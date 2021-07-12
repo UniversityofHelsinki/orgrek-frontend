@@ -46,4 +46,4 @@ deploy_dev:
     # - oc new-app node14~. --name=organisaatiorekisteri-dev-frontend --as-deployment-config
     # - oc new-app . --name=organisaatiorekisteri-dev-backend --as-deployment-config
     - oc start-build organisaatiorekisteri-dev-frontend --from-dir=. --follow
-    - oc expose service organisaatiorekisteri-dev-frontend
+    #- oc expose service organisaatiorekisteri-dev-frontend
