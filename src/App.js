@@ -1,5 +1,4 @@
 import React from "react";
-import './App.css';
 const ORGREK_BACKEND_SERVER = process.env.REACT_APP_ORGREK_BACKEND_SERVER;
 
 function App() {
@@ -12,11 +11,10 @@ function App() {
         .then((data) => setData(data.message));
   }, []);
 
-
   return (
     <div className="App">
       <header className="App-header">
-        <p>{!data ? "Loading..." : data}</p>
+        <h1>{!data ? "Loading..." : data}</h1>
       </header>
     </div>
   );
