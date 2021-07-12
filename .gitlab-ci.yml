@@ -1,0 +1,49 @@
+image: frolvlad/alpine-glibc
+
+before_script:
+  - apk update && apk --no-cache add g++ gcc libgcc libstdc++ linux-headers make python3 curl tar
+
+  # Cache node modules - speeds up future builds
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - node_modules
+
+# Define the stages
+stages:
+  - setup
+  - deploy
+
+# Define the process for each stage
+
+# Define the process for setup stage
+setup:
+  stage: setup
+  tags:
+    - ohtu-build-1
+  script:
+    - curl -fsSLO --compressed "https://unofficial-builds.nodejs.org/download/release/v14.17.3/node-v14.17.3-linux-x64-musl.tar.gz";
+    - tar -xvzf "node-v14.17.3-linux-x64-musl.tar.gz" -C /usr/local --strip-components=1 --no-same-owner
+    - ln -s /usr/local/bin/node /usr/local/bin/nodejs
+    - npm install
+
+# Define the process for deploy stage to development environment
+deploy_dev:
+  stage: deploy
+  tags:
+    - ohtu-build-1
+  environment:
+    name: development
+  only:
+    - master
+  script:
+    - curl -fsSLO --compressed "https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/openshift-client-linux.tar.gz";
+    - tar xvzf openshift-client-linux.tar.gz -C /usr/local/bin
+    # before any action, I connect to the OpenShift server with the appropriate credentials
+    # this parameter: `--insecure-skip-tls-verify` is important because we use a certificate signed by an unknown authority
+    - oc login https://$OPENSHIFT_ADDR:$OPENSHIFT_PORT --token=$OPENSHIFT_TOKEN --insecure-skip-tls-verify
+    - oc project organisaatiorekisteri-dev
+    - oc new-app node14~. --name=organisaatiorekisteri-dev-frontend --as-deployment-config
+    # - oc new-app . --name=organisaatiorekisteri-dev-backend --as-deployment-config
+    #- oc start-build organisaatiorekisteri-dev-frontend --from-dir=. --follow
+    - oc expose service organisaatiorekisteri-dev-frontend
