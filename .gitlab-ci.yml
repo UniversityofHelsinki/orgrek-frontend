@@ -45,5 +45,5 @@ deploy_dev:
     - oc project organisaatiorekisteri-dev
     - oc new-app . --name=organisaatiorekisteri-frontend --as-deployment-config --strategy=docker
     # - oc new-app . --name=organisaatiorekisteri-frontend --as-deployment-config --strategy=docker
-    - oc start-build organisaatiorekisteri-frontend --from-dir=. --follow
+    #- oc start-build organisaatiorekisteri-frontend --from-dir=. --follow
     - oc expose service organisaatiorekisteri-frontend
