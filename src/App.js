@@ -1,23 +1,29 @@
 import React from "react";
-const ORGREK_BACKEND_SERVER = process.env.REACT_APP_ORGREK_BACKEND_SERVER || '';
+import {connect} from 'react-redux';
+import Hello from "./components/hello";
+import {fetchHelloMessage} from "./actions/helloAction";
 
-function App() {
+const App= (props) => {
 
-  const [data, setData] = React.useState(null);
+    React.useEffect(() => {
+        props.onFetchMessage();
+    }, []);
 
-  React.useEffect(() => {
-    fetch(`${ORGREK_BACKEND_SERVER}/api`)
-        .then((res) => res.json())
-        .then((data) => setData(data.message));
-  }, []);
-
-  return (
-    <div className="App">
-      <header className="App-header">
-        <h1>{!data ? "Loading..." : data}</h1>
-      </header>
-    </div>
-  );
+    return (
+        <div className="App">
+            <header className="App-header">
+                <Hello />
+            </header>
+        </div>
+    );
 }
 
-export default App;
+const mapStateToProps = state => ({
+    message : state.hr.message
+});
+
+const mapDispatchToProps = dispatch => ({
+    onFetchMessage: () => dispatch(fetchHelloMessage())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
