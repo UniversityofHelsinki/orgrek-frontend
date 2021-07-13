@@ -4,8 +4,7 @@ import { connect } from 'react-redux';
 const Hello = (props) => {
     return (
         <div>
-            <p>{props.hr.message}</p>
-
+            <h1>{props.hr.message}</h1>
         </div>
     );
 };

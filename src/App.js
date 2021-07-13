@@ -7,6 +7,7 @@ const App= (props) => {
 
     React.useEffect(() => {
         props.onFetchMessage();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (
