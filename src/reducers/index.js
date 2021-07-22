@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
-import helloReducer from './helloReducer';
+import treeReducer from './treeReducer';
 
 const rootReducer = combineReducers({
-    hr : helloReducer
+    tr : treeReducer
 });
 
 export default rootReducer;

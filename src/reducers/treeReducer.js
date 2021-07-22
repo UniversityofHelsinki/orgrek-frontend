@@ -1,12 +1,12 @@
 
-const initialState = { message : {} };
+const initialState = { tree : {} };
 
 const userReducer = (state = initialState, action) => {
     switch (action.type) {
-        case 'SUCCESS_API_GET_HELLO_MESSAGE':
+        case 'SUCCESS_API_GET_TREE':
             return {
                 ...state,
-                message: action.payload
+                tree: action.payload
             };
         default:
             return state;

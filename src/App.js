@@ -1,30 +1,30 @@
 import React from "react";
 import {connect} from 'react-redux';
-import Hello from "./components/hello";
-import {fetchHelloMessage} from "./actions/helloAction";
+import Tree from "./components/tree";
+import {fetchTree} from "./actions/treeAction";
 
 const App= (props) => {
 
     React.useEffect(() => {
-        props.onFetchMessage();
+        props.onFetchTree();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (
         <div className="App">
             <header className="App-header">
-                <Hello />
+                <Tree/>
             </header>
         </div>
     );
 }
 
 const mapStateToProps = state => ({
-    message : state.hr.message
+    tree : state.tr.tree
 });
 
 const mapDispatchToProps = dispatch => ({
-    onFetchMessage: () => dispatch(fetchHelloMessage())
+    onFetchTree: () => dispatch(fetchTree())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
