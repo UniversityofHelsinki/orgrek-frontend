@@ -20,7 +20,7 @@ stages:
 setup:
   stage: setup
   tags:
-    - ohtu-build-1
+    - ohtu-build-2
   script:
     - curl -fsSLO --compressed "https://unofficial-builds.nodejs.org/download/release/v14.17.3/node-v14.17.3-linux-x64-musl.tar.gz";
     - tar -xvzf "node-v14.17.3-linux-x64-musl.tar.gz" -C /usr/local --strip-components=1 --no-same-owner
