@@ -2,6 +2,8 @@ import React from "react";
 import {connect} from 'react-redux';
 import Tree from "./components/tree";
 import {fetchTree} from "./actions/treeAction";
+import "@itcenteratunihelsinki/huds-lib/dist/fonts/fonts.css";
+import "@itcenteratunihelsinki/huds-lib/dist/huds-lib/huds-lib.css";
 
 const App= (props) => {
 

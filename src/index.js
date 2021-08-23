@@ -5,6 +5,11 @@ import { Provider } from "react-redux";
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { applyPolyfills, defineCustomElements } from '@itcenteratunihelsinki/huds-lib/loader/index.cjs';
+
+applyPolyfills().then(() => {
+    defineCustomElements(window)
+});
 
 ReactDOM.render(
     <Provider store={store}>
