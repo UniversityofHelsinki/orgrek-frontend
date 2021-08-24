@@ -18,6 +18,7 @@ const App= (props) => {
                 <div className="site-header-demo-container">
                     <Header/>
                     <Tree/>
+                    <Footer/>
                 </div>
             </header>
         </div>
