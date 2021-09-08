@@ -1,7 +1,7 @@
 FROM nginx:alpine
 
 WORKDIR /app
-COPY package.json yarn.lock ./
+COPY build package.json yarn.lock ./
 
 # Install node.js
 RUN apk update && \
