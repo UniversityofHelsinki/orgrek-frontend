@@ -28,6 +28,10 @@ setup:
     - ln -s /usr/local/bin/node /usr/local/bin/nodejs
     - npm install
     - npm run build
+  artifacts:
+    name: orgrek-build
+    paths:
+      - build
 
 
 # Define the process for deploy stage to development environment
