@@ -8,8 +8,9 @@ RUN apk update && \
     apk add nodejs npm python3 make curl g++
 
 # Build Application
-COPY . ./
-RUN npm run build
+#COPY . ./
+#RUN npm run build
+COPY build ./build
 RUN cp -r ./build/. /usr/share/nginx/html
 
 RUN rm -rf /etc/nginx/conf.d/default.conf
