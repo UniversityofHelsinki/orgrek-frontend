@@ -10,7 +10,8 @@ RUN apk update && \
 # Build Application
 #COPY . ./
 #RUN npm run build
-COPY build ./build
+RUN ls -la
+COPY ./build build
 RUN cp -r ./build/. /usr/share/nginx/html
 
 RUN rm -rf /etc/nginx/conf.d/default.conf
