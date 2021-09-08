@@ -27,15 +27,8 @@ setup:
     - tar -xvzf "node-v14.17.3-linux-x64-musl.tar.gz" -C /usr/local --strip-components=1 --no-same-owner
     - ln -s /usr/local/bin/node /usr/local/bin/nodejs
     - npm install
-
-
-# Define the process for build stage
-build:
-  stage: build
-  tags:
-    - ohtu-build-2
-  script:
     - npm run build
+
 
 # Define the process for deploy stage to development environment
 deploy_dev:
