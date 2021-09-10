@@ -13,26 +13,19 @@ const Footer = (props) => {
                     logo-label="University of Helsinki"
                     logo-url="/"
                     some-label="Follow us"
-                    copyright-text="© University of Helsinki 2020"
+                    copyright-text="© University of Helsinki 2021"
                     data-footer-base-links='[
-                      {"label": "People finder", "url": "#"},
-                      {"label": "Press and media", "url": "#"},
-                      {"label": "Opening hours", "url": "#"},
                       {"label": "Flamma", "url": "#"},
-                      {"label": "Library", "url": "#"},
-                      {"label": "Webshop", "url": "#"},
                       {"label": "About website", "url": "#"},
-                      {"label": "Data protection", "url": "#"},
-                      {"label": "More Data protection", "url": "#"},
                       {"label": "Accessibility", "url": "#"},
                       {"label": "Give feedback", "url": "#"}
                     ]'
                     data-footer-base-some='[
-                        {"label": "Follow us on Facebook", "url": "#", "type": "facebook"},
-                          {"label": "Follow us on Twitter", "url": "#", "type": "twitter"},
-                          {"label": "Follow us on Youtube", "url": "#", "type": "youtube"},
-                          {"label": "Follow us on LinkedIn", "url": "#", "type": "linkedin"},
-                          {"label": "Follow us on Instagram", "url": "#", "type": "instagram"}
+                        {"label": "Follow us on Facebook", "url": "https://www.facebook.com/HelsinkiUniversity", "type": "facebook"},
+                          {"label": "Follow us on Twitter", "url": "https://twitter.com/helsinkiuni", "type": "twitter"},
+                          {"label": "Follow us on Youtube", "url": "https://www.youtube.com/user/universityofhelsinki", "type": "youtube"},
+                          {"label": "Follow us on LinkedIn", "url": "https://fi.linkedin.com/school/university-of-helsinki/", "type": "linkedin"},
+                          {"label": "Follow us on Instagram", "url": "https://www.instagram.com/universityofhelsinki/", "type": "instagram"}
                         ]'
                 >
                     <div slot="content">
