@@ -1,9 +1,9 @@
 import React from "react";
 import {connect} from 'react-redux';
+import Header from "./components/Header";
+import Footer from "./components/Footer";
 import Tree from "./components/tree";
 import {fetchTree} from "./actions/treeAction";
-import "@itcenteratunihelsinki/huds-lib/dist/fonts/fonts.css";
-import "@itcenteratunihelsinki/huds-lib/dist/huds-lib/huds-lib.css";
 
 const App= (props) => {
 
@@ -15,7 +15,11 @@ const App= (props) => {
     return (
         <div className="App">
             <header className="App-header">
-                <Tree/>
+                <div className="site-header-demo-container">
+                    <Header/>
+                    <Tree/>
+                    <Footer/>
+                </div>
             </header>
         </div>
     );
