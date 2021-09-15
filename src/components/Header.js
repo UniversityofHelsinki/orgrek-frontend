@@ -11,36 +11,11 @@ const Header = (props) => {
                 site-url="https://www.helsinki.fi/en/"
                 logo-label="Organisaatiorekisteri"
                 logo-url="/"
-                search-button-label="Search"
+                no-search="true"
                 data-site-header-labels='{
           "menu_labels": {"open":"Open mobile menu","close":"Close mobile menu panel","expand":"Expand submenu"},
-          "search_labels":{"label":"Search","open":"Open search","close":"Close search"},
           "group_pages":{"university_main_menu":"University main menu"},
           "language_labels":{"open":"Open language list","close":"Close language list"}}'
-                data-site-search-labels='{
-        "search_description": "web pages, study options, people, research groups, etc…",
-        "search_placeholder":"What do you want to find…",
-        "search_label":"Search",
-        "search_close_label":"Exit search",
-        "search_tools_label":"Special Search tools"
-      }'
-                data-search-tools='[
-        {"menuLinkId":"4a4242dd7b9a201ad57b943ac904ec39",
-        "isExternal":false,
-        "label":"People finder",
-        "url":"/en/about-us/people",
-        "description":""},
-        {"menuLinkId":"334decac91a4531f495e88893b190519",
-        "isExternal":"external",
-        "label":"Degree finder",
-        "url":"https://svenska.yle.fi",
-        "description":""},
-        {"menuLinkId":"60296b1a224d1f5c2a5e29fef4b716c3",
-        "isExternal":false,
-        "label":"Research groups",
-        "url":"/en/tiedekunta/laaketieteellinen-tiedekunta/tutkimus/services-researchers",
-        "description":""}
-      ]'
                 data-menu-language='[
           {"langCode":"fi","abbr":"fin","label":"Finnish","url":"/fi", "isActive":"true"},
           {"langCode":"en","abbr":"eng","label":"English","url":"/en"},
