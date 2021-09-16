@@ -74,3 +74,20 @@ deploy_test:
     - oc login https://$OPENSHIFT_ADDR_TEST:$OPENSHIFT_PORT --token=$OPENSHIFT_TOKEN_TEST --insecure-skip-tls-verify
     - oc project organisaatiorekisteri
     - oc start-build organisaatiorekisteri-frontend-test --from-dir=. --follow
+
+deploy_prod:
+  stage: deploy
+  tags:
+    - ohtu-build-2
+  environment:
+    name: prod
+  only:
+    - prod
+  script:
+    - curl -fsSLO --compressed "https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/openshift-client-linux.tar.gz";
+    - tar xvzf openshift-client-linux.tar.gz -C /usr/local/bin
+    # before any action, I connect to the OpenShift server with the appropriate credentials
+    # this parameter: `--insecure-skip-tls-verify` is important because we use a certificate signed by an unknown authority
+    - oc login https://$OPENSHIFT_ADDR_PROD:$OPENSHIFT_PORT --token=$OPENSHIFT_TOKEN_PROD --insecure-skip-tls-verify
+    - oc project organisaatiorekisteri
+    - oc start-build organisaatiorekisteri-frontend-prod --from-dir=. --follow
