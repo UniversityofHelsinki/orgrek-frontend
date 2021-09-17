@@ -15,7 +15,7 @@ const App= (props) => {
     return (
         <div className="App">
             <header className="App-header">
-                <div className="site-header-demo-container">
+                <div>
                     <Header/>
                     <Tree/>
                     <Footer/>
