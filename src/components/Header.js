@@ -28,12 +28,12 @@ const Header = (props) => {
       ]
       '
                 data-desktop-links='
-      [{"menuLinkId":"06ec39de0916925f3bcfa55000ae2382","isActive":"false","isExternal":false,"label":"Hierarkia","labelExtra":"Hierarkia","url":"/","description":"","toggleOff":"true","shortcutsTitle":"Oikopolut","closeButtonTitle":"Sulje","shortcuts":[],"items":[]}]
+      [{"menuLinkId":"06ec39de0916925f3bcfa55000ae2382","isActive":"false","isExternal":false,"label":"Rakenne","labelExtra":"Rakenne","url":"/","description":"","toggleOff":"true","shortcutsTitle":"Oikopolut","closeButtonTitle":"Sulje","shortcuts":[],"items":[]}]
       '
             >
                 <hy-menu slot="menu" menu-button-breadcrumb-home="Etusivu">
                     <hy-menu-level-container menu-level="1" depth="1">
-                        <hy-menu-item menu-link-id="1" url="/" label="Hierarkia">
+                        <hy-menu-item menu-link-id="1" url="/" label="Rakenne">
                         </hy-menu-item>
                     </hy-menu-level-container>
                 </hy-menu>
