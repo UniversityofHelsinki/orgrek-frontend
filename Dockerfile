@@ -1,16 +1,18 @@
 FROM nginx:alpine
 
 WORKDIR /app
-COPY package.json yarn.lock ./
+COPY build ./
 
 # Install node.js
 RUN apk update && \
     apk add nodejs npm python3 make curl g++
 
 # Build Application
-COPY . ./
-RUN npm run build
-RUN cp -r ./build/. /usr/share/nginx/html
+#COPY . ./
+#RUN npm run build
+RUN ls -la
+#RUN cp -r ./build/. /usr/share/nginx/html
+RUN cp -r . /usr/share/nginx/html
 
 RUN rm -rf /etc/nginx/conf.d/default.conf
 COPY Nginx.conf /etc/nginx/conf.d
