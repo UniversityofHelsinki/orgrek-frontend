@@ -48,7 +48,7 @@ deploy_dev:
   environment:
     name: development
   only:
-    - OR-536
+    - master
   script:
     - curl -fsSLO --compressed "https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/openshift-client-linux.tar.gz";
     - tar xvzf openshift-client-linux.tar.gz -C /usr/local/bin
