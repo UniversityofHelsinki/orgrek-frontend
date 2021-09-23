@@ -4,13 +4,13 @@ import { connect } from 'react-redux';
 const Tree = (props) => {
     return (
         <div>
-            <pre>{JSON.stringify(props.tr.tree, null, 2) }</pre>
+            <pre>{JSON.stringify(props.tree, null, 2) }</pre>
         </div>
     );
 };
 
 const mapStateToProps = state => ({
-    tr : state.tr.tree
+    tree : state.tr.tree
 });
 
 
