@@ -1,4 +1,4 @@
-# Getting Started with Create React App
+# Getting Started with Orgrek frontend
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
@@ -6,13 +6,22 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 Place environment variables in .env.development.local file (create it if it does not exist)
 Add these environment variables to file : 
-REACT_APP_ORGREK_BACKEND_SERVER=http://localhost:8080
+
+REACT_APP_ORGREK_BACKEND_SERVER=
+
+Value to run the project with api-gateway backend:
+
+http://localhost:8080
+
+Value to run the project with local json server backend:
+
+http://localhost:3003
 
 ## Available Scripts
 
 In the project directory, you can run:
 
-### `yarn dev`
+### `yarn dev` or `npm run dev`
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
@@ -20,6 +29,9 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
 
+### `yarn start:server` or `npm run start:server`
+
+Starts the local json server, if you are aiming to use api-gateway server you should run the backend project separately.
 
 ### `yarn test`
 
@@ -46,11 +58,29 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
+## JSON server
+
+The JSON server runs mock api using the db.json-file as database. 
+
+You can make GET, POST, PUT, PATCH and DELETE requests to the mock database. You should include the `Content-Type: application/json` header to your requests to ensure the changes are made to data. 
+
+### Adding new endpoints or data
+
+**When creating new mock endpoint or adding data ensure your formatting matches the one coming from the actual database or, in case of yet inexistent endpoint, what have been planned** - switching between mock and actual database should not cause any disturbances on component behavior.
+
+Adding new data is done by adding new JSON objects to the db.json-file. 
+
+To create a new endpoint customize one matching your needs to the routes.json-file. Read more from [JSON server custom routes documentation.](https://github.com/typicode/json-serverr#add-custom-routes)
+
 ## Learn More
 
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+### JSON server
+
+JSON server documentation: [https://github.com/typicode/json-server](https://github.com/typicode/json-server)
 
 ### Code Splitting
 
