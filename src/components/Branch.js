@@ -4,7 +4,6 @@ import Node from './Node'
 
 const Branch = ({ item, level }) => {
     const [selected, setSelected] = useState(item.selected ?? false);
-
     const hasChildren = item.children && item.children.length !== 0;
 
     const renderBranches = () => {
@@ -23,6 +22,11 @@ const Branch = ({ item, level }) => {
         setSelected(prev => !prev);
     };
 
+    const onSelection = () => {
+        console.log("selected item" , item);
+
+    };
+
     return (
         <>
             <Node
@@ -31,6 +35,7 @@ const Branch = ({ item, level }) => {
                 hasChildren={hasChildren}
                 level={level}
                 onToggle={toggleSelected}
+                onSelection={onSelection}
             />
 
             {selected && renderBranches()}
