@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import Node from './Node'
 
 const Branch = ({ item, level }) => {
-    const [selected, setSelected] = useState(item.selected ?? false);
+    const [selected, setSelected] = useState(true); // open tree on load
     const hasChildren = item.children && item.children.length !== 0;
 
     const renderBranches = () => {
