@@ -1,14 +1,17 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+
 
 const Header = (props) => {
+    const { t } = useTranslation();
     return (
         <div>
             <hy-site-header
                 is-group="true"
                 site-label="University of Helsinki"
                 site-url="https://www.helsinki.fi/en/"
-                logo-label="Organisaatiorekisteri"
+                logo-label={t("organisational_registry")}
                 logo-url="/"
                 no-search="true"
                 data-site-header-labels='{
