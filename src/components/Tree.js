@@ -1,10 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import Branch from './Branch';
 
 const Tree = (props) => {
     return (
         <div>
-            <pre>{JSON.stringify(props.tree, null, 2) }</pre>
+            {Object.values(props.tree).map((item) => <Branch key={item.id} item={item} level={0} />)}
         </div>
     );
 };

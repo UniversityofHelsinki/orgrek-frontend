@@ -2,7 +2,7 @@ import React from "react";
 import {connect} from 'react-redux';
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import Tree from "./components/tree";
+import Tree from "./components/Tree";
 import {fetchTree} from "./actions/treeAction";
 
 const App= (props) => {
