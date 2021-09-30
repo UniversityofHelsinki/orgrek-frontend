@@ -17,8 +17,8 @@ RUN cp -r . /usr/share/nginx/html
 #RUN rm -rf /etc/nginx/conf.d/default.conf
 #COPY Nginx.conf /etc/nginx/conf.d
 
-COPY default.conf /etc/nginx/conf.d/default.conf
-COPY nginx.conf /etc/nginx/nginx.conf
+COPY Default.conf /etc/nginx/conf.d/default.conf
+COPY Nginx.conf /etc/nginx/nginx.conf
 
 
 RUN chgrp -R root /var/cache/nginx /var/run /var/log/nginx && \
