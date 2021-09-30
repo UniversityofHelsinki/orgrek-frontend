@@ -3,8 +3,10 @@ import { initReactI18next } from "react-i18next";
 import Backend from "i18next-http-backend";
 import LanguageDetector from "i18next-browser-languagedetector";
 
+const ORGREK_BACKEND_SERVER = process.env.REACT_APP_ORGREK_BACKEND_SERVER || '';
+
 const backendOptions = {
-    loadPath: 'http://localhost:8000/api/texts/{{lng}}',
+    loadPath: `${ORGREK_BACKEND_SERVER}/api/texts/{{lng}}`,
     //'/locales/{{lng}}/{{ns}}.json',
 
     requestOptions: { // used for fetch, can also be a function (payload) => ({ method: 'GET' })
