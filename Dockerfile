@@ -5,7 +5,7 @@ COPY build ./
 
 # Install node.js
 RUN apk update && \
-    apk add nodejs npm python3 make curl g++
+    apk add nodejs npm python3 make curl g++ nginx-mod-http-perl=1.10.3-r1
 
 # Build Application
 #COPY . ./
