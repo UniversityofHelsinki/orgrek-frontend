@@ -1,11 +1,11 @@
-FROM alpine
+FROM nginx:1.18.0-alpine-perl
 
 WORKDIR /app
 COPY build ./
 
 # Install node.js
 RUN apk update && \
-    apk add nodejs npm python3 make curl g++ nginx nginx-mod-http-perl
+    apk add nodejs npm python3 make curl g++ nginx-mod-http-perl
 
 # Build Application
 #COPY . ./
