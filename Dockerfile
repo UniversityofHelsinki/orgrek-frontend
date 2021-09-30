@@ -18,7 +18,7 @@ RUN rm -rf /etc/nginx/conf.d/default.conf
 #COPY Nginx.conf /etc/nginx/conf.d
 
 COPY default.conf /etc/nginx/conf.d
-COPY nginx.conf /etc/nginx/
+COPY nginx.conf /etc/nginx
 
 
 RUN chgrp -R root /var/cache/nginx /var/run /var/log/nginx && \
