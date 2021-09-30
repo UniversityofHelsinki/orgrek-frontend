@@ -50,6 +50,7 @@ deploy_dev:
   only:
     - master
   script:
+    - mv nginx_dev.conf nginx.conf
     - curl -fsSLO --compressed "https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/openshift-client-linux.tar.gz";
     - tar xvzf openshift-client-linux.tar.gz -C /usr/local/bin
     # before any action, I connect to the OpenShift server with the appropriate credentials
@@ -67,6 +68,7 @@ deploy_test:
   only:
     - test
   script:
+    - mv nginx_test.conf nginx.conf
     - curl -fsSLO --compressed "https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/openshift-client-linux.tar.gz";
     - tar xvzf openshift-client-linux.tar.gz -C /usr/local/bin
     # before any action, I connect to the OpenShift server with the appropriate credentials
@@ -84,6 +86,7 @@ deploy_prod:
   only:
     - prod
   script:
+    - mv nginx_prod.conf nginx.conf
     - curl -fsSLO --compressed "https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/openshift-client-linux.tar.gz";
     - tar xvzf openshift-client-linux.tar.gz -C /usr/local/bin
     # before any action, I connect to the OpenShift server with the appropriate credentials
