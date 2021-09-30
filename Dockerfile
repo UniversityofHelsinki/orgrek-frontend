@@ -1,4 +1,4 @@
-FROM nginx:1.18.0-alpine-perl
+FROM nginx:stable-alpine-perl
 
 WORKDIR /app
 COPY build ./
