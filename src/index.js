@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
 import store from "./store";
 import { Provider } from "react-redux";
@@ -6,6 +6,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { applyPolyfills, defineCustomElements } from '@itcenteratunihelsinki/huds-lib/loader/index.cjs';
+import "./i18n";
 
 applyPolyfills().then(() => {
     defineCustomElements(window)
@@ -13,7 +14,9 @@ applyPolyfills().then(() => {
 
 ReactDOM.render(
     <Provider store={store}>
-        <App />
+        <Suspense fallback={<div>Loading...</div>}>
+            <App />
+        </Suspense>
     </Provider>,
     document.getElementById("root")
 );
