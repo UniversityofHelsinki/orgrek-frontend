@@ -31,7 +31,7 @@
     "start:server": "json-server --watch db.json --routes routes.json  --port 3003",
     "dev": "react-scripts start",
     "build": "react-scripts build",
-    "test": "jest",
+    "test": "jest --coverage",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
