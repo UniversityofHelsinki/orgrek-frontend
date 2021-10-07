@@ -26,6 +26,13 @@
   "devDependencies": {
     "json-server": "^0.16.3"
   },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx}",
+      "!<rootDir>/node_modules/",
+      "!<rootDir>/path/to/dir/"
+    ]
+  },
   "scripts": {
     "start": "HOST=0.0.0.0 PORT=8080 react-scripts start",
     "start:server": "json-server --watch db.json --routes routes.json  --port 3003",
