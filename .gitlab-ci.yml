@@ -15,6 +15,7 @@ cache:
 # Define the stages
 stages:
   - setup
+  - test
   - build
   - deploy
 
@@ -27,6 +28,15 @@ setup:
     - ohtu-build-2
   script:
     - npm install
+
+# Define the process for test stage
+test:
+  stage: test
+  tags:
+    - ohtu-build-2
+  script:
+    - npm test
+  coverage: /All files\s*\|\s*([\d\.]+)/
 
 build:
   stage: build
