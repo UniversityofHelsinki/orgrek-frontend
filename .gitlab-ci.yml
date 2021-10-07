@@ -58,11 +58,8 @@ deploy_dev:
     - master
   script:
     - mv nginx_dev.conf nginx.conf
-    #- curl -fsSLO --compressed "https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/openshift-client-linux.tar.gz";
-    #- tar xvzf openshift-client-linux.tar.gz -C /usr/local/bin
-    - ln -s /tmp /usr/local/bin
-    - cd /usr/local/bin/tmp
-    - ls
+    - curl -fsSLO --compressed "https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/openshift-client-linux.tar.gz";
+    - tar xvzf openshift-client-linux.tar.gz -C /usr/local/bin
     # before any action, I connect to the OpenShift server with the appropriate credentials
     # this parameter: `--insecure-skip-tls-verify` is important because we use a certificate signed by an unknown authority
     - oc login https://$OPENSHIFT_ADDR_TEST:$OPENSHIFT_PORT --token=$OPENSHIFT_TOKEN_TEST --insecure-skip-tls-verify
