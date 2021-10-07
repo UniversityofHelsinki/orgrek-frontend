@@ -3,8 +3,7 @@ image: frolvlad/alpine-glibc
 before_script:
   - apk update && apk --no-cache add g++ gcc libgcc libstdc++ linux-headers make python3 curl tar
   - curl -fsSLO --compressed "https://unofficial-builds.nodejs.org/download/release/v14.17.3/node-v14.17.3-linux-x64-musl.tar.gz";
-  - tar -xvzf "node-v14.17.3-linux-x64-musl.tar.gz" -C /usr/local --strip-components=1 --no-same-owner
-  - ln -s /usr/local/bin/node /usr/local/bin/nodejs
+  - apk add nodejs
 
   # Cache node modules - speeds up future builds
 cache:
