@@ -1,7 +1,7 @@
 image: frolvlad/alpine-glibc
 
 before_script:
-  - apk update && apk --no-cache add g++ gcc libgcc libstdc++ linux-headers make python3 curl tar nodejs
+  - apk update && apk --no-cache add g++ gcc libgcc libstdc++ linux-headers make python3 curl tar nodejs npm
 
   # Cache node modules - speeds up future builds
 cache:
