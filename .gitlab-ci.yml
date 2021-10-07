@@ -1,7 +1,7 @@
 image: frolvlad/alpine-glibc
 
 before_script:
-  - apk update && apk --no-cache add g++ gcc libgcc libstdc++ linux-headers make python3 curl tar nodejs npm
+  - apk update && apk --no-cache add g++ gcc libgcc libstdc++ linux-headers make python3 curl tar
 
   # Cache node modules - speeds up future builds
 cache:
@@ -20,6 +20,8 @@ stages:
 
 # Define the process for setup stage
 setup:
+  before_script:
+    - apk add nodejs npm
   stage: setup
   tags:
     - ohtu-build-2
