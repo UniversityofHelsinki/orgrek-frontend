@@ -1,10 +1,7 @@
 image: frolvlad/alpine-glibc
 
 before_script:
-  - apk update && apk --no-cache add g++ gcc libgcc libstdc++ linux-headers make python3 curl tar
-  - curl -fsSLO --compressed "https://unofficial-builds.nodejs.org/download/release/v14.17.3/node-v14.17.3-linux-x64-musl.tar.gz";
-  - tar -xvzf "node-v14.17.3-linux-x64-musl.tar.gz" -C /usr/local --strip-components=1 --no-same-owner
-  - ln -s /usr/local/bin/node /usr/local/bin/nodejs
+  - apk update && apk --no-cache add g++ gcc libgcc libstdc++ linux-headers make python3 curl tar nodejs npm
 
   # Cache node modules - speeds up future builds
 cache:
@@ -15,6 +12,7 @@ cache:
 # Define the stages
 stages:
   - setup
+  - test
   - build
   - deploy
 
@@ -27,6 +25,15 @@ setup:
     - ohtu-build-2
   script:
     - npm install
+
+# Define the process for test stage
+test:
+  stage: test
+  tags:
+    - ohtu-build-2
+  script:
+    - npm test
+  coverage: /All files\s*\|\s*([\d\.]+)/
 
 build:
   stage: build
@@ -50,6 +57,7 @@ deploy_dev:
   only:
     - master
   script:
+    - mv nginx_dev.conf nginx.conf
     - curl -fsSLO --compressed "https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/openshift-client-linux.tar.gz";
     - tar xvzf openshift-client-linux.tar.gz -C /usr/local/bin
     # before any action, I connect to the OpenShift server with the appropriate credentials
@@ -67,6 +75,7 @@ deploy_test:
   only:
     - test
   script:
+    - mv nginx_test.conf nginx.conf
     - curl -fsSLO --compressed "https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/openshift-client-linux.tar.gz";
     - tar xvzf openshift-client-linux.tar.gz -C /usr/local/bin
     # before any action, I connect to the OpenShift server with the appropriate credentials
@@ -84,6 +93,7 @@ deploy_prod:
   only:
     - prod
   script:
+    - mv nginx_prod.conf nginx.conf
     - curl -fsSLO --compressed "https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/openshift-client-linux.tar.gz";
     - tar xvzf openshift-client-linux.tar.gz -C /usr/local/bin
     # before any action, I connect to the OpenShift server with the appropriate credentials
