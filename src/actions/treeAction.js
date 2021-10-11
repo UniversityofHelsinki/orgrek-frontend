@@ -4,7 +4,7 @@ export const fetchTree = () => {
     const PARAMS = '/talous';
     return async (dispatch)  => {
         let response = await fetch(`${ORGREK_BACKEND_SERVER}${PATH}${PARAMS}`, {
-            headers: {'Content-Type': 'application/json'}
+            headers: { 'Content-Type': 'application/json' }
         });
         if (response.status === 200) {
             let responseJSON = await response.json();
