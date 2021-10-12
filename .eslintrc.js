@@ -1,48 +1,48 @@
 module.exports = {
-    "env": {
-        "node": true,
-        "browser": true,
-        "es6": true,
-        "jest/globals": true
+    'env': {
+        'node': true,
+        'browser': true,
+        'es6': true,
+        'jest/globals': true
     },
-    "extends": [
-        "eslint:recommended",
-        "plugin:react/recommended"
+    'extends': [
+        'eslint:recommended',
+        'plugin:react/recommended'
     ],
-    "parserOptions": {
-        "ecmaFeatures": {
-            "jsx": true
+    'parserOptions': {
+        'ecmaFeatures': {
+            'jsx': true
         },
-        "ecmaVersion": 2018,
-        "sourceType": "module"
+        'ecmaVersion': 2018,
+        'sourceType': 'module'
     },
-    "plugins": [
-        "react", "jest"
+    'plugins': [
+        'react', 'jest'
     ],
-    "rules": {
-        "indent": [2, 4],
-        "linebreak-style": [
-            "error",
-            "unix"
+    'rules': {
+        'indent': [2, 4],
+        'linebreak-style': [
+            'error',
+            'unix'
         ],
-        "quotes": [
-            "error",
-            "single"
+        'quotes': [
+            'error',
+            'single'
         ],
-        "semi": [
-            "error",
-            "always"
+        'semi': [
+            'error',
+            'always'
         ],
-        "eqeqeq": "error",
-        "no-unused-vars": "off",
-        "no-trailing-spaces": "error",
-        "object-curly-spacing": [
-            "error", "always"
+        'eqeqeq': 'error',
+        'no-unused-vars': 'off',
+        'no-trailing-spaces': 'error',
+        'object-curly-spacing': [
+            'error', 'always'
         ],
-        "arrow-spacing": [
-            "error", { "before": true, "after": true }
+        'arrow-spacing': [
+            'error', { 'before': true, 'after': true }
         ],
-        "no-console": 0,
-        "react/prop-types": 0
+        'no-console': 0,
+        'react/prop-types': 0
     }
 };
