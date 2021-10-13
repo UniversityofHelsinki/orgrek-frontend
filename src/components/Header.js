@@ -8,6 +8,7 @@ const Header = ( ) => {
     return (
         <div>
             <hy-site-header
+                class="hy-site-header"
                 is-group="true"
                 site-label="University of Helsinki"
                 site-url="https://www.helsinki.fi/en/"
