@@ -1,9 +1,10 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import Header from './components/Header';
-import Footer from './components/Footer';
-import Tree from './components/Tree';
-import { fetchTree } from './actions/treeAction';
+import React from "react";
+import {connect} from 'react-redux';
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import Tree from "./components/Tree";
+import {fetchTree} from "./actions/treeAction";
+import "./App.css"
 
 const App= (props) => {
 
@@ -14,13 +15,9 @@ const App= (props) => {
 
     return (
         <div className="App">
-            <header className="App-header">
-                <div>
-                    <Header/>
-                    <Tree/>
-                    <Footer/>
-                </div>
-            </header>
+            <Header/>
+            <Tree/>
+            <Footer/>
         </div>
     );
 };
