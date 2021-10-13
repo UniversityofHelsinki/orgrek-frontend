@@ -1,7 +1,7 @@
-export const fetchTree = () => {
+export const fetchTree = (param) => {
     const ORGREK_BACKEND_SERVER = process.env.REACT_APP_ORGREK_BACKEND_SERVER || '';
-    const PATH = '/api/tree';
-    const PARAMS = '/talous';
+    const PATH = '/api/tree/';
+    const PARAMS = param;
     return async (dispatch)  => {
         let response = await fetch(`${ORGREK_BACKEND_SERVER}${PATH}${PARAMS}`, {
             headers: { 'Content-Type': 'application/json' }
@@ -14,7 +14,7 @@ export const fetchTree = () => {
 };
 
 export const apiGetTreeSuccessCall = data => {
-    return{
+    return {
         type: 'SUCCESS_API_GET_TREE',
         payload: data
     };
