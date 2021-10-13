@@ -1,12 +1,21 @@
 import React from 'react';
-import { Provider } from 'react-redux';
-import store from '../src/store'
-import {screen, render} from "@testing-library/react"
+import {screen, render} from "./testUtils"
+import userReducer from '../src/reducers/treeReducer'
 
 test('renders a div with awesome text', () => {
-  render(<Provider store={store}><div>Awesome text</div></Provider>);
+  render(<div>Awesome text</div>);
 
   const awesomeElement = screen.getByText(/Awesome text/i);
   
   expect(awesomeElement).toBeInTheDocument;
 });
+
+
+test('should return the initial tree state', () => {
+  expect(userReducer(undefined, {})).toEqual(
+    {
+      tree : {},
+      selectedHierarchy: 'talous'
+    }
+  )
+})

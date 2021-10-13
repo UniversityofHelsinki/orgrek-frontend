@@ -1,5 +1,8 @@
 
-const initialState = { tree : {} };
+const initialState = { 
+    tree : {},
+    selectedHierarchy: 'talous'
+};
 
 const userReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -7,6 +10,11 @@ const userReducer = (state = initialState, action) => {
             return {
                 ...state,
                 tree: action.payload
+            };
+        case 'SWITCH_HIERARCHY':
+            return {
+                ...state,
+                selectedHierarchy: action.payload
             };
         default:
             return state;
