@@ -1,7 +1,7 @@
-import React from "react";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
-import Hierarchy from "./components/Hierarchy";
+import React from 'react';
+import Header from './components/Header';
+import Footer from './components/Footer';
+import Hierarchy from './components/Hierarchy';
 
 const App= () => {
 
@@ -16,6 +16,6 @@ const App= () => {
             </header>
         </div>
     );
-}
+};
 
 export default App;

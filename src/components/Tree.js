@@ -1,20 +1,20 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Branch from './Branch';
-import {fetchTree} from "../actions/treeAction";
+import { fetchTree } from '../actions/treeAction';
 
 const Tree = (props) => {
 
     React.useEffect(() => {
         props.onFetchTree(props.selectedHierarchy);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line
     }, [props.selectedHierarchy]);
 
     return (
         <div>
             {Object.values(props.tree).map((item) => {
                 console.log(item);
-            return <Branch key={item.id} item={item} level={0} />})}
+                return <Branch key={item.id} item={item} level={0} />;})}
         </div>
     );
 };
