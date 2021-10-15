@@ -1,15 +1,15 @@
 import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
-import store from "./store";
-import { Provider } from "react-redux";
+import store from './store';
+import { Provider } from 'react-redux';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { applyPolyfills, defineCustomElements } from '@itcenteratunihelsinki/huds-lib/loader/index.cjs';
-import "./i18n";
+import './i18n';
 
 applyPolyfills().then(() => {
-    defineCustomElements(window)
+    defineCustomElements(window);
 });
 
 ReactDOM.render(
@@ -18,7 +18,7 @@ ReactDOM.render(
             <App />
         </Suspense>
     </Provider>,
-    document.getElementById("root")
+    document.getElementById('root')
 );
 
 // If you want to start measuring performance in your app, pass a function

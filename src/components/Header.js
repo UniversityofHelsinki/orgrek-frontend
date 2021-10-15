@@ -3,15 +3,16 @@ import { connect } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
 
-const Header = (props) => {
+const Header = ( ) => {
     const { t, i18n } = useTranslation();
     return (
         <div>
             <hy-site-header
+                class="hy-site-header"
                 is-group="true"
                 site-label="University of Helsinki"
                 site-url="https://www.helsinki.fi/en/"
-                logo-label={t("oppiaineen-tunnus")}
+                logo-label={t('oppiaineen-tunnus')}
                 logo-url="/"
                 no-search="true"
                 data-site-header-labels='{
@@ -40,9 +41,9 @@ const Header = (props) => {
                     </hy-menu-level-container>
                 </hy-menu>
             </hy-site-header>
-            <button onClick={() => i18n.changeLanguage("en")}>En</button>
-            <button onClick={() => i18n.changeLanguage("sv")}>Sv</button>
-            <button onClick={() => i18n.changeLanguage("fi")}>Fi</button>
+            <button onClick={() => i18n.changeLanguage('en')}>En</button>
+            <button onClick={() => i18n.changeLanguage('sv')}>Sv</button>
+            <button onClick={() => i18n.changeLanguage('fi')}>Fi</button>
         </div>
     );
 };

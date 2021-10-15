@@ -1,5 +1,5 @@
 module.exports = {
     output: {
-      publicPath: 'auto',
+        publicPath: 'auto',
     },
-  };
+};

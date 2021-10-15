@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-const Footer = (props) => {
+const Footer = ( ) => {
     return (
         <div>
             <hy-footer>

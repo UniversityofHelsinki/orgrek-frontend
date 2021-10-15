@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-
-import Node from './Node'
+import Node from './Node';
 
 const Branch = ({ item, level }) => {
     const [selected, setSelected] = useState(true); // open tree on load
@@ -11,7 +10,7 @@ const Branch = ({ item, level }) => {
             const newLevel = level + 1;
 
             return item.children.map((child) => {
-                return <Branch key={child.id} item={child} level={newLevel} />
+                return <Branch key={child.id} item={child} level={newLevel} />;
             });
         }
 
@@ -23,7 +22,7 @@ const Branch = ({ item, level }) => {
     };
 
     const onSelection = () => {
-        console.log("selected item" , item);
+        console.log('selected item' , item);
 
     };
 
