@@ -24,7 +24,8 @@ setup:
   tags:
     - ohtu-build-2
   script:
-    - npm install 
+    - npm cache clean --force
+    - npm install
 
 # Define the process for test stage
 test:
