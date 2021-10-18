@@ -42,6 +42,9 @@ module.exports = {
         'arrow-spacing': [
             'error', { 'before': true, 'after': true }
         ],
+        'complexity': ['error', 20],
+        'max-lines-per-function': ['error', 50],
+        'max-lines': ['error', 300],
         'no-console': 0,
         'react/prop-types': 0
     }
