@@ -13,8 +13,7 @@ const Tree = (props) => {
     return (
         <div>
             {Object.values(props.tree).map((item) => {
-                console.log(item);
-                return <Branch key={item.id} item={item} level={0} />;})}
+                return <Branch key={item.id} item={item} level={0} parent='' />;})}
         </div>
     );
 };
