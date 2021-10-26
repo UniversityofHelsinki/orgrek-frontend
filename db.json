@@ -12679,5 +12679,13 @@
     "remove_filters": "remove_filters",
     "relations_nav": "relations",
     "uus_avain_jipii": "uus_avain_jipii"
-  }
+  },
+  "types": [
+  "tutkimus",
+  "henkilosto",
+  "toiminnanohjaus",
+  "opetus",
+  "history",
+  "talous"
+  ]
 }

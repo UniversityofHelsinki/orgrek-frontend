@@ -6,7 +6,9 @@ import { fetchTree } from '../actions/treeAction';
 const Tree = (props) => {
 
     React.useEffect(() => {
-        props.onFetchTree(props.selectedHierarchy);
+        if (props.selectedHierarchy !== '') {
+            props.onFetchTree(props.selectedHierarchy);
+        }
         // eslint-disable-next-line
     }, [props.selectedHierarchy]);
 
