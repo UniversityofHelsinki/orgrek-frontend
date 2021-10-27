@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchNodeAttributes } from '../actions/nodeAction';
+import { fetchNode, fetchNodeAttributes } from '../actions/nodeAction';
 
 const Node = (props) => {
     return (
@@ -12,7 +12,10 @@ const Node = (props) => {
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-    onNodeSelection: () => dispatch(fetchNodeAttributes(ownProps.item.id))
+    onNodeSelection: () => {
+        dispatch(fetchNode(ownProps.item.id));
+        dispatch(fetchNodeAttributes(ownProps.item.id));
+    }
 });
 
 export default connect(null, mapDispatchToProps)(Node);
