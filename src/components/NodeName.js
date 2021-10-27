@@ -20,7 +20,7 @@ const NodeName = (props) => {
 
     return (
         <div>
-            {props.node  ?
+            {props.nodeAttributes  ?
                 <table>
                     <thead>
                         <tr>
@@ -30,21 +30,21 @@ const NodeName = (props) => {
                         </tr>
                     </thead>
                     <tbody>
-                        {props.node.name_fi ? props.node.name_fi.map(nameFi => (
+                        {props.nodeAttributes.name_fi ? props.nodeAttributes.name_fi.map(nameFi => (
                             <tr key={nameFi.key}>
                                 <td>Suomi</td>
                                 <td>{nameFi.value}</td>
                                 <td>{showValidity(nameFi.startDate, nameFi.endDate)}</td>
                             </tr>
                         )) : null}
-                        {props.node.name_en ? props.node.name_en.map(nameEn => (
+                        {props.nodeAttributes.name_en ? props.nodeAttributes.name_en.map(nameEn => (
                             <tr key={nameEn.key}>
                                 <td>Englanti</td>
                                 <td>{nameEn.value}</td>
                                 <td>{showValidity(nameEn.startDate, nameEn.endDate)}</td>
                             </tr>
                         )) : null}
-                        {props.node.name_sv ? props.node.name_sv.map(nameSV => (
+                        {props.nodeAttributes.name_sv ? props.nodeAttributes.name_sv.map(nameSV => (
                             <tr key={nameSV.key}>
                                 <td>Ruotsi</td>
                                 <td>{nameSV.value}</td>
@@ -60,7 +60,7 @@ const NodeName = (props) => {
 
 
 const mapStateToProps = state => ({
-    node : state.nrd.node
+    nodeAttributes : state.nrd.nodeAttributes
 });
 
 export default connect(mapStateToProps, null)(NodeName);

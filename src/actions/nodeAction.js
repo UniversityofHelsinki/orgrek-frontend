@@ -12,14 +12,14 @@ export const fetchNode = (uniqueId) => {
         if (response.status === 200) {
             let responseJSON = await response.json();
             console.log(responseJSON);
-            dispatch(apiGetNodeSuccessCall(responseJSON));
+            dispatch(apiGetNodeAttributesSuccessCall(responseJSON));
         }
     };
 };
 
-export const apiGetNodeSuccessCall = data => {
+export const apiGetNodeAttributesSuccessCall = data => {
     return {
-        type: 'SUCCESS_API_GET_NODE',
+        type: 'SUCCESS_API_GET_NODE_ATTRIBUTES',
         payload: data
     };
 };
