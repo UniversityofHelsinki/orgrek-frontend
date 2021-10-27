@@ -3,8 +3,6 @@ import { connect } from 'react-redux';
 
 const NodeValidity = (props) => {
 
-    console.log(props.node);
-
     const showValidity = (startDate, endDate) => {
         if (startDate && endDate) {
             return new Date(startDate).toLocaleDateString('fi-FI') + ' – ' + new Date(endDate).toLocaleDateString('fi-FI');
