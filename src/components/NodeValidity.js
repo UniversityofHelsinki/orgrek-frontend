@@ -30,7 +30,7 @@ const NodeValidity = (props) => {
                     <tbody>
                     <tr>
                         <td>Voimassaolo</td>
-                        <td>${showValidity(props.node.startDate, props.node.endDate)}</td>
+                        <td>{showValidity(props.node.startDate, props.node.endDate)}</td>
                     </tr>
                     </tbody>
                 </table> : null
