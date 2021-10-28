@@ -1,7 +1,9 @@
-export const fetchNodeParents = (param) => {
+export const fetchNodeParents = (uniqueId) => {
     const ORGREK_BACKEND_SERVER = process.env.REACT_APP_ORGREK_BACKEND_SERVER || '';
+    const today  = new Date();
+    const date = today.toLocaleDateString('fi-FI');
     const PATH = '/api/node/parents/';
-    const PARAMS = param;
+    const PARAMS = `${uniqueId}/${date}`;
     return async (dispatch)  => {
         let response = await fetch(`${ORGREK_BACKEND_SERVER}${PATH}${PARAMS}`, {
             headers: { 'Content-Type': 'application/json' }
@@ -20,10 +22,12 @@ export const apiGetParentsSuccessCall = data => {
     };
 };
 
-export const fetchNodeChildren = (param) => {
+export const fetchNodeChildren = (uniqueId) => {
     const ORGREK_BACKEND_SERVER = process.env.REACT_APP_ORGREK_BACKEND_SERVER || '';
+    const today  = new Date();
+    const date = today.toLocaleDateString('fi-FI');
     const PATH = '/api/node/children/';
-    const PARAMS = param;
+    const PARAMS = `${uniqueId}/${date}`;
     return async (dispatch)  => {
         let response = await fetch(`${ORGREK_BACKEND_SERVER}${PATH}${PARAMS}`, {
             headers: { 'Content-Type': 'application/json' }

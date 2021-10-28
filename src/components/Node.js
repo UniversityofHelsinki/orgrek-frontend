@@ -13,7 +13,6 @@ const Node = (props) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
     onNodeSelection: () => {
-        console.log(ownProps);
         //dispatch(fetchNode(ownProps.item.id));
         //dispatch(fetchNodeAttributes(ownProps.item.id));
         dispatch(fetchNodeParents(ownProps.item.id));

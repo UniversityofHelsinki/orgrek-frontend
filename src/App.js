@@ -2,6 +2,7 @@ import React from 'react';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Hierarchy from './components/Hierarchy';
+import NodeParents from './components/NodeParents';
 
 const App= () => {
 
@@ -11,6 +12,7 @@ const App= () => {
                 <div>
                     <Header/>
                     <Hierarchy />
+                    <NodeParents />
                     <Footer/>
                 </div>
             </header>
