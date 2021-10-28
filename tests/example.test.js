@@ -23,14 +23,14 @@ test('should return the initial tree state', () => {
 });
 
 test('clicks a button', () => {
-  const clickFunction = jest.fn();
-  render(<button onClick={clickFunction}>Click Me</button>);
-  const button = screen.getByText(/Click Me/i);
+    const clickFunction = jest.fn();
+    render(<button onClick={clickFunction}>Click Me</button>);
+    const button = screen.getByText(/Click Me/i);
 
-  expect(button).toBeInTheDocument;
+    expect(button).toBeInTheDocument;
 
-  userEvent.click(button);
-  userEvent.click(button);
-  
-  expect(clickFunction).toHaveBeenCalledTimes(2);
-})
+    userEvent.click(button);
+    userEvent.click(button);
+
+    expect(clickFunction).toHaveBeenCalledTimes(2);
+});

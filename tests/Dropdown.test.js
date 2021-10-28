@@ -11,23 +11,23 @@ jest.mock('../src/actions/treeAction', () => ({
     fetchSelectableHierarchies: jest.fn(() => { return  {
         type: 'SUCCESS_API_GET_SELECTABLE_HIERARCHIES',
         payload: [
-        "tutkimus",
-        "henkilosto",
-        "toiminnanohjaus",
-        "opetus",
-        "history",
-        "talous"
+            'tutkimus',
+            'henkilosto',
+            'toiminnanohjaus',
+            'opetus',
+            'history',
+            'talous'
         ]
-    }})
+    };})
 }));
 
-test('Dropdown renders', () => {    
+test('Dropdown renders', () => {
     render(<Dropdown />);
-    const dropdown = screen.getByTestId("dropdown");
+    const dropdown = screen.getByTestId('dropdown');
     expect(dropdown).toBeDefined();
 });
 
-test("Dropdown does not display history as an option", () => {    
+test('Dropdown does not display history as an option', () => {
     render(<Dropdown />);
     const talousInput = screen.getByText(/talous/i);
     expect(talousInput).toBeInTheDocument;
@@ -38,13 +38,13 @@ test("Dropdown does not display history as an option", () => {
 
 test('Dropdown selection can be chaged', () => {
     render(<Dropdown />);
-    let input = screen.getByRole("textbox", { hidden: true });
-    expect(input.value).toEqual("talous");
+    let input = screen.getByRole('textbox', { hidden: true });
+    expect(input.value).toEqual('talous');
     const talousInput = screen.getByText(/talous/i);
     expect(talousInput).toBeInTheDocument;
     userEvent.click(talousInput);
     const opetusInput = screen.getByText(/opetus/i);
     userEvent.click(opetusInput);
-    input = screen.getByRole("textbox", { hidden: true });
-    expect(input.value).toEqual("opetus");
+    input = screen.getByRole('textbox', { hidden: true });
+    expect(input.value).toEqual('opetus');
 });
