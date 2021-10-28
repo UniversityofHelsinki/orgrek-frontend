@@ -1,11 +1,12 @@
-export const fetchTree = () => {
-    const ORGREK_BACKEND_SERVER = process.env.REACT_APP_ORGREK_BACKEND_SERVER || '';
-    const PATH = '/api/tree';
-    const PARAMS = '/talous';
+const ORGREK_BACKEND_SERVER = process.env.REACT_APP_ORGREK_BACKEND_SERVER || '';
+
+export const fetchTree = (param) => {
+    const PATH = '/api/tree/';
+    const PARAMS = param;
     return async (dispatch)  => {
         let response = await fetch(`${ORGREK_BACKEND_SERVER}${PATH}${PARAMS}`, {
-            headers: {'Content-Type': 'application/json'}
-        });
+            headers: { 'Content-Type': 'application/json' }
+        }).catch(error => console.log(error));
         if (response.status === 200) {
             let responseJSON = await response.json();
             dispatch(apiGetTreeSuccessCall(responseJSON));
@@ -13,9 +14,30 @@ export const fetchTree = () => {
     };
 };
 
+export const fetchSelectableHierarchies = () => {
+    const PATH = '/api/edge/';
+    const PARAMS = 'types';
+    return async (dispatch)  => {
+        let response = await fetch(`${ORGREK_BACKEND_SERVER}${PATH}${PARAMS}`, {
+            headers: { 'Content-Type': 'application/json' }
+        });
+        if (response.status === 200) {
+            let responseJSON = await response.json();
+            dispatch(apiGetSelectableHierarchiesSuccessCall(responseJSON));
+        }
+    };
+};
+
 export const apiGetTreeSuccessCall = data => {
-    return{
+    return {
         type: 'SUCCESS_API_GET_TREE',
+        payload: data
+    };
+};
+
+export const apiGetSelectableHierarchiesSuccessCall = data => {
+    return {
+        type: 'SUCCESS_API_GET_SELECTABLE_HIERARCHIES',
         payload: data
     };
 };

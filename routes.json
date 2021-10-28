@@ -1,4 +1,5 @@
 {
   "/api/tree/*": "/$1",
-  "/api/texts/*": "/$1"
+  "/api/texts/*": "/$1",
+  "/api/edge/*": "/$1"
 }
