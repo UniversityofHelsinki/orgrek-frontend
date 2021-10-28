@@ -13,7 +13,7 @@ const Tree = (props) => {
     }, [props.selectedHierarchy]);
 
     return (
-        <div>
+        <div data-testid='tree'>
             {Object.values(props.tree).map((item) => {
                 return <Branch key={item.id} item={item} level={0} parent='' />;})}
         </div>
