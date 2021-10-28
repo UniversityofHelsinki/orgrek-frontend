@@ -1,7 +1,7 @@
 
 const initialState = {
-    parents: [],
-    children: []
+    parents: null,
+    children: null
 };
 
 const hierarchyReducer = (state = initialState, action) => {
