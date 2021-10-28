@@ -15,3 +15,6 @@ export const mainariId = 'mainari_tunnus';
 
 export const notOtherAttributes = [ nameFi, nameSv, nameEn, type, abbreviation, upperUnitAbbreviation, hrAbbreviation,
     mainariId, hrId, billingId, disciplineId, profitCenterId, researchId ];
+
+export const codeAttributes = [abbreviation, upperUnitAbbreviation, hrAbbreviation, mainariId, hrId, billingId,
+    disciplineId, profitCenterId, researchId];
