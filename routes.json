@@ -1,4 +1,6 @@
 {
   "/api/tree/*": "/$1",
-  "/api/texts/*": "/$1"
+  "/api/texts/*": "/$1",
+  "/api/node/parents/:id/:date": "/parents",
+  "/api/node/children/:id/:date": "/children"
 }
