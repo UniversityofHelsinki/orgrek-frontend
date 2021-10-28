@@ -21,38 +21,41 @@ const NodeName = (props) => {
     return (
         <div>
             {props.nodeAttributes  ?
-                <table>
-                    <thead>
-                        <tr>
-                            <th>kieli</th>
-                            <th>Nimi</th>
-                            <th>Voimassaolo</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {props.nodeAttributes.name_fi ? props.nodeAttributes.name_fi.map(nameFi => (
-                            <tr key={nameFi.key}>
-                                <td>Suomi</td>
-                                <td>{nameFi.value}</td>
-                                <td>{showValidity(nameFi.startDate, nameFi.endDate)}</td>
+                <div>
+                    <h3>Nimitiedot</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Kieli</th>
+                                <th>Nimi</th>
+                                <th>Voimassaolo</th>
                             </tr>
-                        )) : null}
-                        {props.nodeAttributes.name_en ? props.nodeAttributes.name_en.map(nameEn => (
-                            <tr key={nameEn.key}>
-                                <td>Englanti</td>
-                                <td>{nameEn.value}</td>
-                                <td>{showValidity(nameEn.startDate, nameEn.endDate)}</td>
-                            </tr>
-                        )) : null}
-                        {props.nodeAttributes.name_sv ? props.nodeAttributes.name_sv.map(nameSV => (
-                            <tr key={nameSV.key}>
-                                <td>Ruotsi</td>
-                                <td>{nameSV.value}</td>
-                                <td>{showValidity(nameSV.startDate, nameSV.endDate)}</td>
-                            </tr>
-                        )) : null}
-                    </tbody>
-                </table> : null
+                        </thead>
+                        <tbody>
+                            {props.nodeAttributes.filter(attribute => attribute.key === 'name_fi').map(nameFi => (
+                                <tr key={nameFi.key}>
+                                    <td>Suomi</td>
+                                    <td>{nameFi.value}</td>
+                                    <td>{showValidity(nameFi.startDate, nameFi.endDate)}</td>
+                                </tr>
+                            ))}
+                            {props.nodeAttributes.filter(attribute => attribute.key === 'name_en').map(nameEn => (
+                                <tr key={nameEn.key}>
+                                    <td>Englanti</td>
+                                    <td>{nameEn.value}</td>
+                                    <td>{showValidity(nameEn.startDate, nameEn.endDate)}</td>
+                                </tr>
+                            ))}
+                            {props.nodeAttributes.filter(attribute => attribute.key === 'name_sv').map(nameSV => (
+                                <tr key={nameSV.key}>
+                                    <td>Ruotsi</td>
+                                    <td>{nameSV.value}</td>
+                                    <td>{showValidity(nameSV.startDate, nameSV.endDate)}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>: null
             }
         </div>
     );
