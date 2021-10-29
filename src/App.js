@@ -3,6 +3,8 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import Hierarchy from './components/Hierarchy';
 import './App.css';
+import NodeParents from './components/NodeParents';
+import NodeChildren from './components/NodeChildren';
 
 const App= () => {
 
@@ -12,6 +14,8 @@ const App= () => {
                 <div>
                     <Header/>
                     <Hierarchy />
+                    <NodeParents />
+                    <NodeChildren />
                     <Footer/>
                 </div>
             </header>
