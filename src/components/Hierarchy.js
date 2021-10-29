@@ -7,7 +7,7 @@ const Hierarchy = (props) => {
 
     return (
         <div className="hierarcyContainer">
-            <Dropdown menuItems={['talous', 'opetus']} />
+            <Dropdown/>
             <Tree/>
         </div>
     );
