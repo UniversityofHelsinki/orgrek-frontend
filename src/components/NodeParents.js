@@ -6,22 +6,25 @@ const NodeParents = (props) => {
     return (
         <div>
             {props.parents && props.parents.length > 0   ?
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Ylä-yksikkö</th>
-                            <th>Hierarkiat</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {props.parents.map(parent => (
-                            <tr key={parent.node.id}>
-                                <td>{parent.node.name}</td>
-                                <td>{commaSep(parent.hierarchies)}</td>
+                <div>
+                    <h3>Yläyksiköt</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Yksikkö</th>
+                                <th>Hierarkiat</th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table> : null
+                        </thead>
+                        <tbody>
+                            {props.parents.map(parent => (
+                                <tr key={parent.node.id}>
+                                    <td>{parent.node.name}</td>
+                                    <td>{commaSep(parent.hierarchies)}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div> : null
             }
         </div>
     );
