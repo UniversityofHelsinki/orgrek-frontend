@@ -8,6 +8,7 @@ Place environment variables in .env.development.local file (create it if it does
 Add these environment variables to file : 
 
 REACT_APP_ORGREK_BACKEND_SERVER=
+REACT_APP_ORGREK_LOGIN=https://organisaatiorekisteri-dev.it.helsinki.fi/Shibboleth.sso/Login
 
 Value to run the project with api-gateway backend:
 
