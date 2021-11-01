@@ -40,7 +40,7 @@ code {
 }
 
 .nodeDetailsContainer {
-  position: fixed;  /* <---------- required */
+  position: absolute;  /* <---------- required */
   top: 240px;  /* <---------------------- required */
   right: 0;  /* <-------------------- required */
   bottom: 0;  /* <------------------- required */

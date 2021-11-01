@@ -6,12 +6,14 @@ import { fetchTree } from '../actions/treeAction';
 const Tree = (props) => {
 
     React.useEffect(() => {
-        props.onFetchTree(props.selectedHierarchy);
+        if (props.selectedHierarchy !== '') {
+            props.onFetchTree(props.selectedHierarchy);
+        }
         // eslint-disable-next-line
     }, [props.selectedHierarchy]);
 
     return (
-        <div>
+        <div data-testid='tree'>
             {Object.values(props.tree).map((item) => {
                 return <Branch key={item.id} item={item} level={0} parent='' />;})}
         </div>

@@ -1,7 +1,8 @@
 
 const initialState = {
     tree : {},
-    selectedHierarchy: 'talous'
+    selectedHierarchy: 'talous',
+    selectableHierarchies: []
 };
 
 const userReducer = (state = initialState, action) => {
@@ -10,6 +11,11 @@ const userReducer = (state = initialState, action) => {
         return {
             ...state,
             tree: action.payload
+        };
+    case 'SUCCESS_API_GET_SELECTABLE_HIERARCHIES':
+        return {
+            ...state,
+            selectableHierarchies: action.payload
         };
     case 'SWITCH_HIERARCHY':
         return {

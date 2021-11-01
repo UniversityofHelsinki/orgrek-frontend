@@ -21,10 +21,7 @@ module.exports = {
     ],
     'rules': {
         'indent': [0, 2],
-        'linebreak-style': [
-            'error',
-            'unix'
-        ],
+        'linebreak-style': 0,
         'quotes': [
             'error',
             'single'
@@ -42,6 +39,9 @@ module.exports = {
         'arrow-spacing': [
             'error', { 'before': true, 'after': true }
         ],
+        'complexity': ['error', 20],
+        'max-lines-per-function': ['error', 300],
+        'max-lines': ['error', 300],
         'no-console': 0,
         'react/prop-types': 0
     }

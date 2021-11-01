@@ -12680,6 +12680,197 @@
     "relations_nav": "relations",
     "uus_avain_jipii": "uus_avain_jipii"
   },
+  "types": [
+  "tutkimus",
+  "henkilosto",
+  "toiminnanohjaus",
+  "opetus",
+  "history",
+  "talous"
+  ],
+  "parents": [],
+  "children": [
+    {
+      "node": {
+        "id": "1",
+        "name": "HY, Keskushallinto uusi nimi (UU99)",
+        "startDate": "2018-07-24T18:00:00.000+00:00",
+        "endDate": "2018-08-22T18:00:00.000+00:00",
+        "timestamp": "2018-08-10T02:54:42.521+00:00",
+        "unique_id": 27452043
+      },
+      "hierarchies": [
+        "henkilosto"
+      ]
+    },
+    {
+      "node": {
+        "id": "3130",
+        "name": "Erilliset laitokset",
+        "startDate": null,
+        "endDate": null,
+        "timestamp": "2017-12-28T08:49:04.463+00:00",
+        "unique_id": 42275629
+      },
+      "hierarchies": [
+        "toiminnanohjaus",
+        "opetus",
+        "tutkimus",
+        "talous",
+        "henkilosto"
+      ]
+    },
+    {
+      "node": {
+        "id": "3140",
+        "name": "HY, Yliopistopalvelut (YPA)",
+        "startDate": null,
+        "endDate": null,
+        "timestamp": "2020-01-24T13:29:24.426+00:00",
+        "unique_id": 77096679
+      },
+      "hierarchies": [
+        "opetus",
+        "talous",
+        "tutkimus",
+        "henkilosto"
+      ]
+    },
+    {
+      "node": {
+        "id": "3236",
+        "name": "OIKTDK, Oikeustieteellinen tiedekunta (OIKTDK)",
+        "startDate": null,
+        "endDate": null,
+        "timestamp": "2018-07-09T07:22:50.110+00:00",
+        "unique_id": 22963335
+      },
+      "hierarchies": [
+        "toiminnanohjaus"
+      ]
+    },
+    {
+      "node": {
+        "id": "3319",
+        "name": "Helsingin taloustieteellinen tutkimuskeskus (HECER)",
+        "startDate": null,
+        "endDate": "2012-12-30T22:00:00.000+00:00",
+        "timestamp": null,
+        "unique_id": 90578829
+      },
+      "hierarchies": [
+        "talous"
+      ]
+    },
+    {
+      "node": {
+        "id": "3337",
+        "name": "IPR University Center",
+        "startDate": null,
+        "endDate": "2013-12-30T22:00:00.000+00:00",
+        "timestamp": "2017-12-28T09:41:25.657+00:00",
+        "unique_id": 75908005
+      },
+      "hierarchies": [
+        "henkilosto",
+        "talous"
+      ]
+    },
+    {
+      "node": {
+        "id": "349",
+        "name": "Koulutusohjelmat",
+        "startDate": "2016-12-31T22:00:00.000+00:00",
+        "endDate": null,
+        "timestamp": "2018-03-19T14:14:45.356+00:00",
+        "unique_id": 33539259
+      },
+      "hierarchies": [
+        "toiminnanohjaus",
+        "opetus",
+        "tutkimus"
+      ]
+    },
+    {
+      "node": {
+        "id": "5935",
+        "name": "HY, Oikeustieteellinen tiedekunta (OIKTDK)",
+        "startDate": null,
+        "endDate": null,
+        "timestamp": "2019-12-19T12:40:51.699+00:00",
+        "unique_id": 10020336
+      },
+      "hierarchies": [
+        "opetus",
+        "talous",
+        "toiminnanohjaus"
+      ]
+    },
+    {
+      "node": {
+        "id": "6770",
+        "name": "HY, Tiedekunnat (TDK)",
+        "startDate": "1961-03-18T22:00:00.000+00:00",
+        "endDate": null,
+        "timestamp": "2020-01-23T11:46:40.790+00:00",
+        "unique_id": 32800844
+      },
+      "hierarchies": [
+        "tutkimus",
+        "toiminnanohjaus",
+        "opetus",
+        "talous",
+        "henkilosto"
+      ]
+    },
+    {
+      "node": {
+        "id": "6777",
+        "name": "HY, Muut yksiköt (MUUT)",
+        "startDate": "2009-12-31T22:00:00.000+00:00",
+        "endDate": null,
+        "timestamp": "2018-08-13T09:51:49.232+00:00",
+        "unique_id": 74223428
+      },
+      "hierarchies": [
+        "toiminnanohjaus",
+        "opetus",
+        "talous",
+        "henkilosto",
+        "tutkimus"
+      ]
+    },
+    {
+      "node": {
+        "id": "743",
+        "name": "HY, Tohtoriohjelmat (TRI)",
+        "startDate": "2013-12-31T20:00:00.000+00:00",
+        "endDate": null,
+        "timestamp": "2018-07-11T04:09:31.635+00:00",
+        "unique_id": 54806742
+      },
+      "hierarchies": [
+        "talous"
+      ]
+    },
+    {
+      "node": {
+        "id": "840",
+        "name": "Yhteinen toiminta",
+        "startDate": null,
+        "endDate": null,
+        "timestamp": "2018-01-03T19:10:17.435+00:00",
+        "unique_id": 46582376
+      },
+      "hierarchies": [
+        "toiminnanohjaus",
+        "tutkimus",
+        "opetus",
+        "talous",
+        "henkilosto"
+      ]
+    }
+  ],
   "42785051" : {
     "id": "a1",
     "name": "Helsingin yliopisto (HY)",
@@ -12688,95 +12879,72 @@
     "timestamp": "2021-02-08T09:08:48.677+00:00",
     "unique_id": 42785051
   },
-  "attributes" : {
-    "emo_lyhenne": [
-      {
-        "key": "emo_lyhenne",
-        "value": "HY",
-        "startDate": null,
-        "endDate": null
-      }
-    ],
-    "hr_lyhenne": [
-      {
-        "key": "hr_lyhenne",
-        "value": "H30",
-        "startDate": "2013-12-31T20:00:00.000+00:00",
-        "endDate": null
-      }
-    ],
-    "hr_tunnus": [
-      {
-        "key": "hr_tunnus",
-        "value": "51000073",
-        "startDate": "2013-12-31T20:00:00.000+00:00",
-        "endDate": null
-      }
-    ],
-    "laskutus_tunnus": [
-      {
-        "key": "laskutus_tunnus",
-        "value": "A30000",
-        "startDate": null,
-        "endDate": null
-      }
-    ],
-    "lyhenne": [
-      {
-        "key": "lyhenne",
-        "value": "LTDK",
-        "startDate": null,
-        "endDate": null
-      }
-    ],
-    "mainari_tunnus": [
-      {
-        "key": "mainari_tunnus",
-        "value": "LTDK",
-        "startDate": null,
-        "endDate": null
-      }
-    ],
-    "name_en": [
-      {
-        "key": "name_en",
-        "value": "Faculty of Medicine",
-        "startDate": null,
-        "endDate": null
-      }
-    ],
-    "name_fi": [
-      {
-        "key": "name_fi",
-        "value": "Lääketieteellinen tiedekunta",
-        "startDate": null,
-        "endDate": null
-      }
-    ],
-    "name_sv": [
-      {
-        "key": "name_sv",
-        "value": "Medicinska fakulteten",
-        "startDate": null,
-        "endDate": null
-      }
-    ],
-    "talous_tunnus": [
-      {
-        "key": "talous_tunnus",
-        "value": "H30",
-        "startDate": null,
-        "endDate": null
-      }
-    ],
-    "type": [
-      {
-        "key": "type",
-        "value": "tiedekunta",
-        "startDate": null,
-        "endDate": null
-      }
-    ]
-  }
+  "attributes" :[
+    {
+      "key": "emo_lyhenne",
+      "value": "HY",
+      "startDate": null,
+      "endDate": null
+    },
+    {
+      "key": "hr_lyhenne",
+      "value": "H30",
+      "startDate": "2013-12-31T20:00:00.000+00:00",
+      "endDate": null
+    },
+    {
+      "key": "hr_tunnus",
+      "value": "51000073",
+      "startDate": "2013-12-31T20:00:00.000+00:00",
+      "endDate": null
+    },
+    {
+      "key": "laskutus_tunnus",
+      "value": "A30000",
+      "startDate": null,
+      "endDate": null
+    },
+    {
+      "key": "lyhenne",
+      "value": "LTDK",
+      "startDate": null,
+      "endDate": null
+    },
+    {
+      "key": "mainari_tunnus",
+      "value": "LTDK",
+      "startDate": null,
+      "endDate": null
+    },
+    {
+      "key": "name_en",
+      "value": "Faculty of Medicine",
+      "startDate": null,
+      "endDate": null
+    },
+    {
+      "key": "name_fi",
+      "value": "Lääketieteellinen tiedekunta",
+      "startDate": null,
+      "endDate": null
+    },
+    {
+      "key": "name_sv",
+      "value": "Medicinska fakulteten",
+      "startDate": null,
+      "endDate": null
+    },
+    {
+      "key": "talous_tunnus",
+      "value": "H30",
+      "startDate": null,
+      "endDate": null
+    },
+    {
+      "key": "type",
+      "value": "tiedekunta",
+      "startDate": null,
+      "endDate": null
+    }
+  ]
 }
-
