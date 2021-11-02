@@ -1,8 +1,8 @@
 import React,  { useEffect } from 'react';
 import { connect } from 'react-redux';
 import Header from './components/Header';
-import Footer from './components/Footer';
 import Hierarchy from './components/Hierarchy';
+import NodeDetails from './components/NodeDetails';
 import './App.css';
 import NodeParents from './components/NodeParents';
 import NodeChildren from './components/NodeChildren';
@@ -24,9 +24,7 @@ const App= (props) => {
                     <LoginRedirect loginUrl={SHIBBOLETH_LOGIN} />
                     <Header/>
                     <Hierarchy />
-                    <NodeParents />
-                    <NodeChildren />
-                    <Footer/>
+                    <NodeDetails />
                 </div>
             </header>
         </div>
