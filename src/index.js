@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import store from './store';
 import { Provider } from 'react-redux';
 import './index.css';
+import 'react-datepicker/dist/react-datepicker.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { applyPolyfills, defineCustomElements } from '@itcenteratunihelsinki/huds-lib/loader/index.cjs';
