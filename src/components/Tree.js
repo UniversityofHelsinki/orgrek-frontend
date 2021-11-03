@@ -7,10 +7,10 @@ const Tree = (props) => {
 
     React.useEffect(() => {
         if (props.selectedHierarchy !== '') {
-            props.onFetchTree(props.selectedHierarchy);
+            props.onFetchTree(props.selectedHierarchy, props.selectedDay);
         }
         // eslint-disable-next-line
-    }, [props.selectedHierarchy]);
+    }, [props.selectedHierarchy, props.selectedDay]);
 
     return (
         <div data-testid='tree'>
@@ -22,11 +22,12 @@ const Tree = (props) => {
 
 const mapStateToProps = state => ({
     tree : state.tree.tree,
-    selectedHierarchy: state.tree.selectedHierarchy
+    selectedHierarchy: state.tree.selectedHierarchy,
+    selectedDay : state.dr.selectedDay
 });
 
 const mapDispatchToProps = dispatch => ({
-    onFetchTree: (selection) => dispatch(fetchTree(selection))
+    onFetchTree: (selection, selectedDay) => dispatch(fetchTree(selection, selectedDay))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Tree);

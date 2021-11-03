@@ -20,11 +20,6 @@ const Branch = ({ item, level }) => {
         setSelected(prev => !prev);
     };
 
-    const onSelection = () => {
-        console.log('selected item' , item);
-
-    };
-
     return (
         <>
             <Node
@@ -33,7 +28,6 @@ const Branch = ({ item, level }) => {
                 hasChildren={hasChildren}
                 level={level}
                 onToggle={toggleSelected}
-                onSelection={onSelection}
             />
 
             {selected && renderBranches()}
