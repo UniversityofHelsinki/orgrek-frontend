@@ -2,9 +2,11 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Nav, Navbar, Container, NavDropdown } from 'react-bootstrap';
 import HyLogo from './HYLogo';
+import { connect } from 'react-redux';
 
 
-const Header = () => {
+
+const Header = (props) => {
     const { t, i18n } = useTranslation();
     return (
         <div>
@@ -22,7 +24,7 @@ const Header = () => {
                             </NavDropdown>
                         </Nav>
                         <Nav>
-                            <Nav.Link>Logged In : </Nav.Link>
+                            <Nav.Link>{props.user ? 'Logged In :' +  props.user.eppn : '' }</Nav.Link>
                             <Nav.Link>
                                 Logout
                             </Nav.Link>
@@ -34,4 +36,8 @@ const Header = () => {
     );
 };
 
-export default Header;
+const mapStateToProps = state => ({
+    user : state.ur.user
+});
+
+export default connect(mapStateToProps, null)(Header);
