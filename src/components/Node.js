@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { fetchNodeParents, fetchNodeChildren } from '../actions/hierarchyAction';
-import { fetchNode, fetchNodeAttributes } from '../actions/nodeAction';
+import { fetchNode, fetchNodeAttributes, fetchNodePredecessors, fetchNodeSuccessors } from '../actions/nodeAction';
 
 const Node = (props) => {
     return (
@@ -18,6 +18,8 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         dispatch(fetchNodeAttributes(ownProps.item.id));
         dispatch(fetchNodeParents(ownProps.item.id));
         dispatch(fetchNodeChildren(ownProps.item.id));
+        dispatch(fetchNodePredecessors(ownProps.item.id));
+        dispatch(fetchNodeSuccessors(ownProps.item.id));
     }
 });
 
