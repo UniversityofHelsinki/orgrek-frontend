@@ -19,14 +19,12 @@ const App= (props) => {
 
     return (
         <div className="App">
-            <header className="App-header">
                 <div>
                     <LoginRedirect loginUrl={SHIBBOLETH_LOGIN} />
-                    <Header/>
+                    <Header />
                     <Hierarchy />
                     <NodeDetails />
                 </div>
-            </header>
         </div>
     );
 };

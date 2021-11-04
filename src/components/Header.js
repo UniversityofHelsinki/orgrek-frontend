@@ -1,56 +1,37 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { Nav, Navbar, Container, NavDropdown } from 'react-bootstrap';
+import HyLogo from './HYLogo';
 
 
-const Header = ( ) => {
+const Header = () => {
     const { t, i18n } = useTranslation();
     return (
         <div>
-            <hy-site-header
-                class="hy-site-header"
-                is-group="true"
-                site-label="University of Helsinki"
-                site-url="https://www.helsinki.fi/en/"
-                logo-label={t('oppiaineen-tunnus')}
-                logo-url="/"
-                no-search="true"
-                data-site-header-labels='{
-          "menu_labels": {"open":"Avaa mobiilimenu","close":"Sulje mobiilimenu","expand":"Avaa alavalikko","return":"Palaa edelliselle tasolle","home":"Etusivu","main":"P\u00e4\u00e4valikko","front_page":"Etusivu"},
-          "group_pages":{"university_main_menu":"Yliopiston p\u00e4\u00e4valikko","university_home_page":"","university_front_page":"Etusivu"},
-          "language_labels":{"open":"Open language list","close":"Close language list"}}'
-                data-menu-language='[
-          {"langCode":"fi","abbr":"fin","label":"Finnish","url":"/fi", "isActive":"true"},
-          {"langCode":"en","abbr":"eng","label":"English","url":"/en"},
-          {"langCode":"sv","abbr":"swe","label":"Swedish","url":"/sv"}
-        ]'
-                data-menu-donate='[]'
-                data-main-menu-links='
-      [
-      {"menuLinkId":"9a1297e0af8490e7d111de27a809a650","isActive":"false","isExternal":false,"label":"About us","url":"https://www.helsinki.fi/en/about-us", "description":"","closeButtonTitle":"Close"}
-      ]
-      '
-                data-desktop-links='
-      [{"menuLinkId":"06ec39de0916925f3bcfa55000ae2382","isActive":"false","isExternal":false,"label":"Rakenne","labelExtra":"Rakenne","url":"/","description":"","toggleOff":"true","shortcutsTitle":"Oikopolut","closeButtonTitle":"Sulje","shortcuts":[],"items":[]}]
-      '
-            >
-                <hy-menu slot="menu">
-                    <hy-menu-level-container menu-level="1" depth="1">
-                        <hy-menu-item menu-link-id="1" url="/" label="Rakenne">
-                        </hy-menu-item>
-                    </hy-menu-level-container>
-                </hy-menu>
-            </hy-site-header>
-            <button onClick={() => i18n.changeLanguage('en')}>En</button>
-            <button onClick={() => i18n.changeLanguage('sv')}>Sv</button>
-            <button onClick={() => i18n.changeLanguage('fi')}>Fi</button>
+            <Navbar fixed="top" collapseOnSelect expand="lg" bg="dark" variant="dark">
+                <Container fluid>
+                    <HyLogo />
+                    <Navbar.Brand href="#home">Organisaatiorekisteri</Navbar.Brand>
+                    <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+                    <Navbar.Collapse id="responsive-navbar-nav">
+                        <Nav className="me-auto">
+                            <NavDropdown title="Kieli" id="collasible-nav-dropdown">
+                                <NavDropdown.Item>Suomeksi</NavDropdown.Item>
+                                <NavDropdown.Item>In English</NavDropdown.Item>
+                                <NavDropdown.Item>På Svenska</NavDropdown.Item>
+                            </NavDropdown>
+                        </Nav>
+                        <Nav>
+                            <Nav.Link>Logged In : </Nav.Link>
+                            <Nav.Link>
+                                Logout
+                            </Nav.Link>
+                        </Nav>
+                    </Navbar.Collapse>
+                </Container>
+            </Navbar>
         </div>
     );
 };
 
-const mapStateToProps = state => ({
-
-});
-
-
-export default connect(mapStateToProps, null)(Header);
+export default Header;
