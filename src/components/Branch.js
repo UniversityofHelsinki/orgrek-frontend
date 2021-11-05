@@ -8,7 +8,9 @@ const Branch = ({ item, level }) => {
     const renderBranches = () => {
         if (hasChildren) {
             const newLevel = level + 1;
-
+            console.log(item);
+            item.children.sort((prev, next) => prev.id - next.id);
+            console.log(item.children);
             return item.children.map((child) => {
                 return <Branch key={child.id} item={child} level={newLevel} />;
             });
