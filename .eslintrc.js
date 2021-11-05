@@ -20,7 +20,7 @@ module.exports = {
         'react', 'jest'
     ],
     'rules': {
-        'indent': [2, 4],
+        'indent': [0, 2],
         'linebreak-style': 0,
         'quotes': [
             'error',
@@ -40,7 +40,7 @@ module.exports = {
             'error', { 'before': true, 'after': true }
         ],
         'complexity': ['error', 20],
-        'max-lines-per-function': ['error', 50],
+        'max-lines-per-function': ['error', 300],
         'max-lines': ['error', 300],
         'no-console': 0,
         'react/prop-types': 0

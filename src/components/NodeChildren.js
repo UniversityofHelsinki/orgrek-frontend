@@ -6,22 +6,25 @@ const NodeChildren = (props) => {
     return (
         <div>
             {props.children && props.children.length > 0   ?
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Ala-yksikkö</th>
-                            <th>Hierarkiat</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {props.children.map(child => (
-                            <tr key={child.node.id}>
-                                <td>{child.node.name}</td>
-                                <td>{commaSep(child.hierarchies)}</td>
+                <div>
+                    <h3>Alayksiköt</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Yksikkö</th>
+                                <th>Hierarkiat</th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table> : null
+                        </thead>
+                        <tbody>
+                            {props.children.map(child => (
+                                <tr key={child.node.id}>
+                                    <td>{child.node.name}</td>
+                                    <td>{commaSep(child.hierarchies)}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>: null
             }
         </div>
     );

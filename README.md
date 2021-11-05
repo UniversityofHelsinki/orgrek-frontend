@@ -17,6 +17,9 @@ Value to run the project with local json server backend:
 
 http://localhost:3003
 
+
+REACT_APP_ORGREK_LOGIN=https://organisaatiorekisteri-dev.it.helsinki.fi/Shibboleth.sso/Login
+
 ## Available Scripts
 
 In the project directory, you can run:

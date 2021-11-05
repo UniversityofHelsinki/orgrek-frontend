@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { fetchNodeParents, fetchNodeChildren } from '../actions/hierarchyAction';
+import { fetchNode, fetchNodeAttributes } from '../actions/nodeAction';
 
 const Node = (props) => {
     return (
@@ -17,8 +18,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
     onNodeSelection: (selectedDay) => {
-        //dispatch(fetchNode(ownProps.item.id));
-        //dispatch(fetchNodeAttributes(ownProps.item.id));
+        dispatch(fetchNode(ownProps.item.id));
+        dispatch(fetchNodeAttributes(ownProps.item.id));
         dispatch(fetchNodeParents(ownProps.item.id, selectedDay));
         dispatch(fetchNodeChildren(ownProps.item.id, selectedDay));
     }
