@@ -13,14 +13,14 @@ const Header = (props) => {
             <Navbar fixed="top" collapseOnSelect expand="lg" bg="dark" variant="dark">
                 <Container fluid>
                     <HyLogo />
-                    <Navbar.Brand href="#home">Organisaatiorekisteri</Navbar.Brand>
+                    <Navbar.Brand>{t('organisational_registry')}</Navbar.Brand>
                     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                     <Navbar.Collapse id="responsive-navbar-nav">
                         <Nav className="me-auto">
                             <NavDropdown title="Kieli" id="collasible-nav-dropdown">
-                                <NavDropdown.Item>Suomeksi</NavDropdown.Item>
-                                <NavDropdown.Item>In English</NavDropdown.Item>
-                                <NavDropdown.Item>På Svenska</NavDropdown.Item>
+                                <NavDropdown.Item  onClick={() => i18n.changeLanguage('fi')}>Suomeksi</NavDropdown.Item>
+                                <NavDropdown.Item  onClick={() => i18n.changeLanguage('en')}>In English</NavDropdown.Item>
+                                <NavDropdown.Item  onClick={() => i18n.changeLanguage('sv')}>På Svenska</NavDropdown.Item>
                             </NavDropdown>
                         </Nav>
                         <Nav>
