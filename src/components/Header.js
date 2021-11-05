@@ -17,7 +17,7 @@ const Header = (props) => {
                     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                     <Navbar.Collapse id="responsive-navbar-nav">
                         <Nav className="me-auto">
-                            <NavDropdown title="Kieli" id="collasible-nav-dropdown">
+                            <NavDropdown title={t('text_language_header')} id="collasible-nav-dropdown">
                                 <NavDropdown.Item  onClick={() => i18n.changeLanguage('fi')}>Suomeksi</NavDropdown.Item>
                                 <NavDropdown.Item  onClick={() => i18n.changeLanguage('en')}>In English</NavDropdown.Item>
                                 <NavDropdown.Item  onClick={() => i18n.changeLanguage('sv')}>På Svenska</NavDropdown.Item>
