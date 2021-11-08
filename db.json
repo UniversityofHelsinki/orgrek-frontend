@@ -12946,5 +12946,10 @@
       "startDate": null,
       "endDate": null
     }
-  ]
+  ],
+  "user" : {
+    "eppn" : "testaaja",
+    "hyGroupCn" : "grp-a02700-ohtu",
+    "preferredLanguage" : "fi"
+  }
 }
