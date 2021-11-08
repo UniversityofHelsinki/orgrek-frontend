@@ -44,7 +44,7 @@ const Branch = ({ item, level }) => {
     );
 };
 
-function sortChildren (children, language) {
+const sortChildren = (children, language) => {
     const compareNameVersion = (prev, next) => {
         switch (language) {
             case 'en':
@@ -68,8 +68,8 @@ function sortChildren (children, language) {
     });
 
     childrenWithCode.sort((prev, next) => prev.code.localeCompare(next.code));
-    childrenRest.sort(function (prev, next) {return compareNameVersion(prev, next);});
+    childrenRest.sort((prev, next) => { compareNameVersion(prev, next);});
     return childrenWithCode.concat(childrenRest);
-}
+};
 
 export default Branch;
