@@ -16,7 +16,6 @@ test('should return the initial tree state', () => {
     expect(userReducer(undefined, {})).toEqual(
         {
             tree : {},
-            order_by: 'talous_tunns',
             selectedHierarchy: 'talous',
             selectableHierarchies: []
         }

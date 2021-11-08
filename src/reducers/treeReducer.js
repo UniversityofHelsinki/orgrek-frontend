@@ -1,7 +1,6 @@
 
 const initialState = {
     tree : {},
-    order_by: 'talous_tunnus',
     selectedHierarchy: 'talous',
     selectableHierarchies: []
 };
