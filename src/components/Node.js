@@ -2,7 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { fetchNodeParents, fetchNodeChildren } from '../actions/hierarchyAction';
-import { fetchNode, fetchNodeAttributes } from '../actions/nodeAction';
+import { fetchNode, fetchNodeAttributes, fetchNodePredecessors, fetchNodeSuccessors } from '../actions/nodeAction';
 
 const Node = (props) => {
     const { t, i18n } = useTranslation();
@@ -40,6 +40,8 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         dispatch(fetchNodeAttributes(ownProps.item.id));
         dispatch(fetchNodeParents(ownProps.item.id, selectedDay));
         dispatch(fetchNodeChildren(ownProps.item.id, selectedDay));
+        dispatch(fetchNodePredecessors(ownProps.item.id));
+        dispatch(fetchNodeSuccessors(ownProps.item.id));
     }
 });
 
