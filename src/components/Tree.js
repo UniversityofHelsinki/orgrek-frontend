@@ -2,19 +2,21 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Branch from './Branch';
 import { fetchTree } from '../actions/treeAction';
+import { useTranslation } from 'react-i18next';
 
 const Tree = (props) => {
+    const { t, i18n } = useTranslation();
 
     React.useEffect(() => {
         if (props.selectedHierarchy !== '') {
             props.onFetchTree(props.selectedHierarchy);
         }
         // eslint-disable-next-line
-    }, [props.selectedHierarchy]);
+    }, [props.selectedHierarchy, i18n.language]);
 
     return (
         <div data-testid='tree'>
-            {Object.values(props.tree).map((item) => {
+            {props.tree && Object.values(props.tree).map((item) => {
                 return <Branch key={item.id} item={item} level={0} parent='' />;})}
         </div>
     );
