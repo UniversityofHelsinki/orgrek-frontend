@@ -26,7 +26,7 @@ const Header = (props) => {
                         <Nav>
                             <Nav.Link>{props.user ? 'Logged In :' +  props.user.eppn : '' }</Nav.Link>
                             <Nav.Link>
-                                Logout
+                                <a href="/Shibboleth.sso/Logout">logout</a>
                             </Nav.Link>
                         </Nav>
                     </Navbar.Collapse>
