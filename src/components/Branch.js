@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { connect } from 'react-redux';
 import Node from './Node';
 
 const Branch = ({ item, level }) => {
@@ -38,19 +37,20 @@ const Branch = ({ item, level }) => {
     );
 };
 
+const compareNameVersion = (prev, next, language) => {
+    switch (language) {
+        case 'en':
+            return prev.nameEn.localeCompare(next.nameEn);
+        case 'fi':
+            return prev.nameFi.localeCompare(next.nameFi);
+        case 'sv':
+            return prev.nameSv.localeCompare(next.nameSv);
+        default:
+            break;
+    }
+};
+
 const sortChildren = (children, language) => {
-    const compareNameVersion = (prev, next) => {
-        switch (language) {
-            case 'en':
-                return prev.nameEn.localeCompare(next.nameEn);
-            case 'fi':
-                return prev.nameFi.localeCompare(next.nameFi);
-            case 'sv':
-                return prev.nameSv.localeCompare(next.nameSv);
-            default:
-                break;
-        }
-    };
     let childrenWithCode = [];
     let childrenRest = [];
     children.map((item) => {
@@ -62,7 +62,7 @@ const sortChildren = (children, language) => {
     });
 
     childrenWithCode.sort((prev, next) => prev.code.localeCompare(next.code));
-    childrenRest.sort((prev, next) => { compareNameVersion(prev, next);});
+    childrenRest.sort((prev, next) => { compareNameVersion(prev, next, language);});
     return childrenWithCode.concat(childrenRest);
 };
 
