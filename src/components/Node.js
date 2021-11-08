@@ -15,7 +15,7 @@ const Node = (props) => {
             case 'sv':
                 return props.item.nameSv;
             default:
-                break;
+                return props.item.nameFi;
         }
     };
 
