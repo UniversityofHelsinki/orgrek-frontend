@@ -14,7 +14,7 @@ const SelectDate = (props) => {
 
     return (
         <Fragment>
-            <DatePicker locale="fi" dateFormat="dd.MM.yyyy" className="form-control"  selected={props.selectedDay ? props.selectedDay : new Date()} onChange={(date) =>  props.onDayChange(date)} />
+            <DatePicker wrapperClassName="datePicker" locale="fi" dateFormat="dd.MM.yyyy" className="form-control"  selected={props.selectedDay ? props.selectedDay : new Date()} onChange={(date) =>  props.onDayChange(date)} />
         </Fragment>
     );
 };
