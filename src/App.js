@@ -6,7 +6,7 @@ import NodeDetails from './components/NodeDetails';
 import './App.css';
 import { fetchUser } from './actions/userAction';
 import LoginRedirect from './components/LoginRedirect';
-import SelectDate from './components/SelectDate';
+import Footer from './components/Footer';
 
 const App= (props) => {
 
@@ -23,6 +23,7 @@ const App= (props) => {
                     <Header />
                     <Hierarchy />
                     <NodeDetails />
+                    <Footer />
                 </div>
         </div>
     );
