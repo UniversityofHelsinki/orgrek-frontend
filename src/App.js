@@ -4,10 +4,9 @@ import Header from './components/Header';
 import Hierarchy from './components/Hierarchy';
 import NodeDetails from './components/NodeDetails';
 import './App.css';
-import NodeParents from './components/NodeParents';
-import NodeChildren from './components/NodeChildren';
 import { fetchUser } from './actions/userAction';
 import LoginRedirect from './components/LoginRedirect';
+import SelectDate from './components/SelectDate';
 
 const App= (props) => {
 
@@ -19,14 +18,12 @@ const App= (props) => {
 
     return (
         <div className="App">
-            <header className="App-header">
                 <div>
                     <LoginRedirect loginUrl={SHIBBOLETH_LOGIN} />
-                    <Header/>
+                    <Header />
                     <Hierarchy />
                     <NodeDetails />
                 </div>
-            </header>
         </div>
     );
 };

@@ -9,4 +9,8 @@
   min-height: 128px;
 }
 
-
+.datePicker {
+  padding-top: 60px;
+  padding-bottom: 10px;
+  width: auto;
+}
