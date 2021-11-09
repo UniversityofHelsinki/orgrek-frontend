@@ -7,12 +7,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-datepicker/dist/react-datepicker.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { applyPolyfills, defineCustomElements } from '@itcenteratunihelsinki/huds-lib/loader/index.cjs';
 import './i18n';
-
-applyPolyfills().then(() => {
-    defineCustomElements(window);
-});
 
 ReactDOM.render(
     <Provider store={store}>
