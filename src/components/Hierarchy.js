@@ -5,7 +5,7 @@ import SelectDate from './SelectDate';
 
 const Hierarchy = () => {
     return (
-        <div className="hierarcyContainer">
+        <div className="hierarchyContainer">
             <SelectDate/>
             <Dropdown/>
             <Tree/>
