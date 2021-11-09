@@ -21,7 +21,6 @@ const App= (props) => {
                 <div>
                     <LoginRedirect loginUrl={SHIBBOLETH_LOGIN} />
                     <Header />
-                    <SelectDate />
                     <Hierarchy />
                     <NodeDetails />
                 </div>

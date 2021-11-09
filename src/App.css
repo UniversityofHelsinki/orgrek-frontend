@@ -10,6 +10,7 @@
 }
 
 .datePicker {
-  padding-top: 10px;
+  padding-top: 60px;
   padding-bottom: 10px;
+  width: auto;
 }
