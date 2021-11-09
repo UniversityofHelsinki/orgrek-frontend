@@ -10,6 +10,8 @@ import SelectDate from './components/SelectDate';
 
 const App= (props) => {
 
+    console.log(props.env);
+
     useEffect(() => {
         props.onFetchUser();
     }, []);

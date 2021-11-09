@@ -10,9 +10,16 @@ export const fetchNodeParents = (uniqueId, selectedDay) => {
         if (response.status === 200) {
             let responseJSON = await response.json();
             dispatch(apiGetParentsSuccessCall(responseJSON));
+        } else {
+            dispatch(api401FailureCall(new Date()));
         }
     };
 };
+
+export const api401FailureCall = failureTime => ({
+    type: 'STATUS_401_API_CALL',
+    payload : failureTime
+});
 
 export const apiGetParentsSuccessCall = data => {
     return {
@@ -33,6 +40,8 @@ export const fetchNodeChildren = (uniqueId, selectedDay) => {
         if (response.status === 200) {
             let responseJSON = await response.json();
             dispatch(apiGetChildrenSuccessCall(responseJSON));
+        } else {
+            dispatch(api401FailureCall(new Date()));
         }
     };
 };

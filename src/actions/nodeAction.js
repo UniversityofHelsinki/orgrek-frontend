@@ -8,9 +8,16 @@ export const fetchNode = (uniqueId) => {
         if (response.status === 200) {
             let responseJSON = await response.json();
             dispatch(apiGetNodeSuccessCall(responseJSON));
+        } else {
+            dispatch(api401FailureCall(new Date()));
         }
     };
 };
+
+export const api401FailureCall = failureTime => ({
+    type: 'STATUS_401_API_CALL',
+    payload : failureTime
+});
 
 export const apiGetNodeSuccessCall = data => {
     return {
@@ -32,6 +39,8 @@ export const fetchNodeAttributes = (uniqueId) => {
         if (response.status === 200) {
             let responseJSON = await response.json();
             dispatch(apiGetNodeAttributesSuccessCall(responseJSON));
+        } else {
+            dispatch(api401FailureCall(new Date()));
         }
     };
 };
@@ -54,6 +63,8 @@ export const fetchNodePredecessors = (uniqueId) => {
         if (response.status === 200) {
             let responseJSON = await response.json();
             dispatch(apiGetNodePredecessorsSuccessCall(responseJSON));
+        } else {
+            dispatch(api401FailureCall(new Date()));
         }
     };
 };
@@ -76,6 +87,8 @@ export const fetchNodeSuccessors = (uniqueId) => {
         if (response.status === 200) {
             let responseJSON = await response.json();
             dispatch(apiGetNodeSuccessorsSuccessCall(responseJSON));
+        } else {
+            dispatch(api401FailureCall(new Date()));
         }
     };
 };

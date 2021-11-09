@@ -10,9 +10,16 @@ export const fetchTree = (selection, selectedDay) => {
         if (response.status === 200) {
             let responseJSON = await response.json();
             dispatch(apiGetTreeSuccessCall(responseJSON));
+        } else {
+            dispatch(api401FailureCall(new Date()));
         }
     };
 };
+
+export const api401FailureCall = failureTime => ({
+    type: 'STATUS_401_API_CALL',
+    payload : failureTime
+});
 
 export const fetchSelectableHierarchies = () => {
     const PATH = '/api/edge/';
@@ -24,6 +31,8 @@ export const fetchSelectableHierarchies = () => {
         if (response.status === 200) {
             let responseJSON = await response.json();
             dispatch(apiGetSelectableHierarchiesSuccessCall(responseJSON));
+        } else {
+            dispatch(api401FailureCall(new Date()));
         }
     };
 };
