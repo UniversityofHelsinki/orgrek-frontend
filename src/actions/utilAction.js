@@ -1,5 +1,4 @@
 export const showValidity = (startDate, endDate, i18n) => {
-    console.log(i18n);
     if (startDate && endDate) {
         return new Date(startDate).toLocaleDateString('fi-FI') + ' – ' + new Date(endDate).toLocaleDateString('fi-FI');
     }
