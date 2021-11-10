@@ -8,6 +8,6 @@ jest.mock('react-i18next', () => ({
 
 test('Header renders', () => {
     const { container } = render(<Header />);
-    const dropdown = container.getElementsByClassName('navbar');
-    expect(dropdown).toBeDefined();
+    const header = container.getElementsByClassName('navbar');
+    expect(header).toBeDefined();
 });
