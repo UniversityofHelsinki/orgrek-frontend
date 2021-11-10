@@ -26,10 +26,9 @@ export const apiGetNodeSuccessCall = data => {
     };
 };
 
-export const fetchNodeAttributes = (uniqueId) => {
+export const fetchNodeAttributes = (uniqueId, selectedDay) => {
     const ORGREK_BACKEND_SERVER = process.env.REACT_APP_ORGREK_BACKEND_SERVER || '';
-    const today  = new Date();
-    const date = today.toLocaleDateString('fi-FI');
+    const date = selectedDay ? selectedDay.toLocaleDateString('fi-FI') : new Date().toLocaleDateString('fi-FI');
     const PATH = '/api/node/';
     const PARAMS = `${uniqueId}/${date}/attributes`;
     return async (dispatch)  => {
