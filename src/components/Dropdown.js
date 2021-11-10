@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { Select, MenuItem } from '@mui/material/';
 import { useDispatch, connect } from 'react-redux';
 import { fetchSelectableHierarchies } from '../actions/treeAction';
+import { useTranslation } from 'react-i18next';
 
 const Dropdown = (props) => {
+    const { t } = useTranslation();
     const [selected, setSelected] = useState('');
     const dispatch = useDispatch();
     const all = props.selectableHierarchies;
@@ -25,7 +27,7 @@ const Dropdown = (props) => {
             setSelected('');
         }
     // eslint-disable-next-line
-    }, [selected, props.selectableHierarchies]); 
+    }, [selected, props.selectableHierarchies]);
 
     return (
         <Select
@@ -36,7 +38,7 @@ const Dropdown = (props) => {
             onChange={changeSelected}
         >
             {filtered.length > 0 ? filtered.map((item) => {
-                return <MenuItem key={item} value={item}>{item}</MenuItem>;
+                return <MenuItem key={item} value={item}>{t(item)}</MenuItem>;
             }) : <MenuItem key='' value=''>{''}</MenuItem>}
         </Select>
     );

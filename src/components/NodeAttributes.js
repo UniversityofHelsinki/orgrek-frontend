@@ -1,28 +1,30 @@
 import { connect } from 'react-redux';
 import React from 'react';
 import * as Constants from '../Constants';
+import { useTranslation } from 'react-i18next';
 import { showValidity } from '../actions/utilAction';
 
 const NodeAttributes = (props) => {
+    const { t, i18n } = useTranslation();
     const notOtherAttributes = Constants.notOtherAttributes;
     const codeAttributes = Constants.codeAttributes;
 
     const drawTypeAttributeList = () => {
         return (
             <div>
-                <h3>Yksikön tyyppi</h3>
+                <h3>{t('unit_type')}</h3>
                 <table>
                     <thead>
                     <tr>
-                        <th>Tyyppi</th>
-                        <th>Voimassaolo</th>
+                        <th>{t('type')}</th>
+                        <th>{t('valid_dates')}</th>
                     </tr>
                     </thead>
                     <tbody>
                     {props.nodeAttributes.filter(attribute => attribute.key === 'type').map((type, index) => (
                         <tr key={index}>
                             <td>{type.value}</td>
-                            <td>{showValidity(type.startDate, type.endDate)}</td>
+                            <td>{showValidity(type.startDate, type.endDate, i18n)}</td>
                         </tr>
                     ))}
                     </tbody>
@@ -35,13 +37,13 @@ const NodeAttributes = (props) => {
         const filteredCodeAttributes = props.nodeAttributes.filter(attribute => codeAttributes.includes(attribute.key));
         return (
             <div>
-                <h3>Koodisto</h3>
+                <h3>{t('codes')}</h3>
                 <table>
                     <thead>
                     <tr>
-                        <th>Koodi</th>
-                        <th>Arvo</th>
-                        <th>Voimassaolo</th>
+                        <th>{t('code_namespace')}</th>
+                        <th>{t('attribute_value')}</th>
+                        <th>{t('valid_until')}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -49,7 +51,7 @@ const NodeAttributes = (props) => {
                         <tr key={index}>
                             <td>{attribute.key}</td>
                             <td>{attribute.value}</td>
-                            <td>{showValidity(attribute.startDate, attribute.endDate)}</td>
+                            <td>{showValidity(attribute.startDate, attribute.endDate, i18n)}</td>
                         </tr>
                     ))}
                     </tbody>
@@ -62,13 +64,13 @@ const NodeAttributes = (props) => {
         const otherAttributes = props.nodeAttributes.filter(attribute => !notOtherAttributes.includes(attribute.key));
         return (
             <div>
-                <h3>Muut Attribuutit</h3>
+                <h3>{t('other_attributes')}</h3>
                 <table>
                     <thead>
                     <tr>
-                        <th>Attribuutti</th>
-                        <th>Arvo</th>
-                        <th>Voimassaolo</th>
+                        <th>{t('attribute')}</th>
+                        <th>{t('attribute_value')}</th>
+                        <th>{t('valid_until')}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -76,7 +78,7 @@ const NodeAttributes = (props) => {
                         <tr key={index}>
                             <td>{attribute.key}</td>
                             <td>{attribute.value}</td>
-                            <td>{showValidity(attribute.startDate, attribute.endDate)}</td>
+                            <td>{showValidity(attribute.startDate, attribute.endDate, i18n)}</td>
                         </tr>
                     ))}
                     </tbody>
