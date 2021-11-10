@@ -2,8 +2,10 @@ import { connect } from 'react-redux';
 import React from 'react';
 import * as Constants from '../Constants';
 import { showValidity } from '../actions/utilAction';
+import { useTranslation } from 'react-i18next';
 
 const NodeAttributes = (props) => {
+    const { t, i18n } = useTranslation();
     const notOtherAttributes = Constants.notOtherAttributes;
     const codeAttributes = Constants.codeAttributes;
 
@@ -47,7 +49,7 @@ const NodeAttributes = (props) => {
                     <tbody>
                     {props.node ?
                         <tr>
-                            <td>Yksilöivä tunnus</td>
+                            <td>{t('unique_id')}</td>
                             <td>{props.node.unique_id}</td>
                         </tr> : null
                     }
