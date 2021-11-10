@@ -37,7 +37,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = (dispatch, ownProps) => ({
     onNodeSelection: (selectedDay) => {
         dispatch(fetchNode(ownProps.item.id));
-        dispatch(fetchNodeAttributes(ownProps.item.id));
+        dispatch(fetchNodeAttributes(ownProps.item.id, selectedDay));
         dispatch(fetchNodeParents(ownProps.item.id, selectedDay));
         dispatch(fetchNodeChildren(ownProps.item.id, selectedDay));
         dispatch(fetchNodePredecessors(ownProps.item.id));
