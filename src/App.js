@@ -9,9 +9,6 @@ import LoginRedirect from './components/LoginRedirect';
 import Footer from './components/Footer';
 
 const App= (props) => {
-
-    console.log(process.env);
-
     useEffect(() => {
         props.onFetchUser();
     }, []);

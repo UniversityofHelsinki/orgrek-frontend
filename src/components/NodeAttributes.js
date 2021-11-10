@@ -45,6 +45,12 @@ const NodeAttributes = (props) => {
                     </tr>
                     </thead>
                     <tbody>
+                    {props.node ?
+                        <tr>
+                            <td>Yksilöivä tunnus</td>
+                            <td>{props.node.unique_id}</td>
+                        </tr> : null
+                    }
                     {filteredCodeAttributes.map((attribute, index) => (
                         <tr key={index}>
                             <td>{attribute.key}</td>
@@ -95,7 +101,8 @@ const NodeAttributes = (props) => {
 };
 
 const mapStateToProps = state => ({
-    nodeAttributes : state.nrd.nodeAttributes
+    nodeAttributes : state.nrd.nodeAttributes,
+    node : state.nrd.node
 });
 
 export default connect(mapStateToProps, null)(NodeAttributes);
