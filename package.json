@@ -42,7 +42,7 @@
     ]
   },
   "scripts": {
-    "start": "REACT_APP_GIT_BRANCH=\"$(git rev-parse --abbrev-ref HEAD)\" REACT_APP_GIT_HASH=\"$(git rev-parse --short=7 HEAD)\" HOST=0.0.0.0 PORT=8080 react-scripts start",
+    "start": "react-scripts start",
     "start:server": "json-server --watch db.json --routes routes.json  --port 3003",
     "dev": "REACT_APP_GIT_BRANCH=\"$(git rev-parse --abbrev-ref HEAD)\" REACT_APP_GIT_HASH=\"$(git rev-parse --short=7 HEAD)\" react-scripts start",
     "build": "REACT_APP_GIT_BRANCH=\"$(git rev-parse --abbrev-ref HEAD)\" REACT_APP_GIT_HASH=\"$(git rev-parse --short=7 HEAD)\" react-scripts build",
