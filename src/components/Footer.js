@@ -8,7 +8,7 @@ const Footer = ( ) => {
                 <p className="hy-footer">
                     <span>© Helsingin yliopisto 2021</span>
                     <br />
-                    <span id="version" style={{ color: 'grey', fontSize: 'small', fontStyle: 'italic' }}>Branch: {process.env.REACT_APP_GIT_BRANCH} Commit Hash: {process.env.REACT_APP_GIT_HASH}</span>
+                    <span id="version" style={{ color: 'grey', fontSize: 'small', fontStyle: 'italic' }}>Commit Hash: {process.env.REACT_APP_GIT_HASH}</span>
                 </p>
             </footer>
         </div>
