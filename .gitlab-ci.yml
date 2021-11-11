@@ -113,6 +113,8 @@ deploy_test:
     # this parameter: `--insecure-skip-tls-verify` is important because we use a certificate signed by an unknown authority
     - oc login https://$OPENSHIFT_ADDR_TEST:$OPENSHIFT_PORT --token=$OPENSHIFT_TOKEN_TEST --insecure-skip-tls-verify
     - oc project organisaatiorekisteri
+    - oc set env dc/organisaatiorekisteri-frontend-test REACT_APP_GIT_BRANCH=$(echo ${CI_COMMIT_BRANCH})
+    - oc set env dc/organisaatiorekisteri-frontend-test REACT_APP_GIT_HASH=$(git rev-parse --short=7 HEAD)
     - oc start-build organisaatiorekisteri-frontend-test --from-dir=. --follow
 
 deploy_prod:
@@ -131,4 +133,6 @@ deploy_prod:
     # this parameter: `--insecure-skip-tls-verify` is important because we use a certificate signed by an unknown authority
     - oc login https://$OPENSHIFT_ADDR_PROD:$OPENSHIFT_PORT --token=$OPENSHIFT_TOKEN_PROD --insecure-skip-tls-verify
     - oc project organisaatiorekisteri
+    - oc set env dc/organisaatiorekisteri-frontend-prod REACT_APP_GIT_BRANCH=$(echo ${CI_COMMIT_BRANCH})
+    - oc set env dc/organisaatiorekisteri-frontend-prod REACT_APP_GIT_HASH=$(git rev-parse --short=7 HEAD)
     - oc start-build organisaatiorekisteri-frontend-prod --from-dir=. --follow
