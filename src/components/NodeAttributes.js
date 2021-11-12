@@ -3,7 +3,6 @@ import React from 'react';
 import * as Constants from '../Constants';
 import { useTranslation } from 'react-i18next';
 import { showValidity } from '../actions/utilAction';
-import { useTranslation } from 'react-i18next';
 
 const NodeAttributes = (props) => {
     const { t, i18n } = useTranslation();
