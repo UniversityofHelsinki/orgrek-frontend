@@ -24,7 +24,7 @@ const SelectDate = (props) => {
     return (
         <Fragment>
             <DatePicker wrapperClassName="datePicker" locale="fi" dateFormat="dd.MM.yyyy" className="form-control"  selected={props.selectedDay ? props.selectedDay : new Date()} onChange={(date) =>  props.onDayChange(date)} />
-            <Button onClick={changeToCurrentDate}>{t('return_to_today')}</Button>
+            <Button className="returnTodayButton" onClick={changeToCurrentDate}>{t('return_to_today')}</Button>
         </Fragment>
     );
 };
