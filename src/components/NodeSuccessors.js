@@ -1,27 +1,29 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { showValidity } from '../actions/utilAction';
+import { useTranslation } from 'react-i18next';
 
 const NodeSuccessors = (props) => {
+    const { t, i18n } = useTranslation();
     return (
         <div>
             {props.successors && props.successors.length > 0   ?
                 <div>
-                    <h3>Seuraavat yksiköt</h3>
+                    <h3>{t('successor_units')}</h3>
                     <table>
                         <thead>
                         <tr>
-                            <th>Yksikkö</th>
-                            <th>Voimassaolo</th>
-                            <th>Yhteyden päivämäärä</th>
+                            <th>{t('unit')}</th>
+                            <th>{t('valid_until')}</th>
+                            <th>{t('predecessor_edge_valid')}</th>
                         </tr>
                         </thead>
                         <tbody>
                         {props.successors.map(node => (
                             <tr key={node.nodeId}>
                                 <td>{node.name}</td>
-                                <td>{showValidity(node.startDate, node.endDate)}</td>
-                                <td>{showValidity(node.edgeStartDate, node.edgeEndDate)}</td>
+                                <td>{showValidity(node.startDate, node.endDate, i18n)}</td>
+                                <td>{showValidity(node.edgeStartDate, node.edgeEndDate, i18n)}</td>
                             </tr>
                         ))}
                         </tbody>

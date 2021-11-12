@@ -1,18 +1,20 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 
 const NodeChildren = (props) => {
+    const { t } = useTranslation();
     const commaSep = (hierarchies) => hierarchies.map(item => item).join(', ');
     return (
         <div>
             {props.children && props.children.length > 0   ?
                 <div>
-                    <h3>Alayksiköt</h3>
+                    <h3>{t('children_units')}</h3>
                     <table>
                         <thead>
                             <tr>
-                                <th>Yksikkö</th>
-                                <th>Hierarkiat</th>
+                                <th>{t('unit')}</th>
+                                <th>{t('hierarchies')}</th>
                             </tr>
                         </thead>
                         <tbody>
