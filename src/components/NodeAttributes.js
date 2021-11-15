@@ -82,8 +82,8 @@ const NodeAttributes = (props) => {
                     <tbody>
                     {otherAttributes.map((attribute, index) => (
                         <tr key={index}>
-                            <td>{attribute.key}</td>
-                            <td>{attribute.value}</td>
+                            <td>{t(attribute.key)}</td>
+                            <td>{t(attribute.value)}</td>
                             <td>{showValidity(attribute.startDate, attribute.endDate, i18n)}</td>
                         </tr>
                     ))}
