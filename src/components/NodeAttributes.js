@@ -23,7 +23,7 @@ const NodeAttributes = (props) => {
                     <tbody>
                     {props.nodeAttributes.filter(attribute => attribute.key === 'type').map((type, index) => (
                         <tr key={index}>
-                            <td>{type.value}</td>
+                            <td>{t(type.value)}</td>
                             <td>{showValidity(type.startDate, type.endDate, i18n)}</td>
                         </tr>
                     ))}
