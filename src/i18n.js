@@ -20,7 +20,7 @@ i18n
     .use(initReactI18next)
     .init({
         backend: backendOptions,
-        fallbackLng: 'en',
+        fallbackLng: 'fi',
         interpolation: {
             escapeValue: false, // not needed for react as it escapes by default
         }
