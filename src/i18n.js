@@ -6,7 +6,7 @@ import Backend from 'i18next-http-backend';
 const ORGREK_BACKEND_SERVER = process.env.REACT_APP_ORGREK_BACKEND_SERVER || '';
 
 const backendOptions = {
-    loadPath: `${ORGREK_BACKEND_SERVER}/api/texts/{{lng}}`,
+    loadPath: `${ORGREK_BACKEND_SERVER}/api/texts/{{lng}}/{{ns}}`,
     allowMultiLoading: true,
     requestOptions: { // used for fetch, can also be a function (payload) => ({ method: 'GET' })
         mode: 'cors',
@@ -20,7 +20,9 @@ i18n
     .use(initReactI18next)
     .init({
         backend: backendOptions,
-        fallbackLng: 'en',
+        ns: ['texts', 'nodeattr'],
+        defaultNS: 'texts',
+        fallbackLng: 'fi',
         interpolation: {
             escapeValue: false, // not needed for react as it escapes by default
         }

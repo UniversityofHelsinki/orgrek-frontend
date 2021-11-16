@@ -13,7 +13,7 @@ const NodePredecessors = (props) => {
                     <table>
                         <thead>
                         <tr>
-                            <th>{t('unit')}</th>
+                            <th>{t('unit', { ns: 'nodeattr' })}</th>
                             <th>{t('valid_until')}</th>
                             <th>{t('predecessor_edge_valid')}</th>
                         </tr>
@@ -21,7 +21,7 @@ const NodePredecessors = (props) => {
                         <tbody>
                         {props.predecessors.map(node => (
                             <tr key={node.nodeId}>
-                                <td>{node.name}</td>
+                                <td>{t(node.nodeId, { ns: 'nodeattr' })}</td>
                                 <td>{showValidity(node.startDate, node.endDate, i18n)}</td>
                                 <td>{showValidity(node.edgeStartDate, node.edgeEndDate, i18n)}</td>
                             </tr>
