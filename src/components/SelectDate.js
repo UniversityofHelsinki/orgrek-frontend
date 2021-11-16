@@ -5,16 +5,26 @@ import { changeDate } from '../actions/dayChangeAction';
 
 
 import fi from 'date-fns/locale/fi';
+import { Button } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 registerLocale('fi', fi);
 
 const SelectDate = (props) => {
 
+    const { t, i18n } = useTranslation();
+
     React.useEffect(() => {
     }, [props.selectedDay]);
+
+
+    const changeToCurrentDate = () =>  {
+        props.onDayChange(new Date());
+    };
 
     return (
         <Fragment>
             <DatePicker wrapperClassName="datePicker" locale="fi" dateFormat="dd.MM.yyyy" className="form-control"  selected={props.selectedDay ? props.selectedDay : new Date()} onChange={(date) =>  props.onDayChange(date)} />
+            <Button className="returnTodayButton" onClick={changeToCurrentDate}>{t('return_to_today')}</Button>
         </Fragment>
     );
 };
