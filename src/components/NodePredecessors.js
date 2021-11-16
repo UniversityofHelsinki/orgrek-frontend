@@ -13,7 +13,7 @@ const NodePredecessors = (props) => {
                     <table>
                         <thead>
                         <tr>
-                            <th>{t('unit', { ns: 'nodeattr' })}</th>
+                            <th>{t('unit')}</th>
                             <th>{t('valid_until')}</th>
                             <th>{t('predecessor_edge_valid')}</th>
                         </tr>
