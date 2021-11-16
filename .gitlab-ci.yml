@@ -160,9 +160,9 @@ dependency scanning:
     - touch $RESULT_FILE
     # Write to the result file
     - echo " ************ ORGREK-FRONTEND NPM AUDIT RESULT ************ " >> $RESULT_FILE
-    - echo "        https://version.helsinki.fi/tike-ohtu/orgrek-frontend" >> $RESULT_FILE
+    - echo "https://version.helsinki.fi/tike-ohtu/orgrek-frontend" >> $RESULT_FILE
     - echo "" >> $RESULT_FILE
-    - echo "                   === npm audit security report ===" >> $RESULT_FILE
+    - echo "=== npm audit security report ===" >> $RESULT_FILE
     - echo "" >> $RESULT_FILE
     # Run npm audit and "catch" the possible non zero exit code (https://docs.gitlab.com/ee/ci/yaml/#script)
     - "npm audit --parseable | awk -F '\t' 'NF {print $2}' >> $RESULT_FILE || exit_code=$?"
@@ -173,7 +173,7 @@ dependency scanning:
     - echo "" >> $RESULT_FILE
     - echo " ************ ORGREK-FRONTEND NPM OUTDATED RESULT ************ " >> $RESULT_FILE
     - echo "" >> $RESULT_FILE
-    - echo "                   === npm outdated report ===" >> $RESULT_FILE
+    - echo "=== npm outdated report ===" >> $RESULT_FILE
     - echo "" >> $RESULT_FILE
     # Run npm outdated and "catch" the possible non zero exit code (https://docs.gitlab.com/ee/ci/yaml/#script)
     - npm outdated >> $RESULT_FILE || exit_code=$?
