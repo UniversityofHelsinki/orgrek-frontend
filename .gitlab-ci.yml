@@ -165,7 +165,7 @@ dependency scanning:
     - echo "=== npm audit security report ===" >> $RESULT_FILE
     - echo "" >> $RESULT_FILE
     # Run npm audit and "catch" the possible non zero exit code (https://docs.gitlab.com/ee/ci/yaml/#script)
-    - "npm audit --parseable | awk -F '\t' 'NF {print $2}' >> $RESULT_FILE || exit_code=$?"
+    - "npm audit  >> $RESULT_FILE || exit_code=$?"
     # npm audit --parseable | awk -F $'\t' 'NF {print "   Package: "$2, "\tLevel: "$3, "\tMore info: "$6}' # this would be nice format
     # Add a message based on npm audit's return code
     - if [ $exit_code -ne 0 ]; then echo "Some vulnerabilities was found, check the above packages." >> $RESULT_FILE; fi;
