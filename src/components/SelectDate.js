@@ -18,12 +18,19 @@ const SelectDate = (props) => {
 
 
     const changeToCurrentDate = () =>  {
-        props.onDayChange(new Date());
+        const date = new Date();
+        props.onDayChange(date);
+        i18n.loadNamespaces('nodeattr' + date.toLocaleDateString('EN-CA'));
     };
 
     return (
         <Fragment>
-            <DatePicker wrapperClassName="datePicker" locale="fi" dateFormat="dd.MM.yyyy" className="form-control"  selected={props.selectedDay ? props.selectedDay : new Date()} onChange={(date) =>  props.onDayChange(date)} />
+            <DatePicker wrapperClassName="datePicker" locale="fi" dateFormat="dd.MM.yyyy" className="form-control"
+                        selected={props.selectedDay ? props.selectedDay : new Date()}
+                        onChange={(date) =>  {
+                            props.onDayChange(date);
+                            i18n.loadNamespaces('nodeattr' + date.toLocaleDateString('EN-CA'));
+                        }} />
             <Button className="returnTodayButton" onClick={changeToCurrentDate}>{t('return_to_today')}</Button>
         </Fragment>
     );

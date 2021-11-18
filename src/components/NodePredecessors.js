@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 
 const NodePredecessors = (props) => {
     const { t, i18n } = useTranslation();
+    const nodeattrNs = `nodeattr${props.selectedDay ? props.selectedDay.toLocaleDateString('fi-FI') : new Date().toLocaleDateString('fi-FI')}`;
     return (
         <div>
             {props.predecessors && props.predecessors.length > 0   ?
@@ -21,7 +22,7 @@ const NodePredecessors = (props) => {
                         <tbody>
                         {props.predecessors.map(node => (
                             <tr key={node.nodeId}>
-                                <td>{t(node.nodeId, { ns: 'nodeattr' })}</td>
+                                <td>{t(node.nodeId, { ns: nodeattrNs })} {node.name}</td>
                                 <td>{showValidity(node.startDate, node.endDate, i18n)}</td>
                                 <td>{showValidity(node.edgeStartDate, node.edgeEndDate, i18n)}</td>
                             </tr>
@@ -35,7 +36,8 @@ const NodePredecessors = (props) => {
 };
 
 const mapStateToProps = state => ({
-    predecessors : state.nrd.nodePredecessors
+    predecessors : state.nrd.nodePredecessors,
+    selectedDay: state.dr.selectedDay,
 });
 
 export default connect(mapStateToProps, null)(NodePredecessors);
