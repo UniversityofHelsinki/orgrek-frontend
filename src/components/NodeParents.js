@@ -35,7 +35,8 @@ const NodeParents = (props) => {
 };
 
 const mapStateToProps = state => ({
-    parents : state.hr.parents
+    parents : state.hr.parents,
+    selectedDay: state.dr.selectedDay,
 });
 
 export default connect(mapStateToProps, null)(NodeParents);

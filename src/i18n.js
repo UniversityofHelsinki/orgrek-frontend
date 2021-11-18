@@ -18,7 +18,7 @@ i18n
     .use(initReactI18next)
     .init({
         backend: backendOptions,
-        ns: ['texts', 'nodeattr'],
+        ns: ['texts', 'nodeattr', `nodeattr${new Date().toLocaleDateString('EN-CA')}`],
         defaultNS: 'texts',
         fallbackLng: 'fi',
         interpolation: {

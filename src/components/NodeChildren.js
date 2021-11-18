@@ -24,6 +24,7 @@ const NodeChildren = (props) => {
                                 <tr key={child.node.id}>
                                     <td>{t(child.node.id, { ns: nodeattrNs })}</td>
                                     <td>{commaSep(child.hierarchies)}</td>
+
                                 </tr>
                             ))}
                         </tbody>
@@ -35,7 +36,8 @@ const NodeChildren = (props) => {
 };
 
 const mapStateToProps = state => ({
-    children : state.hr.children
+    children : state.hr.children,
+    selectedDay: state.dr.selectedDay,
 });
 
 export default connect(mapStateToProps, null)(NodeChildren);

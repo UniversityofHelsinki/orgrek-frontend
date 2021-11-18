@@ -23,7 +23,7 @@ const NodePredecessors = (props) => {
                         <tbody>
                         {props.predecessors.map(node => (
                             <tr key={node.nodeId}>
-                                <td>{t(node.nodeId, { ns: nodeattrNs })} </td>
+                                <td>{t(node.nodeId, { ns: 'nodeattr' })} </td>
                                 <td>{showValidity(node.startDate, node.endDate, i18n)}</td>
                                 <td>{showValidity(node.edgeStartDate, node.edgeEndDate, i18n)}</td>
                             </tr>
