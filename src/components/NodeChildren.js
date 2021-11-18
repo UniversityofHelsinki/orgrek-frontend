@@ -22,7 +22,7 @@ const NodeChildren = (props) => {
                         <tbody>
                             {props.children.map(child => (
                                 <tr key={child.node.id}>
-                                    <td>{t(child.node.id, { ns: nodeattrNs })} {child.name}</td>
+                                    <td>{t(child.node.id, { ns: nodeattrNs })} </td>
                                     <td>{commaSep(child.hierarchies)}</td>
                                 </tr>
                             ))}
