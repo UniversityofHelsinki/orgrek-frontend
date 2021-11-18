@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 
 const NodeChildren = (props) => {
     const { t } = useTranslation();
-    const commaSep = (hierarchies) => hierarchies.map(item => item).join(', ');
+    const commaSep = (hierarchies) => hierarchies.map(item => t(item)).join(', ');
     const nodeattrNs = `nodeattr${props.selectedDay ? props.selectedDay.toLocaleDateString('EN-CA') : ''}`;
 
     return (
