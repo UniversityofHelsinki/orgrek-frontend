@@ -1,21 +1,21 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
-import store from "./store";
-import { Provider } from "react-redux";
+import store from './store';
+import { Provider } from 'react-redux';
 import './index.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'react-datepicker/dist/react-datepicker.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { applyPolyfills, defineCustomElements } from '@itcenteratunihelsinki/huds-lib/loader/index.cjs';
-
-applyPolyfills().then(() => {
-    defineCustomElements(window)
-});
+import './i18n';
 
 ReactDOM.render(
     <Provider store={store}>
-        <App />
+        <Suspense fallback={<div>Loading...</div>}>
+            <App />
+        </Suspense>
     </Provider>,
-    document.getElementById("root")
+    document.getElementById('root')
 );
 
 // If you want to start measuring performance in your app, pass a function

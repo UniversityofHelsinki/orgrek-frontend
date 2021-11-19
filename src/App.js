@@ -1,36 +1,36 @@
-import React from "react";
-import {connect} from 'react-redux';
-import Header from "./components/Header";
-import Footer from "./components/Footer";
-import Tree from "./components/tree";
-import {fetchTree} from "./actions/treeAction";
+import React,  { useEffect } from 'react';
+import { connect } from 'react-redux';
+import Header from './components/Header';
+import Hierarchy from './components/Hierarchy';
+import NodeDetails from './components/NodeDetails';
+import './App.css';
+import { fetchUser } from './actions/userAction';
+import LoginRedirect from './components/LoginRedirect';
+import Footer from './components/Footer';
 
 const App= (props) => {
 
-    React.useEffect(() => {
-        props.onFetchTree();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+    useEffect(() => {
+        props.onFetchUser();
     }, []);
+
+    const SHIBBOLETH_LOGIN = process.env.REACT_APP_ORGREK_LOGIN;
 
     return (
         <div className="App">
-            <header className="App-header">
-                <div className="site-header-demo-container">
-                    <Header/>
-                    <Tree/>
-                    <Footer/>
+                <div>
+                    <LoginRedirect loginUrl={SHIBBOLETH_LOGIN} />
+                    <Header />
+                    <Hierarchy />
+                    <NodeDetails />
+                    <Footer />
                 </div>
-            </header>
         </div>
     );
-}
-
-const mapStateToProps = state => ({
-    tree : state.tr.tree
-});
+};
 
 const mapDispatchToProps = dispatch => ({
-    onFetchTree: () => dispatch(fetchTree())
+    onFetchUser: () => dispatch(fetchUser())
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(null, mapDispatchToProps)(App);

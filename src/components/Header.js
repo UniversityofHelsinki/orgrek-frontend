@@ -1,25 +1,41 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
+import { Nav, Navbar, Container, NavDropdown } from 'react-bootstrap';
+import HyLogo from './HYLogo';
 import { connect } from 'react-redux';
 
+
+
 const Header = (props) => {
+    const { t, i18n } = useTranslation();
     return (
         <div>
-            <hy-site-logo color="black" size="64" url="https://www.helsinki.fi" label="Helsingin yliopisto" />
-            <hy-heading heading="h2">Organisaatiorekisteri</hy-heading>
-            <div style={{position: "relative", width: 300, height: 30}}>
-                <hy-menu-language is-mobile={false} labels='{"open":"Open", "close":"Close"}' data-menu-language='[
-                    {"langCode":"fi","abbr":"fin","label":"Finnish","url":"/fi", "isActive":"true"},
-                    {"langCode":"en","abbr":"eng","label":"English","url":"/en"},
-                    {"langCode":"sv","abbr":"swe","label":"Swedish","url":"/sv"}]'
-                />
-            </div>
+            <Navbar fixed="top" collapseOnSelect expand="lg" bg="dark" variant="dark">
+                <Container fluid>
+                    <HyLogo />
+                    <Navbar.Brand>{t('organisational_registry')}</Navbar.Brand>
+                    <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+                    <Navbar.Collapse id="responsive-navbar-nav">
+                        <Nav className="me-auto">
+                            <NavDropdown title={t('text_language_header')} id="collasible-nav-dropdown">
+                                <NavDropdown.Item  onClick={() => i18n.changeLanguage('fi')}>Suomeksi</NavDropdown.Item>
+                                <NavDropdown.Item  onClick={() => i18n.changeLanguage('en')}>In English</NavDropdown.Item>
+                                <NavDropdown.Item  onClick={() => i18n.changeLanguage('sv')}>På Svenska</NavDropdown.Item>
+                            </NavDropdown>
+                        </Nav>
+                        <Nav>
+                            <Nav.Link eventKey="disabled" disabled>{props.user ? t('logged_in') + ' ' +  props.user.eppn : '' }</Nav.Link>
+                            <Nav.Link href="/Shibboleth.sso/Logout">{t('logout')}</Nav.Link>
+                        </Nav>
+                    </Navbar.Collapse>
+                </Container>
+            </Navbar>
         </div>
     );
 };
 
 const mapStateToProps = state => ({
-
+    user : state.ur.user
 });
-
 
 export default connect(mapStateToProps, null)(Header);

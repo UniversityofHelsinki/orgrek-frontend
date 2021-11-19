@@ -11,3 +11,39 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.arrow {
+  border: solid black;
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+  padding: 3px;
+}
+
+.right {
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+}
+
+.left {
+  transform: rotate(135deg);
+  -webkit-transform: rotate(135deg);
+}
+
+.up {
+  transform: rotate(-135deg);
+  -webkit-transform: rotate(-135deg);
+}
+
+.down {
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+}
+
+.nodeDetailsContainer {
+  position: absolute;  /* <---------- required */
+  top: 240px;  /* <---------------------- required */
+  right: 0;  /* <-------------------- required */
+  bottom: 0;  /* <------------------- required */
+  width: 50%;  /* <------------------ required */
+  box-sizing: border-box;  /* <------ required */
+}
