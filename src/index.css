@@ -17,6 +17,20 @@ code {
   border-width: 0 3px 3px 0;
   display: inline-block;
   padding: 3px;
+  background: transparent;
+  position: relative;
+  top: -7px;
+}
+
+.arrow::after {
+  position: absolute;
+  content: '';
+  left: -4px;
+  top: -4px;
+  z-index: -1;
+  width: 300%;
+  height: 300%;
+  border-radius: 7px;
 }
 
 .right {

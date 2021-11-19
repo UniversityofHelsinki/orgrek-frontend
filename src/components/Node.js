@@ -24,7 +24,7 @@ const Node = (props) => {
     return (
         <div style={{ paddingLeft: `${props.level * 35}px` }}>
             <span style={props.node && props.node.unique_id === props.item.id ?  { fontWeight: 'bold', paddingRight: '10px' } : { paddingRight: '10px' } } onClick={() => props.onNodeSelection(props.selectedDay)}>{props.level > 0 ? props.item.code : ''} {nameSelectedLanguage} {props.item.abbreviation ? '(' + props.item.abbreviation + ')' : ''}</span>
-            {props.hasChildren && <i data-testid={props.selected ? 'arrowdown' : 'arrowright'}  id={props.item.id} onClick={props.onToggle} className={props.selected ? 'arrow down' : 'arrow right'}></i>}
+           {props.hasChildren && <button data-testid={props.selected ? 'arrowdown' : 'arrowright'}  id={props.item.id} onClick={props.onToggle} className={props.selected ? 'arrow down' : 'arrow right'}></button>}
         </div>
     );
 };
