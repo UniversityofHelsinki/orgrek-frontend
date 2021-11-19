@@ -12871,6 +12871,25 @@
       ]
     }
   ],
+  "predecessors": [
+    {
+        "nodeId": "3337",
+        "name": "IPR University Center",
+        "startDate": null,
+        "endDate": "2013-12-31 00:00:00",
+        "edgeStartDate": null,
+        "edgeEndDate": null
+    },
+    {
+        "nodeId": "3471",
+        "name": "HY, Helsingin yliopiston koulutus- ja kehittämispalvelut (HYKKE)",
+        "startDate": null,
+        "endDate": "2016-12-31 00:00:00",
+        "edgeStartDate": null,
+        "edgeEndDate": null
+    }
+],
+  "successors": [],  
   "42785051" : {
     "id": "a1",
     "name": "Helsingin yliopisto (HY)",

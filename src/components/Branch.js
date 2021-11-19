@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import Node from './Node';
 
-const Branch = ({ item, level }) => {
+const Branch = ({ parentAbbr, item, level }) => {
     const { t, i18n } = useTranslation();
     const [selected, setSelected] = useState(level >= 1 ? false : true); // open tree on load
     const hasChildren = item.children && item.children.length !== 0;
@@ -12,7 +12,7 @@ const Branch = ({ item, level }) => {
             const newLevel = level + 1;
             const sortedChildren = sortChildren(item.children, i18n.language);
             return sortedChildren.map((child) => {
-                return <Branch key={child.id} item={child} level={newLevel} />;
+                return <Branch key={child.id} parentAbbr={item.code} item={child} level={newLevel} />;
             });
         }
         return null;
@@ -25,6 +25,7 @@ const Branch = ({ item, level }) => {
     return (
         <>
             <Node
+                parentAbbr={parentAbbr}
                 item={item}
                 selected={selected}
                 hasChildren={hasChildren}
