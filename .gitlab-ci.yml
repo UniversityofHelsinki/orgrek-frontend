@@ -123,6 +123,7 @@ deploy_prod:
     name: prod
   only:
     - prod
+  when: manual
   script:
     - mv nginx_prod.conf nginx.conf
     - curl -fsSLO --compressed "https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/openshift-client-linux.tar.gz";
