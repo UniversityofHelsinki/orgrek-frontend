@@ -1,6 +1,6 @@
 
 const initialState = {
-    selectedDay : null
+    selectedDay : new Date()
 };
 
 const dayChangeReducer = (state = initialState, action) => {

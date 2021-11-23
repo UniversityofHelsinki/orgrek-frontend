@@ -21,7 +21,7 @@ const NodeSuccessors = (props) => {
                         <tbody>
                         {props.successors.map(node => (
                             <tr key={node.nodeId}>
-                                <td>{node.name}</td>
+                                <td>{t(node.nodeId, { ns: 'nodeattr' })}</td>
                                 <td>{showValidity(node.startDate, node.endDate, i18n)}</td>
                                 <td>{showValidity(node.edgeStartDate, node.edgeEndDate, i18n)}</td>
                             </tr>

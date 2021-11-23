@@ -21,21 +21,21 @@ const NodeName = (props) => {
                         <tbody>
                             {props.nodeAttributes.filter(attribute => attribute.key === 'name_fi').map(nameFi => (
                                 <tr key={nameFi.key}>
-                                    <td>Suomi</td>
+                                    <td>{t('finnish')}</td>
                                     <td>{nameFi.value}</td>
                                     <td>{showValidity(nameFi.startDate, nameFi.endDate, i18n)}</td>
                                 </tr>
                             ))}
                             {props.nodeAttributes.filter(attribute => attribute.key === 'name_en').map(nameEn => (
                                 <tr key={nameEn.key}>
-                                    <td>Englanti</td>
+                                    <td>{t('english')}</td>
                                     <td>{nameEn.value}</td>
                                     <td>{showValidity(nameEn.startDate, nameEn.endDate, i18n)}</td>
                                 </tr>
                             ))}
                             {props.nodeAttributes.filter(attribute => attribute.key === 'name_sv').map(nameSV => (
                                 <tr key={nameSV.key}>
-                                    <td>Ruotsi</td>
+                                    <td>{t('swedish')}</td>
                                     <td>{nameSV.value}</td>
                                     <td>{showValidity(nameSV.startDate, nameSV.endDate, i18n)}</td>
                                 </tr>
