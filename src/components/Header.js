@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 const Header = (props) => {
     const { t, i18n } = useTranslation();
     return (
-        <div>
+        <div className='orgrek-header'>
             <Navbar fixed="top" collapseOnSelect expand="lg" bg="dark" variant="dark">
                 <Container fluid>
                     <HyLogo />
