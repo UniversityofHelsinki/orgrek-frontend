@@ -12,7 +12,7 @@ const Branch = ({ parentAbbr, item, level }) => {
             const newLevel = level + 1;
             const sortedChildren = sortChildren(item.children, i18n.language);
             return sortedChildren.map((child) => {
-                return <Branch key={child.id} parentAbbr={item.code} item={child} level={newLevel} />;
+                return <Branch key={child.id} parentAbbr={child.parentAbbreviation} item={child} level={newLevel} />;
             });
         }
         return null;
