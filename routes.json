@@ -1,6 +1,8 @@
 {
   "/api/tree/*/byDate/*": "/$1",
-  "/api/texts/*": "/$1",
+  "/api/texts/*/texts": "/$1",
+  "/api/texts/*/nodeattr": "/$1",
+  "/api/texts/*/nodeattr:date": "/$1",
   "/api/edge/*": "/$1",
   "/api/node/parents/:id/:date": "/parents",
   "/api/node/children/:id/:date": "/children",

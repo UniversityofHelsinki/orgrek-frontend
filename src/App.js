@@ -7,6 +7,7 @@ import './App.css';
 import { fetchUser } from './actions/userAction';
 import LoginRedirect from './components/LoginRedirect';
 import Footer from './components/Footer';
+import { Container, Col, Row } from 'react-bootstrap';
 
 const App= (props) => {
 
@@ -18,13 +19,15 @@ const App= (props) => {
 
     return (
         <div className="App">
-                <div>
                     <LoginRedirect loginUrl={SHIBBOLETH_LOGIN} />
                     <Header />
-                    <Hierarchy />
-                    <NodeDetails />
+                    <Container fluid="true">
+                        <Row>
+                            <Col md={4} lg={4}><Hierarchy /></Col>
+                            <Col fluid="true"><NodeDetails /></Col>
+                        </Row>
+                    </Container>
                     <Footer />
-                </div>
         </div>
     );
 };

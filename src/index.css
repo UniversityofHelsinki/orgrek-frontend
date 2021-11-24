@@ -52,12 +52,3 @@ code {
   transform: rotate(45deg);
   -webkit-transform: rotate(45deg);
 }
-
-.nodeDetailsContainer {
-  position: absolute;  /* <---------- required */
-  top: 240px;  /* <---------------------- required */
-  right: 0;  /* <-------------------- required */
-  bottom: 0;  /* <------------------- required */
-  width: 50%;  /* <------------------ required */
-  box-sizing: border-box;  /* <------ required */
-}
