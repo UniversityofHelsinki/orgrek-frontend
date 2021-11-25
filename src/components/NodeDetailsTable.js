@@ -36,7 +36,7 @@ const NodeDetailsTable = (props) => {
 
             if (props.type === 'node-hierarchy') {
                 return (<tr key={elem.node.id}>
-                    <td onClick={() => props.onNodeSelection(elem.node)}><a href="#">{t(elem.node.id, { ns: nodeattrNs })}</a></td>
+                    <td onClick={() => props.onNodeSelection(elem.node)}><a className='list-node-link' href="#">{t(elem.node.id, { ns: nodeattrNs })}</a></td>
                     <td>{commaSep(elem.hierarchies)}</td>
                 </tr>);
             }

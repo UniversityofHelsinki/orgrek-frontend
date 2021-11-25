@@ -22,3 +22,12 @@
 h4 caption {
   color: black;
 }
+
+a.list-node-link {
+  text-decoration: none;
+  color: #337ab7;
+}
+
+a:hover {
+  text-decoration: underline;
+}
