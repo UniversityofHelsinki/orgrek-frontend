@@ -9,15 +9,15 @@ const NodeDetails = (props) => {
     const lang = i18n.language;
     const codeAttributes = ['lyhenne',' tutkimus_tunnus', 'hr_lyhenne', 'talous_tunnus', 'oppiaine_tunnus', 'laskutus_tunnus', 'mainari_tunnus', 'emo_lyhenne', 'iam_ryhma'];
 
-    function isCodeAttirbute (elem) {
+    const isCodeAttribute = (elem) => {
         return codeAttributes.includes(elem);
-    }
+    };
 
-    function isLanguageAttribute (elem) {
+    const isLanguageAttribute = (elem) => {
         return (elem.startsWith('name') && elem.length === 7);
-    }
+    };
 
-    function matchNameToLang (displayNames) {
+    const matchNameToLang = (displayNames) => {
         let fallBack;
         let matchedName = undefined;
         displayNames.map(elem => {
@@ -30,14 +30,14 @@ const NodeDetails = (props) => {
             }
         });
         return matchedName ? matchedName : fallBack;
-    }
+    };
 
     const nameInfoData = props.nodeAttributes ? props.nodeAttributes.filter(elem => isLanguageAttribute(elem.key)) : false;
     const displayNameData = props.nodeAttributes ? parseDisplayNames(nameInfoData, props.nodeAttributes.find(elem => elem.key === 'lyhenne'), props.nodeAttributes.find(elem => elem.key === 'emo_lyhenne')) : false;
     const DisplayName = displayNameData ?  matchNameToLang(displayNameData) : false;
-    const codeAttributesData = props.nodeAttributes ? props.nodeAttributes.filter(elem => isCodeAttirbute(elem.key)) : false;
+    const codeAttributesData = props.nodeAttributes ? props.nodeAttributes.filter(elem => isCodeAttribute(elem.key)) : false;
     const typeAttributeData = props.nodeAttributes ? props.nodeAttributes.filter(elem => elem.key === 'type') : false;
-    const otherAttributesData = props.nodeAttributes ? props.nodeAttributes.filter(elem => !isCodeAttirbute(elem.key) && elem.key !== 'type' && !isLanguageAttribute(elem.key)) : false;
+    const otherAttributesData = props.nodeAttributes ? props.nodeAttributes.filter(elem => !isCodeAttribute(elem.key) && elem.key !== 'type' && !isLanguageAttribute(elem.key)) : false;
     const validityData = props.node ? [props.node] : false;
     const parentsData = props.parents ? props.parents : false;
     const childrenData = props.children ? props.children : false;
