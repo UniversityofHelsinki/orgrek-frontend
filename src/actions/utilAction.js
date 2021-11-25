@@ -31,10 +31,13 @@ export const commaSep = (hierarchies) => {
 };
 
 export const parseDisplayNames = (nameInfoData, lyhenne, emo_lyhenne) => {
-    const displayNames = nameInfoData.map((elem, emo_lyhenne, lyhenne) => {
+    const displayNames = nameInfoData.map((elem) => {
+        const emo = emo_lyhenne && emo_lyhenne.value ? '(' + emo_lyhenne.value + '), ' : '';
+        const name = elem && elem.value ? elem.value : '';
+        const abbr = lyhenne && lyhenne.value ? ' (' + lyhenne.value + ')' : '';
         return {
             'key': elem.key,
-            'value': '(' + emo_lyhenne && emo_lyhenne.value ? emo_lyhenne.value : '' + '), ' + elem && elem.value ? elem.value : '' + ' (' + lyhenne && lyhenne.value ? lyhenne.value : '' + ')',
+            'value': emo + name + abbr,
             'startDate': elem.startDate,
             'endDate': elem.endDate
         };
