@@ -1,10 +1,14 @@
 {
-  "/api/tree/*": "/$1",
-  "/api/texts/*": "/$1",
+  "/api/tree/*/byDate/*": "/$1",
+  "/api/texts/*/texts": "/$1",
+  "/api/texts/*/nodeattr": "/$1",
+  "/api/texts/*/nodeattr:date": "/$1",
   "/api/edge/*": "/$1",
   "/api/node/parents/:id/:date": "/parents",
   "/api/node/children/:id/:date": "/children",
-  "/api/node/*": "/$1",
-  "/api/node/:id/:date/attributes": "/attributes/:id",
+  "/api/node/:id/:date/attributes": "/attributes",
+  "/api/node/:id": "/42785051",
+  "/api/node/predecessors/*": "/predecessors",
+  "/api/node/successors/*": "/successors",
   "/api/user": "/user"
 }

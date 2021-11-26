@@ -15,7 +15,7 @@ const Tree = (props) => {
     }, [props.selectedHierarchy, props.selectedDay, i18n.language]);
 
     return (
-        <div data-testid='tree'>
+        <div className='treeContainer' data-testid='tree'>
             {props.tree && Object.values(props.tree).map((item) => {
                 return <Branch key={item.id} item={item} level={0} parent='' />;})}
         </div>

@@ -1,25 +1,150 @@
 import React from 'react';
-import NodeName from './NodeName';
-import NodeValidity from './NodeValidity';
-import NodeAttributes from './NodeAttributes';
-import NodeParents from './NodeParents';
-import NodeChildren from './NodeChildren';
-import NodePredecessors from './NodePredecessors';
-import NodeSuccessors from './NodeSuccessors';
+import { connect } from 'react-redux';
+import NodeDetailsTable from './NodeDetailsTable';
+import { parseDisplayNames } from '../actions/utilAction';
+import { useTranslation } from 'react-i18next';
 
-const NodeDetails = () => {
+const NodeDetails = (props) => {
+    const { t, i18n } = useTranslation();
+    const lang = i18n.language;
+    const codeAttributes = ['lyhenne',' tutkimus_tunnus', 'hr_lyhenne', 'talous_tunnus', 'oppiaine_tunnus', 'laskutus_tunnus', 'mainari_tunnus', 'emo_lyhenne', 'iam_ryhma'];
+
+    const isCodeAttribute = (elem) => {
+        return codeAttributes.includes(elem);
+    };
+
+    const isLanguageAttribute = (elem) => {
+        return (elem.startsWith('name') && elem.length === 7);
+    };
+
+    const matchNameToLang = (displayNames) => {
+        let fallBack;
+        let matchedName = undefined;
+        displayNames.map(elem => {
+            const langCode =  isLanguageAttribute(elem.key) ? elem.key.slice(5) : '';
+            if (langCode === 'fi') {
+                fallBack = elem.value;
+            }
+            if (langCode === lang) {
+                matchedName = elem.value;
+            }
+        });
+        return matchedName ? matchedName : fallBack;
+    };
+
+    const nameInfoData = props.nodeAttributes ? props.nodeAttributes.filter(elem => isLanguageAttribute(elem.key)) : false;
+    const displayNameData = props.nodeAttributes ? parseDisplayNames(nameInfoData, props.nodeAttributes.find(elem => elem.key === 'lyhenne'), props.nodeAttributes.find(elem => elem.key === 'emo_lyhenne')) : false;
+    const DisplayName = displayNameData ?  matchNameToLang(displayNameData) : false;
+    const codeAttributesData = props.nodeAttributes ? props.nodeAttributes.filter(elem => isCodeAttribute(elem.key)) : false;
+    const typeAttributeData = props.nodeAttributes ? props.nodeAttributes.filter(elem => elem.key === 'type') : false;
+    const otherAttributesData = props.nodeAttributes ? props.nodeAttributes.filter(elem => !isCodeAttribute(elem.key) && elem.key !== 'type' && !isLanguageAttribute(elem.key)) : false;
+    const validityData = props.node ? [props.node] : false;
+    const parentsData = props.parents ? props.parents : false;
+    const childrenData = props.children ? props.children : false;
+    const predecessorData = props.predecessors ? props.predecessors : false;
+    const successorsData = props.successors ? props.successors : false;
+    React.useEffect(() => {
+    }, [props.nodeAttributes]);
 
     return (
-        <div className="nodeDetailsContainer">
-            <NodeValidity/>
-            <NodeName />
-            <NodeParents />
-            <NodeChildren />
-            <NodePredecessors />
-            <NodeSuccessors />
-            <NodeAttributes />
-        </div>
+        <>
+        {props.nodeAttributes &&
+            <>
+                <h3>{DisplayName}</h3>
+                <NodeDetailsTable
+                    selectedDay={props.selectedDay}
+                    type='key-value'
+                    heading='valid_dates'
+                    tableLabels={[]}
+                    contentData={validityData}
+                    hasValidity={true}
+                />
+                <NodeDetailsTable
+                    selectedDay={props.selectedDay}
+                    type='key-value'
+                    heading='name_info'
+                    tableLabels={['text_language_header', 'name']}
+                    contentData={nameInfoData}
+                    hasValidity={true}
+                />
+                <NodeDetailsTable
+                    selectedDay={props.selectedDay}
+                    type='key-value'
+                    heading='display_name_info'
+                    tableLabels={['text_language_header', 'name']}
+                    contentData={displayNameData}
+                    hasValidity={true}
+                />
+                <NodeDetailsTable
+                    selectedDay={props.selectedDay}
+                    type='key-value'
+                    heading='codes'
+                    tableLabels={['code_namespace', 'value']}
+                    contentData={codeAttributesData}
+                    hasValidity={true}
+                />
+                <NodeDetailsTable
+                    selectedDay={props.selectedDay}
+                    type='key-value'
+                    heading='unit_type'
+                    tableLabels={[]}
+                    contentData={typeAttributeData}
+                    hasValidity={true}
+                />
+                <NodeDetailsTable
+                    selectedDay={props.selectedDay}
+                    type='node-hierarchy'
+                    heading='upper_units'
+                    tableLabels={['unit', 'hierarchies']}
+                    contentData={parentsData}
+                    hasValidity={false}
+                />
+                <NodeDetailsTable
+                    selectedDay={props.selectedDay}
+                    type='node-hierarchy'
+                    heading='subunits'
+                    tableLabels={['unit', 'hierarchies']}
+                    contentData={childrenData}
+                    hasValidity={false}
+                />
+                <NodeDetailsTable
+                    selectedDay={props.selectedDay}
+                    type='name-validity'
+                    heading='predecessors'
+                    tableLabels={['name', 'valid_dates', 'predecessor_edge_valid']}
+                    contentData={predecessorData}
+                    hasValidity={false}
+                />
+                <NodeDetailsTable
+                    selectedDay={props.selectedDay}
+                    type='name-validity'
+                    heading='successors'
+                    tableLabels={['name', 'valid_dates', 'successor_edge_valid']}
+                    contentData={successorsData}
+                    hasValidity={false}
+                />
+                <NodeDetailsTable
+                    selectedDay={props.selectedDay}
+                    type='key-value'
+                    heading='other_attributes'
+                    tableLabels={['attribute', 'value']}
+                    contentData={otherAttributesData}
+                    hasValidity={true}
+                />
+            </>
+        }
+        </>
     );
 };
 
-export default NodeDetails;
+const mapStateToProps = state => ({
+    node : state.nrd.node,
+    nodeAttributes : state.nrd.nodeAttributes,
+    parents : state.hr.parents,
+    children : state.hr.children,
+    predecessors : state.nrd.nodePredecessors,
+    successors : state.nrd.nodeSuccessorsconst,
+    selectedDay: state.dr.selectedDay,
+});
+
+export default connect(mapStateToProps)(NodeDetails);

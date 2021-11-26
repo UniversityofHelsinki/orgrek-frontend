@@ -92,25 +92,25 @@ test('Tree renders', () => {
 test('There are two levels visible on default', () => {
     render(<Tree />);
     expect(screen.getByText('Helsingin yliopisto (HY)')).toBeInTheDocument;
-    expect(screen.getByText('KOULOHJ Koulutusohjelmat (KOULOHJ)')).toBeInTheDocument;    expect(() => screen.getByText('H920 Humanistis-yhteiskuntatieteellinen tutkijakoulu (HYMY)')).toThrow('Unable to find an element');
-    expect(() => screen.getByText('H920 Humanistis-yhteiskuntatieteellinen tutkijakoulu (HYMY)')).toThrow('Unable to find an element');
-    expect(() => screen.getByText('H92 Tohtoriohjelmat (TRI)')).toThrow('Unable to find an element');
+    expect(screen.getByText('KOULOHJ HY, Koulutusohjelmat (KOULOHJ)')).toBeInTheDocument;    expect(() => screen.getByText('H920 Humanistis-yhteiskuntatieteellinen tutkijakoulu (HYMY)')).toThrow('Unable to find an element');
+    expect(() => screen.getByText('H920 HY-TRI, Humanistis-yhteiskuntatieteellinen tutkijakoulu (HYMY)')).toThrow('Unable to find an element');
+    expect(() => screen.getByText('H92 HY, Tohtoriohjelmat (TRI)')).toThrow('Unable to find an element');
 
 });
 
 test('Opening and closing tree levels', () => {
     render(<Tree />);
-    expect(() => screen.getByText('H920 Humanistis-yhteiskuntatieteellinen tutkijakoulu (HYMY)')).toThrow('Unable to find an element');
+    expect(() => screen.getByText('H920 HY-TRI, Humanistis-yhteiskuntatieteellinen tutkijakoulu (HYMY)')).toThrow('Unable to find an element');
     let input = screen.getByTestId('arrowright');
     userEvent.click(input);
     input = screen.getByTestId('arrowright');
     userEvent.click(input);
     expect(() => screen.getByTestId('arrowright')).toThrow('Unable to find an element');
     expect(screen.getByText('Helsingin yliopisto (HY)')).toBeInTheDocument;
-    expect(screen.getByText('KOULOHJ Koulutusohjelmat (KOULOHJ)')).toBeInTheDocument;
-    expect(screen.getByText('H920 Humanistis-yhteiskuntatieteellinen tutkijakoulu (HYMY)')).toBeInTheDocument;
-    expect(screen.getByText('H92 Tohtoriohjelmat (TRI)')).toBeInTheDocument;
+    expect(screen.getByText('KOULOHJ HY, Koulutusohjelmat (KOULOHJ)')).toBeInTheDocument;
+    expect(screen.getByText('H920 HY-TRI, Humanistis-yhteiskuntatieteellinen tutkijakoulu (HYMY)')).toBeInTheDocument;
+    expect(screen.getByText('H92 HY, Tohtoriohjelmat (TRI)')).toBeInTheDocument;
     input = screen.getAllByTestId('arrowdown');
     userEvent.click(input[0]);
-    expect(() => screen.getByText('KOULOHJ Koulutusohjelmat (KOULOHJ)')).toThrow('Unable to find an element');
+    expect(() => screen.getByText('KOULOHJ HY, Koulutusohjelmat (KOULOHJ)')).toThrow('Unable to find an element');
 });
