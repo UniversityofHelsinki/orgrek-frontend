@@ -14,7 +14,7 @@ const TreeSearch = (props) => {
         setSingleSelections(value);
         value.length > 0 ? props.onSearchResultSelection(props.selectedDay, value[0].id) : false;
     };
-    const options = flattenTree(props.tree ? props.tree.tree.children : []);
+    const options = flattenTree(props.tree.tree ? props.tree.tree.children : []);
 
     return (
             <Typeahead

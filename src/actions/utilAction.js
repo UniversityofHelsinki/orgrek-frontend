@@ -45,7 +45,7 @@ export const commaSep = (hierarchies) => {
 
 export const parseDisplayNames = (nameInfoData, lyhenne, emo_lyhenne) => {
     const displayNames = nameInfoData.map((elem) => {
-        const emo = emo_lyhenne && emo_lyhenne.value ? '(' + emo_lyhenne.value + '), ' : '';
+        const emo = emo_lyhenne && emo_lyhenne.value ? emo_lyhenne.value + ', ' : '';
         const name = elem && elem.value ? elem.value : '';
         const abbr = lyhenne && lyhenne.value ? ' (' + lyhenne.value + ')' : '';
         return {
