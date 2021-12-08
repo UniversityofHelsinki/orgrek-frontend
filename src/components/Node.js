@@ -1,25 +1,14 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
+import { selectNameVersion } from '../actions/utilAction';
 import { fetchNodeParents, fetchNodeChildren } from '../actions/hierarchyAction';
 import { fetchNode, fetchNodeAttributes, fetchNodePredecessors, fetchNodeSuccessors } from '../actions/nodeAction';
 
 const Node = (props) => {
     const { t, i18n } = useTranslation();
-    const selectNameVersion = () => {
-        switch (i18n.language) {
-            case 'en':
-                return props.item.nameEn;
-            case 'fi':
-                return props.item.nameFi;
-            case 'sv':
-                return props.item.nameSv;
-            default:
-                return props.item.nameFi;
-        }
-    };
 
-    const nameSelectedLanguage = selectNameVersion();
+    const nameSelectedLanguage = selectNameVersion(i18n, props.item);
 
     return (
         <div style={{ paddingLeft: `${props.level * 35}px` }}>
