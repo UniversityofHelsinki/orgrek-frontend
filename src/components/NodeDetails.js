@@ -7,7 +7,19 @@ import { useTranslation } from 'react-i18next';
 const NodeDetails = (props) => {
     const { t, i18n } = useTranslation();
     const lang = i18n.language;
-    const codeAttributes = ['lyhenne',' tutkimus_tunnus', 'hr_lyhenne', 'talous_tunnus', 'oppiaine_tunnus', 'laskutus_tunnus', 'mainari_tunnus', 'emo_lyhenne', 'iam_ryhma'];
+    const codeAttributes = [
+        'unique_id',
+        'talous_tunnus',
+        'lyhenne',
+        'hr_lyhenne',
+        'hr_tunnus',
+        'tutkimus_tunnus',
+        'oppiaine_tunnus',
+        'oppiaine_surrogaatti',
+        'laskutus_tunnus',
+        'mainari_tunnus',
+        'emo_lyhenne',
+        'iam_ryhma'];
 
     const isCodeAttribute = (elem) => {
         return codeAttributes.includes(elem);
