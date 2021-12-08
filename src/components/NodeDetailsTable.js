@@ -43,7 +43,7 @@ const NodeDetailsTable = (props) => {
 
             if (props.type === 'name-validity') {
                 return (<tr key={elem.nodeId}>
-                    <td>{t(elem.nodeId, { ns: 'nodeattr' })}</td>
+                    <td><a className='list-node-link' href="#">{t(elem.nodeId, { ns: 'nodeattr' })}</a></td>
                     <td>{showValidity(elem.startDate, elem.endDate, i18n, t)}</td>
                     <td>{showValidity(elem.edgeStartDate, elem.edgeEndDate, i18n, t)}</td>
                 </tr>);
