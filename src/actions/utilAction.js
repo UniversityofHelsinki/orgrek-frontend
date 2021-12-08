@@ -26,6 +26,19 @@ export const showValidity = (startDate, endDate, i18n, t) => {
     return t('not_specified');
 };
 
+export const selectNameVersion = (i18n,item) => {
+    switch (i18n.language) {
+        case 'en':
+            return item.nameEn;
+        case 'fi':
+            return item.nameFi;
+        case 'sv':
+            return item.nameSv;
+        default:
+            return item.nameFi;
+    }
+};
+
 export const commaSep = (hierarchies) => {
     return hierarchies.map(item => item).join(', ');
 };
@@ -41,4 +54,23 @@ export const parseDisplayNames = (nameInfoData, lyhenne, emo_lyhenne) => {
     });
 
     return displayNames;
+};
+
+/*
+Flatten the tree structure for treeSearch component
+The input must be array
+*/
+export const flattenTree = (input, res = []) => {
+    input ? input.map(obj => {
+        if (!obj.children) {
+            res.push(obj);
+        } else {
+            const modObj = Object.assign({}, obj);
+            modObj.children = [];
+            res.push(modObj);
+            flattenTree(obj.children, res);
+        }
+     }
+    ) : '';
+    return res;
 };
