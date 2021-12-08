@@ -4,6 +4,14 @@
   color: #333;
 }
 
+.table {
+  color: #333 !important;
+}
+
+.table>:not(:first-child) {
+  border-top: 2px solid lightgray !important;
+}
+
 .orgrek-header {
   max-height: 60px;
   min-height: 60px;
