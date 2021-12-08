@@ -18,14 +18,14 @@ const Node = (props) => {
                 id={props.item.id} onClick={props.onToggle} className={props.selected ? 'arrow down' : 'arrow right'}>
                 </i></div>}
             <span style={props.node && props.node.unique_id === props.item.id
-                ?  { fontWeight: 'bold', paddingRight: '10px', marginLeft: '10px', textAlign: 'center' }
-                : { paddingRight: '10px', marginLeft: '3px' } }
+                ?  { fontWeight: 'bold', paddingRight: '10px', marginLeft: '5px' }
+                : { paddingRight: '10px', marginLeft: '5px' } }
                 onClick={() => props.onNodeSelection(props.selectedDay)}>
                     {props.level > 0
-                    ? props.item.code
+                    ? props.item.code + ' '
                     : ''}
                     {props.parentAbbr
-                    ? ' ' + props.parentAbbr + ', '
+                    ? props.parentAbbr + ', '
                     : ''}
                     {nameSelectedLanguage}
                     {props.item.abbreviation
