@@ -18,9 +18,10 @@ const Header = (props) => {
                     <Navbar.Collapse id="responsive-navbar-nav">
                         <Nav className="me-auto">
                             <NavDropdown title={t('text_language_header')} id="collasible-nav-dropdown">
-                                <NavDropdown.Item  onClick={() => i18n.changeLanguage('fi')}>Suomeksi</NavDropdown.Item>
-                                <NavDropdown.Item  onClick={() => i18n.changeLanguage('en')}>In English</NavDropdown.Item>
-                                <NavDropdown.Item  onClick={() => i18n.changeLanguage('sv')}>På Svenska</NavDropdown.Item>
+                                <NavDropdown.Item  onClick={() => i18n.changeLanguage('fi')}>{t('finnish')}</NavDropdown.Item>
+                                <NavDropdown.Item  onClick={() => i18n.changeLanguage('sv')}>{t('swedish')}</NavDropdown.Item>
+                                <NavDropdown.Item  onClick={() => i18n.changeLanguage('en')}>{t('english')}</NavDropdown.Item>
+                                <NavDropdown.Item  onClick={() => i18n.changeLanguage('ia')}>{t('text_key')}</NavDropdown.Item>
                             </NavDropdown>
                         </Nav>
                         <Nav>

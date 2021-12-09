@@ -20,7 +20,10 @@ i18n
         backend: backendOptions,
         ns: ['texts', 'nodeattr', `nodeattr${new Date().toLocaleDateString('EN-CA')}`],
         defaultNS: 'texts',
-        fallbackLng: 'fi',
+        fallbackLng:  {
+            'ia': ['ia'],
+            'default': ['fi'],
+        },
         interpolation: {
             escapeValue: false, // not needed for react as it escapes by default
         }
