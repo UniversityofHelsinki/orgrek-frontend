@@ -4,10 +4,10 @@ before_script:
   - apk update && apk --no-cache add g++ gcc libgcc libstdc++ linux-headers make python3 curl tar nodejs npm git
 
   # Cache node modules - speeds up future builds
-cache:
-  key: ${CI_COMMIT_REF_SLUG}
-  paths:
-    - node_modules
+#cache:
+#  key: ${CI_COMMIT_REF_SLUG}
+#  paths:
+#    - node_modules
 
 # Define the stages
 stages:
