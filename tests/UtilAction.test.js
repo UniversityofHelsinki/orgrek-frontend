@@ -73,59 +73,59 @@ const inputTree =
                       }]
               },
               {
-                  "id": 32800844,
-                  "code": "0-TDK",
-                  "nameFi": "Tiedekunnat",
-                  "nameEn": "Faculties",
-                  "nameSv": "Fakulteterna",
-                  "displayNameFi": "HY, Tiedekunnat (TDK)",
-                  "displayNameEn": "HY, Faculties (TDK)",
-                  "displayNameSv": "HY, Fakulteterna (TDK)",
-                  "type": "koontiyksikko",
-                  "abbreviation": "TDK",
-                  "parentAbbreviation": "HY",
-                  "children": [
+                  'id': 32800844,
+                  'code': '0-TDK',
+                  'nameFi': 'Tiedekunnat',
+                  'nameEn': 'Faculties',
+                  'nameSv': 'Fakulteterna',
+                  'displayNameFi': 'HY, Tiedekunnat (TDK)',
+                  'displayNameEn': 'HY, Faculties (TDK)',
+                  'displayNameSv': 'HY, Fakulteterna (TDK)',
+                  'type': 'koontiyksikko',
+                  'abbreviation': 'TDK',
+                  'parentAbbreviation': 'HY',
+                  'children': [
                     {
-                      "id": 10020336,
-                      "code": "H20",
-                      "nameFi": "Oikeustieteellinen tiedekunta",
-                      "nameEn": "Faculty of Law",
-                      "nameSv": "Juridiska fakulteten",
-                      "displayNameFi": "HY, Oikeustieteellinen tiedekunta (OIKTDK)",
-                      "displayNameEn": "HY, Faculty of Law (OIKTDK)",
-                      "displayNameSv": "HY, Juridiska fakulteten (OIKTDK)",
-                      "type": "tiedekunta",
-                      "abbreviation": "OIKTDK",
-                      "parentAbbreviation": "HY",
-                      "billingCode": "A20000",
-                      "iamGroup": "hy-oiktdk",
-                      "publicity": "julkinen",
-                      "children": [
+                      'id': 10020336,
+                      'code': 'H20',
+                      'nameFi': 'Oikeustieteellinen tiedekunta',
+                      'nameEn': 'Faculty of Law',
+                      'nameSv': 'Juridiska fakulteten',
+                      'displayNameFi': 'HY, Oikeustieteellinen tiedekunta (OIKTDK)',
+                      'displayNameEn': 'HY, Faculty of Law (OIKTDK)',
+                      'displayNameSv': 'HY, Juridiska fakulteten (OIKTDK)',
+                      'type': 'tiedekunta',
+                      'abbreviation': 'OIKTDK',
+                      'parentAbbreviation': 'HY',
+                      'billingCode': 'A20000',
+                      'iamGroup': 'hy-oiktdk',
+                      'publicity': 'julkinen',
+                      'children': [
                         {
-                          "id": 22963335,
-                          "code": "H200",
-                          "nameFi": "Oikeustieteellinen tiedekunta",
-                          "nameEn": "Faculty of Law",
-                          "nameSv": "Juridiska fakulteten",
-                          "displayNameFi": "OIKTDK, Oikeustieteellinen tiedekunta (OIKTDK)",
-                          "displayNameEn": "OIKTDK, Faculty of Law (OIKTDK)",
-                          "displayNameSv": "OIKTDK, Juridiska fakulteten (OIKTDK)",
-                          "type": "toimintayksikko",
-                          "abbreviation": "OIKTDK",
-                          "parentAbbreviation": "OIKTDK",
-                          "children": [
+                          'id': 22963335,
+                          'code': 'H200',
+                          'nameFi': 'Oikeustieteellinen tiedekunta',
+                          'nameEn': 'Faculty of Law',
+                          'nameSv': 'Juridiska fakulteten',
+                          'displayNameFi': 'OIKTDK, Oikeustieteellinen tiedekunta (OIKTDK)',
+                          'displayNameEn': 'OIKTDK, Faculty of Law (OIKTDK)',
+                          'displayNameSv': 'OIKTDK, Juridiska fakulteten (OIKTDK)',
+                          'type': 'toimintayksikko',
+                          'abbreviation': 'OIKTDK',
+                          'parentAbbreviation': 'OIKTDK',
+                          'children': [
                             {
-                              "id": 55134536,
-                              "code": "H2001",
-                              "nameFi": "Oikeustieteellinen koulutus, Vaasa",
-                              "nameEn": "Vaasa Unit of Legal Studies",
-                              "nameSv": "Juridiska utbildningen i Vasa",
-                              "displayNameFi": "OIKTDK, Oikeustieteellinen koulutus, Vaasa",
-                              "displayNameEn": "OIKTDK, Vaasa Unit of Legal Studies",
-                              "displayNameSv": "OIKTDK, Juridiska utbildningen i Vasa",
-                              "type": "yksikko",
-                              "parentAbbreviation": "OIKTDK",
-                              "publicity": "julkinen"
+                              'id': 55134536,
+                              'code': 'H2001',
+                              'nameFi': 'Oikeustieteellinen koulutus, Vaasa',
+                              'nameEn': 'Vaasa Unit of Legal Studies',
+                              'nameSv': 'Juridiska utbildningen i Vasa',
+                              'displayNameFi': 'OIKTDK, Oikeustieteellinen koulutus, Vaasa',
+                              'displayNameEn': 'OIKTDK, Vaasa Unit of Legal Studies',
+                              'displayNameSv': 'OIKTDK, Juridiska utbildningen i Vasa',
+                              'type': 'yksikko',
+                              'parentAbbreviation': 'OIKTDK',
+                              'publicity': 'julkinen'
                             }
                           ]
                         }
@@ -135,7 +135,7 @@ const inputTree =
               },
           ]
       }
-  }
+  };
 
 test('flattenTree result is not larger than original tree', () => {
     const flatTreee = flattenTree(inputTree.tree.children);
