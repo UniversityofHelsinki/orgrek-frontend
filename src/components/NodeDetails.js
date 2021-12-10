@@ -25,6 +25,17 @@ const NodeDetails = (props) => {
         return codeAttributes.includes(elem);
     };
 
+    const orderCodeAttributes = (elems) => {
+        const result = [];
+        result.push({ 'key': 'unique_id', 'value': props.node.unique_id, startDate: null, endDate: null });
+        codeAttributes.map(codeAttribute => {
+            const match = elems.find(elem => elem.key === codeAttribute);
+            match ? result.push(match) : '';
+        });
+
+        return result;
+    };
+
     const isLanguageAttribute = (elem) => {
         return (elem.startsWith('name') && elem.length === 7);
     };
@@ -47,7 +58,7 @@ const NodeDetails = (props) => {
     const nameInfoData = props.nodeAttributes ? props.nodeAttributes.filter(elem => isLanguageAttribute(elem.key)) : false;
     const displayNameData = props.nodeAttributes ? parseDisplayNames(nameInfoData, props.nodeAttributes.find(elem => elem.key === 'lyhenne'), props.nodeAttributes.find(elem => elem.key === 'emo_lyhenne')) : false;
     const DisplayName = displayNameData ?  matchNameToLang(displayNameData) : false;
-    const codeAttributesData = props.nodeAttributes ? props.nodeAttributes.filter(elem => isCodeAttribute(elem.key)) : false;
+    const codeAttributesData = props.nodeAttributes ? orderCodeAttributes(props.nodeAttributes) : false;
     const typeAttributeData = props.nodeAttributes ? props.nodeAttributes.filter(elem => elem.key === 'type') : false;
     const otherAttributesData = props.nodeAttributes ? props.nodeAttributes.filter(elem => !isCodeAttribute(elem.key) && elem.key !== 'type' && !isLanguageAttribute(elem.key)) : false;
     const validityData = props.node ? [props.node] : false;
