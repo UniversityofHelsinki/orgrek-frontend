@@ -11,23 +11,27 @@ const Node = (props) => {
     const nameSelectedLanguage = selectNameVersion(i18n, props.item);
 
     return (
-        <div style={{ paddingLeft: `${props.level * 35}px` }}>
+        <div style={{ display: 'flex', paddingLeft: `${props.level * 35}px` }}>
+             {props.hasChildren
+                && <div><i
+                data-testid={props.selected ? 'arrowdown' : 'arrowright'}
+                id={props.item.id} onClick={props.onToggle} className={props.selected ? 'arrow down' : 'arrow right'}>
+                </i></div>}
             <span style={props.node && props.node.unique_id === props.item.id
-                ?  { fontWeight: 'bold', paddingRight: '10px' }
-                : { paddingRight: '10px' } }
+                ?  { fontWeight: 'bold', paddingRight: '10px', marginLeft: '5px' }
+                : { paddingRight: '10px', marginLeft: '5px' } }
                 onClick={() => props.onNodeSelection(props.selectedDay)}>
                     {props.level > 0
-                    ? props.item.code
+                    ? props.item.code + ' '
                     : ''}
                     {props.parentAbbr
-                    ? ' ' + props.parentAbbr + ', '
+                    ? props.parentAbbr + ', '
                     : ''}
                     {nameSelectedLanguage}
                     {props.item.abbreviation
                     ? ' (' + props.item.abbreviation + ')'
                     : ''}
             </span>
-            {props.hasChildren && <i data-testid={props.selected ? 'arrowdown' : 'arrowright'}  id={props.item.id} onClick={props.onToggle} className={props.selected ? 'arrow down' : 'arrow right'}></i>}
         </div>
     );
 };

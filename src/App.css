@@ -1,6 +1,15 @@
 .App {
   display: flex;
   flex-direction: column;
+  color: #333;
+}
+
+.table {
+  color: #333 !important;
+}
+
+.table>:not(:first-child) {
+  border-top: 2px solid lightgray !important;
 }
 
 .orgrek-header {
