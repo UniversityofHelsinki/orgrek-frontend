@@ -27,7 +27,7 @@ const NodeDetails = (props) => {
 
     const orderCodeAttributes = (elems) => {
         const result = [];
-        result.push({ 'key': 'unique_id', 'value': props.node.unique_id, startDate: null, endDate: null });
+        props.node.unique_id ? result.push({ 'key': 'unique_id', 'value': props.node.unique_id, startDate: null, endDate: null }) : result.push({ 'key': 'unique_id', 'value': t('no_value'), startDate: null, endDate: null });
         codeAttributes.map(codeAttribute => {
             const match = elems.find(elem => elem.key === codeAttribute);
             match ? result.push(match) : '';
