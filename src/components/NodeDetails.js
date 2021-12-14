@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import NodeDetailsTable from './NodeDetailsTable';
+import NodeViewControl from './NodeViewControl';
 import { parseDisplayNames } from '../actions/utilAction';
 import { useTranslation } from 'react-i18next';
 
@@ -51,6 +52,7 @@ const NodeDetails = (props) => {
         {props.nodeAttributes &&
             <>
                 <h3>{DisplayName}</h3>
+                <NodeViewControl />
                 <NodeDetailsTable
                     selectedDay={props.selectedDay}
                     type='key-value'
