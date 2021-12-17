@@ -18,8 +18,9 @@ code {
   display: inline-block;
   padding: 3px;
   background: transparent;
+  margin: auto;
   position: relative;
-  top: -7px;
+  bottom: 5%;
 }
 
 .arrow::after {

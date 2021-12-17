@@ -81,7 +81,7 @@ jest.mock('react-i18next', () => ({
         },
       };
     },
-  }));
+}));
 
 test('Tree renders', () => {
     render(<Tree />);

@@ -99,6 +99,8 @@ deploy_dev:
     - oc project organisaatiorekisteri
     - oc set env dc/organisaatiorekisteri-frontend-dev REACT_APP_GIT_HASH=$(git rev-parse --short=7 HEAD)
     - oc start-build organisaatiorekisteri-frontend-dev --from-dir=. --follow
+    - oc patch bc/organisaatiorekisteri-frontend-dev --patch '{"spec":{"successfulBuildsHistoryLimit":1}}'
+    - oc patch bc/organisaatiorekisteri-frontend-dev --patch '{"spec":{"failedBuildsHistoryLimit":1}}'
 
 deploy_test:
   stage: deploy
@@ -121,6 +123,8 @@ deploy_test:
     - oc project organisaatiorekisteri
     - oc set env dc/organisaatiorekisteri-frontend-test REACT_APP_GIT_HASH=$(git rev-parse --short=7 HEAD)
     - oc start-build organisaatiorekisteri-frontend-test --from-dir=. --follow
+    - oc patch bc/organisaatiorekisteri-frontend-test --patch '{"spec":{"successfulBuildsHistoryLimit":1}}'
+    - oc patch bc/organisaatiorekisteri-frontend-test --patch '{"spec":{"failedBuildsHistoryLimit":1}}'
 
 deploy_prod:
   stage: deploy
@@ -144,6 +148,8 @@ deploy_prod:
     - oc project organisaatiorekisteri
     - oc set env dc/organisaatiorekisteri-frontend-prod REACT_APP_GIT_HASH=$(git rev-parse --short=7 HEAD)
     - oc start-build organisaatiorekisteri-frontend-prod --from-dir=. --follow
+    - oc patch bc/organisaatiorekisteri-frontend-prod --patch '{"spec":{"successfulBuildsHistoryLimit":1}}'
+    - oc patch bc/organisaatiorekisteri-frontend-prod --patch '{"spec":{"failedBuildsHistoryLimit":1}}'
 
 # Rules for the scheduled npm audit and outdated scans
 dependency scanning:

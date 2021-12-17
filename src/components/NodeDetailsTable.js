@@ -36,14 +36,14 @@ const NodeDetailsTable = (props) => {
 
             if (props.type === 'node-hierarchy') {
                 return (<tr key={elem.node.id}>
-                    <td onClick={() => props.onNodeSelection(elem.node)}><a className='list-node-link' href="#">{t(elem.node.id, { ns: nodeattrNs })}</a></td>
+                    <td onClick={() => props.onNodeSelection(elem.node.unique_id)}><a className='list-node-link' href="#">{t(elem.node.id, { ns: nodeattrNs })}</a></td>
                     <td>{commaSep(elem.hierarchies)}</td>
                 </tr>);
             }
 
             if (props.type === 'name-validity') {
                 return (<tr key={elem.nodeId}>
-                    <td>{t(elem.nodeId, { ns: 'nodeattr' })}</td>
+                    <td onClick={() => props.onNodeSelection(elem.uniqueId)}><a className='list-node-link' href="#">{t(elem.nodeId, { ns: 'nodeattr' })}</a></td>
                     <td>{showValidity(elem.startDate, elem.endDate, i18n, t)}</td>
                     <td>{showValidity(elem.edgeStartDate, elem.edgeEndDate, i18n, t)}</td>
                 </tr>);
@@ -72,13 +72,13 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-    onNodeSelection: (elem) => {
-        dispatch(fetchNode(elem.unique_id));
-        dispatch(fetchNodeAttributes(elem.unique_id, ownProps.selectedDay));
-        dispatch(fetchNodeParents(elem.unique_id, ownProps.selectedDay));
-        dispatch(fetchNodeChildren(elem.unique_id, ownProps.selectedDay));
-        dispatch(fetchNodePredecessors(elem.unique_id));
-        dispatch(fetchNodeSuccessors(elem.unique_id));
+    onNodeSelection: (elemId) => {
+        dispatch(fetchNode(elemId));
+        dispatch(fetchNodeAttributes(elemId, ownProps.selectedDay));
+        dispatch(fetchNodeParents(elemId, ownProps.selectedDay));
+        dispatch(fetchNodeChildren(elemId, ownProps.selectedDay));
+        dispatch(fetchNodePredecessors(elemId));
+        dispatch(fetchNodeSuccessors(elemId));
     }
 });
 
