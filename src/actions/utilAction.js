@@ -1,7 +1,7 @@
 export const showValidity = (startDate, endDate, i18n, t) => {
     const lang = i18n.language;
     if (startDate && endDate) {
-        return new Date(startDate).toLocaleDateString('fi-FI') + ' – ' + new Date(endDate).toLocaleDateString('fi-FI');
+        return new Date(startDate).toLocaleDateString('fi-FI') + ' - ' + new Date(endDate).toLocaleDateString('fi-FI');
     }
     if (startDate) {
         switch (lang) {
