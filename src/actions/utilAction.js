@@ -39,8 +39,8 @@ export const selectNameVersion = (i18n,item) => {
     }
 };
 
-export const commaSep = (hierarchies) => {
-    return hierarchies.map(item => item).join(', ');
+export const commaSepWithTranslate = (hierarchies, t) => {
+    return hierarchies.map(item => t(item)).join(', ');
 };
 
 export const parseDisplayNames = (nameInfoData, lyhenne, emo_lyhenne) => {
