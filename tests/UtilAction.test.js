@@ -1,7 +1,7 @@
 import React from 'react';
 import { screen, render } from './testUtils';
 import * as reactRedux from 'react-redux';
-import { flattenTree } from '../src/actions/utilAction';
+import { flattenTree, showValidity } from '../src/actions/utilAction';
 
 jest.spyOn(reactRedux, 'useDispatch');
 
@@ -143,3 +143,31 @@ test('flattenTree result is not larger than original tree', () => {
     const treeSize = encodeURI(JSON.stringify(inputTree).split(/%..|./).length - 1);
     expect(flatSize / 1024).toBeLessThanOrEqual(treeSize / 1024);
 });
+
+test('the from dates render as expected', () => {
+  const t = (str) => str
+  const i18n = {language: 'fi'};
+  const parseDate = showValidity('2013-12-31T20:00:00.000+00:00', null, i18n, t);
+  expect(parseDate).toMatch(/12|31[./]12|31[./]2013from_date/);
+})
+
+test('the until dates render as expected', () => {
+  const t = (str) => str
+  const i18n = {language: 'fi'};
+  const parseDate = showValidity(null, '2016-12-31 00:00:00', i18n, t);
+  expect(parseDate).toMatch(/12|31[./]12|31[./]2016until_date/);
+})
+
+test('the time period dates render as expected', () => {
+  const t = (str) => str
+  const i18n = {language: 'fi'};
+  const parseDate = showValidity('2013-12-31T20:00:00.000+00:00', '2016-12-31 00:00:00', i18n, t);
+  expect(parseDate).toMatch(/12|31[./]12|31[./]2013 - 12|31[./]12|31[./]2016/);
+})
+
+test("the missing date message rendes as expected", () => {
+  const t = (str) => str
+  const i18n = {language: 'fi'};
+  const parseDate = showValidity(null, null, i18n, t);
+  expect(parseDate).toMatch('not_specified');
+})

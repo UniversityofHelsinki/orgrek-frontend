@@ -1,7 +1,7 @@
 export const showValidity = (startDate, endDate, i18n, t) => {
     const lang = i18n.language;
     if (startDate && endDate) {
-        return new Date(startDate).toLocaleDateString('fi-FI') + ' – ' + new Date(endDate).toLocaleDateString('fi-FI');
+        return new Date(startDate).toLocaleDateString('fi-FI') + ' - ' + new Date(endDate).toLocaleDateString('fi-FI');
     }
     if (startDate) {
         switch (lang) {
@@ -16,10 +16,10 @@ export const showValidity = (startDate, endDate, i18n, t) => {
     if (endDate) {
         switch (lang) {
             case 'fi':
-                return new Date(startDate).toLocaleDateString('fi-FI') + t('until_date');
+                return new Date(endDate).toLocaleDateString('fi-FI') + t('until_date');
 
             default:
-                return t('until_date') + new Date(startDate).toLocaleDateString('fi-FI');
+                return t('until_date') + new Date(endDate).toLocaleDateString('fi-FI');
         }
     }
 
