@@ -23,7 +23,7 @@ stages:
 setup:
   stage: setup
   tags:
-    - shared-openshift
+    - ohtu-build-2
   script:
     - npm ci
 
@@ -31,7 +31,7 @@ setup:
 test:
   stage: test
   tags:
-    - shared-openshift
+    - ohtu-build-2
   script:
     - npm test
   coverage: /All files\s*\|\s*([\d\.]+)/
@@ -39,7 +39,7 @@ test:
 build_dev:
   stage: build
   tags:
-    - shared-openshift
+    - ohtu-build-2
   only:
     - master
   script:
@@ -53,7 +53,7 @@ build_dev:
 build_test:
   stage: build
   tags:
-    - shared-openshift
+    - ohtu-build-2
   only:
     - test
   script:
@@ -67,7 +67,7 @@ build_test:
 build_prod:
   stage: build
   tags:
-    - shared-openshift
+    - ohtu-build-2
   only:
     - prod
   script:
@@ -81,7 +81,7 @@ build_prod:
 deploy_dev:
   stage: deploy
   tags:
-    - shared-openshift
+    - ohtu-build-2
   environment:
     name: development
   only:
@@ -105,7 +105,7 @@ deploy_dev:
 deploy_test:
   stage: deploy
   tags:
-    - shared-openshift
+    - ohtu-build-2
   environment:
     name: test
   only:
@@ -129,7 +129,7 @@ deploy_test:
 deploy_prod:
   stage: deploy
   tags:
-    - shared-openshift
+    - ohtu-build-2
   environment:
     name: prod
   only:
@@ -154,7 +154,7 @@ deploy_prod:
 dependency scanning:
   stage: audit_scan
   tags:
-    - shared-openshift
+    - ohtu-build-2
   allow_failure: true
   only:
     - schedules
