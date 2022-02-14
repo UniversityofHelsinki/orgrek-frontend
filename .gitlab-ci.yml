@@ -1,13 +1,18 @@
-image: frolvlad/alpine-glibc
+image: quay.io/tike/alpine-oc-node
 
-before_script:
-  - apk update && apk --no-cache add g++ gcc libgcc libstdc++ linux-headers make python3 curl tar nodejs npm git
+variables:
+  npm_config_cache: "$CI_PROJECT_DIR/.npm"
 
-  # Cache node modules - speeds up future builds
-cache:
-  key: ${CI_COMMIT_REF_SLUG}
-  paths:
-    - node_modules
+# Define a hidden job to be used with extends
+# Better than default to avoid activating cache for all jobs
+.dependencies_cache:
+  cache:
+    key:
+      files:
+        - package-lock.json
+    paths:
+      - .npm
+    policy: pull
 
 # Define the stages
 stages:
@@ -17,21 +22,26 @@ stages:
   - build
   - deploy
 
-# Define the process for each stage
-
 # Define the process for setup stage
 setup:
   stage: setup
-  tags:
-    - ohtu-build-2
   script:
     - npm ci
+  tags:
+    - shared-openshift
+  extends: .dependencies_cache
+  cache:
+    policy: pull-push
+  artifacts:
+    expire_in: 1h
+    paths:
+      - node_modules
 
 # Define the process for test stage
 test:
   stage: test
   tags:
-    - ohtu-build-2
+    - shared-openshift
   script:
     - npm test
   coverage: /All files\s*\|\s*([\d\.]+)/
@@ -39,7 +49,7 @@ test:
 build_dev:
   stage: build
   tags:
-    - ohtu-build-2
+    - shared-openshift
   only:
     - master
   script:
@@ -53,7 +63,7 @@ build_dev:
 build_test:
   stage: build
   tags:
-    - ohtu-build-2
+    - shared-openshift
   only:
     - test
   script:
@@ -67,7 +77,7 @@ build_test:
 build_prod:
   stage: build
   tags:
-    - ohtu-build-2
+    - shared-openshift
   only:
     - prod
   script:
@@ -81,7 +91,7 @@ build_prod:
 deploy_dev:
   stage: deploy
   tags:
-    - ohtu-build-2
+    - shared-openshift
   environment:
     name: development
   only:
@@ -90,9 +100,9 @@ deploy_dev:
     # Skip deploy when scheduled npm audit and outdated scans are executed.
     - schedules
   script:
+    # set home path for openshift 1001 user
+    - export HOME=/home/1001
     - mv nginx_dev.conf nginx.conf
-    - curl -fsSLO --compressed "https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/openshift-client-linux.tar.gz";
-    - tar xvzf openshift-client-linux.tar.gz -C /usr/local/bin
     # before any action, I connect to the OpenShift server with the appropriate credentials
     # this parameter: `--insecure-skip-tls-verify` is important because we use a certificate signed by an unknown authority
     - oc login https://$OPENSHIFT_ADDR_TEST:$OPENSHIFT_PORT --token=$OPENSHIFT_TOKEN_TEST --insecure-skip-tls-verify
@@ -105,7 +115,7 @@ deploy_dev:
 deploy_test:
   stage: deploy
   tags:
-    - ohtu-build-2
+    - shared-openshift
   environment:
     name: test
   only:
@@ -114,9 +124,9 @@ deploy_test:
     # Skip deploy when scheduled npm audit and outdated scans are executed.
     - schedules
   script:
+    # set home path for openshift 1001 user
+    - export HOME=/home/1001
     - mv nginx_test.conf nginx.conf
-    - curl -fsSLO --compressed "https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/openshift-client-linux.tar.gz";
-    - tar xvzf openshift-client-linux.tar.gz -C /usr/local/bin
     # before any action, I connect to the OpenShift server with the appropriate credentials
     # this parameter: `--insecure-skip-tls-verify` is important because we use a certificate signed by an unknown authority
     - oc login https://$OPENSHIFT_ADDR_TEST:$OPENSHIFT_PORT --token=$OPENSHIFT_TOKEN_TEST --insecure-skip-tls-verify
@@ -129,7 +139,7 @@ deploy_test:
 deploy_prod:
   stage: deploy
   tags:
-    - ohtu-build-2
+    - shared-openshift
   environment:
     name: prod
   only:
@@ -138,9 +148,9 @@ deploy_prod:
     # Skip deploy when scheduled npm audit and outdated scans are executed.
     - schedules
   script:
+    # set home path for openshift 1001 user
+    - export HOME=/home/1001
     - mv nginx_prod.conf nginx.conf
-    - curl -fsSLO --compressed "https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/openshift-client-linux.tar.gz";
-    - tar xvzf openshift-client-linux.tar.gz -C /usr/local/bin
     # before any action, I connect to the OpenShift server with the appropriate credentials
     # this parameter: `--insecure-skip-tls-verify` is important because we use a certificate signed by an unknown authority
     - oc login https://$OPENSHIFT_ADDR_PROD:$OPENSHIFT_PORT --token=$OPENSHIFT_TOKEN_PROD --insecure-skip-tls-verify
@@ -154,7 +164,7 @@ deploy_prod:
 dependency scanning:
   stage: audit_scan
   tags:
-    - ohtu-build-2
+    - shared-openshift
   allow_failure: true
   only:
     - schedules
