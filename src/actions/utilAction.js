@@ -77,3 +77,47 @@ export const flattenTree = (input, res = []) => {
     ) : '';
     return res;
 };
+
+export const filterNodeDuplicates = (historyArray, futureArray) => {
+    const result = historyArray;
+    if (futureArray && historyArray) {
+        futureArray.map(elem => {
+            const found = historyArray.find(historyElem => historyElem.node.id === elem.node.id);
+            found ? '' : result.push(elem);
+        });
+    }
+    return result;
+};
+
+export const filterAttributeDuplicates = (historyArray, futureArray) => {
+    const result = historyArray;
+    futureArray ? futureArray.map(elem => {
+        const found = result.find(historyElem => deepEqual(historyElem, elem));
+        found ? '' : result.push(elem);
+    }) : '';
+    return result;
+};
+
+export function deepEqual(object1, object2) {
+    const keys1 = Object.keys(object1);
+    const keys2 = Object.keys(object2);
+    if (keys1.length !== keys2.length) {
+      return false;
+    }
+    for (const key of keys1) {
+      const val1 = object1[key];
+      const val2 = object2[key];
+      const areObjects = isObject(val1) && isObject(val2);
+      if (
+        areObjects && !deepEqual(val1, val2) ||
+        !areObjects && val1 !== val2
+      ) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  function isObject(object) {
+    return object !== null && typeof object === 'object';
+  }
