@@ -194,7 +194,7 @@ const mapStateToProps = state => ({
     childrenHistory: state.hr.childrenHistory,
     childrenFuture: state.hr.childrenFuture,
     predecessors : state.nrd.nodePredecessors,
-    successors : state.nrd.nodeSuccessorsconst,
+    successors : state.nrd.nodeSuccessors,
     selectedDay: state.dr.selectedDay,
     showHistory: state.nvrd.showHistory,
     showComing: state.nvrd.showComing

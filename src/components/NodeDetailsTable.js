@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { commaSep, showValidity } from '../actions/utilAction';
+import { commaSepWithTranslate, showValidity } from '../actions/utilAction';
 import { Table } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { fetchNode, fetchNodeAttributes, fetchNodePredecessors, fetchNodeSuccessors } from '../actions/nodeAction';
@@ -37,7 +37,7 @@ const NodeDetailsTable = (props) => {
             if (props.type === 'node-hierarchy') {
                 return (<tr key={elem.node.id}>
                     <td onClick={() => props.onNodeSelection(elem.node.unique_id)}><a className='list-node-link' href="#">{t(elem.node.id, { ns: nodeattrNs })}</a></td>
-                    <td>{commaSep(elem.hierarchies)}</td>
+                    <td>{commaSepWithTranslate(elem.hierarchies, t)}</td>
                 </tr>);
             }
 
