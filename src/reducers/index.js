@@ -4,13 +4,15 @@ import hierarchyReducer from './hierarchyReducer';
 import dayChangeReducer from './dayChangeReducer';
 import userReducer from './userReducer';
 import nodeReducer from './nodeReducer';
+import nodeDetailsViewReducer from './nodeDetailsViewReducer';
 
 const rootReducer = combineReducers({
     tree : treeReducer,
     hr : hierarchyReducer,
     nrd : nodeReducer,
     ur : userReducer,
-    dr: dayChangeReducer
+    dr: dayChangeReducer,
+    nvrd: nodeDetailsViewReducer
 });
 
 export default rootReducer;
