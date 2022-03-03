@@ -6,20 +6,20 @@ export const showValidity = (startDate, endDate, i18n, t) => {
     if (startDate) {
         switch (lang) {
             case 'fi':
-                return new Date(startDate).toLocaleDateString('fi-FI') + t('from_date');
+                return new Date(startDate).toLocaleDateString('fi-FI') + ' ' + t('from_date_react');
 
             default:
-                return t('from_date') + new Date(startDate).toLocaleDateString('fi-FI');
+                return t('from_date_react') + ' '  + new Date(startDate).toLocaleDateString('fi-FI');
         }
     }
 
     if (endDate) {
         switch (lang) {
             case 'fi':
-                return new Date(endDate).toLocaleDateString('fi-FI') + t('until_date');
+                return new Date(endDate).toLocaleDateString('fi-FI') + ' ' + t('until_date_react');
 
             default:
-                return t('until_date') + new Date(endDate).toLocaleDateString('fi-FI');
+                return t('until_date_react') + ' ' + new Date(endDate).toLocaleDateString('fi-FI');
         }
     }
 
