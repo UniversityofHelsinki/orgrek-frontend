@@ -47,8 +47,8 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         dispatch(fetchNodeAttributes(ownProps.item.id, selectedDay));
         dispatch(fetchNodeParents(ownProps.item.id, selectedDay));
         dispatch(fetchNodeChildren(ownProps.item.id, selectedDay));
-        dispatch(fetchNodePredecessors(ownProps.item.id));
-        dispatch(fetchNodeSuccessors(ownProps.item.id));
+        dispatch(fetchNodePredecessors(ownProps.item.id, selectedDay));
+        dispatch(fetchNodeSuccessors(ownProps.item.id, selectedDay));
     }
 });
 
