@@ -99,22 +99,28 @@ jest.mock('react-i18next', () => ({
 ];
 
   const contentDataNameValidity = [
-    {
-        'nodeId': '3337',
-        'name': 'IPR University Center',
-        'startDate': null,
-        'endDate': '2013-12-31 00:00:00',
-        'edgeStartDate': null,
-        'edgeEndDate': null
-    },
-    {
-        'nodeId': '3471',
-        'name': 'HY, Helsingin yliopiston koulutus- ja kehittämispalvelut (HYKKE)',
-        'startDate': null,
-        'endDate': '2016-12-31 00:00:00',
-        'edgeStartDate': null,
-        'edgeEndDate': null
-    }
+      {
+          'nodeEdgeHistoryWrapper': {
+              'edgeEndDate': null,
+              'edgeStartDate': null,
+              'endDate': '2016-12-30T22:00:00.000+00:00',
+              'id': '3471',
+              'name': 'HY, Helsingin yliopiston koulutus- ja kehittämispalvelut (HYKKE)',
+              'startDate': null,
+              'unique_id': 21682135
+          }
+      },
+      {
+          'nodeEdgeHistoryWrapper': {
+              'edgeEndDate': null,
+              'edgeStartDate': null,
+              'endDate': '2013-12-30T22:00:00.000+00:00',
+              'id': '3337',
+              'name': 'IPR University Center',
+              'startDate': null,
+              'unique_id': 75908005
+          }
+      }
 ];
 
 test('key-value NodeDetailsTable renders', () => {

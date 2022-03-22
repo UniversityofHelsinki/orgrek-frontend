@@ -101,10 +101,11 @@ export const apiGetNodeAttributesFutureSuccessCall = data => {
     };
 };
 
-export const fetchNodePredecessors = (uniqueId) => {
+export const fetchNodePredecessors = (uniqueId, selectedDay) => {
     const ORGREK_BACKEND_SERVER = process.env.REACT_APP_ORGREK_BACKEND_SERVER || '';
     const PATH = '/api/node/predecessors/';
-    const PARAMS = `${uniqueId}`;
+    const date = selectedDay ? selectedDay.toLocaleDateString('fi-FI') : new Date().toLocaleDateString('fi-FI');
+    const PARAMS = `${uniqueId}/${date}`;
     return async (dispatch)  => {
         let response = await fetch(`${ORGREK_BACKEND_SERVER}${PATH}${PARAMS}`, {
             headers: { 'Content-Type': 'application/json' }
@@ -125,10 +126,11 @@ export const apiGetNodePredecessorsSuccessCall = data => {
   };
 };
 
-export const fetchNodeSuccessors = (uniqueId) => {
+export const fetchNodeSuccessors = (uniqueId, selectedDay) => {
     const ORGREK_BACKEND_SERVER = process.env.REACT_APP_ORGREK_BACKEND_SERVER || '';
     const PATH = '/api/node/successors/';
-    const PARAMS = `${uniqueId}`;
+    const date = selectedDay ? selectedDay.toLocaleDateString('fi-FI') : new Date().toLocaleDateString('fi-FI');
+    const PARAMS = `${uniqueId}/${date}`;
     return async (dispatch)  => {
         let response = await fetch(`${ORGREK_BACKEND_SERVER}${PATH}${PARAMS}`, {
             headers: { 'Content-Type': 'application/json' }

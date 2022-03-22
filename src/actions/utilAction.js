@@ -43,6 +43,19 @@ export const commaSepWithTranslate = (hierarchies, t) => {
     return hierarchies.map(item => t(item)).join(', ');
 };
 
+export const showHierarchyDisplayNameByLanguage = (node, lang) => {
+    if(node){
+        if(lang==='fi'){
+            return node.displayNameFi;
+        }else if(lang==='sv'){
+            return node.displayNameSv;
+        }else if(lang==='en'){
+            return node.displayNameEn;
+        }
+    }
+    return null;
+};
+
 export const parseDisplayNames = (nameInfoData, lyhenne, emo_lyhenne) => {
     const displayNames = nameInfoData.map((elem) => {
         const emo = emo_lyhenne && emo_lyhenne.value ? emo_lyhenne.value + ', ' : '';

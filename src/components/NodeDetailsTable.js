@@ -1,6 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { commaSepWithTranslate, showValidity } from '../actions/utilAction';
+import {
+    commaSepWithTranslate,
+    showValidity,
+    showHierarchyDisplayNameByLanguage
+} from '../actions/utilAction';
 import { Table } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { fetchNode, fetchNodeAttributes, fetchNodePredecessors, fetchNodeSuccessors } from '../actions/nodeAction';
@@ -8,7 +12,7 @@ import { fetchNodeChildren, fetchNodeParents } from '../actions/hierarchyAction'
 
 const NodeDetailsTable = (props) => {
     const { t, i18n } = useTranslation();
-    const nodeattrNs = `nodeattr${props.selectedDay ? props.selectedDay.toLocaleDateString('EN-Ca') : ''}`;
+    const lang = i18n.language;
 
     const renderTableHeader = () => {
         return (
@@ -36,16 +40,22 @@ const NodeDetailsTable = (props) => {
 
             if (props.type === 'node-hierarchy') {
                 return (<tr key={elem.node.id}>
-                    <td onClick={() => props.onNodeSelection(elem.node.unique_id)}><a className='list-node-link' href="#">{t(elem.node.id, { ns: nodeattrNs })}</a></td>
+                    <td onClick={() => props.onNodeSelection(elem.node.unique_id)}>
+                        <a className='list-node-link' href="#">
+                            {showHierarchyDisplayNameByLanguage(elem, lang) ? showHierarchyDisplayNameByLanguage(elem, lang) : elem.node.name}
+                        </a></td>
                     <td>{commaSepWithTranslate(elem.hierarchies, t)}</td>
                 </tr>);
             }
 
             if (props.type === 'name-validity') {
-                return (<tr key={elem.nodeId}>
-                    <td onClick={() => props.onNodeSelection(elem.uniqueId)}><a className='list-node-link' href="#">{t(elem.nodeId, { ns: 'nodeattr' })}</a></td>
-                    <td>{showValidity(elem.startDate, elem.endDate, i18n, t)}</td>
-                    <td>{showValidity(elem.edgeStartDate, elem.edgeEndDate, i18n, t)}</td>
+                return (<tr key={elem.nodeEdgeHistoryWrapper.id}>
+                    <td onClick={() => props.onNodeSelection(elem.nodeEdgeHistoryWrapper.unique_id)}>
+                        <a className='list-node-link' href="#">
+                            {showHierarchyDisplayNameByLanguage(elem, lang) ? showHierarchyDisplayNameByLanguage(elem, lang) : elem.nodeEdgeHistoryWrapper.name }
+                        </a></td>
+                    <td>{showValidity(elem.nodeEdgeHistoryWrapper.startDate, elem.nodeEdgeHistoryWrapper.endDate, i18n, t)}</td>
+                    <td>{showValidity(elem.nodeEdgeHistoryWrapper.edgeStartDate, elem.nodeEdgeHistoryWrapper.edgeEndDate, i18n, t)}</td>
                 </tr>);
             }
 
@@ -77,8 +87,8 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         dispatch(fetchNodeAttributes(elemId, ownProps.selectedDay));
         dispatch(fetchNodeParents(elemId, ownProps.selectedDay));
         dispatch(fetchNodeChildren(elemId, ownProps.selectedDay));
-        dispatch(fetchNodePredecessors(elemId));
-        dispatch(fetchNodeSuccessors(elemId));
+        dispatch(fetchNodePredecessors(elemId, ownProps.selectedDay));
+        dispatch(fetchNodeSuccessors(elemId, ownProps.selectedDay));
     }
 });
 
