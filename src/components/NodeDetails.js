@@ -12,6 +12,7 @@ const NodeDetails = (props) => {
     const [attributeData, setAttributeData] = useState(false);
     const [parentsData, setParentsData] = useState(false);
     const [childrenData, setChildrenData] = useState(false);
+    const [headerData, setHeaderData] = useState(false);
 
     const isCodeAttribute = (elem) => {
         return codeAttributes.includes(elem);
@@ -56,24 +57,30 @@ const NodeDetails = (props) => {
             setAttributeData(filterAttributeDuplicates(props.nodeAttributesHistory, props.nodeAttributesFuture));
             setChildrenData(filterNodeDuplicates(props.childrenHistory, props.childrenFuture));
             setParentsData(filterNodeDuplicates(props.parentsHistory, props.parentsFuture));
+            setHeaderData(props.nodeAttributes);
         } else if (props.showHistory && props.nodeAttributesHistory) {
             setAttributeData(props.nodeAttributesHistory);
             setChildrenData(props.childrenHistory);
             setParentsData(props.parentsHistory);
+            setHeaderData(props.nodeAttributes);
         } else if (props.showComing && props.nodeAttributesFuture) {
             setAttributeData(props.nodeAttributesFuture);
             setChildrenData(props.childrenFuture);
             setParentsData(props.parentsFuture);
+            setHeaderData(props.nodeAttributes);
         } else {
             setAttributeData(props.nodeAttributes);
             setChildrenData(props.children);
             setParentsData(props.parents);
+            setHeaderData(props.nodeAttributes);
         }
     };
 
     const nameInfoData = attributeData ? attributeData.filter(elem => isLanguageAttribute(elem.key)) : false;
     const displayNameData = attributeData ? parseDisplayNames(nameInfoData, attributeData.find(elem => elem.key === 'lyhenne'), attributeData.find(elem => elem.key === 'emo_lyhenne')) : false;
-    const DisplayName = displayNameData ?  matchNameToLang(displayNameData) : false;
+    const headerInfoData = headerData ? headerData.filter(elem => isLanguageAttribute(elem.key)) : false;
+    const headerNameData = headerData ? parseDisplayNames(headerInfoData, headerData.find(elem => elem.key === 'lyhenne'), headerData.find(elem => elem.key === 'emo_lyhenne')) : false;
+    const headerName = headerNameData ?  matchNameToLang(headerNameData) : false;
     const codeAttributesData = attributeData ? orderCodeAttributes(attributeData) : false;
     const typeAttributeData = attributeData ? attributeData.filter(elem => elem.key === 'type') : false;
     const otherAttributesData = attributeData ? attributeData.filter(elem => !isCodeAttribute(elem.key) && elem.key !== 'type' && !isLanguageAttribute(elem.key)) : false;
@@ -94,7 +101,7 @@ const NodeDetails = (props) => {
         <>
         {props.nodeAttributes &&
             <>
-                <h3>{DisplayName}</h3>
+                <h3>{headerName}</h3>
                 <NodeViewControl node={props.node} selectedDay={props.selectedDay} />
                 <NodeDetailsTable
                     selectedDay={props.selectedDay}
