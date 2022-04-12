@@ -46,11 +46,23 @@ export const commaSepWithTranslate = (hierarchies, t) => {
 export const showHierarchyDisplayNameByLanguage = (node, lang) => {
     if(node){
         if(lang==='fi'){
-            return node.displayNameFi;
+            if(node.displayNameFi){
+                return node.displayNameFi;
+            }else{
+                return node.displayNameEn ? node.displayNameEn : node.displayNameSv;
+            }
         }else if(lang==='sv'){
-            return node.displayNameSv;
+            if(node.displayNameSv){
+                return node.displayNameSv;
+            }else{
+                return node.displayNameFi ? node.displayNameFi : node.displayNameEn;
+            }
         }else if(lang==='en'){
-            return node.displayNameEn;
+            if(node.displayNameEn){
+                return node.displayNameEn;
+            }else{
+                return node.displayNameFi ? node.displayNameFi : node.displayNameSv;
+            }
         }
     }
     return null;
