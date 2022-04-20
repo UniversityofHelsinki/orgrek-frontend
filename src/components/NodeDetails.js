@@ -124,7 +124,7 @@ const NodeDetails = (props) => {
                     type='key-value'
                     heading='display_name_info'
                     tableLabels={['text_language_header', 'name']}
-                    contentData={displayNameData}
+                    contentData={headerNameData}
                     hasValidity={true}
                 />
                 <NodeDetailsTable
