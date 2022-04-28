@@ -15,12 +15,16 @@ const Node = (props) => {
              {props.hasChildren
                 && <div><i
                 data-testid={props.selected ? 'arrowdown' : 'arrowright'}
-                id={props.item.id} onClick={props.onToggle} className={props.selected ? 'arrow down' : 'arrow right'}>
+                id={props.item.id}
+                onClick={props.onToggle}
+                onKeyUp={(e) => e.key === 'Enter' && props.onToggle()}
+                tabIndex={0}
+                className={props.selected ? 'arrow down' : 'arrow right'}>
                 </i></div>}
             <span style={props.node && props.node.unique_id === props.item.id
                 ?  { fontWeight: 'bold', paddingRight: '10px', marginLeft: '5px' }
                 : { paddingRight: '10px', marginLeft: '5px' } }
-                onClick={() => props.onNodeSelection(props.selectedDay)}>
+                onClick={() => props.onNodeSelection(props.selectedDay)} onKeyUp={() => props.onNodeSelection(props.selectedDay)} tabIndex={0}>
                     {props.level > 0
                     ? props.item.code + ' '
                     : ''}
