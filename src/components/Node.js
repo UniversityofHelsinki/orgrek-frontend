@@ -22,8 +22,8 @@ const Node = (props) => {
                 className={props.selected ? 'arrow down' : 'arrow right'}>
                 </i></div>}
             <span style={props.node && props.node.unique_id === props.item.id
-                ?  { fontWeight: 'bold', paddingRight: '10px', marginLeft: '5px' }
-                : { paddingRight: '10px', marginLeft: '5px' } }
+                ?  { fontWeight: 'bold', paddingRight: '10px', marginLeft: '5px', color:'#107eab' }
+                : { paddingRight: '10px', marginLeft: '5px', color:'#333' } }
                 onClick={() => props.onNodeSelection(props.selectedDay)} onKeyUp={() => props.onNodeSelection(props.selectedDay)} tabIndex={0}>
                     {props.level > 0
                     ? props.item.code + ' '

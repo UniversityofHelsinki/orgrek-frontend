@@ -21,10 +21,10 @@ const App= (props) => {
         <div className="App">
                     <LoginRedirect loginUrl={SHIBBOLETH_LOGIN} />
                     <Header />
-                    <Container fluid="true">
+                    <Container fluid>
                         <Row>
                             <Col md={4} lg={4}><Hierarchy /></Col>
-                            <Col fluid="true"><NodeDetails /></Col>
+                            <Col ><NodeDetails /></Col>
                         </Row>
                     </Container>
                     <Footer />

@@ -32,6 +32,12 @@ const NodeDetails = (props) => {
         return result;
     };
 
+    const orderNameAttributesByLanguage = (elems) => {
+        const order = { name_fi : 0, name_sv : 1, name_en : 2, default: 3 };
+        elems.sort((a,b) => order[a.key] - order[b.key]);
+        return elems;
+    };
+
     const isLanguageAttribute = (elem) => {
         return (elem.startsWith('name') && elem.length === 7);
     };
@@ -75,12 +81,13 @@ const NodeDetails = (props) => {
             setHeaderData(props.nodeAttributes);
         }
     };
-
     const nameInfoData = attributeData ? attributeData.filter(elem => isLanguageAttribute(elem.key)) : false;
+    const nameInfoDataOrderedByLanguage = nameInfoData ? orderNameAttributesByLanguage(nameInfoData) : false;
     const displayNameData = attributeData ? parseDisplayNames(nameInfoData, attributeData.find(elem => elem.key === 'lyhenne'), attributeData.find(elem => elem.key === 'emo_lyhenne')) : false;
     const headerInfoData = headerData ? headerData.filter(elem => isLanguageAttribute(elem.key)) : false;
     const headerNameData = headerData ? parseDisplayNames(headerInfoData, headerData.find(elem => elem.key === 'lyhenne'), headerData.find(elem => elem.key === 'emo_lyhenne')) : false;
-    const headerName = headerNameData ?  matchNameToLang(headerNameData) : false;
+    const headerNameDataOrderedByLang = headerData ? orderNameAttributesByLanguage(headerNameData) : false;
+    const headerName = headerNameDataOrderedByLang ?  matchNameToLang(headerNameDataOrderedByLang) : false;
     const codeAttributesData = attributeData ? orderCodeAttributes(attributeData) : false;
     const typeAttributeData = attributeData ? attributeData.filter(elem => elem.key === 'type') : false;
     const otherAttributesData = attributeData ? attributeData.filter(elem => !isCodeAttribute(elem.key) && elem.key !== 'type' && !isLanguageAttribute(elem.key)) : false;
@@ -116,7 +123,7 @@ const NodeDetails = (props) => {
                     type='key-value'
                     heading='name_info'
                     tableLabels={['text_language_header', 'name']}
-                    contentData={nameInfoData}
+                    contentData={nameInfoDataOrderedByLanguage}
                     hasValidity={true}
                 />
                 <NodeDetailsTable

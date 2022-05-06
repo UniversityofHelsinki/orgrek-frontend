@@ -40,3 +40,26 @@ a.list-node-link {
 a:hover {
   text-decoration: underline;
 }
+
+.today-button {
+  background-color: #107eab;
+  border-color: #107eab
+}
+
+.today-button:hover {
+  background-color: #0e688b;
+}
+
+#show_history_switch:checked, #show_coming_switch:checked{
+  background-color: #0e688b;
+  border-color: #0e688b;
+}
+
+h3, h4 {
+  margin: 10px 10px 10px 0 !important;
+  color : #0e688b;
+}
+
+th {
+  color: #0e688b;
+}
