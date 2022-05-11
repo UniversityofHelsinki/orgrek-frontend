@@ -51,10 +51,61 @@ export const apiGetNodeAttributesSuccessCall = data => {
     };
 };
 
-export const fetchNodePredecessors = (uniqueId) => {
+export const fetchNodeAttributesHistory = (uniqueId, selectedDay) => {
+    const ORGREK_BACKEND_SERVER = process.env.REACT_APP_ORGREK_BACKEND_SERVER || '';
+    const date = selectedDay ? selectedDay.toLocaleDateString('fi-FI') : new Date().toLocaleDateString('fi-FI');
+    const PATH = '/api/node/historyandcurrent/';
+    const PARAMS = `${uniqueId}/${date}/attributes`;
+    return async (dispatch)  => {
+        let response = await fetch(`${ORGREK_BACKEND_SERVER}${PATH}${PARAMS}`, {
+            headers: { 'Content-Type': 'application/json' }
+        });
+        if (response.status === 200) {
+            let responseJSON = await response.json();
+            dispatch(apiGetNodeAttributesHistorySuccessCall(responseJSON));
+        } else {
+            dispatch(api401FailureCall(new Date()));
+        }
+    };
+};
+
+export const apiGetNodeAttributesHistorySuccessCall = data => {
+    return {
+        type: 'SUCCESS_API_GET_NODE_ATTRIBUTES_HISTORY',
+        payload: data
+    };
+};
+
+export const fetchNodeAttributesFuture = (uniqueId, selectedDay) => {
+    const ORGREK_BACKEND_SERVER = process.env.REACT_APP_ORGREK_BACKEND_SERVER || '';
+    const date = selectedDay ? selectedDay.toLocaleDateString('fi-FI') : new Date().toLocaleDateString('fi-FI');
+    const PATH = '/api/node/futureandcurrent/';
+    const PARAMS = `${uniqueId}/${date}/attributes`;
+    return async (dispatch)  => {
+        let response = await fetch(`${ORGREK_BACKEND_SERVER}${PATH}${PARAMS}`, {
+            headers: { 'Content-Type': 'application/json' }
+        });
+        if (response.status === 200) {
+            let responseJSON = await response.json();
+            dispatch(apiGetNodeAttributesFutureSuccessCall(responseJSON));
+        } else {
+            dispatch(api401FailureCall(new Date()));
+        }
+    };
+};
+
+export const apiGetNodeAttributesFutureSuccessCall = data => {
+    return {
+        type: 'SUCCESS_API_GET_NODE_ATTRIBUTES_FUTURE',
+        payload: data
+    };
+};
+
+export const fetchNodePredecessors = (uniqueId, selectedDay) => {
     const ORGREK_BACKEND_SERVER = process.env.REACT_APP_ORGREK_BACKEND_SERVER || '';
     const PATH = '/api/node/predecessors/';
-    const PARAMS = `${uniqueId}`;
+    const date = selectedDay ? selectedDay.toLocaleDateString('fi-FI') : new Date().toLocaleDateString('fi-FI');
+    const PARAMS = `${uniqueId}/${date}`;
     return async (dispatch)  => {
         let response = await fetch(`${ORGREK_BACKEND_SERVER}${PATH}${PARAMS}`, {
             headers: { 'Content-Type': 'application/json' }
@@ -75,10 +126,11 @@ export const apiGetNodePredecessorsSuccessCall = data => {
   };
 };
 
-export const fetchNodeSuccessors = (uniqueId) => {
+export const fetchNodeSuccessors = (uniqueId, selectedDay) => {
     const ORGREK_BACKEND_SERVER = process.env.REACT_APP_ORGREK_BACKEND_SERVER || '';
     const PATH = '/api/node/successors/';
-    const PARAMS = `${uniqueId}`;
+    const date = selectedDay ? selectedDay.toLocaleDateString('fi-FI') : new Date().toLocaleDateString('fi-FI');
+    const PARAMS = `${uniqueId}/${date}`;
     return async (dispatch)  => {
         let response = await fetch(`${ORGREK_BACKEND_SERVER}${PATH}${PARAMS}`, {
             headers: { 'Content-Type': 'application/json' }

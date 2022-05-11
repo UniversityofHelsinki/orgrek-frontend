@@ -1,7 +1,7 @@
 import React from 'react';
 import { screen, render } from './testUtils';
 import * as reactRedux from 'react-redux';
-import { flattenTree } from '../src/actions/utilAction';
+import { flattenTree, showValidity, deepEqual, filterAttributeDuplicates, filterNodeDuplicates } from '../src/actions/utilAction';
 
 jest.spyOn(reactRedux, 'useDispatch');
 
@@ -137,9 +137,200 @@ const inputTree =
       }
   };
 
+const historyNodes = [{
+  "node": {
+    "id": "1",
+    "name": "HY, Keskushallinto uusi nimi (UU99)",
+    "startDate": "2018-07-24T18:00:00.000+00:00",
+    "endDate": "2018-08-22T18:00:00.000+00:00",
+    "timestamp": "2018-08-10T02:54:42.521+00:00",
+    "unique_id": 27452043
+  },
+  "hierarchies": [
+    "henkilosto"
+  ]
+},
+{
+  "node": {
+    "id": "3130",
+    "name": "Erilliset laitokset",
+    "startDate": null,
+    "endDate": null,
+    "timestamp": "2017-12-28T08:49:04.463+00:00",
+    "unique_id": 42275629
+  },
+  "hierarchies": [
+    "toiminnanohjaus",
+    "opetus",
+    "tutkimus",
+    "talous",
+    "henkilosto"
+  ]
+},
+{
+  "node": {
+    "id": "3140",
+    "name": "HY, Yliopistopalvelut (YPA)",
+    "startDate": null,
+    "endDate": null,
+    "timestamp": "2020-01-24T13:29:24.426+00:00",
+    "unique_id": 77096679
+  },
+  "hierarchies": [
+    "opetus",
+    "talous",
+    "tutkimus",
+    "henkilosto"
+  ]
+}];
+
+const futureNodes = [{
+  "node": {
+    "id": "3140",
+    "name": "HY, Yliopistopalvelut (YPA)",
+    "startDate": null,
+    "endDate": null,
+    "timestamp": "2020-01-24T13:29:24.426+00:00",
+    "unique_id": 77096679
+  },
+  "hierarchies": [
+    "opetus",
+    "talous",
+    "tutkimus",
+    "henkilosto"
+  ]
+},
+{
+  "node": {
+    "id": "3236",
+    "name": "OIKTDK, Oikeustieteellinen tiedekunta (OIKTDK)",
+    "startDate": null,
+    "endDate": null,
+    "timestamp": "2018-07-09T07:22:50.110+00:00",
+    "unique_id": 22963335
+  },
+  "hierarchies": [
+    "toiminnanohjaus"
+  ]
+},
+{
+  "node": {
+    "id": "3319",
+    "name": "Helsingin taloustieteellinen tutkimuskeskus (HECER)",
+    "startDate": null,
+    "endDate": "2012-12-30T22:00:00.000+00:00",
+    "timestamp": null,
+    "unique_id": 90578829
+  },
+  "hierarchies": [
+    "talous"
+  ]
+}];
+
+const historyAttributes = [{
+  "key": "lyhenne",
+  "value": "TIKE",
+  "startDate": null,
+  "endDate": null
+},
+{
+  "key": "mainari_tunnus",
+  "value": "ATKOS",
+  "startDate": null,
+  "endDate": null
+},
+{
+  "key": "laskutus_tunnus",
+  "value": "A02700",
+  "startDate": null,
+  "endDate": null
+}];
+
+const futureAttributes = [{
+  "key": "laskutus_tunnus",
+  "value": "A02700",
+  "startDate": null,
+  "endDate": null
+},
+{
+  "key": "talous_tunnus",
+  "value": "H907",
+  "startDate": "2011-01-01T00:00:00.000+00:00",
+  "endDate": "2016-01-01T00:00:00.000+00:00"
+},
+{
+  "key": "talous_tunnus",
+  "value": "H907",
+  "startDate": "2017-01-01T00:00:00.000+00:00",
+  "endDate": null
+},
+{
+  "key": "type",
+  "value": "erillinen laitos",
+  "startDate": "2011-01-01T00:00:00.000+00:00",
+  "endDate": null
+}];
+
 test('flattenTree result is not larger than original tree', () => {
     const flatTreee = flattenTree(inputTree.tree.children);
     const flatSize = encodeURI(JSON.stringify(flatTreee).split(/%..|./).length - 1);
     const treeSize = encodeURI(JSON.stringify(inputTree).split(/%..|./).length - 1);
     expect(flatSize / 1024).toBeLessThanOrEqual(treeSize / 1024);
 });
+
+test('Node duplicates are filtered', () => {
+  expect(historyNodes.length + futureNodes.length).toEqual(6);
+  expect(filterNodeDuplicates(historyNodes, futureNodes).length).toEqual(5);
+});
+
+test('Attribute duplicates are filtered', () => {
+  expect(historyAttributes.length + futureAttributes.length).toEqual(7);
+  expect(filterAttributeDuplicates(historyAttributes, futureAttributes).length).toEqual(6);
+});
+
+test('deepEqual distinguishes different and similar objects', () => {
+  const obj1 = {
+    name: 'boo',
+    size: 'large',
+    scary: 'much'
+  }
+  const obj2 = {
+    name: 'boo',
+    size: 'large',
+    scary: 'much'
+  }
+  const obj3 = {
+    name: 'boo',
+    size: 'large',
+    scary: 'some'
+  }
+  expect(deepEqual(obj1, obj2)).toBeTruthy;
+  expect(deepEqual(obj1, obj3)).toBeFalsy;
+});
+test('the from dates render as expected', () => {
+  const t = (str) => str
+  const i18n = {language: 'fi'};
+  const parseDate = showValidity('2013-12-31T20:00:00.000+00:00', null, i18n, t);
+  expect(parseDate).toMatch(/12|31[./]12|31[./]2013from_date/);
+})
+
+test('the until dates render as expected', () => {
+  const t = (str) => str
+  const i18n = {language: 'fi'};
+  const parseDate = showValidity(null, '2016-12-31 00:00:00', i18n, t);
+  expect(parseDate).toMatch(/12|31[./]12|31[./]2016until_date/);
+})
+
+test('the time period dates render as expected', () => {
+  const t = (str) => str
+  const i18n = {language: 'fi'};
+  const parseDate = showValidity('2013-12-31T20:00:00.000+00:00', '2016-12-31 00:00:00', i18n, t);
+  expect(parseDate).toMatch(/12|31[./]12|31[./]2013 - 12|31[./]12|31[./]2016/);
+})
+
+test("the missing date message rendes as expected", () => {
+  const t = (str) => str
+  const i18n = {language: 'fi'};
+  const parseDate = showValidity(null, null, i18n, t);
+  expect(parseDate).toMatch('not_specified');
+})

@@ -5,7 +5,7 @@ import { changeDate } from '../actions/dayChangeAction';
 
 
 import fi from 'date-fns/locale/fi';
-import { Button } from 'react-bootstrap';
+import { Button, Col } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 registerLocale('fi', fi);
 
@@ -25,14 +25,18 @@ const SelectDate = (props) => {
 
     return (
         <Fragment>
-            <DatePicker wrapperClassName="datePicker" locale="fi" dateFormat="dd.MM.yyyy" className="form-control"
-                        selected={props.selectedDay ? props.selectedDay : new Date()}
-                        onChange={(date) =>  {
-                            props.onDayChange(date);
-                            i18n.loadNamespaces('nodeattr' + date.toLocaleDateString('EN-CA'));
-                        }} />
-            <Button className="returnTodayButton" onClick={changeToCurrentDate}>{t('return_to_today')}</Button>
-        </Fragment>
+            <Col xs={6}>
+                <DatePicker wrapperClassName="datePicker" locale="fi" dateFormat="dd.MM.yyyy" className="form-control"
+                            selected={props.selectedDay ? props.selectedDay : new Date()}
+                            onChange={(date) =>  {
+                                props.onDayChange(date);
+                                i18n.loadNamespaces('nodeattr' + date.toLocaleDateString('EN-CA'));
+                            }} />
+            </Col>
+            <Col xs={6}>
+                <Button className="today-button returnTodayButton" onClick={changeToCurrentDate}>{t('return_to_today')}</Button>
+            </Col>
+           </Fragment>
     );
 };
 

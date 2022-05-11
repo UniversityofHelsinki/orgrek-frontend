@@ -15693,5 +15693,981 @@
     "eppn" : "testaaja",
     "hyGroupCn" : "grp-a02700-ohtu",
     "preferredLanguage" : "fi"
-  }
+  },
+  "historyattributes": [
+    {
+      "key": "name_en",
+      "value": "Centre for Information Technology",
+      "startDate": "2011-01-01T00:00:00.000+00:00",
+      "endDate": null
+    },
+    {
+      "key": "name_sv",
+      "value": "Centret för informationsteknologi",
+      "startDate": "2011-01-01T00:00:00.000+00:00",
+      "endDate": null
+    },
+    {
+      "key": "lyhenne",
+      "value": "TIKE",
+      "startDate": null,
+      "endDate": null
+    },
+    {
+      "key": "mainari_tunnus",
+      "value": "ATKOS",
+      "startDate": null,
+      "endDate": null
+    },
+    {
+      "key": "laskutus_tunnus",
+      "value": "A02700",
+      "startDate": null,
+      "endDate": null
+    },
+    {
+      "key": "talous_tunnus",
+      "value": "H907",
+      "startDate": "2011-01-01T00:00:00.000+00:00",
+      "endDate": null
+    },
+    {
+      "key": "type",
+      "value": "erillinen laitos",
+      "startDate": "2011-01-01T00:00:00.000+00:00",
+      "endDate": null
+    },
+    {
+      "key": "name_fi",
+      "value": "Tietotekniikkakeskus",
+      "startDate": "2011-01-01T00:00:00.000+00:00",
+      "endDate": null
+    },
+    {
+      "key": "talous_tunnus",
+      "value": "H027",
+      "startDate": null,
+      "endDate": "2010-12-31T00:00:00.000+00:00"
+    },
+    {
+      "key": "name_en",
+      "value": "Information Technology (TIETOS)",
+      "startDate": null,
+      "endDate": "2010-12-31T00:00:00.000+00:00"
+    },
+    {
+      "key": "name_fi",
+      "value": "Tietotekniikkaosasto (TIETOS)",
+      "startDate": null,
+      "endDate": "2010-12-31T00:00:00.000+00:00"
+    },
+    {
+      "key": "name_sv",
+      "value": "Avdelningen för informationsteknologi (TIETOS)",
+      "startDate": null,
+      "endDate": "2010-12-31T00:00:00.000+00:00"
+    },
+    {
+      "key": "type",
+      "value": "toimiala",
+      "startDate": null,
+      "endDate": "2010-12-31T00:00:00.000+00:00"
+    },
+    {
+      "key": "emo_lyhenne",
+      "value": "HY",
+      "startDate": null,
+      "endDate": null
+    },
+    {
+      "key": "iam_ryhma",
+      "value": "hy-tike",
+      "startDate": "2016-10-01T00:00:00.000+00:00",
+      "endDate": null
+    },
+    {
+      "key": "hr_lyhenne",
+      "value": "H907",
+      "startDate": "2014-01-01T00:00:00.000+00:00",
+      "endDate": null
+    },
+    {
+      "key": "hr_tunnus",
+      "value": "51000132",
+      "startDate": "2014-01-01T00:00:00.000+00:00",
+      "endDate": null
+    },
+    {
+      "key": "hr_lyhenne",
+      "value": "H30",
+      "startDate": "2013-12-31T20:00:00.000+00:00",
+      "endDate": null
+    },
+    {
+      "key": "hr_tunnus",
+      "value": "51000073",
+      "startDate": "2013-12-31T20:00:00.000+00:00",
+      "endDate": null
+    },
+    {
+      "key": "laskutus_tunnus",
+      "value": "A30000",
+      "startDate": null,
+      "endDate": null
+    },
+    {
+      "key": "lyhenne",
+      "value": "LTDK",
+      "startDate": null,
+      "endDate": null
+    },
+    {
+      "key": "mainari_tunnus",
+      "value": "LTDK",
+      "startDate": null,
+      "endDate": null
+    },
+    {
+      "key": "name_en",
+      "value": "Faculty of Medicine",
+      "startDate": null,
+      "endDate": null
+    },
+    {
+      "key": "name_fi",
+      "value": "Lääketieteellinen tiedekunta",
+      "startDate": null,
+      "endDate": null
+    },
+    {
+      "key": "name_sv",
+      "value": "Medicinska fakulteten",
+      "startDate": null,
+      "endDate": null
+    },
+    {
+      "key": "talous_tunnus",
+      "value": "H30",
+      "startDate": null,
+      "endDate": null
+    },
+    {
+      "key": "type",
+      "value": "tiedekunta",
+      "startDate": null,
+      "endDate": null
+    }
+  ],
+  "futureattributes": [
+    {
+      "key": "emo_lyhenne",
+      "value": "HY",
+      "startDate": "2013-12-31T20:00:00.000+00:00",
+      "endDate": null
+    },
+    {
+      "key": "emo_lyhenne",
+      "value": "HY-FUTURE",
+      "startDate": null,
+      "endDate": null
+    },
+    {
+      "key": "hr_lyhenne",
+      "value": "H30",
+      "startDate": "2013-12-31T20:00:00.000+00:00",
+      "endDate": null
+    },
+    {
+      "key": "hr_tunnus",
+      "value": "51000073",
+      "startDate": "2013-12-31T20:00:00.000+00:00",
+      "endDate": null
+    },
+    {
+      "key": "laskutus_tunnus",
+      "value": "A30000",
+      "startDate": null,
+      "endDate": null
+    },
+    {
+      "key": "lyhenne",
+      "value": "LTDK",
+      "startDate": null,
+      "endDate": null
+    },
+    {
+      "key": "mainari_tunnus",
+      "value": "LTDK",
+      "startDate": null,
+      "endDate": null
+    },
+    {
+      "key": "name_en",
+      "value": "Faculty of Medicine",
+      "startDate": null,
+      "endDate": null
+    },
+    {
+      "key": "name_fi",
+      "value": "Lääketieteellinen tiedekunta",
+      "startDate": null,
+      "endDate": null
+    },
+    {
+      "key": "name_sv",
+      "value": "Medicinska fakulteten",
+      "startDate": null,
+      "endDate": null
+    },
+    {
+      "key": "talous_tunnus",
+      "value": "H30",
+      "startDate": null,
+      "endDate": null
+    },
+    {
+      "key": "type",
+      "value": "tiedekunta",
+      "startDate": null,
+      "endDate": null
+    },
+    {
+      "key": "name_en",
+      "value": "Centre for Future",
+      "startDate": "2023-01-01T00:00:00.000+00:00",
+      "endDate": null
+    },
+    {
+      "key": "name_sv",
+      "value": "Centret för Future",
+      "startDate": "2023-01-01T00:00:00.000+00:00",
+      "endDate": null
+    },
+    {
+      "key": "lyhenne",
+      "value": "FUKE",
+      "startDate": "2023-01-01T00:00:00.000+00:00",
+      "endDate": null
+    },
+    {
+      "key": "mainari_tunnus",
+      "value": "ATKOS",
+      "startDate": null,
+      "endDate": null
+    },
+    {
+      "key": "laskutus_tunnus",
+      "value": "A02700",
+      "startDate": null,
+      "endDate": null
+    },
+    {
+      "key": "talous_tunnus",
+      "value": "H907FFF",
+      "startDate": "2023-01-01T00:00:00.000+00:00",
+      "endDate": null
+    },
+    {
+      "key": "type",
+      "value": "erillinen laitos",
+      "startDate": "2011-01-01T00:00:00.000+00:00",
+      "endDate": null
+    },
+    {
+      "key": "name_fi",
+      "value": "Tulevaisuuskeskus",
+      "startDate": "2023-01-01T00:00:00.000+00:00",
+      "endDate": null
+    },
+    {
+      "key": "name_en",
+      "value": "Information Technology (TIETOS)",
+      "startDate": null,
+      "endDate": "2025-12-31T00:00:00.000+00:00"
+    },
+    {
+      "key": "name_fi",
+      "value": "Tietotekniikkaosasto (TIETOS)",
+      "startDate": null,
+      "endDate": "2025-12-31T00:00:00.000+00:00"
+    },
+    {
+      "key": "name_sv",
+      "value": "Avdelningen för informationsteknologi (TIETOS)",
+      "startDate": null,
+      "endDate": "2025-12-31T00:00:00.000+00:00"
+    }
+  ],
+  "historyparents": [
+    {
+      "node": {
+        "id": "3130",
+        "name": "Erilliset laitokset",
+        "startDate": null,
+        "endDate": null,
+        "timestamp": "2017-12-28T10:49:04.463+00:00",
+        "unique_id": 42275629
+      },
+      "hierarchies": [
+        "opetus",
+        "toiminnanohjaus",
+        "tutkimus",
+        "henkilosto",
+        "talous"
+      ]
+    },
+    {
+      "node": {
+        "id": "3140",
+        "name": "HY, Yliopistopalvelut (YPA)",
+        "startDate": null,
+        "endDate": null,
+        "timestamp": "2020-01-24T15:29:24.426+00:00",
+        "unique_id": 77096679
+      },
+      "hierarchies": [
+        "toiminnanohjaus",
+        "tutkimus",
+        "opetus",
+        "henkilosto",
+        "talous"
+      ]
+    },
+    {
+      "node": {
+        "id": "a1",
+        "name": "Helsingin yliopisto (HY)",
+        "startDate": null,
+        "endDate": null,
+        "timestamp": "2022-01-12T12:53:19.256+00:00",
+        "unique_id": 42785051
+      },
+      "hierarchies": [
+        "talous",
+        "henkilosto"
+      ]
+    }
+  ],
+  "futureparents": [
+    {
+      "node": {
+        "id": "3130",
+        "name": "Erilliset laitokset",
+        "startDate": null,
+        "endDate": null,
+        "timestamp": "2017-12-28T10:49:04.463+00:00",
+        "unique_id": 42275629
+      },
+      "hierarchies": [
+        "opetus",
+        "toiminnanohjaus",
+        "tutkimus",
+        "henkilosto",
+        "talous"
+      ]
+    },
+    {
+      "node": {
+        "id": "93140",
+        "name": "Tulevaisuuden laitos",
+        "startDate": "2023-01-24T15:29:24.426+00:00",
+        "endDate": null,
+        "timestamp": "2020-01-24T15:29:24.426+00:00",
+        "unique_id": 77096679
+      },
+      "hierarchies": [
+        "toiminnanohjaus",
+        "tutkimus",
+        "opetus",
+        "henkilosto",
+        "talous"
+      ]
+    }
+  ],
+  "futurechildren": [
+    {
+      "node": {
+        "id": "1",
+        "name": "HY, Keskushallinto uusi nimi (UU99)",
+        "startDate": "2018-07-24T18:00:00.000+00:00",
+        "endDate": "2018-08-22T18:00:00.000+00:00",
+        "timestamp": "2018-08-10T02:54:42.521+00:00",
+        "unique_id": 27452043
+      },
+      "hierarchies": [
+        "henkilosto"
+      ]
+    },
+    {
+      "node": {
+        "id": "3130",
+        "name": "Erilliset laitokset",
+        "startDate": null,
+        "endDate": null,
+        "timestamp": "2017-12-28T08:49:04.463+00:00",
+        "unique_id": 42275629
+      },
+      "hierarchies": [
+        "toiminnanohjaus",
+        "opetus",
+        "tutkimus",
+        "talous",
+        "henkilosto"
+      ]
+    },
+    {
+      "node": {
+        "id": "3140",
+        "name": "HY, Yliopistopalvelut (YPA)",
+        "startDate": null,
+        "endDate": null,
+        "timestamp": "2020-01-24T13:29:24.426+00:00",
+        "unique_id": 77096679
+      },
+      "hierarchies": [
+        "opetus",
+        "talous",
+        "tutkimus",
+        "henkilosto"
+      ]
+    },
+    {
+      "node": {
+        "id": "3236",
+        "name": "OIKTDK, Oikeustieteellinen tiedekunta (OIKTDK)",
+        "startDate": null,
+        "endDate": null,
+        "timestamp": "2018-07-09T07:22:50.110+00:00",
+        "unique_id": 22963335
+      },
+      "hierarchies": [
+        "toiminnanohjaus"
+      ]
+    },
+    {
+      "node": {
+        "id": "3319",
+        "name": "Helsingin taloustieteellinen tutkimuskeskus (HECER)",
+        "startDate": null,
+        "endDate": "2012-12-30T22:00:00.000+00:00",
+        "timestamp": null,
+        "unique_id": 90578829
+      },
+      "hierarchies": [
+        "talous"
+      ]
+    },
+    {
+      "node": {
+        "id": "3337",
+        "name": "IPR University Center",
+        "startDate": null,
+        "endDate": "2013-12-30T22:00:00.000+00:00",
+        "timestamp": "2017-12-28T09:41:25.657+00:00",
+        "unique_id": 75908005
+      },
+      "hierarchies": [
+        "henkilosto",
+        "talous"
+      ]
+    },
+    {
+      "node": {
+        "id": "349",
+        "name": "Koulutusohjelmat",
+        "startDate": "2016-12-31T22:00:00.000+00:00",
+        "endDate": null,
+        "timestamp": "2018-03-19T14:14:45.356+00:00",
+        "unique_id": 33539259
+      },
+      "hierarchies": [
+        "toiminnanohjaus",
+        "opetus",
+        "tutkimus"
+      ]
+    },
+    {
+      "node": {
+        "id": "5935",
+        "name": "HY, Oikeustieteellinen tiedekunta (OIKTDK)",
+        "startDate": null,
+        "endDate": null,
+        "timestamp": "2019-12-19T12:40:51.699+00:00",
+        "unique_id": 10020336
+      },
+      "hierarchies": [
+        "opetus",
+        "talous",
+        "toiminnanohjaus"
+      ]
+    },
+    {
+      "node": {
+        "id": "6770",
+        "name": "HY, Tiedekunnat (TDK)",
+        "startDate": "1961-03-18T22:00:00.000+00:00",
+        "endDate": null,
+        "timestamp": "2020-01-23T11:46:40.790+00:00",
+        "unique_id": 32800844
+      },
+      "hierarchies": [
+        "tutkimus",
+        "toiminnanohjaus",
+        "opetus",
+        "talous",
+        "henkilosto"
+      ]
+    },
+    {
+      "node": {
+        "id": "6777",
+        "name": "HY, Muut yksiköt (MUUT)",
+        "startDate": "2009-12-31T22:00:00.000+00:00",
+        "endDate": null,
+        "timestamp": "2018-08-13T09:51:49.232+00:00",
+        "unique_id": 74223428
+      },
+      "hierarchies": [
+        "toiminnanohjaus",
+        "opetus",
+        "talous",
+        "henkilosto",
+        "tutkimus"
+      ]
+    },
+    {
+      "node": {
+        "id": "743",
+        "name": "HY, Tohtoriohjelmat (TRI)",
+        "startDate": "2013-12-31T20:00:00.000+00:00",
+        "endDate": null,
+        "timestamp": "2018-07-11T04:09:31.635+00:00",
+        "unique_id": 54806742
+      },
+      "hierarchies": [
+        "talous"
+      ]
+    },
+    {
+      "node": {
+        "id": "840",
+        "name": "Yhteinen toiminta",
+        "startDate": null,
+        "endDate": null,
+        "timestamp": "2018-01-03T19:10:17.435+00:00",
+        "unique_id": 46582376
+      },
+      "hierarchies": [
+        "toiminnanohjaus",
+        "tutkimus",
+        "opetus",
+        "talous",
+        "henkilosto"
+      ]
+    },
+    {
+      "node": {
+        "id": "5283",
+        "name": "Yhteiset",
+        "startDate": null,
+        "endDate": null,
+        "timestamp": "2018-04-10T13:36:57.184+00:00",
+        "unique_id": 59457884
+      },
+      "hierarchies": [
+        "talous",
+        "opetus",
+        "tutkimus",
+        "toiminnanohjaus"
+      ]
+    },
+    {
+      "node": {
+        "id": "259",
+        "name": "Tietotekniikkapalvelut",
+        "startDate": "2014-01-01T00:00:00.000+00:00",
+        "endDate": null,
+        "timestamp": "2018-04-10T13:41:42.116+00:00",
+        "unique_id": 69800527
+      },
+      "hierarchies": [
+        "henkilosto",
+        "toiminnanohjaus"
+      ]
+    },
+    {
+      "node": {
+        "id": "2908",
+        "name": "Keskitetty tuki",
+        "startDate": null,
+        "endDate": null,
+        "timestamp": "2018-04-10T13:41:06.860+00:00",
+        "unique_id": 27321600
+      },
+      "hierarchies": [
+        "toiminnanohjaus",
+        "tutkimus",
+        "talous",
+        "opetus"
+      ]
+    },
+    {
+      "node": {
+        "id": "4820",
+        "name": "Tietotekniikkaratkaisut",
+        "startDate": null,
+        "endDate": null,
+        "timestamp": "2018-04-10T13:43:21.482+00:00",
+        "unique_id": 38919588
+      },
+      "hierarchies": [
+        "opetus",
+        "talous",
+        "toiminnanohjaus",
+        "tutkimus"
+      ]
+    },
+    {
+      "node": {
+        "id": "4726",
+        "name": "Teknologiapalvelut",
+        "startDate": null,
+        "endDate": null,
+        "timestamp": "2018-04-10T13:38:20.505+00:00",
+        "unique_id": 59523286
+      },
+      "hierarchies": [
+        "opetus",
+        "tutkimus",
+        "talous",
+        "toiminnanohjaus"
+      ]
+    },
+    {
+      "node": {
+        "id": "4805",
+        "name": "Tietohallinto",
+        "startDate": null,
+        "endDate": null,
+        "timestamp": "2018-04-10T11:14:32.363+00:00",
+        "unique_id": 94298967
+      },
+      "hierarchies": [
+        "tutkimus",
+        "toiminnanohjaus",
+        "henkilosto",
+        "opetus",
+        "talous"
+      ]
+    },
+    {
+      "node": {
+        "id": "6919",
+        "name": "Lähituki",
+        "startDate": "2014-01-01T00:00:00.000+00:00",
+        "endDate": null,
+        "timestamp": "2018-04-10T13:45:07.323+00:00",
+        "unique_id": 88124538
+      },
+      "hierarchies": [
+        "toiminnanohjaus",
+        "opetus",
+        "tutkimus",
+        "talous"
+      ]
+    }
+  ],
+  "historychildren": [
+    {
+      "node": {
+        "id": "5283",
+        "name": "Yhteiset",
+        "startDate": null,
+        "endDate": null,
+        "timestamp": "2018-04-10T13:36:57.184+00:00",
+        "unique_id": 59457884
+      },
+      "hierarchies": [
+        "talous",
+        "opetus",
+        "tutkimus",
+        "toiminnanohjaus"
+      ]
+    },
+    {
+      "node": {
+        "id": "259",
+        "name": "Tietotekniikkapalvelut",
+        "startDate": "2014-01-01T00:00:00.000+00:00",
+        "endDate": null,
+        "timestamp": "2018-04-10T13:41:42.116+00:00",
+        "unique_id": 69800527
+      },
+      "hierarchies": [
+        "henkilosto",
+        "toiminnanohjaus"
+      ]
+    },
+    {
+      "node": {
+        "id": "2908",
+        "name": "Keskitetty tuki",
+        "startDate": null,
+        "endDate": null,
+        "timestamp": "2018-04-10T13:41:06.860+00:00",
+        "unique_id": 27321600
+      },
+      "hierarchies": [
+        "toiminnanohjaus",
+        "tutkimus",
+        "talous",
+        "opetus"
+      ]
+    },
+    {
+      "node": {
+        "id": "4820",
+        "name": "Tietotekniikkaratkaisut",
+        "startDate": null,
+        "endDate": null,
+        "timestamp": "2018-04-10T13:43:21.482+00:00",
+        "unique_id": 38919588
+      },
+      "hierarchies": [
+        "opetus",
+        "talous",
+        "toiminnanohjaus",
+        "tutkimus"
+      ]
+    },
+    {
+      "node": {
+        "id": "4726",
+        "name": "Teknologiapalvelut",
+        "startDate": null,
+        "endDate": null,
+        "timestamp": "2018-04-10T13:38:20.505+00:00",
+        "unique_id": 59523286
+      },
+      "hierarchies": [
+        "opetus",
+        "tutkimus",
+        "talous",
+        "toiminnanohjaus"
+      ]
+    },
+    {
+      "node": {
+        "id": "4805",
+        "name": "Tietohallinto",
+        "startDate": null,
+        "endDate": null,
+        "timestamp": "2018-04-10T11:14:32.363+00:00",
+        "unique_id": 94298967
+      },
+      "hierarchies": [
+        "tutkimus",
+        "toiminnanohjaus",
+        "henkilosto",
+        "opetus",
+        "talous"
+      ]
+    },
+    {
+      "node": {
+        "id": "6919",
+        "name": "Lähituki",
+        "startDate": "2014-01-01T00:00:00.000+00:00",
+        "endDate": null,
+        "timestamp": "2018-04-10T13:45:07.323+00:00",
+        "unique_id": 88124538
+      },
+      "hierarchies": [
+        "toiminnanohjaus",
+        "opetus",
+        "tutkimus",
+        "talous"
+      ]
+    },
+    {
+      "node": {
+        "id": "1",
+        "name": "HY, Keskushallinto uusi nimi (UU99)",
+        "startDate": "2018-07-24T18:00:00.000+00:00",
+        "endDate": "2018-08-22T18:00:00.000+00:00",
+        "timestamp": "2018-08-10T02:54:42.521+00:00",
+        "unique_id": 27452043
+      },
+      "hierarchies": [
+        "henkilosto"
+      ]
+    },
+    {
+      "node": {
+        "id": "3130",
+        "name": "Erilliset laitokset",
+        "startDate": null,
+        "endDate": null,
+        "timestamp": "2017-12-28T08:49:04.463+00:00",
+        "unique_id": 42275629
+      },
+      "hierarchies": [
+        "toiminnanohjaus",
+        "opetus",
+        "tutkimus",
+        "talous",
+        "henkilosto"
+      ]
+    },
+    {
+      "node": {
+        "id": "3140",
+        "name": "HY, Yliopistopalvelut (YPA)",
+        "startDate": null,
+        "endDate": null,
+        "timestamp": "2020-01-24T13:29:24.426+00:00",
+        "unique_id": 77096679
+      },
+      "hierarchies": [
+        "opetus",
+        "talous",
+        "tutkimus",
+        "henkilosto"
+      ]
+    },
+    {
+      "node": {
+        "id": "3236",
+        "name": "OIKTDK, Oikeustieteellinen tiedekunta (OIKTDK)",
+        "startDate": null,
+        "endDate": null,
+        "timestamp": "2018-07-09T07:22:50.110+00:00",
+        "unique_id": 22963335
+      },
+      "hierarchies": [
+        "toiminnanohjaus"
+      ]
+    },
+    {
+      "node": {
+        "id": "3319",
+        "name": "Helsingin taloustieteellinen tutkimuskeskus (HECER)",
+        "startDate": null,
+        "endDate": "2012-12-30T22:00:00.000+00:00",
+        "timestamp": null,
+        "unique_id": 90578829
+      },
+      "hierarchies": [
+        "talous"
+      ]
+    },
+    {
+      "node": {
+        "id": "3337",
+        "name": "IPR University Center",
+        "startDate": null,
+        "endDate": "2013-12-30T22:00:00.000+00:00",
+        "timestamp": "2017-12-28T09:41:25.657+00:00",
+        "unique_id": 75908005
+      },
+      "hierarchies": [
+        "henkilosto",
+        "talous"
+      ]
+    },
+    {
+      "node": {
+        "id": "349",
+        "name": "Koulutusohjelmat",
+        "startDate": "2016-12-31T22:00:00.000+00:00",
+        "endDate": null,
+        "timestamp": "2018-03-19T14:14:45.356+00:00",
+        "unique_id": 33539259
+      },
+      "hierarchies": [
+        "toiminnanohjaus",
+        "opetus",
+        "tutkimus"
+      ]
+    },
+    {
+      "node": {
+        "id": "5935",
+        "name": "HY, Oikeustieteellinen tiedekunta (OIKTDK)",
+        "startDate": null,
+        "endDate": null,
+        "timestamp": "2019-12-19T12:40:51.699+00:00",
+        "unique_id": 10020336
+      },
+      "hierarchies": [
+        "opetus",
+        "talous",
+        "toiminnanohjaus"
+      ]
+    },
+    {
+      "node": {
+        "id": "6770",
+        "name": "HY, Tiedekunnat (TDK)",
+        "startDate": "1961-03-18T22:00:00.000+00:00",
+        "endDate": null,
+        "timestamp": "2020-01-23T11:46:40.790+00:00",
+        "unique_id": 32800844
+      },
+      "hierarchies": [
+        "tutkimus",
+        "toiminnanohjaus",
+        "opetus",
+        "talous",
+        "henkilosto"
+      ]
+    },
+    {
+      "node": {
+        "id": "6777",
+        "name": "HY, Muut yksiköt (MUUT)",
+        "startDate": "2009-12-31T22:00:00.000+00:00",
+        "endDate": null,
+        "timestamp": "2018-08-13T09:51:49.232+00:00",
+        "unique_id": 74223428
+      },
+      "hierarchies": [
+        "toiminnanohjaus",
+        "opetus",
+        "talous",
+        "henkilosto",
+        "tutkimus"
+      ]
+    },
+    {
+      "node": {
+        "id": "743",
+        "name": "HY, Tohtoriohjelmat (TRI)",
+        "startDate": "2013-12-31T20:00:00.000+00:00",
+        "endDate": null,
+        "timestamp": "2018-07-11T04:09:31.635+00:00",
+        "unique_id": 54806742
+      },
+      "hierarchies": [
+        "talous"
+      ]
+    },
+    {
+      "node": {
+        "id": "840",
+        "name": "Yhteinen toiminta",
+        "startDate": null,
+        "endDate": null,
+        "timestamp": "2018-01-03T19:10:17.435+00:00",
+        "unique_id": 46582376
+      },
+      "hierarchies": [
+        "toiminnanohjaus",
+        "tutkimus",
+        "opetus",
+        "talous",
+        "henkilosto"
+      ]
+    }
+  ]
 }

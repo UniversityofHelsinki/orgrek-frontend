@@ -1,6 +1,6 @@
 
 const initialState = {
-    user: { eppn: '', preferredLanguage: '', displayName: '' },
+    user: { eppn: '', preferredLanguage: '', displayName: '', roles: [] },
     redirect401: null
 };
 

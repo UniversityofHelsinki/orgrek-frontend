@@ -1,25 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import NodeDetailsTable from './NodeDetailsTable';
-import { parseDisplayNames } from '../actions/utilAction';
+import NodeViewControl from './NodeViewControl';
+import { parseDisplayNames, filterAttributeDuplicates, filterNodeDuplicates } from '../actions/utilAction';
 import { useTranslation } from 'react-i18next';
+import { codeAttributes } from '../constants/variables';
 
 const NodeDetails = (props) => {
     const { t, i18n } = useTranslation();
     const lang = i18n.language;
-    const codeAttributes = [
-        'unique_id',
-        'talous_tunnus',
-        'lyhenne',
-        'hr_lyhenne',
-        'hr_tunnus',
-        'tutkimus_tunnus',
-        'oppiaine_tunnus',
-        'oppiaine_surrogaatti',
-        'laskutus_tunnus',
-        'mainari_tunnus',
-        'emo_lyhenne',
-        'iam_ryhma'];
+    const [attributeData, setAttributeData] = useState(false);
+    const [parentsData, setParentsData] = useState(false);
+    const [childrenData, setChildrenData] = useState(false);
+    const [headerData, setHeaderData] = useState(false);
 
     const isCodeAttribute = (elem) => {
         return codeAttributes.includes(elem);
@@ -27,13 +20,22 @@ const NodeDetails = (props) => {
 
     const orderCodeAttributes = (elems) => {
         const result = [];
-        props.node.unique_id ? result.push({ 'key': 'unique_id', 'value': props.node.unique_id, startDate: null, endDate: null }) : result.push({ 'key': 'unique_id', 'value': t('no_value'), startDate: null, endDate: null });
+        props.node ? result.push({ 'key': 'unique_id', 'value': props.node.unique_id, startDate: null, endDate: null })
+                    : result.push({ 'key': 'unique_id', 'value': t('no_value'), startDate: null, endDate: null });
         codeAttributes.map(codeAttribute => {
-            const match = elems.find(elem => elem.key === codeAttribute);
-            match ? result.push(match) : '';
+            for (let i = 0, len = elems.length; i < len; i++) {
+                const match = elems[i].key === codeAttribute;
+                match ? result.push(elems[i]) : '';
+            }
         });
 
         return result;
+    };
+
+    const orderNameAttributesByLanguage = (elems) => {
+        const order = { name_fi : 0, name_sv : 1, name_en : 2, default: 3 };
+        elems.sort((a,b) => order[a.key] - order[b.key]);
+        return elems;
     };
 
     const isLanguageAttribute = (elem) => {
@@ -55,25 +57,59 @@ const NodeDetails = (props) => {
         return matchedName ? matchedName : fallBack;
     };
 
-    const nameInfoData = props.nodeAttributes ? props.nodeAttributes.filter(elem => isLanguageAttribute(elem.key)) : false;
-    const displayNameData = props.nodeAttributes ? parseDisplayNames(nameInfoData, props.nodeAttributes.find(elem => elem.key === 'lyhenne'), props.nodeAttributes.find(elem => elem.key === 'emo_lyhenne')) : false;
-    const DisplayName = displayNameData ?  matchNameToLang(displayNameData) : false;
-    const codeAttributesData = props.nodeAttributes ? orderCodeAttributes(props.nodeAttributes) : false;
-    const typeAttributeData = props.nodeAttributes ? props.nodeAttributes.filter(elem => elem.key === 'type') : false;
-    const otherAttributesData = props.nodeAttributes ? props.nodeAttributes.filter(elem => !isCodeAttribute(elem.key) && elem.key !== 'type' && !isLanguageAttribute(elem.key)) : false;
+    const selectData = () => {
+
+        if (props.showHistory && props.showComing && props.nodeAttributesHistory && props.nodeAttributes) {
+            setAttributeData(filterAttributeDuplicates(props.nodeAttributesHistory, props.nodeAttributesFuture));
+            setChildrenData(filterNodeDuplicates(props.childrenHistory, props.childrenFuture));
+            setParentsData(filterNodeDuplicates(props.parentsHistory, props.parentsFuture));
+            setHeaderData(props.nodeAttributes);
+        } else if (props.showHistory && props.nodeAttributesHistory) {
+            setAttributeData(props.nodeAttributesHistory);
+            setChildrenData(props.childrenHistory);
+            setParentsData(props.parentsHistory);
+            setHeaderData(props.nodeAttributes);
+        } else if (props.showComing && props.nodeAttributesFuture) {
+            setAttributeData(props.nodeAttributesFuture);
+            setChildrenData(props.childrenFuture);
+            setParentsData(props.parentsFuture);
+            setHeaderData(props.nodeAttributes);
+        } else {
+            setAttributeData(props.nodeAttributes);
+            setChildrenData(props.children);
+            setParentsData(props.parents);
+            setHeaderData(props.nodeAttributes);
+        }
+    };
+    const nameInfoData = attributeData ? attributeData.filter(elem => isLanguageAttribute(elem.key)) : false;
+    const nameInfoDataOrderedByLanguage = nameInfoData ? orderNameAttributesByLanguage(nameInfoData) : false;
+    const displayNameData = attributeData ? parseDisplayNames(nameInfoData, attributeData.find(elem => elem.key === 'lyhenne'), attributeData.find(elem => elem.key === 'emo_lyhenne')) : false;
+    const headerInfoData = headerData ? headerData.filter(elem => isLanguageAttribute(elem.key)) : false;
+    const headerNameData = headerData ? parseDisplayNames(headerInfoData, headerData.find(elem => elem.key === 'lyhenne'), headerData.find(elem => elem.key === 'emo_lyhenne')) : false;
+    const headerNameDataOrderedByLang = headerData ? orderNameAttributesByLanguage(headerNameData) : false;
+    const headerName = headerNameDataOrderedByLang ?  matchNameToLang(headerNameDataOrderedByLang) : false;
+    const codeAttributesData = attributeData ? orderCodeAttributes(attributeData) : false;
+    const typeAttributeData = attributeData ? attributeData.filter(elem => elem.key === 'type') : false;
+    const otherAttributesData = attributeData ? attributeData.filter(elem => !isCodeAttribute(elem.key) && elem.key !== 'type' && !isLanguageAttribute(elem.key)) : false;
     const validityData = props.node ? [props.node] : false;
-    const parentsData = props.parents ? props.parents : false;
-    const childrenData = props.children ? props.children : false;
     const predecessorData = props.predecessors ? props.predecessors : false;
     const successorsData = props.successors ? props.successors : false;
-    React.useEffect(() => {
-    }, [props.nodeAttributes]);
+
+    React.useLayoutEffect(() => {
+        selectData(props.showHistory, props.showComing);
+    }, [props.showComing, props.showHistory,
+        props.parentsFuture, props.parentsHistory,
+        props.childrenHistory, props.childrenFuture,
+        props.children, props.parents,
+        props.nodeAttributes, props.nodeAttributesHistory,
+        props.nodeAttributesFuture]);
 
     return (
         <>
         {props.nodeAttributes &&
             <>
-                <h3>{DisplayName}</h3>
+                <h3>{headerName}</h3>
+                <NodeViewControl node={props.node} selectedDay={props.selectedDay} />
                 <NodeDetailsTable
                     selectedDay={props.selectedDay}
                     type='key-value'
@@ -87,7 +123,7 @@ const NodeDetails = (props) => {
                     type='key-value'
                     heading='name_info'
                     tableLabels={['text_language_header', 'name']}
-                    contentData={nameInfoData}
+                    contentData={nameInfoDataOrderedByLanguage}
                     hasValidity={true}
                 />
                 <NodeDetailsTable
@@ -95,7 +131,7 @@ const NodeDetails = (props) => {
                     type='key-value'
                     heading='display_name_info'
                     tableLabels={['text_language_header', 'name']}
-                    contentData={displayNameData}
+                    contentData={headerNameData}
                     hasValidity={true}
                 />
                 <NodeDetailsTable
@@ -163,11 +199,19 @@ const NodeDetails = (props) => {
 const mapStateToProps = state => ({
     node : state.nrd.node,
     nodeAttributes : state.nrd.nodeAttributes,
+    nodeAttributesFuture: state.nrd.nodeAttributesFuture,
+    nodeAttributesHistory: state.nrd.nodeAttributesHistory,
     parents : state.hr.parents,
+    parentsHistory: state.hr.parentsHistory,
+    parentsFuture: state.hr.parentsFuture,
     children : state.hr.children,
+    childrenHistory: state.hr.childrenHistory,
+    childrenFuture: state.hr.childrenFuture,
     predecessors : state.nrd.nodePredecessors,
-    successors : state.nrd.nodeSuccessorsconst,
+    successors : state.nrd.nodeSuccessors,
     selectedDay: state.dr.selectedDay,
+    showHistory: state.nvrd.showHistory,
+    showComing: state.nvrd.showComing
 });
 
 export default connect(mapStateToProps)(NodeDetails);
