@@ -11,7 +11,7 @@ const Node = (props) => {
     const nameSelectedLanguage = selectNameVersion(i18n, props.item);
 
     return (
-        <div style={{ display: 'flex', paddingLeft: `${props.level * 35}px` }}>
+        <div style={{ display: 'flex', cursor:'pointer', paddingLeft: `${props.level * 35}px` }}>
              {props.hasChildren
                 && <div><i
                 data-testid={props.selected ? 'arrowdown' : 'arrowright'}
@@ -22,8 +22,8 @@ const Node = (props) => {
                 className={props.selected ? 'arrow down' : 'arrow right'}>
                 </i></div>}
             <span style={props.node && props.node.unique_id === props.item.id
-                ?  { fontWeight: 'bold', paddingRight: '10px', marginLeft: '5px', color:'#107eab' }
-                : { paddingRight: '10px', marginLeft: '5px', color:'#333' } }
+                ?  { fontWeight: 'bold', paddingRight: '10px', marginLeft: '5px', color:'#107eab', cursor:'pointer' }
+                : { paddingRight: '10px', marginLeft: '5px', color:'#333', cursor:'pointer' } }
                 onClick={() => props.onNodeSelection(props.selectedDay)} onKeyUp={() => props.onNodeSelection(props.selectedDay)} tabIndex={0}>
                     {props.level > 0
                     ? props.item.code + ' '
