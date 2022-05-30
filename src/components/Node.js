@@ -2,8 +2,19 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { selectNameVersion } from '../actions/utilAction';
-import { fetchNodeParents, fetchNodeChildren } from '../actions/hierarchyAction';
-import { fetchNode, fetchNodeAttributes, fetchNodePredecessors, fetchNodeSuccessors } from '../actions/nodeAction';
+import {
+    fetchNodeParents,
+    fetchNodeChildren,
+    fetchNodeParentsHistory,
+    fetchNodeChildrenHistory, fetchNodeParentsFuture, fetchNodeChildrenFuture
+} from '../actions/hierarchyAction';
+import {
+    fetchNode,
+    fetchNodeAttributes, fetchNodeAttributesFuture,
+    fetchNodeAttributesHistory,
+    fetchNodePredecessors,
+    fetchNodeSuccessors
+} from '../actions/nodeAction';
 
 const Node = (props) => {
     const { t, i18n } = useTranslation();
@@ -54,6 +65,14 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         dispatch(fetchNodeChildren(ownProps.item.id, selectedDay));
         dispatch(fetchNodePredecessors(ownProps.item.id, selectedDay));
         dispatch(fetchNodeSuccessors(ownProps.item.id, selectedDay));
+
+        dispatch(fetchNodeParentsHistory(ownProps.item.id, selectedDay));
+        dispatch(fetchNodeChildrenHistory(ownProps.item.id, selectedDay));
+        dispatch(fetchNodeAttributesHistory(ownProps.item.id, selectedDay));
+
+        dispatch(fetchNodeParentsFuture(ownProps.item.id, selectedDay));
+        dispatch(fetchNodeChildrenFuture(ownProps.item.id, selectedDay));
+        dispatch(fetchNodeAttributesFuture(ownProps.item.id, selectedDay));
     }
 });
 
