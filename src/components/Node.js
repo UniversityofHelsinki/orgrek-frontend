@@ -17,6 +17,7 @@ import {
 } from '../actions/nodeAction';
 
 const Node = (props) => {
+
     const { t, i18n } = useTranslation();
 
     const nameSelectedLanguage = selectNameVersion(i18n, props.item);
@@ -35,8 +36,8 @@ const Node = (props) => {
             <span style={props.node && props.node.unique_id === props.item.id
                 ?  { fontWeight: 'bold', paddingRight: '10px', marginLeft: '5px', color:'#107eab' }
                 : { paddingRight: '10px', marginLeft: '5px', color:'#333' } }
-                onClick={() => props.onNodeSelection(props.selectedDay)}
-                onKeyUp={(e) => e.key === 'Enter' && props.onNodeSelection(props.selectedDay)} tabIndex={0}>
+                onClick={() => props.onNodeSelection(props.selectedDay, props.showHistory, props.showComing)}
+                onKeyUp={(e) => e.key === 'Enter' && props.onNodeSelection(props.selectedDay, props.showHistory, props.showComing)} tabIndex={0}>
                     {props.level > 0
                     ? props.item.code + ' '
                     : ''}
@@ -48,17 +49,20 @@ const Node = (props) => {
                     ? ' (' + props.item.abbreviation + ')'
                     : ''}
             </span>
+            <p>{props.showHistory}</p>
         </div>
     );
 };
 
 const mapStateToProps = state => ({
     node : state.nrd.node,
-    selectedDay : state.dr.selectedDay
+    selectedDay : state.dr.selectedDay,
+    showHistory: state.nvrd.showHistory,
+    showComing: state.nvrd.showComing
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-    onNodeSelection: (selectedDay) => {
+    onNodeSelection: (selectedDay, showHistory, showComing) => {
         dispatch(fetchNode(ownProps.item.id));
         dispatch(fetchNodeAttributes(ownProps.item.id, selectedDay));
         dispatch(fetchNodeParents(ownProps.item.id, selectedDay));
@@ -66,13 +70,16 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         dispatch(fetchNodePredecessors(ownProps.item.id, selectedDay));
         dispatch(fetchNodeSuccessors(ownProps.item.id, selectedDay));
 
-        dispatch(fetchNodeParentsHistory(ownProps.item.id, selectedDay));
-        dispatch(fetchNodeChildrenHistory(ownProps.item.id, selectedDay));
-        dispatch(fetchNodeAttributesHistory(ownProps.item.id, selectedDay));
-
-        dispatch(fetchNodeParentsFuture(ownProps.item.id, selectedDay));
-        dispatch(fetchNodeChildrenFuture(ownProps.item.id, selectedDay));
-        dispatch(fetchNodeAttributesFuture(ownProps.item.id, selectedDay));
+        if (showHistory) {
+            dispatch(fetchNodeParentsHistory(ownProps.item.id, selectedDay));
+            dispatch(fetchNodeChildrenHistory(ownProps.item.id, selectedDay));
+            dispatch(fetchNodeAttributesHistory(ownProps.item.id, selectedDay));
+        }
+        if (showComing) {
+            dispatch(fetchNodeParentsFuture(ownProps.item.id, selectedDay));
+            dispatch(fetchNodeChildrenFuture(ownProps.item.id, selectedDay));
+            dispatch(fetchNodeAttributesFuture(ownProps.item.id, selectedDay));
+        }
     }
 });
 
