@@ -7,8 +7,19 @@ import {
 } from '../actions/utilAction';
 import { Table } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { fetchNode, fetchNodeAttributes, fetchNodePredecessors, fetchNodeSuccessors } from '../actions/nodeAction';
-import { fetchNodeChildren, fetchNodeParents } from '../actions/hierarchyAction';
+import {
+    fetchNode,
+    fetchNodeAttributes, fetchNodeAttributesFuture,
+    fetchNodeAttributesHistory,
+    fetchNodePredecessors,
+    fetchNodeSuccessors
+} from '../actions/nodeAction';
+import {
+    fetchNodeChildren, fetchNodeChildrenFuture,
+    fetchNodeChildrenHistory,
+    fetchNodeParents, fetchNodeParentsFuture,
+    fetchNodeParentsHistory
+} from '../actions/hierarchyAction';
 
 const NodeDetailsTable = (props) => {
     const { t, i18n } = useTranslation();
@@ -40,7 +51,7 @@ const NodeDetailsTable = (props) => {
 
             if (props.type === 'node-hierarchy') {
                 return (<tr key={elem.node.id}>
-                    <td onClick={() => props.onNodeSelection(elem.node.unique_id)}>
+                    <td onClick={() => props.onNodeSelection(elem.node.unique_id, props.showHistory, props.showComing)}>
                         <a className='list-node-link' href="#">
                             {showHierarchyDisplayNameByLanguage(elem, lang) ? showHierarchyDisplayNameByLanguage(elem, lang) : elem.node.name}
                         </a></td>
@@ -50,7 +61,7 @@ const NodeDetailsTable = (props) => {
 
             if (props.type === 'name-validity') {
                 return (<tr key={elem.nodeEdgeHistoryWrapper.id}>
-                    <td onClick={() => props.onNodeSelection(elem.nodeEdgeHistoryWrapper.unique_id)}>
+                    <td onClick={() => props.onNodeSelection(elem.nodeEdgeHistoryWrapper.unique_id, props.showHistory, props.showComing)}>
                         <a className='list-node-link' href="#">
                             {showHierarchyDisplayNameByLanguage(elem, lang) ? showHierarchyDisplayNameByLanguage(elem, lang) : elem.nodeEdgeHistoryWrapper.name }
                         </a></td>
@@ -78,17 +89,31 @@ const NodeDetailsTable = (props) => {
 };
 
 const mapStateToProps = state => ({
-    selectedDay : state.dr.selectedDay
+    selectedDay : state.dr.selectedDay,
+    showHistory: state.nvrd.showHistory,
+    showComing: state.nvrd.showComing
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-    onNodeSelection: (elemId) => {
+    onNodeSelection: (elemId, showHistory, showComing) => {
         dispatch(fetchNode(elemId));
         dispatch(fetchNodeAttributes(elemId, ownProps.selectedDay));
         dispatch(fetchNodeParents(elemId, ownProps.selectedDay));
         dispatch(fetchNodeChildren(elemId, ownProps.selectedDay));
         dispatch(fetchNodePredecessors(elemId, ownProps.selectedDay));
         dispatch(fetchNodeSuccessors(elemId, ownProps.selectedDay));
+
+        if (showHistory) {
+            dispatch(fetchNodeParentsHistory(elemId, ownProps.selectedDay));
+            dispatch(fetchNodeChildrenHistory(elemId, ownProps.selectedDay));
+            dispatch(fetchNodeAttributesHistory(elemId, ownProps.selectedDay));
+        }
+        if (showComing) {
+            dispatch(fetchNodeParentsFuture(elemId, ownProps.selectedDay));
+            dispatch(fetchNodeChildrenFuture(elemId, ownProps.selectedDay));
+            dispatch(fetchNodeAttributesFuture(elemId, ownProps.selectedDay));
+        }
+
     }
 });
 
