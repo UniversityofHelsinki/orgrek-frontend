@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { selectNameVersion } from '../actions/utilAction';
@@ -21,6 +21,12 @@ const Node = (props) => {
     const { t, i18n } = useTranslation();
 
     const nameSelectedLanguage = selectNameVersion(i18n, props.item);
+
+    useEffect(() => {
+        if (props.node && props.node.unique_id === props.item.id) {
+            props.onNodeSelection(props.selectedDay, props.showHistory, props.showComing);
+        }
+    }, [props.selectedDay]);
 
     return (
         <div style={{ display: 'flex', cursor:'pointer', paddingLeft: `${props.level * 35}px` }}>
@@ -49,7 +55,6 @@ const Node = (props) => {
                     ? ' (' + props.item.abbreviation + ')'
                     : ''}
             </span>
-            <p>{props.showHistory}</p>
         </div>
     );
 };
