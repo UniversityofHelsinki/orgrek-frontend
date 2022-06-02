@@ -57,8 +57,6 @@ const NodeDetails = (props) => {
         return matchedName ? matchedName : fallBack;
     };
 
-    const isPastNode = node => node && node.endDate && new Date(node.endDate).setHours(0,0,0,0) < props.selectedDay.setHours(0,0,0,0);
-
     const selectData = () => {
 
         if (props.showHistory && props.showComing && props.nodeAttributesHistory && props.nodeAttributes) {
@@ -83,7 +81,6 @@ const NodeDetails = (props) => {
             setHeaderData(props.nodeAttributes);
         }
     };
-    const isNodePast = isPastNode(props.node);
     const nameInfoData = attributeData ? attributeData.filter(elem => isLanguageAttribute(elem.key)) : false;
     const nameInfoDataOrderedByLanguage = nameInfoData ? orderNameAttributesByLanguage(nameInfoData) : false;
     const displayNameData = attributeData ? parseDisplayNames(nameInfoData, attributeData.find(elem => elem.key === 'lyhenne'), attributeData.find(elem => elem.key === 'emo_lyhenne')) : false;
@@ -121,26 +118,22 @@ const NodeDetails = (props) => {
                         contentData={validityData}
                         hasValidity={true}
                     />
-                    {!isNodePast &&
-                        <>
-                            <NodeDetailsTable
-                                selectedDay={props.selectedDay}
-                                type='key-value'
-                                heading='name_info'
-                                tableLabels={['text_language_header', 'name']}
-                                contentData={nameInfoDataOrderedByLanguage}
-                                hasValidity={true}
-                            />
-                            <NodeDetailsTable
-                                selectedDay={props.selectedDay}
-                                type='key-value'
-                                heading='display_name_info'
-                                tableLabels={['text_language_header', 'name']}
-                                contentData={headerNameData}
-                                hasValidity={true}
-                            />
-                        </>
-                    }
+                    <NodeDetailsTable
+                        selectedDay={props.selectedDay}
+                        type='key-value'
+                        heading='name_info'
+                        tableLabels={['text_language_header', 'name']}
+                        contentData={nameInfoDataOrderedByLanguage}
+                        hasValidity={true}
+                    />
+                    <NodeDetailsTable
+                        selectedDay={props.selectedDay}
+                        type='key-value'
+                        heading='display_name_info'
+                        tableLabels={['text_language_header', 'name']}
+                        contentData={headerNameData}
+                        hasValidity={true}
+                    />
                     <NodeDetailsTable
                         selectedDay={props.selectedDay}
                         type='key-value'
@@ -149,8 +142,6 @@ const NodeDetails = (props) => {
                         contentData={codeAttributesData}
                         hasValidity={true}
                     />
-                    {!isNodePast &&
-                        <>
                     <NodeDetailsTable
                         selectedDay={props.selectedDay}
                         type='key-value'
@@ -175,8 +166,6 @@ const NodeDetails = (props) => {
                         contentData={childrenData}
                         hasValidity={false}
                     />
-                        </>
-                    }
                     <NodeDetailsTable
                         selectedDay={props.selectedDay}
                         type='name-validity'
@@ -193,18 +182,14 @@ const NodeDetails = (props) => {
                         contentData={successorsData}
                         hasValidity={false}
                     />
-                    {!isNodePast &&
-                        <>
-                            <NodeDetailsTable
-                                selectedDay={props.selectedDay}
-                                type='key-value'
-                                heading='other_attributes'
-                                tableLabels={['attribute', 'value']}
-                                contentData={otherAttributesData}
-                                hasValidity={true}
-                            />
-                        </>
-                    }
+                    <NodeDetailsTable
+                        selectedDay={props.selectedDay}
+                        type='key-value'
+                        heading='other_attributes'
+                        tableLabels={['attribute', 'value']}
+                        contentData={otherAttributesData}
+                        hasValidity={true}
+                    />
                 </>
             }
         </>
