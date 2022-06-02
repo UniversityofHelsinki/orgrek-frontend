@@ -18,6 +18,20 @@ const NodeDetails = (props) => {
         return codeAttributes.includes(elem);
     };
 
+    const sortCodeAttributesByDate = (elems, order) => {
+        let result = [];
+        order.forEach(element => {
+            const filteredBatch = elems.filter(e => {
+                return e.key === element;
+            });
+            filteredBatch.sort((a,b) => {
+                return new Date(b.endDate) - new Date(a.startDate);
+            });
+            result.push(filteredBatch);
+        });
+        return result.flat();
+    };
+
     const orderCodeAttributes = (elems) => {
         const result = [];
         props.node ? result.push({ 'key': 'unique_id', 'value': props.node.unique_id, startDate: null, endDate: null })
@@ -29,7 +43,7 @@ const NodeDetails = (props) => {
             }
         });
 
-        return result;
+        return sortCodeAttributesByDate(result, codeAttributes);
     };
 
     const sortNameAttributesByDate = (elems, order) => {
