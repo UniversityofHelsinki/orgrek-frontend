@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import NodeDetailsTable from './NodeDetailsTable';
 import NodeViewControl from './NodeViewControl';
-import { parseDisplayNames, filterAttributeDuplicates, filterNodeDuplicates } from '../actions/utilAction';
+import { filterAttributeDuplicates, filterNodeDuplicates, parseDisplayNames } from '../actions/utilAction';
 import { useTranslation } from 'react-i18next';
 import { codeAttributes } from '../constants/variables';
 
@@ -21,7 +21,7 @@ const NodeDetails = (props) => {
     const orderCodeAttributes = (elems) => {
         const result = [];
         props.node ? result.push({ 'key': 'unique_id', 'value': props.node.unique_id, startDate: null, endDate: null })
-                    : result.push({ 'key': 'unique_id', 'value': t('no_value'), startDate: null, endDate: null });
+            : result.push({ 'key': 'unique_id', 'value': t('no_value'), startDate: null, endDate: null });
         codeAttributes.map(codeAttribute => {
             for (let i = 0, len = elems.length; i < len; i++) {
                 const match = elems[i].key === codeAttribute;
@@ -106,92 +106,92 @@ const NodeDetails = (props) => {
 
     return (
         <>
-        {props.nodeAttributes &&
-            <>
-                <h3>{headerName}</h3>
-                <NodeViewControl node={props.node} selectedDay={props.selectedDay} />
-                <NodeDetailsTable
-                    selectedDay={props.selectedDay}
-                    type='key-value'
-                    heading='valid_dates'
-                    tableLabels={[]}
-                    contentData={validityData}
-                    hasValidity={true}
-                />
-                <NodeDetailsTable
-                    selectedDay={props.selectedDay}
-                    type='key-value'
-                    heading='name_info'
-                    tableLabels={['text_language_header', 'name']}
-                    contentData={nameInfoDataOrderedByLanguage}
-                    hasValidity={true}
-                />
-                <NodeDetailsTable
-                    selectedDay={props.selectedDay}
-                    type='key-value'
-                    heading='display_name_info'
-                    tableLabels={['text_language_header', 'name']}
-                    contentData={headerNameData}
-                    hasValidity={true}
-                />
-                <NodeDetailsTable
-                    selectedDay={props.selectedDay}
-                    type='key-value'
-                    heading='codes'
-                    tableLabels={['code_namespace', 'value']}
-                    contentData={codeAttributesData}
-                    hasValidity={true}
-                />
-                <NodeDetailsTable
-                    selectedDay={props.selectedDay}
-                    type='key-value'
-                    heading='unit_type'
-                    tableLabels={[]}
-                    contentData={typeAttributeData}
-                    hasValidity={true}
-                />
-                <NodeDetailsTable
-                    selectedDay={props.selectedDay}
-                    type='node-hierarchy'
-                    heading='upper_units'
-                    tableLabels={['unit', 'hierarchies']}
-                    contentData={parentsData}
-                    hasValidity={false}
-                />
-                <NodeDetailsTable
-                    selectedDay={props.selectedDay}
-                    type='node-hierarchy'
-                    heading='subunits'
-                    tableLabels={['unit', 'hierarchies']}
-                    contentData={childrenData}
-                    hasValidity={false}
-                />
-                <NodeDetailsTable
-                    selectedDay={props.selectedDay}
-                    type='name-validity'
-                    heading='predecessors'
-                    tableLabels={['name', 'valid_dates', 'predecessor_edge_valid']}
-                    contentData={predecessorData}
-                    hasValidity={false}
-                />
-                <NodeDetailsTable
-                    selectedDay={props.selectedDay}
-                    type='name-validity'
-                    heading='successors'
-                    tableLabels={['name', 'valid_dates', 'successor_edge_valid']}
-                    contentData={successorsData}
-                    hasValidity={false}
-                />
-                <NodeDetailsTable
-                    selectedDay={props.selectedDay}
-                    type='key-value'
-                    heading='other_attributes'
-                    tableLabels={['attribute', 'value']}
-                    contentData={otherAttributesData}
-                    hasValidity={true}
-                />
-            </>
-        }
+            {props.nodeAttributes &&
+                <>
+                    <h3>{headerName}</h3>
+                    <NodeViewControl node={props.node} selectedDay={props.selectedDay} />
+                    <NodeDetailsTable
+                        selectedDay={props.selectedDay}
+                        type='key-value'
+                        heading='valid_dates'
+                        tableLabels={[]}
+                        contentData={validityData}
+                        hasValidity={true}
+                    />
+                    <NodeDetailsTable
+                        selectedDay={props.selectedDay}
+                        type='key-value'
+                        heading='name_info'
+                        tableLabels={['text_language_header', 'name']}
+                        contentData={nameInfoDataOrderedByLanguage}
+                        hasValidity={true}
+                    />
+                    <NodeDetailsTable
+                        selectedDay={props.selectedDay}
+                        type='key-value'
+                        heading='display_name_info'
+                        tableLabels={['text_language_header', 'name']}
+                        contentData={headerNameData}
+                        hasValidity={true}
+                    />
+                    <NodeDetailsTable
+                        selectedDay={props.selectedDay}
+                        type='key-value'
+                        heading='codes'
+                        tableLabels={['code_namespace', 'value']}
+                        contentData={codeAttributesData}
+                        hasValidity={true}
+                    />
+                    <NodeDetailsTable
+                        selectedDay={props.selectedDay}
+                        type='key-value'
+                        heading='unit_type'
+                        tableLabels={[]}
+                        contentData={typeAttributeData}
+                        hasValidity={true}
+                    />
+                    <NodeDetailsTable
+                        selectedDay={props.selectedDay}
+                        type='node-hierarchy'
+                        heading='upper_units'
+                        tableLabels={['unit', 'hierarchies']}
+                        contentData={parentsData}
+                        hasValidity={false}
+                    />
+                    <NodeDetailsTable
+                        selectedDay={props.selectedDay}
+                        type='node-hierarchy'
+                        heading='subunits'
+                        tableLabels={['unit', 'hierarchies']}
+                        contentData={childrenData}
+                        hasValidity={false}
+                    />
+                    <NodeDetailsTable
+                        selectedDay={props.selectedDay}
+                        type='name-validity'
+                        heading='predecessors'
+                        tableLabels={['name', 'valid_dates', 'predecessor_edge_valid']}
+                        contentData={predecessorData}
+                        hasValidity={false}
+                    />
+                    <NodeDetailsTable
+                        selectedDay={props.selectedDay}
+                        type='name-validity'
+                        heading='successors'
+                        tableLabels={['name', 'valid_dates', 'successor_edge_valid']}
+                        contentData={successorsData}
+                        hasValidity={false}
+                    />
+                    <NodeDetailsTable
+                        selectedDay={props.selectedDay}
+                        type='key-value'
+                        heading='other_attributes'
+                        tableLabels={['attribute', 'value']}
+                        contentData={otherAttributesData}
+                        hasValidity={true}
+                    />
+                </>
+            }
         </>
     );
 };
