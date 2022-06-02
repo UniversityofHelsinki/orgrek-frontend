@@ -3,7 +3,8 @@ import { useTranslation } from 'react-i18next';
 import {
     commaSepWithTranslate,
     showValidity,
-    showHierarchyDisplayNameByLanguage
+    showHierarchyDisplayNameByLanguage,
+    hierarchyDates
 } from '../actions/utilAction';
 import { Table } from 'react-bootstrap';
 import { connect } from 'react-redux';
@@ -50,13 +51,17 @@ const NodeDetailsTable = (props) => {
             }
 
             if (props.type === 'node-hierarchy') {
-                return (<tr key={elem.node.id}>
+                return (<><tr key={elem.node.id}>
                     <td onClick={() => props.onNodeSelection(elem.node.unique_id, props.showHistory, props.showComing)}>
                         <a className='list-node-link' href="#">
                             {showHierarchyDisplayNameByLanguage(elem, lang) ? showHierarchyDisplayNameByLanguage(elem, lang) : elem.node.name}
                         </a></td>
                     <td>{commaSepWithTranslate(elem.hierarchies, t)}</td>
-                </tr>);
+                        </tr>
+                <tr key={'row2' + elem.node.id}>
+                    <td></td>
+                    <td>{hierarchyDates(elem.hierarchies, i18n, t)}</td>
+                </tr></>);
             }
 
             if (props.type === 'name-validity') {
