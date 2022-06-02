@@ -40,11 +40,7 @@ export const selectNameVersion = (i18n,item) => {
 };
 
 export const commaSepWithTranslate = (hierarchies, t) => {
-    return hierarchies.map(item => t(item.type)).join(', ');
-};
-
-export const hierarchyDates = (hierarchies, i18n, t) => {
-    return hierarchies.map(elem => (showValidity(elem.startDate, elem.endDate, i18n, t))).join(', ');
+    return hierarchies.map(item => t(item)).join(', ');
 };
 
 export const showHierarchyDisplayNameByLanguage = (node, lang) => {

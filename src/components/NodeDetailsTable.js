@@ -14,6 +14,12 @@ import {
     fetchNodePredecessors,
     fetchNodeSuccessors
 } from '../actions/nodeAction';
+import {
+    fetchNodeChildren, fetchNodeChildrenFuture,
+    fetchNodeChildrenHistory,
+    fetchNodeParents, fetchNodeParentsFuture,
+    fetchNodeParentsHistory
+} from '../actions/hierarchyAction';
 
 const NodeDetailsTable = (props) => {
     const { t, i18n } = useTranslation();
