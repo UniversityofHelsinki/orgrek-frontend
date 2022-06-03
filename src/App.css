@@ -12,43 +12,14 @@
   border-top: 2px solid lightgray !important;
 }
 
-.orgrek-header {
-  max-height: 60px;
-  min-height: 60px;
-}
-
-.hy-footer {
-  margin-left: 10px;
-}
-
-.treeContainer {
-  border: 1px solid lightgrey;
-  border-radius: 5px;
-  margin-top: 10px;
-  background-color: #F6F6F6;
-}
-
 h4 caption {
   color: black;
-}
-
-a.list-node-link {
-  text-decoration: none;
-  color: #337ab7;
 }
 
 a:hover {
   text-decoration: underline;
 }
 
-.today-button {
-  background-color: #107eab;
-  border-color: #107eab
-}
-
-.today-button:hover {
-  background-color: #0e688b;
-}
 
 #show_history_switch:checked, #show_coming_switch:checked{
   background-color: #0e688b;

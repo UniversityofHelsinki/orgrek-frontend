@@ -2,13 +2,19 @@ import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import DatePicker, { registerLocale } from 'react-datepicker';
 import { changeDate } from '../actions/dayChangeAction';
-
-
+import styled from 'styled-components';
 import fi from 'date-fns/locale/fi';
 import { Button, Col } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 registerLocale('fi', fi);
 
+const TodayButton = styled(Button)`
+  background-color: #107eab;
+  border-color: #107eab;
+  &:hover {
+    background-color: #0e688b;
+  }
+`;
 const SelectDate = (props) => {
 
     const { t, i18n } = useTranslation();
@@ -34,7 +40,7 @@ const SelectDate = (props) => {
                             }} />
             </Col>
             <Col xs={6}>
-                <Button className="today-button returnTodayButton" onClick={changeToCurrentDate}>{t('return_to_today')}</Button>
+                <TodayButton className="returnTodayButton" onClick={changeToCurrentDate}>{t('return_to_today')}</TodayButton>
             </Col>
            </Fragment>
     );
