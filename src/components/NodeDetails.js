@@ -18,6 +18,19 @@ const NodeDetails = (props) => {
         return codeAttributes.includes(elem);
     };
 
+    const sortAttributesByName = elems => {
+        elems.sort((a, b) => {
+            if (lang === 'sv') {
+                return a.displayNameSv.toLowerCase().localeCompare(b.displayNameSv.toLowerCase());
+            } else if (lang === 'en') {
+                return a.displayNameEn.toLowerCase().localeCompare(b.displayNameEn.toLowerCase());
+            } else {
+                return a.displayNameFi.toLowerCase().localeCompare(b.displayNameFi.toLowerCase());
+            }
+        });
+        return elems;
+    };
+
     const sortCodeAttributesByDate = (elems, order) => {
         let result = [];
         order.forEach(element => {
@@ -128,6 +141,8 @@ const NodeDetails = (props) => {
     const validityData = props.node ? [props.node] : false;
     const predecessorData = props.predecessors ? props.predecessors : false;
     const successorsData = props.successors ? props.successors : false;
+    const sortedParentsByName = parentsData ? sortAttributesByName(parentsData) : false;
+    const sortedChildrenByName = childrenData ? sortAttributesByName(childrenData) : false;
 
     React.useLayoutEffect(() => {
         selectData(props.showHistory, props.showComing);
@@ -189,7 +204,7 @@ const NodeDetails = (props) => {
                         type='node-hierarchy'
                         heading='upper_units'
                         tableLabels={['unit', 'hierarchies']}
-                        contentData={parentsData}
+                        contentData={sortedParentsByName}
                         hasValidity={false}
                     />
                     <NodeDetailsTable
@@ -197,7 +212,7 @@ const NodeDetails = (props) => {
                         type='node-hierarchy'
                         heading='subunits'
                         tableLabels={['unit', 'hierarchies']}
-                        contentData={childrenData}
+                        contentData={sortedChildrenByName}
                         hasValidity={false}
                     />
                     <NodeDetailsTable
