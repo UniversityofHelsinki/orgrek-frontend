@@ -51,7 +51,7 @@ const NodeDetailsTable = (props) => {
             }
 
             if (props.type === 'node-hierarchy') {
-                return (<><tr key={elem.node.id}>
+                return (<><tr key={elem.node.id + index}>
                     <td onClick={() => props.onNodeSelection(elem.node.unique_id, props.showHistory, props.showComing)}>
                         <a className='list-node-link' href="#">
                             {showHierarchyDisplayNameByLanguage(elem, lang) ? showHierarchyDisplayNameByLanguage(elem, lang) : elem.node.name}

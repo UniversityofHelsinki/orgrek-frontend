@@ -18,14 +18,21 @@ const NodeDetails = (props) => {
         return codeAttributes.includes(elem);
     };
 
+    const sortOtherAttributes = elems => {
+        const sortedList = elems.filter((data) => Object.hasOwn(data, 'startDate') || Object.hasOwn(data, 'endDate')).sort((a, b) => {
+            return new Date(b.endDate) - new Date(a.startDate);
+        });
+        return sortedList;
+    };
+
     const sortAttributesByName = elems => {
         elems.sort((a, b) => {
             if (lang === 'sv') {
-                return a.displayNameSv.toLowerCase().localeCompare(b.displayNameSv.toLowerCase());
+                return a.displayNameSv && b.displayNameSv && a.displayNameSv.toLowerCase().localeCompare(b.displayNameSv.toLowerCase());
             } else if (lang === 'en') {
-                return a.displayNameEn.toLowerCase().localeCompare(b.displayNameEn.toLowerCase());
+                return a.displayNameEn && b.displayNameEn && a.displayNameEn.toLowerCase().localeCompare(b.displayNameEn.toLowerCase());
             } else {
-                return a.displayNameFi.toLowerCase().localeCompare(b.displayNameFi.toLowerCase());
+                return a.displayNameFi && b.displayNameFi && a.displayNameFi.toLowerCase().localeCompare(b.displayNameFi.toLowerCase());
             }
         });
         return elems;
@@ -138,9 +145,11 @@ const NodeDetails = (props) => {
     const codeAttributesData = attributeData ? orderCodeAttributes(attributeData) : false;
     const typeAttributeData = attributeData ? attributeData.filter(elem => elem.key === 'type') : false;
     const otherAttributesData = attributeData ? attributeData.filter(elem => !isCodeAttribute(elem.key) && elem.key !== 'type' && !isLanguageAttribute(elem.key)) : false;
+    console.log(otherAttributesData ? sortOtherAttributes(otherAttributesData):'');
+    const sortedOtherAttributesData = otherAttributesData ? sortOtherAttributes(otherAttributesData) : false;
     const validityData = props.node ? [props.node] : false;
-    const predecessorData = props.predecessors ? props.predecessors : false;
-    const successorsData = props.successors ? props.successors : false;
+    const predecessorData = props.predecessors ? sortAttributesByName(props.predecessors) : false;
+    const successorsData = props.successors ? sortAttributesByName(props.successors) : false;
     const sortedParentsByName = parentsData ? sortAttributesByName(parentsData) : false;
     const sortedChildrenByName = childrenData ? sortAttributesByName(childrenData) : false;
 
@@ -236,7 +245,7 @@ const NodeDetails = (props) => {
                         type='key-value'
                         heading='other_attributes'
                         tableLabels={['attribute', 'value']}
-                        contentData={otherAttributesData}
+                        contentData={sortedOtherAttributesData}
                         hasValidity={true}
                     />
                 </>
