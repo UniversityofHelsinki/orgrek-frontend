@@ -145,7 +145,6 @@ const NodeDetails = (props) => {
     const codeAttributesData = attributeData ? orderCodeAttributes(attributeData) : false;
     const typeAttributeData = attributeData ? attributeData.filter(elem => elem.key === 'type') : false;
     const otherAttributesData = attributeData ? attributeData.filter(elem => !isCodeAttribute(elem.key) && elem.key !== 'type' && !isLanguageAttribute(elem.key)) : false;
-    console.log(otherAttributesData ? sortOtherAttributes(otherAttributesData):'');
     const sortedOtherAttributesData = otherAttributesData ? sortOtherAttributes(otherAttributesData) : false;
     const validityData = props.node ? [props.node] : false;
     const predecessorData = props.predecessors ? sortAttributesByName(props.predecessors) : false;
