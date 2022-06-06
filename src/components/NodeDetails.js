@@ -17,6 +17,10 @@ const NodeDetails = (props) => {
     const isCodeAttribute = (elem) => {
         return codeAttributes.includes(elem);
     };
+    const datesOverlap = (a, b, overlapper) => {
+        console.log(`${a} ${b} ${overlapper}`);
+        return (!a || a.getTime() <= overlapper.getTime()) && (!b || b.getTime() >= overlapper.getTime());
+    };
 
     const orderCodeAttributes = (elems) => {
         const result = [];
@@ -57,6 +61,15 @@ const NodeDetails = (props) => {
         return matchedName ? matchedName : fallBack;
     };
 
+    const pickHeaderName = (displayNames) => {
+        console.log('selectedDay: %o', props.selectedDay);
+        const _asDate = d => d && new Date(Date.parse(d)) || null;
+        if (props.node && props.selectedDay && !datesOverlap(_asDate(props.node.startDate), _asDate(props.node.endDate), props.selectedDay)) {
+            return props.node.name;
+        }
+        return matchNameToLang(displayNames);
+    };
+
     const selectData = () => {
 
         if (props.showHistory && props.showComing && props.nodeAttributesHistory && props.nodeAttributes) {
@@ -87,7 +100,7 @@ const NodeDetails = (props) => {
     const headerInfoData = headerData ? headerData.filter(elem => isLanguageAttribute(elem.key)) : false;
     const headerNameData = headerData ? parseDisplayNames(headerInfoData, headerData.find(elem => elem.key === 'lyhenne'), headerData.find(elem => elem.key === 'emo_lyhenne')) : false;
     const headerNameDataOrderedByLang = headerData ? orderNameAttributesByLanguage(headerNameData) : false;
-    const headerName = headerNameDataOrderedByLang ?  matchNameToLang(headerNameDataOrderedByLang) : false;
+    const headerName = headerNameDataOrderedByLang ?  pickHeaderName(headerNameDataOrderedByLang) : false;
     const codeAttributesData = attributeData ? orderCodeAttributes(attributeData) : false;
     const typeAttributeData = attributeData ? attributeData.filter(elem => elem.key === 'type') : false;
     const otherAttributesData = attributeData ? attributeData.filter(elem => !isCodeAttribute(elem.key) && elem.key !== 'type' && !isLanguageAttribute(elem.key)) : false;
