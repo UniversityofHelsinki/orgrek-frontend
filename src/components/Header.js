@@ -3,13 +3,19 @@ import { useTranslation } from 'react-i18next';
 import { Nav, Navbar, Container, NavDropdown } from 'react-bootstrap';
 import HyLogo from './HYLogo';
 import { connect } from 'react-redux';
+import styled from 'styled-components';
+
+const Div = styled.div`
+  max-height: 60px;
+  min-height: 60px;
+`;
 
 
 
 const Header = (props) => {
     const { t, i18n } = useTranslation();
     return (
-        <div className='orgrek-header'>
+        <Div>
             <Navbar fixed="top" collapseOnSelect expand="lg" bg="dark" variant="dark">
                 <Container fluid>
                     <HyLogo />
@@ -31,7 +37,7 @@ const Header = (props) => {
                     </Navbar.Collapse>
                 </Container>
             </Navbar>
-        </div>
+        </Div>
     );
 };
 

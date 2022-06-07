@@ -3,6 +3,15 @@ import { connect } from 'react-redux';
 import Branch from './Branch';
 import { fetchTree } from '../actions/treeAction';
 import { useTranslation } from 'react-i18next';
+import styled from 'styled-components';
+
+const ContainerDiv = styled.div`
+  border: 1px solid lightgrey;
+  border-radius: 5px;
+  margin-top: 10px;
+  background-color: #F6F6F6;
+`;
+
 
 const Tree = (props) => {
     const { t, i18n } = useTranslation();
@@ -15,10 +24,10 @@ const Tree = (props) => {
     }, [props.selectedHierarchy, props.selectedDay, i18n.language]);
 
     return (
-        <div className='treeContainer' data-testid='tree'>
+        <ContainerDiv data-testid='tree'>
             {props.tree && Object.values(props.tree).map((item) => {
                 return <Branch key={item.id} item={item} level={0} parent='' />;})}
-        </div>
+        </ContainerDiv>
     );
 };
 
