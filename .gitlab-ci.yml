@@ -54,7 +54,7 @@ build_dev:
     - master
   script:
     - yes | cp -f -v .env.development .env.production || true
-    - npm run build
+    - CI=false npm run build
   artifacts:
     name: orgrek-build
     paths:
@@ -68,7 +68,7 @@ build_test:
     - test
   script:
     - yes | cp -f -v .env.test .env.production || true
-    - npm run build
+    - CI=false npm run build
   artifacts:
     name: orgrek-build
     paths:
@@ -81,7 +81,7 @@ build_prod:
   only:
     - prod
   script:
-    - npm run build
+    - CI=false npm run build
   artifacts:
     name: orgrek-build
     paths:
