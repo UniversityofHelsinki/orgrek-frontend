@@ -8,6 +8,13 @@ import {
 } from '../actions/utilAction';
 import { Table } from 'react-bootstrap';
 import { connect } from 'react-redux';
+import styled from 'styled-components';
+
+const ListLink = styled.a`
+  text-decoration: none;
+  color: #337ab7;
+`;
+
 import {
     fetchNode,
     fetchNodeAttributes, fetchNodeAttributesFuture,
@@ -53,9 +60,9 @@ const NodeDetailsTable = (props) => {
             if (props.type === 'node-hierarchy') {
                 return (<><tr key={elem.node.id}>
                     <td onClick={() => props.onNodeSelection(elem.node.unique_id, props.showHistory, props.showComing)}>
-                        <a className='list-node-link' href="#">
+                        <ListLink href="#">
                             {showHierarchyDisplayNameByLanguage(elem, lang) ? showHierarchyDisplayNameByLanguage(elem, lang) : elem.node.name}
-                        </a></td>
+                        </ListLink></td>
                     <td>{commaSepWithTranslate(elem.hierarchies, t)}</td>
                         </tr>
                 <tr key={'row2' + elem.node.id}>
@@ -67,9 +74,9 @@ const NodeDetailsTable = (props) => {
             if (props.type === 'name-validity') {
                 return (<tr key={elem.nodeEdgeHistoryWrapper.id}>
                     <td onClick={() => props.onNodeSelection(elem.nodeEdgeHistoryWrapper.unique_id, props.showHistory, props.showComing)}>
-                        <a className='list-node-link' href="#">
+                        <ListLink href="#">
                             {showHierarchyDisplayNameByLanguage(elem, lang) ? showHierarchyDisplayNameByLanguage(elem, lang) : elem.nodeEdgeHistoryWrapper.name }
-                        </a></td>
+                        </ListLink></td>
                     <td>{showValidity(elem.nodeEdgeHistoryWrapper.startDate, elem.nodeEdgeHistoryWrapper.endDate, i18n, t)}</td>
                     <td>{showValidity(elem.nodeEdgeHistoryWrapper.edgeStartDate, elem.nodeEdgeHistoryWrapper.edgeEndDate, i18n, t)}</td>
                 </tr>);
