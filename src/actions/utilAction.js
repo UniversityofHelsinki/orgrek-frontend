@@ -127,6 +127,10 @@ export const filterAttributeDuplicates = (historyArray, futureArray) => {
     return result;
 };
 
+export const datesOverlap = (a, b, overlapper) => {
+    return (!a || a.getTime() <= overlapper.getTime()) && (!b || b.getTime() >= overlapper.getTime());
+};
+
 export function deepEqual(object1, object2) {
     const keys1 = Object.keys(object1);
     const keys2 = Object.keys(object2);
@@ -150,3 +154,4 @@ export function deepEqual(object1, object2) {
   function isObject(object) {
     return object !== null && typeof object === 'object';
   }
+

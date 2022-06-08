@@ -40,11 +40,6 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = (dispatch) => ({
     onSearchResultSelection: (selectedDay, searcResultId) => {
         dispatch(fetchNode(searcResultId));
-        dispatch(fetchNodeAttributes(searcResultId, selectedDay));
-        dispatch(fetchNodeParents(searcResultId, selectedDay));
-        dispatch(fetchNodeChildren(searcResultId, selectedDay));
-        dispatch(fetchNodePredecessors(searcResultId));
-        dispatch(fetchNodeSuccessors(searcResultId));
     }
 });
 
