@@ -19,7 +19,7 @@ const NodeDetails = (props) => {
     };
 
     const sortOtherAttributes = elems => {
-        const sortedList = elems.filter((data) => Object.hasOwn(data, 'startDate') || Object.hasOwn(data, 'endDate')).sort((a, b) => {
+        const sortedList = elems.filter((data) => data.startDate || data.endDate).sort((a, b) => {
             return new Date(b.endDate) - new Date(a.startDate);
         });
         return sortedList;
