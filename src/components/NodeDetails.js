@@ -68,7 +68,7 @@ const NodeDetails = (props) => {
 
     const orderCodeAttributes = (elems) => {
         const result = [];
-        props.node ? result.push({ 'key': 'unique_id', 'value': props.node.unique_id, startDate: null, endDate: null })
+        props.node ? result.push({ 'key': 'unique_id', 'value': props.node.uniqueId, startDate: null, endDate: null })
             : result.push({ 'key': 'unique_id', 'value': t('no_value'), startDate: null, endDate: null });
         codeAttributes.map(codeAttribute => {
             for (let i = 0, len = elems.length; i < len; i++) {
@@ -242,7 +242,7 @@ const NodeDetails = (props) => {
                         tableLabels={['code_namespace', 'value']}
                         contentData={codeAttributesData}
                         hasValidity={true}
-                        dataFilter={data => (isPast || isFuture) && !(props.showHistory || props.showComing) ? data.filter(attr => attr.key === 'unique_id') : data}
+                        dataFilter={data => (isPast || isFuture) && !(props.showHistory || props.showComing) ? data.filter(attr => attr.key === 'uniqueId') : data}
                     />
                     <NodeDetailsTable
                         selectedDay={props.selectedDay}
@@ -322,21 +322,21 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     fetchNodeDetails: (node, selectedDay, showHistory, showComing) => {
-        dispatch(fetchNodeAttributes(node.unique_id, selectedDay));
-        dispatch(fetchNodeParents(node.unique_id, selectedDay));
-        dispatch(fetchNodeChildren(node.unique_id, selectedDay));
-        dispatch(fetchNodePredecessors(node.unique_id, selectedDay));
-        dispatch(fetchNodeSuccessors(node.unique_id, selectedDay));
+        dispatch(fetchNodeAttributes(node.uniqueId, selectedDay));
+        dispatch(fetchNodeParents(node.uniqueId, selectedDay));
+        dispatch(fetchNodeChildren(node.uniqueId, selectedDay));
+        dispatch(fetchNodePredecessors(node.uniqueId, selectedDay));
+        dispatch(fetchNodeSuccessors(node.uniqueId, selectedDay));
 
         if (showHistory) {
-            dispatch(fetchNodeParentsHistory(node.unique_id, selectedDay));
-            dispatch(fetchNodeChildrenHistory(node.unique_id, selectedDay));
-            dispatch(fetchNodeAttributesHistory(node.unique_id, selectedDay));
+            dispatch(fetchNodeParentsHistory(node.uniqueId, selectedDay));
+            dispatch(fetchNodeChildrenHistory(node.uniqueId, selectedDay));
+            dispatch(fetchNodeAttributesHistory(node.uniqueId, selectedDay));
         }
         if (showComing) {
-            dispatch(fetchNodeParentsFuture(node.unique_id, selectedDay));
-            dispatch(fetchNodeChildrenFuture(node.unique_id, selectedDay));
-            dispatch(fetchNodeAttributesFuture(node.unique_id, selectedDay));
+            dispatch(fetchNodeParentsFuture(node.uniqueId, selectedDay));
+            dispatch(fetchNodeChildrenFuture(node.uniqueId, selectedDay));
+            dispatch(fetchNodeAttributesFuture(node.uniqueId, selectedDay));
         }
     }
 });

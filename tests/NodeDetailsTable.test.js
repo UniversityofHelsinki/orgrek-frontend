@@ -60,7 +60,7 @@ jest.mock('react-i18next', () => ({
         'startDate': '2018-07-24T18:00:00.000+00:00',
         'endDate': '2018-08-22T18:00:00.000+00:00',
         'timestamp': '2018-08-10T02:54:42.521+00:00',
-        'unique_id': 27452043
+        'uniqueId': 27452043
     },
     'hierarchies': [
         'henkilosto'
@@ -73,7 +73,7 @@ jest.mock('react-i18next', () => ({
             'startDate': null,
             'endDate': '2012-12-30T22:00:00.000+00:00',
             'timestamp': null,
-            'unique_id': 90578829
+            'uniqueId': 90578829
         },
         'hierarchies': [
             'talous'
@@ -86,7 +86,7 @@ jest.mock('react-i18next', () => ({
             'startDate': '2009-12-31T22:00:00.000+00:00',
             'endDate': null,
             'timestamp': '2018-08-13T09:51:49.232+00:00',
-            'unique_id': 74223428
+            'uniqueId': 74223428
         },
         'hierarchies': [
             'toiminnanohjaus',
@@ -107,7 +107,7 @@ jest.mock('react-i18next', () => ({
               'id': '3471',
               'name': 'HY, Helsingin yliopiston koulutus- ja kehittämispalvelut (HYKKE)',
               'startDate': null,
-              'unique_id': 21682135
+              'uniqueId': 21682135
           }
       },
       {
@@ -118,7 +118,7 @@ jest.mock('react-i18next', () => ({
               'id': '3337',
               'name': 'IPR University Center',
               'startDate': null,
-              'unique_id': 75908005
+              'uniqueId': 75908005
           }
       }
 ];

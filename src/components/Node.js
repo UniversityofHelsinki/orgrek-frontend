@@ -23,7 +23,7 @@ const Node = (props) => {
     const nameSelectedLanguage = selectNameVersion(i18n, props.item);
 
     useEffect(() => {
-        if (props.node && props.node.unique_id === props.item.id) {
+        if (props.node && props.node.uniqueId === props.item.id) {
             props.onNodeSelection();
         }
     }, [props.selectedDay]);
@@ -39,7 +39,7 @@ const Node = (props) => {
                 tabIndex={0}
                 className={props.selected ? 'arrow down' : 'arrow right'}>
                 </i></div>}
-            <span style={props.node && props.node.unique_id === props.item.id
+            <span style={props.node && props.node.uniqueId === props.item.id
                 ?  { fontWeight: 'bold', paddingRight: '10px', marginLeft: '5px', color:'#107eab' }
                 : { paddingRight: '10px', marginLeft: '5px', color:'#333' } }
                 onClick={() => props.onNodeSelection()}
