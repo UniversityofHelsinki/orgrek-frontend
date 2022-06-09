@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
-import { selectNameVersion } from '../actions/utilAction';
+import { selectNameVersion, datesOverlap } from '../actions/utilAction';
 import {
     fetchNodeParents,
     fetchNodeChildren,
@@ -24,7 +24,7 @@ const Node = (props) => {
 
     useEffect(() => {
         if (props.node && props.node.unique_id === props.item.id) {
-            props.onNodeSelection(props.selectedDay, props.showHistory, props.showComing);
+            props.onNodeSelection();
         }
     }, [props.selectedDay]);
 
@@ -42,8 +42,8 @@ const Node = (props) => {
             <span style={props.node && props.node.unique_id === props.item.id
                 ?  { fontWeight: 'bold', paddingRight: '10px', marginLeft: '5px', color:'#107eab' }
                 : { paddingRight: '10px', marginLeft: '5px', color:'#333' } }
-                onClick={() => props.onNodeSelection(props.selectedDay, props.showHistory, props.showComing)}
-                onKeyUp={(e) => e.key === 'Enter' && props.onNodeSelection(props.selectedDay, props.showHistory, props.showComing)} tabIndex={0}>
+                onClick={() => props.onNodeSelection()}
+                onKeyUp={(e) => e.key === 'Enter' && props.onNodeSelection()} tabIndex={0}>
                     {props.level > 0
                     ? props.item.code + ' '
                     : ''}
@@ -67,24 +67,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-    onNodeSelection: (selectedDay, showHistory, showComing) => {
+    onNodeSelection: () => {
         dispatch(fetchNode(ownProps.item.id));
-        dispatch(fetchNodeAttributes(ownProps.item.id, selectedDay));
-        dispatch(fetchNodeParents(ownProps.item.id, selectedDay));
-        dispatch(fetchNodeChildren(ownProps.item.id, selectedDay));
-        dispatch(fetchNodePredecessors(ownProps.item.id, selectedDay));
-        dispatch(fetchNodeSuccessors(ownProps.item.id, selectedDay));
-
-        if (showHistory) {
-            dispatch(fetchNodeParentsHistory(ownProps.item.id, selectedDay));
-            dispatch(fetchNodeChildrenHistory(ownProps.item.id, selectedDay));
-            dispatch(fetchNodeAttributesHistory(ownProps.item.id, selectedDay));
-        }
-        if (showComing) {
-            dispatch(fetchNodeParentsFuture(ownProps.item.id, selectedDay));
-            dispatch(fetchNodeChildrenFuture(ownProps.item.id, selectedDay));
-            dispatch(fetchNodeAttributesFuture(ownProps.item.id, selectedDay));
-        }
     }
 });
 

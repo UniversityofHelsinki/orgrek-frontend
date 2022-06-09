@@ -1,11 +1,25 @@
-import React, { useState } from 'react';
+/* eslint-disable max-lines */
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import NodeDetailsTable from './NodeDetailsTable';
 import NodeViewControl from './NodeViewControl';
-import { filterAttributeDuplicates, filterNodeDuplicates, parseDisplayNames } from '../actions/utilAction';
+import { filterAttributeDuplicates, filterNodeDuplicates, parseDisplayNames, datesOverlap } from '../actions/utilAction';
+import {
+    fetchNodeParents,
+    fetchNodeChildren,
+    fetchNodeParentsHistory,
+    fetchNodeChildrenHistory, fetchNodeParentsFuture, fetchNodeChildrenFuture
+} from '../actions/hierarchyAction';
+import {
+    fetchNodeAttributes, fetchNodeAttributesFuture,
+    fetchNodeAttributesHistory,
+    fetchNodePredecessors,
+    fetchNodeSuccessors
+} from '../actions/nodeAction';
 import { useTranslation } from 'react-i18next';
 import { codeAttributes } from '../constants/variables';
 
+// eslint-disable-next-line complexity
 const NodeDetails = (props) => {
     const { t, i18n } = useTranslation();
     const lang = i18n.language;
@@ -112,7 +126,6 @@ const NodeDetails = (props) => {
     };
 
     const selectData = () => {
-
         if (props.showHistory && props.showComing && props.nodeAttributesHistory && props.nodeAttributes) {
             setAttributeData(filterAttributeDuplicates(props.nodeAttributesHistory, props.nodeAttributesFuture));
             setChildrenData(filterNodeDuplicates(props.childrenHistory, props.childrenFuture));
@@ -152,14 +165,43 @@ const NodeDetails = (props) => {
     const sortedParentsByName = parentsData ? sortAttributesByName(parentsData) : false;
     const sortedChildrenByName = childrenData ? sortAttributesByName(childrenData) : false;
 
+    const isCurrent = datesOverlap(
+        props.node?.startDate && new Date(Date.parse(props.node.startDate)),
+        props.node?.endDate && new Date(Date.parse(props.node.endDate)),
+        props.selectedDay
+    );
+    const isPast = !isCurrent && props.node?.endDate && new Date(Date.parse(props.node.endDate)).getTime() <= props.selectedDay.getTime();
+    const isFuture = !isCurrent && props.node?.startDate && new Date(Date.parse(props.node.startDate)).getTime() >= props.selectedDay.getTime();
+
+    useEffect(() => {
+        if (props.node) {
+            const startDate = Date.parse(props.node.startDate) || undefined;
+            const endDate = Date.parse(props.node.endDate) || undefined;
+            if (datesOverlap(startDate && new Date(startDate), endDate && new Date(endDate), props.selectedDay)) {
+                props.fetchNodeDetails(props.node, props.selectedDay, props.showHistory, props.showComing);
+            } else if (endDate && new Date(endDate).getTime() <= props.selectedDay.getTime()) {
+                props.fetchNodeDetails(props.node, new Date(endDate), props.showHistory, props.showComing);
+            } else if (startDate && new Date(startDate).getTime() >= props.selectedDay.getTime()) {
+                props.fetchNodeDetails(props.node, new Date(startDate), props.showHistory, props.showComing);
+            }
+        }
+    }, [props.node]);
+
     React.useLayoutEffect(() => {
-        selectData(props.showHistory, props.showComing);
+        selectData();
     }, [props.showComing, props.showHistory,
         props.parentsFuture, props.parentsHistory,
         props.childrenHistory, props.childrenFuture,
         props.children, props.parents,
         props.nodeAttributes, props.nodeAttributesHistory,
         props.nodeAttributesFuture]);
+
+    const pastFutureFilter = (data) => {
+        if (isCurrent || props.showComing || props.showHistory) {
+            return data;
+        }
+        return [];
+    };
 
     return (
         <>
@@ -182,14 +224,16 @@ const NodeDetails = (props) => {
                         tableLabels={['text_language_header', 'name']}
                         contentData={nameInfoDataOrderedByLanguage}
                         hasValidity={true}
+                        dataFilter={pastFutureFilter}
                     />
                     <NodeDetailsTable
                         selectedDay={props.selectedDay}
                         type='key-value'
                         heading='display_name_info'
                         tableLabels={['text_language_header', 'name']}
-                        contentData={headerNameData}
+                        contentData={displayNameData}
                         hasValidity={true}
+                        dataFilter={pastFutureFilter}
                     />
                     <NodeDetailsTable
                         selectedDay={props.selectedDay}
@@ -198,6 +242,7 @@ const NodeDetails = (props) => {
                         tableLabels={['code_namespace', 'value']}
                         contentData={codeAttributesData}
                         hasValidity={true}
+                        dataFilter={data => (isPast || isFuture) && !(props.showHistory || props.showComing) ? data.filter(attr => attr.key === 'unique_id') : data}
                     />
                     <NodeDetailsTable
                         selectedDay={props.selectedDay}
@@ -206,6 +251,7 @@ const NodeDetails = (props) => {
                         tableLabels={[]}
                         contentData={typeAttributeData}
                         hasValidity={true}
+                        dataFilter={pastFutureFilter}
                     />
                     <NodeDetailsTable
                         selectedDay={props.selectedDay}
@@ -214,6 +260,7 @@ const NodeDetails = (props) => {
                         tableLabels={['unit', 'hierarchies']}
                         contentData={sortedParentsByName}
                         hasValidity={false}
+                        dataFilter={pastFutureFilter}
                     />
                     <NodeDetailsTable
                         selectedDay={props.selectedDay}
@@ -222,6 +269,7 @@ const NodeDetails = (props) => {
                         tableLabels={['unit', 'hierarchies']}
                         contentData={sortedChildrenByName}
                         hasValidity={false}
+                        dataFilter={pastFutureFilter}
                     />
                     <NodeDetailsTable
                         selectedDay={props.selectedDay}
@@ -246,6 +294,7 @@ const NodeDetails = (props) => {
                         tableLabels={['attribute', 'value']}
                         contentData={sortedOtherAttributesData}
                         hasValidity={true}
+                        dataFilter={pastFutureFilter}
                     />
                 </>
             }
@@ -271,4 +320,25 @@ const mapStateToProps = state => ({
     showComing: state.nvrd.showComing
 });
 
-export default connect(mapStateToProps)(NodeDetails);
+const mapDispatchToProps = dispatch => ({
+    fetchNodeDetails: (node, selectedDay, showHistory, showComing) => {
+        dispatch(fetchNodeAttributes(node.unique_id, selectedDay));
+        dispatch(fetchNodeParents(node.unique_id, selectedDay));
+        dispatch(fetchNodeChildren(node.unique_id, selectedDay));
+        dispatch(fetchNodePredecessors(node.unique_id, selectedDay));
+        dispatch(fetchNodeSuccessors(node.unique_id, selectedDay));
+
+        if (showHistory) {
+            dispatch(fetchNodeParentsHistory(node.unique_id, selectedDay));
+            dispatch(fetchNodeChildrenHistory(node.unique_id, selectedDay));
+            dispatch(fetchNodeAttributesHistory(node.unique_id, selectedDay));
+        }
+        if (showComing) {
+            dispatch(fetchNodeParentsFuture(node.unique_id, selectedDay));
+            dispatch(fetchNodeChildrenFuture(node.unique_id, selectedDay));
+            dispatch(fetchNodeAttributesFuture(node.unique_id, selectedDay));
+        }
+    }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(NodeDetails);

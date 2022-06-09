@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
     commaSepWithTranslate,
@@ -47,7 +47,7 @@ const NodeDetailsTable = (props) => {
     };
 
     const renderTableData = () => {
-        return props.contentData ? props.contentData.map((elem, index) => {
+        return props.contentData ? (props.dataFilter ? props.dataFilter(props.contentData) : props.contentData).map((elem, index) => {
 
             if (props.type === 'key-value') {
                 return (<tr key={index}>
@@ -58,7 +58,7 @@ const NodeDetailsTable = (props) => {
             }
 
             if (props.type === 'node-hierarchy') {
-                return (<><tr key={elem.node.id + index}>
+                return (<React.Fragment key={elem.node.id}><tr>
                     <td onClick={() => props.onNodeSelection(elem.node.unique_id, props.showHistory, props.showComing)}>
                         <ListLink href="#">
                             {showHierarchyDisplayNameByLanguage(elem, lang) ? showHierarchyDisplayNameByLanguage(elem, lang) : elem.node.name}
@@ -68,7 +68,7 @@ const NodeDetailsTable = (props) => {
                 <tr key={'row2' + elem.node.id}>
                     <td></td>
                     <td>{hierarchyDates(elem.hierarchies, i18n, t)}</td>
-                </tr></>);
+                </tr></React.Fragment>);
             }
 
             if (props.type === 'name-validity') {
@@ -109,23 +109,6 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = (dispatch, ownProps) => ({
     onNodeSelection: (elemId, showHistory, showComing) => {
         dispatch(fetchNode(elemId));
-        dispatch(fetchNodeAttributes(elemId, ownProps.selectedDay));
-        dispatch(fetchNodeParents(elemId, ownProps.selectedDay));
-        dispatch(fetchNodeChildren(elemId, ownProps.selectedDay));
-        dispatch(fetchNodePredecessors(elemId, ownProps.selectedDay));
-        dispatch(fetchNodeSuccessors(elemId, ownProps.selectedDay));
-
-        if (showHistory) {
-            dispatch(fetchNodeParentsHistory(elemId, ownProps.selectedDay));
-            dispatch(fetchNodeChildrenHistory(elemId, ownProps.selectedDay));
-            dispatch(fetchNodeAttributesHistory(elemId, ownProps.selectedDay));
-        }
-        if (showComing) {
-            dispatch(fetchNodeParentsFuture(elemId, ownProps.selectedDay));
-            dispatch(fetchNodeChildrenFuture(elemId, ownProps.selectedDay));
-            dispatch(fetchNodeAttributesFuture(elemId, ownProps.selectedDay));
-        }
-
     }
 });
 
