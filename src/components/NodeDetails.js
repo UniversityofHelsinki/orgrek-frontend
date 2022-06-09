@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import NodeDetailsTable from './NodeDetailsTable';
@@ -31,6 +32,40 @@ const NodeDetails = (props) => {
         return codeAttributes.includes(elem);
     };
 
+    const sortOtherAttributes = elems => {
+        const sortedList = elems.filter((data) => data.startDate || data.endDate).sort((a, b) => {
+            return new Date(b.endDate) - new Date(a.startDate);
+        });
+        return sortedList;
+    };
+
+    const sortAttributesByName = elems => {
+        elems.sort((a, b) => {
+            if (lang === 'sv') {
+                return a.displayNameSv && b.displayNameSv && a.displayNameSv.toLowerCase().localeCompare(b.displayNameSv.toLowerCase());
+            } else if (lang === 'en') {
+                return a.displayNameEn && b.displayNameEn && a.displayNameEn.toLowerCase().localeCompare(b.displayNameEn.toLowerCase());
+            } else {
+                return a.displayNameFi && b.displayNameFi && a.displayNameFi.toLowerCase().localeCompare(b.displayNameFi.toLowerCase());
+            }
+        });
+        return elems;
+    };
+
+    const sortCodeAttributesByDate = (elems, order) => {
+        let result = [];
+        order.forEach(element => {
+            const filteredBatch = elems.filter(e => {
+                return e.key === element;
+            });
+            filteredBatch.sort((a,b) => {
+                return new Date(b.endDate) - new Date(a.startDate);
+            });
+            result.push(filteredBatch);
+        });
+        return result.flat();
+    };
+
     const orderCodeAttributes = (elems) => {
         const result = [];
         props.node ? result.push({ 'key': 'unique_id', 'value': props.node.unique_id, startDate: null, endDate: null })
@@ -42,13 +77,33 @@ const NodeDetails = (props) => {
             }
         });
 
-        return result;
+        return sortCodeAttributesByDate(result, codeAttributes);
+    };
+
+    const sortNameAttributesByDate = (elems, order) => {
+
+        let result = [];
+
+        for (let property in order) {
+
+            const filteredBatch = elems.filter(e => {
+              return e.key === property;
+            });
+
+            filteredBatch.sort((a,b) => {
+                return new Date(b.endDate) - new Date(a.startDate);
+            });
+
+            result.push(filteredBatch);
+        }
+
+        return result.flat();
     };
 
     const orderNameAttributesByLanguage = (elems) => {
         const order = { name_fi : 0, name_sv : 1, name_en : 2, default: 3 };
         elems.sort((a,b) => order[a.key] - order[b.key]);
-        return elems;
+        return sortNameAttributesByDate(elems, order);
     };
 
     const isLanguageAttribute = (elem) => {
@@ -103,9 +158,12 @@ const NodeDetails = (props) => {
     const codeAttributesData = attributeData ? orderCodeAttributes(attributeData) : false;
     const typeAttributeData = attributeData ? attributeData.filter(elem => elem.key === 'type') : false;
     const otherAttributesData = attributeData ? attributeData.filter(elem => !isCodeAttribute(elem.key) && elem.key !== 'type' && !isLanguageAttribute(elem.key)) : false;
+    const sortedOtherAttributesData = otherAttributesData ? sortOtherAttributes(otherAttributesData) : false;
     const validityData = props.node ? [props.node] : false;
-    const predecessorData = props.predecessors ? props.predecessors : false;
-    const successorsData = props.successors ? props.successors : false;
+    const predecessorData = props.predecessors ? sortAttributesByName(props.predecessors) : false;
+    const successorsData = props.successors ? sortAttributesByName(props.successors) : false;
+    const sortedParentsByName = parentsData ? sortAttributesByName(parentsData) : false;
+    const sortedChildrenByName = childrenData ? sortAttributesByName(childrenData) : false;
 
     const isCurrent = datesOverlap(
         props.node?.startDate && new Date(Date.parse(props.node.startDate)),
@@ -200,7 +258,7 @@ const NodeDetails = (props) => {
                         type='node-hierarchy'
                         heading='upper_units'
                         tableLabels={['unit', 'hierarchies']}
-                        contentData={parentsData}
+                        contentData={sortedParentsByName}
                         hasValidity={false}
                         dataFilter={pastFutureFilter}
                     />
@@ -209,7 +267,7 @@ const NodeDetails = (props) => {
                         type='node-hierarchy'
                         heading='subunits'
                         tableLabels={['unit', 'hierarchies']}
-                        contentData={childrenData}
+                        contentData={sortedChildrenByName}
                         hasValidity={false}
                         dataFilter={pastFutureFilter}
                     />
@@ -234,7 +292,7 @@ const NodeDetails = (props) => {
                         type='key-value'
                         heading='other_attributes'
                         tableLabels={['attribute', 'value']}
-                        contentData={otherAttributesData}
+                        contentData={sortedOtherAttributesData}
                         hasValidity={true}
                         dataFilter={pastFutureFilter}
                     />
