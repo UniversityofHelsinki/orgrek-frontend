@@ -71,7 +71,6 @@ const NodeDetails = (props) => {
     };
 
     const selectData = () => {
-
         if (props.showHistory && props.showComing && props.nodeAttributesHistory && props.nodeAttributes) {
             setAttributeData(filterAttributeDuplicates(props.nodeAttributesHistory, props.nodeAttributesFuture));
             setChildrenData(filterNodeDuplicates(props.childrenHistory, props.childrenFuture));
@@ -131,7 +130,7 @@ const NodeDetails = (props) => {
     }, [props.node]);
 
     React.useLayoutEffect(() => {
-        selectData(props.showHistory, props.showComing);
+        selectData();
     }, [props.showComing, props.showHistory,
         props.parentsFuture, props.parentsHistory,
         props.childrenHistory, props.childrenFuture,
@@ -140,7 +139,10 @@ const NodeDetails = (props) => {
         props.nodeAttributesFuture]);
 
     const pastFutureFilter = (data) => {
-        return (isPast || isFuture) && !(props.showHistory || props.showComing) ? [] : data;
+        if (isCurrent || props.showComing || props.showHistory) {
+            return data;
+        }
+        return [];
     };
 
     return (
@@ -171,7 +173,7 @@ const NodeDetails = (props) => {
                         type='key-value'
                         heading='display_name_info'
                         tableLabels={['text_language_header', 'name']}
-                        contentData={headerNameData}
+                        contentData={displayNameData}
                         hasValidity={true}
                         dataFilter={pastFutureFilter}
                     />
