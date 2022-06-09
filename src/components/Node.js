@@ -44,7 +44,7 @@ const Node = (props) => {
                 : { paddingRight: '10px', marginLeft: '5px', color:'#333' } }
                 onClick={() => props.onNodeSelection()}
                 onKeyUp={(e) => e.key === 'Enter' && props.onNodeSelection()} tabIndex={0}>
-                    {props.level > 0
+                    {props.level > 0 && props.item.code
                     ? props.item.code + ' '
                     : ''}
                     {props.parentAbbr
