@@ -4,6 +4,7 @@ import {
     commaSepWithTranslate,
     showValidity,
     showHierarchyDisplayNameByLanguage,
+    hierarchyDate,
     hierarchyDates
 } from '../actions/utilAction';
 import { Table } from 'react-bootstrap';
@@ -28,6 +29,7 @@ import {
     fetchNodeParents, fetchNodeParentsFuture,
     fetchNodeParentsHistory
 } from '../actions/hierarchyAction';
+import { blue } from '@mui/material/colors';
 
 const NodeDetailsTable = (props) => {
     const { t, i18n } = useTranslation();
@@ -58,17 +60,28 @@ const NodeDetailsTable = (props) => {
             }
 
             if (props.type === 'node-hierarchy') {
-                return (<React.Fragment key={elem.node.id}><tr>
-                    <td onClick={() => props.onNodeSelection(elem.node.unique_id, props.showHistory, props.showComing)}>
-                        <ListLink href="#">
-                            {showHierarchyDisplayNameByLanguage(elem, lang) ? showHierarchyDisplayNameByLanguage(elem, lang) : elem.node.name}
-                        </ListLink></td>
-                    <td>{commaSepWithTranslate(elem.hierarchies, t)}</td>
+                return (<React.Fragment key={elem.node.id}>
+                        <tr>
+                            <td onClick={() => props.onNodeSelection(elem.node.unique_id, props.showHistory, props.showComing)}>
+                                <ListLink href="#">
+                                    {showHierarchyDisplayNameByLanguage(elem, lang) ? showHierarchyDisplayNameByLanguage(elem, lang) : elem.node.name}
+                                </ListLink></td>
+                            {elem.hierarchies.length > 0 &&
+                                <>
+                                    <td>{t(elem.hierarchies[0].type)}</td>
+                                    <td>{hierarchyDate(elem.hierarchies[0], i18n, t)}</td>
+                                </>
+                            }
                         </tr>
-                <tr key={'row2' + elem.node.id}>
-                    <td></td>
-                    <td>{hierarchyDates(elem.hierarchies, i18n, t)}</td>
-                </tr></React.Fragment>);
+                        {elem.hierarchies.slice(1).map((hierarchy, i) =>
+                            <tr key={i + hierarchy.nodeId}>
+                                <td></td>
+                                <td>{t(hierarchy.type)}</td>
+                                <td>{hierarchyDate(hierarchy, i18n, t)}</td>
+                            </tr>
+                        )}
+                    </React.Fragment>
+                );
             }
 
             if (props.type === 'name-validity') {

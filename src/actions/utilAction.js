@@ -43,8 +43,12 @@ export const commaSepWithTranslate = (hierarchies, t) => {
     return hierarchies.map(item => t(item.type)).join(', ');
 };
 
+export const hierarchyDate = (hierarchy, i18n, t) => {
+    return showValidity(hierarchy.startDate, hierarchy.endDate, i18n, t);
+};
+
 export const hierarchyDates = (hierarchies, i18n, t) => {
-    return hierarchies.map(elem => (showValidity(elem.startDate, elem.endDate, i18n, t))).join(', ');
+    return hierarchies.map(elem => (hierarchyDate(elem, i18n, t))).join(', ');
 };
 
 export const showHierarchyDisplayNameByLanguage = (node, lang) => {
