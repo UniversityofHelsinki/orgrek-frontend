@@ -44,7 +44,7 @@ const Node = (props) => {
                 : 'nodeLink'}
                 onClick={() => props.onNodeSelection()}
                 onKeyUp={(e) => e.key === 'Enter' && props.onNodeSelection()} tabIndex={0}>
-                    {props.level > 0 && props.item.code
+                    {props.level > 0 && props.item.code && !props.item.code.includes('NO_CODE')
                     ? props.item.code + ' '
                     : ''}
                     {props.parentAbbr
