@@ -39,9 +39,9 @@ const Node = (props) => {
                 tabIndex={0}
                 className={props.selected ? 'arrow down' : 'arrow right'}>
                 </i></div>}
-            <span style={props.node && props.node.unique_id === props.item.id
-                ?  { fontWeight: 'bold', paddingRight: '10px', marginLeft: '5px', color:'#107eab' }
-                : { paddingRight: '10px', marginLeft: '5px', color:'#333' } }
+            <span className={props.node && props.node.unique_id === props.item.id
+                ? 'nodeLinkSelected'
+                : 'nodeLink'}
                 onClick={() => props.onNodeSelection()}
                 onKeyUp={(e) => e.key === 'Enter' && props.onNodeSelection()} tabIndex={0}>
                     {props.level > 0 && props.item.code
