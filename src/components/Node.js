@@ -39,7 +39,7 @@ const Node = (props) => {
                 tabIndex={0}
                 className={props.selected ? 'arrow down' : 'arrow right'}>
                 </i></div>}
-            <span className={props.node && props.node.unique_id === props.item.id
+            <span className={props.node && props.node.uniqueId === props.item.id
                 ? 'nodeLinkSelected'
                 : 'nodeLink'}
                 onClick={() => props.onNodeSelection()}
