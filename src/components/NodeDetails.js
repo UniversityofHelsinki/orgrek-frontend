@@ -257,7 +257,7 @@ const NodeDetails = (props) => {
                         selectedDay={props.selectedDay}
                         type='node-hierarchy'
                         heading='upper_units'
-                        tableLabels={['unit', 'hierarchies']}
+                        tableLabels={['unit', 'hierarchies', 'hierarchy_valid']}
                         contentData={sortedParentsByName}
                         hasValidity={false}
                         dataFilter={pastFutureFilter}
@@ -266,7 +266,7 @@ const NodeDetails = (props) => {
                         selectedDay={props.selectedDay}
                         type='node-hierarchy'
                         heading='subunits'
-                        tableLabels={['unit', 'hierarchies']}
+                        tableLabels={['unit', 'hierarchies', 'hierarchy_valid']}
                         contentData={sortedChildrenByName}
                         hasValidity={false}
                         dataFilter={pastFutureFilter}
