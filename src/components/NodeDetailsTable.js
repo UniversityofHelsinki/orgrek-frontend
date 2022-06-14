@@ -86,7 +86,7 @@ const NodeDetailsTable = (props) => {
 
             if (props.type === 'name-validity') {
                 return (<tr key={elem.nodeEdgeHistoryWrapper.id}>
-                    <td onClick={() => props.onNodeSelection(elem.nodeEdgeHistoryWrapper.unique_id, props.showHistory, props.showComing)}>
+                    <td onClick={() => props.onNodeSelection(elem.nodeEdgeHistoryWrapper.uniqueId, props.showHistory, props.showComing)}>
                         <ListLink href="#">
                             {showHierarchyDisplayNameByLanguage(elem, lang) ? showHierarchyDisplayNameByLanguage(elem, lang) : elem.nodeEdgeHistoryWrapper.name }
                         </ListLink></td>

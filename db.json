@@ -13616,7 +13616,7 @@
     "swedish": "Svenska",
     "delete_button": "Poista",
     "attr_filter_info": "Tämä on pitkä tooltip-teksti, jonka leveys riippuu pisimmästä sanasta. Laatikon leveys määräytyy siis sen mukaan mikä on pisin sana, välilyöntien kohdalta rivitetään agressiivisesti, laatikko pyrkii oletuksena mahdollisimman kapeaan tilaan, loppuuuu.",
-    "unique_id": "Yksilöivä tunnus",
+    "uniqueId": "Yksilöivä tunnus",
     "lisataso": "Lisätaso",
     "unit_already_traversed": "Yksikkö löytyy aiempaa, aliyksiköitä ei ole listattu uudestaan",
     "permission_denied": "Ei riittäviä oikeuksia toiminnon suorittamiseksi",
@@ -15203,7 +15203,7 @@
     "swedish": "Svenska",
     "delete_button": "Delete",
     "attr_filter_info": "attr_filter_info",
-    "unique_id": "Unique Id",
+    "uniqueId": "Unique Id",
     "lisataso": "Extra Level",
     "permission_denied": "permission_denied",
     "all_updates_failed": "all_updates_failed",
@@ -15420,7 +15420,7 @@
         "startDate": "2018-07-24T18:00:00.000+00:00",
         "endDate": "2018-08-22T18:00:00.000+00:00",
         "timestamp": "2018-08-10T02:54:42.521+00:00",
-        "unique_id": 27452043
+        "uniqueId": 27452043
       },
       "hierarchies": [
         "henkilosto"
@@ -15433,7 +15433,7 @@
         "startDate": null,
         "endDate": null,
         "timestamp": "2017-12-28T08:49:04.463+00:00",
-        "unique_id": 42275629
+        "uniqueId": 42275629
       },
       "hierarchies": [
         "toiminnanohjaus",
@@ -15450,7 +15450,7 @@
         "startDate": null,
         "endDate": null,
         "timestamp": "2020-01-24T13:29:24.426+00:00",
-        "unique_id": 77096679
+        "uniqueId": 77096679
       },
       "hierarchies": [
         "opetus",
@@ -15466,7 +15466,7 @@
         "startDate": null,
         "endDate": null,
         "timestamp": "2018-07-09T07:22:50.110+00:00",
-        "unique_id": 22963335
+        "uniqueId": 22963335
       },
       "hierarchies": [
         "toiminnanohjaus"
@@ -15479,7 +15479,7 @@
         "startDate": null,
         "endDate": "2012-12-30T22:00:00.000+00:00",
         "timestamp": null,
-        "unique_id": 90578829
+        "uniqueId": 90578829
       },
       "hierarchies": [
         "talous"
@@ -15492,7 +15492,7 @@
         "startDate": null,
         "endDate": "2013-12-30T22:00:00.000+00:00",
         "timestamp": "2017-12-28T09:41:25.657+00:00",
-        "unique_id": 75908005
+        "uniqueId": 75908005
       },
       "hierarchies": [
         "henkilosto",
@@ -15506,7 +15506,7 @@
         "startDate": "2016-12-31T22:00:00.000+00:00",
         "endDate": null,
         "timestamp": "2018-03-19T14:14:45.356+00:00",
-        "unique_id": 33539259
+        "uniqueId": 33539259
       },
       "hierarchies": [
         "toiminnanohjaus",
@@ -15521,7 +15521,7 @@
         "startDate": null,
         "endDate": null,
         "timestamp": "2019-12-19T12:40:51.699+00:00",
-        "unique_id": 10020336
+        "uniqueId": 10020336
       },
       "hierarchies": [
         "opetus",
@@ -15536,7 +15536,7 @@
         "startDate": "1961-03-18T22:00:00.000+00:00",
         "endDate": null,
         "timestamp": "2020-01-23T11:46:40.790+00:00",
-        "unique_id": 32800844
+        "uniqueId": 32800844
       },
       "hierarchies": [
         "tutkimus",
@@ -15553,7 +15553,7 @@
         "startDate": "2009-12-31T22:00:00.000+00:00",
         "endDate": null,
         "timestamp": "2018-08-13T09:51:49.232+00:00",
-        "unique_id": 74223428
+        "uniqueId": 74223428
       },
       "hierarchies": [
         "toiminnanohjaus",
@@ -15570,7 +15570,7 @@
         "startDate": "2013-12-31T20:00:00.000+00:00",
         "endDate": null,
         "timestamp": "2018-07-11T04:09:31.635+00:00",
-        "unique_id": 54806742
+        "uniqueId": 54806742
       },
       "hierarchies": [
         "talous"
@@ -15583,7 +15583,7 @@
         "startDate": null,
         "endDate": null,
         "timestamp": "2018-01-03T19:10:17.435+00:00",
-        "unique_id": 46582376
+        "uniqueId": 46582376
       },
       "hierarchies": [
         "toiminnanohjaus",
@@ -15619,7 +15619,7 @@
     "startDate": null,
     "endDate": null,
     "timestamp": "2021-02-08T09:08:48.677+00:00",
-    "unique_id": 42785051
+    "uniqueId": 42785051
   },
   "attributes" :[
     {
@@ -16006,7 +16006,7 @@
         "startDate": null,
         "endDate": null,
         "timestamp": "2017-12-28T10:49:04.463+00:00",
-        "unique_id": 42275629
+        "uniqueId": 42275629
       },
       "hierarchies": [
         "opetus",
@@ -16023,7 +16023,7 @@
         "startDate": null,
         "endDate": null,
         "timestamp": "2020-01-24T15:29:24.426+00:00",
-        "unique_id": 77096679
+        "uniqueId": 77096679
       },
       "hierarchies": [
         "toiminnanohjaus",
@@ -16040,7 +16040,7 @@
         "startDate": null,
         "endDate": null,
         "timestamp": "2022-01-12T12:53:19.256+00:00",
-        "unique_id": 42785051
+        "uniqueId": 42785051
       },
       "hierarchies": [
         "talous",
@@ -16056,7 +16056,7 @@
         "startDate": null,
         "endDate": null,
         "timestamp": "2017-12-28T10:49:04.463+00:00",
-        "unique_id": 42275629
+        "uniqueId": 42275629
       },
       "hierarchies": [
         "opetus",
@@ -16073,7 +16073,7 @@
         "startDate": "2023-01-24T15:29:24.426+00:00",
         "endDate": null,
         "timestamp": "2020-01-24T15:29:24.426+00:00",
-        "unique_id": 77096679
+        "uniqueId": 77096679
       },
       "hierarchies": [
         "toiminnanohjaus",
@@ -16092,7 +16092,7 @@
         "startDate": "2018-07-24T18:00:00.000+00:00",
         "endDate": "2018-08-22T18:00:00.000+00:00",
         "timestamp": "2018-08-10T02:54:42.521+00:00",
-        "unique_id": 27452043
+        "uniqueId": 27452043
       },
       "hierarchies": [
         "henkilosto"
@@ -16105,7 +16105,7 @@
         "startDate": null,
         "endDate": null,
         "timestamp": "2017-12-28T08:49:04.463+00:00",
-        "unique_id": 42275629
+        "uniqueId": 42275629
       },
       "hierarchies": [
         "toiminnanohjaus",
@@ -16122,7 +16122,7 @@
         "startDate": null,
         "endDate": null,
         "timestamp": "2020-01-24T13:29:24.426+00:00",
-        "unique_id": 77096679
+        "uniqueId": 77096679
       },
       "hierarchies": [
         "opetus",
@@ -16138,7 +16138,7 @@
         "startDate": null,
         "endDate": null,
         "timestamp": "2018-07-09T07:22:50.110+00:00",
-        "unique_id": 22963335
+        "uniqueId": 22963335
       },
       "hierarchies": [
         "toiminnanohjaus"
@@ -16151,7 +16151,7 @@
         "startDate": null,
         "endDate": "2012-12-30T22:00:00.000+00:00",
         "timestamp": null,
-        "unique_id": 90578829
+        "uniqueId": 90578829
       },
       "hierarchies": [
         "talous"
@@ -16164,7 +16164,7 @@
         "startDate": null,
         "endDate": "2013-12-30T22:00:00.000+00:00",
         "timestamp": "2017-12-28T09:41:25.657+00:00",
-        "unique_id": 75908005
+        "uniqueId": 75908005
       },
       "hierarchies": [
         "henkilosto",
@@ -16178,7 +16178,7 @@
         "startDate": "2016-12-31T22:00:00.000+00:00",
         "endDate": null,
         "timestamp": "2018-03-19T14:14:45.356+00:00",
-        "unique_id": 33539259
+        "uniqueId": 33539259
       },
       "hierarchies": [
         "toiminnanohjaus",
@@ -16193,7 +16193,7 @@
         "startDate": null,
         "endDate": null,
         "timestamp": "2019-12-19T12:40:51.699+00:00",
-        "unique_id": 10020336
+        "uniqueId": 10020336
       },
       "hierarchies": [
         "opetus",
@@ -16208,7 +16208,7 @@
         "startDate": "1961-03-18T22:00:00.000+00:00",
         "endDate": null,
         "timestamp": "2020-01-23T11:46:40.790+00:00",
-        "unique_id": 32800844
+        "uniqueId": 32800844
       },
       "hierarchies": [
         "tutkimus",
@@ -16225,7 +16225,7 @@
         "startDate": "2009-12-31T22:00:00.000+00:00",
         "endDate": null,
         "timestamp": "2018-08-13T09:51:49.232+00:00",
-        "unique_id": 74223428
+        "uniqueId": 74223428
       },
       "hierarchies": [
         "toiminnanohjaus",
@@ -16242,7 +16242,7 @@
         "startDate": "2013-12-31T20:00:00.000+00:00",
         "endDate": null,
         "timestamp": "2018-07-11T04:09:31.635+00:00",
-        "unique_id": 54806742
+        "uniqueId": 54806742
       },
       "hierarchies": [
         "talous"
@@ -16255,7 +16255,7 @@
         "startDate": null,
         "endDate": null,
         "timestamp": "2018-01-03T19:10:17.435+00:00",
-        "unique_id": 46582376
+        "uniqueId": 46582376
       },
       "hierarchies": [
         "toiminnanohjaus",
@@ -16272,7 +16272,7 @@
         "startDate": null,
         "endDate": null,
         "timestamp": "2018-04-10T13:36:57.184+00:00",
-        "unique_id": 59457884
+        "uniqueId": 59457884
       },
       "hierarchies": [
         "talous",
@@ -16288,7 +16288,7 @@
         "startDate": "2014-01-01T00:00:00.000+00:00",
         "endDate": null,
         "timestamp": "2018-04-10T13:41:42.116+00:00",
-        "unique_id": 69800527
+        "uniqueId": 69800527
       },
       "hierarchies": [
         "henkilosto",
@@ -16302,7 +16302,7 @@
         "startDate": null,
         "endDate": null,
         "timestamp": "2018-04-10T13:41:06.860+00:00",
-        "unique_id": 27321600
+        "uniqueId": 27321600
       },
       "hierarchies": [
         "toiminnanohjaus",
@@ -16318,7 +16318,7 @@
         "startDate": null,
         "endDate": null,
         "timestamp": "2018-04-10T13:43:21.482+00:00",
-        "unique_id": 38919588
+        "uniqueId": 38919588
       },
       "hierarchies": [
         "opetus",
@@ -16334,7 +16334,7 @@
         "startDate": null,
         "endDate": null,
         "timestamp": "2018-04-10T13:38:20.505+00:00",
-        "unique_id": 59523286
+        "uniqueId": 59523286
       },
       "hierarchies": [
         "opetus",
@@ -16350,7 +16350,7 @@
         "startDate": null,
         "endDate": null,
         "timestamp": "2018-04-10T11:14:32.363+00:00",
-        "unique_id": 94298967
+        "uniqueId": 94298967
       },
       "hierarchies": [
         "tutkimus",
@@ -16367,7 +16367,7 @@
         "startDate": "2014-01-01T00:00:00.000+00:00",
         "endDate": null,
         "timestamp": "2018-04-10T13:45:07.323+00:00",
-        "unique_id": 88124538
+        "uniqueId": 88124538
       },
       "hierarchies": [
         "toiminnanohjaus",
@@ -16385,7 +16385,7 @@
         "startDate": null,
         "endDate": null,
         "timestamp": "2018-04-10T13:36:57.184+00:00",
-        "unique_id": 59457884
+        "uniqueId": 59457884
       },
       "hierarchies": [
         "talous",
@@ -16401,7 +16401,7 @@
         "startDate": "2014-01-01T00:00:00.000+00:00",
         "endDate": null,
         "timestamp": "2018-04-10T13:41:42.116+00:00",
-        "unique_id": 69800527
+        "uniqueId": 69800527
       },
       "hierarchies": [
         "henkilosto",
@@ -16415,7 +16415,7 @@
         "startDate": null,
         "endDate": null,
         "timestamp": "2018-04-10T13:41:06.860+00:00",
-        "unique_id": 27321600
+        "uniqueId": 27321600
       },
       "hierarchies": [
         "toiminnanohjaus",
@@ -16431,7 +16431,7 @@
         "startDate": null,
         "endDate": null,
         "timestamp": "2018-04-10T13:43:21.482+00:00",
-        "unique_id": 38919588
+        "uniqueId": 38919588
       },
       "hierarchies": [
         "opetus",
@@ -16447,7 +16447,7 @@
         "startDate": null,
         "endDate": null,
         "timestamp": "2018-04-10T13:38:20.505+00:00",
-        "unique_id": 59523286
+        "uniqueId": 59523286
       },
       "hierarchies": [
         "opetus",
@@ -16463,7 +16463,7 @@
         "startDate": null,
         "endDate": null,
         "timestamp": "2018-04-10T11:14:32.363+00:00",
-        "unique_id": 94298967
+        "uniqueId": 94298967
       },
       "hierarchies": [
         "tutkimus",
@@ -16480,7 +16480,7 @@
         "startDate": "2014-01-01T00:00:00.000+00:00",
         "endDate": null,
         "timestamp": "2018-04-10T13:45:07.323+00:00",
-        "unique_id": 88124538
+        "uniqueId": 88124538
       },
       "hierarchies": [
         "toiminnanohjaus",
@@ -16496,7 +16496,7 @@
         "startDate": "2018-07-24T18:00:00.000+00:00",
         "endDate": "2018-08-22T18:00:00.000+00:00",
         "timestamp": "2018-08-10T02:54:42.521+00:00",
-        "unique_id": 27452043
+        "uniqueId": 27452043
       },
       "hierarchies": [
         "henkilosto"
@@ -16509,7 +16509,7 @@
         "startDate": null,
         "endDate": null,
         "timestamp": "2017-12-28T08:49:04.463+00:00",
-        "unique_id": 42275629
+        "uniqueId": 42275629
       },
       "hierarchies": [
         "toiminnanohjaus",
@@ -16526,7 +16526,7 @@
         "startDate": null,
         "endDate": null,
         "timestamp": "2020-01-24T13:29:24.426+00:00",
-        "unique_id": 77096679
+        "uniqueId": 77096679
       },
       "hierarchies": [
         "opetus",
@@ -16542,7 +16542,7 @@
         "startDate": null,
         "endDate": null,
         "timestamp": "2018-07-09T07:22:50.110+00:00",
-        "unique_id": 22963335
+        "uniqueId": 22963335
       },
       "hierarchies": [
         "toiminnanohjaus"
@@ -16555,7 +16555,7 @@
         "startDate": null,
         "endDate": "2012-12-30T22:00:00.000+00:00",
         "timestamp": null,
-        "unique_id": 90578829
+        "uniqueId": 90578829
       },
       "hierarchies": [
         "talous"
@@ -16568,7 +16568,7 @@
         "startDate": null,
         "endDate": "2013-12-30T22:00:00.000+00:00",
         "timestamp": "2017-12-28T09:41:25.657+00:00",
-        "unique_id": 75908005
+        "uniqueId": 75908005
       },
       "hierarchies": [
         "henkilosto",
@@ -16582,7 +16582,7 @@
         "startDate": "2016-12-31T22:00:00.000+00:00",
         "endDate": null,
         "timestamp": "2018-03-19T14:14:45.356+00:00",
-        "unique_id": 33539259
+        "uniqueId": 33539259
       },
       "hierarchies": [
         "toiminnanohjaus",
@@ -16597,7 +16597,7 @@
         "startDate": null,
         "endDate": null,
         "timestamp": "2019-12-19T12:40:51.699+00:00",
-        "unique_id": 10020336
+        "uniqueId": 10020336
       },
       "hierarchies": [
         "opetus",
@@ -16612,7 +16612,7 @@
         "startDate": "1961-03-18T22:00:00.000+00:00",
         "endDate": null,
         "timestamp": "2020-01-23T11:46:40.790+00:00",
-        "unique_id": 32800844
+        "uniqueId": 32800844
       },
       "hierarchies": [
         "tutkimus",
@@ -16629,7 +16629,7 @@
         "startDate": "2009-12-31T22:00:00.000+00:00",
         "endDate": null,
         "timestamp": "2018-08-13T09:51:49.232+00:00",
-        "unique_id": 74223428
+        "uniqueId": 74223428
       },
       "hierarchies": [
         "toiminnanohjaus",
@@ -16646,7 +16646,7 @@
         "startDate": "2013-12-31T20:00:00.000+00:00",
         "endDate": null,
         "timestamp": "2018-07-11T04:09:31.635+00:00",
-        "unique_id": 54806742
+        "uniqueId": 54806742
       },
       "hierarchies": [
         "talous"
@@ -16659,7 +16659,7 @@
         "startDate": null,
         "endDate": null,
         "timestamp": "2018-01-03T19:10:17.435+00:00",
-        "unique_id": 46582376
+        "uniqueId": 46582376
       },
       "hierarchies": [
         "toiminnanohjaus",

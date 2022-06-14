@@ -51,17 +51,17 @@ const mapDispatchToProps = (dispatch, ownProps) => (
     onSwitchHistory: (input) => {
         dispatch(switchHistory(input));
         if (input) {
-            dispatch(fetchNodeParentsHistory(ownProps.node.unique_id, ownProps.selectedDay));
-            dispatch(fetchNodeChildrenHistory(ownProps.node.unique_id, ownProps.selectedDay));
-            dispatch(fetchNodeAttributesHistory(ownProps.node.unique_id, ownProps.selectedDay));
+            dispatch(fetchNodeParentsHistory(ownProps.node.uniqueId, ownProps.selectedDay));
+            dispatch(fetchNodeChildrenHistory(ownProps.node.uniqueId, ownProps.selectedDay));
+            dispatch(fetchNodeAttributesHistory(ownProps.node.uniqueId, ownProps.selectedDay));
         }
     },
     onSwitchComing: (input) => {
         dispatch(switchComing(input));
         if (input) {
-            dispatch(fetchNodeParentsFuture(ownProps.node.unique_id, ownProps.selectedDay));
-            dispatch(fetchNodeChildrenFuture(ownProps.node.unique_id, ownProps.selectedDay));
-            dispatch(fetchNodeAttributesFuture(ownProps.node.unique_id, ownProps.selectedDay));
+            dispatch(fetchNodeParentsFuture(ownProps.node.uniqueId, ownProps.selectedDay));
+            dispatch(fetchNodeChildrenFuture(ownProps.node.uniqueId, ownProps.selectedDay));
+            dispatch(fetchNodeAttributesFuture(ownProps.node.uniqueId, ownProps.selectedDay));
         }
     }
 

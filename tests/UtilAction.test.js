@@ -144,7 +144,7 @@ const historyNodes = [{
     "startDate": "2018-07-24T18:00:00.000+00:00",
     "endDate": "2018-08-22T18:00:00.000+00:00",
     "timestamp": "2018-08-10T02:54:42.521+00:00",
-    "unique_id": 27452043
+    "uniqueId": 27452043
   },
   "hierarchies": [
     "henkilosto"
@@ -157,7 +157,7 @@ const historyNodes = [{
     "startDate": null,
     "endDate": null,
     "timestamp": "2017-12-28T08:49:04.463+00:00",
-    "unique_id": 42275629
+    "uniqueId": 42275629
   },
   "hierarchies": [
     "toiminnanohjaus",
@@ -174,7 +174,7 @@ const historyNodes = [{
     "startDate": null,
     "endDate": null,
     "timestamp": "2020-01-24T13:29:24.426+00:00",
-    "unique_id": 77096679
+    "uniqueId": 77096679
   },
   "hierarchies": [
     "opetus",
@@ -191,7 +191,7 @@ const futureNodes = [{
     "startDate": null,
     "endDate": null,
     "timestamp": "2020-01-24T13:29:24.426+00:00",
-    "unique_id": 77096679
+    "uniqueId": 77096679
   },
   "hierarchies": [
     "opetus",
@@ -207,7 +207,7 @@ const futureNodes = [{
     "startDate": null,
     "endDate": null,
     "timestamp": "2018-07-09T07:22:50.110+00:00",
-    "unique_id": 22963335
+    "uniqueId": 22963335
   },
   "hierarchies": [
     "toiminnanohjaus"
@@ -220,7 +220,7 @@ const futureNodes = [{
     "startDate": null,
     "endDate": "2012-12-30T22:00:00.000+00:00",
     "timestamp": null,
-    "unique_id": 90578829
+    "uniqueId": 90578829
   },
   "hierarchies": [
     "talous"

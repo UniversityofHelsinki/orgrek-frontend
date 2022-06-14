@@ -23,7 +23,7 @@ const Node = (props) => {
     const nameSelectedLanguage = selectNameVersion(i18n, props.item);
 
     useEffect(() => {
-        if (props.node && props.node.unique_id === props.item.id) {
+        if (props.node && props.node.uniqueId === props.item.id) {
             props.onNodeSelection();
         }
     }, [props.selectedDay]);
