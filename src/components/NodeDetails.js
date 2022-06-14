@@ -242,7 +242,7 @@ const NodeDetails = (props) => {
                         tableLabels={['code_namespace', 'value']}
                         contentData={codeAttributesData}
                         hasValidity={true}
-                        dataFilter={data => (isPast || isFuture) && !(props.showHistory || props.showComing) ? data.filter(attr => attr.key === 'uniqueId') : data}
+                        dataFilter={data => (isPast || isFuture) && !(props.showHistory || props.showComing) ? data.filter(attr => attr.key === 'unique_id') : data}
                     />
                     <NodeDetailsTable
                         selectedDay={props.selectedDay}
