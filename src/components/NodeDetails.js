@@ -91,7 +91,7 @@ const NodeDetails = (props) => {
             });
 
             filteredBatch.sort((a,b) => {
-                return new Date(b.endDate) - new Date(a.startDate);
+                return (!(a.endDate || b.endDate) && 0) || (!a.endDate && -1) || (!b.endDate && 1) || new Date(b.endDate) - new Date(a.endDate);
             });
 
             result.push(filteredBatch);
@@ -150,7 +150,7 @@ const NodeDetails = (props) => {
     };
     const nameInfoData = attributeData ? attributeData.filter(elem => isLanguageAttribute(elem.key)) : false;
     const nameInfoDataOrderedByLanguage = nameInfoData ? orderNameAttributesByLanguage(nameInfoData) : false;
-    const displayNameData = attributeData ? parseDisplayNames(nameInfoData, attributeData.find(elem => elem.key === 'lyhenne'), attributeData.find(elem => elem.key === 'emo_lyhenne')) : false;
+    const displayNameData = attributeData ? parseDisplayNames(nameInfoDataOrderedByLanguage, attributeData.find(elem => elem.key === 'lyhenne'), attributeData.find(elem => elem.key === 'emo_lyhenne')) : false;
     const headerInfoData = headerData ? headerData.filter(elem => isLanguageAttribute(elem.key)) : false;
     const headerNameData = headerData ? parseDisplayNames(headerInfoData, headerData.find(elem => elem.key === 'lyhenne'), headerData.find(elem => elem.key === 'emo_lyhenne')) : false;
     const headerNameDataOrderedByLang = headerData ? orderNameAttributesByLanguage(headerNameData) : false;
