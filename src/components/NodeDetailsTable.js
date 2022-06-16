@@ -62,7 +62,7 @@ const NodeDetailsTable = (props) => {
             if (props.type === 'node-hierarchy') {
                 return (<React.Fragment key={elem.node.id}>
                         <tr>
-                            <td onClick={() => props.onNodeSelection(elem.node.unique_id, props.showHistory, props.showComing)}>
+                            <td onClick={() => props.onNodeSelection(elem.node.uniqueId, props.showHistory, props.showComing)}>
                                 <ListLink href="#">
                                     {showHierarchyDisplayNameByLanguage(elem, lang) ? showHierarchyDisplayNameByLanguage(elem, lang) : elem.node.name}
                                 </ListLink></td>
