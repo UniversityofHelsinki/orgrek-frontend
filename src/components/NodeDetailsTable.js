@@ -62,7 +62,7 @@ const NodeDetailsTable = (props) => {
             if (props.type === 'node-hierarchy') {
                 return (<React.Fragment key={elem.node.id}>
                         <tr>
-                            <td onClick={() => props.onNodeSelection(elem.node.uniqueId, props.showHistory, props.showComing)}>
+                            <td onClick={() => props.onNodeSelection(elem.node.uniqueId, props.showHistory, props.showComing, props.selectedDay)}>
                                 <ListLink href="#">
                                     {showHierarchyDisplayNameByLanguage(elem, lang) ? showHierarchyDisplayNameByLanguage(elem, lang) : elem.node.name}
                                 </ListLink></td>
@@ -120,8 +120,24 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-    onNodeSelection: (elemId, showHistory, showComing) => {
+    onNodeSelection: (elemId, showHistory, showComing, selectedDay) => {
         dispatch(fetchNode(elemId));
+        dispatch(fetchNodeAttributes(elemId, selectedDay));
+        dispatch(fetchNodeParents(elemId, selectedDay));
+        dispatch(fetchNodeChildren(elemId, selectedDay));
+        dispatch(fetchNodePredecessors(elemId, selectedDay));
+        dispatch(fetchNodeSuccessors(elemId, selectedDay));
+
+        if (showHistory) {
+            dispatch(fetchNodeParentsHistory(elemId, selectedDay));
+            dispatch(fetchNodeChildrenHistory(elemId, selectedDay));
+            dispatch(fetchNodeAttributesHistory(ownProps.item.id, selectedDay));
+        }
+        if (showComing) {
+            dispatch(fetchNodeParentsFuture(elemId, selectedDay));
+            dispatch(fetchNodeChildrenFuture(elemId, selectedDay));
+            dispatch(fetchNodeAttributesFuture(elemId, selectedDay));
+        }
     }
 });
 
