@@ -69,22 +69,6 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = (dispatch, ownProps) => ({
     onNodeSelection: (selectedDay, showHistory, showComing) => {
         dispatch(fetchNode(ownProps.item.id));
-        dispatch(fetchNodeAttributes(ownProps.item.id, selectedDay));
-        dispatch(fetchNodeParents(ownProps.item.id, selectedDay));
-        dispatch(fetchNodeChildren(ownProps.item.id, selectedDay));
-        dispatch(fetchNodePredecessors(ownProps.item.id, selectedDay));
-        dispatch(fetchNodeSuccessors(ownProps.item.id, selectedDay));
-
-        if (showHistory) {
-            dispatch(fetchNodeParentsHistory(ownProps.item.id, selectedDay));
-            dispatch(fetchNodeChildrenHistory(ownProps.item.id, selectedDay));
-            dispatch(fetchNodeAttributesHistory(ownProps.item.id, selectedDay));
-        }
-        if (showComing) {
-            dispatch(fetchNodeParentsFuture(ownProps.item.id, selectedDay));
-            dispatch(fetchNodeChildrenFuture(ownProps.item.id, selectedDay));
-            dispatch(fetchNodeAttributesFuture(ownProps.item.id, selectedDay));
-        }
     }
 });
 

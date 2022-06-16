@@ -6,13 +6,10 @@ import NodeViewControl from './NodeViewControl';
 import { filterAttributeDuplicates, filterNodeDuplicates, parseDisplayNames, datesOverlap } from '../actions/utilAction';
 import {
     fetchNodeParents,
-    fetchNodeChildren,
-    fetchNodeParentsHistory,
-    fetchNodeChildrenHistory, fetchNodeParentsFuture, fetchNodeChildrenFuture
+    fetchNodeChildren
 } from '../actions/hierarchyAction';
 import {
-    fetchNodeAttributes, fetchNodeAttributesFuture,
-    fetchNodeAttributesHistory,
+    fetchNodeAttributes,
     fetchNodePredecessors,
     fetchNodeSuccessors
 } from '../actions/nodeAction';
@@ -321,23 +318,12 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    fetchNodeDetails: (node, selectedDay, showHistory, showComing) => {
+    fetchNodeDetails: (node, selectedDay) => {
         dispatch(fetchNodeAttributes(node.uniqueId, selectedDay));
         dispatch(fetchNodeParents(node.uniqueId, selectedDay));
         dispatch(fetchNodeChildren(node.uniqueId, selectedDay));
         dispatch(fetchNodePredecessors(node.uniqueId, selectedDay));
         dispatch(fetchNodeSuccessors(node.uniqueId, selectedDay));
-
-        if (showHistory) {
-            dispatch(fetchNodeParentsHistory(node.uniqueId, selectedDay));
-            dispatch(fetchNodeChildrenHistory(node.uniqueId, selectedDay));
-            dispatch(fetchNodeAttributesHistory(node.uniqueId, selectedDay));
-        }
-        if (showComing) {
-            dispatch(fetchNodeParentsFuture(node.uniqueId, selectedDay));
-            dispatch(fetchNodeChildrenFuture(node.uniqueId, selectedDay));
-            dispatch(fetchNodeAttributesFuture(node.uniqueId, selectedDay));
-        }
     }
 });
 
