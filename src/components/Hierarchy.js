@@ -11,7 +11,7 @@ const Hierarchy = () => {
     return (
         <Container>
             <Row>
-                <h3>{t('units')}</h3>
+                <h3 id={'main-content'}>{t('units')}</h3>
                 <Col>
                     <Dropdown/>
                 </Col>
