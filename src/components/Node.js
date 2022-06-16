@@ -42,8 +42,8 @@ const Node = (props) => {
             <span className={props.node && props.node.uniqueId === props.item.id
                 ? 'nodeLinkSelected'
                 : 'nodeLink'}
-                onClick={() => props.onNodeSelection()}
-                onKeyUp={(e) => e.key === 'Enter' && props.onNodeSelection()} tabIndex={0}>
+                onClick={() => props.onNodeSelection(props.selectedDay, props.showHistory, props.showComing)}
+                onKeyUp={(e) => e.key === 'Enter' && props.onNodeSelection(props.selectedDay, props.showHistory, props.showComing)} tabIndex={0}>
                     {props.level > 0 && props.item.code && !props.item.code.includes('NO_CODE')
                     ? props.item.code + ' '
                     : ''}
@@ -67,8 +67,24 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-    onNodeSelection: () => {
+    onNodeSelection: (selectedDay, showHistory, showComing) => {
         dispatch(fetchNode(ownProps.item.id));
+        dispatch(fetchNodeAttributes(ownProps.item.id, selectedDay));
+        dispatch(fetchNodeParents(ownProps.item.id, selectedDay));
+        dispatch(fetchNodeChildren(ownProps.item.id, selectedDay));
+        dispatch(fetchNodePredecessors(ownProps.item.id, selectedDay));
+        dispatch(fetchNodeSuccessors(ownProps.item.id, selectedDay));
+
+        if (showHistory) {
+            dispatch(fetchNodeParentsHistory(ownProps.item.id, selectedDay));
+            dispatch(fetchNodeChildrenHistory(ownProps.item.id, selectedDay));
+            dispatch(fetchNodeAttributesHistory(ownProps.item.id, selectedDay));
+        }
+        if (showComing) {
+            dispatch(fetchNodeParentsFuture(ownProps.item.id, selectedDay));
+            dispatch(fetchNodeChildrenFuture(ownProps.item.id, selectedDay));
+            dispatch(fetchNodeAttributesFuture(ownProps.item.id, selectedDay));
+        }
     }
 });
 
