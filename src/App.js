@@ -8,6 +8,7 @@ import { fetchUser } from './actions/userAction';
 import LoginRedirect from './components/LoginRedirect';
 import Footer from './components/Footer';
 import { Container, Col, Row } from 'react-bootstrap';
+import SkipNavLink from './components/SkipNavLink';
 
 const App= (props) => {
 
@@ -20,6 +21,7 @@ const App= (props) => {
     return (
         <div className="App">
                     <LoginRedirect loginUrl={SHIBBOLETH_LOGIN} />
+                    <SkipNavLink id="main-content" />
                     <Header />
                     <Container fluid>
                         <Row>

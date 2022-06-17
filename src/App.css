@@ -52,3 +52,27 @@ th {
   margin-left: 5px; 
   color: #107eab;
 }
+
+.skip-nav-link {
+  border: 0;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+.skip-nav-link:focus-visible, .skip-nav-link:active {
+  background: #107eab;
+  color: white;
+  border: 50px;
+  clip: auto;
+  height: auto;
+  margin: 50px;
+  padding: 1rem;
+  position: fixed;
+  width: auto;
+  z-index: 1001;
+}
+
