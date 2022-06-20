@@ -60,6 +60,20 @@ build_dev:
     paths:
       - build
 
+build_organisation_dev:
+  stage: build
+  tags:
+    - shared-openshift
+  only:
+    - organisation-dev
+  script:
+    - yes | cp -f -v .env.organisation-development .env.production || true
+    - CI=false npm run build
+  artifacts:
+    name: orgrek-build
+    paths:
+      - build
+
 build_test:
   stage: build
   tags:
@@ -156,6 +170,30 @@ deploy_prod:
     - oc start-build organisaatiorekisteri-frontend-prod --from-dir=. --follow
     - oc patch bc/organisaatiorekisteri-frontend-prod --patch '{"spec":{"successfulBuildsHistoryLimit":1}}'
     - oc patch bc/organisaatiorekisteri-frontend-prod --patch '{"spec":{"failedBuildsHistoryLimit":1}}'
+
+# Define the process for deploy stage to new database development environment
+deploy_organisation_dev:
+  stage: deploy
+  tags:
+    - shared-openshift
+  environment:
+    name: development
+  only:
+    - organisation-dev
+  except:
+    # Skip deploy when scheduled npm audit and outdated scans are executed.
+    - schedules
+  script:
+    # set home path for openshift 1001 user
+    - export HOME=/home/1001
+    - mv nginx_dev.conf nginx.conf
+    # before any action, I connect to the OpenShift server with the appropriate credentials
+    - oc login https://$OPENSHIFT_ADDR_TEST:$OPENSHIFT_PORT --token=$OPENSHIFT_TOKEN_TEST
+    - oc project organisaatiorekisteri
+    - oc set env dc/organisation-frontend-dev REACT_APP_GIT_HASH=$(git rev-parse --short=7 HEAD)
+    - oc start-build organisation-frontend-dev --from-dir=. --follow
+    - oc patch bc/organisation-frontend-dev --patch '{"spec":{"successfulBuildsHistoryLimit":1}}'
+    - oc patch bc/organisation-frontend-dev --patch '{"spec":{"failedBuildsHistoryLimit":1}}'
 
 # Rules for the scheduled npm audit and outdated scans
 dependency scanning:
