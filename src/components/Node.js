@@ -67,7 +67,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-    onNodeSelection: (selectedDay, showHistory, showComing) => {
+    onNodeSelection: () => {
         dispatch(fetchNode(ownProps.item.id));
     }
 });

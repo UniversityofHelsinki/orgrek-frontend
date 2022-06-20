@@ -50,6 +50,9 @@ const NodeDetailsTable = (props) => {
             }
 
             if (props.type === 'node-hierarchy') {
+                if (elem.node.id === '349') {
+                    (() => {})();
+                }
                 return (<React.Fragment key={elem.node.id}>
                         <tr>
                             <td onClick={() => props.onNodeSelection(elem.node.uniqueId)}>

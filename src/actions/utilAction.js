@@ -112,11 +112,25 @@ export const flattenTree = (input, res = []) => {
 };
 
 export const filterNodeDuplicates = (historyArray, futureArray) => {
+
+    const isSameHierarchy = (a, b) => {
+        return Object.keys(a).every(property => a[property] === b[property]);
+    };
+
     const result = historyArray;
     if (futureArray && historyArray) {
         futureArray.map(elem => {
             const found = historyArray.find(historyElem => historyElem.node.id === elem.node.id);
-            found ? '' : result.push(elem);
+            if (found) {
+                elem.hierarchies.forEach(a => {
+                    const alreadyExists = found.hierarchies.find(b => isSameHierarchy(a,b));
+                    if (!alreadyExists) {
+                        found.hierarchies.push(a);
+                    }
+                });
+            } else {
+                result.push(elem);
+            }
         });
     }
     return result;
