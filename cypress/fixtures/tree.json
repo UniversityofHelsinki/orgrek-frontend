@@ -1,0 +1,211 @@
+{
+  "tree": {
+    "id": 42785051,
+    "code": "HY",
+    "nameFi": "Helsingin yliopisto",
+    "nameEn": "University of Helsinki",
+    "nameSv": "Helsingfors universitet",
+    "displayNameFi": "Helsingin yliopisto (HY)",
+    "displayNameEn": "University of Helsinki (HY)",
+    "displayNameSv": "Helsingfors universitet (HY)",
+    "type": "yritys_yhteiso",
+    "abbreviation": "HY",
+    "children": [
+      {
+        "id": 74223428,
+        "code": "Z-MUUT",
+        "nameFi": "Muut yksiköt",
+        "nameEn": "Other Units",
+        "nameSv": "Andra enheter",
+        "displayNameFi": "HY, Muut yksiköt (MUUT)",
+        "displayNameEn": "HY, Other Units (MUUT)",
+        "displayNameSv": "HY, Andra enheter (MUUT)",
+        "type": "koontiyksikko,yksikko",
+        "abbreviation": "MUUT",
+        "parentAbbreviation": "HY",
+        "children": [
+          {
+            "id": 68909643,
+            "code": "KP",
+            "nameFi": "Helsingin yliopiston kiinteistöpalvelut Oy",
+            "nameEn": "KIPA",
+            "nameSv": "KIPA",
+            "displayNameFi": "MUUT, Helsingin yliopiston kiinteistöpalvelut Oy (HY247)",
+            "displayNameEn": "MUUT, KIPA (HY247)",
+            "displayNameSv": "MUUT, KIPA (HY247)",
+            "type": "yritys_yhteiso,yksikko",
+            "abbreviation": "HY247",
+            "parentAbbreviation": "MUUT",
+            "children": [
+              {
+                "id": 94718814,
+                "code": "KP03",
+                "nameFi": "Toimitila- ja käyttäjäpalvelut",
+                "nameEn": "Premises and user services",
+                "nameSv": "Lokal- och konsumenttjänster",
+                "displayNameFi": "HY247, Toimitila- ja käyttäjäpalvelut",
+                "displayNameEn": "HY247, Premises and user services",
+                "displayNameSv": "HY247, Lokal- och konsumenttjänster",
+                "type": "tulosyksikko",
+                "parentAbbreviation": "HY247"
+              },
+              {
+                "id": 40965119,
+                "code": "KP01",
+                "nameFi": "Ylläpitopalvelut",
+                "nameEn": "Maintenance services",
+                "nameSv": "Underhållstjänster",
+                "displayNameFi": "HY247, Ylläpitopalvelut",
+                "displayNameEn": "HY247, Maintenance services",
+                "displayNameSv": "HY247, Underhållstjänster",
+                "type": "tulosyksikko",
+                "parentAbbreviation": "HY247"
+              },
+              {
+                "id": 49992784,
+                "code": "KP05",
+                "nameFi": "Valmentamo",
+                "nameEn": "Administrative services",
+                "nameSv": "Förvaltningsservicen",
+                "displayNameFi": "HY247, Valmentamo",
+                "displayNameEn": "HY247, Administrative services",
+                "displayNameSv": "HY247, Förvaltningsservicen",
+                "type": "tulosyksikko",
+                "parentAbbreviation": "HY247"
+              },
+              {
+                "id": 44895547,
+                "code": "KP06",
+                "nameFi": "Rakennuttamispalvelut",
+                "nameEn": "Building development services",
+                "nameSv": "Byggherretjänster",
+                "displayNameFi": "HY247, Rakennuttamispalvelut",
+                "displayNameEn": "HY247, Building development services",
+                "displayNameSv": "HY247, Byggherretjänster",
+                "type": "tulosyksikko",
+                "parentAbbreviation": "HY247"
+              }
+            ]
+          },
+          {
+            "id": 21682135,
+            "code": "NO_CODE_636",
+            "nameFi": "HY+",
+            "nameEn": "HY+",
+            "nameSv": "HY+",
+            "displayNameFi": "MUUT, HY+ (HYPLUS)",
+            "displayNameEn": "MUUT, HY+ (HYPLUS)",
+            "displayNameSv": "MUUT, HY+ (HYPLUS)",
+            "type": "yritys_yhteiso,erillinen laitos",
+            "abbreviation": "HYPLUS",
+            "parentAbbreviation": "MUUT",
+            "billingCode": "A96000"
+          },
+          {
+            "id": 83231586,
+            "code": "R0214",
+            "nameFi": "Helsingin yliopiston rahastot",
+            "nameEn": "The University of Helsinki Funds",
+            "nameSv": "Helsingfors universitets fonder",
+            "displayNameFi": "MUUT, Helsingin yliopiston rahastot (HYR)",
+            "displayNameEn": "MUUT, The University of Helsinki Funds (HYR)",
+            "displayNameSv": "MUUT, Helsingfors universitets fonder (HYR)",
+            "type": "yritys_yhteiso,tulosyksikko",
+            "abbreviation": "HYR",
+            "parentAbbreviation": "MUUT",
+            "children": [
+              {
+                "id": 24701832,
+                "code": "R02147",
+                "nameFi": "Rahastot",
+                "nameEn": "Funds",
+                "nameSv": "Fonder",
+                "displayNameFi": "HYR, Rahastot",
+                "displayNameEn": "HYR, Funds",
+                "displayNameSv": "HYR, Fonder",
+                "type": "yksikko,tulosyksikko",
+                "parentAbbreviation": "HYR"
+              }
+            ]
+          },
+          {
+            "id": 69640366,
+            "code": "HYK",
+            "nameFi": "Helsingin yliopistokiinteistöt Oy",
+            "nameEn": "HYK",
+            "nameSv": "HYK",
+            "displayNameFi": "MUUT, Helsingin yliopistokiinteistöt Oy (HYK)",
+            "displayNameEn": "MUUT, HYK (HYK)",
+            "displayNameSv": "MUUT, HYK (HYK)",
+            "type": "yritys_yhteiso",
+            "abbreviation": "HYK",
+            "parentAbbreviation": "MUUT",
+            "children": [
+              {
+                "id": 77438361,
+                "code": "HYK01",
+                "nameFi": "Hallinto",
+                "nameEn": "Administration",
+                "nameSv": "Förvaltning",
+                "displayNameFi": "HYK, Hallinto",
+                "displayNameEn": "HYK, Administration",
+                "displayNameSv": "HYK, Förvaltning",
+                "type": "tulosyksikko",
+                "parentAbbreviation": "HYK"
+              },
+              {
+                "id": 28686730,
+                "code": "HYK02",
+                "nameFi": "HY:n käyttö",
+                "nameEn": "UH Usage",
+                "nameSv": "HU bruk",
+                "displayNameFi": "HYK, HY:n käyttö",
+                "displayNameEn": "HYK, UH Usage",
+                "displayNameSv": "HYK, HU bruk",
+                "type": "tulosyksikko",
+                "parentAbbreviation": "HYK"
+              },
+              {
+                "id": 99369402,
+                "code": "HYK03",
+                "nameFi": "Muu käyttö / monikäyttö",
+                "nameEn": "Other Usage",
+                "nameSv": "Annat bruk",
+                "displayNameFi": "HYK, Muu käyttö / monikäyttö",
+                "displayNameEn": "HYK, Other Usage",
+                "displayNameSv": "HYK, Annat bruk",
+                "type": "tulosyksikko",
+                "parentAbbreviation": "HYK"
+              }
+            ]
+          },
+          {
+            "id": 46436786,
+            "code": "K000",
+            "nameFi": "Konsernin pienet kiinteistöyhtiöt",
+            "nameEn": "Small Real Estate Com­panies of the Group",
+            "nameSv": "Koncernens små fastighetsbolag",
+            "displayNameFi": "MUUT, Konsernin pienet kiinteistöyhtiöt (K000)",
+            "displayNameEn": "MUUT, Small Real Estate Com­panies of the Group (K000)",
+            "displayNameSv": "MUUT, Koncernens små fastighetsbolag (K000)",
+            "type": "yritys_yhteiso,yksikko",
+            "abbreviation": "K000",
+            "parentAbbreviation": "MUUT"
+          },
+          {
+            "id": 94314457,
+            "code": "NO_CODE_637",
+            "nameFi": "Tuntematon yksikkö/ tekninen korjaus",
+            "nameEn": "Other activities, Finance",
+            "nameSv": "Anna verksamhet, kvesturen",
+            "displayNameFi": "MUUT, Tuntematon yksikkö/ tekninen korjaus (XXXX)",
+            "displayNameEn": "MUUT, Other activities, Finance (XXXX)",
+            "displayNameSv": "MUUT, Anna verksamhet, kvesturen (XXXX)",
+            "type": "yksikko,tulosyksikko",
+            "abbreviation": "XXXX",
+            "parentAbbreviation": "MUUT",
+            "billingCode": "A99900"
+          }
+        ]
+      }
+}

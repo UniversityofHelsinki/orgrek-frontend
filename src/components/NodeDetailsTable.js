@@ -91,7 +91,7 @@ const NodeDetailsTable = (props) => {
     return (
         <>
             <h4>{t(props.heading)}</h4>
-            <Table size="sm" data-testid='node-details-table'>
+            <Table id={props.heading} size="sm" data-testid='node-details-table'>
                 <thead>
                 {renderTableHeader()}
                 </thead>
