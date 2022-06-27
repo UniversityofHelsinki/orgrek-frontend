@@ -50,6 +50,8 @@ build_dev:
   stage: build
   tags:
     - shared-openshift
+  environment:
+    CYPRESS_CACHE_FOLDER: '~/.cache/Cypress'
   only:
     - master
   script:
