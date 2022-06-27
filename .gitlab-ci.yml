@@ -50,13 +50,11 @@ build_dev:
   stage: build
   tags:
     - shared-openshift
-  environment:
-    - CYPRESS_CACHE_FOLDER: '~/.cache/Cypress'
   only:
     - master
   script:
     - yes | cp -f -v .env.development .env.production || true
-    - CI=false npm run build
+    - CI=false CYPRESS_CACHE_FOLDER='~/.cache/Cypress' npm run build
   artifacts:
     name: orgrek-build
     paths:
@@ -70,7 +68,7 @@ build_test:
     - test
   script:
     - yes | cp -f -v .env.test .env.production || true
-    - CI=false npm run build
+    - CI=false CYPRESS_CACHE_FOLDER='~/.cache/Cypress' npm run build
   artifacts:
     name: orgrek-build
     paths:
@@ -83,7 +81,7 @@ build_prod:
   only:
     - prod
   script:
-    - CI=false npm run build
+    - CI=false CYPRESS_CACHE_FOLDER='~/.cache/Cypress' npm run build
   artifacts:
     name: orgrek-build
     paths:
