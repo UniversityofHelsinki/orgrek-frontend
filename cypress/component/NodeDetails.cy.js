@@ -281,7 +281,7 @@ describe('NodeDetails.cy.js', () => {
 
   });
 
-  it.only('shows correct information when unit is future in relation to selected day', () => {
+  it('shows correct information when unit is future in relation to selected day', () => {
       cy.intercept('GET', /.*\/api\/node\/[0-9]+\/[0-9]+\.[0-9]+\.[0-9]+\/attributes/g, { fixture: '2022-06-21/future/attributes.json' });
       cy.intercept('GET', /.*\/api\/node\/parents\/[0-9]+\/[0-9]+\.[0-9]+\.[0-9]+/g, { fixture: '2022-06-21/future/parents.json' });
       cy.intercept('GET', /.*\/api\/node\/children\/[0-9]+\/[0-9]+\.[0-9]+\.[0-9]+/g, { fixture: '2022-06-21/future/children.json' });
@@ -323,6 +323,79 @@ describe('NodeDetails.cy.js', () => {
      cy.get('@predecessors').children('tbody').children().should('have.length', 1);
 
      cy.get('@showHistorySwitch').click();
+     cy.get('@nameInfoTable').contains('Tulevaisuuden yliopisto').should('not.exist');
+     cy.get('@nameInfoTable').contains('Menneisyyden yliopisto').should('exist');
+
+     cy.get('@codeAttributes').contains('PAST').should('exist');
+     cy.get('@codeAttributes').contains('ALWAYS_VALID').should('exist');
+     cy.get('@children').contains('tutkimus').should('exist');
+     cy.get('@parents').contains('talous').should('exist');
+
+     cy.get('@children').children('tbody').children().should('have.length', 1);
+     cy.get('@parents').children('tbody').children().should('have.length', 1);
+
+     cy.get('@showHistorySwitch').click();
+     cy.get('@nameInfoTable').contains('Tulevaisuuden yliopisto').should('not.exist');
+     cy.get('@nameInfoTable').contains('Menneisyyden yliopisto').should('not.exist');
+     cy.get('@codeAttributes').contains('unique_id').should('exist');
+     cy.get('@codeAttributes').contains('PAST').should('not.exist');
+     cy.get('@codeAttributes').contains('ALWAYS_VALID').should('not.exist');
+     cy.get('@children').contains('tutkimus').should('not.exist');
+     cy.get('@parents').contains('talous').should('not.exist');
+     cy.get('@children').children('tbody').children().should('have.length', 0);
+     cy.get('@parents').children('tbody').children().should('have.length', 0);
+     cy.get('@predecessors').children('tbody').children().should('have.length', 1);
+     cy.get('@predecessors').contains('IPR University Center').should('exist');
+
+     cy.get('@showComingSwitch').click();
+     cy.get('@nameInfoTable').contains('Tulevaisuuden yliopisto').should('exist');
+     cy.get('@nameInfoTable').contains('Menneisyyden yliopisto').should('not.exist');
+     cy.get('@displayNameInfoTable').contains('Tulevaisuuden yliopisto').should('exist');
+     cy.get('@displayNameInfoTable').contains('Menneisyyden yliopisto').should('not.exist');
+     cy.get('@codeAttributes').contains('unique_id').should('exist');
+     cy.get('@codeAttributes').contains('PAST').should('not.exist');
+     cy.get('@codeAttributes').contains('FUTURE').should('exist');
+     cy.get('@codeAttributes').contains('ALWAYS_VALID').should('exist');
+     cy.get('@showComingSwitch').click();
+
+     cy.get('@displayNameInfoTable').contains('Tulevaisuuden yliopisto').should('not.exist');
+     cy.get('@codeAttributes').contains('FUTURE').should('not.exist');
+     cy.get('@codeAttributes').contains('ALWAYS_VALID').should('not.exist');
+     cy.get('@predecessors').contains('IPR University Center').should('exist');
+
+     cy.get('@showComingSwitch').click();
+     cy.get('@showHistorySwitch').click();
+     cy.get('@nameInfoTable').contains('Tulevaisuuden yliopisto').should('exist');
+     cy.get('@nameInfoTable').contains('Menneisyyden yliopisto').should('exist');
+     cy.get('@displayNameInfoTable').contains('Tulevaisuuden yliopisto').should('exist');
+     cy.get('@displayNameInfoTable').contains('Menneisyyden yliopisto').should('exist');
+
+     cy.get('@codeAttributes').contains('unique_id').should('exist');
+     cy.get('@codeAttributes').contains('PAST').should('exist');
+     cy.get('@codeAttributes').contains('FUTURE').should('exist');
+     cy.get('@codeAttributes').contains('ALWAYS_VALID').should('exist');
+
+     cy.get('@parents').contains('talous').should('exist');
+     cy.get('@parents').contains('tutkimus').should('exist');
+     cy.get('@parents').contains('opetus').should('exist');
+
+     cy.get('@children').contains('tutkimus').should('exist');
+     cy.get('@children').contains('tutkimus').should('exist');
+     cy.get('@children').contains('opetus').should('exist');
+
+     cy.get('@showHistorySwitch').click();
+     cy.get('@showComingSwitch').click();
+     cy.get('@nameInfoTable').children('tbody').children().should('not.exist');
+     cy.get('@displayNameInfoTable').children('tbody').children().should('not.exist');
+
+     cy.get('@codeAttributes').contains('unique_id').should('exist');
+     cy.get('@codeAttributes').children('tbody').children().should('have.length', 1);
+
+     cy.get('@children').children('tbody').children().should('not.exist');
+     cy.get('@parents').children('tbody').children().should('not.exist');
+     cy.get('@otherAttributes').children('tbody').children().should('not.exist');
+
+     cy.get('@predecessors').children('tbody').children().should('have.length', 1);
 
   });
 });

@@ -14,20 +14,6 @@
     "nodeId": "a1"
   },
   {
-    "key": "lyhenne",
-    "value": "HY",
-    "startDate": "2020-01-01T00:00:00+00:00",
-    "endDate": "2030-01-01T00:00:00+00:00",
-    "nodeId": "a1"
-  },
-  {
-    "key": "type",
-    "value": "yritys_yhteiso",
-    "startDate": "2020-01-01T00:00:00+00:00",
-    "endDate": "2030-01-01T00:00:00+00:00",
-    "nodeId": "a1"
-  },
-  {
     "key": "name_fi",
     "value": "Helsingin yliopisto",
     "startDate": "2020-01-01T00:00:00+00:00",
@@ -43,23 +29,9 @@
   },
   {
     "key": "hr_lyhenne",
-    "value": "HY",
-    "startDate": "2020-01-01T00:00:00+00:00",
-    "endDate": "2030-01-01T00:00:00+00:00",
-    "nodeId": "a1"
-  },
-  {
-    "key": "hr_lyhenne",
     "value": "PAST",
     "startDate": "1920-01-01T00:00:00+00:00",
     "endDate": "1930-01-01T00:00:00+00:00",
-    "nodeId": "a1"
-  },
-  {
-    "key": "hr_tunnus",
-    "value": "51000053",
-    "startDate": "2020-01-01T00:00:00+00:00",
-    "endDate": "2030-01-01T00:00:00+00:00",
     "nodeId": "a1"
   },
   {
