@@ -52,7 +52,7 @@
     "test": "jest --coverage",
     "eject": "react-scripts eject",
     "lint": "eslint --fix .",
-    "cypress:open": "cypress open --config-file configs/cypress.json"
+    "cypress:open": "cypress open"
   },
   "eslintConfig": {
     "extends": [
