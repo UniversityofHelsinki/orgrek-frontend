@@ -1,13 +1,22 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Form, Row, Col } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { switchHistory, switchComing } from '../actions/nodeViewAction';
-import { fetchNodeAttributesFuture, fetchNodeAttributesHistory } from '../actions/nodeAction';
-import { fetchNodeChildrenHistory, fetchNodeChildrenFuture, fetchNodeParentsHistory, fetchNodeParentsFuture } from '../actions/hierarchyAction';
+import { fetchNodeAttributesFuture, fetchNodeAttributesHistory, clearNodeFuture, clearNodeHistory } from '../actions/nodeAction';
+import { fetchNodeChildrenHistory, fetchNodeChildrenFuture, fetchNodeParentsHistory, fetchNodeParentsFuture, clearChildrenHistory, clearChildrenFuture, clearParentsFuture, clearParentsHistory } from '../actions/hierarchyAction';
 
 const NodeViewControl = (props) => {
     const { t, i18n } = useTranslation();
+
+    useEffect(() => {
+        if (props.showHistory) {
+            props.fetchHistory();
+        }
+        if (props.showComing) {
+            props.fetchComing();
+        }
+    }, [props.showHistory, props.showComing, props.node]);
     return (
             <Form>
                 <Row className='align-items-center'>
@@ -50,19 +59,25 @@ const mapDispatchToProps = (dispatch, ownProps) => (
     {
     onSwitchHistory: (input) => {
         dispatch(switchHistory(input));
-        if (input) {
-            dispatch(fetchNodeParentsHistory(ownProps.node.uniqueId, ownProps.selectedDay));
-            dispatch(fetchNodeChildrenHistory(ownProps.node.uniqueId, ownProps.selectedDay));
-            dispatch(fetchNodeAttributesHistory(ownProps.node.uniqueId, ownProps.selectedDay));
-        }
+    },
+    fetchHistory: () => {
+        dispatch(clearNodeHistory());
+        dispatch(clearChildrenHistory());
+        dispatch(clearParentsHistory());
+        dispatch(fetchNodeParentsHistory(ownProps.node.uniqueId, ownProps.selectedDay));
+        dispatch(fetchNodeChildrenHistory(ownProps.node.uniqueId, ownProps.selectedDay));
+        dispatch(fetchNodeAttributesHistory(ownProps.node.uniqueId, ownProps.selectedDay));
     },
     onSwitchComing: (input) => {
         dispatch(switchComing(input));
-        if (input) {
-            dispatch(fetchNodeParentsFuture(ownProps.node.uniqueId, ownProps.selectedDay));
-            dispatch(fetchNodeChildrenFuture(ownProps.node.uniqueId, ownProps.selectedDay));
-            dispatch(fetchNodeAttributesFuture(ownProps.node.uniqueId, ownProps.selectedDay));
-        }
+    },
+    fetchComing: () => {
+        dispatch(clearNodeFuture());
+        dispatch(clearChildrenFuture());
+        dispatch(clearParentsFuture());
+        dispatch(fetchNodeParentsFuture(ownProps.node.uniqueId, ownProps.selectedDay));
+        dispatch(fetchNodeChildrenFuture(ownProps.node.uniqueId, ownProps.selectedDay));
+        dispatch(fetchNodeAttributesFuture(ownProps.node.uniqueId, ownProps.selectedDay));
     }
 
 });

@@ -26,7 +26,7 @@ stages:
 setup:
   stage: setup
   script:
-    - npm ci
+    - CYPRESS_CACHE_FOLDER='.cache/Cypress' npm ci
   tags:
     - shared-openshift
   extends: .dependencies_cache

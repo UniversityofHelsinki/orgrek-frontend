@@ -25,20 +25,40 @@ const hierarchyReducer = (state = initialState, action) => {
             ...state,
             parentsHistory: action.payload
         };
+    case 'CLEAR_PARENTS_HISTORY':
+        return {
+            ...state,
+            parentsHistory: undefined,
+        };
     case 'SUCCESS_API_GET_CHILDREN_HISTORY':
         return {
             ...state,
             childrenHistory: action.payload
+        };
+    case 'CLEAR_CHILDREN_HISTORY':
+        return {
+            ...state,
+            childrenHistory: undefined
         };
     case 'SUCCESS_API_GET_PARENTS_FUTURE':
         return {
             ...state,
             parentsFuture: action.payload
         };
+    case 'CLEAR_PARENTS_FUTURE':
+        return {
+            ...state,
+            parentsFuture: undefined
+        };
     case 'SUCCESS_API_GET_CHILDREN_FUTURE':
         return {
             ...state,
             childrenFuture: action.payload
+        };
+    case 'CLEAR_CHILDREN_FUTURE':
+        return {
+            ...state,
+            childrenFuture: undefined
         };
     default:
         return state;

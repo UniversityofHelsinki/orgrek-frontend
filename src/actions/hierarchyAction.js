@@ -152,3 +152,27 @@ export const api401FailureCall = failureTime => ({
     type: 'STATUS_401_API_CALL',
     payload : failureTime
 });
+
+export const clearChildrenHistory = () => {
+    return {
+        type: 'CLEAR_CHILDREN_HISTORY'
+    };
+};
+
+export const clearChildrenFuture = () => {
+    return {
+        type: 'CLEAR_CHILDREN_FUTURE'
+    };
+};
+
+export const clearParentsHistory = () => {
+    return {
+        type: 'CLEAR_PARENTS_HISTORY'
+    };
+};
+
+export const clearParentsFuture = () => {
+    return {
+        type: 'CLEAR_PARENTS_FUTURE'
+    };
+};

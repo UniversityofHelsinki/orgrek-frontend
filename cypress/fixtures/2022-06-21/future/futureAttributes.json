@@ -1,0 +1,72 @@
+[
+  {
+    "key": "name_en",
+    "value": "University of Helsinki",
+    "startDate": "2020-01-01T00:00:00+00:00",
+    "endDate": "2030-01-01T00:00:00+00:00",
+    "nodeId": "a1"
+  },
+  {
+    "key": "name_sv",
+    "value": "Helsingfors universitet",
+    "startDate": "2020-01-01T00:00:00+00:00",
+    "endDate": "2030-01-01T00:00:00+00:00",
+    "nodeId": "a1"
+  },
+  {
+    "key": "lyhenne",
+    "value": "HY",
+    "startDate": "2020-01-01T00:00:00+00:00",
+    "endDate": "2030-01-01T00:00:00+00:00",
+    "nodeId": "a1"
+  },
+  {
+    "key": "type",
+    "value": "yritys_yhteiso",
+    "startDate": "2080-01-01T00:00:00+00:00",
+    "endDate": "2090-01-01T00:00:00+00:00",
+    "nodeId": "a1"
+  },
+  {
+    "key": "name_fi",
+    "value": "Helsingin yliopisto",
+    "startDate": "2020-01-01T00:00:00+00:00",
+    "endDate": "2030-01-01T00:00:00+00:00",
+    "nodeId": "a1"
+  },
+  {
+    "key": "name_sv",
+    "value": "Tulevaisuuden yliopisto",
+    "startDate": "2040-01-01T00:00:00+00:00",
+    "endDate": "2050-01-01T00:00:00+00:00",
+    "nodeId": "a1"
+  },
+  {
+    "key": "hr_lyhenne",
+    "value": "HY",
+    "startDate": "2020-01-01T00:00:00+00:00",
+    "endDate": "2030-01-01T00:00:00+00:00",
+    "nodeId": "a1"
+  },
+  {
+    "key": "hr_lyhenne",
+    "value": "FUTURE",
+    "startDate": "2050-01-01T00:00:00+00:00",
+    "endDate": "2070-01-01T00:00:00+00:00",
+    "nodeId": "a1"
+  },
+  {
+    "key": "hr_tunnus",
+    "value": "51000053",
+    "startDate": "2020-01-01T00:00:00+00:00",
+    "endDate": "2030-01-01T00:00:00+00:00",
+    "nodeId": "a1"
+  },
+  {
+    "key": "hr_tunnus",
+    "value": "ALWAYS_VALID",
+    "startDate": null,
+    "endDate": null,
+    "nodeId": "a1"
+  }
+]

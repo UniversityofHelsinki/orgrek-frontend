@@ -17,18 +17,8 @@ const ListLink = styled.a`
 `;
 
 import {
-    fetchNode,
-    fetchNodeAttributes, fetchNodeAttributesFuture,
-    fetchNodeAttributesHistory,
-    fetchNodePredecessors,
-    fetchNodeSuccessors
+    fetchNode
 } from '../actions/nodeAction';
-import {
-    fetchNodeChildren, fetchNodeChildrenFuture,
-    fetchNodeChildrenHistory,
-    fetchNodeParents, fetchNodeParentsFuture,
-    fetchNodeParentsHistory
-} from '../actions/hierarchyAction';
 import { blue } from '@mui/material/colors';
 
 const NodeDetailsTable = (props) => {
@@ -62,7 +52,7 @@ const NodeDetailsTable = (props) => {
             if (props.type === 'node-hierarchy') {
                 return (<React.Fragment key={elem.node.id}>
                         <tr>
-                            <td onClick={() => props.onNodeSelection(elem.node.uniqueId, props.showHistory, props.showComing, props.selectedDay)}>
+                            <td onClick={() => props.onNodeSelection(elem.node.uniqueId)}>
                                 <ListLink href="#">
                                     {showHierarchyDisplayNameByLanguage(elem, lang) ? showHierarchyDisplayNameByLanguage(elem, lang) : elem.node.name}
                                 </ListLink></td>
@@ -86,7 +76,7 @@ const NodeDetailsTable = (props) => {
 
             if (props.type === 'name-validity') {
                 return (<tr key={elem.nodeEdgeHistoryWrapper.id}>
-                    <td onClick={() => props.onNodeSelection(elem.nodeEdgeHistoryWrapper.uniqueId, props.showHistory, props.showComing)}>
+                    <td onClick={() => props.onNodeSelection(elem.nodeEdgeHistoryWrapper.uniqueId)}>
                         <ListLink href="#">
                             {showHierarchyDisplayNameByLanguage(elem, lang) ? showHierarchyDisplayNameByLanguage(elem, lang) : elem.nodeEdgeHistoryWrapper.name }
                         </ListLink></td>
@@ -101,7 +91,7 @@ const NodeDetailsTable = (props) => {
     return (
         <>
             <h4>{t(props.heading)}</h4>
-            <Table size="sm" data-testid='node-details-table'>
+            <Table id={props.heading} size="sm" data-testid='node-details-table'>
                 <thead>
                 {renderTableHeader()}
                 </thead>
@@ -120,24 +110,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-    onNodeSelection: (elemId, showHistory, showComing, selectedDay) => {
+    onNodeSelection: (elemId) => {
         dispatch(fetchNode(elemId));
-        dispatch(fetchNodeAttributes(elemId, selectedDay));
-        dispatch(fetchNodeParents(elemId, selectedDay));
-        dispatch(fetchNodeChildren(elemId, selectedDay));
-        dispatch(fetchNodePredecessors(elemId, selectedDay));
-        dispatch(fetchNodeSuccessors(elemId, selectedDay));
-
-        if (showHistory) {
-            dispatch(fetchNodeParentsHistory(elemId, selectedDay));
-            dispatch(fetchNodeChildrenHistory(elemId, selectedDay));
-            dispatch(fetchNodeAttributesHistory(ownProps.item.id, selectedDay));
-        }
-        if (showComing) {
-            dispatch(fetchNodeParentsFuture(elemId, selectedDay));
-            dispatch(fetchNodeChildrenFuture(elemId, selectedDay));
-            dispatch(fetchNodeAttributesFuture(elemId, selectedDay));
-        }
     }
 });
 

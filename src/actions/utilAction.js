@@ -112,22 +112,39 @@ export const flattenTree = (input, res = []) => {
 };
 
 export const filterNodeDuplicates = (historyArray, futureArray) => {
-    const result = historyArray;
+    const isSameHierarchy = (a, b) => {
+        return Object.keys(a).every(property => a[property] === b[property]);
+    };
+
+    const result = historyArray ? [...historyArray] : [];
     if (futureArray && historyArray) {
         futureArray.map(elem => {
             const found = historyArray.find(historyElem => historyElem.node.id === elem.node.id);
-            found ? '' : result.push(elem);
+            if (found) {
+                elem.hierarchies.forEach(a => {
+                    const alreadyExists = found.hierarchies.find(b => isSameHierarchy(a,b));
+                    if (!alreadyExists) {
+                        found.hierarchies.push(a);
+                    }
+                });
+            } else {
+                result.push(elem);
+            }
         });
     }
     return result;
 };
 
 export const filterAttributeDuplicates = (historyArray, futureArray) => {
-    const result = historyArray;
-    futureArray ? futureArray.map(elem => {
-        const found = result.find(historyElem => deepEqual(historyElem, elem));
-        found ? '' : result.push(elem);
-    }) : '';
+    const result = historyArray ? [...historyArray] : [];
+    if (historyArray && futureArray) {
+        futureArray.map(elem => {
+            const found = historyArray.find(historyElem => deepEqual(historyElem, elem));
+            if (!found) {
+                result.push(elem);
+            }
+        });
+    }
     return result;
 };
 
