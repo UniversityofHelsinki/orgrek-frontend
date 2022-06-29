@@ -19,10 +19,20 @@ const nodeReducer = (state = initialState, action) => {
                 ...state,
                 nodeAttributesHistory: action.payload
             };
+        case 'CLEAR_NODE_ATTRIBUTES_HISTORY':
+            return {
+                ...state,
+                nodeAttributesHistory: undefined,
+            };
         case 'SUCCESS_API_GET_NODE_ATTRIBUTES_FUTURE':
             return {
                 ...state,
                 nodeAttributesFuture: action.payload
+            };
+        case 'CLEAR_NODE_ATTRIBUTES_FUTURE':
+            return {
+                ...state,
+                nodeAttributesFuture: undefined,
             };
         case 'SUCCESS_API_GET_NODE':
             return {

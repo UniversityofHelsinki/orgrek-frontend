@@ -150,3 +150,21 @@ export const apiGetNodeSuccessorsSuccessCall = data => {
         payload: data
     };
 };
+
+export const clearNodeHistory = () => {
+    return {
+        type: 'CLEAR_NODE_ATTRIBUTES_HISTORY'
+    };
+};
+
+export const clearNodeFuture = () => {
+    return {
+        type: 'CLEAR_NODE_ATTRIBUTES_FUTURE'
+    };
+};
+
+export const clearNodeDetails = () => {
+    return {
+        type: 'CLEAR_NODE_DETAILS'
+    };
+};
