@@ -3,8 +3,7 @@ import { connect } from 'react-redux';
 import { Typeahead } from 'react-bootstrap-typeahead';
 import { useTranslation } from 'react-i18next';
 import { selectNameVersion, flattenTree } from '../actions/utilAction';
-import { fetchNodeParents, fetchNodeChildren } from '../actions/hierarchyAction';
-import { fetchNode, fetchNodeAttributes, fetchNodePredecessors, fetchNodeSuccessors } from '../actions/nodeAction';
+import { fetchNode } from '../actions/nodeAction';
 
 const TreeSearch = (props) => {
     const { t, i18n } = useTranslation();
@@ -21,7 +20,7 @@ const TreeSearch = (props) => {
             <Typeahead
                 data-testid='treesearch'
                 id="code-and-name-search"
-                labelKey={(option) => `${option.code} ${selectNameVersion(i18n, option)}`}
+                labelKey={(option) => `${option.id} ${option.code} ${selectNameVersion(i18n, option)}`}
                 onChange={ value  => handleChange(value)}
                 options={options}
                 placeholder={t('type_three_char_to_start_search')}
