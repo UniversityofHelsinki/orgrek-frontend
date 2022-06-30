@@ -25,7 +25,7 @@ const TreeSearch = (props) => {
     };
 
     const uniqueIdMatches = (uniqueId, text) => {
-        return uniqueId.toString().indexOf(text) !== -1;
+        return uniqueId.toString() === text.toLowerCase();
     };
 
     return (
@@ -34,9 +34,7 @@ const TreeSearch = (props) => {
                 id="code-and-name-search"
                 labelKey={(option) => `${option.code} ${selectNameVersion(i18n, option)}`}
                 filterBy={(option, props) => {
-                    if (nameMatches(selectNameVersion(i18n, option), props.text) || codeMatches(option.code, props.text) || uniqueIdMatches(option.id, props.text)) {
-                        return true;
-                    }
+                    return nameMatches(selectNameVersion(i18n, option), props.text) || codeMatches(option.code, props.text) || uniqueIdMatches(option.id, props.text) ? true : false;
                 }}
                 onChange={ value  => handleChange(value)}
                 options={options}
