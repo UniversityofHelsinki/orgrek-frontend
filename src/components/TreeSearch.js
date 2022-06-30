@@ -16,11 +16,28 @@ const TreeSearch = (props) => {
 
     const options = flattenTree(props.tree.tree ? props.tree.tree.children : []);
 
+    const nameMatches = (name, text) => {
+        return name.toLowerCase().indexOf(text.toLowerCase()) !== -1;
+    };
+
+    const codeMatches = (code, text) => {
+        return code.toLowerCase().indexOf(text.toLowerCase()) !== -1;
+    };
+
+    const uniqueIdMatches = (uniqueId, text) => {
+        return uniqueId.toString().indexOf(text) !== -1;
+    };
+
     return (
             <Typeahead
                 data-testid='treesearch'
                 id="code-and-name-search"
-                labelKey={(option) => `${option.id} ${option.code} ${selectNameVersion(i18n, option)}`}
+                labelKey={(option) => `${option.code} ${selectNameVersion(i18n, option)}`}
+                filterBy={(option, props) => {
+                    if (nameMatches(selectNameVersion(i18n, option), props.text) || codeMatches(option.code, props.text) || uniqueIdMatches(option.id, props.text)) {
+                        return true;
+                    }
+                }}
                 onChange={ value  => handleChange(value)}
                 options={options}
                 placeholder={t('type_three_char_to_start_search')}
