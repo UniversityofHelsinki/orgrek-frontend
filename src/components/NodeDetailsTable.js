@@ -58,7 +58,7 @@ const NodeDetailsTable = (props) => {
                                 </ListLink></td>
                             {elem.hierarchies.length > 0 &&
                                 <>
-                                    <td>{t(elem.hierarchies[0].type)}</td>
+                                    <td>{t(elem.hierarchies[0].hierarchy)}</td>
                                     <td>{hierarchyDate(elem.hierarchies[0], i18n, t)}</td>
                                 </>
                             }
@@ -66,7 +66,7 @@ const NodeDetailsTable = (props) => {
                         {elem.hierarchies.slice(1).map((hierarchy, i) =>
                             <tr key={i + hierarchy.nodeId}>
                                 <td></td>
-                                <td>{t(hierarchy.type)}</td>
+                                <td>{t(hierarchy.hierarchy)}</td>
                                 <td>{hierarchyDate(hierarchy, i18n, t)}</td>
                             </tr>
                         )}
