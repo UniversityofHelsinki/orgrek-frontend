@@ -173,7 +173,7 @@ const NodeDetails = (props) => {
                         type='key-value'
                         heading='display_name_info'
                         tableLabels={['text_language_header', 'name']}
-                        contentData={console.log(props.displayNames) || [...props.displayNames.fi, ...props.displayNames.sv, ...props.displayNames.en].filter(n => n).map(dn => ({ ...dn, key: `name_${dn.language.toLowerCase()}`, value: dn.name }))}
+                        contentData={[...props.displayNames.fi, ...props.displayNames.sv, ...props.displayNames.en].filter(n => n).map(dn => ({ ...dn, key: `name_${dn.language.toLowerCase()}`, value: dn.name }))}
                         hasValidity={true}
                         dataFilter={pastFutureFilter}
                     />
