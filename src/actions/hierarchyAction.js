@@ -23,6 +23,7 @@ export const apiGetParentsSuccessCall = data => {
     };
 };
 
+
 export const fetchNodeParentsHistory = (uniqueId, selectedDay) => {
     const ORGREK_BACKEND_SERVER = process.env.REACT_APP_ORGREK_BACKEND_SERVER || '';
     const date = selectedDay ? selectedDay.toLocaleDateString('fi-FI') : new Date().toLocaleDateString('fi-FI');
@@ -44,6 +45,29 @@ export const fetchNodeParentsHistory = (uniqueId, selectedDay) => {
 export const apiGetParentsHistorySuccessCall = data => {
     return {
         type: 'SUCCESS_API_GET_PARENTS_HISTORY',
+        payload: data
+    };
+};
+
+export const fetchNodeParentsAll = (uniqueId, selectedDay) => {
+    const ORGREK_BACKEND_SERVER = process.env.REACT_APP_ORGREK_BACKEND_SERVER || '';
+    const PATH = `/api/node/all/parents/${uniqueId}/${selectedDay.toLocaleDateString('fi-FI')}`;
+    return async (dispatch)  => {
+        let response = await fetch(`${ORGREK_BACKEND_SERVER}${PATH}`, {
+            headers: { 'Content-Type': 'application/json' }
+        });
+        if (response.status === 200) {
+            let responseJSON = await response.json();
+            dispatch(apiGetParentsAllSuccess(responseJSON));
+        } else {
+            dispatch(api401FailureCall(new Date()));
+        }
+    };
+};
+
+export const apiGetParentsAllSuccess = data => {
+    return {
+        type: 'SUCCESS_API_GET_PARENTS_ALL',
         payload: data
     };
 };
@@ -119,6 +143,29 @@ export const fetchNodeChildrenHistory = (uniqueId, selectedDay) => {
 export const apiGetChildrenHistorySuccessCall = data => {
     return {
         type: 'SUCCESS_API_GET_CHILDREN_HISTORY',
+        payload: data
+    };
+};
+
+export const fetchNodeChildrenAll = (uniqueId, selectedDay) => {
+    const ORGREK_BACKEND_SERVER = process.env.REACT_APP_ORGREK_BACKEND_SERVER || '';
+    const PATH = `/api/node/all/children/${uniqueId}/${selectedDay.toLocaleDateString('fi-FI')}`;
+    return async (dispatch)  => {
+        let response = await fetch(`${ORGREK_BACKEND_SERVER}${PATH}`, {
+            headers: { 'Content-Type': 'application/json' }
+        });
+        if (response.status === 200) {
+            let responseJSON = await response.json();
+            dispatch(apiGetNodeChildrenAll(responseJSON));
+        } else {
+            dispatch(api401FailureCall(new Date()));
+        }
+    };
+};
+
+export const apiGetNodeChildrenAll = data => {
+    return {
+        type: 'SUCCESS_API_GET_CHILDREN_ALL',
         payload: data
     };
 };

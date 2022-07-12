@@ -3,18 +3,22 @@ import { connect } from 'react-redux';
 import { Form, Row, Col } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { switchHistory, switchComing } from '../actions/nodeViewAction';
-import { fetchNodeAttributesFuture, fetchNodeAttributesHistory, clearNodeFuture, clearNodeHistory } from '../actions/nodeAction';
-import { fetchNodeChildrenHistory, fetchNodeChildrenFuture, fetchNodeParentsHistory, fetchNodeParentsFuture, clearChildrenHistory, clearChildrenFuture, clearParentsFuture, clearParentsHistory } from '../actions/hierarchyAction';
+import { fetchNodeAttributesFuture, fetchNodeAttributesHistory, clearNodeFuture, clearNodeHistory, fetchNodeFullNamesHistory, fetchNodeFullNamesFuture, clearFullNamesFuture, clearFullNamesHistory, fetchNodeFullNames, fetchNodeFullNamesAll } from '../actions/nodeAction';
+import { fetchNodeChildrenHistory, fetchNodeChildrenFuture, fetchNodeParentsHistory, fetchNodeParentsFuture, clearChildrenHistory, clearChildrenFuture, clearParentsFuture, clearParentsHistory, fetchNodeChildrenAll, fetchNodeParentsAll } from '../actions/hierarchyAction';
 
 const NodeViewControl = (props) => {
     const { t, i18n } = useTranslation();
 
     useEffect(() => {
-        if (props.showHistory) {
-            props.fetchHistory();
-        }
-        if (props.showComing) {
-            props.fetchComing();
+        if (props.showHistory && props.showComing) {
+            console.log('molemmat');
+            props.fetchAll();
+        } else if (props.showHistory) {
+            console.log('showHistory');
+            props.fetchHistory(props.showComing);
+        } else if (props.showComing) {
+            console.log('showComing');
+            props.fetchComing(props.showHistory);
         }
     }, [props.showHistory, props.showComing, props.node]);
     return (
@@ -55,29 +59,61 @@ const mapStateToProps = state => ({
     showComing: state.nvrd.showComing
 });
 
-const mapDispatchToProps = (dispatch, ownProps) => (
-    {
+const mapDispatchToProps = (dispatch, ownProps) => ({
     onSwitchHistory: (input) => {
         dispatch(switchHistory(input));
     },
-    fetchHistory: () => {
+    fetchAll: () => {
+        dispatch(clearFullNamesFuture());
+        dispatch(clearChildrenFuture());
+        dispatch(clearParentsFuture());
+        dispatch(clearNodeHistory());
+        dispatch(clearNodeFuture());
+        dispatch(fetchNodeFullNamesAll(ownProps.node.uniqueId, ownProps.selectedDay));
+        dispatch(fetchNodeParentsAll(ownProps.node.uniqueId, ownProps.selectedDay));
+        dispatch(fetchNodeChildrenAll(ownProps.node.uniqueId, ownProps.selectedDay));
+        dispatch(fetchNodeAttributesHistory(ownProps.node.uniqueId, ownProps.selectedDay));
+        dispatch(fetchNodeAttributesFuture(ownProps.node.uniqueId, ownProps.selectedDay));
+
+    },
+    fetchAllDisplayNames: () => {
+        dispatch(clearFullNamesFuture());
+        dispatch(fetchNodeFullNames(ownProps.node.uniqueId));
+    },
+    fetchAllParents: () => {
+        dispatch(clearParentsFuture());
+        dispatch(fetchNodeParentsAll(ownProps.node.uniqueId, ownProps.selectedDay));
+    },
+    fetchAllChildren: () => {
+        dispatch(clearChildrenFuture());
+        dispatch(fetchNodeChildrenAll(ownProps.node.uniqueId, ownProps.selectedDay));
+    },
+    fetchHistory: (showComing) => {
         dispatch(clearNodeHistory());
         dispatch(clearChildrenHistory());
         dispatch(clearParentsHistory());
+        dispatch(clearFullNamesHistory());
         dispatch(fetchNodeParentsHistory(ownProps.node.uniqueId, ownProps.selectedDay));
         dispatch(fetchNodeChildrenHistory(ownProps.node.uniqueId, ownProps.selectedDay));
         dispatch(fetchNodeAttributesHistory(ownProps.node.uniqueId, ownProps.selectedDay));
+        if (!showComing) {
+            dispatch(fetchNodeFullNamesHistory(ownProps.node.uniqueId, ownProps.selectedDay));
+        }
     },
     onSwitchComing: (input) => {
         dispatch(switchComing(input));
     },
-    fetchComing: () => {
+    fetchComing: (showHistory) => {
         dispatch(clearNodeFuture());
         dispatch(clearChildrenFuture());
         dispatch(clearParentsFuture());
+        dispatch(clearFullNamesFuture());
         dispatch(fetchNodeParentsFuture(ownProps.node.uniqueId, ownProps.selectedDay));
         dispatch(fetchNodeChildrenFuture(ownProps.node.uniqueId, ownProps.selectedDay));
         dispatch(fetchNodeAttributesFuture(ownProps.node.uniqueId, ownProps.selectedDay));
+        if (!showHistory) {
+            dispatch(fetchNodeFullNamesFuture(ownProps.node.uniqueId, ownProps.selectedDay));
+        }
     }
 
 });

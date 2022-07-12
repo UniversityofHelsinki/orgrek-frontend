@@ -3,8 +3,9 @@ const initialState = {
     nodeAttributes : null,
     nodeAttributesHistory: null,
     nodeAttributesFuture: null,
-    nodePredecessors : null,
-    nodeSuccessors : null
+    nodePredecessors : { fi: [], sv: [], en: [] },
+    nodeSuccessors : { fi: [], sv: [], en: [] },
+    nodeDisplayNames: { fi: [], sv: [], en: [] },
 };
 
 const nodeReducer = (state = initialState, action) => {
@@ -48,6 +49,35 @@ const nodeReducer = (state = initialState, action) => {
             return {
                 ...state,
                 nodeSuccessors: action.payload
+            };
+        case 'SUCCESS_API_GET_NODE_FULL_NAMES':
+            return {
+                ...state,
+                nodeDisplayNames: action.payload
+            };
+        case 'SUCCESS_API_GET_FULL_NAMES_HISTORY':
+            return {
+                ...state,
+                nodeDisplayNames: action.payload
+            };
+        case 'SUCCESS_API_GET_FULL_NAMES_FUTURE':
+            return {
+                ...state,
+                nodeDisplayNames: action.payload
+            };
+        case 'SUCCESS_API_GET_FULL_NAMES_ALL':
+            return {
+                ...state,
+                nodeDisplayNames: action.payload
+            };
+        case 'CLEAR_FULL_NAMES_HISTORY':
+            return {
+                ...state,
+                nodeDisplayNames: initialState.nodeDisplayNames
+            };
+        case 'CLEAR_FULL_NAMES_FUTURE': return {
+                ...state,
+                nodeDisplayNames: initialState.nodeDisplayNames
             };
         default:
             return state;

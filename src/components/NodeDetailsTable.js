@@ -50,11 +50,11 @@ const NodeDetailsTable = (props) => {
             }
 
             if (props.type === 'node-hierarchy') {
-                return (<React.Fragment key={elem.node.id}>
+                return (<React.Fragment key={elem.id}>
                         <tr>
-                            <td onClick={() => props.onNodeSelection(elem.node.uniqueId)}>
+                            <td onClick={() => props.onNodeSelection(elem.uniqueId)}>
                                 <ListLink href="#">
-                                    {showHierarchyDisplayNameByLanguage(elem, lang) ? showHierarchyDisplayNameByLanguage(elem, lang) : elem.node.name}
+                                    {elem.fullName}
                                 </ListLink></td>
                             {elem.hierarchies.length > 0 &&
                                 <>
@@ -64,7 +64,7 @@ const NodeDetailsTable = (props) => {
                             }
                         </tr>
                         {elem.hierarchies.slice(1).map((hierarchy, i) =>
-                            <tr key={i + hierarchy.nodeId}>
+                            <tr key={i}>
                                 <td></td>
                                 <td>{t(hierarchy.hierarchy)}</td>
                                 <td>{hierarchyDate(hierarchy, i18n, t)}</td>
@@ -75,13 +75,13 @@ const NodeDetailsTable = (props) => {
             }
 
             if (props.type === 'name-validity') {
-                return (<tr key={elem.nodeEdgeHistoryWrapper.id}>
-                    <td onClick={() => props.onNodeSelection(elem.nodeEdgeHistoryWrapper.uniqueId)}>
+                return (<tr key={elem.id}>
+                    <td onClick={() => props.onNodeSelection(elem.uniqueId)}>
                         <ListLink href="#">
-                            {showHierarchyDisplayNameByLanguage(elem, lang) ? showHierarchyDisplayNameByLanguage(elem, lang) : elem.nodeEdgeHistoryWrapper.name }
+                            {elem.fullName}
                         </ListLink></td>
-                    <td>{showValidity(elem.nodeEdgeHistoryWrapper.startDate, elem.nodeEdgeHistoryWrapper.endDate, i18n, t)}</td>
-                    <td>{showValidity(elem.nodeEdgeHistoryWrapper.edgeStartDate, elem.nodeEdgeHistoryWrapper.edgeEndDate, i18n, t)}</td>
+                    <td>{showValidity(elem.startDate, elem.endDate, i18n, t)}</td>
+                    <td>{showValidity(elem.edgeStartDate, elem.edgeEndDate, i18n, t)}</td>
                 </tr>);
             }
 

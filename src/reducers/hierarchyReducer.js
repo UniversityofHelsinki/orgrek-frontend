@@ -1,11 +1,11 @@
 
 const initialState = {
-    parents: null,
-    children: null,
-    parentsFuture: null,
-    parentsHistory: null,
-    childrenFuture: null,
-    childrenHistory: null
+    parents: { fi: [], sv: [], en: [] },
+    children: { fi: [], sv: [], en: [] },
+    parentsFuture: { fi: [], sv: [], en: [] },
+    parentsHistory: { fi: [], sv: [], en: [] },
+    childrenFuture: { fi: [], sv: [], en: [] },
+    childrenHistory: { fi: [], sv: [], en: [] }
 };
 
 const hierarchyReducer = (state = initialState, action) => {
@@ -23,42 +23,52 @@ const hierarchyReducer = (state = initialState, action) => {
     case 'SUCCESS_API_GET_PARENTS_HISTORY':
         return {
             ...state,
-            parentsHistory: action.payload
+            parents: action.payload
+        };
+    case 'SUCCESS_API_GET_PARENTS_ALL':
+        return {
+            ...state,
+            parents: action.payload
         };
     case 'CLEAR_PARENTS_HISTORY':
         return {
             ...state,
-            parentsHistory: undefined,
+            parentsHistory: initialState.parentsHistory,
         };
     case 'SUCCESS_API_GET_CHILDREN_HISTORY':
         return {
             ...state,
-            childrenHistory: action.payload
+            children: action.payload
+        };
+    case 'SUCCESS_API_GET_CHILDREN_ALL':
+        return {
+            ...state,
+            children: action.payload
         };
     case 'CLEAR_CHILDREN_HISTORY':
         return {
             ...state,
-            childrenHistory: undefined
+            children: initialState.childrenHistory
         };
     case 'SUCCESS_API_GET_PARENTS_FUTURE':
         return {
             ...state,
-            parentsFuture: action.payload
+            parents: action.payload
         };
     case 'CLEAR_PARENTS_FUTURE':
         return {
             ...state,
-            parentsFuture: undefined
+            parents: initialState.parentsFuture
         };
     case 'SUCCESS_API_GET_CHILDREN_FUTURE':
         return {
             ...state,
-            childrenFuture: action.payload
+            children: action.payload
         };
     case 'CLEAR_CHILDREN_FUTURE':
         return {
             ...state,
-            childrenFuture: undefined
+            children: initialState.childrenFuture
         };
     default:
         return state;
