@@ -11,13 +11,10 @@ const NodeViewControl = (props) => {
 
     useEffect(() => {
         if (props.showHistory && props.showComing) {
-            console.log('molemmat');
             props.fetchAll();
         } else if (props.showHistory) {
-            console.log('showHistory');
             props.fetchHistory(props.showComing);
         } else if (props.showComing) {
-            console.log('showComing');
             props.fetchComing(props.showHistory);
         }
     }, [props.showHistory, props.showComing, props.node]);

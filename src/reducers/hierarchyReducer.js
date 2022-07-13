@@ -1,11 +1,11 @@
 
 const initialState = {
-    parents: { fi: [], sv: [], en: [] },
-    children: { fi: [], sv: [], en: [] },
-    parentsFuture: { fi: [], sv: [], en: [] },
-    parentsHistory: { fi: [], sv: [], en: [] },
-    childrenFuture: { fi: [], sv: [], en: [] },
-    childrenHistory: { fi: [], sv: [], en: [] }
+    parents: { fi: [], sv: [], en: [], ia: [] },
+    children: { fi: [], sv: [], en: [], ia: [] },
+    parentsFuture: { fi: [], sv: [], en: [], ia: [] },
+    parentsHistory: { fi: [], sv: [], en: [], ia: [] },
+    childrenFuture: { fi: [], sv: [], en: [], ia: [] },
+    childrenHistory: { fi: [], sv: [], en: [], ia: [] }
 };
 
 const hierarchyReducer = (state = initialState, action) => {

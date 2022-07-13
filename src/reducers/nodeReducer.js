@@ -3,9 +3,9 @@ const initialState = {
     nodeAttributes : null,
     nodeAttributesHistory: null,
     nodeAttributesFuture: null,
-    nodePredecessors : { fi: [], sv: [], en: [] },
-    nodeSuccessors : { fi: [], sv: [], en: [] },
-    nodeDisplayNames: { fi: [], sv: [], en: [] },
+    nodePredecessors : { fi: [], sv: [], en: [], ia: [] },
+    nodeSuccessors : { fi: [], sv: [], en: [], ia: [] },
+    nodeDisplayNames: { fi: [], sv: [], en: [], ia: [] },
 };
 
 const nodeReducer = (state = initialState, action) => {
