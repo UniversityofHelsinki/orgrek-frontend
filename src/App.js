@@ -9,6 +9,8 @@ import LoginRedirect from './components/LoginRedirect';
 import Footer from './components/Footer';
 import { Container, Col, Row } from 'react-bootstrap';
 import SkipNavLink from './components/SkipNavLink';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Texts from './components/Texts';
 
 const App= (props) => {
 
@@ -22,11 +24,18 @@ const App= (props) => {
         <div className="App">
                     <LoginRedirect loginUrl={SHIBBOLETH_LOGIN} />
                     <SkipNavLink id="main-content" />
-                    <Header />
                     <Container fluid>
                         <Row>
-                            <Col md={4} lg={4}><Hierarchy /></Col>
-                            <Col ><NodeDetails /></Col>
+                        <BrowserRouter>
+                            <Header />
+                            <Routes>
+                                <Route path="/" element={<>
+                                        <Col md={4} lg={4}><Hierarchy /></Col>
+                                        <Col ><NodeDetails /></Col>
+                                </> } />
+                                <Route path="/texts" element={<Texts />} />
+                            </Routes>
+                        </BrowserRouter>
                         </Row>
                     </Container>
                     <Footer />

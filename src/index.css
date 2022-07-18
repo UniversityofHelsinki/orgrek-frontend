@@ -53,3 +53,21 @@ code {
   transform: rotate(45deg);
   -webkit-transform: rotate(45deg);
 }
+
+.boldHeader {
+  color: #0e688b;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.boldHeader:hover {
+  cursor: pointer;
+}
+
+.littleLeftMargin {
+  margin-left: 5px;
+}
+
+.error {
+  color: red
+}
