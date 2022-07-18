@@ -67,3 +67,7 @@ code {
 .littleLeftMargin {
   margin-left: 5px;
 }
+
+.error {
+  color: red
+}
