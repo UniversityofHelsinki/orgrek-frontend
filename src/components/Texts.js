@@ -145,6 +145,7 @@ const Row = connect(
     }, [props.feedback]);
 
     const toggleEdit = (event) => {
+        setValue(text.value);
         setEdit(!edit);
     };
 
