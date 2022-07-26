@@ -2,9 +2,9 @@ const ORGREK_BACKEND_SERVER = process.env.REACT_APP_ORGREK_BACKEND_SERVER || '';
 
 export const fetchTree = (selection, selectedDay) => {
     const PATH = '/api/tree/';
-    const date = selectedDay ? selectedDay.toLocaleDateString('EN-CA') : new Date().toLocaleDateString('EN-CA');
+    const date = selectedDay ? selectedDay.toLocaleDateString('FI-fi') : new Date().toLocaleDateString('FI-fi');
     return async (dispatch)  => {
-        let response = await fetch(`${ORGREK_BACKEND_SERVER}${PATH}${selection}/byDate/${date}`, {
+        let response = await fetch(`${ORGREK_BACKEND_SERVER}${PATH}${selection}/${date}`, {
             headers: { 'Content-Type': 'application/json' }
         }).catch(error => console.log(error));
         if (response.status === 200) {
