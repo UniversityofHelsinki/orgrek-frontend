@@ -23,7 +23,7 @@ const Node = (props) => {
     const nameSelectedLanguage = selectNameVersion(i18n, props.item);
 
     useEffect(() => {
-        if (props.node && props.node.uniqueId === props.item.id) {
+        if (props.node && props.node.uniqueId === props.item.uniqueId) {
             props.onNodeSelection();
         }
     }, [props.selectedDay]);
@@ -33,13 +33,13 @@ const Node = (props) => {
              {props.hasChildren
                 && <div><i
                 data-testid={props.selected ? 'arrowdown' : 'arrowright'}
-                id={props.item.id}
+                id={props.item.uniqueId}
                 onClick={props.onToggle}
                 onKeyUp={(e) => e.key === 'Enter' && props.onToggle()}
                 tabIndex={0}
                 className={props.selected ? 'arrow down' : 'arrow right'}>
                 </i></div>}
-            <span className={props.node && props.node.uniqueId === props.item.id
+            <span className={props.node && props.node.uniqueId === props.item.uniqueId
                 ? 'nodeLinkSelected'
                 : 'nodeLink'}
                 onClick={() => props.onNodeSelection(props.selectedDay, props.showHistory, props.showComing)}
@@ -47,13 +47,7 @@ const Node = (props) => {
                     {props.level > 0 && props.item.code && !props.item.code.includes('NO_CODE')
                     ? props.item.code + ' '
                     : ''}
-                    {props.parentAbbr
-                    ? props.parentAbbr + ', '
-                    : ''}
                     {nameSelectedLanguage}
-                    {props.item.abbreviation
-                    ? ' (' + props.item.abbreviation + ')'
-                    : ''}
             </span>
         </div>
     );
@@ -68,7 +62,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
     onNodeSelection: () => {
-        dispatch(fetchNode(ownProps.item.id));
+        dispatch(fetchNode(ownProps.item.uniqueId));
     }
 });
 
