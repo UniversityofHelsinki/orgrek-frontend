@@ -210,7 +210,7 @@ export const fetchNodeFullNamesFuture = (uniqueId, selectedDay) => {
 
 export const fetchNodeFullNamesAll = (uniqueId, selectedDay) => {
     const ORGREK_BACKEND_SERVER = process.env.REACT_APP_ORGREK_BACKEND_SERVER || '';
-    const PATH = `/api/node/fullname/all/${uniqueId}/`;
+    const PATH = `/api/node/fullname/all/${uniqueId}`;
     return async (dispatch)  => {
         let response = await fetch(`${ORGREK_BACKEND_SERVER}${PATH}`, {
             headers: { 'Content-Type': 'application/json' }
