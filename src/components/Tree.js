@@ -25,14 +25,14 @@ const Tree = (props) => {
 
     return (
         <ContainerDiv data-testid='tree'>
-            {props.tree && Object.values(props.tree).map((item) => {
-                return <Branch key={item.id} item={item} level={0} parent='' />;})}
+            {props.tree && Object.values(props.tree).map((item, index) => {
+                return <Branch key={index} item={item} level={0} parent='' />;})}
         </ContainerDiv>
     );
 };
 
 const mapStateToProps = state => ({
-    tree : state.tree.tree,
+    tree : state.tree,
     selectedHierarchy: state.tree.selectedHierarchy,
     selectedDay : state.dr.selectedDay
 });

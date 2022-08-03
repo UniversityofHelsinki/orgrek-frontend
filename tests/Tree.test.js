@@ -13,60 +13,39 @@ jest.mock('../src/actions/treeAction', () => ({
     fetchTree: jest.fn(() => { return  {
         type: 'SUCCESS_API_GET_TREE',
         payload: {
-            'tree': {
-                'id': 42785051,
+                'id': 'a1',
                 'code': 'HY',
-                'nameFi': 'Helsingin yliopisto',
-                'nameEn': 'University of Helsinki',
-                'nameSv': 'Helsingfors universitet',
-                'displayNameFi': 'Helsingin yliopisto (HY)',
-                'displayNameEn': 'University of Helsinki (HY)',
-                'displayNameSv': 'Helsingfors universitet (HY)',
-                'type': 'yritys_yhteiso',
-                'abbreviation': 'HY',
+                'nameFi': 'Helsingin yliopisto (HY)',
+                'nameEn': 'University of Helsinki (HY)',
+                'nameSv': 'Helsingfors universitet (HY)',
+                'uniqueId': 42785051,
                 'children': [
                     {
-                        'id': 33539259,
+                        'id': 123,
                         'code': 'KOULOHJ',
-                        'nameFi': 'Koulutusohjelmat',
-                        'nameEn': 'Degree Programmes',
-                        'nameSv': 'Utbildningsprogram',
-                        'displayNameFi': 'HY, Koulutusohjelmat (KOULOHJ)',
-                        'displayNameEn': 'HY, Degree Programmes (KOULOHJ)',
-                        'displayNameSv': 'HY, Utbildningsprogram (KOULOHJ)',
-                        'type': 'koontiyksikko',
-                        'abbreviation': 'KOULOHJ',
-                        'parentAbbreviation': 'HY',
+                        'nameFi': 'HY, Koulutusohjelmat (KOULOHJ)',
+                        'nameEn': 'HY, Degree Programmes (KOULOHJ)',
+                        'nameSv': 'HY, Utbildningsprogram (KOULOHJ)',
+                        'uniqueId' : 33539259,
                         'children': [
                             {
-                                'id': 54806742,
+                                'id': 1234,
                                 'code': 'H92',
-                                'nameFi': 'Tohtoriohjelmat',
-                                'nameEn': 'Doctoral Programmes',
-                                'nameSv': 'Doktorandprogram',
-                                'displayNameFi': 'HY, Tohtoriohjelmat (TRI)',
-                                'displayNameEn': 'HY, Doctoral Programmes (TRI)',
-                                'displayNameSv': 'HY, Doktorandprogram (TRI)',
-                                'type': 'tiedekunnan kaltainen,koontiyksikko',
-                                'abbreviation': 'TRI',
-                                'parentAbbreviation': 'HY',
+                                'nameFi': 'HY, Tohtoriohjelmat (TRI)',
+                                'nameEn': 'HY, Doctoral Programmes (TRI)',
+                                'nameSv': 'HY, Doktorandprogram (TRI)',
+                                'uniqueId': 54806742,
                                 'children': [
                                     {
-                                        'id': 61974091,
+                                        'id': 12345,
                                         'code': 'H920',
-                                        'nameFi': 'Humanistis-yhteiskuntatieteellinen tutkijakoulu',
-                                        'nameEn': 'Doctoral School in the Humanities and Social Sciences',
-                                        'nameSv': 'Humanistisk-samhällsvetenskapliga forskarskolan',
-                                        'displayNameFi': 'HY-TRI, Humanistis-yhteiskuntatieteellinen tutkijakoulu (HYMY)',
-                                        'displayNameEn': 'HY-TRI, Doctoral School in the Humanities and Social Sciences (HYMY)',
-                                        'displayNameSv': 'HY-TRI, Humanistisk-samhällsvetenskapliga forskarskolan (HYMY)',
-                                        'type': 'tutkijakoulu',
-                                        'abbreviation': 'HYMY',
-                                        'parentAbbreviation': 'HY-TRI'
+                                        'nameFi': 'HY-TRI, Humanistis-yhteiskuntatieteellinen tutkijakoulu (HYMY)',
+                                        'nameEn': 'HY-TRI, Doctoral School in the Humanities and Social Sciences (HYMY)',
+                                        'nameSv': 'HY-TRI, Humanistisk-samhällsvetenskapliga forskarskolan (HYMY)',
+                                        'uniqueId': 61974091
                                     }]
                             }]
                     }]
-            },
         }
     };})
 }));

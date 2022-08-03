@@ -4,6 +4,7 @@ import { Nav, Navbar, Container, NavDropdown } from 'react-bootstrap';
 import HyLogo from './HYLogo';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
+import { NavLink } from 'react-router-dom';
 
 const Div = styled.div`
   max-height: 60px;
@@ -29,6 +30,8 @@ const Header = (props) => {
                                 <NavDropdown.Item  onClick={() => i18n.changeLanguage('en')}>{t('english')}</NavDropdown.Item>
                                 <NavDropdown.Item  onClick={() => i18n.changeLanguage('ia')}>{t('text_key')}</NavDropdown.Item>
                             </NavDropdown>
+                            <NavLink className="nav-link" to="/"> {t('organisation')} </NavLink>
+                            <NavLink className="nav-link" to="/texts"> {t('texts')} </NavLink>
                         </Nav>
                         <Nav>
                             <Nav.Link eventKey="disabled" disabled>{props.user ? t('logged_in') + ' ' +  props.user.eppn : '' }</Nav.Link>
