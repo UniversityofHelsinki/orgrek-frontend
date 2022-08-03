@@ -150,7 +150,7 @@ const NodeDetails = (props) => {
             {props.nodeAttributes &&
                 <>
                     <h3>{props.displayNames[lang === 'ia' && 'fi' || lang][0]?.name}</h3>
-                    <NodeViewControl node={props.node} selectedDay={props.selectedDay} />
+                    <NodeViewControl node={props.node} selectedDay={props.selectedDay} selectedHierarchy={props.selectedHierarchy} />
                     <NodeDetailsTable
                         selectedDay={props.selectedDay}
                         type='key-value'
