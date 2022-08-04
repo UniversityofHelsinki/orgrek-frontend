@@ -36,7 +36,7 @@ th {
 }
 
 .nodeLink {
-  padding-right: 10px;
+  padding-right: 5;
   margin-left: 5px;
   color: #337ab7;
 }
@@ -46,9 +46,25 @@ th {
   color: #0e688b;
 }
 
+.treeNode {
+  list-style: none;
+  padding-left: 0;
+  margin-bottom: inherit;
+}
+
+.treeHierarchies {
+  color: #957b4e; 
+  font-size: 0.86em; 
+  margin-left: 5px;
+}
+
+.treeHierarchiesSelected {
+
+}
+
 .nodeLinkSelected {
   font-weight: bold; 
-  padding-right: 10px; 
+  padding-right: 5px; 
   margin-left: 5px; 
   color: #107eab;
 }

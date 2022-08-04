@@ -19,6 +19,7 @@ const Dropdown = (props) => {
     });
 
     const changeSelected = value => {
+        console.log(value);
         setSelected(value);
         dispatch(dropDownSwitchValueCall(value));
     };
