@@ -3,7 +3,6 @@ import { useDispatch, connect } from 'react-redux';
 import { fetchSelectableHierarchies } from '../actions/treeAction';
 import { useTranslation } from 'react-i18next';
 import MultiSelect from  'react-multiple-select-dropdown-lite';
-import  'react-multiple-select-dropdown-lite/dist/index.css';
 
 const Dropdown = (props) => {
     const { t } = useTranslation();
@@ -19,7 +18,6 @@ const Dropdown = (props) => {
     });
 
     const changeSelected = value => {
-        console.log(value);
         setSelected(value);
         dispatch(dropDownSwitchValueCall(value));
     };

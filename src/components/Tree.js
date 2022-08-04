@@ -24,9 +24,10 @@ const Tree = (props) => {
     }, [props.selectedHierarchy, props.selectedDay, i18n.language]);
 
 
+    const language = i18n.language === 'ia' ? 'fi' : i18n.language;
     return (
         <ContainerDiv data-testid='tree'>
-            {props.tree?.[i18n.language] && <Branch item={props.tree[i18n.language]} level={0} parent='' />}
+            {props.tree?.[language] && <Branch item={props.tree[language]} level={0} parent='' />}
         </ContainerDiv>
     );
 };

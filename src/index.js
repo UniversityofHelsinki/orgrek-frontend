@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-datepicker/dist/react-datepicker.css';
+import  'react-multiple-select-dropdown-lite/dist/index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import './i18n';
