@@ -270,6 +270,7 @@ const mapDispatchToProps = dispatch => ({
         dispatch(fetchNodeSuccessors(node.uniqueId, selectedDay));
         if (!(showHistory || showComing)) {
             dispatch(fetchNodeAttributes(node.uniqueId, selectedDay, selectedHierarchy));
+            /*dispatch(fetchNodeAttributes(node.uniqueId, selectedDay, ['talous', 'henkilosto']));*/
             dispatch(fetchNodeParents(node.uniqueId, selectedDay));
             dispatch(fetchNodeChildren(node.uniqueId, selectedDay));
             dispatch(fetchNodeFullNames(node.uniqueId, selectedDay));
