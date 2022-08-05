@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import NodeDetailsTable from './NodeDetailsTable';
 import NodeViewControl from './NodeViewControl';
-import { filterAttributeDuplicates, filterNodeDuplicates, parseDisplayNames, datesOverlap } from '../actions/utilAction';
+import { filterAttributeDuplicates, datesOverlap } from '../actions/utilAction';
 import {
     fetchNodeParents,
     fetchNodeChildren
@@ -149,7 +149,7 @@ const NodeDetails = (props) => {
         <>
             {props.nodeAttributes &&
                 <>
-                    <h3>{props.displayNames[lang === 'ia' && 'fi' || lang][0]?.name}</h3>
+                    <h3>{props.displayNames[lang === 'ia' && 'fi' || lang]?.[0]?.name}</h3>
                     <NodeViewControl node={props.node} selectedDay={props.selectedDay} />
                     <NodeDetailsTable
                         selectedDay={props.selectedDay}
@@ -173,7 +173,7 @@ const NodeDetails = (props) => {
                         type='key-value'
                         heading='display_name_info'
                         tableLabels={['text_language_header', 'name']}
-                        contentData={[...props.displayNames.fi, ...props.displayNames.sv, ...props.displayNames.en].filter(n => n).map(dn => ({ ...dn, key: `name_${dn.language.toLowerCase()}`, value: dn.name }))}
+                        contentData={[...(props.displayNames.fi || []), ...(props.displayNames.sv || []), ...(props.displayNames.en || [])].filter(n => n).map(dn => ({ ...dn, key: `name_${dn.language.toLowerCase()}`, value: dn.name }))}
                         hasValidity={true}
                         dataFilter={pastFutureFilter}
                     />

@@ -176,3 +176,9 @@ export function deepEqual(object1, object2) {
     return object !== null && typeof object === 'object';
   }
 
+
+export const containsAll = (a, b) => {
+    return a.length > b.length ?
+        a.every(ai => b.includes(ai))
+        : b.every(bi => a.includes(bi));
+};

@@ -1,25 +1,27 @@
 import React, { useState } from 'react';
-import { Select, MenuItem } from '@mui/material/';
 import { useDispatch, connect } from 'react-redux';
 import { fetchSelectableHierarchies } from '../actions/treeAction';
 import { useTranslation } from 'react-i18next';
+import MultiSelect from  'react-multiple-select-dropdown-lite';
 
 const Dropdown = (props) => {
     const { t } = useTranslation();
     const [selected, setSelected] = useState('');
     const dispatch = useDispatch();
     const all = props.selectableHierarchies;
-    const filtered = all.filter(item => item !== 'history');
+    const filtered = all.filter(item => item.value !== 'history');
 
     React.useEffect(() => {
         if (filtered.length === 0) {
             dispatch(fetchSelectableHierarchies());
         }
     });
-    const changeSelected = (event) => {
-        setSelected(event.target.value);
-        dispatch(dropDownSwitchValueCall(event.target.value));
+
+    const changeSelected = value => {
+        setSelected(value);
+        dispatch(dropDownSwitchValueCall(value));
     };
+
     React.useEffect(() => {
         if (filtered.length > 0) {
             setSelected(props.selectedHierarchy);
@@ -30,17 +32,11 @@ const Dropdown = (props) => {
     }, [selected, props.selectableHierarchies]);
 
     return (
-        <Select
-            data-testid="dropdown"
-            labelId="hierarchy-selector"
-            id="hierarchy-select"
-            value={selected}
+        <MultiSelect
+            defaultValue={selected}
             onChange={changeSelected}
-        >
-            {filtered.length > 0 ? filtered.map((item) => {
-                return <MenuItem key={item} value={item}>{t(item)}</MenuItem>;
-            }) : <MenuItem key='' value=''>{''}</MenuItem>}
-        </Select>
+            options={filtered}
+        />
     );
 };
 
@@ -52,7 +48,6 @@ export const dropDownSwitchValueCall = data => {
 };
 
 const mapStateToProps = state => ({
-    tree : state.tree.tree,
     selectedHierarchy: state.tree.selectedHierarchy,
     selectableHierarchies: state.tree.selectableHierarchies
 });

@@ -23,16 +23,17 @@ const Tree = (props) => {
         // eslint-disable-next-line
     }, [props.selectedHierarchy, props.selectedDay, i18n.language]);
 
+
+    const language = i18n.language === 'ia' ? 'fi' : i18n.language;
     return (
         <ContainerDiv data-testid='tree'>
-            {props.tree && Object.values(props.tree).map((item, index) => {
-                return <Branch key={index} item={item} level={0} parent='' />;})}
+            {props.tree?.[language] && <Branch item={props.tree[language]} level={0} parent='' />}
         </ContainerDiv>
     );
 };
 
 const mapStateToProps = state => ({
-    tree : state.tree,
+    tree : state.tree.tree,
     selectedHierarchy: state.tree.selectedHierarchy,
     selectedDay : state.dr.selectedDay
 });

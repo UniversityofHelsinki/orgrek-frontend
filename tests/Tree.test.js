@@ -13,40 +13,32 @@ jest.mock('../src/actions/treeAction', () => ({
     fetchTree: jest.fn(() => { return  {
         type: 'SUCCESS_API_GET_TREE',
         payload: {
+            fi: {
                 'id': 'a1',
-                'code': 'HY',
-                'nameFi': 'Helsingin yliopisto (HY)',
-                'nameEn': 'University of Helsinki (HY)',
-                'nameSv': 'Helsingfors universitet (HY)',
+                'name': 'Helsingin yliopisto (HY)',
                 'uniqueId': 42785051,
+                'hierarchies': ['talous'],
                 'children': [
                     {
                         'id': 123,
-                        'code': 'KOULOHJ',
-                        'nameFi': 'HY, Koulutusohjelmat (KOULOHJ)',
-                        'nameEn': 'HY, Degree Programmes (KOULOHJ)',
-                        'nameSv': 'HY, Utbildningsprogram (KOULOHJ)',
+                        'name': 'KOULOHJ HY, Koulutusohjelmat (KOULOHJ)',
                         'uniqueId' : 33539259,
+                        'hierarchies': ['talous'],
                         'children': [
                             {
                                 'id': 1234,
-                                'code': 'H92',
-                                'nameFi': 'HY, Tohtoriohjelmat (TRI)',
-                                'nameEn': 'HY, Doctoral Programmes (TRI)',
-                                'nameSv': 'HY, Doktorandprogram (TRI)',
+                                'name': 'H92 HY, Tohtoriohjelmat (TRI)',
                                 'uniqueId': 54806742,
+                                'hierarchies': ['talous'],
                                 'children': [
                                     {
                                         'id': 12345,
-                                        'code': 'H920',
-                                        'nameFi': 'HY-TRI, Humanistis-yhteiskuntatieteellinen tutkijakoulu (HYMY)',
-                                        'nameEn': 'HY-TRI, Doctoral School in the Humanities and Social Sciences (HYMY)',
-                                        'nameSv': 'HY-TRI, Humanistisk-samhällsvetenskapliga forskarskolan (HYMY)',
+                                        'name': 'H920 HY-TRI, Humanistis-yhteiskuntatieteellinen tutkijakoulu (HYMY)',
                                         'uniqueId': 61974091
                                     }]
                             }]
                     }]
-        }
+        } }
     };})
 }));
 
@@ -57,6 +49,7 @@ jest.mock('react-i18next', () => ({
         t: (str) => str,
         i18n: {
           changeLanguage: () => new Promise(() => {}),
+          language: 'fi'
         },
       };
     },
