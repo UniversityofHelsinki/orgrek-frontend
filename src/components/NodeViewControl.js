@@ -53,7 +53,7 @@ const NodeViewControl = (props) => {
 
 const mapStateToProps = state => ({
     showHistory: state.nvrd.showHistory,
-    showComing: state.nvrd.showComing
+    showComing: state.nvrd.showComing,
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
@@ -69,8 +69,8 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         dispatch(fetchNodeFullNamesAll(ownProps.node.uniqueId, ownProps.selectedDay));
         dispatch(fetchNodeParentsAll(ownProps.node.uniqueId, ownProps.selectedDay));
         dispatch(fetchNodeChildrenAll(ownProps.node.uniqueId, ownProps.selectedDay));
-        dispatch(fetchNodeAttributesHistory(ownProps.node.uniqueId, ownProps.selectedDay));
-        dispatch(fetchNodeAttributesFuture(ownProps.node.uniqueId, ownProps.selectedDay));
+        dispatch(fetchNodeAttributesHistory(ownProps.node.uniqueId, ownProps.selectedDay, ownProps.selectedHierarchy));
+        dispatch(fetchNodeAttributesFuture(ownProps.node.uniqueId, ownProps.selectedDay, ownProps.selectedHierarchy));
 
     },
     fetchAllDisplayNames: () => {
@@ -92,7 +92,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         dispatch(clearFullNamesHistory());
         dispatch(fetchNodeParentsHistory(ownProps.node.uniqueId, ownProps.selectedDay));
         dispatch(fetchNodeChildrenHistory(ownProps.node.uniqueId, ownProps.selectedDay));
-        dispatch(fetchNodeAttributesHistory(ownProps.node.uniqueId, ownProps.selectedDay));
+        dispatch(fetchNodeAttributesHistory(ownProps.node.uniqueId, ownProps.selectedDay, ownProps.selectedHierarchy));
         if (!showComing) {
             dispatch(fetchNodeFullNamesHistory(ownProps.node.uniqueId, ownProps.selectedDay));
         }
@@ -107,7 +107,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         dispatch(clearFullNamesFuture());
         dispatch(fetchNodeParentsFuture(ownProps.node.uniqueId, ownProps.selectedDay));
         dispatch(fetchNodeChildrenFuture(ownProps.node.uniqueId, ownProps.selectedDay));
-        dispatch(fetchNodeAttributesFuture(ownProps.node.uniqueId, ownProps.selectedDay));
+        dispatch(fetchNodeAttributesFuture(ownProps.node.uniqueId, ownProps.selectedDay, ownProps.selectedHierarchy));
         if (!showHistory) {
             dispatch(fetchNodeFullNamesFuture(ownProps.node.uniqueId, ownProps.selectedDay));
         }

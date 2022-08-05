@@ -125,14 +125,14 @@ const NodeDetails = (props) => {
             const startDate = Date.parse(props.node.startDate) || undefined;
             const endDate = Date.parse(props.node.endDate) || undefined;
             if (datesOverlap(startDate && new Date(startDate), endDate && new Date(endDate), props.selectedDay)) {
-                props.fetchNodeDetails(props.node, props.selectedDay, props.showHistory, props.showComing);
+                props.fetchNodeDetails(props.node, props.selectedDay, props.showHistory, props.showComing, props.selectedHierarchy);
             } else if (endDate && new Date(endDate).getTime() <= props.selectedDay.getTime()) {
-                props.fetchNodeDetails(props.node, new Date(endDate), props.showHistory, props.showComing);
+                props.fetchNodeDetails(props.node, new Date(endDate), props.showHistory, props.showComing, props.selectedHierarchy);
             } else if (startDate && new Date(startDate).getTime() >= props.selectedDay.getTime()) {
-                props.fetchNodeDetails(props.node, new Date(startDate), props.showHistory, props.showComing);
+                props.fetchNodeDetails(props.node, new Date(startDate), props.showHistory, props.showComing, props.selectedHierarchy);
             }
         }
-    }, [props.node, props.showComing, props.showHistory]);
+    }, [props.node, props.showComing, props.showHistory, props.selectedHierarchy]);
 
     React.useLayoutEffect(() => {
         selectData();
@@ -260,15 +260,17 @@ const mapStateToProps = state => ({
     selectedDay: state.dr.selectedDay,
     showHistory: state.nvrd.showHistory,
     showComing: state.nvrd.showComing,
-    displayNames: state.nrd.nodeDisplayNames
+    displayNames: state.nrd.nodeDisplayNames,
+    selectedHierarchy: state.tree.selectedHierarchy,
 });
 
 const mapDispatchToProps = dispatch => ({
-    fetchNodeDetails: (node, selectedDay, showHistory, showComing) => {
+    fetchNodeDetails: (node, selectedDay, showHistory, showComing, selectedHierarchy) => {
         dispatch(fetchNodePredecessors(node.uniqueId, selectedDay));
         dispatch(fetchNodeSuccessors(node.uniqueId, selectedDay));
         if (!(showHistory || showComing)) {
-            dispatch(fetchNodeAttributes(node.uniqueId, selectedDay));
+            dispatch(fetchNodeAttributes(node.uniqueId, selectedDay, selectedHierarchy));
+            /*dispatch(fetchNodeAttributes(node.uniqueId, selectedDay, ['talous', 'henkilosto']));*/
             dispatch(fetchNodeParents(node.uniqueId, selectedDay));
             dispatch(fetchNodeChildren(node.uniqueId, selectedDay));
             dispatch(fetchNodeFullNames(node.uniqueId, selectedDay));

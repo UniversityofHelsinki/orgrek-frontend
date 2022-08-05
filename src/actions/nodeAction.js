@@ -49,11 +49,11 @@ export const apiGetNodeFullNamesSuccessCall = data => {
     };
 };
 
-export const fetchNodeAttributes = (uniqueId, selectedDay) => {
+export const fetchNodeAttributes = (uniqueId, selectedDay, selectedHierarchy) => {
     const ORGREK_BACKEND_SERVER = process.env.REACT_APP_ORGREK_BACKEND_SERVER || '';
     const date = selectedDay ? selectedDay.toLocaleDateString('fi-FI') : new Date().toLocaleDateString('fi-FI');
     const PATH = '/api/node/';
-    const PARAMS = `${uniqueId}/${date}/attributes`;
+    const PARAMS = `${uniqueId}/${date}/${selectedHierarchy}/attributes`;
     return async (dispatch)  => {
         let response = await fetch(`${ORGREK_BACKEND_SERVER}${PATH}${PARAMS}`, {
             headers: { 'Content-Type': 'application/json' }
@@ -74,11 +74,11 @@ export const apiGetNodeAttributesSuccessCall = data => {
     };
 };
 
-export const fetchNodeAttributesHistory = (uniqueId, selectedDay) => {
+export const fetchNodeAttributesHistory = (uniqueId, selectedDay, selectedHierarchy) => {
     const ORGREK_BACKEND_SERVER = process.env.REACT_APP_ORGREK_BACKEND_SERVER || '';
     const date = selectedDay ? selectedDay.toLocaleDateString('fi-FI') : new Date().toLocaleDateString('fi-FI');
     const PATH = '/api/node/historyandcurrent/';
-    const PARAMS = `${uniqueId}/${date}/attributes`;
+    const PARAMS = `${uniqueId}/${date}/${selectedHierarchy}/attributes`;
     return async (dispatch)  => {
         let response = await fetch(`${ORGREK_BACKEND_SERVER}${PATH}${PARAMS}`, {
             headers: { 'Content-Type': 'application/json' }
@@ -99,11 +99,11 @@ export const apiGetNodeAttributesHistorySuccessCall = data => {
     };
 };
 
-export const fetchNodeAttributesFuture = (uniqueId, selectedDay) => {
+export const fetchNodeAttributesFuture = (uniqueId, selectedDay, selectedHierarchy) => {
     const ORGREK_BACKEND_SERVER = process.env.REACT_APP_ORGREK_BACKEND_SERVER || '';
     const date = selectedDay ? selectedDay.toLocaleDateString('fi-FI') : new Date().toLocaleDateString('fi-FI');
     const PATH = '/api/node/futureandcurrent/';
-    const PARAMS = `${uniqueId}/${date}/attributes`;
+    const PARAMS = `${uniqueId}/${date}/${selectedHierarchy}/attributes`;
     return async (dispatch)  => {
         let response = await fetch(`${ORGREK_BACKEND_SERVER}${PATH}${PARAMS}`, {
             headers: { 'Content-Type': 'application/json' }
