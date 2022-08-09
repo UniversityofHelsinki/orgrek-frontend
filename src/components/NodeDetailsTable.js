@@ -52,7 +52,7 @@ const NodeDetailsTable = (props) => {
             if (props.type === 'node-hierarchy') {
                 return (<React.Fragment key={elem.id}>
                         <tr>
-                            <td onClick={() => props.onNodeSelection(elem.uniqueId)}>
+                            <td onClick={() => props.onNodeSelection(elem)}>
                                 <ListLink href="#">
                                     {elem.fullName}
                                 </ListLink></td>
@@ -76,7 +76,7 @@ const NodeDetailsTable = (props) => {
 
             if (props.type === 'name-validity') {
                 return (<tr key={elem.id}>
-                    <td onClick={() => props.onNodeSelection(elem.uniqueId)}>
+                    <td onClick={() => props.onNodeSelection(elem)}>
                         <ListLink href="#">
                             {elem.fullName}
                         </ListLink></td>
@@ -110,8 +110,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-    onNodeSelection: (elemId) => {
-        dispatch(fetchNode(elemId));
+    onNodeSelection: (elem) => {
+        dispatch(fetchNode(elem.uniqueId));
     }
 });
 

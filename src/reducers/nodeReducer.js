@@ -75,9 +75,15 @@ const nodeReducer = (state = initialState, action) => {
                 ...state,
                 nodeDisplayNames: initialState.nodeDisplayNames
             };
-        case 'CLEAR_FULL_NAMES_FUTURE': return {
+        case 'CLEAR_FULL_NAMES_FUTURE':
+            return {
                 ...state,
                 nodeDisplayNames: initialState.nodeDisplayNames
+            };
+        case 'OPEN_TREE':
+            return {
+                ...state,
+                openTree: action.payload
             };
         default:
             return state;

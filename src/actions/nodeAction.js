@@ -1,4 +1,4 @@
-export const fetchNode = (uniqueId) => {
+export const fetchNode = (uniqueId, openTree) => {
     const ORGREK_BACKEND_SERVER = process.env.REACT_APP_ORGREK_BACKEND_SERVER || '';
     const PATH = `/api/node/${uniqueId}`;
     return async (dispatch)  => {
@@ -7,6 +7,10 @@ export const fetchNode = (uniqueId) => {
         });
         if (response.status === 200) {
             let responseJSON = await response.json();
+            dispatch({
+                type: 'OPEN_TREE',
+                payload: openTree === undefined || openTree
+            });
             dispatch(apiGetNodeSuccessCall(responseJSON));
         } else {
             dispatch(api401FailureCall(new Date()));
