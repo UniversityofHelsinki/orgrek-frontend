@@ -56,7 +56,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
     onNodeSelection: () => {
-        dispatch(fetchNode(ownProps.item.uniqueId));
+        dispatch(fetchNode(ownProps.item.uniqueId, false));
     }
 });
 

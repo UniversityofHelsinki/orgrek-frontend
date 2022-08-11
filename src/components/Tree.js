@@ -29,7 +29,6 @@ const traverseTree = (current, target) => {
 const Tree = (props) => {
     const { t, i18n } = useTranslation();
     const [pathsToTarget, setPathsToTarget] = useState();
-    const [openTree, setOpenTree] = useState();
 
     useEffect(() => {
         if (props.selectedHierarchy !== '') {
@@ -41,14 +40,10 @@ const Tree = (props) => {
     const language = i18n.language === 'ia' ? 'fi' : i18n.language;
 
     useEffect(() => {
-        setOpenTree(props.openTree);
-    }, [props.openTree]);
-
-    useEffect(() => {
         if (!props.openTree) {
             setPathsToTarget(undefined);
         }
-        if (props.tree[language] && props.node?.uniqueId && props.openTree && props.openTree === openTree) {
+        if (props.tree[language] && props.node?.uniqueId && props.openTree) {
             const foundInTree = traverseTree(props.tree[language], props.node.uniqueId);
             if (foundInTree) {
                 setPathsToTarget(foundInTree);
