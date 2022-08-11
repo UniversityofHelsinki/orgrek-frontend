@@ -124,6 +124,9 @@ const Row = connect(
             if (props.feedback.success && props.feedback.text) {
                 setEdit(false);
                 setText(props.feedback.text);
+                if (props.onTextUpdated) {
+                    props.onTextUpdated(props.feedback.text);
+                }
             }
             return () => {
                 if (timeoutID) {
@@ -201,14 +204,14 @@ const Row = connect(
                             } variant="danger">
                                     <Dropdown.Item onClick={remove}>{t('texts_delete_confirm')}</Dropdown.Item>
                             </DropdownButton>
-                            {feedback && <span className={feedback.success ? '' : 'error'}>{feedback.message}<br/>{feedback.success || `${t('status_code')}: ${feedback.statusCode}`}</span>}
+                            {feedback && <span className={feedback.success ? '' : 'error'}>{t(feedback.message)}<br/>{feedback.success || `${t('status_code')}: ${feedback.statusCode}`}</span>}
                         </ButtonGroup>
                     ) : (<>
                         <Button size="sm" onClick={toggleEdit}>
                             {t('texts_edit_button')}
                         </Button>
                         <div>
-                            {feedback && <span className={feedback.success ? '' : 'error'}>{feedback.message}<br/>{feedback.success || `${t('status_code')}: ${feedback.statusCode}`}</span>}
+                            {feedback && <span className={feedback.success ? '' : 'error'}>{t(feedback.message)}<br/>{feedback.success || `${t('status_code')}: ${feedback.statusCode}`}</span>}
                         </div>
                     </>)}
                 </td>
@@ -259,12 +262,13 @@ const FormRow = (props) => {
                     <BSDropdown.Item onClick={() => onChange('language', 'sv')}>{t('sv')}</BSDropdown.Item>
                     <BSDropdown.Item onClick={() => onChange('language', 'en')}>{t('en')}</BSDropdown.Item>
                 </DropdownButton>
+                {props.showLanguageWarning && !text.language && <span className="warningText">{t('texts_language_missing')}</span>}
             </td>
             <td>
                 <InputGroup>
                     <Form.Control as="textarea" rows={1} placeholder={t('texts_value')} value={text.value || ''} onChange={(e) => e.target.value.length <= 255 && onChange('value', e.target.value)} />
                 </InputGroup>
-                {text.value?.length > 0 && <span className="warningText">{255-text.value.length} {t('texts_value_characters_left')}</span>}
+                {text.value?.length > 0 && <span>{255-text.value.length} {t('texts_value_characters_left')}</span>}
             </td>
             <td>{text.user_name}</td>
             <td></td>
@@ -307,7 +311,9 @@ const Texts = (props) => {
     const [pageNo, setPageNo] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(12);
     const [texts, setTexts] = useState(props.texts);
+    const [updatedTexts, setUpdatedTexts] = useState([]);
     const [formRows, setFormRows] = useState([{}]);
+    const [showLanguageWarning, setShowLanguageWarning] = useState(false);
     const [areNewTextsValid, setAreNewTextsValid] = useState(false);
     const [saveNewTextsInProgress, setSaveNewTextsInProgress] = useState(false);
     const [awaitingFeedback, setAwaitingFeedback] = useState(false);
@@ -333,6 +339,7 @@ const Texts = (props) => {
             setFeedbackTimeoutID(setTimeout(setFeedback, FEEDBACK_TIMEOUT_MS));
             if (props.feedback.success && props.feedback.texts) {
                 setAreNewTextsValid(false);
+                setShowLanguageWarning(false);
                 setFormRows([
                     ...formRows.map(row => undefined),
                     { user_name: props.user.eppn }
@@ -367,15 +374,19 @@ const Texts = (props) => {
     };
 
     useEffect(() => {
+        const currentTexts = props.texts.map(t => {
+            const found = updatedTexts.find(ut => ut.key === t.key && ut.language === t.language);
+            return found || t;
+        });
         if (searchQuery && searchQuery.length > 0) {
-            setTexts([...props.texts].filter(text => {
+            setTexts(currentTexts.filter(text => {
                 const includedFields = ['key', 'value'];
                 return includedFields.some(field => {
                     return text[field]?.toLowerCase().includes(searchQuery);
                 });
             }));
         } else {
-            setTexts(props.texts);
+            setTexts(currentTexts);
         }
     }, [searchQuery, props.texts]);
 
@@ -437,6 +448,11 @@ const Texts = (props) => {
         setFeedbackTimeoutID(setTimeout(setFeedback, ms));
     };
 
+    const onTextUpdated = (updatedText) => {
+        const duplicateRemoved = updatedTexts.filter(text => text.key !== updatedText.key && text.language !== updatedText.language);
+        setUpdatedTexts([...duplicateRemoved, updatedText]);
+    };
+
     return (<Container>
         <BSRow className="justify-content-between" style={{ marginTop: '10px', marginBottom: '10px' }}>
             <Col sm={6}><Search onChange={searchQueryChange} /></Col>
@@ -450,12 +466,12 @@ const Texts = (props) => {
                     </thead>
                     <tbody>
                         {texts.slice((pageNo-1)*itemsPerPage, pageNo*itemsPerPage).map((text, i) =>
-                            <Row key={text.key + text.language + i} text={text} setExternalFeedback={(feedback) => timeoutFeedback(feedback)} />
+                            <Row key={text.key + text.language + i} text={text} setExternalFeedback={(feedback) => timeoutFeedback(feedback)} onTextUpdated={onTextUpdated} />
                         )}
                     </tbody>
                     <tfoot>
                         {formRows.map((row, i) =>
-                            row && <FormRow onChange={(key,value) => onFormRowChange(key, value, i)} hideDeleteButton={formRows.filter(r => r).length === 1} onDelete={() => deleteFormRow(i)} key={i} text={row} alreadyExists={alreadyExists} />
+                            row && <FormRow onChange={(key,value) => onFormRowChange(key, value, i)} hideDeleteButton={formRows.filter(r => r).length === 1} onDelete={() => deleteFormRow(i)} key={i} text={row} alreadyExists={alreadyExists} showLanguageWarning={showLanguageWarning} />
                         )}
                     </tfoot>
                 </Table>
@@ -473,7 +489,7 @@ const Texts = (props) => {
                     <Col md="auto">
                         <Button onClick={() => setFormRows([...formRows, { user_name: props.user.eppn }])} disabled={saveNewTextsInProgress} variant="outline-secondary"><b>+</b> {t('add_new_row')}</Button>
                     </Col>
-                    <Col md="auto">
+                    <Col md="auto" onClick={!areNewTextsValid || saveNewTextsInProgress ? () => setShowLanguageWarning(true) : () => {}}>
                         <Button onClick={saveNewTexts} disabled={!areNewTextsValid || saveNewTextsInProgress} variant="success">
                             {saveNewTextsInProgress ? (<>
                                 <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" />
