@@ -4,6 +4,7 @@ import { fetchSelectableHierarchies } from '../actions/treeAction';
 import { useTranslation } from 'react-i18next';
 import MultiSelect from  'react-multiple-select-dropdown-lite';
 
+const defaultValue = 'talous';
 const Dropdown = (props) => {
     const { t } = useTranslation();
     const [selected, setSelected] = useState('');
@@ -18,8 +19,9 @@ const Dropdown = (props) => {
     });
 
     const changeSelected = value => {
-        setSelected(value);
-        dispatch(dropDownSwitchValueCall(value));
+        const newValue = value || defaultValue;
+        setSelected(newValue);
+        dispatch(dropDownSwitchValueCall(newValue));
     };
 
     React.useEffect(() => {

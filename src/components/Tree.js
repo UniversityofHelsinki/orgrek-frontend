@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import Branch from './Branch';
 import { fetchTree } from '../actions/treeAction';
@@ -12,22 +12,49 @@ const ContainerDiv = styled.div`
   background-color: #F6F6F6;
 `;
 
+const traverseTree = (current, target) => {
+    if (current.uniqueId === target) {
+        return [[current]];
+    }
+    const paths = [];
+    for (const child of current.children) {
+        const subpaths = traverseTree(child, target);
+        if (subpaths.length > 0) {
+            subpaths.forEach(subpath => paths.push([current, ...subpath]));
+        }
+    }
+    return paths;
+};
 
 const Tree = (props) => {
     const { t, i18n } = useTranslation();
+    const [pathsToTarget, setPathsToTarget] = useState();
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (props.selectedHierarchy !== '') {
             props.onFetchTree(props.selectedHierarchy, props.selectedDay);
         }
         // eslint-disable-next-line
-    }, [props.selectedHierarchy, props.selectedDay, i18n.language]);
-
+    }, [props.selectedHierarchy, props.selectedDay]);
 
     const language = i18n.language === 'ia' ? 'fi' : i18n.language;
+
+    useEffect(() => {
+        if (!props.openTree) {
+            setPathsToTarget(undefined);
+        }
+        if (props.tree[language] && props.node?.uniqueId && props.openTree) {
+            const foundInTree = traverseTree(props.tree[language], props.node.uniqueId);
+            if (foundInTree) {
+                setPathsToTarget(foundInTree);
+            }
+        }
+    }, [props.tree, props.node, props.openTree]);
+
+
     return (
         <ContainerDiv data-testid='tree'>
-            {props.tree?.[language] && <Branch item={props.tree[language]} level={0} parent='' />}
+            {props.tree?.[language] && <Branch item={props.tree[language]} openableTree={props.openTree ? pathsToTarget : undefined} level={0} parent='' />}
         </ContainerDiv>
     );
 };
@@ -35,7 +62,9 @@ const Tree = (props) => {
 const mapStateToProps = state => ({
     tree : state.tree.tree,
     selectedHierarchy: state.tree.selectedHierarchy,
-    selectedDay : state.dr.selectedDay
+    selectedDay : state.dr.selectedDay,
+    node: state.nrd.node,
+    openTree: state.nrd.openTree
 });
 
 const mapDispatchToProps = dispatch => ({
