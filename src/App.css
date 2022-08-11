@@ -62,6 +62,10 @@ th {
 
 }
 
+.warningText {
+  color: red
+}
+
 .nodeLinkSelected {
   font-weight: bold; 
   padding-right: 5px; 
