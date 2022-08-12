@@ -12,7 +12,7 @@ export const fetchNode = (uniqueId, openTree) => {
                 payload: openTree === undefined || openTree
             });
             dispatch(apiGetNodeSuccessCall(responseJSON));
-        } else {
+        } else if (response.status === 401) {
             dispatch(api401FailureCall(new Date()));
         }
     };

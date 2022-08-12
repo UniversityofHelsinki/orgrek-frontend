@@ -1,12 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
 import Dropdown from './Dropdown';
 import Tree from './Tree';
 import TreeSearch from './TreeSearch';
 import SelectDate from './SelectDate';
+import { fetchSelectableHierarchies } from '../actions/treeAction';
 import { Container, Row, Col } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 
-const Hierarchy = () => {
+const Hierarchy = (props) => {
+
+    useEffect(() => {
+        props.fetchSelectableHierarchies();
+    }, []);
+
     const { t, i18n } = useTranslation();
     return (
         <Container>
@@ -31,4 +38,8 @@ const Hierarchy = () => {
     );
 };
 
-export default Hierarchy;
+const mapDispatchToProps = dispatch => ({
+    fetchSelectableHierarchies: () => dispatch(fetchSelectableHierarchies()),
+});
+
+export default connect(null, mapDispatchToProps)(Hierarchy);

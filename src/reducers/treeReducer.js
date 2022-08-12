@@ -1,7 +1,8 @@
 
 const initialState = {
     tree : {},
-    selectedHierarchy: 'talous',
+    selectedHierarchy: undefined,
+    defaultHierarchy: 'talous',
     selectableHierarchies: []
 };
 

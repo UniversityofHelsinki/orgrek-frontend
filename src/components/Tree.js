@@ -31,7 +31,7 @@ const Tree = (props) => {
     const [pathsToTarget, setPathsToTarget] = useState();
 
     useEffect(() => {
-        if (props.selectedHierarchy !== '') {
+        if (props.selectedHierarchy) {
             props.onFetchTree(props.selectedHierarchy, props.selectedDay);
         }
         // eslint-disable-next-line
