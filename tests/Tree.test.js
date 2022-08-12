@@ -42,6 +42,40 @@ jest.mock('../src/actions/treeAction', () => ({
     };})
 }));
 
+jest.mock('../src/reducers/treeReducer', () => {
+    const originalModule = jest.requireActual('../src/reducers/treeReducer');
+    return {
+        __esModule: true,
+        ...originalModule,
+        default: jest.fn((state = { 
+            selectedHierarchy: 'talous',
+            defaultHierarchy: 'talous',
+            tree: {},
+            selectableHierarchies: []
+        }, action) => {
+            switch (action.type) {
+            case 'SUCCESS_API_GET_TREE':
+                return {
+                    ...state,
+                    tree: action.payload
+                };
+            case 'SUCCESS_API_GET_SELECTABLE_HIERARCHIES':
+                return {
+                    ...state,
+                    selectableHierarchies: action.payload
+                };
+            case 'SWITCH_HIERARCHY':
+                return {
+                    ...state,
+                    selectedHierarchy: action.payload
+                };
+            default:
+                return state;
+            }
+        })
+    };
+});
+
 jest.mock('react-i18next', () => ({
     // this mock makes sure any components using the translate hook can use it without a warning being shown
     useTranslation: () => {
