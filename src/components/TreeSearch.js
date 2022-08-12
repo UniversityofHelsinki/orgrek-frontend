@@ -51,7 +51,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = (dispatch) => ({
     onSearchResultSelection: (selectedDay, searchResultId) => {
-        dispatch(fetchNode(searchResultId, false));
+        dispatch(fetchNode(searchResultId));
     }
 });
 
