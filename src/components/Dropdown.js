@@ -1,45 +1,30 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, connect } from 'react-redux';
 import { fetchSelectableHierarchies } from '../actions/treeAction';
 import { useTranslation } from 'react-i18next';
 import MultiSelect from  'react-multiple-select-dropdown-lite';
 
-const defaultValue = 'talous';
 const Dropdown = (props) => {
     const { t } = useTranslation();
-    const [selected, setSelected] = useState('');
     const dispatch = useDispatch();
-    const all = props.selectableHierarchies;
-    const filtered = all.filter(item => item.value !== 'history');
-
-    React.useEffect(() => {
-        if (filtered.length === 0) {
-            dispatch(fetchSelectableHierarchies());
-        }
-    });
 
     const changeSelected = value => {
-        const newValue = value || defaultValue;
-        setSelected(newValue);
-        dispatch(dropDownSwitchValueCall(newValue));
+        const newValue = value || props.defaultHierarchy;
+        dispatch(dropDownSwitchValueCall(new String(newValue)));
+        // new String for causing a rerender when newValue === previous value.
     };
 
-    React.useEffect(() => {
-        if (filtered.length > 0) {
-            setSelected(props.selectedHierarchy);
-        } else {
-            setSelected('');
-        }
-    // eslint-disable-next-line
-    }, [selected, props.selectableHierarchies]);
-
-    return (
-        <MultiSelect
-            defaultValue={selected}
-            onChange={changeSelected}
-            options={filtered}
-        />
-    );
+    if (props.selectableHierarchies?.length > 0) {
+        return (
+            <MultiSelect
+                defaultValue={props.selectedHierarchy?.split(',') || props.defaultHierarchy}
+                onChange={changeSelected}
+                options={props.selectableHierarchies.filter(item => item.value !== 'history')}
+                placeholder={t('select_hierarchies')}
+            />
+        );
+    }
+    return <></>;
 };
 
 export const dropDownSwitchValueCall = data => {
@@ -51,7 +36,8 @@ export const dropDownSwitchValueCall = data => {
 
 const mapStateToProps = state => ({
     selectedHierarchy: state.tree.selectedHierarchy,
-    selectableHierarchies: state.tree.selectableHierarchies
+    selectableHierarchies: state.tree.selectableHierarchies,
+    defaultHierarchy: state.tree.defaultHierarchy
 });
 
 export default connect(mapStateToProps)(Dropdown);
