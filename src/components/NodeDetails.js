@@ -24,13 +24,25 @@ const NodeDetails = (props) => {
     const lang = i18n.language;
     const [attributeData, setAttributeData] = useState(false);
 
+    const uniqueIdAttribute = props.node
+                    ? { 'key': 'unique_id', 'value': props.node.uniqueId, startDate: null, endDate: null }
+                    : { 'key': 'unique_id', 'value': t('no_value'), startDate: null, endDate: null };
     const isCodeAttribute = (elem) => {
         return codeAttributes.includes(elem);
     };
 
     const sortOtherAttributes = elems => {
-        const sortedList = elems.filter((data) => data.startDate || data.endDate).sort((a, b) => {
-            return new Date(b.endDate) - new Date(a.startDate);
+        const sortedList = elems.sort((a, b) => {
+            if (!a.startDate && !a.endDate) {
+                return -1;
+            }
+            if (!b.startDate && !b.endDate) {
+                return 1;
+            }
+            if (b.endDate && a.startDate) {
+                return new Date(b.endDate) - new Date(a.startDate);
+            }
+            return new Date(a.startDate) - new Date(b.startDate);
         });
         return sortedList;
     };
@@ -49,18 +61,27 @@ const NodeDetails = (props) => {
         return result.flat();
     };
 
-    const orderCodeAttributes = (elems) => {
-        const result = [];
-        props.node ? result.push({ 'key': 'unique_id', 'value': props.node.uniqueId, startDate: null, endDate: null })
-            : result.push({ 'key': 'unique_id', 'value': t('no_value'), startDate: null, endDate: null });
-        codeAttributes.map(codeAttribute => {
-            for (let i = 0, len = elems.length; i < len; i++) {
-                const match = elems[i].key === codeAttribute;
-                match ? result.push(elems[i]) : '';
+    const byCodesAndDates = (a,b) => {
+        if (a.key === b.key) {
+            if (!a.startDate && !a.endDate) {
+                return -1;
             }
-        });
-
-        return sortCodeAttributesByDate(result, codeAttributes);
+            if (!b.startDate && !b.endDate) {
+                return 1;
+            }
+            if (b.endDate && a.startDate) {
+                return new Date(b.endDate) - new Date(a.startDate);
+            }
+            return new Date(a.startDate) - new Date(b.startDate);
+        }
+        const aOrder = codeAttributes.findIndex(key => key === a.key);
+        const bOrder = codeAttributes.findIndex(key => key === b.key);
+        if (aOrder < bOrder) {
+            return -1;
+        } else if (aOrder > bOrder) {
+            return 1;
+        }
+        return 0;
     };
 
     const sortNameAttributesByDate = (elems, order) => {
@@ -89,10 +110,6 @@ const NodeDetails = (props) => {
         return sortNameAttributesByDate(elems, order);
     };
 
-    const isLanguageAttribute = (elem) => {
-        return (elem.startsWith('name') && elem.length === 7);
-    };
-
     const selectData = () => {
         if (props.showHistory && props.showComing && props.nodeAttributesHistory && props.nodeAttributes) {
             setAttributeData(filterAttributeDuplicates(props.nodeAttributesHistory, props.nodeAttributesFuture));
@@ -104,12 +121,21 @@ const NodeDetails = (props) => {
             setAttributeData(props.nodeAttributes);
         }
     };
-    const nameInfoData = attributeData ? attributeData.filter(elem => isLanguageAttribute(elem.key)) : false;
+    const nameInfoData = attributeData ? attributeData.filter(elem => /^name_(fi|sv|en)$/.test(elem.key)) : false;
     const nameInfoDataOrderedByLanguage = nameInfoData ? orderNameAttributesByLanguage(nameInfoData) : false;
-    const codeAttributesData = attributeData ? orderCodeAttributes(attributeData) : false;
     const typeAttributeData = attributeData ? attributeData.filter(elem => elem.key === 'type') : false;
-    const otherAttributesData = attributeData ? attributeData.filter(elem => !isCodeAttribute(elem.key) && elem.key !== 'type' && !isLanguageAttribute(elem.key)) : false;
+    const codeAttributesData = attributeData
+                                    ? [uniqueIdAttribute, ...attributeData.filter(a => codeAttributes.includes(a.key))]
+                                            .sort(byCodesAndDates)
+                                            .filter(a => !nameInfoData.includes(a) && !typeAttributeData.includes(a))
+                                    : false;
+    const otherAttributesData = attributeData ? attributeData.filter(elem => {
+        return !nameInfoData.includes(elem) && !typeAttributeData.includes(elem) && !codeAttributesData.includes(elem);
+    }) : false;
     const sortedOtherAttributesData = otherAttributesData ? sortOtherAttributes(otherAttributesData) : false;
+    console.log(codeAttributesData);
+    console.log(otherAttributesData);
+    console.log(sortedOtherAttributesData);
     const validityData = props.node ? [props.node] : false;
 
     const isCurrent = datesOverlap(
