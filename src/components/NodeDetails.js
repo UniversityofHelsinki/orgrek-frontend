@@ -133,9 +133,6 @@ const NodeDetails = (props) => {
         return !nameInfoData.includes(elem) && !typeAttributeData.includes(elem) && !codeAttributesData.includes(elem);
     }) : false;
     const sortedOtherAttributesData = otherAttributesData ? sortOtherAttributes(otherAttributesData) : false;
-    console.log(codeAttributesData);
-    console.log(otherAttributesData);
-    console.log(sortedOtherAttributesData);
     const validityData = props.node ? [props.node] : false;
 
     const isCurrent = datesOverlap(
