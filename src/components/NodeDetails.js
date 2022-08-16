@@ -13,7 +13,8 @@ import {
     fetchNodeAttributes,
     fetchNodePredecessors,
     fetchNodeSuccessors,
-    fetchNodeFullNames
+    fetchNodeFullNames,
+    fetchNodeFavorableFullNames
 } from '../actions/nodeAction';
 import { useTranslation } from 'react-i18next';
 import { codeAttributes } from '../constants/variables';
@@ -172,7 +173,7 @@ const NodeDetails = (props) => {
         <>
             {props.nodeAttributes &&
                 <>
-                    <h3>{props.displayNames[lang === 'ia' && 'fi' || lang]?.[0]?.name}</h3>
+                    <h3>{props.favorableNames[lang === 'ia' && 'fi' || lang]?.[0]?.name}</h3>
                     <NodeViewControl node={props.node} selectedDay={props.selectedDay} selectedHierarchy={props.selectedHierarchy} />
                     <NodeDetailsTable
                         selectedDay={props.selectedDay}
@@ -284,6 +285,7 @@ const mapStateToProps = state => ({
     showHistory: state.nvrd.showHistory,
     showComing: state.nvrd.showComing,
     displayNames: state.nrd.nodeDisplayNames,
+    favorableNames: state.nrd.nodeFavorableNames,
     selectedHierarchy: state.tree.selectedHierarchy,
 });
 
@@ -291,6 +293,7 @@ const mapDispatchToProps = dispatch => ({
     fetchNodeDetails: (node, selectedDay, showHistory, showComing, selectedHierarchy) => {
         dispatch(fetchNodePredecessors(node.uniqueId, selectedDay));
         dispatch(fetchNodeSuccessors(node.uniqueId, selectedDay));
+        dispatch(fetchNodeFavorableFullNames(node.uniqueId, selectedDay));
         if (!(showHistory || showComing)) {
             dispatch(fetchNodeAttributes(node.uniqueId, selectedDay, selectedHierarchy));
             dispatch(fetchNodeParents(node.uniqueId, selectedDay));
