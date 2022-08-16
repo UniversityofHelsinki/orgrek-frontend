@@ -15,11 +15,15 @@ const Dropdown = (props) => {
     };
 
     if (props.selectableHierarchies?.length > 0) {
+        let values = [props.defaultHierarchy];
+        if (props.selectedHierarchy) {
+            values = [...props.selectedHierarchy.split(',')];
+        }
         return (
             <MultiSelect
-                defaultValue={props.selectedHierarchy?.split(',') || props.defaultHierarchy}
+                defaultValue={values.map(v => ({ value: v, label: t(v) }))}
                 onChange={changeSelected}
-                options={props.selectableHierarchies.filter(item => item.value !== 'history')}
+                options={props.selectableHierarchies.filter(item => item !== 'history').map(v => ({ value: v, label: t(v) }))}
                 placeholder={t('select_hierarchies')}
             />
         );
