@@ -35,6 +35,23 @@ export const fetchNodeFullNames = (uniqueId, selectedDay) => {
     };
 };
 
+export const fetchNodeFavorableFullNames = (uniqueId, selectedDay) => {
+    const ORGREK_BACKEND_SERVER = process.env.REACT_APP_ORGREK_BACKEND_SERVER || '';
+    const date = selectedDay?.toLocaleDateString('fi-FI') || '';
+    const PATH = `/api/node/fullname/favorable/${uniqueId}/${date}`;
+    return async (dispatch) => {
+        let response = await fetch(`${ORGREK_BACKEND_SERVER}${PATH}`, {
+            headers: { 'Content-Type': 'application/json' }
+        });
+        if (response.status === 200) {
+            dispatch({
+                type: 'SUCCESS_API_GET_NODE_FAVORABLE_FULL_NAMES',
+                payload: await response.json()
+            });
+        }
+    };
+};
+
 export const api401FailureCall = failureTime => ({
     type: 'STATUS_401_API_CALL',
     payload : failureTime

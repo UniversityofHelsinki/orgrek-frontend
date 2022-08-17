@@ -25,8 +25,7 @@ const App= (props) => {
             const parameters = new URLSearchParams(window.location.search);
             const hierarchies = parameters.get('hierarchies');
             if (hierarchies && props.selectableHierarchies?.length > 0) {
-                const selectableHierarchies = props.selectableHierarchies.map(sh => sh.value);
-                const valid = hierarchies.split(',').every(hierarchy => selectableHierarchies.includes(hierarchy));
+                const valid = hierarchies.split(',').every(hierarchy => props.selectableHierarchies.includes(hierarchy));
                 if (valid) {
                     props.setHierarchies(hierarchies);
                 } else {

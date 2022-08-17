@@ -6,6 +6,7 @@ const initialState = {
     nodePredecessors : { fi: [], sv: [], en: [], ia: [] },
     nodeSuccessors : { fi: [], sv: [], en: [], ia: [] },
     nodeDisplayNames: { fi: [], sv: [], en: [], ia: [] },
+    nodeFavorableNames: { fi: undefined, en: undefined, sv: undefined, ia: undefined }
 };
 
 const nodeReducer = (state = initialState, action) => {
@@ -69,6 +70,11 @@ const nodeReducer = (state = initialState, action) => {
             return {
                 ...state,
                 nodeDisplayNames: action.payload
+            };
+        case 'SUCCESS_API_GET_NODE_FAVORABLE_FULL_NAMES':
+            return {
+                ...state,
+                nodeFavorableNames: action.payload
             };
         case 'CLEAR_FULL_NAMES_HISTORY':
             return {
