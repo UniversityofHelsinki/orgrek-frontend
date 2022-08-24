@@ -13,6 +13,7 @@ import { Container, Col, Row } from 'react-bootstrap';
 import SkipNavLink from './components/SkipNavLink';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Texts from './components/Texts';
+import HierarchyFilters from './components/HierarchyFilters';
 
 const App= (props) => {
 
@@ -65,6 +66,7 @@ const App= (props) => {
                                         <Col >{props.node && <NodeDetails />}</Col>
                                 </> } />
                                 <Route path="/texts" element={<Texts />} />
+                                <Route path="/hierarchyfilters" element={<HierarchyFilters />} />
                             </Routes>
                         </BrowserRouter>
                         </Row>

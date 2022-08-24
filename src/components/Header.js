@@ -32,6 +32,7 @@ const Header = (props) => {
                             </NavDropdown>
                             <NavLink className="nav-link" to="/"> {t('organisation')} </NavLink>
                             <NavLink className="nav-link" to="/texts"> {t('texts')} </NavLink>
+                            <NavLink className="nav-link" to="/hierarchyfilters"> {t('hierarchy_filters')} </NavLink>
                         </Nav>
                         <Nav>
                             <Nav.Link eventKey="disabled" disabled>{props.user ? t('logged_in') + ' ' +  props.user.eppn : '' }</Nav.Link>
