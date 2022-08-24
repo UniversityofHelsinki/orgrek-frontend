@@ -18,16 +18,22 @@ import {
 } from '../actions/nodeAction';
 import { useTranslation } from 'react-i18next';
 import { codeAttributes } from '../constants/variables';
+import { Button, Col, Row } from 'react-bootstrap';
 
 // eslint-disable-next-line complexity
 const NodeDetails = (props) => {
     const { t, i18n } = useTranslation();
     const lang = i18n.language;
     const [attributeData, setAttributeData] = useState(false);
+    const [edit, setEdit] = useState(false);
+
+    const toggleEdit = (event) => {
+        setEdit(!edit);
+    };
 
     const uniqueIdAttribute = props.node
-                    ? { 'key': 'unique_id', 'value': props.node.uniqueId, startDate: null, endDate: null }
-                    : { 'key': 'unique_id', 'value': t('no_value'), startDate: null, endDate: null };
+        ? { 'key': 'unique_id', 'value': props.node.uniqueId, startDate: null, endDate: null }
+        : { 'key': 'unique_id', 'value': t('no_value'), startDate: null, endDate: null };
     const isCodeAttribute = (elem) => {
         return codeAttributes.includes(elem);
     };
@@ -92,7 +98,7 @@ const NodeDetails = (props) => {
         for (let property in order) {
 
             const filteredBatch = elems.filter(e => {
-              return e.key === property;
+                return e.key === property;
             });
 
             filteredBatch.sort((a,b) => {
@@ -126,10 +132,10 @@ const NodeDetails = (props) => {
     const nameInfoDataOrderedByLanguage = nameInfoData ? orderNameAttributesByLanguage(nameInfoData) : false;
     const typeAttributeData = attributeData ? attributeData.filter(elem => elem.key === 'type') : false;
     const codeAttributesData = attributeData
-                                    ? [uniqueIdAttribute, ...attributeData.filter(a => codeAttributes.includes(a.key))]
-                                            .sort(byCodesAndDates)
-                                            .filter(a => !nameInfoData.includes(a) && !typeAttributeData.includes(a))
-                                    : false;
+        ? [uniqueIdAttribute, ...attributeData.filter(a => codeAttributes.includes(a.key))]
+            .sort(byCodesAndDates)
+            .filter(a => !nameInfoData.includes(a) && !typeAttributeData.includes(a))
+        : false;
     const otherAttributesData = attributeData ? attributeData.filter(elem => {
         return !nameInfoData.includes(elem) && !typeAttributeData.includes(elem) && !codeAttributesData.includes(elem);
     }) : false;
@@ -174,6 +180,25 @@ const NodeDetails = (props) => {
             {props.nodeAttributes &&
                 <>
                     <h3>{props.favorableNames[lang === 'ia' && 'fi' || lang]?.[0]?.name}</h3>
+                    <>
+                        {edit ? (
+                            <Row>
+                                <Col md="auto">
+                                    <Button size="sm" variant="warning" onClick={toggleEdit}>
+                                        {t('texts_cancel_button')}
+                                    </Button>
+                                </Col>
+                                <Col>
+                                    <Button size="sm" variant="success" onClick={toggleEdit}>
+                                        {t('texts_save_button')}
+                                    </Button>
+                                </Col>
+                            </Row>
+                        ) : (
+                            <Button size="sm" onClick={toggleEdit}>
+                                {t('texts_edit_button')}
+                            </Button>)}
+                    </>
                     <NodeViewControl node={props.node} selectedDay={props.selectedDay} selectedHierarchy={props.selectedHierarchy} />
                     <NodeDetailsTable
                         selectedDay={props.selectedDay}
