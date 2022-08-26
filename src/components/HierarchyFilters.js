@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 /* eslint-disable max-lines */
 import React, { useEffect, useState } from 'react';
 import { Dropdown } from 'react-bootstrap';
@@ -10,6 +11,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { fetchHierarchyFilters, updateHierarchyFilter, deleteHierarchyFilter, insertHierarchyFilters, setHierarchyFilters } from '../actions/hierarchyFiltersAction';
+import { fetchSelectableHierarchies } from '../actions/treeAction';
 
 const FEEDBACK_TIMEOUT_MS = 10000;
 
@@ -42,7 +44,7 @@ const DropDown = (props) => {
 
 const Header = (props) => {
     const { t, i18n } = useTranslation();
-    const [scendings] = useState({ key: -1, value: -1, language: -1, user_name: -1, timestamp: -1 });
+    const [scendings] = useState({ hierarchy: -1, key: -1, value: -1, startDate: -1, endDate: -1 });
     const [arrow, setArrow] = useState();
 
     const onClick = (key) => {
@@ -55,10 +57,6 @@ const Header = (props) => {
 
     return (<>
             <tr>
-                <th>
-                    <span onClick={onClick('id')} className='boldHeader'>{t('hierarchy_filters_id')}</span>
-                    {arrow === 'id' && <span className='littleLeftMargin'>{scendings['id'] === 1 ? '\u25bd' : '\u25b3' }</span>}
-                </th>
                 <th>
                     <span onClick={onClick('hierarchy')} className='boldHeader'>{t('hierarchy_filters_hierarchy')}</span>
                     {arrow === 'hierarchy' && <span className='littleLeftMargin'>{scendings['hierarchy'] === 1 ? '\u25bd' : '\u25b3' }</span>}
@@ -87,7 +85,12 @@ const Header = (props) => {
 };
 
 const Row = connect(
-        (state) => ({ feedback: state.hierarchyFilters.feedback, hierarchyFilters: state.hierarchyFilters.hierarchyFilters, user: state.ur.user }),
+        (state) => ({
+            feedback: state.hierarchyFilters.feedback,
+            hierarchyFilters: state.hierarchyFilters.hierarchyFilters,
+            user: state.ur.user,
+            hierarchies: state.tree.selectableHierarchies
+        }),
         (dispatch) => ({
             updateHierarchyFilter: (hierarchyFilter) => dispatch(updateHierarchyFilter(hierarchyFilter)),
             deleteHierarchyFilter: (hierarchyFilter) => dispatch(deleteHierarchyFilter(hierarchyFilter)),
@@ -95,7 +98,7 @@ const Row = connect(
         }))((props) => {
     const { t, i18n } = useTranslation();
     const [edit, setEdit] = useState(false);
-    const [value, setValue] = useState(props.hierarchyFilter.value);
+    const [modified, setModified] = useState({ ...props.hierarchyFilter });
     const [hierarchyFilter, setHierarchyFilter] = useState(props.hierarchyFilter);
     const [saveInProgress, setSaveInProgress] = useState(false);
     const [deletionInProgress, setDeletionInProgress] = useState(false);
@@ -103,10 +106,11 @@ const Row = connect(
     const [awaitingDeletionFeedback, setAwaitingDeletionFeedback] = useState(false);
     const [feedback, setFeedback] = useState();
     const [feedbackTimeoutID, setFeedbackTimeoutID] = useState();
+    const [validationErrorMessages, setValidationErrorMessages] = useState({});
 
     useEffect(() => {
         setHierarchyFilter(props.hierarchyFilter);
-        setValue(props.hierarchyFilter.value);
+        setModified({ ...props.hierarchyFilter });
     }, [props.hierarchyFilter]);
 
     useEffect(() => {
@@ -128,6 +132,7 @@ const Row = connect(
             if (props.feedback.success && props.feedback.hierarchyFilter) {
                 setEdit(false);
                 setHierarchyFilter(props.feedback.hierarchyFilter);
+                setModified({ ...props.feedback.hierarchyFilter });
                 if (props.onHierarchyFilterUpdated) {
                     props.onHierarchyFilterUpdated(props.feedback.hierarchyFilter);
                 }
@@ -151,47 +156,85 @@ const Row = connect(
         }
     }, [props.feedback]);
 
-    const toggleEdit = (event) => {
-        setValue(hierarchyFilter.value);
+    const toggleEdit = () => {
+        setModified({ ...hierarchyFilter });
         setEdit(!edit);
     };
 
-    const onValueChange = (event) => {
-        setValue(event.target.value);
+    const onChange = (event, column) => {
+        setModified({ ...modified, [column]: event.target.value });
     };
 
     const save = () => {
         setSaveInProgress(true);
         setAwaitingSaveFeedback(true);
-        props.updateHierarchyFilter({ ...hierarchyFilter, value });
+        props.updateHierarchyFilter({ ...modified });
     };
 
     const remove = () => {
         setDeletionInProgress(true);
         setAwaitingDeletionFeedback(true);
-        props.deleteHierarchyFilter({ ...hierarchyFilter });
+        props.deleteHierarchyFilter({ ...modified });
     };
 
+    const notModified = () => {
+        return Object.keys(hierarchyFilter).every(key => hierarchyFilter[key] === modified[key]);
+    };
+
+    const isValid = () => {
+        const sd = modified.startDate && new Date(modified.startDate);
+        const ed = modified.endDate && new Date(modified.endDate);
+        if (sd && ed) {
+            return ed > sd;
+        }
+        return true;
+    };
+
+    const startDate = modified.startDate && new Date(modified.startDate);
+    const startDateValue = startDate && `${startDate.getFullYear()}-${new String(startDate.getMonth()+1).padStart(2, '0')}-${new String(startDate.getDate()).padStart(2, '0')}`;
+    const endDate = modified.endDate && new Date(modified.endDate);
+    const endDateValue = endDate && `${endDate.getFullYear()}-${new String(endDate.getMonth()+1).padStart(2, '0')}-${new String(endDate.getDate()).padStart(2, '0')}`;
+
     return (<tr>
-                <td>{hierarchyFilter.id}</td>
-                <td>{hierarchyFilter.hierarchy}</td>
-                <td>{hierarchyFilter.key}</td>
+                <td>
+                    {edit ?
+                        <Form.Select value={modified.hierarchy} onChange={e => onChange(e, 'hierarchy')}>
+                            {props.hierarchies.filter(h => h !== 'history').map(hierarchy => <option key={hierarchy} value={hierarchy}>{t(hierarchy)}</option>)}
+                        </Form.Select>
+                    : t(hierarchyFilter.hierarchy)}
+                    {validationErrorMessages.hierarchy && <span className="warningText">{t(validationErrorMessages.hierarchy)}</span>}
+                </td>
+                <td>{edit ? <>
+                        <Form.Control value={modified.key} onChange={e => onChange(e, 'key')} />
+                    </>
+                    : modified.key}
+                </td>
                 <td onClick={() => !edit && toggleEdit()}>
                     {edit ? <>
-                                <Form.Control as="textarea" rows={3} value={value} onChange={(e) => e.target.value.length <= 255 && onValueChange(e)} />
-                                <span>{255-value.length} {t('hierarchy_filters_value_characters_left')}</span>
+                                <Form.Control value={modified.value} onChange={e => onChange(e, 'value')} />
                             </>
-                        : <span>{hierarchyFilter.value}</span>}
+                        : <span>{hierarchyFilter.value || ''}</span>}
+                        {validationErrorMessages.value && <span className="warningText">{t(validationErrorMessages.value)}</span>}
                 </td>
-                <td>{hierarchyFilter.startDate}</td>
-                <td>{hierarchyFilter.endDate}</td>
+                <td>
+                        {edit ? <>
+                            <input type="date" value={startDateValue || ''} onChange={e => onChange(e, 'startDate')} />
+                        </>: modified.startDate ? new Date(modified.startDate).toLocaleDateString('fi-FI') : '' }
+                        {validationErrorMessages.startDate && <span className="warningText">{t(validationErrorMessages.startDate)}</span>}
+                </td>
+                <td>
+                        {edit ? <>
+                            <input type="date" value={endDateValue || ''} onChange={e => onChange(e, 'endDate')} />
+                        </> : modified.endDate ? new Date(modified.endDate).toLocaleDateString('fi-FI') : '' }
+                        {validationErrorMessages.endDate && <span className="warningText">{t(validationErrorMessages.endDate)}</span>}
+                </td>
                 <td style={{ textAlign: 'center' }}>
                     {edit ? (
                         <ButtonGroup vertical>
                             <Button size="sm" variant="warning" onClick={toggleEdit}>
                                 {t('hierarchy_filters_cancel_button')}
                             </Button>
-                            <Button size="sm" variant="success" onClick={save} disabled={saveInProgress || value === hierarchyFilter.value}>
+                            <Button size="sm" variant="success" onClick={save} disabled={saveInProgress || notModified() || !isValid()}>
                                 {saveInProgress ? (<>
                                     <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" />
                                     <span style={{ marginLeft: '10px' }}>{t('hierarchy_filters_save_in_progress')}</span>
@@ -229,10 +272,12 @@ const FormRow = (props) => {
     const [valid, setValid] = useState(false);
 
     const isValid = (hierarchyFilter) => {
+        const sd = hierarchyFilter.startDate && new Date(hierarchyFilter.startDate);
+        const ed = hierarchyFilter.endDate && new Date(hierarchyFilter.endDate);
+        if (sd && ed && ed < sd) {
+            return false;
+        }
         return true;
-        /*return hierarchyFilter.key && !alreadyExists(hierarchyFilter.key, hierarchyFilter.language) &&
-            hierarchyFilter.value?.length > 0 && hierarchyFilter.value?.length < 256 &&
-            hierarchyFilter.language?.length > 0;*/
     };
 
     useEffect(() => {
@@ -251,40 +296,30 @@ const FormRow = (props) => {
         props.onChange(key, value);
     };
 
-    const alreadyExists = (key, language) => {
-        return false;
-        //return key && props.hierarchyFilters?.some(t => t.key === key.toLowerCase() && t.language === language);
-    };
-
     return (<tr>
-            <td></td>
             <td>
-                <InputGroup>
-                    <Form.Control placeholder={t('hierarchy_filters_hierarchy')} value={hierarchyFilter.hierarchy || ''} onChange={(e) => onChange('hierarchy', e.target.value)} />
-                </InputGroup>
-                {props.alreadyExists(hierarchyFilter.key, hierarchyFilter.language) && <span className="warningText">{t('hierarchy_filters_key_already_exists')}</span>}
+                <Form.Select value={hierarchyFilter.hierarchy} onChange={e => onChange('hierarchy', e.target.value)}>
+                    {props.hierarchies.filter(h => h !== 'history').map(hierarchy => <option key={hierarchy} value={hierarchy}>{t(hierarchy)}</option>)}
+                </Form.Select>
             </td>
             <td>
                 <InputGroup>
                     <Form.Control placeholder={t('hierarchy_filters_key')} value={hierarchyFilter.key || ''} onChange={(e) => onChange('key', e.target.value)} />
                 </InputGroup>
-            {/*
-                <DropdownButton title={hierarchyFilter.language || t('hierarchy_filters_key')}>
-                    <BSDropdown.Item onClick={() => onChange('language', 'fi')}>{t('fi')}</BSDropdown.Item>
-                    <BSDropdown.Item onClick={() => onChange('language', 'sv')}>{t('sv')}</BSDropdown.Item>
-                    <BSDropdown.Item onClick={() => onChange('language', 'en')}>{t('en')}</BSDropdown.Item>
-                </DropdownButton>
-                {props.showLanguageWarning && !hierarchyFilter.language && <span className="warninghierarchyFilter">{t('hierarchy_filters_language_missing')}</span>}
-                */}
             </td>
             <td>
                 <InputGroup>
-                    <Form.Control placeholder={t('hierarchy_filters_value')} value={hierarchyFilter.value || ''} onChange={(e) => e.target.value.length <= 255 && onChange('value', e.target.value)} />
+                    <Form.Control placeholder={t('hierarchy_filters_value')} value={hierarchyFilter.value || ''} onChange={(e) => onChange('value', e.target.value)} />
                 </InputGroup>
-                {hierarchyFilter.value?.length > 0 && <span>{255-hierarchyFilter.value.length} {t('hierarchy_filters_value_characters_left')}</span>}
             </td>
-            <td></td>
-            <td></td>
+            <td>
+                <input type="date" value={hierarchyFilter.startDate || ''} onChange={e => onChange('startDate', e.target.value)} />
+                {/* end date comes before start date ? <span>end date comes before start date</span> */}
+            </td>
+            <td>
+                <input type="date" value={hierarchyFilter.endDate || ''} onChange={e => onChange('endDate', e.target.value)} />
+                {/* end date comes before start date ? <span>end date comes before start date</span> */}
+            </td>
             <td style={{ textAlign: 'center' }}>
                 <Button hidden={props.hideDeleteButton} onClick={props.onDelete} variant="outline-danger"><b>-</b> {t('hierarchy_filters_delete_row')}</Button>
             </td>
@@ -326,7 +361,7 @@ const HierarchyFilters = (props) => {
     const [hierarchyFilters, setHierarchyFilters] = useState(props.hierarchyFilters);
     const [updatedHierarchyFilters, setUpdatedHierarchyFilters] = useState([]);
     const [formRows, setFormRows] = useState([{}]);
-    const [showLanguageWarning, setShowLanguageWarning] = useState(false);
+    const [showWarning, setShowWarning] = useState(false);
     const [areNewHierarchyFiltersValid, setAreNewHierarchyFiltersValid] = useState(false);
     const [saveNewHierarchyFiltersInProgress, setSaveNewHierarchyFiltersInProgress] = useState(false);
     const [awaitingFeedback, setAwaitingFeedback] = useState(false);
@@ -336,6 +371,7 @@ const HierarchyFilters = (props) => {
 
     useEffect(() => {
         props.fetchHierarchyFilters();
+        props.fetchHierarchies();
         if (feedbackTimeoutID) {
             clearTimeout(feedbackTimeoutID);
         }
@@ -352,7 +388,7 @@ const HierarchyFilters = (props) => {
             setFeedbackTimeoutID(setTimeout(setFeedback, FEEDBACK_TIMEOUT_MS));
             if (props.feedback.success && props.feedback.hierarchyFilters) {
                 setAreNewHierarchyFiltersValid(false);
-                setShowLanguageWarning(false);
+                setShowWarning(false);
                 setFormRows([
                     ...formRows.map(row => undefined),
                     { user_name: props.user.eppn }
@@ -421,15 +457,17 @@ const HierarchyFilters = (props) => {
 
     const alreadyExists = (key, language) => {
         return false;
-        //return key && language && (props.hierarchyFilters?.some(t => t.key === key.toLowerCase() && t.language === language)
-         //   || formRows.filter(r => r).filter(t => t.key === key && t.language === language).length > 1);
+        /* if the P wants that key and value pair should be unique, check it here*/
     };
 
-    const isValid = (text) => {
+    const isValid = (hierarchyFilter) => {
+        /* add more validations here for the new hierarchy filters */
+        const sd = hierarchyFilter.startDate && new Date(hierarchyFilter.startDate);
+        const ed = hierarchyFilter.endDate && new Date(hierarchyFilter.endDate);
+        if (sd && ed && ed < sd) {
+            return false;
+        }
         return true;
-        /*return text.key && text.key?.length < 256 && !alreadyExists(text.key, text.language) &&
-            text.value?.length > 0 && text.value?.length < 256 &&
-            text.language?.length > 0;*/
     };
 
     const onFormRowChange = (key, value, i) => {
@@ -478,7 +516,7 @@ const HierarchyFilters = (props) => {
                     </tbody>
                     <tfoot>
                         {formRows.map((row, i) =>
-                            row && <FormRow onChange={(key,value) => onFormRowChange(key, value, i)} hideDeleteButton={formRows.filter(r => r).length === 1} onDelete={() => deleteFormRow(i)} key={i} hierarchyFilter={row} alreadyExists={alreadyExists} showLanguageWarning={showLanguageWarning} />
+                            row && <FormRow onChange={(key,value) => onFormRowChange(key, value, i)} hideDeleteButton={formRows.filter(r => r).length === 1} onDelete={() => deleteFormRow(i)} key={i} hierarchyFilter={row} alreadyExists={alreadyExists} hierarchies={props.hierarchies} />
                         )}
                     </tfoot>
                 </Table>
@@ -496,7 +534,7 @@ const HierarchyFilters = (props) => {
                     <Col md="auto">
                         <Button onClick={() => setFormRows([...formRows, { user_name: props.user.eppn }])} disabled={saveNewHierarchyFiltersInProgress} variant="outline-secondary"><b>+</b> {t('add_new_row')}</Button>
                     </Col>
-                    <Col md="auto" onClick={!areNewHierarchyFiltersValid || saveNewHierarchyFiltersInProgress ? () => setShowLanguageWarning(true) : () => {}}>
+                    <Col md="auto" onClick={!areNewHierarchyFiltersValid || saveNewHierarchyFiltersInProgress ? () => setShowWarning(true) : () => {}}>
                         <Button onClick={saveNewHierarchyFilters} disabled={!areNewHierarchyFiltersValid || saveNewHierarchyFiltersInProgress} variant="success">
                             {saveNewHierarchyFiltersInProgress ? (<>
                                 <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" />
@@ -515,12 +553,14 @@ const mapStateToProps = state => ({
     hierarchyFilters: state.hierarchyFilters.hierarchyFilters,
     user: state.ur.user,
     feedback: state.hierarchyFilters.feedback,
+    hierarchies: state.tree.selectableHierarchies
 });
 
 const mapDispatchToProps = (dispatch) => ({
     fetchHierarchyFilters: () => dispatch(fetchHierarchyFilters()),
     insertHierarchyFilters: (hierarchyFilters) => dispatch(insertHierarchyFilters(hierarchyFilters)),
-    setHierarchyFilters: (hierarchyFilters) => dispatch(setHierarchyFilters(hierarchyFilters))
+    setHierarchyFilters: (hierarchyFilters) => dispatch(setHierarchyFilters(hierarchyFilters)),
+    fetchHierarchies: () => dispatch(fetchSelectableHierarchies())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(HierarchyFilters);

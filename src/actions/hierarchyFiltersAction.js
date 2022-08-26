@@ -20,6 +20,12 @@ export const fetchHierarchyFilters = () => {
 };
 
 export const updateHierarchyFilter = (hierarchyFilter) => {
+    const formatted = {
+        ...hierarchyFilter,
+        startDate: hierarchyFilter.startDate ? new Date(hierarchyFilter.startDate).toISOString() : null,
+        endDate: hierarchyFilter.endDate ? new Date(hierarchyFilter.endDate).toISOString() : null
+    };
+    console.log(formatted);
     const ORGREK_BACKEND_SERVER = process.env.REACT_APP_ORGREK_BACKEND_SERVER || '';
     const PATH = 'api/hierarchyFilters';
     return async (dispatch) => {
@@ -28,7 +34,7 @@ export const updateHierarchyFilter = (hierarchyFilter) => {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(hierarchyFilter)
+            body: JSON.stringify(formatted)
         });
         if (response.status === 200) {
             dispatch({
@@ -71,6 +77,11 @@ export const deleteHierarchyFilter = (hierarchyFilter) => {
 };
 
 export const insertHierarchyFilters = (hierarchyFilters) => {
+    const formatted = hierarchyFilters.map(hierarchyFilter => ({
+        ...hierarchyFilter,
+        startDate: hierarchyFilter.startDate ? new Date(hierarchyFilter.startDate).toISOString() : null,
+        endDate: hierarchyFilter.endDate ? new Date(hierarchyFilter.endDate).toISOString() : null
+    }));
     const ORGREK_BACKEND_SERVER = process.env.REACT_APP_ORGREK_BACKEND_SERVER || '';
     const PATH = 'api/hierarchyFilters';
     return async (dispatch) => {
