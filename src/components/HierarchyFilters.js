@@ -391,7 +391,7 @@ const HierarchyFilters = (props) => {
                 setShowWarning(false);
                 setFormRows([
                     ...formRows.map(row => undefined),
-                    { user_name: props.user.eppn }
+                    { hierarchy: props.hierarchies[0] }
                 ]);
                 props.setHierarchyFilters([
                     ...props.hierarchyFilters,
@@ -402,8 +402,8 @@ const HierarchyFilters = (props) => {
     }, [props.feedback]);
 
     useEffect(() => {
-        setFormRows(formRows.map(row => ({ ...row, user_name: props.user.eppn })));
-    }, [props.user]);
+        setFormRows(formRows.map(row => ({ ...row, hierarchy: props.hierarchies[0] })));
+    }, [props.hierarchies]);
 
     const pageChange = (pNo) => {
         setPageNo(pNo);
@@ -532,7 +532,7 @@ const HierarchyFilters = (props) => {
             <Col md="auto">
                 <BSRow className="justify-content-end">
                     <Col md="auto">
-                        <Button onClick={() => setFormRows([...formRows, { user_name: props.user.eppn }])} disabled={saveNewHierarchyFiltersInProgress} variant="outline-secondary"><b>+</b> {t('add_new_row')}</Button>
+                        <Button onClick={() => setFormRows([...formRows, { hierarchy: props.hierarchies[0] }])} disabled={saveNewHierarchyFiltersInProgress} variant="outline-secondary"><b>+</b> {t('add_new_row')}</Button>
                     </Col>
                     <Col md="auto" onClick={!areNewHierarchyFiltersValid || saveNewHierarchyFiltersInProgress ? () => setShowWarning(true) : () => {}}>
                         <Button onClick={saveNewHierarchyFilters} disabled={!areNewHierarchyFiltersValid || saveNewHierarchyFiltersInProgress} variant="success">

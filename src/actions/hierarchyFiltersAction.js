@@ -25,7 +25,6 @@ export const updateHierarchyFilter = (hierarchyFilter) => {
         startDate: hierarchyFilter.startDate ? new Date(hierarchyFilter.startDate).toISOString() : null,
         endDate: hierarchyFilter.endDate ? new Date(hierarchyFilter.endDate).toISOString() : null
     };
-    console.log(formatted);
     const ORGREK_BACKEND_SERVER = process.env.REACT_APP_ORGREK_BACKEND_SERVER || '';
     const PATH = 'api/hierarchyFilters';
     return async (dispatch) => {
@@ -90,7 +89,7 @@ export const insertHierarchyFilters = (hierarchyFilters) => {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(hierarchyFilters)
+            body: JSON.stringify(formatted)
         });
         if (response.status === 200) {
             dispatch({
