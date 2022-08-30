@@ -152,7 +152,7 @@ export const datesOverlap = (a, b, overlapper) => {
     return (!a || a.getTime() <= overlapper.getTime()) && (!b || b.getTime() >= overlapper.getTime());
 };
 
-const deepEqual = (object1, object2) => {
+export const deepEqual = (object1, object2) => {
     const keys1 = Object.keys(object1);
     const keys2 = Object.keys(object2);
     if (keys1.length !== keys2.length) {
