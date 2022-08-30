@@ -6,6 +6,7 @@ import userReducer from './userReducer';
 import nodeReducer from './nodeReducer';
 import nodeDetailsViewReducer from './nodeDetailsViewReducer';
 import textsReducer from './textsReducer';
+import hierarchyFiltersReducer from './hierarchyFilterReducer';
 
 const rootReducer = combineReducers({
     tree : treeReducer,
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
     dr: dayChangeReducer,
     nvrd: nodeDetailsViewReducer,
     texts: textsReducer,
+    hierarchyFilters: hierarchyFiltersReducer
 });
 
 export default rootReducer;
