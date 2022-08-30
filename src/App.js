@@ -4,7 +4,7 @@ import Header from './components/Header';
 import Hierarchy from './components/Hierarchy';
 import NodeDetails from './components/NodeDetails';
 import './App.css';
-import { fetchUser } from './actions/userAction';
+import { fetchUser, isAdmin } from './actions/userAction';
 import { fetchSelectableHierarchies } from './actions/treeAction';
 import { fetchNode } from './actions/nodeAction';
 import LoginRedirect from './components/LoginRedirect';
@@ -65,8 +65,8 @@ const App= (props) => {
                                         <Col md={4} lg={4}><Hierarchy /></Col>
                                         <Col >{props.node && <NodeDetails />}</Col>
                                 </> } />
-                                <Route path="/texts" element={<Texts />} />
-                                <Route path="/hierarchyfilters" element={<HierarchyFilters />} />
+                                { isAdmin(props.user) ? <Route path="/texts" element={<Texts />} /> : null}
+                                { isAdmin(props.user) ? <Route path="/hierarchyfilters" element={<HierarchyFilters />} /> : null }
                             </Routes>
                         </BrowserRouter>
                         </Row>
@@ -80,7 +80,8 @@ const mapStateToProps = state => ({
     selectableHierarchies: state.tree.selectableHierarchies,
     selectedHierarchy: state.tree.selectedHierarchy,
     defaultHierarchy: state.tree.defaultHierarchy,
-    node: state.nrd.node
+    node: state.nrd.node,
+    user : state.ur.user
 });
 
 const mapDispatchToProps = dispatch => ({
