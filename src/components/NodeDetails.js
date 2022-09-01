@@ -170,7 +170,7 @@ const NodeDetails = (props) => {
     };
 
     return (
-        <>
+        <div className="right-side">
             {props.nodeAttributes &&
                 <>
                     <h3>{props.favorableNames[lang === 'ia' && 'fi' || lang]?.[0]?.name}</h3>
@@ -264,7 +264,7 @@ const NodeDetails = (props) => {
                     />
                 </>
             }
-        </>
+        </div>
     );
 };
 
