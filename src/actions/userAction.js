@@ -28,6 +28,5 @@ export const api401FailureCall = failureTime => ({
 });
 
 export const isAdmin = (user) => {
-    console.log(user.roles.includes(roleAdmin));
     return user.roles.includes(roleAdmin) ? true : false;
 };
