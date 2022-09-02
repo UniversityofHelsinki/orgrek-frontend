@@ -169,7 +169,7 @@ const NodeDetails = (props) => {
     return (
         <div>
             {props.nodeAttributes &&
-                <div>
+                <>
                     <div className="organisation-unit-title">
                         <h3>{props.favorableNames[lang === 'ia' && 'fi' || lang]?.[0]?.name}</h3>
                         <NodeViewControl node={props.node} selectedDay={props.selectedDay} selectedHierarchy={props.selectedHierarchy} />
@@ -263,7 +263,7 @@ const NodeDetails = (props) => {
                             dataFilter={pastFutureFilter}
                         />
                     </div>
-                </div>
+                </>
             }
         </div>
     );

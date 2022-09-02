@@ -96,6 +96,11 @@ th {
   z-index: 1001;
 }
 
+.left-side {
+  overflow-y: scroll;
+  max-height: 100vh;
+}
+
 .right-side {
   overflow-y: scroll;
   max-height: 100vh;
