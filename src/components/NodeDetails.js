@@ -4,17 +4,14 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import NodeDetailsTable from './NodeDetailsTable';
 import NodeViewControl from './NodeViewControl';
-import { filterAttributeDuplicates, datesOverlap } from '../actions/utilAction';
-import {
-    fetchNodeParents,
-    fetchNodeChildren
-} from '../actions/hierarchyAction';
+import { datesOverlap, filterAttributeDuplicates } from '../actions/utilAction';
+import { fetchNodeChildren, fetchNodeParents } from '../actions/hierarchyAction';
 import {
     fetchNodeAttributes,
-    fetchNodePredecessors,
-    fetchNodeSuccessors,
+    fetchNodeFavorableFullNames,
     fetchNodeFullNames,
-    fetchNodeFavorableFullNames
+    fetchNodePredecessors,
+    fetchNodeSuccessors
 } from '../actions/nodeAction';
 import { useTranslation } from 'react-i18next';
 import { codeAttributes } from '../constants/variables';
@@ -26,8 +23,8 @@ const NodeDetails = (props) => {
     const [attributeData, setAttributeData] = useState(false);
 
     const uniqueIdAttribute = props.node
-                    ? { 'key': 'unique_id', 'value': props.node.uniqueId, startDate: null, endDate: null }
-                    : { 'key': 'unique_id', 'value': t('no_value'), startDate: null, endDate: null };
+        ? { 'key': 'unique_id', 'value': props.node.uniqueId, startDate: null, endDate: null }
+        : { 'key': 'unique_id', 'value': t('no_value'), startDate: null, endDate: null };
     const isCodeAttribute = (elem) => {
         return codeAttributes.includes(elem);
     };
@@ -92,7 +89,7 @@ const NodeDetails = (props) => {
         for (let property in order) {
 
             const filteredBatch = elems.filter(e => {
-              return e.key === property;
+                return e.key === property;
             });
 
             filteredBatch.sort((a,b) => {
@@ -126,10 +123,10 @@ const NodeDetails = (props) => {
     const nameInfoDataOrderedByLanguage = nameInfoData ? orderNameAttributesByLanguage(nameInfoData) : false;
     const typeAttributeData = attributeData ? attributeData.filter(elem => elem.key === 'type') : false;
     const codeAttributesData = attributeData
-                                    ? [uniqueIdAttribute, ...attributeData.filter(a => codeAttributes.includes(a.key))]
-                                            .sort(byCodesAndDates)
-                                            .filter(a => !nameInfoData.includes(a) && !typeAttributeData.includes(a))
-                                    : false;
+        ? [uniqueIdAttribute, ...attributeData.filter(a => codeAttributes.includes(a.key))]
+            .sort(byCodesAndDates)
+            .filter(a => !nameInfoData.includes(a) && !typeAttributeData.includes(a))
+        : false;
     const otherAttributesData = attributeData ? attributeData.filter(elem => {
         return !nameInfoData.includes(elem) && !typeAttributeData.includes(elem) && !codeAttributesData.includes(elem);
     }) : false;
@@ -170,99 +167,103 @@ const NodeDetails = (props) => {
     };
 
     return (
-        <div className="right-side">
+        <div>
             {props.nodeAttributes &&
-                <>
-                    <h3>{props.favorableNames[lang === 'ia' && 'fi' || lang]?.[0]?.name}</h3>
-                    <NodeViewControl node={props.node} selectedDay={props.selectedDay} selectedHierarchy={props.selectedHierarchy} />
-                    <NodeDetailsTable
-                        selectedDay={props.selectedDay}
-                        type='key-value'
-                        heading='valid_dates'
-                        tableLabels={[]}
-                        contentData={validityData}
-                        hasValidity={true}
-                    />
-                    <NodeDetailsTable
-                        selectedDay={props.selectedDay}
-                        type='key-value'
-                        heading='name_info'
-                        tableLabels={['text_language_header', 'name']}
-                        contentData={nameInfoDataOrderedByLanguage}
-                        hasValidity={true}
-                        dataFilter={pastFutureFilter}
-                    />
-                    <NodeDetailsTable
-                        selectedDay={props.selectedDay}
-                        type='key-value'
-                        heading='display_name_info'
-                        tableLabels={['text_language_header', 'name']}
-                        contentData={[...(props.displayNames.fi || []), ...(props.displayNames.sv || []), ...(props.displayNames.en || [])].filter(n => n).map(dn => ({ ...dn, key: `name_${dn.language.toLowerCase()}`, value: dn.name }))}
-                        hasValidity={true}
-                        dataFilter={pastFutureFilter}
-                    />
-                    <NodeDetailsTable
-                        selectedDay={props.selectedDay}
-                        type='key-value'
-                        heading='codes'
-                        tableLabels={['code_namespace', 'value']}
-                        contentData={codeAttributesData}
-                        hasValidity={true}
-                        dataFilter={data => (isPast || isFuture) && !(props.showHistory || props.showComing) ? data.filter(attr => attr.key === 'unique_id') : data}
-                    />
-                    <NodeDetailsTable
-                        selectedDay={props.selectedDay}
-                        type='key-value'
-                        heading='unit_type'
-                        tableLabels={[]}
-                        contentData={typeAttributeData}
-                        hasValidity={true}
-                        dataFilter={pastFutureFilter}
-                    />
-                    <NodeDetailsTable
-                        selectedDay={props.selectedDay}
-                        type='node-hierarchy'
-                        heading='upper_units'
-                        tableLabels={['unit', 'hierarchies', 'hierarchy_valid']}
-                        contentData={props.parents[lang === 'ia' && 'fi' || lang]}
-                        hasValidity={false}
-                        dataFilter={pastFutureFilter}
-                    />
-                    <NodeDetailsTable
-                        selectedDay={props.selectedDay}
-                        type='node-hierarchy'
-                        heading='subunits'
-                        tableLabels={['unit', 'hierarchies', 'hierarchy_valid']}
-                        contentData={props.children[lang === 'ia' && 'fi' || lang]}
-                        hasValidity={false}
-                        dataFilter={pastFutureFilter}
-                    />
-                    <NodeDetailsTable
-                        selectedDay={props.selectedDay}
-                        type='name-validity'
-                        heading='predecessors'
-                        tableLabels={['name', 'valid_dates', 'predecessor_edge_valid']}
-                        contentData={props.predecessors[lang === 'ia' && 'fi' || lang]}
-                        hasValidity={false}
-                    />
-                    <NodeDetailsTable
-                        selectedDay={props.selectedDay}
-                        type='name-validity'
-                        heading='successors'
-                        tableLabels={['name', 'valid_dates', 'successor_edge_valid']}
-                        contentData={props.successors[lang === 'ia' && 'fi' || lang]}
-                        hasValidity={false}
-                    />
-                    <NodeDetailsTable
-                        selectedDay={props.selectedDay}
-                        type='key-value'
-                        heading='other_attributes'
-                        tableLabels={['attribute', 'value']}
-                        contentData={sortedOtherAttributesData}
-                        hasValidity={true}
-                        dataFilter={pastFutureFilter}
-                    />
-                </>
+                <div>
+                    <div className="organisation-unit-title">
+                        <h3>{props.favorableNames[lang === 'ia' && 'fi' || lang]?.[0]?.name}</h3>
+                        <NodeViewControl node={props.node} selectedDay={props.selectedDay} selectedHierarchy={props.selectedHierarchy} />
+                    </div>
+                    <div className="right-side">
+                        <NodeDetailsTable
+                            selectedDay={props.selectedDay}
+                            type='key-value'
+                            heading='valid_dates'
+                            tableLabels={[]}
+                            contentData={validityData}
+                            hasValidity={true}
+                        />
+                        <NodeDetailsTable
+                            selectedDay={props.selectedDay}
+                            type='key-value'
+                            heading='name_info'
+                            tableLabels={['text_language_header', 'name']}
+                            contentData={nameInfoDataOrderedByLanguage}
+                            hasValidity={true}
+                            dataFilter={pastFutureFilter}
+                        />
+                        <NodeDetailsTable
+                            selectedDay={props.selectedDay}
+                            type='key-value'
+                            heading='display_name_info'
+                            tableLabels={['text_language_header', 'name']}
+                            contentData={[...(props.displayNames.fi || []), ...(props.displayNames.sv || []), ...(props.displayNames.en || [])].filter(n => n).map(dn => ({ ...dn, key: `name_${dn.language.toLowerCase()}`, value: dn.name }))}
+                            hasValidity={true}
+                            dataFilter={pastFutureFilter}
+                        />
+                        <NodeDetailsTable
+                            selectedDay={props.selectedDay}
+                            type='key-value'
+                            heading='codes'
+                            tableLabels={['code_namespace', 'value']}
+                            contentData={codeAttributesData}
+                            hasValidity={true}
+                            dataFilter={data => (isPast || isFuture) && !(props.showHistory || props.showComing) ? data.filter(attr => attr.key === 'unique_id') : data}
+                        />
+                        <NodeDetailsTable
+                            selectedDay={props.selectedDay}
+                            type='key-value'
+                            heading='unit_type'
+                            tableLabels={[]}
+                            contentData={typeAttributeData}
+                            hasValidity={true}
+                            dataFilter={pastFutureFilter}
+                        />
+                        <NodeDetailsTable
+                            selectedDay={props.selectedDay}
+                            type='node-hierarchy'
+                            heading='upper_units'
+                            tableLabels={['unit', 'hierarchies', 'hierarchy_valid']}
+                            contentData={props.parents[lang === 'ia' && 'fi' || lang]}
+                            hasValidity={false}
+                            dataFilter={pastFutureFilter}
+                        />
+                        <NodeDetailsTable
+                            selectedDay={props.selectedDay}
+                            type='node-hierarchy'
+                            heading='subunits'
+                            tableLabels={['unit', 'hierarchies', 'hierarchy_valid']}
+                            contentData={props.children[lang === 'ia' && 'fi' || lang]}
+                            hasValidity={false}
+                            dataFilter={pastFutureFilter}
+                        />
+                        <NodeDetailsTable
+                            selectedDay={props.selectedDay}
+                            type='name-validity'
+                            heading='predecessors'
+                            tableLabels={['name', 'valid_dates', 'predecessor_edge_valid']}
+                            contentData={props.predecessors[lang === 'ia' && 'fi' || lang]}
+                            hasValidity={false}
+                        />
+                        <NodeDetailsTable
+                            selectedDay={props.selectedDay}
+                            type='name-validity'
+                            heading='successors'
+                            tableLabels={['name', 'valid_dates', 'successor_edge_valid']}
+                            contentData={props.successors[lang === 'ia' && 'fi' || lang]}
+                            hasValidity={false}
+                        />
+                        <NodeDetailsTable
+                            selectedDay={props.selectedDay}
+                            type='key-value'
+                            heading='other_attributes'
+                            tableLabels={['attribute', 'value']}
+                            contentData={sortedOtherAttributesData}
+                            hasValidity={true}
+                            dataFilter={pastFutureFilter}
+                        />
+                    </div>
+                </div>
             }
         </div>
     );

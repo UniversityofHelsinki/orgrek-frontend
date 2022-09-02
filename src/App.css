@@ -101,3 +101,9 @@ th {
   max-height: 100vh;
 }
 
+.organisation-unit-title {
+  position: fixed;
+  background-color: white;
+  width: 100%;
+}
+
