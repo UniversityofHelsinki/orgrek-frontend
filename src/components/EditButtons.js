@@ -12,7 +12,7 @@ const EditButtons = () => {
     };
 
     return (
-        <div>
+        <>
             {edit ? (
                 <Row>
                     <Col md="auto">
@@ -29,10 +29,10 @@ const EditButtons = () => {
             ) : (
                 <Button size="sm" onClick={toggleEdit}>
                     {t('texts_edit_button')}
-                </Button>)}
-        </div>
+                </Button>
+            )}
+        </>
     );
-
 };
 
 export default EditButtons;

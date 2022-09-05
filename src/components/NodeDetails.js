@@ -19,6 +19,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import { codeAttributes } from '../constants/variables';
 import EditButtons from './EditButtons';
+import { isAdmin } from '../actions/userAction';
 
 // eslint-disable-next-line complexity
 const NodeDetails = (props) => {
@@ -174,7 +175,7 @@ const NodeDetails = (props) => {
         <>
             {props.nodeAttributes &&
                 <div>
-                <EditButtons />
+                    {isAdmin(props.user) ? <EditButtons /> : null }
                     <h3>{props.favorableNames[lang === 'ia' && 'fi' || lang]?.[0]?.name}</h3>
                     <NodeViewControl node={props.node} selectedDay={props.selectedDay} selectedHierarchy={props.selectedHierarchy} />
                     <NodeDetailsTable
@@ -289,6 +290,7 @@ const mapStateToProps = state => ({
     displayNames: state.nrd.nodeDisplayNames,
     favorableNames: state.nrd.nodeFavorableNames,
     selectedHierarchy: state.tree.selectedHierarchy,
+    user : state.ur.user
 });
 
 const mapDispatchToProps = dispatch => ({
