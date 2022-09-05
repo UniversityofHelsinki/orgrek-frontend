@@ -98,15 +98,15 @@ The input must be array
 */
 export const flattenTree = (input, res = []) => {
     input ? input.map(obj => {
-        if (!obj.children) {
-            res.push(obj);
-        } else {
-            const modObj = Object.assign({}, obj);
-            modObj.children = [];
-            res.push(modObj);
-            flattenTree(obj.children, res);
+            if (!obj.children) {
+                res.push(obj);
+            } else {
+                const modObj = Object.assign({}, obj);
+                modObj.children = [];
+                res.push(modObj);
+                flattenTree(obj.children, res);
+            }
         }
-     }
     ) : '';
     return res;
 };
@@ -152,29 +152,29 @@ export const datesOverlap = (a, b, overlapper) => {
     return (!a || a.getTime() <= overlapper.getTime()) && (!b || b.getTime() >= overlapper.getTime());
 };
 
-export function deepEqual(object1, object2) {
+export const deepEqual = (object1, object2) => {
     const keys1 = Object.keys(object1);
     const keys2 = Object.keys(object2);
     if (keys1.length !== keys2.length) {
-      return false;
+        return false;
     }
     for (const key of keys1) {
-      const val1 = object1[key];
-      const val2 = object2[key];
-      const areObjects = isObject(val1) && isObject(val2);
-      if (
-        areObjects && !deepEqual(val1, val2) ||
-        !areObjects && val1 !== val2
-      ) {
-        return false;
-      }
+        const val1 = object1[key];
+        const val2 = object2[key];
+        const areObjects = isObject(val1) && isObject(val2);
+        if (
+            areObjects && !deepEqual(val1, val2) ||
+            !areObjects && val1 !== val2
+        ) {
+            return false;
+        }
     }
     return true;
-  }
+};
 
-  function isObject(object) {
+const isObject = (object) => {
     return object !== null && typeof object === 'object';
-  }
+};
 
 
 export const containsAll = (a, b) => {

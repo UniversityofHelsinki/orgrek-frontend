@@ -5,6 +5,7 @@ import HyLogo from './HYLogo';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
+import { isAdmin } from '../actions/userAction';
 
 const Div = styled.div`
   max-height: 60px;
@@ -31,7 +32,8 @@ const Header = (props) => {
                                 <NavDropdown.Item  onClick={() => i18n.changeLanguage('ia')}>{t('text_key')}</NavDropdown.Item>
                             </NavDropdown>
                             <NavLink className="nav-link" to="/"> {t('organisation')} </NavLink>
-                            <NavLink className="nav-link" to="/texts"> {t('texts')} </NavLink>
+                            { isAdmin(props.user) ? <NavLink className="nav-link" to="/texts"> {t('texts')} </NavLink> : null }
+                            { isAdmin(props.user) ? <NavLink className="nav-link" to="/hierarchyfilters"> {t('hierarchy_filters')} </NavLink> : null }
                         </Nav>
                         <Nav>
                             <Nav.Link eventKey="disabled" disabled>{props.user ? t('logged_in') + ' ' +  props.user.eppn : '' }</Nav.Link>
