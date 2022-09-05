@@ -18,18 +18,13 @@ import {
 } from '../actions/nodeAction';
 import { useTranslation } from 'react-i18next';
 import { codeAttributes } from '../constants/variables';
-import { Button, Col, Row } from 'react-bootstrap';
+import EditButtons from './EditButtons';
 
 // eslint-disable-next-line complexity
 const NodeDetails = (props) => {
     const { t, i18n } = useTranslation();
     const lang = i18n.language;
     const [attributeData, setAttributeData] = useState(false);
-    const [edit, setEdit] = useState(false);
-
-    const toggleEdit = (event) => {
-        setEdit(!edit);
-    };
 
     const uniqueIdAttribute = props.node
         ? { 'key': 'unique_id', 'value': props.node.uniqueId, startDate: null, endDate: null }
@@ -178,27 +173,9 @@ const NodeDetails = (props) => {
     return (
         <>
             {props.nodeAttributes &&
-                <>
+                <div>
+                <EditButtons />
                     <h3>{props.favorableNames[lang === 'ia' && 'fi' || lang]?.[0]?.name}</h3>
-                    <>
-                        {edit ? (
-                            <Row>
-                                <Col md="auto">
-                                    <Button size="sm" variant="warning" onClick={toggleEdit}>
-                                        {t('texts_cancel_button')}
-                                    </Button>
-                                </Col>
-                                <Col>
-                                    <Button size="sm" variant="success" onClick={toggleEdit}>
-                                        {t('texts_save_button')}
-                                    </Button>
-                                </Col>
-                            </Row>
-                        ) : (
-                            <Button size="sm" onClick={toggleEdit}>
-                                {t('texts_edit_button')}
-                            </Button>)}
-                    </>
                     <NodeViewControl node={props.node} selectedDay={props.selectedDay} selectedHierarchy={props.selectedHierarchy} />
                     <NodeDetailsTable
                         selectedDay={props.selectedDay}
@@ -287,7 +264,7 @@ const NodeDetails = (props) => {
                         hasValidity={true}
                         dataFilter={pastFutureFilter}
                     />
-                </>
+                </div>
             }
         </>
     );
