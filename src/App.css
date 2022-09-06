@@ -53,8 +53,8 @@ th {
 }
 
 .treeHierarchies {
-  color: #957b4e; 
-  font-size: 0.86em; 
+  color: #957b4e;
+  font-size: 0.86em;
   margin-left: 5px;
 }
 
@@ -67,9 +67,9 @@ th {
 }
 
 .nodeLinkSelected {
-  font-weight: bold; 
-  padding-right: 5px; 
-  margin-left: 5px; 
+  font-weight: bold;
+  padding-right: 5px;
+  margin-left: 5px;
   color: #107eab;
 }
 
@@ -94,5 +94,21 @@ th {
   position: fixed;
   width: auto;
   z-index: 1001;
+}
+
+.left-side {
+  overflow-y: scroll;
+  max-height: 100vh;
+}
+
+.right-side {
+  overflow-y: scroll;
+  max-height: 100vh;
+}
+
+.organisation-unit-title {
+  position: fixed;
+  background-color: white;
+  width: 100%;
 }
 
