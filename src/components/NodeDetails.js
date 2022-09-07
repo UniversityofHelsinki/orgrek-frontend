@@ -17,6 +17,7 @@ import { useTranslation } from 'react-i18next';
 import { codeAttributes } from '../constants/variables';
 import EditButtons from './EditButtons';
 import { isAdmin } from '../actions/userAction';
+import OrganisationUnitSearch from './OrganisationUnitSearch';
 
 // eslint-disable-next-line complexity
 const NodeDetails = (props) => {
@@ -231,6 +232,7 @@ const NodeDetails = (props) => {
                             hasValidity={false}
                             dataFilter={pastFutureFilter}
                         />
+                        <OrganisationUnitSearch />
                         <NodeDetailsTable
                             selectedDay={props.selectedDay}
                             type='node-hierarchy'
