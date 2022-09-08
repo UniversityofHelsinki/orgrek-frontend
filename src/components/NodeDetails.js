@@ -19,6 +19,8 @@ import EditButtons from './EditButtons';
 import { isAdmin } from '../actions/userAction';
 import OrganisationUnitSearch from './OrganisationUnitSearch';
 import HierarchyDropDown from './HierarchyDropDown';
+import { Button, Col, Row } from 'react-bootstrap';
+import NewUpperUnit from './NewUpperUnit';
 
 // eslint-disable-next-line complexity
 const NodeDetails = (props) => {
@@ -233,8 +235,7 @@ const NodeDetails = (props) => {
                             hasValidity={false}
                             dataFilter={pastFutureFilter}
                         />
-                        <OrganisationUnitSearch />
-                        <HierarchyDropDown/>
+                        <NewUpperUnit />
                         <NodeDetailsTable
                             selectedDay={props.selectedDay}
                             type='node-hierarchy'
