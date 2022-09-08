@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 
 const HierarchyDropDown = (props) => {
+    const { t } = useTranslation();
     const [value, setValue] = useState('');
     const [selectedHierarchies, setSelectedHierarchies] = useState([]);
 
@@ -18,7 +20,7 @@ const HierarchyDropDown = (props) => {
         <div>
             <select value={value} onChange={handleChange} >
                 {selectedHierarchies.map((option) => (
-                    <option key={option} value={option}>{option}</option>
+                    <option key={option} value={option}>{t(option)}</option>
                 ))}
             </select>
         </div>
