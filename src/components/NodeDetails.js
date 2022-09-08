@@ -18,6 +18,7 @@ import { codeAttributes } from '../constants/variables';
 import EditButtons from './EditButtons';
 import { isAdmin } from '../actions/userAction';
 import OrganisationUnitSearch from './OrganisationUnitSearch';
+import HierarchyDropDown from './HierarchyDropDown';
 
 // eslint-disable-next-line complexity
 const NodeDetails = (props) => {
@@ -233,6 +234,7 @@ const NodeDetails = (props) => {
                             dataFilter={pastFutureFilter}
                         />
                         <OrganisationUnitSearch />
+                        <HierarchyDropDown/>
                         <NodeDetailsTable
                             selectedDay={props.selectedDay}
                             type='node-hierarchy'
