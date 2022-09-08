@@ -24,6 +24,7 @@ const NodeViewControl = (props) => {
                     <Col sm='auto'>
                         <Form.Check
                         inline
+                        checked={props.showHistory}
                         type='switch'
                         id='show_history_switch'
                         label={t('show_history')}
@@ -38,6 +39,7 @@ const NodeViewControl = (props) => {
                     <Col sm='auto'>
                         <Form.Check
                             inline
+                            checked={props.showComing}
                             type='switch'
                             id='show_coming_switch'
                             label={t('show_coming')}

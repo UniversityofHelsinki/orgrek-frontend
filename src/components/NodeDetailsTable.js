@@ -7,7 +7,7 @@ import {
     hierarchyDate,
     hierarchyDates
 } from '../actions/utilAction';
-import { Table } from 'react-bootstrap';
+import { Form, InputGroup, Table, Button, Row, Col } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
@@ -19,7 +19,7 @@ const ListLink = styled.a`
 import {
     fetchNode
 } from '../actions/nodeAction';
-import { blue } from '@mui/material/colors';
+import ChooseDate from './ChooseDate';
 
 const NodeDetailsTable = (props) => {
     const { t, i18n } = useTranslation();
@@ -38,14 +38,42 @@ const NodeDetailsTable = (props) => {
         );
     };
 
+    const doEdit = (key) => {
+        return key !== 'unique_id';//fullname does not have unique_id. It should not be edited
+    };
+
     const renderTableData = () => {
         return props.contentData ? (props.dataFilter ? props.dataFilter(props.contentData) : props.contentData).map((elem, index) => {
 
             if (props.type === 'key-value') {
+                if (!props.edit && !elem.id && !props.fullname) {//fullname does not have unique_if
+                    return <></>;
+                }
                 return (<tr key={index}>
                     <td>{t(elem.key)}</td>
-                    <td>{t(elem.value)}</td>
-                    {props.hasValidity ? <td>{t(showValidity(elem.startDate, elem.endDate, i18n, t))}</td> : <></>}
+                    <td>
+                        {props.edit && doEdit(elem.key) ?
+                            <> {/* edit mode */}
+                                <Form.Control name='value' value={elem.value} onChange={(e) => props.onValueChange(e, elem)} />
+                            </>
+                            : t(elem.value)} {/* show mode */}
+                    </td>
+
+                    {props.hasValidity ?
+                        <td>
+                            <td>
+                                {props.edit && doEdit(elem.key) ?
+                                    <Row> {/* edit mode */}
+                                        <Col md="auto">
+                                            <ChooseDate field={'startDate'} elem={elem} onDateChange={props.onDateChange} />
+                                        </Col>
+                                        <Col md="auto">
+                                            <ChooseDate field={'endDate'} elem={elem} onDateChange={props.onDateChange} />
+                                        </Col>
+                                    </Row>
+                                    : t(showValidity(elem.startDate, elem.endDate, i18n, t))} {/* show mode */}
+                            </td>
+                        </td> : <></>}
                 </tr>);
             }
 
@@ -98,6 +126,7 @@ const NodeDetailsTable = (props) => {
                 <tbody>
                 {renderTableData()}
                 </tbody>
+                {/*<>{props.edit ? <tfoot><Button size="sm" onClick= {(e) => props.addNewrow(e)}>{t('edit_mode_add_row_button')}</Button></tfoot> :  <></> }</>*/}
             </Table>
         </>
     );
