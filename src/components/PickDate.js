@@ -3,7 +3,7 @@ import { Col } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import DatePicker from 'react-datepicker';
 
-const PickDate = () => {
+const PickDate = (props) => {
     const { t } = useTranslation();
 
     const [selectedDate, setSelectedDate] = useState(null);
@@ -11,8 +11,9 @@ const PickDate = () => {
     useEffect(() => {
     }, []);
 
-    const changeDate = (date) => {
+    const changeDate = (date, startDate, endDate) => {
         setSelectedDate(date);
+        props.onDateChange(date, startDate, endDate);
     };
 
     return (
@@ -20,7 +21,7 @@ const PickDate = () => {
                 <DatePicker wrapperClassName="datePicker" locale="fi" dateFormat="dd.MM.yyyy" className="form-control"
                           selected={selectedDate}
                           onChange={(date) =>  {
-                                changeDate(date);
+                                changeDate(date, props.startDate, props.endDate);
                             }} />
             </div>
     );

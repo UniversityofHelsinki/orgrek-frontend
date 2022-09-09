@@ -9,6 +9,7 @@ const HierarchyDropDown = (props) => {
 
     const handleChange = (event) => {
         setValue(event.target.value);
+        props.onHierarchyChange(event.target.value);
     };
 
     useEffect(() => {
@@ -21,6 +22,7 @@ const HierarchyDropDown = (props) => {
             {selectedHierarchies &&
                 <>
                     <select value={value} onChange={handleChange}>
+                        <option value="">-</option>
                         {selectedHierarchies.map((option) => (
                             <option key={option} value={option}>{t(option)}</option>
                         ))}

@@ -9,6 +9,7 @@ const OrganisationUnitSearch = (props) => {
 
     const handleChange = (value) => {
         setSingleSelections(value);
+        props.onOrganisationUnitChange(value);
     };
 
     const flatten = (current) =>  current.reduce((a,c) => [...a, c, ...flatten(c.children)], []);
