@@ -49,13 +49,13 @@ const NodeDetailsTable = (props) => {
         return props.contentData ? (props.dataFilter ? props.dataFilter(props.contentData) : props.contentData).map((elem, index) => {
 
             if (props.type === 'key-value') {
-                if (!props.edit && !elem.id && !props.fullname) {//fullname does not have unique_if
+                if (!props.edit && !elem.id) {//fullname does not have unique_if
                     return <></>;
                 }
                 return (<tr key={index}>
                     <td>{t(elem.key)}</td>
                     <td>
-                        {props.edit && doEdit(elem.key) ?
+                        {props.edit && props.fullname === false ?
                             <> {/* edit mode */}
                                 <Form.Control name='value' value={elem.value} onChange={(e) => props.onValueChange(e, elem)} />
                             </>
@@ -65,7 +65,7 @@ const NodeDetailsTable = (props) => {
                     {props.hasValidity ?
                         <td>
                             <td>
-                                {props.edit && doEdit(elem.key) ?
+                                {props.edit && props.fullname === false ?
                                     <Row> {/* edit mode */}
                                         <Col md="auto">
                                             <ChooseDate field={'startDate'} elem={elem} onDateChange={props.onDateChange} />

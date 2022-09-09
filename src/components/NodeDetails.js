@@ -246,6 +246,7 @@ const NodeDetails = (props) => {
                             hasValidity={true}
                             onValueChange={onValueChange}
                             onDateChange={onDateChange}
+                            fullname={false}
                         />
                         <NodeDetailsTable
                             selectedDay={props.selectedDay}
@@ -271,6 +272,8 @@ const NodeDetails = (props) => {
                             onValueChange={onValueChange}
                             onDateChange={onDateChange}
                             //addNewrow={addNewrow}
+                            fullname={false}
+
                         />
                         <NodeDetailsTable
                             selectedDay={props.selectedDay}
@@ -306,6 +309,8 @@ const NodeDetails = (props) => {
                             dataFilter={data => (isPast || isFuture) && !(props.showHistory || props.showComing) ? data.filter(attr => attr.key === 'unique_id') : data}
                             onValueChange={onValueChange}
                             onDateChange={onDateChange}
+                            fullname={false}
+
                         />
                         <NodeDetailsTable
                             selectedDay={props.selectedDay}
@@ -322,6 +327,8 @@ const NodeDetails = (props) => {
                             dataFilter={pastFutureFilter}
                             onValueChange={onValueChange}
                             onDateChange={onDateChange}
+                            fullname={false}
+
                         />
                         <NodeDetailsTable
                             selectedDay={props.selectedDay}
@@ -333,6 +340,8 @@ const NodeDetails = (props) => {
                             dataFilter={pastFutureFilter}
                             onValueChange={onValueChange}
                             onDateChange={onDateChange}
+                            fullname={false}
+
                         />
                         <NodeDetailsTable
                             selectedDay={props.selectedDay}
@@ -344,6 +353,8 @@ const NodeDetails = (props) => {
                             dataFilter={pastFutureFilter}
                             onValueChange={onValueChange}
                             onDateChange={onDateChange}
+                            fullname={false}
+
                         />
                         <NodeDetailsTable
                             selectedDay={props.selectedDay}
@@ -354,6 +365,8 @@ const NodeDetails = (props) => {
                             hasValidity={false}
                             onValueChange={onValueChange}
                             onDateChange={onDateChange}
+                            fullname={false}
+
                         />
                         <NodeDetailsTable
                             selectedDay={props.selectedDay}
@@ -364,6 +377,8 @@ const NodeDetails = (props) => {
                             hasValidity={false}
                             onValueChange={onValueChange}
                             onDateChange={onDateChange}
+                            fullname={false}
+
                         />
                         <NodeDetailsTable
                             selectedDay={props.selectedDay}
@@ -386,6 +401,8 @@ const NodeDetails = (props) => {
                             dataFilter={pastFutureFilter}
                             onValueChange={onValueChange}
                             onDateChange={onDateChange}
+                            fullname={false}
+
                         />
                     </div>
                 </>
