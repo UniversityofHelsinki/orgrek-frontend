@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import NodeDetailsTable from './NodeDetailsTable';
-import NodeViewControl from './NodeViewControl';
 import { filterAttributeDuplicates, datesOverlap } from '../actions/utilAction';
 import { switchHistory, switchComing, updateAttributes } from '../actions/nodeViewAction';
 
@@ -22,7 +21,6 @@ import { useTranslation } from 'react-i18next';
 import { codeAttributes } from '../constants/variables';
 import EditButtons from './EditButtons';
 import { isAdmin } from '../actions/userAction';
-import { Button, Col, Row } from 'react-bootstrap';
 import moment from 'moment';
 
 // eslint-disable-next-line complexity
@@ -30,21 +28,9 @@ const NodeDetails = (props) => {
     const { t, i18n } = useTranslation();
     const lang = i18n.language;
     const [attributeData, setAttributeData] = useState(false);
-    const [edit, setEdit] = useState(false);
-    const FEEDBACK_TIMEOUT_MS = 10000;
-    const [feedback, setFeedback] = useState();
-    const [awaitingSaveFeedback, setAwaitingSaveFeedback] = useState(false);
-    const [feedbackTimeoutID, setFeedbackTimeoutID] = useState();
     const [modified, setModified] = useState({}); //{} makes map. Change map to list when sending to backend
     //const [newrowdata, setNewrowdata] = useState([]); //{} makes map. Change map to list when sending to backend
 
-    const toggleEdit = (newMode) => {
-         if (!newMode) {
-             setModified({});//initialize modified map, when cancel button presses. When response got after
-             //save button pressed, modidied should be initialized.
-         }
-        setEdit(newMode);
-    };
     const uniqueIdAttribute = props.node
         ? { 'key': 'unique_id', 'value': props.node.uniqueId, startDate: null, endDate: null }
         : { 'key': 'unique_id', 'value': t('no_value'), startDate: null, endDate: null };
@@ -165,12 +151,6 @@ const NodeDetails = (props) => {
     const isFuture = !isCurrent && props.node?.startDate && new Date(Date.parse(props.node.startDate)).getTime() >= props.selectedDay.getTime();
 
     useEffect(() => {
-        if (feedbackTimeoutID) {
-            clearTimeout(feedbackTimeoutID);
-        }
-    }, []);
-
-    useEffect(() => {
         if (props.node) {
             const startDate = Date.parse(props.node.startDate) || undefined;
             const endDate = Date.parse(props.node.endDate) || undefined;
@@ -181,16 +161,8 @@ const NodeDetails = (props) => {
             } else if (startDate && new Date(startDate).getTime() >= props.selectedDay.getTime()) {
                 props.fetchNodeDetails(props.node, new Date(startDate), props.showHistory, props.showComing, props.selectedHierarchy);
             }
-            if (awaitingSaveFeedback) {
-                if (feedbackTimeoutID) {
-                    clearTimeout(feedbackTimeoutID);
-                }
-                setFeedbackTimeoutID(setTimeout(setFeedback, FEEDBACK_TIMEOUT_MS));
-                setAwaitingSaveFeedback(false);
-                setFeedback(props.feedback);
-            }
         }
-    }, [props.node, props.showComing, props.showHistory, props.selectedHierarchy, props.feedback]);
+    }, [props.node, props.showComing, props.showHistory, props.selectedHierarchy]);
 
     React.useLayoutEffect(() => {
         selectData();
@@ -244,21 +216,14 @@ const NodeDetails = (props) => {
         }
     };
 
-    const saveModifiedAttributes = ()  => {
-      const modifiedArr = Object.values(modified);
-      //modifiedArr.map((mod,index) => console.log(index + ' = ' + mod + ' = ' + mod[index]));
-      props.updatingAttributes(props.node, modifiedArr);
-      setAwaitingSaveFeedback(true);
-    };
-
     return (
         <div>
             {props.nodeAttributes &&
                 <>
-                    {isAdmin(props.user) ? <EditButtons /> : null }
+                    {isAdmin(props.user) ? <EditButtons setModified={setModified} node={props.node} selectedDay={props.selectedDay} selectedHierarchy={props.selectedHierarchy} modified={modified} /> : null }
                     <div className="organisation-unit-title">
                         <h3>{props.favorableNames[lang === 'ia' && 'fi' || lang]?.[0]?.name}</h3>
-                        <NodeViewControl node={props.node} selectedDay={props.selectedDay} selectedHierarchy={props.selectedHierarchy} />
+                        {/*<NodeViewControl node={props.node} selectedDay={props.selectedDay} selectedHierarchy={props.selectedHierarchy} />*/}
                     </div>
                     <div className="right-side">
                         <NodeDetailsTable
@@ -266,17 +231,46 @@ const NodeDetails = (props) => {
                             type='key-value'
                             heading='valid_dates'
                             tableLabels={[]}
-                            contentData={validityData}
+                            contentData={validityData ? [...validityData.map((elem => {
+                                if (modified[elem.id]) { //if attribute is modified it's found in modified map
+                                    return modified[elem.id];//and already modified attribute is shown
+                                }
+                                return elem; //original attribute
+                            }))] : validityData }
+                            /*contentData={validityData ? [...validityData.map((elem => {
+                                 if (modified[elem.id]) { //if attribute is modified it's found in modified map
+                                     return modified[elem.id];//and already modified attribute is shown
+                                 }
+                                 return elem; //original attribute
+                             })), { key: '',value: '' }] : [{ key: '',value: '' }]} //adds empty row after attributes*/
                             hasValidity={true}
+                            onValueChange={onValueChange}
+                            onDateChange={onDateChange}
                         />
                         <NodeDetailsTable
                             selectedDay={props.selectedDay}
                             type='key-value'
                             heading='name_info'
                             tableLabels={['text_language_header', 'name']}
-                            contentData={nameInfoDataOrderedByLanguage}
+                            contentData={nameInfoDataOrderedByLanguage ? [...nameInfoDataOrderedByLanguage.map((elem => {
+                                if (modified[elem.id]) { //if attribute is modified it's found in modified map
+                                    return modified[elem.id];//and already modified attribute is shown
+                                }
+                                return elem; //original attribute
+                            }))] : nameInfoDataOrderedByLanguage }
+                            /*contentData={nameInfoDataOrderedByLanguage ? [...nameInfoDataOrderedByLanguage.map((elem => {
+                                if (modified[elem.id]) { //if attribute is modified it's found in modified map
+                                    return modified[elem.id];//and already modified attribute is shown
+                                }
+                                return elem; //original attribute
+                            })), [...modified.map((elem => {
+                                return elem;
+                            }))] ]: [{ key: '',value: '' }]} //add empty row after attributes*/
                             hasValidity={true}
                             dataFilter={pastFutureFilter}
+                            onValueChange={onValueChange}
+                            onDateChange={onDateChange}
+                            //addNewrow={addNewrow}
                         />
                         <NodeDetailsTable
                             selectedDay={props.selectedDay}
@@ -286,24 +280,48 @@ const NodeDetails = (props) => {
                             contentData={[...(props.displayNames.fi || []), ...(props.displayNames.sv || []), ...(props.displayNames.en || [])].filter(n => n).map(dn => ({ ...dn, key: `name_${dn.language.toLowerCase()}`, value: dn.name }))}
                             hasValidity={true}
                             dataFilter={pastFutureFilter}
+                            //edit={false}
+                            fullname={true}
+                            onValueChange={onValueChange}
+                            onDateChange={onDateChange}
                         />
                         <NodeDetailsTable
                             selectedDay={props.selectedDay}
                             type='key-value'
                             heading='codes'
                             tableLabels={['code_namespace', 'value']}
-                            contentData={codeAttributesData}
+                            contentData={codeAttributesData ? [...codeAttributesData.map((elem => {
+                                if (modified[elem.id]) { //if attribute is modified it's found in modified map
+                                    return modified[elem.id];//and already modified attribute is shown
+                                }
+                                return elem; //original attribute
+                            }))]: codeAttributesData }
+                            /*contentData={codeAttributesData ? [...codeAttributesData.map((elem => {
+                                if (modified[elem.id]) { //if attribute is modified it's found in modified map
+                                    return modified[elem.id];//and already modified attribute is shown
+                                }
+                                return elem; //original attribute
+                            })), { key: '',value: '' }] : [{ key: '',value: '' }]} //add empty row after attributes*/
                             hasValidity={true}
                             dataFilter={data => (isPast || isFuture) && !(props.showHistory || props.showComing) ? data.filter(attr => attr.key === 'unique_id') : data}
+                            onValueChange={onValueChange}
+                            onDateChange={onDateChange}
                         />
                         <NodeDetailsTable
                             selectedDay={props.selectedDay}
                             type='key-value'
                             heading='unit_type'
                             tableLabels={[]}
-                            contentData={typeAttributeData}
+                            contentData={typeAttributeData ? [...typeAttributeData.map((elem => {
+                                if (modified[elem.id]) { //if attribute is modified it's found in modified map
+                                    return modified[elem.id];//and already modified attribute is shown
+                                }
+                                return elem; //original attribute
+                            }))]: typeAttributeData }
                             hasValidity={true}
                             dataFilter={pastFutureFilter}
+                            onValueChange={onValueChange}
+                            onDateChange={onDateChange}
                         />
                         <NodeDetailsTable
                             selectedDay={props.selectedDay}
@@ -313,6 +331,8 @@ const NodeDetails = (props) => {
                             contentData={props.parents[lang === 'ia' && 'fi' || lang]}
                             hasValidity={false}
                             dataFilter={pastFutureFilter}
+                            onValueChange={onValueChange}
+                            onDateChange={onDateChange}
                         />
                         <NodeDetailsTable
                             selectedDay={props.selectedDay}
@@ -322,6 +342,8 @@ const NodeDetails = (props) => {
                             contentData={props.children[lang === 'ia' && 'fi' || lang]}
                             hasValidity={false}
                             dataFilter={pastFutureFilter}
+                            onValueChange={onValueChange}
+                            onDateChange={onDateChange}
                         />
                         <NodeDetailsTable
                             selectedDay={props.selectedDay}
@@ -330,6 +352,8 @@ const NodeDetails = (props) => {
                             tableLabels={['name', 'valid_dates', 'predecessor_edge_valid']}
                             contentData={props.predecessors[lang === 'ia' && 'fi' || lang]}
                             hasValidity={false}
+                            onValueChange={onValueChange}
+                            onDateChange={onDateChange}
                         />
                         <NodeDetailsTable
                             selectedDay={props.selectedDay}
@@ -338,15 +362,30 @@ const NodeDetails = (props) => {
                             tableLabels={['name', 'valid_dates', 'successor_edge_valid']}
                             contentData={props.successors[lang === 'ia' && 'fi' || lang]}
                             hasValidity={false}
+                            onValueChange={onValueChange}
+                            onDateChange={onDateChange}
                         />
                         <NodeDetailsTable
                             selectedDay={props.selectedDay}
                             type='key-value'
                             heading='other_attributes'
                             tableLabels={['attribute', 'value']}
-                            contentData={sortedOtherAttributesData}
+                            contentData={sortedOtherAttributesData ? [...sortedOtherAttributesData.map((elem => {
+                                if (modified[elem.id]) { //if attribute is modified it's found in modified map
+                                    return modified[elem.id];//and already modified attribute is shown
+                                }
+                                return elem; //original attribute
+                            }))] : sortedOtherAttributesData }
+                            /*contentData={sortedOtherAttributesData ? [...sortedOtherAttributesData.map((elem => {
+                                if (modified[elem.id]) { //if attribute is modified it's found in modified map
+                                    return modified[elem.id];//and already modified attribute is shown
+                                }
+                                return elem; //original attribute
+                            })), { key: '',value: '' }] : [{ key: '',value: '' }]} //add empty row after attributes*/
                             hasValidity={true}
                             dataFilter={pastFutureFilter}
+                            onValueChange={onValueChange}
+                            onDateChange={onDateChange}
                         />
                     </div>
                 </>
@@ -375,7 +414,7 @@ const mapStateToProps = state => ({
     favorableNames: state.nrd.nodeFavorableNames,
     selectedHierarchy: state.tree.selectedHierarchy,
     user : state.ur.user,
-    feedback: state.nrd.feedback,
+    //feedback: state.nrd.feedback,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -384,9 +423,6 @@ const mapDispatchToProps = dispatch => ({
     },
     onSwitchComing: (input) => {
         dispatch(switchComing(input));
-    },
-    updatingAttributes: (node, attributes) => {
-        dispatch(updateAttributes(node.uniqueId, attributes));
     },
     fetchNodeDetails: (node, selectedDay, showHistory, showComing, selectedHierarchy) => {
         dispatch(fetchNodePredecessors(node.uniqueId, selectedDay));

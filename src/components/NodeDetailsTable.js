@@ -25,6 +25,9 @@ const NodeDetailsTable = (props) => {
     const { t, i18n } = useTranslation();
     const lang = i18n.language;
 
+    useEffect(() => {
+    }, [props.edit]);
+
     const renderTableHeader = () => {
         return (
             <tr key={props.heading}>
@@ -133,9 +136,7 @@ const NodeDetailsTable = (props) => {
 };
 
 const mapStateToProps = state => ({
-    selectedDay : state.dr.selectedDay,
-    showHistory: state.nvrd.showHistory,
-    showComing: state.nvrd.showComing
+    edit : state.editModeReducer.edit
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
