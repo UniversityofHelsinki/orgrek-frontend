@@ -4,6 +4,7 @@ import HierarchyDropDown from './HierarchyDropDown';
 import React, { useState } from 'react';
 import PickDate from './PickDate';
 import Button from 'react-bootstrap/Button';
+import { actionAddNewUpperUnit } from '../actions/newUpperUnitAction';
 
 const NewUpperUnit = () => {
 
@@ -25,11 +26,8 @@ const NewUpperUnit = () => {
         endDate ? setEndDate(value) : null;
     };
 
-    const insertNewUpperUnit = () => {
-        console.log('selected organisation unit', selectedOrganisationUnit);
-        console.log('selected hierarchy', selectedHierarchy);
-        console.log('startDate', startDate);
-        console.log('endDate', endDate);
+    const insertNewUpperUnit = async() => {
+        await actionAddNewUpperUnit(selectedOrganisationUnit, selectedHierarchy, startDate, endDate);
     };
 
     return (
