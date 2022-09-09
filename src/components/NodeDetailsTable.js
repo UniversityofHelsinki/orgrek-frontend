@@ -41,15 +41,11 @@ const NodeDetailsTable = (props) => {
         );
     };
 
-    const doEdit = (key) => {
-        return key !== 'unique_id';//fullname does not have unique_id. It should not be edited
-    };
-
     const renderTableData = () => {
         return props.contentData ? (props.dataFilter ? props.dataFilter(props.contentData) : props.contentData).map((elem, index) => {
 
             if (props.type === 'key-value') {
-                if (!props.edit && !elem.id) {//fullname does not have unique_if
+                if (!props.edit && !elem.id) {//fullname does not have unique_id
                     return <></>;
                 }
                 return (<tr key={index}>
