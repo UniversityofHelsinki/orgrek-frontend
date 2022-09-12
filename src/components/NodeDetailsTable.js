@@ -47,14 +47,14 @@ const NodeDetailsTable = (props) => {
 
     const renderTableData = () => {
         return props.contentData ? (props.dataFilter ? props.dataFilter(props.contentData) : props.contentData).map((elem, index) => {
-
+            const elemcopy = { ...elem, uniqueid: elem.id };
             if (props.type === 'key-value') {
                 return (<tr key={index}>
                     <td>{t(elem.key)}</td>
                     <td>
                         {props.edit && props.fullname === false &&  doEdit(elem.key) ?
                             <> {/* edit mode */}
-                                <Form.Control name='value' value={elem.value} onChange={(e) => props.onValueChange(e, elem)} />
+                                <Form.Control name='value' value={elem.value} onChange={(e) => props.onValueChange(e, elemcopy)} />
                             </>
                             : t(elem.value)} {/* show mode */}
                     </td>
