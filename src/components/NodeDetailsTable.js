@@ -1,29 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import {
-    commaSepWithTranslate,
-    showValidity,
-    showHierarchyDisplayNameByLanguage,
-    hierarchyDate,
-    hierarchyDates
-} from '../actions/utilAction';
-import { Table } from 'react-bootstrap';
+import { hierarchyDate, showValidity } from '../actions/utilAction';
+import { Col, Form, Row, Table } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
+import { fetchNode } from '../actions/nodeAction';
+import ChooseDate from './ChooseDate';
 
 const ListLink = styled.a`
   text-decoration: none;
   color: #337ab7;
 `;
 
-import {
-    fetchNode
-} from '../actions/nodeAction';
-import { blue } from '@mui/material/colors';
-
 const NodeDetailsTable = (props) => {
     const { t, i18n } = useTranslation();
     const lang = i18n.language;
+
+    useEffect(() => {
+    }, [props.edit]);
 
     const renderTableHeader = () => {
         return (
@@ -38,15 +32,37 @@ const NodeDetailsTable = (props) => {
         );
     };
 
+    const doEdit = (key) => {
+        return key !== 'unique_id';//Yksilöivä tunniste should not be edited
+    };
+
     const renderTableData = () => {
         return props.contentData ? (props.dataFilter ? props.dataFilter(props.contentData) : props.contentData).map((elem, index) => {
-
             if (props.type === 'key-value') {
-                return (<tr key={index}>
-                    <td>{t(elem.key)}</td>
-                    <td>{t(elem.value)}</td>
-                    {props.hasValidity ? <td>{t(showValidity(elem.startDate, elem.endDate, i18n, t))}</td> : <></>}
-                </tr>);
+                return (
+                    <tr key={index}>
+                        <td>{t(elem.key)}</td>
+                        <td>
+                            {props.edit && props.fullname === false &&  doEdit(elem.key) ?
+                                <> {/* edit mode */}
+                                    <Form.Control name='value' value={elem.value} onChange={(e) => props.onValueChange(e, elem)} />
+                                </>
+                                : t(elem.value)} {/* show mode */}
+                        </td>
+                        {props.hasValidity ?
+                            <td>
+                                {props.edit && props.fullname === false &&  doEdit(elem.key) ?
+                                    <Row> {/* edit mode */}
+                                        <Col md="auto">
+                                            <ChooseDate field={'startDate'} elem={elem} onDateChange={props.onDateChange} />
+                                        </Col>
+                                        <Col md="auto">
+                                            <ChooseDate field={'endDate'} elem={elem} onDateChange={props.onDateChange} />
+                                        </Col>
+                                    </Row>
+                                    : t(showValidity(elem.startDate, elem.endDate, i18n, t))} {/* show mode */}
+                            </td> : <></>}
+                    </tr>);
             }
 
             if (props.type === 'node-hierarchy') {
@@ -75,16 +91,17 @@ const NodeDetailsTable = (props) => {
             }
 
             if (props.type === 'name-validity') {
-                return (<tr key={elem.id}>
-                    <td onClick={() => props.onNodeSelection(elem)}>
-                        <ListLink href="#">
-                            {elem.fullName}
-                        </ListLink></td>
-                    <td>{showValidity(elem.startDate, elem.endDate, i18n, t)}</td>
-                    <td>{showValidity(elem.edgeStartDate, elem.edgeEndDate, i18n, t)}</td>
-                </tr>);
+                return (
+                    <tr key={elem.id}>
+                        <td onClick={() => props.onNodeSelection(elem)}>
+                            <ListLink href="#">
+                                {elem.fullName}
+                            </ListLink></td>
+                        <td>{showValidity(elem.startDate, elem.endDate, i18n, t)}</td>
+                        <td>{showValidity(elem.edgeStartDate, elem.edgeEndDate, i18n, t)}</td>
+                    </tr>
+                );
             }
-
         }) : null;
     };
 
@@ -98,15 +115,14 @@ const NodeDetailsTable = (props) => {
                 <tbody>
                 {renderTableData()}
                 </tbody>
+                {/*<>{props.edit ? <tfoot><Button size="sm" onClick= {(e) => props.addNewrow(e)}>{t('edit_mode_add_row_button')}</Button></tfoot> :  <></> }</>*/}
             </Table>
         </>
     );
 };
 
 const mapStateToProps = state => ({
-    selectedDay : state.dr.selectedDay,
-    showHistory: state.nvrd.showHistory,
-    showComing: state.nvrd.showComing
+    edit : state.editModeReducer.edit
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({

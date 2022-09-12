@@ -39,57 +39,8 @@ export const selectNameVersion = (i18n,item) => {
     }
 };
 
-export const commaSepWithTranslate = (hierarchies, t) => {
-    return hierarchies.map(item => t(item.type)).join(', ');
-};
-
 export const hierarchyDate = (hierarchy, i18n, t) => {
     return showValidity(hierarchy.startDate, hierarchy.endDate, i18n, t);
-};
-
-export const hierarchyDates = (hierarchies, i18n, t) => {
-    return hierarchies.map(elem => (hierarchyDate(elem, i18n, t))).join(', ');
-};
-
-export const showHierarchyDisplayNameByLanguage = (node, lang) => {
-    if(node){
-        if(lang==='fi'){
-            if(node.displayNameFi){
-                return node.displayNameFi;
-            }else{
-                return node.displayNameEn ? node.displayNameEn : node.displayNameSv;
-            }
-        }else if(lang==='sv'){
-            if(node.displayNameSv){
-                return node.displayNameSv;
-            }else{
-                return node.displayNameFi ? node.displayNameFi : node.displayNameEn;
-            }
-        }else if(lang==='en'){
-            if(node.displayNameEn){
-                return node.displayNameEn;
-            }else{
-                return node.displayNameFi ? node.displayNameFi : node.displayNameSv;
-            }
-        }
-    }
-    return null;
-};
-
-export const parseDisplayNames = (nameInfoData, lyhenne, emo_lyhenne) => {
-    const displayNames = nameInfoData.map((elem) => {
-        const emo = emo_lyhenne && emo_lyhenne.value ? emo_lyhenne.value + ', ' : '';
-        const name = elem && elem.value ? elem.value : '';
-        const abbr = lyhenne && lyhenne.value ? ' (' + lyhenne.value + ')' : '';
-        return {
-            'key': elem.key,
-            'value': emo + name + abbr,
-            'startDate': elem.startDate,
-            'endDate': elem.endDate
-        };
-    });
-
-    return displayNames;
 };
 
 /*

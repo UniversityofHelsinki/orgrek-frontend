@@ -11,6 +11,12 @@ const initialState = {
 
 const nodeReducer = (state = initialState, action) => {
     switch (action.type) {
+        case 'UPDATE_ATTRIBUTES_SUCCESS':
+        case 'UPDATE_ATTRIBUTES_ERROR':
+            return {
+                ...state,
+                feedback: action.payload
+            };
         case 'SUCCESS_API_GET_NODE_ATTRIBUTES':
             return {
                 ...state,

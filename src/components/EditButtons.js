@@ -1,38 +1,122 @@
 import { Button, Col, Row } from 'react-bootstrap';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { switchComing, switchHistory, updateAttributes } from '../actions/nodeViewAction';
+import { connect } from 'react-redux';
+import NodeViewControl from './NodeViewControl';
+import { editMode } from '../actions/editModeAction';
 
-const EditButtons = () => {
+const EditButtons = (props) => {
     const { t, i18n } = useTranslation();
 
-    const [edit, setEdit] = useState(false);
+    const [awaitingSaveFeedback, setAwaitingSaveFeedback] = useState(false);
+    const [feedback, setFeedback] = useState();
+    const [feedbackTimeoutID, setFeedbackTimeoutID] = useState();
+    const FEEDBACK_TIMEOUT_MS = 10000;
 
-    const toggleEdit = () => {
-        setEdit(!edit);
+
+    const toggleEdit = (newMode) => {
+        if (!newMode) {
+            props.setModified({});//initialize modified map, when cancel button presses. When response got after
+            //save button pressed, modidied should be initialized.
+        }
+        props.onEditChange(newMode);
     };
+
+    const saveModifiedAttributes = ()  => {
+        const modifiedArr = Object.values(props.modified);
+        //modifiedArr.map((mod,index) => console.log(index + ' = ' + mod + ' = ' + mod[index]));
+        props.updatingAttributes(props.node, modifiedArr);
+        setAwaitingSaveFeedback(true);
+    };
+
+    useEffect(() => {
+    }, [props.edit]);
+
+    useEffect(() => {
+        if (feedbackTimeoutID) {
+            clearTimeout(feedbackTimeoutID);
+        }
+    }, []);
+
+    useEffect(() => {
+        if (props.node) {
+            if (awaitingSaveFeedback) {
+                if (feedbackTimeoutID) {
+                    clearTimeout(feedbackTimeoutID);
+                }
+                setFeedbackTimeoutID(setTimeout(setFeedback, FEEDBACK_TIMEOUT_MS));
+                setAwaitingSaveFeedback(false);
+                setFeedback(props.feedback);
+            }
+        }
+    }, [props.node, props.feedback]);
 
     return (
         <>
-            {edit ? (
+            {props.edit ? (
                 <Row>
                     <Col md="auto">
-                        <Button size="sm" variant="warning" onClick={toggleEdit}>
-                            {t('texts_cancel_button')}
+                        <Button size="sm" variant="warning" onClick={() => {toggleEdit(false);
+                            props.onSwitchComing(false);//switch off coming attributes
+                            props.onSwitchHistory(false);}//switch off history attributes
+                        }>
+                            {t('edit_mode_cancel_button')}
                         </Button>
                     </Col>
-                    <Col>
-                        <Button size="sm" variant="success" onClick={toggleEdit}>
-                            {t('texts_save_button')}
+                    <Col md="auto">
+                        <Button size="sm" variant="success" onClick={() => {toggleEdit(false);
+                            {saveModifiedAttributes();}
+                            props.onSwitchComing(false);//switch off coming attributes
+                            props.onSwitchHistory(false);}}//switch off history attributes
+                        >
+                            {t('edit_mode_save_button')}
                         </Button>
+                    </Col>
+                    <Col md="auto">
+                        <NodeViewControl node={props.node} selectedDay={props.selectedDay}  selectedHierarchy={props.selectedHierarchy} />
                     </Col>
                 </Row>
             ) : (
-                <Button size="sm" onClick={toggleEdit}>
-                    {t('texts_edit_button')}
-                </Button>
-            )}
+                <Row>
+                    <Col md="auto">
+                        <Button size="sm" onClick={() => {toggleEdit(true);
+                            props.onSwitchComing(true); //switch on coming attributes
+                            props.onSwitchHistory(true);}//switch on history attributes
+                        }>
+                            {t('edit_mode_edit_button')}
+                        </Button>
+                    </Col>
+                    <Col md="auto">
+                        <NodeViewControl node={props.node} selectedDay={props.selectedDay}  selectedHierarchy={props.selectedHierarchy} />
+                    </Col>
+                </Row>)}
+        <Col md="auto">
+            {feedback && <span className={props.feedback.success ? '' : 'error'}>{props.feedback.message}<br/>{props.feedback.success || `${t('status_code')}: ${props.feedback.statusCode}`}</span>}
+        </Col>
         </>
     );
 };
 
-export default EditButtons;
+
+const mapDispatchToProps = dispatch => ({
+    onSwitchHistory: (input) => {
+        dispatch(switchHistory(input));
+    },
+    onSwitchComing: (input) => {
+        dispatch(switchComing(input));
+    },
+    updatingAttributes: (node, attributes) => {
+        dispatch(updateAttributes(node.uniqueId, attributes));
+    },
+    onEditChange: (edit) => dispatch(editMode(edit))
+});
+
+
+const mapStateToProps = state => ({
+    edit : state.editModeReducer.edit,
+    feedback: state.nrd.feedback
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(EditButtons);
+
