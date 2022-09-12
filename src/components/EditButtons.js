@@ -5,7 +5,6 @@ import { switchComing, switchHistory, updateAttributes } from '../actions/nodeVi
 import { connect } from 'react-redux';
 import NodeViewControl from './NodeViewControl';
 import { editMode } from '../actions/editModeAction';
-import { editModeReducer } from '../reducers/editModeReducer';
 
 const EditButtons = (props) => {
     const { t, i18n } = useTranslation();
