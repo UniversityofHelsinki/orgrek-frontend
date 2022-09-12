@@ -41,17 +41,18 @@ const NodeDetailsTable = (props) => {
         );
     };
 
+    const doEdit = (key) => {
+        return key !== 'unique_id';//Yksilöivä tunniste should not be edited
+    };
+
     const renderTableData = () => {
         return props.contentData ? (props.dataFilter ? props.dataFilter(props.contentData) : props.contentData).map((elem, index) => {
 
             if (props.type === 'key-value') {
-                if (!props.edit && !elem.id) {//fullname does not have unique_id
-                    return <></>;
-                }
                 return (<tr key={index}>
                     <td>{t(elem.key)}</td>
                     <td>
-                        {props.edit && props.fullname === false ?
+                        {props.edit && props.fullname === false &&  doEdit(elem.key) ?
                             <> {/* edit mode */}
                                 <Form.Control name='value' value={elem.value} onChange={(e) => props.onValueChange(e, elem)} />
                             </>
@@ -61,7 +62,7 @@ const NodeDetailsTable = (props) => {
                     {props.hasValidity ?
                         <td>
                             <td>
-                                {props.edit && props.fullname === false ?
+                                {props.edit && props.fullname === false &&  doEdit(elem.key) ?
                                     <Row> {/* edit mode */}
                                         <Col md="auto">
                                             <ChooseDate field={'startDate'} elem={elem} onDateChange={props.onDateChange} />
