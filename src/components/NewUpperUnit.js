@@ -5,8 +5,9 @@ import React, { useState } from 'react';
 import PickDate from './PickDate';
 import Button from 'react-bootstrap/Button';
 import { actionAddNewUpperUnit } from '../actions/newUpperUnitAction';
+import { connect } from 'react-redux';
 
-const NewUpperUnit = () => {
+const NewUpperUnit = (props) => {
 
     const [selectedOrganisationUnit, setSelectedOrganisationUnit] = useState(null);
     const [selectedHierarchy, setSelectedHierarchy] = useState(null);
@@ -27,7 +28,7 @@ const NewUpperUnit = () => {
     };
 
     const insertNewUpperUnit = async() => {
-        await actionAddNewUpperUnit(selectedOrganisationUnit, selectedHierarchy, startDate, endDate);
+        props.actionAddNewUpperUnit(selectedOrganisationUnit, selectedHierarchy, startDate, endDate);
     };
 
     return (
@@ -53,4 +54,10 @@ const NewUpperUnit = () => {
     );
 };
 
-export default NewUpperUnit;
+const mapStateToProps = dispatch => ({
+    actionAddNewUpperUnit: (selectedOrganisationUnit, selectedHierarchy, startDate, endDate) => {
+        dispatch(actionAddNewUpperUnit(selectedOrganisationUnit, selectedHierarchy, startDate, endDate));
+    }
+});
+
+export default connect(mapStateToProps, null)(NewUpperUnit);
