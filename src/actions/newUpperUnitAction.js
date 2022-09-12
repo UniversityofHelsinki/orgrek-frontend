@@ -10,10 +10,10 @@ const createNewUpperUnit = (selectedOrganisationUnit, selectedHierarchy, startDa
 export const actionAddNewUpperUnit = async (selectedOrganisationUnit, selectedHierarchy, startDate, endDate) => {
     const newUpperUnit = createNewUpperUnit(selectedOrganisationUnit, selectedHierarchy, startDate, endDate);
     const ORGREK_BACKEND_SERVER = process.env.REACT_APP_ORGREK_BACKEND_SERVER || '';
-    const PATH = 'api/newUpperUnit';
+    const PATH = 'api/node/addNewUpperUnit';
     try {
         let response = await fetch(`${ORGREK_BACKEND_SERVER}${PATH}`, {
-            method: 'PUT',
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },

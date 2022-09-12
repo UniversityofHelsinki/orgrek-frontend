@@ -435,8 +435,7 @@ const mapStateToProps = state => ({
     displayNames: state.nrd.nodeDisplayNames,
     favorableNames: state.nrd.nodeFavorableNames,
     selectedHierarchy: state.tree.selectedHierarchy,
-    user : state.ur.user,
-    //feedback: state.nrd.feedback,
+    user : state.ur.user
 });
 
 const mapDispatchToProps = dispatch => ({

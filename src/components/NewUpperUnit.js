@@ -28,36 +28,41 @@ const NewUpperUnit = (props) => {
     };
 
     const insertNewUpperUnit = async() => {
-        props.actionAddNewUpperUnit(selectedOrganisationUnit, selectedHierarchy, startDate, endDate);
+        await props.addNewUpperUnit(selectedOrganisationUnit, selectedHierarchy, startDate, endDate);
     };
 
     return (
       <div>
-          <Row>
-              <Col xs={6}>
-                  <OrganisationUnitSearch onOrganisationUnitChange={organisationUnitSelection}/>
-              </Col>
-              <Col>
-                  <HierarchyDropDown onHierarchyChange={hierarchySelection}/>
-              </Col>
-              <Col>
-                  <PickDate startDate onDateChange={dateSelection} />
-              </Col>
-              <Col>
-                  <PickDate endDate onDateChange={dateSelection} />
-              </Col>
-              <Col>
-                  <Button variant="primary" onClick={insertNewUpperUnit}>Lisää</Button>
-              </Col>
-          </Row>
+          {props.edit ?
+              <Row>
+                  <Col xs={6}>
+                      <OrganisationUnitSearch onOrganisationUnitChange={organisationUnitSelection}/>
+                  </Col>
+                  <Col>
+                      <HierarchyDropDown onHierarchyChange={hierarchySelection}/>
+                  </Col>
+                  <Col>
+                      <PickDate startDate onDateChange={dateSelection}/>
+                  </Col>
+                  <Col>
+                      <PickDate endDate onDateChange={dateSelection}/>
+                  </Col>
+                  <Col>
+                      <Button variant="primary" onClick={insertNewUpperUnit}>Lisää</Button>
+                  </Col>
+              </Row>
+          : ''}
       </div>
     );
 };
 
-const mapStateToProps = dispatch => ({
-    actionAddNewUpperUnit: (selectedOrganisationUnit, selectedHierarchy, startDate, endDate) => {
+const mapDispatchToProps = dispatch => ({
+    addNewUpperUnit: (selectedOrganisationUnit, selectedHierarchy, startDate, endDate) => {
         dispatch(actionAddNewUpperUnit(selectedOrganisationUnit, selectedHierarchy, startDate, endDate));
     }
 });
+const mapStateToProps = state => ({
+    edit : state.editModeReducer.edit
+});
 
-export default connect(mapStateToProps, null)(NewUpperUnit);
+export default connect(mapStateToProps, mapDispatchToProps)(NewUpperUnit);
