@@ -9,13 +9,13 @@ import { connect } from 'react-redux';
 
 const NewUpperUnit = (props) => {
 
-    const [selectedOrganisationUnit, setSelectedOrganisationUnit] = useState(null);
+    const [selectedParentOrganisationUnit, setSelectedParentOrganisationUnit] = useState(null);
     const [selectedHierarchy, setSelectedHierarchy] = useState(null);
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
 
     const organisationUnitSelection = (value) => {
-        setSelectedOrganisationUnit (value);
+        setSelectedParentOrganisationUnit (value);
     };
 
     const hierarchySelection = (value) => {
@@ -28,7 +28,7 @@ const NewUpperUnit = (props) => {
     };
 
     const insertNewUpperUnit = async() => {
-        await props.addNewUpperUnit(selectedOrganisationUnit, selectedHierarchy, startDate, endDate);
+        await props.addNewUpperUnit(selectedParentOrganisationUnit, selectedHierarchy, startDate, endDate, props.node);
     };
 
     return (
@@ -57,12 +57,13 @@ const NewUpperUnit = (props) => {
 };
 
 const mapDispatchToProps = dispatch => ({
-    addNewUpperUnit: (selectedOrganisationUnit, selectedHierarchy, startDate, endDate) => {
-        dispatch(actionAddNewUpperUnit(selectedOrganisationUnit, selectedHierarchy, startDate, endDate));
+    addNewUpperUnit: (selectedParentOrganisationUnit, selectedHierarchy, startDate, endDate, node) => {
+        dispatch(actionAddNewUpperUnit(selectedParentOrganisationUnit, selectedHierarchy, startDate, endDate, node));
     }
 });
 const mapStateToProps = state => ({
-    edit : state.editModeReducer.edit
+    edit : state.editModeReducer.edit,
+    node: state.nrd.node
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewUpperUnit);

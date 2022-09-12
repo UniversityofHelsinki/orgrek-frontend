@@ -1,14 +1,15 @@
-const createNewUpperUnit = (selectedOrganisationUnit, selectedHierarchy, startDate, endDate) => {
+const createNewUpperUnit = (selectedOrganisationUnit, selectedHierarchy, startDate, endDate, node) => {
     return {
-        selectedOrganisationUnit: { id: selectedOrganisationUnit.id, uniqueId: selectedOrganisationUnit.uniqueId, name: selectedOrganisationUnit.name },
+        selectedParentOrganisationUnit: { id: selectedOrganisationUnit.id, uniqueId: selectedOrganisationUnit.uniqueId, name: selectedOrganisationUnit.name },
         selectedHierarchy: selectedHierarchy,
         startDate: startDate,
-        endDate: endDate
+        endDate: endDate,
+        node: node
     };
 };
 
-export const actionAddNewUpperUnit = async (selectedOrganisationUnit, selectedHierarchy, startDate, endDate) => {
-    const newUpperUnit = createNewUpperUnit(selectedOrganisationUnit, selectedHierarchy, startDate, endDate);
+export const actionAddNewUpperUnit = async (selectedOrganisationUnit, selectedHierarchy, startDate, endDate, node) => {
+    const newUpperUnit = createNewUpperUnit(selectedOrganisationUnit, selectedHierarchy, startDate, endDate, node);
     const ORGREK_BACKEND_SERVER = process.env.REACT_APP_ORGREK_BACKEND_SERVER || '';
     const PATH = '/api/node/addNewUpperUnit';
     try {
