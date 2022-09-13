@@ -225,11 +225,11 @@ const NodeDetails = (props) => {
             {props.nodeAttributes &&
                 <>
                     {isAdmin(props.user) ? <EditButtons setModified={setModified} node={props.node} selectedDay={props.selectedDay} selectedHierarchy={props.selectedHierarchy} modified={modified} /> : null }
-                    <div className="organisation-unit-title">
-                        <h3>{props.favorableNames[lang === 'ia' && 'fi' || lang]?.[0]?.name}</h3>
-                        {/*<NodeViewControl node={props.node} selectedDay={props.selectedDay} selectedHierarchy={props.selectedHierarchy} />*/}
-                    </div>
                     <div className="right-side">
+                        <div>
+                            <h3>{props.favorableNames[lang === 'ia' && 'fi' || lang]?.[0]?.name}</h3>
+                            {/*<NodeViewControl node={props.node} selectedDay={props.selectedDay} selectedHierarchy={props.selectedHierarchy} />*/}
+                        </div>
                         <NodeDetailsTable
                             selectedDay={props.selectedDay}
                             type='key-value'

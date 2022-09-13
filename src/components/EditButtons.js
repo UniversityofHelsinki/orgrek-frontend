@@ -53,7 +53,7 @@ const EditButtons = (props) => {
     }, [props.node, props.feedback]);
 
     return (
-        <>
+        <div className="edit-buttons">
             {props.edit ? (
                 <Row>
                     <Col md="auto">
@@ -94,7 +94,7 @@ const EditButtons = (props) => {
         <Col md="auto">
             {feedback && <span className={props.feedback.success ? '' : 'error'}>{props.feedback.message}<br/>{props.feedback.success || `${t('status_code')}: ${props.feedback.statusCode}`}</span>}
         </Col>
-        </>
+        </div>
     );
 };
 
