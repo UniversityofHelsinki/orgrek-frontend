@@ -19,7 +19,6 @@ export const fetchTree = (selection, selectedDay) => {
 export const fetchTreeWithAllHierarchies = (hierarchies) => {
     const PATH = '/api/tree/';
     const date = new Date().toLocaleDateString('FI-fi');
-    console.log(`${ORGREK_BACKEND_SERVER}${PATH}${hierarchies}/${date}`);
     return async (dispatch)  => {
         let response = await fetch(`${ORGREK_BACKEND_SERVER}${PATH}${hierarchies}/${date}`, {
             headers: { 'Content-Type': 'application/json' }

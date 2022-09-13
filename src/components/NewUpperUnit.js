@@ -6,6 +6,8 @@ import PickDate from './PickDate';
 import Button from 'react-bootstrap/Button';
 import { actionAddNewUpperUnit } from '../actions/newUpperUnitAction';
 import { connect } from 'react-redux';
+import { fetchNode } from '../actions/nodeAction';
+import { fetchTree } from '../actions/treeAction';
 
 const NewUpperUnit = (props) => {
 
@@ -28,7 +30,8 @@ const NewUpperUnit = (props) => {
     };
 
     const insertNewUpperUnit = async() => {
-        await props.addNewUpperUnit(selectedParentOrganisationUnit, selectedHierarchy, startDate, endDate, props.node);
+        await actionAddNewUpperUnit(selectedParentOrganisationUnit, selectedHierarchy, startDate, endDate, props.node);
+        await props.fetchNodeAndTree(props.node, props.selectedHierarchy, props.selectedDay);
     };
 
     return (
@@ -56,14 +59,17 @@ const NewUpperUnit = (props) => {
     );
 };
 
-const mapDispatchToProps = dispatch => ({
-    addNewUpperUnit: (selectedParentOrganisationUnit, selectedHierarchy, startDate, endDate, node) => {
-        dispatch(actionAddNewUpperUnit(selectedParentOrganisationUnit, selectedHierarchy, startDate, endDate, node));
+const mapDispatchToProps = (dispatch) => ({
+    fetchNodeAndTree: (node, selection, date) => {
+        dispatch(fetchNode(node.uniqueId, true));
+        dispatch(fetchTree(selection, date));
     }
 });
 const mapStateToProps = state => ({
     edit : state.editModeReducer.edit,
-    node: state.nrd.node
+    node: state.nrd.node,
+    selectedHierarchy: state.tree.selectedHierarchy,
+    selectedDay : state.dr.selectedDay,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewUpperUnit);
