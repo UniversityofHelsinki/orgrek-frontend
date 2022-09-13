@@ -8,6 +8,7 @@ import { actionAddNewUpperUnit } from '../actions/newUpperUnitAction';
 import { connect } from 'react-redux';
 import { fetchNode } from '../actions/nodeAction';
 import { fetchTree } from '../actions/treeAction';
+import { editMode } from '../actions/editModeAction';
 
 const NewUpperUnit = (props) => {
 
@@ -37,7 +38,7 @@ const NewUpperUnit = (props) => {
     };
 
     const insertNewUpperUnit = async() => {
-        await actionAddNewUpperUnit(selectedParentOrganisationUnit, selectedHierarchy, startDate, endDate, props.node);
+        await props.actionAddNewUpperUnit(selectedParentOrganisationUnit, selectedHierarchy, startDate, endDate, props.node);
         await props.fetchNodeAndTree(props.node, props.selectedHierarchy, props.selectedDay);
         emptyUpperUnitState();
     };
@@ -72,9 +73,13 @@ const NewUpperUnit = (props) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
+    actionAddNewUpperUnit: (selectedParentOrganisationUnit, selectedHierarchy, startDate, endDate, node) => {
+        dispatch(actionAddNewUpperUnit(selectedParentOrganisationUnit, selectedHierarchy, startDate, endDate, node));
+    },
     fetchNodeAndTree: (node, selection, date) => {
         dispatch(fetchNode(node.uniqueId, true));
         dispatch(fetchTree(selection, date));
+        dispatch(editMode(false));
     }
 });
 const mapStateToProps = state => ({

@@ -92,7 +92,7 @@ const EditButtons = (props) => {
                     </Col>
                 </Row>)}
         <Col md="auto">
-            {feedback && <span className={props.feedback.success ? '' : 'error'}>{props.feedback.message}<br/>{props.feedback.success || `${t('status_code')}: ${props.feedback.statusCode}`}</span>}
+            {feedback && <span className={props.feedback.success ? 'success' : 'error'}>{props.feedback.message}<br/>{props.feedback.success || `${t('status_code')}: ${props.feedback.statusCode}`}</span>}
         </Col>
         </div>
     );

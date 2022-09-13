@@ -8,11 +8,11 @@ const createNewUpperUnit = (selectedOrganisationUnit, selectedHierarchy, startDa
     };
 };
 
-export const actionAddNewUpperUnit = async (selectedOrganisationUnit, selectedHierarchy, startDate, endDate, node) => {
+export const actionAddNewUpperUnit = (selectedOrganisationUnit, selectedHierarchy, startDate, endDate, node) => {
     const newUpperUnit = createNewUpperUnit(selectedOrganisationUnit, selectedHierarchy, startDate, endDate, node);
     const ORGREK_BACKEND_SERVER = process.env.REACT_APP_ORGREK_BACKEND_SERVER || '';
     const PATH = '/api/node/addNewUpperUnit';
-    try {
+    return async (dispatch) => {
         let response = await fetch(`${ORGREK_BACKEND_SERVER}${PATH}`, {
             method: 'POST',
             headers: {
@@ -20,13 +20,18 @@ export const actionAddNewUpperUnit = async (selectedOrganisationUnit, selectedHi
             },
             body: JSON.stringify(newUpperUnit)
         });
-        if(response.status === 200) {
-            let responseJSON = await response.json();
-            return responseJSON;
+        if (response.status === 200) {
+            dispatch({
+                type: 'INSERT_NEW_UPPER_UNIT_SUCCESS',
+                payload: { message: 'insert_new_upper_unit_success', success: true }
+            });
         } else {
-            throw new Error(response.status);
+            dispatch({
+                type: 'INSERT_NEW_UPPER_UNIT_ERROR',
+                payload: { message: 'insert_new_upper_unit_success', success: false, statusCode: response.status }
+            });
         }
-    } catch (error) {
-        throw new Error(error);
-    }
+    };
 };
+
+
