@@ -1,5 +1,4 @@
-import React, { useState, useEffect, Fragment } from 'react';
-import { Col } from 'react-bootstrap';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import DatePicker from 'react-datepicker';
 
@@ -9,7 +8,10 @@ const PickDate = (props) => {
     const [selectedDate, setSelectedDate] = useState(null);
 
     useEffect(() => {
-    }, []);
+        if (!props.selectedStartDate && !props.selectedEndDate) {
+            setSelectedDate(null);
+        }
+    }, [props.selectedStartDate, props.selectedEndDate]);
 
     const changeDate = (date, startDate, endDate) => {
         setSelectedDate(date);

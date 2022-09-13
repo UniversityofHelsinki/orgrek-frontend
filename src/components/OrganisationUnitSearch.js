@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Typeahead } from 'react-bootstrap-typeahead';
 import { useTranslation } from 'react-i18next';
@@ -11,6 +11,12 @@ const OrganisationUnitSearch = (props) => {
         setSingleSelections(value);
         props.onOrganisationUnitChange(value[0]);
     };
+
+    useEffect(() => {
+        if (!props.selectedParentOrganisationUnit) {
+            setSingleSelections([]);
+        }
+    }, [props.selectedParentOrganisationUnit]);
 
     const flatten = (current) =>  current.reduce((a,c) => [...a, c, ...flatten(c.children)], []);
     const language = i18n.language === 'ia' ? 'fi' : i18n.language;

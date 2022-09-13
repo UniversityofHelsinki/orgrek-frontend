@@ -29,9 +29,21 @@ const NewUpperUnit = (props) => {
         endDate ? setEndDate(value) : null;
     };
 
+    const emptyUpperUnitState = () => {
+        setSelectedParentOrganisationUnit(null);
+        setSelectedHierarchy(null);
+        setStartDate(null);
+        setEndDate(null);
+    };
+
     const insertNewUpperUnit = async() => {
         await actionAddNewUpperUnit(selectedParentOrganisationUnit, selectedHierarchy, startDate, endDate, props.node);
         await props.fetchNodeAndTree(props.node, props.selectedHierarchy, props.selectedDay);
+        emptyUpperUnitState();
+    };
+
+    const isButtonDisabled = () => {
+        return !selectedParentOrganisationUnit || !selectedHierarchy;
     };
 
     return (
@@ -39,19 +51,19 @@ const NewUpperUnit = (props) => {
           {props.edit ?
               <Row>
                   <Col xs={6}>
-                      <OrganisationUnitSearch onOrganisationUnitChange={organisationUnitSelection}/>
+                      <OrganisationUnitSearch onOrganisationUnitChange={organisationUnitSelection} selectedParentOrganisationUnit={selectedParentOrganisationUnit}/>
                   </Col>
                   <Col>
                       <HierarchyDropDown onHierarchyChange={hierarchySelection}/>
                   </Col>
                   <Col>
-                      <PickDate startDate onDateChange={dateSelection}/>
+                      <PickDate startDate onDateChange={dateSelection} selectedStartDate={startDate}/>
                   </Col>
                   <Col>
-                      <PickDate endDate onDateChange={dateSelection}/>
+                      <PickDate endDate onDateChange={dateSelection} selectedEndDate={endDate}/>
                   </Col>
                   <Col>
-                      <Button variant="primary" onClick={insertNewUpperUnit}>Lisää</Button>
+                      <Button disabled={isButtonDisabled()} variant="primary" onClick={insertNewUpperUnit}>Lisää</Button>
                   </Col>
               </Row>
           : ''}
