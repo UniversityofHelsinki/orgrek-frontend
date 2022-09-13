@@ -1,10 +1,10 @@
 const createNewUpperUnit = (selectedOrganisationUnit, selectedHierarchy, startDate, endDate, node) => {
     return {
-        selectedParentOrganisationUnit: { id: selectedOrganisationUnit.id, uniqueId: selectedOrganisationUnit.uniqueId, name: selectedOrganisationUnit.name },
-        selectedHierarchy: selectedHierarchy,
+        parentNodeId: selectedOrganisationUnit.id,
+        childNodeId: node.id,
+        hierarchy: selectedHierarchy,
         startDate: startDate,
         endDate: endDate,
-        node: node
     };
 };
 
