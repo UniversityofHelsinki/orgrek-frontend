@@ -13,25 +13,15 @@ const initialState = {
 // eslint-disable-next-line complexity
 const nodeReducer = (state = initialState, action) => {
     switch (action.type) {
-        case 'UPDATE_ATTRIBUTES_SUCCESS':
+        case 'SHOW_NOTIFICATION':
             return {
                 ...state,
                 feedback: action.payload
             };
-        case 'UPDATE_ATTRIBUTES_ERROR':
+        case 'HIDE_NOTIFICATION':
             return {
                 ...state,
-                feedback: action.payload
-            };
-        case 'INSERT_NEW_UPPER_UNIT_SUCCESS':
-            return {
-                ...state,
-                feedback: action.payload
-            };
-        case 'INSERT_NEW_UPPER_UNIT_ERROR':
-            return {
-                ...state,
-                feedback: action.payload
+                feedback: null
             };
         case 'SUCCESS_API_GET_NODE_ATTRIBUTES':
             return {

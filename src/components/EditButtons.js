@@ -9,12 +9,6 @@ import { editMode } from '../actions/editModeAction';
 const EditButtons = (props) => {
     const { t, i18n } = useTranslation();
 
-    const [awaitingSaveFeedback, setAwaitingSaveFeedback] = useState(false);
-    const [feedback, setFeedback] = useState();
-    const [feedbackTimeoutID, setFeedbackTimeoutID] = useState();
-    const FEEDBACK_TIMEOUT_MS = 10000;
-
-
     const toggleEdit = (newMode) => {
         if (!newMode) {
             props.setModified({});//initialize modified map, when cancel button presses. When response got after
@@ -27,30 +21,14 @@ const EditButtons = (props) => {
         const modifiedArr = Object.values(props.modified);
         //modifiedArr.map((mod,index) => console.log(index + ' = ' + mod + ' = ' + mod[index]));
         props.updatingAttributes(props.node, modifiedArr);
-        setAwaitingSaveFeedback(true);
+        //setAwaitingSaveFeedback(true);
     };
 
     useEffect(() => {
     }, [props.edit]);
 
     useEffect(() => {
-        if (feedbackTimeoutID) {
-            clearTimeout(feedbackTimeoutID);
-        }
-    }, []);
-
-    useEffect(() => {
-        if (props.node) {
-            if (awaitingSaveFeedback) {
-                if (feedbackTimeoutID) {
-                    clearTimeout(feedbackTimeoutID);
-                }
-                setFeedbackTimeoutID(setTimeout(setFeedback, FEEDBACK_TIMEOUT_MS));
-                setAwaitingSaveFeedback(false);
-                setFeedback(props.feedback);
-            }
-        }
-    }, [props.node, props.feedback]);
+    }, [props.feedback]);
 
     return (
         <div className="edit-buttons">
@@ -92,7 +70,7 @@ const EditButtons = (props) => {
                     </Col>
                 </Row>)}
         <Col md="auto">
-            {feedback && <span className={props.feedback.success ? 'success' : 'error'}>{props.feedback.message}<br/>{props.feedback.success || `${t('status_code')}: ${props.feedback.statusCode}`}</span>}
+            {props.feedback && <span className={props.feedback.success ? 'success' : 'error'}>{props.feedback.message}<br/>{props.feedback.success || `${t('status_code')}: ${props.feedback.statusCode}`}</span>}
         </Col>
         </div>
     );

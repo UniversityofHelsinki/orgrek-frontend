@@ -22,14 +22,20 @@ export const actionAddNewUpperUnit = (selectedOrganisationUnit, selectedHierarch
         });
         if (response.status === 200) {
             dispatch({
-                type: 'INSERT_NEW_UPPER_UNIT_SUCCESS',
+                type: 'SHOW_NOTIFICATION',
                 payload: { message: 'insert_new_upper_unit_success', success: true }
             });
+            setTimeout(() => {
+                dispatch({ type: 'HIDE_NOTIFICATION' });
+            }, 5000);
         } else {
             dispatch({
-                type: 'INSERT_NEW_UPPER_UNIT_ERROR',
-                payload: { message: 'insert_new_upper_unit_success', success: false, statusCode: response.status }
+                type: 'SHOW_NOTIFICATION',
+                payload: { message: 'insert_new_upper_unit_error', success: false, statusCode: response.status }
             });
+            setTimeout(() => {
+                dispatch({ type: 'HIDE_NOTIFICATION' });
+            }, 5000);
         }
     };
 };
