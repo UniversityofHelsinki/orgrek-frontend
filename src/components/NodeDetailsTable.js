@@ -1,26 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import {
-    commaSepWithTranslate,
-    showValidity,
-    showHierarchyDisplayNameByLanguage,
-    hierarchyDate,
-    hierarchyDates
-} from '../actions/utilAction';
-import { Form, InputGroup, Table, Button, Row, Col } from 'react-bootstrap';
+import { hierarchyDate, showValidity } from '../actions/utilAction';
+import { Col, Form, Row, Table } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
+import { fetchNode } from '../actions/nodeAction';
+import ChooseDate from './ChooseDate';
+import UnitDropDown from './UnitDropDown';
 
 const ListLink = styled.a`
   text-decoration: none;
   color: #337ab7;
 `;
-
-import {
-    fetchNode
-} from '../actions/nodeAction';
-import ChooseDate from './ChooseDate';
-import UnitDropDown from './UnitDropDown';
 
 const NodeDetailsTable = (props) => {
     const { t, i18n } = useTranslation();
