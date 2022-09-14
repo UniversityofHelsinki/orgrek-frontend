@@ -3,7 +3,8 @@ const initialState = {
     tree : {},
     selectedHierarchy: undefined,
     defaultHierarchy: 'talous',
-    selectableHierarchies: []
+    selectableHierarchies: [],
+    selectedHierarchies: [],
 };
 
 const treeReducer = (state = initialState, action) => {
@@ -22,6 +23,11 @@ const treeReducer = (state = initialState, action) => {
         return {
             ...state,
             selectedHierarchy: action.payload
+        };
+    case 'SELECTED_HIERARCHIES_SUCCESS':
+        return {
+            ...state,
+            selectedHierarchies: action.payload
         };
     default:
         return state;
