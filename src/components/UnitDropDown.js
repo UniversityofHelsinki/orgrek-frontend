@@ -5,8 +5,6 @@ import { fetchValidHierarchyFilters } from '../actions/hierarchyFiltersAction';
 
 const UnitDropDown = (props) => {
     const { t } = useTranslation();
-    //const [value, setValue] = useState('');
-    //const [hierarchyFilters, setHierarchyFilters] = useState(props.hierarchyFilters);
     const [selectableunits, setSelectableunits] = useState();
 
     const handleChange = (event) => {
@@ -50,8 +48,6 @@ const UnitDropDown = (props) => {
         let units =  concatValues(sortedHierarchies,selectedHierarchies);
         let unitselectable = units.split(',');
         setSelectableunits(unitselectable);
-        //console.log('korjaa');//
-        //setHierarchyFilters(currentHierarchyFilters);
     }, [props.hierarchyFilters, props.selectedHierarchies]);
 
     return (
