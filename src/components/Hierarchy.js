@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import Dropdown from './Dropdown';
 import Tree from './Tree';
 import TreeSearch from './TreeSearch';
 import SelectDate from './SelectDate';
 import { fetchSelectableHierarchies } from '../actions/treeAction';
 import { Container, Row, Col } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
+import MultiSelectHierarchies from './MultiSelectHierarchies';
 
 const Hierarchy = (props) => {
 
@@ -21,7 +21,7 @@ const Hierarchy = (props) => {
                 <Row>
                     <h3 id={'main-content'}>{t('units')}</h3>
                     <Col>
-                        <Dropdown/>
+                        <MultiSelectHierarchies/>
                     </Col>
                 </Row>
                 <Row>
