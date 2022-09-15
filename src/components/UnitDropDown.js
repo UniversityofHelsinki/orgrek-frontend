@@ -2,14 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { fetchValidHierarchyFilters } from '../actions/hierarchyFiltersAction';
+import { DropdownButton, Dropdown } from 'react-bootstrap';
 
 const UnitDropDown = (props) => {
     const { t } = useTranslation();
-    const [selectableunits, setSelectableunits] = useState();
+    const [selectableunits, setSelectableunits] = useState([]);
 
-    const handleChange = (event) => {
-        //setValue(event.target.value);
-        const ev = { target: { name:'value', value: event.target.value } };
+    const handleSelect=(event) => {
+        const ev = { target: { name:'value', value: event } };
         props.onUnitChange(ev);
     };
 
@@ -54,14 +54,13 @@ const UnitDropDown = (props) => {
         <div>
             {selectableunits &&
                 <>
-                    <select  onChange={handleChange}>
-                        {selectableunits.map((option) => (
-                            props.value === t(option) ?
-                                <option key={option} value={props.value} selected>{t(props.value)}</option>
-                            :
-                                <option key={option} value={option}>{t(option)}</option>
+                    <DropdownButton
+                        title={t(props.value)}
+                        onSelect={handleSelect}>
+                        {selectableunits.map((option, i) => (
+                            <Dropdown.Item key={i} eventKey={option} >{t(option)}</Dropdown.Item>
                         ))}
-                    </select>
+                    </DropdownButton>
                 </>
             }
         </div>
