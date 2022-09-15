@@ -54,7 +54,7 @@ const UnitDropDown = (props) => {
         <div>
             {selectableunits &&
                 <>
-                    <select  onChange={handleChange} defaultValue={'DEFAULT'}>
+                    <select  onChange={handleChange}>
                         {selectableunits.map((option) => (
                             props.value === t(option) ?
                                 <option key={option} value={props.value} selected>{t(props.value)}</option>
