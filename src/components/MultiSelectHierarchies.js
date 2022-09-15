@@ -4,7 +4,7 @@ import { editSelectedHierarchies } from '../actions/treeAction';
 import { useTranslation } from 'react-i18next';
 import MultiSelect from  'react-multiple-select-dropdown-lite';
 
-const Dropdown = (props) => {
+const MultiSelectHierarchies = (props) => {
     const { t } = useTranslation();
     const dispatch = useDispatch();
 
@@ -45,8 +45,9 @@ const mapStateToProps = state => ({
     defaultHierarchy: state.tree.defaultHierarchy
 });
 
+
 const mapDispatchToProps = dispatch => ({
     editSelectedHierarchies: (edit) => dispatch(editSelectedHierarchies(edit))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Dropdown);
+export default connect(mapStateToProps, mapDispatchToProps)(MultiSelectHierarchies);

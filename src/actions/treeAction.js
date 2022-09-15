@@ -16,6 +16,22 @@ export const fetchTree = (selection, selectedDay) => {
     };
 };
 
+export const fetchTreeWithAllHierarchies = (hierarchies) => {
+    const PATH = '/api/tree/';
+    const date = new Date().toLocaleDateString('FI-fi');
+    return async (dispatch)  => {
+        let response = await fetch(`${ORGREK_BACKEND_SERVER}${PATH}${hierarchies}/${date}`, {
+            headers: { 'Content-Type': 'application/json' }
+        }).catch(error => console.log(error));
+        if (response.status === 200) {
+            let responseJSON = await response.json();
+            dispatch(apiGetTreeWithAllHierarchiesSuccessCall(responseJSON));
+        } else {
+            //dispatch(api401FailureCall(new Date()));
+        }
+    };
+};
+
 export const api401FailureCall = failureTime => ({
     type: 'STATUS_401_API_CALL',
     payload : failureTime
@@ -40,6 +56,13 @@ export const fetchSelectableHierarchies = () => {
 export const apiGetTreeSuccessCall = data => {
     return {
         type: 'SUCCESS_API_GET_TREE',
+        payload: data
+    };
+};
+
+export const apiGetTreeWithAllHierarchiesSuccessCall = data => {
+    return {
+        type: 'SUCCESS_API_GET_TREE_WITH_ALL_HIERARCHIES',
         payload: data
     };
 };

@@ -1,5 +1,6 @@
 
 const initialState = {
+    feedback: undefined,
     nodeAttributes : null,
     nodeAttributesHistory: null,
     nodeAttributesFuture: null,
@@ -9,13 +10,18 @@ const initialState = {
     nodeFavorableNames: { fi: undefined, en: undefined, sv: undefined, ia: undefined }
 };
 
+// eslint-disable-next-line complexity
 const nodeReducer = (state = initialState, action) => {
     switch (action.type) {
-        case 'UPDATE_ATTRIBUTES_SUCCESS':
-        case 'UPDATE_ATTRIBUTES_ERROR':
+        case 'SHOW_NOTIFICATION':
             return {
                 ...state,
                 feedback: action.payload
+            };
+        case 'HIDE_NOTIFICATION':
+            return {
+                ...state,
+                feedback: null
             };
         case 'SUCCESS_API_GET_NODE_ATTRIBUTES':
             return {

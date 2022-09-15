@@ -5,16 +5,9 @@ import { switchComing, switchHistory, updateAttributes } from '../actions/nodeVi
 import { connect } from 'react-redux';
 import NodeViewControl from './NodeViewControl';
 import { editMode } from '../actions/editModeAction';
-import { editModeReducer } from '../reducers/editModeReducer';
 
 const EditButtons = (props) => {
     const { t, i18n } = useTranslation();
-
-    const [awaitingSaveFeedback, setAwaitingSaveFeedback] = useState(false);
-    const [feedback, setFeedback] = useState();
-    const [feedbackTimeoutID, setFeedbackTimeoutID] = useState();
-    const FEEDBACK_TIMEOUT_MS = 10000;
-
 
     const toggleEdit = (newMode) => {
         if (!newMode) {
@@ -28,33 +21,17 @@ const EditButtons = (props) => {
         const modifiedArr = Object.values(props.modified);
         //modifiedArr.map((mod,index) => console.log(index + ' = ' + mod + ' = ' + mod[index]));
         props.updatingAttributes(props.node, modifiedArr);
-        setAwaitingSaveFeedback(true);
+        //setAwaitingSaveFeedback(true);
     };
 
     useEffect(() => {
     }, [props.edit]);
 
     useEffect(() => {
-        if (feedbackTimeoutID) {
-            clearTimeout(feedbackTimeoutID);
-        }
-    }, []);
-
-    useEffect(() => {
-        if (props.node) {
-            if (awaitingSaveFeedback) {
-                if (feedbackTimeoutID) {
-                    clearTimeout(feedbackTimeoutID);
-                }
-                setFeedbackTimeoutID(setTimeout(setFeedback, FEEDBACK_TIMEOUT_MS));
-                setAwaitingSaveFeedback(false);
-                setFeedback(props.feedback);
-            }
-        }
-    }, [props.node, props.feedback]);
+    }, [props.feedback]);
 
     return (
-        <>
+        <div className="edit-buttons">
             {props.edit ? (
                 <Row>
                     <Col md="auto">
@@ -93,9 +70,9 @@ const EditButtons = (props) => {
                     </Col>
                 </Row>)}
         <Col md="auto">
-            {feedback && <span className={props.feedback.success ? '' : 'error'}>{props.feedback.message}<br/>{props.feedback.success || `${t('status_code')}: ${props.feedback.statusCode}`}</span>}
+            {props.feedback && <span className={props.feedback.success ? 'success' : 'error'}>{props.feedback.message}<br/>{props.feedback.success || `${t('status_code')}: ${props.feedback.statusCode}`}</span>}
         </Col>
-        </>
+        </div>
     );
 };
 

@@ -27,14 +27,20 @@ export const updateAttributes = (uniqueId, attributes) => {
         });
         if (response.status === 200) {
             dispatch({
-                type: 'UPDATE_ATTRIBUTES_SUCCESS',
+                type: 'SHOW_NOTIFICATION',
                 payload: { message: 'update_attributes_success', success: true }
             });
+            setTimeout(() => {
+                dispatch({ type: 'HIDE_NOTIFICATION' });
+            }, 5000);
         } else {
             dispatch({
-                type: 'UPDATE_ATTRIBUTES_ERROR',
+                type: 'SHOW_NOTIFICATION',
                 payload: { message: 'update_attributes_error', success: false, statusCode: response.status }
             });
+            setTimeout(() => {
+                dispatch({ type: 'HIDE_NOTIFICATION' });
+            }, 5000);
         }
     };
 };

@@ -22,6 +22,10 @@ import { codeAttributes } from '../constants/variables';
 import EditButtons from './EditButtons';
 import { isAdmin } from '../actions/userAction';
 import moment from 'moment';
+import OrganisationUnitSearch from './OrganisationUnitSearch';
+import HierarchyDropDown from './HierarchyDropDown';
+import { Button, Col, Row } from 'react-bootstrap';
+import NewUpperUnit from './NewUpperUnit';
 
 // eslint-disable-next-line complexity
 const NodeDetails = (props) => {
@@ -221,11 +225,11 @@ const NodeDetails = (props) => {
             {props.nodeAttributes &&
                 <>
                     {isAdmin(props.user) ? <EditButtons setModified={setModified} node={props.node} selectedDay={props.selectedDay} selectedHierarchy={props.selectedHierarchy} modified={modified} /> : null }
-                    <div className="organisation-unit-title">
-                        <h3>{props.favorableNames[lang === 'ia' && 'fi' || lang]?.[0]?.name}</h3>
-                        {/*<NodeViewControl node={props.node} selectedDay={props.selectedDay} selectedHierarchy={props.selectedHierarchy} />*/}
-                    </div>
                     <div className="right-side">
+                        <div>
+                            <h3>{props.favorableNames[lang === 'ia' && 'fi' || lang]?.[0]?.name}</h3>
+                            {/*<NodeViewControl node={props.node} selectedDay={props.selectedDay} selectedHierarchy={props.selectedHierarchy} />*/}
+                        </div>
                         <NodeDetailsTable
                             selectedDay={props.selectedDay}
                             type='key-value'
@@ -343,6 +347,7 @@ const NodeDetails = (props) => {
                             fullname={false}
 
                         />
+                        <NewUpperUnit />
                         <NodeDetailsTable
                             selectedDay={props.selectedDay}
                             type='node-hierarchy'
@@ -430,8 +435,7 @@ const mapStateToProps = state => ({
     displayNames: state.nrd.nodeDisplayNames,
     favorableNames: state.nrd.nodeFavorableNames,
     selectedHierarchy: state.tree.selectedHierarchy,
-    user : state.ur.user,
-    //feedback: state.nrd.feedback,
+    user : state.ur.user
 });
 
 const mapDispatchToProps = dispatch => ({
