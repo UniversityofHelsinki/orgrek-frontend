@@ -7,6 +7,11 @@ import { DropdownButton, Dropdown } from 'react-bootstrap';
 const UnitDropDown = (props) => {
     const { t } = useTranslation();
     const [selectableunits, setSelectableunits] = useState([]);
+    const [dropDownValue, setDropDownValue] = useState();
+
+    const changeValue = (value) => {
+        setDropDownValue(value);
+    };
 
     const handleSelect=(event) => {
         const ev = { target: { name:'value', value: event } };
@@ -55,10 +60,10 @@ const UnitDropDown = (props) => {
             {selectableunits &&
                 <>
                     <DropdownButton
-                        title={t(props.value)}
+                        title={dropDownValue ? dropDownValue : props.value }
                         onSelect={handleSelect}>
                         {selectableunits.map((option, i) => (
-                            <Dropdown.Item key={i} eventKey={option} >{t(option)}</Dropdown.Item>
+                            <Dropdown.Item key={i} eventKey={option} onClick={(e) => changeValue(e.target.value)}>{t(option)}</Dropdown.Item>
                         ))}
                     </DropdownButton>
                 </>
