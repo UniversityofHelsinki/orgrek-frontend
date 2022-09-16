@@ -19,6 +19,26 @@ export const fetchHierarchyFilters = () => {
     };
 };
 
+export const fetchValidHierarchyFilters = () => {
+    const ORGREK_BACKEND_SERVER = process.env.REACT_APP_ORGREK_BACKEND_SERVER || '';
+    const PATH = 'api/hierarchyFilters';
+    const DATE = new Date().toLocaleDateString('fi-FI');
+    return async (dispatch) => {
+        let response = await fetch(`${ORGREK_BACKEND_SERVER}/${PATH}/${DATE}`);
+        if (response.status === 200) {
+            dispatch({
+                type: 'GET_VALID_HIERARCHY_FILTERS',
+                payload: await response.json()
+            });
+        } else {
+            dispatch({
+                type: 'GET_VALID_HIERARCHY_FILTERS_FAILURE',
+                payload: response.status
+            });
+        }
+    };
+};
+
 export const updateHierarchyFilter = (hierarchyFilter) => {
     const formatted = {
         ...hierarchyFilter,

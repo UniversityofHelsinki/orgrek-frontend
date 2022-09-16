@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, connect } from 'react-redux';
-import { fetchSelectableHierarchies } from '../actions/treeAction';
+import { editSelectedHierarchies } from '../actions/treeAction';
 import { useTranslation } from 'react-i18next';
 import MultiSelect from  'react-multiple-select-dropdown-lite';
 
@@ -19,6 +19,7 @@ const MultiSelectHierarchies = (props) => {
         if (props.selectedHierarchy) {
             values = [...props.selectedHierarchy.split(',')];
         }
+        props.editSelectedHierarchies(values);
         return (
             <MultiSelect
                 defaultValue={values.map(v => ({ value: v, label: t(v) }))}
@@ -44,4 +45,9 @@ const mapStateToProps = state => ({
     defaultHierarchy: state.tree.defaultHierarchy
 });
 
-export default connect(mapStateToProps)(MultiSelectHierarchies);
+
+const mapDispatchToProps = dispatch => ({
+    editSelectedHierarchies: (edit) => dispatch(editSelectedHierarchies(edit))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(MultiSelectHierarchies);

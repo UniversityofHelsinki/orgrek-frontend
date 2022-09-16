@@ -21,8 +21,8 @@ const HierarchyDropDown = (props) => {
         <div>
             {selectedHierarchies &&
                 <>
-                    <select value={value} onChange={handleChange}>
-                        <option value="">-</option>
+                    <select defaultValue={value} onChange={handleChange}>
+                        <option value="-">-</option>
                         {selectedHierarchies.map((option) => (
                             <option key={option} value={option}>{t(option)}</option>
                         ))}

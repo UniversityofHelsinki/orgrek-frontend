@@ -18,8 +18,9 @@ test('should return the initial tree state', () => {
             defaultHierarchy: 'talous',
             tree : {},
             selectedHierarchy: undefined,
+            treeWithAllHierarchies: {},
             selectableHierarchies: [],
-            treeWithAllHierarchies: {}
+            selectedHierarchies: [],
         }
     );
 });

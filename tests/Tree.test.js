@@ -47,11 +47,12 @@ jest.mock('../src/reducers/treeReducer', () => {
     return {
         __esModule: true,
         ...originalModule,
-        default: jest.fn((state = { 
+        default: jest.fn((state = {
             selectedHierarchy: 'talous',
             defaultHierarchy: 'talous',
             tree: {},
-            selectableHierarchies: []
+            selectableHierarchies: [],
+            treeWithAllHierarchies : {},
         }, action) => {
             switch (action.type) {
             case 'SUCCESS_API_GET_TREE':

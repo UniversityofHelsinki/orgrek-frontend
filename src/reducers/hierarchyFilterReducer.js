@@ -1,6 +1,7 @@
 
 const initialState = {
-    hierarchyFilters: []
+    hierarchyFilters: [],
+    validhierarchyFilters: []
 };
 
 const hierarchyFiltersReducer = (state = initialState, action) => {
@@ -9,6 +10,11 @@ const hierarchyFiltersReducer = (state = initialState, action) => {
             return {
                 ...state,
                 hierarchyFilters: action.payload
+            };
+        case 'GET_VALID_HIERARCHY_FILTERS':
+            return {
+                ...state,
+                validhierarchyFilters: action.payload
             };
         case 'SET_HIERARCHY_FILTERS':
             return {
