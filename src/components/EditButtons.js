@@ -5,6 +5,13 @@ import { switchComing, switchHistory, updateAttributes } from '../actions/nodeVi
 import { connect } from 'react-redux';
 import NodeViewControl from './NodeViewControl';
 import { editMode } from '../actions/editModeAction';
+import {
+    fetchNodeAttributes,
+    fetchNodeFavorableFullNames, fetchNodeFullNames,
+    fetchNodePredecessors,
+    fetchNodeSuccessors
+} from '../actions/nodeAction';
+import { fetchNodeChildren, fetchNodeParents } from '../actions/hierarchyAction';
 
 const EditButtons = (props) => {
     const { t, i18n } = useTranslation();
@@ -46,7 +53,9 @@ const EditButtons = (props) => {
                         <Button size="sm" variant="success" onClick={() => {toggleEdit(false);
                             {saveModifiedAttributes();}
                             props.onSwitchComing(false);//switch off coming attributes
-                            props.onSwitchHistory(false);}}//switch off history attributes
+                            props.onSwitchHistory(false);
+                            props.fetchNodeDetails(props.node, props.selectedDay, props.showHistory, props.showComing, props.selectedHierarchy);
+                        }}//switch off history attributes
                         >
                             {t('edit_mode_save_button')}
                         </Button>
@@ -86,6 +95,17 @@ const mapDispatchToProps = dispatch => ({
     },
     updatingAttributes: (node, attributes) => {
         dispatch(updateAttributes(node.uniqueId, attributes));
+    },
+    fetchNodeDetails: (node, selectedDay, showHistory, showComing, selectedHierarchy) => {
+        dispatch(fetchNodePredecessors(node.uniqueId, selectedDay));
+        dispatch(fetchNodeSuccessors(node.uniqueId, selectedDay));
+        dispatch(fetchNodeFavorableFullNames(node.uniqueId, selectedDay));
+        if (!(showHistory || showComing)) {
+            dispatch(fetchNodeAttributes(node.uniqueId, selectedDay, selectedHierarchy));
+            dispatch(fetchNodeParents(node.uniqueId, selectedDay));
+            dispatch(fetchNodeChildren(node.uniqueId, selectedDay));
+            dispatch(fetchNodeFullNames(node.uniqueId, selectedDay));
+        }
     },
     onEditChange: (edit) => dispatch(editMode(edit))
 });
