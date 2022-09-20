@@ -22,6 +22,8 @@ const OrganisationUnitSearch = (props) => {
     const language = i18n.language === 'ia' ? 'fi' : i18n.language;
     const options = props.treeWithAllHierarchies[language] ? flatten(props.treeWithAllHierarchies[language].children) : [];
     const uniqueOptions = options.filter((elem, index) => options.findIndex(obj => obj.uniqueId === elem.uniqueId) === index);
+    const hy = { id: props.treeWithAllHierarchies[language].id, name: props.treeWithAllHierarchies[language].name, uniqueId: props.treeWithAllHierarchies[language].uniqueId };
+    uniqueOptions.push(hy);
 
     const nameMatches = (name, text) => {
         return name.toLowerCase().indexOf(text.toLowerCase()) !== -1;
