@@ -16,8 +16,6 @@ const ListLink = styled.a`
 const NodeDetailsTable = (props) => {
     const { t, i18n } = useTranslation();
     const lang = i18n.language;
-    let units = ['koontiyksikko', 'tiedekunta', 'osasto'];
-    {/* hierarchyFilters kantahaku tehty jo. Ota käyttöön tässä.*/}
 
         useEffect(() => {
         }, [props.edit]);
@@ -48,7 +46,7 @@ const NodeDetailsTable = (props) => {
                             { props.edit && props.fullname === false && doEdit(elem.key) ?
                                 <> {/* edit mode */ }
                                     { (elem.key === 'type') ? <>
-                                            <UnitDropDown value={ t(elem.value) } units={ units }
+                                            <UnitDropDown valueunits={ t(elem.value) } /*units={ units }*/
                                                           onUnitChange={ (e) => props.onValueChange(e, elem) }/>
                                         </>
                                         : <Form.Control name='value' value={ t(elem.value) }
@@ -126,7 +124,6 @@ const NodeDetailsTable = (props) => {
                     <tbody>
                     { renderTableData() }
                     </tbody>
-                    {/*<>{props.edit ? <tfoot><Button size="sm" onClick= {(e) => props.addNewrow(e)}>{t('edit_mode_add_row_button')}</Button></tfoot> :  <></> }</>*/ }
                 </Table>
             </>
         );
@@ -142,6 +139,5 @@ const NodeDetailsTable = (props) => {
             dispatch(fetchNode(elem.uniqueId));
         }
     });
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(NodeDetailsTable);

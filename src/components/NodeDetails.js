@@ -26,6 +26,8 @@ import OrganisationUnitSearch from './OrganisationUnitSearch';
 import HierarchyDropDown from './HierarchyDropDown';
 import { Button, Col, Row } from 'react-bootstrap';
 import NewUpperUnit from './NewUpperUnit';
+import NewAttribute from './NewAttribute';
+import { availablenames, availablecodes } from '../constants/AttibutesForSelect';
 
 // eslint-disable-next-line complexity
 const NodeDetails = (props) => {
@@ -33,7 +35,6 @@ const NodeDetails = (props) => {
     const lang = i18n.language;
     const [attributeData, setAttributeData] = useState(false);
     const [modified, setModified] = useState({}); //{} makes map. Change map to list when sending to backend
-    //const [newrowdata, setNewrowdata] = useState([]); //{} makes map. Change map to list when sending to backend
 
     const uniqueIdAttribute = props.node
         ? { 'key': 'unique_id', 'value': props.node.uniqueId, startDate: null, endDate: null }
@@ -179,20 +180,6 @@ const NodeDetails = (props) => {
         return [];
     };
 
-    /*const addNewrow = (event) => {
-    ==============================================================================================================
-        Jokaiselle NodeDetailsTable:lle (jota voi editoida/lisätä riveja) lisättävä oma newrowdata array, että osaa tulostaa
-        kuhunkin kohtaan oikeat tyhjät rivit, (jotka sit täytetään ja lisätään kantaan jne....)
-    ==============================================================================================================
-            //newrowdata.length +1 ni saat arvon tohon alle key:
-            //se on tiedettävä, jos päivittää jälkeenpäin kys. riviä.
-            //const target = { key: '17',value: 'lili' };//creates a ne elem object
-            //setNewrowdata([{ ...newrowdata, '17': target }]);//adds new empty object in modified array
-           //- piti laitta toho riville yllä [{ ...newrowdata, '17': target }] muuten ei toiminu
-        let index = modified.length +1;
-        setModified([{ ...modified, index:[{ key: '',value: '' }] }]);
-    };*/
-
     const onValueChange = (event, elem) => {
         if (modified[elem.id]) {//element has already been modified at least once, because its found in modified array
             const target = { ...modified[elem.id], [event.target.name]: event.target.value };//makes copy of modified[elem.id] and updates its value with event.target.value
@@ -241,12 +228,6 @@ const NodeDetails = (props) => {
                                 }
                                 return elem; //original attribute
                             }))] : validityData }
-                            /*contentData={validityData ? [...validityData.map((elem => {
-                                 if (modified[elem.id]) { //if attribute is modified it's found in modified map
-                                     return modified[elem.id];//and already modified attribute is shown
-                                 }
-                                 return elem; //original attribute
-                             })), { key: '',value: '' }] : [{ key: '',value: '' }]} //adds empty row after attributes*/
                             hasValidity={true}
                             onValueChange={onValueChange}
                             onDateChange={onDateChange}
@@ -263,22 +244,13 @@ const NodeDetails = (props) => {
                                 }
                                 return elem; //original attribute
                             }))] : nameInfoDataOrderedByLanguage }
-                            /*contentData={nameInfoDataOrderedByLanguage ? [...nameInfoDataOrderedByLanguage.map((elem => {
-                                if (modified[elem.id]) { //if attribute is modified it's found in modified map
-                                    return modified[elem.id];//and already modified attribute is shown
-                                }
-                                return elem; //original attribute
-                            })), [...modified.map((elem => {
-                                return elem;
-                            }))] ]: [{ key: '',value: '' }]} //add empty row after attributes*/
                             hasValidity={true}
                             dataFilter={pastFutureFilter}
                             onValueChange={onValueChange}
                             onDateChange={onDateChange}
-                            //addNewrow={addNewrow}
                             fullname={false}
-
                         />
+                        <NewAttribute availableAttributes={availablenames} />
                         <NodeDetailsTable
                             selectedDay={props.selectedDay}
                             type='key-value'
@@ -287,7 +259,6 @@ const NodeDetails = (props) => {
                             contentData={[...(props.displayNames.fi || []), ...(props.displayNames.sv || []), ...(props.displayNames.en || [])].filter(n => n).map(dn => ({ ...dn, key: `name_${dn.language.toLowerCase()}`, value: dn.name }))}
                             hasValidity={true}
                             dataFilter={pastFutureFilter}
-                            //edit={false}
                             fullname={true}
                             onValueChange={onValueChange}
                             onDateChange={onDateChange}
@@ -303,19 +274,13 @@ const NodeDetails = (props) => {
                                 }
                                 return elem; //original attribute
                             }))]: codeAttributesData }
-                            /*contentData={codeAttributesData ? [...codeAttributesData.map((elem => {
-                                if (modified[elem.id]) { //if attribute is modified it's found in modified map
-                                    return modified[elem.id];//and already modified attribute is shown
-                                }
-                                return elem; //original attribute
-                            })), { key: '',value: '' }] : [{ key: '',value: '' }]} //add empty row after attributes*/
                             hasValidity={true}
                             dataFilter={data => (isPast || isFuture) && !(props.showHistory || props.showComing) ? data.filter(attr => attr.key === 'unique_id') : data}
                             onValueChange={onValueChange}
                             onDateChange={onDateChange}
                             fullname={false}
-
                         />
+                        <NewAttribute availableAttributes={availablecodes}/>
                         <NodeDetailsTable
                             selectedDay={props.selectedDay}
                             type='key-value'
@@ -334,6 +299,7 @@ const NodeDetails = (props) => {
                             fullname={false}
 
                         />
+                        <NewAttribute unit={true}/>
                         <NodeDetailsTable
                             selectedDay={props.selectedDay}
                             type='node-hierarchy'
@@ -396,19 +362,13 @@ const NodeDetails = (props) => {
                                 }
                                 return elem; //original attribute
                             }))] : sortedOtherAttributesData }
-                            /*contentData={sortedOtherAttributesData ? [...sortedOtherAttributesData.map((elem => {
-                                if (modified[elem.id]) { //if attribute is modified it's found in modified map
-                                    return modified[elem.id];//and already modified attribute is shown
-                                }
-                                return elem; //original attribute
-                            })), { key: '',value: '' }] : [{ key: '',value: '' }]} //add empty row after attributes*/
                             hasValidity={true}
                             dataFilter={pastFutureFilter}
                             onValueChange={onValueChange}
                             onDateChange={onDateChange}
                             fullname={false}
-
                         />
+                        <NewAttribute />
                     </div>
                 </>
             }
