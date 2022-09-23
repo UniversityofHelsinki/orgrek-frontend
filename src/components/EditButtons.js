@@ -1,11 +1,12 @@
 import { Button, Col, Row } from 'react-bootstrap';
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { switchComing, switchHistory, updateAttributes } from '../actions/nodeViewAction';
+import { switchComing, switchHistory, updateAttributes, updateNodeProperties } from '../actions/nodeViewAction';
 import { connect } from 'react-redux';
 import NodeViewControl from './NodeViewControl';
 import { editMode } from '../actions/editModeAction';
 import {
+    fetchNode,
     fetchNodeAttributes,
     fetchNodeFavorableFullNames, fetchNodeFullNames,
     fetchNodePredecessors,
@@ -24,10 +25,17 @@ const EditButtons = (props) => {
         props.onEditChange(newMode);
     };
 
-    const saveModifiedAttributes = ()  => {
+    const saveModifiedAttributes = async()  => {
         const modifiedArr = Object.values(props.modified);
-        //modifiedArr.map((mod,index) => console.log(index + ' = ' + mod + ' = ' + mod[index]));
-        props.updatingAttributes(props.node, modifiedArr);
+        const filteredAttributesArray = modifiedArr.filter(elem => elem.validity === false);
+        const filteredNodeWithProperties = modifiedArr.find(elem => elem.validity === true);
+        if (filteredAttributesArray && filteredAttributesArray.length > 0) {
+            await props.updatingAttributes(props.node, filteredAttributesArray);
+        }
+        if (filteredNodeWithProperties) {
+            await props.updateNodeProperties(props.node, filteredNodeWithProperties);
+            await props.getNodeDetails(props.node);
+        }
         //setAwaitingSaveFeedback(true);
     };
 
@@ -95,6 +103,12 @@ const mapDispatchToProps = dispatch => ({
     },
     updatingAttributes: (node, attributes) => {
         dispatch(updateAttributes(node.uniqueId, attributes));
+    },
+    updateNodeProperties: (node, properties) => {
+        dispatch(updateNodeProperties(node.uniqueId, properties));
+    },
+    getNodeDetails: (node) => {
+        dispatch(fetchNode(node.uniqueId, false));
     },
     fetchNodeDetails: (node, selectedDay, showHistory, showComing, selectedHierarchy) => {
         dispatch(fetchNodePredecessors(node.uniqueId, selectedDay));
