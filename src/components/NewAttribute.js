@@ -32,8 +32,8 @@ const NewAttribute = (props) => {
     };
 
     const emptyUpperUnitState = () => {
-        setKey(null);
-        setValue(null);
+        //setKey(null);
+        //setValue(null);
         setStartDate(null);
         setEndDate(null);
     };
