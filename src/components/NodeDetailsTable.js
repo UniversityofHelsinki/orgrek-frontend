@@ -14,13 +14,16 @@ const ListLink = styled.a`
 `;
 
 const NodeDetailsTable = (props) => {
-    const { t, i18n } = useTranslation();
-    const lang = i18n.language;
-    let units = ['koontiyksikko', 'tiedekunta', 'osasto'];
-    {/* hierarchyFilters kantahaku tehty jo. Ota käyttöön tässä.*/}
+        const { t, i18n } = useTranslation();
+        const lang = i18n.language;
+        let units = ['koontiyksikko', 'tiedekunta', 'osasto'];
+        {/* hierarchyFilters kantahaku tehty jo. Ota käyttöön tässä.*/}
 
         useEffect(() => {
         }, [props.edit]);
+
+        useEffect(() => {
+        }, [props.node]);
 
         const renderTableHeader = () => {
             return (
@@ -39,22 +42,34 @@ const NodeDetailsTable = (props) => {
             return key !== 'unique_id';//Yksilöivä tunniste should not be edited
         };
 
+        const unitDropDown = (elem) => {
+            return <UnitDropDown value={t(elem.value)} units={units}
+                                 onUnitChange={(e) => props.onValueChange(e, elem)}/>;
+        };
+
+        const showHideElementBasedOnMode = (elem) => {
+            if (props.edit && props.fullname === false && doEdit(elem.key)) {
+                unitDropDown(elem);
+                if (props.heading !== 'valid_dates') {
+                    return inputField(elem);
+                }
+            } else {
+                return t(elem.value);
+            }
+        };
+
+        const inputField = (elem) => {
+            return <Form.Control name='value' value={ t(elem.value) }
+                                 onChange={ (e) => props.onValueChange(e, elem) }/>;
+        };
+
         const renderTableData = () => {
             return props.contentData ? (props.dataFilter ? props.dataFilter(props.contentData) : props.contentData).map((elem, index) => {
                 if (props.type === 'key-value') {
                     return (<tr key={ index }>
                         <td>{ t(elem.key) }</td>
                         <td>
-                            { props.edit && props.fullname === false && doEdit(elem.key) ?
-                                <> {/* edit mode */ }
-                                    { (elem.key === 'type') ? <>
-                                            <UnitDropDown value={ t(elem.value) } units={ units }
-                                                          onUnitChange={ (e) => props.onValueChange(e, elem) }/>
-                                        </>
-                                        : <Form.Control name='value' value={ t(elem.value) }
-                                                        onChange={ (e) => props.onValueChange(e, elem) }/> }
-                                </>
-                                : t(elem.value) } {/* show mode */ }
+                            { showHideElementBasedOnMode(elem) }
                         </td>
 
                         { props.hasValidity ?
@@ -63,11 +78,11 @@ const NodeDetailsTable = (props) => {
                                     { props.edit && props.fullname === false && doEdit(elem.key) ?
                                         <Row> {/* edit mode */ }
                                             <Col md="auto">
-                                                <ChooseDate field={ 'startDate' } elem={ elem }
+                                                <ChooseDate validity={props.heading === 'valid_dates'} field={ 'startDate' } elem={ elem }
                                                             onDateChange={ props.onDateChange }/>
                                             </Col>
                                             <Col md="auto">
-                                                <ChooseDate field={ 'endDate' } elem={ elem }
+                                                <ChooseDate validity={props.heading === 'valid_dates'} field={ 'endDate' } elem={ elem }
                                                             onDateChange={ props.onDateChange }/>
                                             </Col>
                                         </Row>
@@ -131,17 +146,18 @@ const NodeDetailsTable = (props) => {
             </>
         );
     }
-    ;
+;
 
-    const mapStateToProps = state => ({
-        edit: state.editModeReducer.edit
-    });
+const mapStateToProps = state => ({
+    edit: state.editModeReducer.edit,
+    node: state.nrd.node
+});
 
-    const mapDispatchToProps = (dispatch, ownProps) => ({
-        onNodeSelection: (elem) => {
-            dispatch(fetchNode(elem.uniqueId));
-        }
-    });
+const mapDispatchToProps = (dispatch, ownProps) => ({
+    onNodeSelection: (elem) => {
+        dispatch(fetchNode(elem.uniqueId));
+    }
+});
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(NodeDetailsTable);
