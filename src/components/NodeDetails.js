@@ -204,6 +204,7 @@ const NodeDetails = (props) => {
     };
 
     const onDateChange = (dateChanged) => {
+        console.log(dateChanged);
         let elem = dateChanged.elem;
         let date = moment(dateChanged.date).utcOffset(0).format('YYYY-MM-DDTHH:mm:ss.sss+00:00');
         if (date === 'Invalid date') {

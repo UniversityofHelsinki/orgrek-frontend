@@ -16,19 +16,21 @@ const ChooseDate = (props) => {
     return (
         <Fragment>
             {props.field === 'startDate' ?
-            <Col xs={6}>
-                <DatePicker wrapperClassName="datePicker"  locale="fi" dateFormat="dd.MM.yyyy" className="form-control"
-                            selected={props.elem.startDate === null ? emptydate.date : new Date(props.elem.startDate)}
-                            onChange={(e) => props.onDateChange({ date:e, whichDate:'startDate', elem:props.elem })}
-                            />
-            </Col>
-            :
-            <Col xs={6}>
-                <DatePicker wrapperClassName="datePicker"  locale="fi" dateFormat="dd.MM.yyyy" className="form-control"
-                            selected={props.elem.endDate === null ? emptydate.date : new Date(props.elem.endDate)}
-                            onChange={(e) => props.onDateChange({ date:e, whichDate:'endDate', elem:props.elem })}
-                />
-            </Col>}
+                <Col xs={6}>
+                    <p>{props.elem.startDate}</p>
+                    <DatePicker wrapperClassName="datePicker"  locale="fi" dateFormat="dd.MM.yyyy" className="form-control"
+                                selected={props.elem.startDate === null ? emptydate.date : new Date(props.elem.startDate)}
+                                onChange={(e) => props.onDateChange({ date:e, whichDate:'startDate', elem:props.elem })}
+                    />
+                </Col>
+                :
+                <Col xs={6}>
+                    <DatePicker wrapperClassName="datePicker"  locale="fi" dateFormat="dd.MM.yyyy" className="form-control"
+                                selected={props.elem.endDate === null ? emptydate.date : new Date(props.elem.endDate)}
+                                onChange={(e) => props.onDateChange({ date:e, whichDate:'endDate', elem:props.elem })}
+                    />
+                </Col>
+            }
         </Fragment>
     );
 };

@@ -87,7 +87,17 @@ const NodeDetailsTable = (props) => {
                                 { elem.hierarchies.length > 0 &&
                                     <>
                                         <td>{ t(elem.hierarchies[0].hierarchy) }</td>
-                                        <td>{ hierarchyDate(elem.hierarchies[0], i18n, t) }</td>
+                                        { props.edit && props.fullname === false && doEdit(elem.key) ?
+                                            <Row> {/* edit mode */ }
+                                                <Col md="auto">
+                                                    <ChooseDate field={ 'startDate' } elem={ elem.hierarchies[0] }
+                                                                onDateChange={ props.onDateChange }/>
+                                                </Col>
+                                                <Col md="auto">
+                                                    <ChooseDate field={ 'endDate' } elem={ elem.hierarchies[0] }
+                                                                onDateChange={ props.onDateChange }/>
+                                                </Col>
+                                            </Row>: hierarchyDate(elem.hierarchies[0], i18n, t) }
                                     </>
                                 }
                             </tr>
