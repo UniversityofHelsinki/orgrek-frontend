@@ -11,6 +11,7 @@ import {
     fetchNodeChildren
 } from '../actions/hierarchyAction';
 import {
+    fetchNode,
     fetchNodeAttributes,
     fetchNodeFavorableFullNames,
     fetchNodeFullNames,
@@ -144,7 +145,7 @@ const NodeDetails = (props) => {
         return !nameInfoData.includes(elem) && !typeAttributeData.includes(elem) && !codeAttributesData.includes(elem);
     }) : false;
     const sortedOtherAttributesData = otherAttributesData ? sortOtherAttributes(otherAttributesData) : false;
-    const validityData = props.node ? [props.node] : false;
+    let validityData = props.node ? [props.node] : false;
 
     const isCurrent = datesOverlap(
         props.node?.startDate && new Date(Date.parse(props.node.startDate)),
@@ -156,6 +157,9 @@ const NodeDetails = (props) => {
 
     useEffect(() => {
         if (props.node) {
+            validityData = props.node ? [props.node] : false;
+            console.log(props.node);
+            console.log(validityData);
             const startDate = Date.parse(props.node.startDate) || undefined;
             const endDate = Date.parse(props.node.endDate) || undefined;
             if (datesOverlap(startDate && new Date(startDate), endDate && new Date(endDate), props.selectedDay)) {
@@ -170,7 +174,7 @@ const NodeDetails = (props) => {
 
     React.useLayoutEffect(() => {
         selectData();
-    }, [props.nodeAttributes, props.nodeAttributesFuture, props.nodeAttributesHistory]);
+    }, [props.node, props.nodeAttributes, props.nodeAttributesFuture, props.nodeAttributesHistory]);
 
     const pastFutureFilter = (data) => {
         if (isCurrent || props.showComing || props.showHistory) {
@@ -195,10 +199,10 @@ const NodeDetails = (props) => {
 
     const onValueChange = (event, elem) => {
         if (modified[elem.id]) {//element has already been modified at least once, because its found in modified array
-            const target = { ...modified[elem.id], [event.target.name]: event.target.value };//makes copy of modified[elem.id] and updates its value with event.target.value
+            const target = { ...modified[elem.id], [event.target.name]: event.target.value , validity: false };//makes copy of modified[elem.id] and updates its value with event.target.value
             setModified({ ...modified, [elem.id]: target });//updates row
         } else {//This is the first time this element is modified so its not found in modified array
-            const target = { ...elem, [event.target.name]: event.target.value };//creates a new elem object based on elem object and updates its value with event.target.value
+            const target = { ...elem, [event.target.name]: event.target.value, validity: false };//creates a new elem object based on elem object and updates its value with event.target.value
             setModified({ ...modified, [elem.id]: target });//adds this new object in modified map
         }
     };
@@ -212,10 +216,10 @@ const NodeDetails = (props) => {
         let name = dateChanged.whichDate; //startDate or endDate
 
         if (modified[elem.id]) {//element has already been modified at least once, because its found in modified array
-            const target = { ...modified[elem.id], [name]: date };//makes copy of modified[elem.id] and updates its value with date
+            const target = { ...modified[elem.id], [name]: date, validity: dateChanged.validity };//makes copy of modified[elem.id] and updates its value with date
             setModified({ ...modified, [elem.id]: target });//updates row
         } else {//This is the first time this element is modified so its not found in modified array
-            const target = { ...elem, [name]: date };//creates a new elem object based on elem object and updates its value with date
+            const target = { ...elem, [name]: date, validity: dateChanged.validity };//creates a new elem object based on elem object and updates its value with date
             setModified({ ...modified, [elem.id]: target });//adds this new object in modified map
         }
     };
@@ -455,7 +459,8 @@ const mapDispatchToProps = dispatch => ({
             dispatch(fetchNodeChildren(node.uniqueId, selectedDay));
             dispatch(fetchNodeFullNames(node.uniqueId, selectedDay));
         }
-    }
+    },
+    fetchNode: (uniqueId) => dispatch(fetchNode(uniqueId))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(NodeDetails);

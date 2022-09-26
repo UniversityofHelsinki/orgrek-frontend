@@ -19,14 +19,14 @@ const ChooseDate = (props) => {
             <Col xs={6}>
                 <DatePicker wrapperClassName="datePicker"  locale="fi" dateFormat="dd.MM.yyyy" className="form-control"
                             selected={props.elem.startDate === null ? emptydate.date : new Date(props.elem.startDate)}
-                            onChange={(e) => props.onDateChange({ date:e, whichDate:'startDate', elem:props.elem })}
+                            onChange={(e) => props.onDateChange({ date:e, whichDate:'startDate', elem:props.elem, validity:props.validity })}
                             />
             </Col>
             :
             <Col xs={6}>
                 <DatePicker wrapperClassName="datePicker"  locale="fi" dateFormat="dd.MM.yyyy" className="form-control"
                             selected={props.elem.endDate === null ? emptydate.date : new Date(props.elem.endDate)}
-                            onChange={(e) => props.onDateChange({ date:e, whichDate:'endDate', elem:props.elem })}
+                            onChange={(e) => props.onDateChange({ date:e, whichDate:'endDate', elem:props.elem, validity: props.validity })}
                 />
             </Col>}
         </Fragment>
