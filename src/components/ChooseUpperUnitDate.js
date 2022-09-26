@@ -6,7 +6,7 @@ import { Col } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 registerLocale('fi', fi);
 
-const ChooseDate = (props) => {
+const ChooseUpperUnitDate = (props) => {
     const { t, i18n } = useTranslation();
 
     const emptydate = {
@@ -18,20 +18,20 @@ const ChooseDate = (props) => {
             {props.field === 'startDate' ?
                 <Col xs={6}>
                     <DatePicker wrapperClassName="datePicker"  locale="fi" dateFormat="dd.MM.yyyy" className="form-control"
-                                selected={props.elem.startDate === null ? emptydate.date : new Date(props.elem.startDate)}
-                                onChange={(e) => props.onDateChange({ date:e, whichDate:'startDate', elem:props.elem })}
+                                selected={props.hierarchyElement.startDate === null ? emptydate.date : new Date(props.hierarchyElement.startDate)}
+                                onChange={(e) => props.onDateChange({ date:e, whichDate:'startDate', elem:props.elem, hierarchy:props.hierarchyElement.hierarchy })}
                     />
                 </Col>
                 :
                 <Col xs={6}>
                     <DatePicker wrapperClassName="datePicker"  locale="fi" dateFormat="dd.MM.yyyy" className="form-control"
-                                selected={props.elem.endDate === null ? emptydate.date : new Date(props.elem.endDate)}
-                                onChange={(e) => props.onDateChange({ date:e, whichDate:'endDate', elem:props.elem })}
+                                selected={props.hierarchyElement.endDate === null ? emptydate.date : new Date(props.hierarchyElement.endDate)}
+                                onChange={(e) => props.onDateChange({ date:e, whichDate:'endDate', elem:props.elem, hierarchy:props.hierarchyElement.hierarchy })}
                     />
                 </Col>
             }
         </Fragment>
     );
 };
-export default connect()(ChooseDate);
+export default connect()(ChooseUpperUnitDate);
 

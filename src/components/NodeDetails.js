@@ -33,6 +33,7 @@ const NodeDetails = (props) => {
     const lang = i18n.language;
     const [attributeData, setAttributeData] = useState(false);
     const [modified, setModified] = useState({}); //{} makes map. Change map to list when sending to backend
+    const [modifiedParents, setModifiedParents] = useState({});
     //const [newrowdata, setNewrowdata] = useState([]); //{} makes map. Change map to list when sending to backend
 
     const uniqueIdAttribute = props.node
@@ -203,8 +204,8 @@ const NodeDetails = (props) => {
         }
     };
 
+
     const onDateChange = (dateChanged) => {
-        console.log(dateChanged);
         let elem = dateChanged.elem;
         let date = moment(dateChanged.date).utcOffset(0).format('YYYY-MM-DDTHH:mm:ss.sss+00:00');
         if (date === 'Invalid date') {
@@ -219,6 +220,34 @@ const NodeDetails = (props) => {
             const target = { ...elem, [name]: date };//creates a new elem object based on elem object and updates its value with date
             setModified({ ...modified, [elem.id]: target });//adds this new object in modified map
         }
+    };
+
+    const onParentDateChange = (dateChanged) => {
+        let elem = dateChanged.elem;
+        let date = moment(dateChanged.date).utcOffset(0).format('YYYY-MM-DDTHH:mm:ss.sss+00:00');
+        if (date === 'Invalid date') {
+            date = null;
+        }
+        let name = dateChanged.whichDate; //startDate or endDate
+        let hierarchyIndex = elem.hierarchies.findIndex((obj => obj.hierarchy === dateChanged.hierarchy));
+        if (name === 'startDate') {
+            elem.hierarchies[hierarchyIndex].startDate = date;
+        }
+        if (name === 'endDate') {
+            elem.hierarchies[hierarchyIndex].endDate = date;
+        }
+        if (modifiedParents[elem.id]) {//element has already been modified at least once, because its found in modified array
+            const target = { ...modifiedParents[elem.id], [name]: date };//makes copy of modified[elem.id] and updates its value with date
+            setModifiedParents({ ...modifiedParents, [elem.id]: target });//updates row
+        } else {//This is the first time this element is modified so its not found in modified array
+            const target = { ...elem, [name]: date };//creates a new elem object based on elem object and updates its value with date
+            setModifiedParents({ ...modifiedParents, [elem.id]: target });//adds this new object in modified map
+        }
+
+        console.log(modifiedParents);
+
+        console.log(props.parents);
+
     };
 
     return (
@@ -344,7 +373,7 @@ const NodeDetails = (props) => {
                             hasValidity={false}
                             dataFilter={pastFutureFilter}
                             onValueChange={onValueChange}
-                            onDateChange={onDateChange}
+                            onDateChange={onParentDateChange}
                             fullname={false}
 
                         />

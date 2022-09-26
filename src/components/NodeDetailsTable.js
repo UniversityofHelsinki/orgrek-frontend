@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import { fetchNode } from '../actions/nodeAction';
 import ChooseDate from './ChooseDate';
 import UnitDropDown from './UnitDropDown';
+import ChooseUpperUnitDate from './ChooseUpperUnitDate';
 
 const ListLink = styled.a`
   text-decoration: none;
@@ -14,10 +15,10 @@ const ListLink = styled.a`
 `;
 
 const NodeDetailsTable = (props) => {
-    const { t, i18n } = useTranslation();
-    const lang = i18n.language;
-    let units = ['koontiyksikko', 'tiedekunta', 'osasto'];
-    {/* hierarchyFilters kantahaku tehty jo. Ota käyttöön tässä.*/}
+        const { t, i18n } = useTranslation();
+        const lang = i18n.language;
+        let units = ['koontiyksikko', 'tiedekunta', 'osasto'];
+        {/* hierarchyFilters kantahaku tehty jo. Ota käyttöön tässä.*/}
 
         useEffect(() => {
         }, [props.edit]);
@@ -87,17 +88,19 @@ const NodeDetailsTable = (props) => {
                                 { elem.hierarchies.length > 0 &&
                                     <>
                                         <td>{ t(elem.hierarchies[0].hierarchy) }</td>
-                                        { props.edit && props.fullname === false && doEdit(elem.key) ?
-                                            <Row> {/* edit mode */ }
-                                                <Col md="auto">
-                                                    <ChooseDate field={ 'startDate' } elem={ elem.hierarchies[0] }
-                                                                onDateChange={ props.onDateChange }/>
-                                                </Col>
-                                                <Col md="auto">
-                                                    <ChooseDate field={ 'endDate' } elem={ elem.hierarchies[0] }
-                                                                onDateChange={ props.onDateChange }/>
-                                                </Col>
-                                            </Row>: hierarchyDate(elem.hierarchies[0], i18n, t) }
+                                        <td>
+                                            { props.edit && props.fullname === false && doEdit(elem.key) && props.heading === 'upper_units' ?
+                                                <Row> {/* edit mode */ }
+                                                    <Col md="auto">
+                                                        <ChooseUpperUnitDate field={ 'startDate' } elem={ elem } hierarchyElement={ elem.hierarchies[0] }
+                                                                    onDateChange={ props.onDateChange }/>
+                                                    </Col>
+                                                    <Col md="auto">
+                                                        <ChooseUpperUnitDate field={ 'endDate' } elem={ elem } hierarchyElement={ elem.hierarchies[0] }
+                                                                    onDateChange={ props.onDateChange }/>
+                                                    </Col>
+                                                </Row>: hierarchyDate(elem.hierarchies[0], i18n, t) }
+                                        </td>
                                     </>
                                 }
                             </tr>
@@ -141,17 +144,17 @@ const NodeDetailsTable = (props) => {
             </>
         );
     }
-    ;
+;
 
-    const mapStateToProps = state => ({
-        edit: state.editModeReducer.edit
-    });
+const mapStateToProps = state => ({
+    edit: state.editModeReducer.edit
+});
 
-    const mapDispatchToProps = (dispatch, ownProps) => ({
-        onNodeSelection: (elem) => {
-            dispatch(fetchNode(elem.uniqueId));
-        }
-    });
+const mapDispatchToProps = (dispatch, ownProps) => ({
+    onNodeSelection: (elem) => {
+        dispatch(fetchNode(elem.uniqueId));
+    }
+});
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(NodeDetailsTable);
