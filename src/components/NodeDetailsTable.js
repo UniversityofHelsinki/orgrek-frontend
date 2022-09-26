@@ -108,7 +108,19 @@ const NodeDetailsTable = (props) => {
                                 <tr key={ i }>
                                     <td></td>
                                     <td>{ t(hierarchy.hierarchy) }</td>
-                                    <td>{ hierarchyDate(hierarchy, i18n, t) }</td>
+                                    <td>
+                                        { props.edit && props.fullname === false && doEdit(elem.key) && props.heading === 'upper_units' ?
+                                            <Row> {/* edit mode */ }
+                                                <Col md="auto">
+                                                    <ChooseUpperUnitDate field={ 'startDate' } elem={ elem } hierarchyElement={ hierarchy }
+                                                                         onDateChange={ props.onDateChange }/>
+                                                </Col>
+                                                <Col md="auto">
+                                                    <ChooseUpperUnitDate field={ 'endDate' } elem={ elem } hierarchyElement={ hierarchy }
+                                                                         onDateChange={ props.onDateChange }/>
+                                                </Col>
+                                            </Row>: hierarchyDate(hierarchy, i18n, t) }
+                                    </td>
                                 </tr>
                             ) }
                         </React.Fragment>
