@@ -8,12 +8,11 @@ import { actionAddNewUpperUnit } from '../actions/newUpperUnitAction';
 import { connect } from 'react-redux';
 import { fetchNode } from '../actions/nodeAction';
 import { fetchTree } from '../actions/treeAction';
-import { editMode } from '../actions/editModeAction';
 
 const NewUpperUnit = (props) => {
 
     const [selectedParentOrganisationUnit, setSelectedParentOrganisationUnit] = useState(null);
-    const [selectedHierarchy, setSelectedHierarchy] = useState(null);
+    const [selectedHierarchy, setSelectedHierarchy] = useState('-');
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
 
@@ -31,10 +30,8 @@ const NewUpperUnit = (props) => {
     };
 
     const emptyUpperUnitState = () => {
-        setSelectedParentOrganisationUnit(null);
-        setSelectedHierarchy(null);
-        setStartDate(null);
-        setEndDate(null);
+        setSelectedHierarchy('-');
+        isButtonDisabled();
     };
 
     const insertNewUpperUnit = async() => {
@@ -44,7 +41,7 @@ const NewUpperUnit = (props) => {
     };
 
     const isButtonDisabled = () => {
-        return !selectedParentOrganisationUnit || !selectedHierarchy;
+        return !selectedParentOrganisationUnit || selectedHierarchy === '-';
     };
 
     return (
@@ -55,7 +52,7 @@ const NewUpperUnit = (props) => {
                       <OrganisationUnitSearch onOrganisationUnitChange={organisationUnitSelection} selectedParentOrganisationUnit={selectedParentOrganisationUnit}/>
                   </Col>
                   <Col>
-                      <HierarchyDropDown onHierarchyChange={hierarchySelection}/>
+                      <HierarchyDropDown onHierarchyChange={hierarchySelection} hierarchySelection={selectedHierarchy}/>
                   </Col>
                   <Col>
                       <PickDate startDate onDateChange={dateSelection} selectedStartDate={startDate}/>
@@ -79,7 +76,6 @@ const mapDispatchToProps = (dispatch) => ({
     fetchNodeAndTree: (node, selection, date) => {
         dispatch(fetchNode(node.uniqueId, true));
         dispatch(fetchTree(selection, date));
-        dispatch(editMode(false));
     }
 });
 const mapStateToProps = state => ({

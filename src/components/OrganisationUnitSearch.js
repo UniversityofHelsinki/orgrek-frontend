@@ -21,6 +21,9 @@ const OrganisationUnitSearch = (props) => {
     const flatten = (current) =>  current.reduce((a,c) => [...a, c, ...flatten(c.children)], []);
     const language = i18n.language === 'ia' ? 'fi' : i18n.language;
     const options = props.treeWithAllHierarchies[language] ? flatten(props.treeWithAllHierarchies[language].children) : [];
+    const uniqueOptions = options.filter((elem, index) => options.findIndex(obj => obj.uniqueId === elem.uniqueId) === index);
+    const hy = { id: props.treeWithAllHierarchies[language].id, name: props.treeWithAllHierarchies[language].name, uniqueId: props.treeWithAllHierarchies[language].uniqueId };
+    uniqueOptions.push(hy);
 
     const nameMatches = (name, text) => {
         return name.toLowerCase().indexOf(text.toLowerCase()) !== -1;
@@ -39,7 +42,7 @@ const OrganisationUnitSearch = (props) => {
                 return nameMatches(option.name, props.text) || uniqueIdMatches(option.uniqueId, props.text) ? true : false;
             }}
             onChange={ value  => handleChange(value)}
-            options={options}
+            options={uniqueOptions}
             placeholder={t('type_three_char_to_start_search')}
             selected={singleSelections}
             minLength={3}
