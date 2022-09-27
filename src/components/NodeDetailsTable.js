@@ -36,95 +36,106 @@ const NodeDetailsTable = (props) => {
             );
         };
 
+        const isEditMode = (elem) => {
+            if (props.edit && props.fullname === false && doEdit(elem.key)) {
+                return true;
+            } else {
+                return false;
+            }
+        };
+
         const doEdit = (key) => {
             return key !== 'unique_id';//Yksilöivä tunniste should not be edited
+        };
+
+        const renderUnitDropDownOrInputField = (elem) => {
+            if (elem.key === 'type') {
+                return <UnitDropDown value={ t(elem.value) } units={ units } onUnitChange={ (e) => props.onValueChange(e, elem) }/>;
+            } else {
+                return <Form.Control name='value' value={ t(elem.value) } onChange={ (e) => props.onValueChange(e, elem) }/>;
+            }
+        };
+
+        const renderDateComponent = (elem) => {
+            return (
+                <Row>
+                    <Col md="auto">
+                        <ChooseDate field={'startDate'} elem={elem}
+                                    onDateChange={props.onDateChange}/>
+                    </Col>
+                    <Col md="auto">
+                        <ChooseDate field={'endDate'} elem={elem}
+                                    onDateChange={props.onDateChange}/>
+                    </Col>
+                </Row>
+            );
+        };
+
+        const renderAttributesTable = (elem, index) => {
+            return (
+                <tr key={ index }>
+                    <td>{ t(elem.key) }</td>
+                    <td>
+                        { isEditMode(elem) ? renderUnitDropDownOrInputField(elem) : t(elem.value) }
+                    </td>
+
+                    { props.hasValidity ?
+                        <td>
+                            { isEditMode(elem) ? renderDateComponent(elem) : t(showValidity(elem.startDate, elem.endDate, i18n, t)) }
+                        </td> : <></> }
+                </tr>
+            );
+        };
+
+        const renderUnit = (elem) => {
+            return (
+                <td onClick={ () => props.onNodeSelection(elem) }>
+                    <ListLink href="#">
+                        { elem.fullName }
+                    </ListLink>
+                </td>
+            );
+        };
+
+        const renderUpperUnitDate = (elem, hierarchy) => {
+            return (
+                <Row>
+                    <Col md="auto">
+                        <ChooseUpperUnitDate field={ 'startDate' } elem={ elem } hierarchyElement={ hierarchy }
+                                             onDateChange={ props.onDateChange }/>
+                    </Col>
+                    <Col md="auto">
+                        <ChooseUpperUnitDate field={ 'endDate' } elem={ elem } hierarchyElement={ hierarchy }
+                                             onDateChange={ props.onDateChange }/>
+                    </Col>
+                </Row>
+            );
+        };
+
+        const isUpperUnit = () => props.heading === 'upper_units';
+
+        const renderHierarchyTable = (elem) => {
+            return (
+                <React.Fragment key={ elem.id }>
+                    { elem.hierarchies.map((hierarchy, i) =>
+                        <tr key={ i }>
+                            <td> { i === 0 ? renderUnit(elem) : '' }</td>
+                            <td>{ t(hierarchy.hierarchy) }</td>
+                            <td>{ isEditMode(true) && isUpperUnit() ? renderUpperUnitDate(elem, hierarchy) : hierarchyDate(hierarchy, i18n, t) }</td>
+                        </tr>
+                    ) }
+                </React.Fragment>
+            );
         };
 
         const renderTableData = () => {
             return props.contentData ? (props.dataFilter ? props.dataFilter(props.contentData) : props.contentData).map((elem, index) => {
                 if (props.type === 'key-value') {
-                    return (<tr key={ index }>
-                        <td>{ t(elem.key) }</td>
-                        <td>
-                            { props.edit && props.fullname === false && doEdit(elem.key) ?
-                                <> {/* edit mode */ }
-                                    { (elem.key === 'type') ? <>
-                                            <UnitDropDown value={ t(elem.value) } units={ units }
-                                                          onUnitChange={ (e) => props.onValueChange(e, elem) }/>
-                                        </>
-                                        : <Form.Control name='value' value={ t(elem.value) }
-                                                        onChange={ (e) => props.onValueChange(e, elem) }/> }
-                                </>
-                                : t(elem.value) } {/* show mode */ }
-                        </td>
-
-                        { props.hasValidity ?
-                            <td>
-                                <>
-                                    { props.edit && props.fullname === false && doEdit(elem.key) ?
-                                        <Row> {/* edit mode */ }
-                                            <Col md="auto">
-                                                <ChooseDate field={ 'startDate' } elem={ elem }
-                                                            onDateChange={ props.onDateChange }/>
-                                            </Col>
-                                            <Col md="auto">
-                                                <ChooseDate field={ 'endDate' } elem={ elem }
-                                                            onDateChange={ props.onDateChange }/>
-                                            </Col>
-                                        </Row>
-                                        : t(showValidity(elem.startDate, elem.endDate, i18n, t)) } {/* show mode */ }
-                                </>
-                            </td> : <></> }
-                    </tr>);
+                    return renderAttributesTable(elem, index);
                 }
 
                 if (props.type === 'node-hierarchy') {
-                    return (<React.Fragment key={ elem.id }>
-                            <tr>
-                                <td onClick={ () => props.onNodeSelection(elem) }>
-                                    <ListLink href="#">
-                                        { elem.fullName }
-                                    </ListLink></td>
-                                { elem.hierarchies.length > 0 &&
-                                    <>
-                                        <td>{ t(elem.hierarchies[0].hierarchy) }</td>
-                                        <td>
-                                            { props.edit && props.fullname === false && doEdit(elem.key) && props.heading === 'upper_units' ?
-                                                <Row> {/* edit mode */ }
-                                                    <Col md="auto">
-                                                        <ChooseUpperUnitDate field={ 'startDate' } elem={ elem } hierarchyElement={ elem.hierarchies[0] }
-                                                                    onDateChange={ props.onDateChange }/>
-                                                    </Col>
-                                                    <Col md="auto">
-                                                        <ChooseUpperUnitDate field={ 'endDate' } elem={ elem } hierarchyElement={ elem.hierarchies[0] }
-                                                                    onDateChange={ props.onDateChange }/>
-                                                    </Col>
-                                                </Row>: hierarchyDate(elem.hierarchies[0], i18n, t) }
-                                        </td>
-                                    </>
-                                }
-                            </tr>
-                            { elem.hierarchies.slice(1).map((hierarchy, i) =>
-                                <tr key={ i }>
-                                    <td></td>
-                                    <td>{ t(hierarchy.hierarchy) }</td>
-                                    <td>
-                                        { props.edit && props.fullname === false && doEdit(elem.key) && props.heading === 'upper_units' ?
-                                            <Row> {/* edit mode */ }
-                                                <Col md="auto">
-                                                    <ChooseUpperUnitDate field={ 'startDate' } elem={ elem } hierarchyElement={ hierarchy }
-                                                                         onDateChange={ props.onDateChange }/>
-                                                </Col>
-                                                <Col md="auto">
-                                                    <ChooseUpperUnitDate field={ 'endDate' } elem={ elem } hierarchyElement={ hierarchy }
-                                                                         onDateChange={ props.onDateChange }/>
-                                                </Col>
-                                            </Row>: hierarchyDate(hierarchy, i18n, t) }
-                                    </td>
-                                </tr>
-                            ) }
-                        </React.Fragment>
-                    );
+                    return renderHierarchyTable(elem);
                 }
 
                 if (props.type === 'name-validity') {
@@ -151,7 +162,6 @@ const NodeDetailsTable = (props) => {
                     <tbody>
                     { renderTableData() }
                     </tbody>
-                    {/*<>{props.edit ? <tfoot><Button size="sm" onClick= {(e) => props.addNewrow(e)}>{t('edit_mode_add_row_button')}</Button></tfoot> :  <></> }</>*/ }
                 </Table>
             </>
         );
