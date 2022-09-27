@@ -16,9 +16,7 @@ const ListLink = styled.a`
 
 const NodeDetailsTable = (props) => {
         const { t, i18n } = useTranslation();
-        const lang = i18n.language;
         let units = ['koontiyksikko', 'tiedekunta', 'osasto'];
-        {/* hierarchyFilters kantahaku tehty jo. Ota käyttöön tässä.*/}
 
         useEffect(() => {
         }, [props.edit]);
@@ -45,7 +43,7 @@ const NodeDetailsTable = (props) => {
         };
 
         const doEdit = (key) => {
-            return key !== 'unique_id';//Yksilöivä tunniste should not be edited
+            return key !== 'unique_id';
         };
 
         const renderUnitDropDownOrInputField = (elem) => {
