@@ -200,14 +200,13 @@ const NodeDetails = (props) => {
         } else {
             setModifiedParents({ ...modifiedParents, [elem.id]: elem });
         }
-        console.log(modifiedParents);
     };
 
     return (
         <div>
             {props.nodeAttributes &&
                 <>
-                    {isAdmin(props.user) ? <EditButtons setModified={setModified} node={props.node} selectedDay={props.selectedDay} selectedHierarchy={props.selectedHierarchy} modified={modified} /> : null }
+                    {isAdmin(props.user) ? <EditButtons modifiedParents={modifiedParents} setModified={setModified} node={props.node} selectedDay={props.selectedDay} selectedHierarchy={props.selectedHierarchy} modified={modified} /> : null }
                     <div className="right-side">
                         <div>
                             <h3>{props.favorableNames[lang === 'ia' && 'fi' || lang]?.[0]?.name}</h3>

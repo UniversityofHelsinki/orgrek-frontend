@@ -1,7 +1,7 @@
 import { Button, Col, Row } from 'react-bootstrap';
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { switchComing, switchHistory, updateAttributes } from '../actions/nodeViewAction';
+import { switchComing, switchHistory, updateAttributes, updateParentUnitProperties } from '../actions/nodeViewAction';
 import { connect } from 'react-redux';
 import NodeViewControl from './NodeViewControl';
 import { editMode } from '../actions/editModeAction';
@@ -24,11 +24,21 @@ const EditButtons = (props) => {
         props.onEditChange(newMode);
     };
 
-    const saveModifiedAttributes = ()  => {
+    const updateParentNode = (modifiedParents) => {
+        return modifiedParents[0].hierarchies.forEach((parent) => {
+            parent.parentNodeId = modifiedParents[0].id;
+            parent.childNodeId = props.node.id;
+        });
+    };
+
+    const saveModifiedAttributes = async()  => {
         const modifiedArr = Object.values(props.modified);
-        //modifiedArr.map((mod,index) => console.log(index + ' = ' + mod + ' = ' + mod[index]));
-        props.updatingAttributes(props.node, modifiedArr);
-        //setAwaitingSaveFeedback(true);
+        const modifiedParents = Object.values(props.modifiedParents);
+        await props.updatingAttributes(props.node, modifiedArr);
+        if (modifiedParents && modifiedParents[0] && modifiedParents[0].hierarchies && modifiedParents[0].hierarchies.length > 0) {
+            updateParentNode(modifiedParents);
+            await props.updateParentUnits(modifiedParents[0].hierarchies);
+        }
     };
 
     useEffect(() => {
@@ -50,8 +60,9 @@ const EditButtons = (props) => {
                         </Button>
                     </Col>
                     <Col md="auto">
-                        <Button size="sm" variant="success" onClick={() => {toggleEdit(false);
-                            {saveModifiedAttributes();}
+                        <Button size="sm" variant="success" onClick={async () => {
+                            toggleEdit(false);
+                            await saveModifiedAttributes();
                             props.onSwitchComing(false);//switch off coming attributes
                             props.onSwitchHistory(false);
                             props.fetchNodeDetails(props.node, props.selectedDay, props.showHistory, props.showComing, props.selectedHierarchy);
@@ -95,6 +106,9 @@ const mapDispatchToProps = dispatch => ({
     },
     updatingAttributes: (node, attributes) => {
         dispatch(updateAttributes(node.uniqueId, attributes));
+    },
+    updateParentUnits:(properties) => {
+        dispatch(updateParentUnitProperties(properties));
     },
     fetchNodeDetails: (node, selectedDay, showHistory, showComing, selectedHierarchy) => {
         dispatch(fetchNodePredecessors(node.uniqueId, selectedDay));
