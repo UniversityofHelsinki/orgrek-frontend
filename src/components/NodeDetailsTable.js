@@ -68,7 +68,7 @@ const NodeDetailsTable = (props) => {
                 if (props.type === 'key-value') {
                     return (<tr key={ index }>
                         <td>{ t(elem.key) }</td>
-                        <td>
+                        <td width="20%">
                             { showHideElementBasedOnMode(elem) }
                         </td>
 
@@ -77,13 +77,16 @@ const NodeDetailsTable = (props) => {
                                 <>
                                     { props.edit && props.fullname === false && doEdit(elem.key) ?
                                         <Row> {/* edit mode */ }
-                                            <Col md="auto">
+                                            <Col md="4">
                                                 <ChooseDate validity={props.heading === 'valid_dates'} field={ 'startDate' } elem={ elem }
                                                             onDateChange={ props.onDateChange }/>
                                             </Col>
-                                            <Col md="auto">
+                                            <Col md="4">
                                                 <ChooseDate validity={props.heading === 'valid_dates'} field={ 'endDate' } elem={ elem }
                                                             onDateChange={ props.onDateChange }/>
+                                            </Col>
+                                            <Col md="3" className="warningText">
+                                                { elem.err ? elem.err : '' }
                                             </Col>
                                         </Row>
                                         : t(showValidity(elem.startDate, elem.endDate, i18n, t)) } {/* show mode */ }

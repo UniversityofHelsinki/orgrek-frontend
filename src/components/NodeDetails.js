@@ -34,7 +34,6 @@ const NodeDetails = (props) => {
     const lang = i18n.language;
     const [attributeData, setAttributeData] = useState(false);
     const [modified, setModified] = useState({}); //{} makes map. Change map to list when sending to backend
-    //const [newrowdata, setNewrowdata] = useState([]); //{} makes map. Change map to list when sending to backend
 
     const uniqueIdAttribute = props.node
         ? { 'key': 'unique_id', 'value': props.node.uniqueId, startDate: null, endDate: null }
@@ -183,27 +182,13 @@ const NodeDetails = (props) => {
         return [];
     };
 
-    /*const addNewrow = (event) => {
-    ==============================================================================================================
-        Jokaiselle NodeDetailsTable:lle (jota voi editoida/lisätä riveja) lisättävä oma newrowdata array, että osaa tulostaa
-        kuhunkin kohtaan oikeat tyhjät rivit, (jotka sit täytetään ja lisätään kantaan jne....)
-    ==============================================================================================================
-            //newrowdata.length +1 ni saat arvon tohon alle key:
-            //se on tiedettävä, jos päivittää jälkeenpäin kys. riviä.
-            //const target = { key: '17',value: 'lili' };//creates a ne elem object
-            //setNewrowdata([{ ...newrowdata, '17': target }]);//adds new empty object in modified array
-           //- piti laitta toho riville yllä [{ ...newrowdata, '17': target }] muuten ei toiminu
-        let index = modified.length +1;
-        setModified([{ ...modified, index:[{ key: '',value: '' }] }]);
-    };*/
-
     const onValueChange = (event, elem) => {
         if (modified[elem.id]) {//element has already been modified at least once, because its found in modified array
-            const target = { ...modified[elem.id], [event.target.name]: event.target.value , validity: false };//makes copy of modified[elem.id] and updates its value with event.target.value
+            const target = { ...modified[elem.id], [event.target.name]: event.target.value , validity: false, 'err': '' };//makes copy of modified[elem.id] and updates its value with event.target.value
             setModified({ ...modified, [elem.id]: target });//updates row
         } else {//This is the first time this element is modified so its not found in modified array
-            const target = { ...elem, [event.target.name]: event.target.value, validity: false };//creates a new elem object based on elem object and updates its value with event.target.value
-            setModified({ ...modified, [elem.id]: target });//adds this new object in modified map
+            const target = { ...elem, [event.target.name]: event.target.value, validity: false, 'err': '' };//creates a new elem object based on elem object and updates its value with event.target.value
+            setModified({ ...modified, [elem.id]: target, 'err': '' });//adds this new object in modified map
         }
     };
 
@@ -216,10 +201,10 @@ const NodeDetails = (props) => {
         let name = dateChanged.whichDate; //startDate or endDate
 
         if (modified[elem.id]) {//element has already been modified at least once, because its found in modified array
-            const target = { ...modified[elem.id], [name]: date, validity: dateChanged.validity };//makes copy of modified[elem.id] and updates its value with date
+            const target = { ...modified[elem.id], [name]: date, validity: dateChanged.validity, 'err': '' };//makes copy of modified[elem.id] and updates its value with date
             setModified({ ...modified, [elem.id]: target });//updates row
         } else {//This is the first time this element is modified so its not found in modified array
-            const target = { ...elem, [name]: date, validity: dateChanged.validity };//creates a new elem object based on elem object and updates its value with date
+            const target = { ...elem, [name]: date, validity: dateChanged.validity, 'err': '' };//creates a new elem object based on elem object and updates its value with date
             setModified({ ...modified, [elem.id]: target });//adds this new object in modified map
         }
     };
@@ -245,12 +230,6 @@ const NodeDetails = (props) => {
                                 }
                                 return elem; //original attribute
                             }))] : validityData }
-                            /*contentData={validityData ? [...validityData.map((elem => {
-                                 if (modified[elem.id]) { //if attribute is modified it's found in modified map
-                                     return modified[elem.id];//and already modified attribute is shown
-                                 }
-                                 return elem; //original attribute
-                             })), { key: '',value: '' }] : [{ key: '',value: '' }]} //adds empty row after attributes*/
                             hasValidity={true}
                             onValueChange={onValueChange}
                             onDateChange={onDateChange}
@@ -267,21 +246,11 @@ const NodeDetails = (props) => {
                                 }
                                 return elem; //original attribute
                             }))] : nameInfoDataOrderedByLanguage }
-                            /*contentData={nameInfoDataOrderedByLanguage ? [...nameInfoDataOrderedByLanguage.map((elem => {
-                                if (modified[elem.id]) { //if attribute is modified it's found in modified map
-                                    return modified[elem.id];//and already modified attribute is shown
-                                }
-                                return elem; //original attribute
-                            })), [...modified.map((elem => {
-                                return elem;
-                            }))] ]: [{ key: '',value: '' }]} //add empty row after attributes*/
                             hasValidity={true}
                             dataFilter={pastFutureFilter}
                             onValueChange={onValueChange}
                             onDateChange={onDateChange}
-                            //addNewrow={addNewrow}
                             fullname={false}
-
                         />
                         <NodeDetailsTable
                             selectedDay={props.selectedDay}
@@ -291,7 +260,6 @@ const NodeDetails = (props) => {
                             contentData={[...(props.displayNames.fi || []), ...(props.displayNames.sv || []), ...(props.displayNames.en || [])].filter(n => n).map(dn => ({ ...dn, key: `name_${dn.language.toLowerCase()}`, value: dn.name }))}
                             hasValidity={true}
                             dataFilter={pastFutureFilter}
-                            //edit={false}
                             fullname={true}
                             onValueChange={onValueChange}
                             onDateChange={onDateChange}
@@ -307,18 +275,11 @@ const NodeDetails = (props) => {
                                 }
                                 return elem; //original attribute
                             }))]: codeAttributesData }
-                            /*contentData={codeAttributesData ? [...codeAttributesData.map((elem => {
-                                if (modified[elem.id]) { //if attribute is modified it's found in modified map
-                                    return modified[elem.id];//and already modified attribute is shown
-                                }
-                                return elem; //original attribute
-                            })), { key: '',value: '' }] : [{ key: '',value: '' }]} //add empty row after attributes*/
                             hasValidity={true}
                             dataFilter={data => (isPast || isFuture) && !(props.showHistory || props.showComing) ? data.filter(attr => attr.key === 'unique_id') : data}
                             onValueChange={onValueChange}
                             onDateChange={onDateChange}
                             fullname={false}
-
                         />
                         <NodeDetailsTable
                             selectedDay={props.selectedDay}
@@ -336,7 +297,6 @@ const NodeDetails = (props) => {
                             onValueChange={onValueChange}
                             onDateChange={onDateChange}
                             fullname={false}
-
                         />
                         <NodeDetailsTable
                             selectedDay={props.selectedDay}
@@ -349,7 +309,6 @@ const NodeDetails = (props) => {
                             onValueChange={onValueChange}
                             onDateChange={onDateChange}
                             fullname={false}
-
                         />
                         <NewUpperUnit />
                         <NodeDetailsTable
@@ -363,7 +322,6 @@ const NodeDetails = (props) => {
                             onValueChange={onValueChange}
                             onDateChange={onDateChange}
                             fullname={false}
-
                         />
                         <NodeDetailsTable
                             selectedDay={props.selectedDay}
@@ -375,7 +333,6 @@ const NodeDetails = (props) => {
                             onValueChange={onValueChange}
                             onDateChange={onDateChange}
                             fullname={false}
-
                         />
                         <NodeDetailsTable
                             selectedDay={props.selectedDay}
@@ -387,7 +344,6 @@ const NodeDetails = (props) => {
                             onValueChange={onValueChange}
                             onDateChange={onDateChange}
                             fullname={false}
-
                         />
                         <NodeDetailsTable
                             selectedDay={props.selectedDay}
@@ -400,18 +356,11 @@ const NodeDetails = (props) => {
                                 }
                                 return elem; //original attribute
                             }))] : sortedOtherAttributesData }
-                            /*contentData={sortedOtherAttributesData ? [...sortedOtherAttributesData.map((elem => {
-                                if (modified[elem.id]) { //if attribute is modified it's found in modified map
-                                    return modified[elem.id];//and already modified attribute is shown
-                                }
-                                return elem; //original attribute
-                            })), { key: '',value: '' }] : [{ key: '',value: '' }]} //add empty row after attributes*/
                             hasValidity={true}
                             dataFilter={pastFutureFilter}
                             onValueChange={onValueChange}
                             onDateChange={onDateChange}
                             fullname={false}
-
                         />
                     </div>
                 </>
