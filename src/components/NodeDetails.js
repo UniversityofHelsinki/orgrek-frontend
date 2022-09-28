@@ -23,9 +23,6 @@ import { codeAttributes } from '../constants/variables';
 import EditButtons from './EditButtons';
 import { isAdmin } from '../actions/userAction';
 import moment from 'moment';
-import OrganisationUnitSearch from './OrganisationUnitSearch';
-import HierarchyDropDown from './HierarchyDropDown';
-import { Button, Col, Row } from 'react-bootstrap';
 import NewUpperUnit from './NewUpperUnit';
 
 // eslint-disable-next-line complexity
@@ -33,14 +30,12 @@ const NodeDetails = (props) => {
     const { t, i18n } = useTranslation();
     const lang = i18n.language;
     const [attributeData, setAttributeData] = useState(false);
-    const [modified, setModified] = useState({}); //{} makes map. Change map to list when sending to backend
+    const [modified, setModified] = useState({});
+    const [modifiedParents, setModifiedParents] = useState({});
 
     const uniqueIdAttribute = props.node
         ? { 'key': 'unique_id', 'value': props.node.uniqueId, startDate: null, endDate: null }
         : { 'key': 'unique_id', 'value': t('no_value'), startDate: null, endDate: null };
-    const isCodeAttribute = (elem) => {
-        return codeAttributes.includes(elem);
-    };
 
     const sortOtherAttributes = elems => {
         const sortedList = elems.sort((a, b) => {
@@ -56,20 +51,6 @@ const NodeDetails = (props) => {
             return new Date(a.startDate) - new Date(b.startDate);
         });
         return sortedList;
-    };
-
-    const sortCodeAttributesByDate = (elems, order) => {
-        let result = [];
-        order.forEach(element => {
-            const filteredBatch = elems.filter(e => {
-                return e.key === element;
-            });
-            filteredBatch.sort((a,b) => {
-                return new Date(b.endDate) - new Date(a.startDate);
-            });
-            result.push(filteredBatch);
-        });
-        return result.flat();
     };
 
     const byCodesAndDates = (a,b) => {
@@ -96,22 +77,16 @@ const NodeDetails = (props) => {
     };
 
     const sortNameAttributesByDate = (elems, order) => {
-
         let result = [];
-
         for (let property in order) {
-
             const filteredBatch = elems.filter(e => {
                 return e.key === property;
             });
-
             filteredBatch.sort((a,b) => {
                 return (!(a.endDate || b.endDate) && 0) || (!a.endDate && -1) || (!b.endDate && 1) || new Date(b.endDate) - new Date(a.endDate);
             });
-
             result.push(filteredBatch);
         }
-
         return result.flat();
     };
 
@@ -192,6 +167,7 @@ const NodeDetails = (props) => {
         }
     };
 
+
     const onDateChange = (dateChanged) => {
         let elem = dateChanged.elem;
         let date = moment(dateChanged.date).utcOffset(0).format('YYYY-MM-DDTHH:mm:ss.sss+00:00');
@@ -206,6 +182,26 @@ const NodeDetails = (props) => {
         } else {//This is the first time this element is modified so its not found in modified array
             const target = { ...elem, [name]: date, validity: dateChanged.validity, 'err': '' };//creates a new elem object based on elem object and updates its value with date
             setModified({ ...modified, [elem.id]: target });//adds this new object in modified map
+    };
+
+    const onParentDateChange = (dateChanged) => {
+        let elem = dateChanged.elem;
+        let date = moment(dateChanged.date).utcOffset(0).format('YYYY-MM-DDTHH:mm:ss.sss+00:00');
+        if (date === 'Invalid date') {
+            date = null;
+        }
+        let name = dateChanged.whichDate;
+        let hierarchyIndex = elem.hierarchies.findIndex((obj => obj.hierarchy === dateChanged.hierarchy));
+        if (name === 'startDate') {
+            elem.hierarchies[hierarchyIndex].startDate = date;
+        }
+        if (name === 'endDate') {
+            elem.hierarchies[hierarchyIndex].endDate = date;
+        }
+        if (modifiedParents[elem.id]) {
+            setModifiedParents({ ...modifiedParents, [elem.id]: elem });
+        } else {
+            setModifiedParents({ ...modifiedParents, [elem.id]: elem });
         }
     };
 
@@ -213,11 +209,10 @@ const NodeDetails = (props) => {
         <div>
             {props.nodeAttributes &&
                 <>
-                    {isAdmin(props.user) ? <EditButtons setModified={setModified} node={props.node} selectedDay={props.selectedDay} selectedHierarchy={props.selectedHierarchy} modified={modified} /> : null }
+                    {isAdmin(props.user) ? <EditButtons modifiedParents={modifiedParents} setModified={setModified} node={props.node} selectedDay={props.selectedDay} selectedHierarchy={props.selectedHierarchy} modified={modified} /> : null }
                     <div className="right-side">
                         <div>
                             <h3>{props.favorableNames[lang === 'ia' && 'fi' || lang]?.[0]?.name}</h3>
-                            {/*<NodeViewControl node={props.node} selectedDay={props.selectedDay} selectedHierarchy={props.selectedHierarchy} />*/}
                         </div>
                         <NodeDetailsTable
                             selectedDay={props.selectedDay}
@@ -225,10 +220,10 @@ const NodeDetails = (props) => {
                             heading='valid_dates'
                             tableLabels={[]}
                             contentData={validityData ? [...validityData.map((elem => {
-                                if (modified[elem.id]) { //if attribute is modified it's found in modified map
-                                    return modified[elem.id];//and already modified attribute is shown
+                                if (modified[elem.id]) {
+                                    return modified[elem.id];
                                 }
-                                return elem; //original attribute
+                                return elem;
                             }))] : validityData }
                             hasValidity={true}
                             onValueChange={onValueChange}
@@ -241,10 +236,10 @@ const NodeDetails = (props) => {
                             heading='name_info'
                             tableLabels={['text_language_header', 'name']}
                             contentData={nameInfoDataOrderedByLanguage ? [...nameInfoDataOrderedByLanguage.map((elem => {
-                                if (modified[elem.id]) { //if attribute is modified it's found in modified map
-                                    return modified[elem.id];//and already modified attribute is shown
+                                if (modified[elem.id]) {
+                                    return modified[elem.id];
                                 }
-                                return elem; //original attribute
+                                return elem;
                             }))] : nameInfoDataOrderedByLanguage }
                             hasValidity={true}
                             dataFilter={pastFutureFilter}
@@ -270,10 +265,10 @@ const NodeDetails = (props) => {
                             heading='codes'
                             tableLabels={['code_namespace', 'value']}
                             contentData={codeAttributesData ? [...codeAttributesData.map((elem => {
-                                if (modified[elem.id]) { //if attribute is modified it's found in modified map
-                                    return modified[elem.id];//and already modified attribute is shown
+                                if (modified[elem.id]) {
+                                    return modified[elem.id];
                                 }
-                                return elem; //original attribute
+                                return elem;
                             }))]: codeAttributesData }
                             hasValidity={true}
                             dataFilter={data => (isPast || isFuture) && !(props.showHistory || props.showComing) ? data.filter(attr => attr.key === 'unique_id') : data}
@@ -287,10 +282,10 @@ const NodeDetails = (props) => {
                             heading='unit_type'
                             tableLabels={[]}
                             contentData={typeAttributeData ? [...typeAttributeData.map((elem => {
-                                if (modified[elem.id]) { //if attribute is modified it's found in modified map
-                                    return modified[elem.id];//and already modified attribute is shown
+                                if (modified[elem.id]) {
+                                    return modified[elem.id];
                                 }
-                                return elem; //original attribute
+                                return elem;
                             }))]: typeAttributeData }
                             hasValidity={true}
                             dataFilter={pastFutureFilter}
@@ -307,7 +302,7 @@ const NodeDetails = (props) => {
                             hasValidity={false}
                             dataFilter={pastFutureFilter}
                             onValueChange={onValueChange}
-                            onDateChange={onDateChange}
+                            onDateChange={onParentDateChange}
                             fullname={false}
                         />
                         <NewUpperUnit />
@@ -351,10 +346,10 @@ const NodeDetails = (props) => {
                             heading='other_attributes'
                             tableLabels={['attribute', 'value']}
                             contentData={sortedOtherAttributesData ? [...sortedOtherAttributesData.map((elem => {
-                                if (modified[elem.id]) { //if attribute is modified it's found in modified map
-                                    return modified[elem.id];//and already modified attribute is shown
+                                if (modified[elem.id]) {
+                                    return modified[elem.id];
                                 }
-                                return elem; //original attribute
+                                return elem;
                             }))] : sortedOtherAttributesData }
                             hasValidity={true}
                             dataFilter={pastFutureFilter}
