@@ -11,6 +11,7 @@ import {
     fetchNodeChildren
 } from '../actions/hierarchyAction';
 import {
+    fetchNode,
     fetchNodeAttributes,
     fetchNodeFavorableFullNames,
     fetchNodeFullNames,
@@ -118,7 +119,7 @@ const NodeDetails = (props) => {
         return !nameInfoData.includes(elem) && !typeAttributeData.includes(elem) && !codeAttributesData.includes(elem);
     }) : false;
     const sortedOtherAttributesData = otherAttributesData ? sortOtherAttributes(otherAttributesData) : false;
-    const validityData = props.node ? [props.node] : false;
+    let validityData = props.node ? [props.node] : false;
 
     const isCurrent = datesOverlap(
         props.node?.startDate && new Date(Date.parse(props.node.startDate)),
@@ -130,6 +131,9 @@ const NodeDetails = (props) => {
 
     useEffect(() => {
         if (props.node) {
+            validityData = props.node ? [props.node] : false;
+            console.log(props.node);
+            console.log(validityData);
             const startDate = Date.parse(props.node.startDate) || undefined;
             const endDate = Date.parse(props.node.endDate) || undefined;
             if (datesOverlap(startDate && new Date(startDate), endDate && new Date(endDate), props.selectedDay)) {
@@ -144,7 +148,7 @@ const NodeDetails = (props) => {
 
     React.useLayoutEffect(() => {
         selectData();
-    }, [props.nodeAttributes, props.nodeAttributesFuture, props.nodeAttributesHistory]);
+    }, [props.node, props.nodeAttributes, props.nodeAttributesFuture, props.nodeAttributesHistory]);
 
     const pastFutureFilter = (data) => {
         if (isCurrent || props.showComing || props.showHistory) {
@@ -155,10 +159,10 @@ const NodeDetails = (props) => {
 
     const onValueChange = (event, elem) => {
         if (modified[elem.id]) {
-            const target = { ...modified[elem.id], [event.target.name]: event.target.value };
+            const target = { ...modified[elem.id], [event.target.name]: event.target.value, validity: false  };
             setModified({ ...modified, [elem.id]: target });
         } else {
-            const target = { ...elem, [event.target.name]: event.target.value };
+            const target = { ...elem, [event.target.name]: event.target.value, validity: false  };
             setModified({ ...modified, [elem.id]: target });
         }
     };
@@ -173,10 +177,10 @@ const NodeDetails = (props) => {
         let name = dateChanged.whichDate; //startDate or endDate
 
         if (modified[elem.id]) {
-            const target = { ...modified[elem.id], [name]: date };
+            const target = { ...modified[elem.id], [name]: date, validity: dateChanged.validity  };
             setModified({ ...modified, [elem.id]: target });
         } else {
-            const target = { ...elem, [name]: date };
+            const target = { ...elem, [name]: date, validity: dateChanged.validity  };
             setModified({ ...modified, [elem.id]: target });
         }
     };
@@ -407,7 +411,8 @@ const mapDispatchToProps = dispatch => ({
             dispatch(fetchNodeChildren(node.uniqueId, selectedDay));
             dispatch(fetchNodeFullNames(node.uniqueId, selectedDay));
         }
-    }
+    },
+    fetchNode: (uniqueId) => dispatch(fetchNode(uniqueId))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(NodeDetails);

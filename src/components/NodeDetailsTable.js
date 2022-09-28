@@ -21,6 +21,9 @@ const NodeDetailsTable = (props) => {
         useEffect(() => {
         }, [props.edit]);
 
+        useEffect(() => {
+        }, [props.node]);
+
         const renderTableHeader = () => {
             return (
                 <tr key={ props.heading }>
@@ -167,7 +170,8 @@ const NodeDetailsTable = (props) => {
 ;
 
 const mapStateToProps = state => ({
-    edit: state.editModeReducer.edit
+    edit: state.editModeReducer.edit,
+    node: state.nrd.node
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({

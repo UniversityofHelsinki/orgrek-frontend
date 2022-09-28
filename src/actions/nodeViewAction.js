@@ -77,3 +77,36 @@ export const updateAttributes = (uniqueId, attributes) => {
         }
     };
 };
+
+export const updateNodeProperties = (uniqueId, properties) => {
+    const ORGREK_BACKEND_SERVER = process.env.REACT_APP_ORGREK_BACKEND_SERVER || '';
+    const PATH = '/api/node/properties/';
+    const PARAMS = `${uniqueId}`;
+
+    return async (dispatch) => {
+        const response = await fetch(`${ORGREK_BACKEND_SERVER}${PATH}${PARAMS}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(properties)
+        });
+        if (response.status === 200) {
+            dispatch({
+                type: 'SHOW_NOTIFICATION',
+                payload: { message: 'update_properties_success', success: true }
+            });
+            setTimeout(() => {
+                dispatch({ type: 'HIDE_NOTIFICATION' });
+            }, 5000);
+        } else {
+            dispatch({
+                type: 'SHOW_NOTIFICATION',
+                payload: { message: 'update_properties_error', success: false, statusCode: response.status }
+            });
+            setTimeout(() => {
+                dispatch({ type: 'HIDE_NOTIFICATION' });
+            }, 5000);
+        }
+    };
+};
