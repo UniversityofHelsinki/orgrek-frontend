@@ -86,7 +86,7 @@ const NodeDetailsTable = (props) => {
                                                             onDateChange={ props.onDateChange }/>
                                             </Col>
                                             <Col md="3" className="warningText">
-                                                { elem.err ? elem.err : '' }
+                                                { elem.err ? t(elem.err) : '' }
                                             </Col>
                                         </Row>
                                         : t(showValidity(elem.startDate, elem.endDate, i18n, t)) } {/* show mode */ }

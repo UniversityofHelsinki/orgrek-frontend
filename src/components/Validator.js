@@ -9,7 +9,7 @@ export const validateDates = (modidiedAttributes) => {
             let startD = moment(modified.startDate).valueOf();
             let endD = moment(modified.endDate).valueOf();
             if (startD > endD) {
-                modified.err = 'Loppupäivä ennen alkupäivää';
+                modified.err = 'startdata_after_enddata';
                 errors = true;
             }
         });
@@ -22,7 +22,7 @@ export const validateValues = (modidiedAttributes) => {
     if (modidiedAttributes) {
         modidiedAttributes.forEach(modified => {
             if (modified.value === '') {
-                modified.err = 'Arvo tyhjä';
+                modified.err = 'empty_value';
                 errors = true;
             }
         });
