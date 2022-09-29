@@ -93,11 +93,11 @@ const NodeDetailsTable = (props) => {
 
         const renderUnit = (elem) => {
             return (
-                <td onClick={ () => props.onNodeSelection(elem) }>
+                <div onClick={ () => props.onNodeSelection(elem) }>
                     <ListLink href="#">
                         { elem.fullName }
                     </ListLink>
-                </td>
+                </div>
             );
         };
 
