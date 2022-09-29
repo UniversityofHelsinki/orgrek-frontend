@@ -97,7 +97,7 @@ const EditButtons = (props) => {
                     </Col>
                     <Col md="auto">
                         <Button size="sm" variant="success" onClick={async () => {
-                            toggleEdit(false);
+                            //toggleEdit(false);
                             await saveModifiedAttributes();
                             //props.onSwitchComing(false);//switch off coming attributes
                             //props.onSwitchHistory(false);

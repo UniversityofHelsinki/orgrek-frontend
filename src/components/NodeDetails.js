@@ -182,6 +182,7 @@ const NodeDetails = (props) => {
         } else {//This is the first time this element is modified so its not found in modified array
             const target = { ...elem, [name]: date, validity: dateChanged.validity, 'err': '' };//creates a new elem object based on elem object and updates its value with date
             setModified({ ...modified, [elem.id]: target });//adds this new object in modified map
+        }
     };
 
     const onParentDateChange = (dateChanged) => {

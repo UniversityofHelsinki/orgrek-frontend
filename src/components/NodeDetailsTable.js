@@ -61,11 +61,11 @@ const NodeDetailsTable = (props) => {
             return (
                 <Row>
                     <Col md="4">
-                        <ChooseDate field={'startDate'} elem={elem}
+                        <ChooseDate validity={props.heading === 'valid_dates'}  field={'startDate'} elem={elem}
                                     onDateChange={props.onDateChange}/>
                     </Col>
                     <Col md="4">
-                        <ChooseDate field={'endDate'} elem={elem}
+                        <ChooseDate validity={props.heading === 'valid_dates'} field={'endDate'} elem={elem}
                                     onDateChange={props.onDateChange}/>
                     </Col>
                     <Col md="3" className="warningText">
