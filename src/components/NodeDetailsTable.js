@@ -59,6 +59,13 @@ const NodeDetailsTable = (props) => {
             return <UnitDropDown value={ t(elem.value) } units={ units } onUnitChange={ (e) => props.onValueChange(e, elem) }/>;
         };
 
+        const showHideElementBasedOnMode = (elem) => {
+            renderUnitDropDown(elem);
+            if (props.heading !== 'valid_dates') {
+                return renderInputField(elem);
+            }
+        };
+
         const renderDateComponent = (elem) => {
             return (
                 <Row>
@@ -79,7 +86,7 @@ const NodeDetailsTable = (props) => {
                 <tr key={ index }>
                     <td>{ t(elem.key) }</td>
                     <td>
-                        { isEditMode(elem) ? renderInputField(elem) && renderUnitDropDown(elem) : t(elem.value) }
+                        { isEditMode(elem) ? showHideElementBasedOnMode(elem) : t(elem.value) }
                     </td>
 
                     { props.hasValidity ?
