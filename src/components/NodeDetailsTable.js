@@ -49,12 +49,14 @@ const NodeDetailsTable = (props) => {
             return key !== 'unique_id';
         };
 
-        const renderUnitDropDownOrInputField = (elem) => {
-            if (elem.key === 'type') {
-                return <UnitDropDown value={ t(elem.value) } units={ units } onUnitChange={ (e) => props.onValueChange(e, elem) }/>;
-            } else {
+        const renderInputField = (elem) => {
+            if (props.heading !== 'valid_dates') {
                 return <Form.Control name='value' value={ t(elem.value) } onChange={ (e) => props.onValueChange(e, elem) }/>;
             }
+        };
+
+        const renderUnitDropDown = (elem) => {
+            return <UnitDropDown value={ t(elem.value) } units={ units } onUnitChange={ (e) => props.onValueChange(e, elem) }/>;
         };
 
         const renderDateComponent = (elem) => {
@@ -77,7 +79,7 @@ const NodeDetailsTable = (props) => {
                 <tr key={ index }>
                     <td>{ t(elem.key) }</td>
                     <td>
-                        { isEditMode(elem) ? renderUnitDropDownOrInputField(elem) : t(elem.value) }
+                        { isEditMode(elem) ? renderInputField(elem) && renderUnitDropDown(elem) : t(elem.value) }
                     </td>
 
                     { props.hasValidity ?
