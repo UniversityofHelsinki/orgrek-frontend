@@ -49,11 +49,20 @@ const NodeDetailsTable = (props) => {
             return key !== 'unique_id';
         };
 
-        const renderUnitDropDownOrInputField = (elem) => {
-            if (elem.key === 'type') {
-                return <UnitDropDown value={ t(elem.value) } units={ units } onUnitChange={ (e) => props.onValueChange(e, elem) }/>;
-            } else {
+        const renderInputField = (elem) => {
+            if (props.heading !== 'valid_dates') {
                 return <Form.Control name='value' value={ t(elem.value) } onChange={ (e) => props.onValueChange(e, elem) }/>;
+            }
+        };
+
+        const renderUnitDropDown = (elem) => {
+            return <UnitDropDown value={ t(elem.value) } units={ units } onUnitChange={ (e) => props.onValueChange(e, elem) }/>;
+        };
+
+        const showHideElementBasedOnMode = (elem) => {
+            renderUnitDropDown(elem);
+            if (props.heading !== 'valid_dates') {
+                return renderInputField(elem);
             }
         };
 
@@ -61,11 +70,11 @@ const NodeDetailsTable = (props) => {
             return (
                 <Row>
                     <Col md="auto">
-                        <ChooseDate field={'startDate'} elem={elem}
+                        <ChooseDate validity={props.heading === 'valid_dates'} field={'startDate'} elem={elem}
                                     onDateChange={props.onDateChange}/>
                     </Col>
                     <Col md="auto">
-                        <ChooseDate field={'endDate'} elem={elem}
+                        <ChooseDate validity={props.heading === 'valid_dates'} field={'endDate'} elem={elem}
                                     onDateChange={props.onDateChange}/>
                     </Col>
                 </Row>
@@ -77,7 +86,7 @@ const NodeDetailsTable = (props) => {
                 <tr key={ index }>
                     <td>{ t(elem.key) }</td>
                     <td>
-                        { isEditMode(elem) ? renderUnitDropDownOrInputField(elem) : t(elem.value) }
+                        { isEditMode(elem) ? showHideElementBasedOnMode(elem) : t(elem.value) }
                     </td>
 
                     { props.hasValidity ?
@@ -90,11 +99,11 @@ const NodeDetailsTable = (props) => {
 
         const renderUnit = (elem) => {
             return (
-                <td onClick={ () => props.onNodeSelection(elem) }>
+                <div onClick={ () => props.onNodeSelection(elem) }>
                     <ListLink href="#">
                         { elem.fullName }
                     </ListLink>
-                </td>
+                </div>
             );
         };
 
