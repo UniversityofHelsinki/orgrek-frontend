@@ -132,8 +132,6 @@ const NodeDetails = (props) => {
     useEffect(() => {
         if (props.node) {
             validityData = props.node ? [props.node] : false;
-            console.log(props.node);
-            console.log(validityData);
             const startDate = Date.parse(props.node.startDate) || undefined;
             const endDate = Date.parse(props.node.endDate) || undefined;
             if (datesOverlap(startDate && new Date(startDate), endDate && new Date(endDate), props.selectedDay)) {
