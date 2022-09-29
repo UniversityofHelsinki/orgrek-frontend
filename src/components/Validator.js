@@ -1,11 +1,9 @@
 import moment from 'moment';
 
-export const validateDates = (modidiedAttributes) => {
+export const validateDates = (modifiedAttributes) => {
     let errors = false;
-    if (modidiedAttributes) {
-        modidiedAttributes.forEach(modified => {
-            //console.log('start:' + modified.startDate);
-            //console.log('end:' + modified.endDate);
+    if (modifiedAttributes) {
+        modifiedAttributes.forEach(modified => {
             let startD = moment(modified.startDate).valueOf();
             let endD = moment(modified.endDate).valueOf();
             if (startD > endD) {

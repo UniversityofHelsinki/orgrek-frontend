@@ -97,15 +97,9 @@ const EditButtons = (props) => {
                     </Col>
                     <Col md="auto">
                         <Button size="sm" variant="success" onClick={async () => {
-                            //toggleEdit(false);
                             await saveModifiedAttributes();
-                            //props.onSwitchComing(false);//switch off coming attributes
-                            //props.onSwitchHistory(false);
-                            //props.fetchNodeDetails(props.node, props.selectedDay, props.showHistory, props.showComing, props.selectedHierarchy);
                             {readDetails();}
-                        }}//switch off history attributes
-                        >
-                            {t('edit_mode_save_button')}
+                        }}>{t('edit_mode_save_button')}
                         </Button>
                     </Col>
                     <Col md="auto">
