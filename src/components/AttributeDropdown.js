@@ -6,11 +6,19 @@ import { Dropdown, DropdownButton } from 'react-bootstrap';
 const AttributeDropDown = (props) => {
     const { t } = useTranslation();
     const [value, setValue] = useState('');
+    //let valueSelected = false;
 
     const handleSelect=(value) => {
+        //valueSelected = true;
         setValue(value);
         props.onAttributeChange(value);
     };
+
+    /*useEffect(() => {
+        if (!valueSelected) {
+            setValue('');
+        }
+    }, [props.initializeval]);*/
 
     const validAttributes = ( (availableAttributes) => {
         let validAttr = availableAttributes;

@@ -1,5 +1,5 @@
 import { Col, Form, Row } from 'react-bootstrap';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PickDate from './PickDate';
 import Button from 'react-bootstrap/Button';
 import { connect } from 'react-redux';
@@ -13,10 +13,13 @@ import UnitDropDown from './UnitDropDown';
 
 const NewAttribute = (props) => {
 
-    const [key, setKey] = useState(null);
-    const [value, setValue] = useState(null);
-    const [startDate, setStartDate] = useState(null);
+    const [key, setKey] = useState('');
+    const [value, setValue] = useState('');
+    const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState(null);
+    //const [initializevalues, doInitializevalues] = useState(0);
+    //const initializeval = () => doInitializevalues(val => val +1);
+
 
     const onValueChange = (event) => {
        setValue(event.target.value);
@@ -31,6 +34,13 @@ const NewAttribute = (props) => {
         endDate ? setEndDate(value) : null;
     };
 
+    const emptyAllStates = () => {
+        setKey('');
+        //setKey({ key : null });
+        setValue('');
+        setStartDate('');
+        setEndDate('');
+    };
     const emptyUpperUnitState = () => {
         //setKey(null);
         //setValue(null);
@@ -46,8 +56,12 @@ const NewAttribute = (props) => {
     };
 
     const isButtonDisabled = () => {
-        return !key || !value;
+        return key === '' || value === '';
     };
+
+    useEffect(() => {
+        emptyAllStates();
+    }, [props.initvalues]);
 
     return (
         <div>
@@ -62,6 +76,7 @@ const NewAttribute = (props) => {
                                 }
                                 }/>
                         : props.availableAttributes ?
+                            //<AttributeDropDown initializeval={initializeval} availableAttributes={props.availableAttributes}
                             <AttributeDropDown availableAttributes={props.availableAttributes}
                                 onAttributeChange={ (value) => {
                                     setKey(value);

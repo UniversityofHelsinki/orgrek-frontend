@@ -35,6 +35,14 @@ const NodeDetails = (props) => {
     const lang = i18n.language;
     const [attributeData, setAttributeData] = useState(false);
     const [modified, setModified] = useState({}); //{} makes map. Change map to list when sending to backend
+    const [initvalues, doInitvalues] = useState(0);
+    //const initval = () => doInitvalues(val => val +1);
+    const initval = () => {
+        doInitvalues((prevState) => ({
+            initvalues: prevState.initvalues + 1,
+        }));
+    };
+    //{() => doRefresh(prev => prev + 1)}
 
     const uniqueIdAttribute = props.node
         ? { 'key': 'unique_id', 'value': props.node.uniqueId, startDate: null, endDate: null }
@@ -211,7 +219,7 @@ const NodeDetails = (props) => {
         <div>
             {props.nodeAttributes &&
                 <>
-                    {isAdmin(props.user) ? <EditButtons setModified={setModified} node={props.node} selectedDay={props.selectedDay} selectedHierarchy={props.selectedHierarchy} modified={modified} /> : null }
+                    {isAdmin(props.user) ? <EditButtons initval={initval}setModified={setModified} node={props.node} selectedDay={props.selectedDay} selectedHierarchy={props.selectedHierarchy} modified={modified} /> : null }
                     <div className="right-side">
                         <div>
                             <h3>{props.favorableNames[lang === 'ia' && 'fi' || lang]?.[0]?.name}</h3>
@@ -368,7 +376,7 @@ const NodeDetails = (props) => {
                             onDateChange={onDateChange}
                             fullname={false}
                         />
-                        <NewAttribute />
+                        <NewAttribute initvalues={initvalues}/>
                     </div>
                 </>
             }
