@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 
 const HierarchyDropDown = (props) => {
     const { t } = useTranslation();
-    const [value, setValue] = useState('');
+    const [value, setValue] = useState('-');
     const [selectedHierarchies, setSelectedHierarchies] = useState([]);
 
     const handleChange = (event) => {
@@ -17,12 +17,18 @@ const HierarchyDropDown = (props) => {
         setSelectedHierarchies(arr);
     }, [props.selectedHierarchy]);
 
+    useEffect(() => {
+        if (props.hierarchySelection) {
+            setValue(props.hierarchySelection);
+        }
+    }, [props.hierarchySelection]);
+
     return (
         <div>
             {selectedHierarchies &&
                 <>
-                    <select defaultValue={value} onChange={handleChange}>
-                        <option value="-">-</option>
+                    <select value={value} onChange={handleChange}>
+                        <option value="">-</option>
                         {selectedHierarchies.map((option) => (
                             <option key={option} value={option}>{t(option)}</option>
                         ))}
@@ -36,10 +42,6 @@ const HierarchyDropDown = (props) => {
 
 const mapStateToProps = state => ({
     selectedHierarchy: state.tree.selectedHierarchy
-});
-
-const mapDispatchToProps = dispatch => ({
-
 });
 
 export default connect(mapStateToProps, null)(HierarchyDropDown);
