@@ -40,7 +40,7 @@ const AttributeDropDown = (props) => {
             validAttr = validAttr.filter((s) => !s.match('oppiaine_tunnus'));
         }
         if (!props.selectedHierarchy.includes('talous')) {
-            validAttr = validAttributes.filter((s) => !s.match('talous_tunnus'));
+            validAttr = validAttr.filter((s) => !s.match('talous_tunnus'));
         }
         return validAttr;
     });
