@@ -15,8 +15,8 @@ const ListLink = styled.a`
 `;
 
 const NodeDetailsTable = (props) => {
-        const { t, i18n } = useTranslation();
-        let units = ['koontiyksikko', 'tiedekunta', 'osasto'];
+    const { t, i18n } = useTranslation();
+    const lang = i18n.language;
 
         useEffect(() => {
         }, [props.edit]);
@@ -49,11 +49,20 @@ const NodeDetailsTable = (props) => {
             return key !== 'unique_id';
         };
 
-        const renderUnitDropDownOrInputField = (elem) => {
-            if (elem.key === 'type') {
-                return <UnitDropDown value={ t(elem.value) } units={ units } onUnitChange={ (e) => props.onValueChange(e, elem) }/>;
-            } else {
+        const renderInputField = (elem) => {
+            if (props.heading !== 'valid_dates') {
                 return <Form.Control name='value' value={ t(elem.value) } onChange={ (e) => props.onValueChange(e, elem) }/>;
+            }
+        };
+
+        const renderUnitDropDown = (elem) => {
+            return <UnitDropDown valueunits={ t(elem.value) } onUnitChange={ (e) => props.onValueChange(e, elem) }/>;
+        };
+
+        const showHideElementBasedOnMode = (elem) => {
+            renderUnitDropDown(elem);
+            if (props.heading !== 'valid_dates') {
+                return renderInputField(elem);
             }
         };
 
@@ -79,8 +88,8 @@ const NodeDetailsTable = (props) => {
             return (
                 <tr key={ index }>
                     <td>{ t(elem.key) }</td>
-                    <td width="20%">
-                        { isEditMode(elem) ? renderUnitDropDownOrInputField(elem) : t(elem.value) }
+                    <td>
+                        { isEditMode(elem) ? showHideElementBasedOnMode(elem) : t(elem.value) }
                     </td>
 
                     { props.hasValidity ?

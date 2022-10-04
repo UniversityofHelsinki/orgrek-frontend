@@ -1,7 +1,7 @@
 import { Col, Row } from 'react-bootstrap';
 import OrganisationUnitSearch from './OrganisationUnitSearch';
 import HierarchyDropDown from './HierarchyDropDown';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PickDate from './PickDate';
 import Button from 'react-bootstrap/Button';
 import { actionAddNewUpperUnit } from '../actions/newUpperUnitAction';
@@ -43,6 +43,17 @@ const NewUpperUnit = (props) => {
     const isButtonDisabled = () => {
         return !selectedParentOrganisationUnit || selectedHierarchy === '-';
     };
+
+    const emptyAllStates = () => {
+        setSelectedParentOrganisationUnit('');
+        setSelectedHierarchy('-');
+        setStartDate('');
+        setEndDate('');
+    };
+
+    useEffect(() => {
+        emptyAllStates();
+    }, [props.initvalues]);
 
     return (
       <div>
