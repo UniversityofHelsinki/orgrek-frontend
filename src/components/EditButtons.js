@@ -67,13 +67,14 @@ const EditButtons = (props) => {
                             toggleEdit(false);
                             props.onSwitchComing(false);//switch off coming attributes
                             props.onSwitchHistory(false);//switch off history attributes
-                            props.initval();}
+                          }
                         }>
                             {t('edit_mode_cancel_button')}
                         </Button>
                     </Col>
                     <Col md="auto">
                         <Button size="sm" variant="success" onClick={async () => {
+                            props.initval();
                             toggleEdit(false);
                             await saveModifiedAttributes();
                             props.onSwitchComing(false);//switch off coming attributes
@@ -92,11 +93,10 @@ const EditButtons = (props) => {
                 <Row>
                     <Col md="auto">
                         <Button size="sm" onClick={() => {
-                            props.initval();
                             toggleEdit(true);
                             props.onSwitchComing(true); //switch on coming attributes
                             props.onSwitchHistory(true);
-                            props.initval();}//switch on history attributes
+                          }
                         }>
                             {t('edit_mode_edit_button')}
                         </Button>

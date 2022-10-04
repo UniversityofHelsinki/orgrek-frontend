@@ -1,62 +1,61 @@
 import { Col, Form, Row } from 'react-bootstrap';
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PickDate from './PickDate';
 import Button from 'react-bootstrap/Button';
 import { connect } from 'react-redux';
 import { fetchNode } from '../actions/nodeAction';
 import { fetchTree } from '../actions/treeAction';
-import { editMode } from '../actions/editModeAction';
-import { t } from 'i18next';
 import { addNewAttributeAction } from '../actions/newAttributeAction';
 import AttributeDropDown from './AttributeDropdown';
 import UnitDropDown from './UnitDropDown';
 
 const NewAttribute = (props) => {
 
-    const [key, setKey] = useState('');
-    const [value, setValue] = useState('');
-    const [startDate, setStartDate] = useState('');
-    const [endDate, setEndDate] = useState(null);
-    //const [initializevalues, doInitializevalues] = useState(0);
-    //const initializeval = () => doInitializevalues(val => val +1);
+    const initialState = {
+        key: '',
+        value: '',
+        startDate: '',
+        endDate: ''
+    };
 
+    const [
+        { key, value, startDate, endDate },
+        setState
+    ] = useState(initialState);
+    const clearState = () => {
+        setState({ ...initialState });
+    };
 
     const onValueChange = (event) => {
-       setValue(event.target.value);
+      setState(prevState => ({ ...prevState, value: event.target.value }));
     };
 
     const onKeyChange = (event) => {
-        setKey(event.target.value);
+        setState(prevState => ({ ...prevState, key: event.target.value }));
     };
 
     const dateSelection = (value, startDate, endDate) => {
-        startDate ? setStartDate(value) : null;
-        endDate ? setEndDate(value) : null;
-    };
+        (startDate ?
+            setState(prevState => ({ ...prevState, startDate: value }))
+        : null);
+        (endDate ?
+            setState(prevState => ({ ...prevState, endDate: value }))
+        : null);
+        };
+
 
     const emptyAllStates = () => {
-        setKey('');
-        //setKey({ key : null });
-        setValue('');
-        setStartDate('');
-        setEndDate('');
-    };
-    const emptyUpperUnitState = () => {
-        //setKey(null);
-        //setValue(null);
-        setStartDate(null);
-        setEndDate(null);
+        clearState();
     };
 
     const insertNewAttribute = async() => {
         let attributeArr = [{ 'nodeId': props.node.id, 'key': key, 'value': value, 'startDate': startDate, 'endDate': endDate }];
         await props.actionAddNewAttribute(props.node.id, attributeArr);
         await props.fetchNodeAndTree(props.node, props.selectedHierarchy, props.selectedDay);
-        emptyUpperUnitState();
     };
 
     const isButtonDisabled = () => {
-        return key === '' || value === '';
+            return !key || !value;
     };
 
     useEffect(() => {
@@ -71,25 +70,25 @@ const NewAttribute = (props) => {
                         {props.unit ?
                             <UnitDropDown
                                 onUnitChange={ (e) => {
-                                    setKey('type');
-                                    setValue(e.target.value);
+                                    setState(prevState => ({ ...prevState, key: 'type' }));
+                                    setState(prevState => ({ ...prevState, value: e.target.value }));
                                 }
                                 }/>
                         : props.availableAttributes ?
                             //<AttributeDropDown initializeval={initializeval} availableAttributes={props.availableAttributes}
                             <AttributeDropDown availableAttributes={props.availableAttributes}
                                 onAttributeChange={ (value) => {
-                                    setKey(value);
+                                    setState(prevState => ({ ...prevState, key: value }));
                                 }}/>
                         :
                             <Col>
-                                <Form.Control name='key' onChange={ (e) => onKeyChange(e) }/>
+                                <Form.Control onChange={ (e) => onKeyChange(e) }/>
                             </Col>
                         }
                     </Col>
                     {!props.unit ?
                     <Col>
-                        <Form.Control name='value' onChange={ (e) => onValueChange(e) }/>
+                        <Form.Control value={value} onChange={ (e) => onValueChange(e) }/>
                     </Col> : ''}
                     <Col>
                         <PickDate startDate onDateChange={dateSelection} selectedStartDate={startDate}/>
@@ -106,6 +105,13 @@ const NewAttribute = (props) => {
     );
 };
 
+const mapStateToProps = state => ({
+    edit : state.editModeReducer.edit,
+    node: state.nrd.node,
+    selectedHierarchy: state.tree.selectedHierarchy,
+    selectedDay : state.dr.selectedDay,
+});
+
 const mapDispatchToProps = (dispatch) => ({
     actionAddNewAttribute: (nodeId, attribute) => {
         dispatch(addNewAttributeAction(nodeId, attribute));
@@ -113,14 +119,7 @@ const mapDispatchToProps = (dispatch) => ({
     fetchNodeAndTree: (node, selection, date) => {
         dispatch(fetchNode(node.uniqueId, true));
         dispatch(fetchTree(selection, date));
-        //dispatch(editMode(false));
     }
-});
-const mapStateToProps = state => ({
-    edit : state.editModeReducer.edit,
-    node: state.nrd.node,
-    selectedHierarchy: state.tree.selectedHierarchy,
-    selectedDay : state.dr.selectedDay,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewAttribute);

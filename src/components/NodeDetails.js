@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import NodeDetailsTable from './NodeDetailsTable';
+import NewAttribute from './NewAttribute';
 import { filterAttributeDuplicates, datesOverlap } from '../actions/utilAction';
 import { switchHistory, switchComing, updateAttributes } from '../actions/nodeViewAction';
 
@@ -24,7 +25,6 @@ import EditButtons from './EditButtons';
 import { isAdmin } from '../actions/userAction';
 import moment from 'moment';
 import NewUpperUnit from './NewUpperUnit';
-import NewAttribute from './NewAttribute';
 import { availablenames, availablecodes } from '../constants/AttibutesForSelect';
 
 // eslint-disable-next-line complexity
@@ -34,15 +34,12 @@ const NodeDetails = (props) => {
     const [attributeData, setAttributeData] = useState(false);
     const [modified, setModified] = useState({}); //{} makes map. Change map to list when sending to backend
     const [initvalues, doInitvalues] = useState(0);
-    //const initval = () => doInitvalues(val => val +1);
     const initval = () => {
         doInitvalues((prevState) => ({
             initvalues: prevState.initvalues + 1,
         }));
     };
-    //{() => doRefresh(prev => prev + 1)}
     const [modifiedParents, setModifiedParents] = useState({});
-
     const uniqueIdAttribute = props.node
         ? { 'key': 'unique_id', 'value': props.node.uniqueId, startDate: null, endDate: null }
         : { 'key': 'unique_id', 'value': t('no_value'), startDate: null, endDate: null };
@@ -174,8 +171,10 @@ const NodeDetails = (props) => {
             setModified({ ...modified, [elem.id]: target });
         }
     };
-
-
+    /*const onvalChange = (val) => {
+        setValue(val);
+        console.log('Kutsu tuli');
+    };*/
     const onDateChange = (dateChanged) => {
         let elem = dateChanged.elem;
         let date = moment(dateChanged.date).utcOffset(0).format('YYYY-MM-DDTHH:mm:ss.sss+00:00');
@@ -256,7 +255,7 @@ const NodeDetails = (props) => {
                             onDateChange={onDateChange}
                             fullname={false}
                         />
-                        <NewAttribute availableAttributes={availablenames} />
+                        <NewAttribute availableAttributes={availablenames} initvalues={initvalues} />
                         <NodeDetailsTable
                             selectedDay={props.selectedDay}
                             type='key-value'
@@ -286,7 +285,7 @@ const NodeDetails = (props) => {
                             onDateChange={onDateChange}
                             fullname={false}
                         />
-                        <NewAttribute availableAttributes={availablecodes}/>
+                        <NewAttribute availableAttributes={availablecodes} initvalues={initvalues} />
                         <NodeDetailsTable
                             selectedDay={props.selectedDay}
                             type='key-value'
@@ -305,7 +304,7 @@ const NodeDetails = (props) => {
                             fullname={false}
 
                         />
-                        <NewAttribute unit={true}/>
+                        <NewAttribute unit={true} initvalues={initvalues}/>
                         <NodeDetailsTable
                             selectedDay={props.selectedDay}
                             type='node-hierarchy'
@@ -374,7 +373,7 @@ const NodeDetails = (props) => {
                             onDateChange={onDateChange}
                             fullname={false}
                         />
-                        <NewAttribute initvalues={initvalues}/>
+                        <NewAttribute initvalues={initvalues} />
                     </div>
                 </>
             }
