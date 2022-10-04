@@ -6,9 +6,11 @@ import { DropdownButton, Dropdown } from 'react-bootstrap';
 
 const UnitDropDown = (props) => {
     const { t } = useTranslation();
+    const [value, setValue] = useState('');
     const [selectableunits, setSelectableunits] = useState([]);
 
     const handleSelect=(event) => {
+        setValue(event);
         const ev = { target: { name:'value', value: event } };
         props.onUnitChange(ev);
     };
@@ -34,7 +36,6 @@ const UnitDropDown = (props) => {
         return uniqueValues.toString().replace(/,\s*$/, '');//removes last comma and space (if there is a one)
     };
 
-
     useEffect(() => {
         props.fetchValidHierarchyFilters();
     }, []);
@@ -55,8 +56,8 @@ const UnitDropDown = (props) => {
             {selectableunits &&
                 <>
                     <DropdownButton
-                        title={t(props.value)}
-                        onSelect={handleSelect}>
+                        title={t(props.valueunits) ? t(props.valueunits) : t(value) ?  t(value) : '---'}
+                        onSelect={handleSelect} >
                         {selectableunits.map((option, i) => (
                             <Dropdown.Item key={i} eventKey={option} >{t(option)}</Dropdown.Item>
                         ))}

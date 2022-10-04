@@ -15,8 +15,8 @@ const ListLink = styled.a`
 `;
 
 const NodeDetailsTable = (props) => {
-        const { t, i18n } = useTranslation();
-        let units = ['koontiyksikko', 'tiedekunta', 'osasto'];
+    const { t, i18n } = useTranslation();
+    const lang = i18n.language;
 
         useEffect(() => {
         }, [props.edit]);
@@ -56,7 +56,7 @@ const NodeDetailsTable = (props) => {
         };
 
         const renderUnitDropDown = (elem) => {
-            return <UnitDropDown value={ t(elem.value) } units={ units } onUnitChange={ (e) => props.onValueChange(e, elem) }/>;
+            return <UnitDropDown valueunits={ t(elem.value) } onUnitChange={ (e) => props.onValueChange(e, elem) }/>;
         };
 
         const showHideElementBasedOnMode = (elem) => {
