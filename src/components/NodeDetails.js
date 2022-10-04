@@ -318,7 +318,7 @@ const NodeDetails = (props) => {
                             fullname={false}
 
                         />
-                        <NewUpperUnit />
+                        <NewUpperUnit initvalues={initvalues}/>
                         <NodeDetailsTable
                             selectedDay={props.selectedDay}
                             type='node-hierarchy'
