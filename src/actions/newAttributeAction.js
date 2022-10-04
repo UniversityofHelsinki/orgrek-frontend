@@ -1,7 +1,8 @@
 export const addNewAttributeAction = (nodeId, attribute) => {
     const ORGREK_BACKEND_SERVER = process.env.REACT_APP_ORGREK_BACKEND_SERVER || '';
     const PATH = '/api/node/attributes/';
-    const PARAMS = `${nodeId}`;
+    const SKIP_VALIDATION = '/false';
+    const PARAMS = `${nodeId}${SKIP_VALIDATION}`;
 
     return async (dispatch) => {
         const response = await fetch(`${ORGREK_BACKEND_SERVER}${PATH}${PARAMS}`, {
