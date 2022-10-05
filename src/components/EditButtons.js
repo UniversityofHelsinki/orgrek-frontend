@@ -71,15 +71,15 @@ const EditButtons = (props) => {
     useEffect(() => {
     }, [props.feedback]);
 
-    const readDetails = () => {
+    const readDetails = async () => {
         if (!err_happened) {
             toggleEdit(false);
             props.onSwitchComing(false);//switch off coming attributes
             props.onSwitchHistory(false);
-            props.fetchNodeDetails(props.node, props.selectedDay, props.showHistory, props.showComing, props.selectedHierarchy);
+            await props.fetchNodeDetails(props.node, props.selectedDay, props.showHistory, props.showComing, props.selectedHierarchy);
         } else {
             toggleEdit(true);
-            props.fetchNodeDetails(props.node, props.selectedDay, props.showHistory, props.showComing, props.selectedHierarchy);
+            await props.fetchNodeDetails(props.node, props.selectedDay, props.showHistory, props.showComing, props.selectedHierarchy);
         }
     };
 
@@ -100,10 +100,8 @@ const EditButtons = (props) => {
                     </Col>
                     <Col md="auto">
                         <Button size="sm" variant="success" onClick={async () => {
-                            props.initval();
-                            toggleEdit(false);
                             await saveModifiedAttributes();
-                            {readDetails();}
+                            await readDetails();
                         }}>{t('edit_mode_save_button')}
                         </Button>
                     </Col>
