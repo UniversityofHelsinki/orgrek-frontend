@@ -71,13 +71,16 @@ const NodeDetailsTable = (props) => {
         const renderDateComponent = (elem) => {
             return (
                 <Row>
-                    <Col md="auto">
-                        <ChooseDate validity={props.heading === 'valid_dates'} field={'startDate'} elem={elem}
+                    <Col md="4">
+                        <ChooseDate validity={props.heading === 'valid_dates'}  field={'startDate'} elem={elem}
                                     onDateChange={props.onDateChange}/>
                     </Col>
-                    <Col md="auto">
+                    <Col md="4">
                         <ChooseDate validity={props.heading === 'valid_dates'} field={'endDate'} elem={elem}
                                     onDateChange={props.onDateChange}/>
+                    </Col>
+                    <Col md="3" className="warningText">
+                        { elem.err ? t(elem.err) : '' }
                     </Col>
                 </Row>
             );

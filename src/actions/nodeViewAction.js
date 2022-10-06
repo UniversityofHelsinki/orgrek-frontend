@@ -48,7 +48,8 @@ export const updateParentUnitProperties = (properties) => {
 export const updateAttributes = (uniqueId, attributes) => {
     const ORGREK_BACKEND_SERVER = process.env.REACT_APP_ORGREK_BACKEND_SERVER || '';
     const PATH = '/api/node/attributes/';
-    const PARAMS = `${uniqueId}`;
+    const SKIP_VALIDATION = '/false';
+    const PARAMS = `${uniqueId}${SKIP_VALIDATION}`;
 
     return async (dispatch) => {
         const response = await fetch(`${ORGREK_BACKEND_SERVER}${PATH}${PARAMS}`, {

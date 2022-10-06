@@ -66,6 +66,10 @@ th {
   color: red
 }
 
+.successText {
+  color: green
+}
+
 .nodeLinkSelected {
   font-weight: bold;
   padding-right: 5px;
