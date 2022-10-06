@@ -75,7 +75,6 @@ const NewAttribute = (props) => {
                                 }
                                 }/>
                         : props.availableAttributes ?
-                            //<AttributeDropDown initializeval={initializeval} availableAttributes={props.availableAttributes}
                             <AttributeDropDown availableAttributes={props.availableAttributes}
                                 onAttributeChange={ (value) => {
                                     setState(prevState => ({ ...prevState, key: value }));
