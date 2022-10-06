@@ -7,7 +7,7 @@ export const validateDates = (modifiedAttributes) => {
             let startD = moment(modified.startDate).valueOf();
             let endD = moment(modified.endDate).valueOf();
             if (startD > endD) {
-                modified.err = 'startdata_after_enddata';
+                modified.err = 'startdate_after_enddate';
                 errors = true;
             }
         });

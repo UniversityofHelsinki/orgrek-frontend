@@ -12,7 +12,7 @@ export const addNewAttributeAction = (nodeId, attribute) => {
             },
             body: JSON.stringify(attribute)
         });
-        if (response.status === 200) {
+        if (response.status === 200 || response.status === 201) {
             dispatch({
                 type: 'SHOW_NOTIFICATION',
                 payload: { message: 'insert_attributes_success', success: true }
