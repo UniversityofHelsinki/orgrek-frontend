@@ -171,10 +171,7 @@ const NodeDetails = (props) => {
             setModified({ ...modified, [elem.id]: target });
         }
     };
-    /*const onvalChange = (val) => {
-        setValue(val);
-        console.log('Kutsu tuli');
-    };*/
+
     const onDateChange = (dateChanged) => {
         let elem = dateChanged.elem;
         let date = moment(dateChanged.date).utcOffset(0).format('YYYY-MM-DDTHH:mm:ss.sss+00:00');
