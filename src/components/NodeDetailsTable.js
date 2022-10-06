@@ -60,7 +60,9 @@ const NodeDetailsTable = (props) => {
         };
 
         const showHideElementBasedOnMode = (elem) => {
-            renderUnitDropDown(elem);
+            if (props.heading === 'unit_type') {
+                return renderUnitDropDown(elem);
+            }
             if (props.heading !== 'valid_dates') {
                 return renderInputField(elem);
             }
