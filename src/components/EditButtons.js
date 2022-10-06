@@ -84,7 +84,7 @@ const EditButtons = (props) => {
     };
 
     return (
-        <div className="edit-buttons">
+        <div className="navbar edit-buttons">
             {props.edit ? (
                 <Row>
                     <Col md="auto">
