@@ -15,6 +15,16 @@ export const validateDates = (modifiedAttributes) => {
     return errors;
 };
 
+export const validateStartAndEndDates = (startDate, endDate) => {
+    if (startDate && endDate) {
+        let startD = moment(startDate).valueOf();
+        let endD = moment(endDate).valueOf();
+        if (startD > endD) {
+            return  'startdate_after_enddate';
+        }
+    }
+};
+
 export const validateValues = (modidiedAttributes) => {
     let errors = false;
     if (modidiedAttributes) {

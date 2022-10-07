@@ -56,11 +56,13 @@ const NodeDetailsTable = (props) => {
         };
 
         const renderUnitDropDown = (elem) => {
-            return <UnitDropDown valueunits={ t(elem.value) } onUnitChange={ (e) => props.onValueChange(e, elem) }/>;
+            return <UnitDropDown elemValue={ elem.value } onUnitChange={ (e) => props.onValueChange(e, elem) }/>;
         };
 
         const showHideElementBasedOnMode = (elem) => {
-            renderUnitDropDown(elem);
+            if (props.heading === 'unit_type') {
+                return renderUnitDropDown(elem);
+            }
             if (props.heading !== 'valid_dates') {
                 return renderInputField(elem);
             }
