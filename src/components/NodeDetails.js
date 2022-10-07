@@ -163,12 +163,12 @@ const NodeDetails = (props) => {
     };
 
     const onValueChange = (event, elem) => {
-        if (modified[elem.id]) {
-            const target = { ...modified[elem.id], [event.target.name]: event.target.value, validity: false  };
-            setModified({ ...modified, [elem.id]: target });
-        } else {
-            const target = { ...elem, [event.target.name]: event.target.value, validity: false  };
-            setModified({ ...modified, [elem.id]: target });
+        if (modified[elem.id]) {//element has already been modified at least once, because its found in modified array
+            const target = { ...modified[elem.id], [event.target.name]: event.target.value , validity: false, 'err': '' };//makes copy of modified[elem.id] and updates its value with event.target.value
+            setModified({ ...modified, [elem.id]: target });//updates row
+        } else {//This is the first time this element is modified so its not found in modified array
+            const target = { ...elem, [event.target.name]: event.target.value, validity: false, 'err': '' };//creates a new elem object based on elem object and updates its value with event.target.value
+            setModified({ ...modified, [elem.id]: target, 'err': '' });//adds this new object in modified map
         }
     };
 
@@ -180,12 +180,12 @@ const NodeDetails = (props) => {
         }
         let name = dateChanged.whichDate; //startDate or endDate
 
-        if (modified[elem.id]) {
-            const target = { ...modified[elem.id], [name]: date, validity: dateChanged.validity  };
-            setModified({ ...modified, [elem.id]: target });
-        } else {
-            const target = { ...elem, [name]: date, validity: dateChanged.validity  };
-            setModified({ ...modified, [elem.id]: target });
+        if (modified[elem.id]) {//element has already been modified at least once, because its found in modified array
+            const target = { ...modified[elem.id], [name]: date, validity: dateChanged.validity, 'err': '' };//makes copy of modified[elem.id] and updates its value with date
+            setModified({ ...modified, [elem.id]: target });//updates row
+        } else {//This is the first time this element is modified so its not found in modified array
+            const target = { ...elem, [name]: date, validity: dateChanged.validity, 'err': '' };//creates a new elem object based on elem object and updates its value with date
+            setModified({ ...modified, [elem.id]: target });//adds this new object in modified map
         }
     };
 
@@ -299,7 +299,6 @@ const NodeDetails = (props) => {
                             onValueChange={onValueChange}
                             onDateChange={onDateChange}
                             fullname={false}
-
                         />
                         <NewAttribute unit={true} initvalues={initValues}/>
                         <NodeDetailsTable
@@ -313,7 +312,6 @@ const NodeDetails = (props) => {
                             onValueChange={onValueChange}
                             onDateChange={onParentDateChange}
                             fullname={false}
-
                         />
                         <NewUpperUnit initvalues={initValues}/>
                         <NodeDetailsTable
@@ -327,7 +325,6 @@ const NodeDetails = (props) => {
                             onValueChange={onValueChange}
                             onDateChange={onDateChange}
                             fullname={false}
-
                         />
                         <NodeDetailsTable
                             selectedDay={props.selectedDay}
@@ -339,7 +336,6 @@ const NodeDetails = (props) => {
                             onValueChange={onValueChange}
                             onDateChange={onDateChange}
                             fullname={false}
-
                         />
                         <NodeDetailsTable
                             selectedDay={props.selectedDay}
@@ -351,7 +347,6 @@ const NodeDetails = (props) => {
                             onValueChange={onValueChange}
                             onDateChange={onDateChange}
                             fullname={false}
-
                         />
                         <NodeDetailsTable
                             selectedDay={props.selectedDay}

@@ -8,6 +8,8 @@ import { fetchTree } from '../actions/treeAction';
 import { addNewAttributeAction } from '../actions/newAttributeAction';
 import AttributeDropDown from './AttributeDropdown';
 import UnitDropDown from './UnitDropDown';
+import { validateDates } from './Validator';
+import { t } from 'i18next';
 
 const NewAttribute = (props) => {
 
@@ -15,11 +17,12 @@ const NewAttribute = (props) => {
         key: '',
         value: '',
         startDate: '',
-        endDate: ''
+        endDate: '',
+        err: ''
     };
 
     const [
-        { key, value, startDate, endDate },
+        { key, value, startDate, endDate, err },
         setState
     ] = useState(initialState);
     const clearState = () => {
@@ -49,8 +52,13 @@ const NewAttribute = (props) => {
     };
 
     const insertNewAttribute = async() => {
-        let attributeArr = [{ 'nodeId': props.node.id, 'key': key, 'value': value, 'startDate': startDate, 'endDate': endDate }];
-        await props.actionAddNewAttribute(props.node.id, attributeArr);
+        let attribute = { 'nodeId': props.node.id, 'key': key, 'value': value, 'startDate': startDate, 'endDate': endDate, 'err': '' };
+        const errorDates = validateDates([attribute]);
+        if (errorDates) {
+            setState(prevState => ({ ...prevState, err: attribute.err }));
+            return;
+        }
+        await props.actionAddNewAttribute(props.node.id, attribute);
         await props.fetchNodeAndTree(props.node, props.selectedHierarchy, props.selectedDay);
     };
 
@@ -86,17 +94,20 @@ const NewAttribute = (props) => {
                         }
                     </Col>
                     {!props.unit ?
-                        <Col>
-                            <Form.Control value={value} onChange={ (e) => onValueChange(e) }/>
-                        </Col> : ''}
                     <Col>
+                        <Form.Control value={value} onChange={ (e) => onValueChange(e) }/>
+                    </Col> : ''}
+                    <Col md="2">
                         <PickDate startDate onDateChange={dateSelection} selectedStartDate={startDate}/>
                     </Col>
-                    <Col>
+                    <Col md="2">
                         <PickDate endDate onDateChange={dateSelection} selectedEndDate={endDate}/>
                     </Col>
                     <Col>
                         <Button disabled={isButtonDisabled()} variant="primary" onClick={insertNewAttribute}>Lisää</Button>
+                    </Col>
+                    <Col md="3" className="warningText">
+                        { err ? t(err) : '' }
                     </Col>
                 </Row>
                 : ''}

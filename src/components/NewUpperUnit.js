@@ -8,6 +8,8 @@ import { actionAddNewUpperUnit } from '../actions/newUpperUnitAction';
 import { connect } from 'react-redux';
 import { fetchNode } from '../actions/nodeAction';
 import { fetchTree } from '../actions/treeAction';
+import { t } from 'i18next';
+import { validateStartAndEndDates } from './Validator';
 
 const NewUpperUnit = (props) => {
 
@@ -15,6 +17,7 @@ const NewUpperUnit = (props) => {
     const [selectedHierarchy, setSelectedHierarchy] = useState('-');
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
+    const [err, setErr] = useState(null);
 
     const organisationUnitSelection = (value) => {
         setSelectedParentOrganisationUnit (value);
@@ -35,6 +38,13 @@ const NewUpperUnit = (props) => {
     };
 
     const insertNewUpperUnit = async() => {
+        const error = validateStartAndEndDates(startDate, endDate);
+        if (error) {
+            setErr(error);
+            return;
+        } else {
+            setErr('');
+        }
         await props.actionAddNewUpperUnit(selectedParentOrganisationUnit, selectedHierarchy, startDate, endDate, props.node);
         await props.fetchNodeAndTree(props.node, props.selectedHierarchy, props.selectedDay);
         emptyUpperUnitState();
@@ -49,6 +59,7 @@ const NewUpperUnit = (props) => {
         setSelectedHierarchy('-');
         setStartDate('');
         setEndDate('');
+        setErr('');
     };
 
     useEffect(() => {
@@ -59,20 +70,23 @@ const NewUpperUnit = (props) => {
       <div>
           {props.edit ?
               <Row>
-                  <Col xs={6}>
+                  <Col md="4">
                       <OrganisationUnitSearch onOrganisationUnitChange={organisationUnitSelection} selectedParentOrganisationUnit={selectedParentOrganisationUnit}/>
                   </Col>
-                  <Col>
+                  <Col md="2">
                       <HierarchyDropDown onHierarchyChange={hierarchySelection} hierarchySelection={selectedHierarchy}/>
                   </Col>
-                  <Col>
+                  <Col md="2">
                       <PickDate startDate onDateChange={dateSelection} selectedStartDate={startDate}/>
                   </Col>
-                  <Col>
+                  <Col md="2">
                       <PickDate endDate onDateChange={dateSelection} selectedEndDate={endDate}/>
                   </Col>
                   <Col>
                       <Button disabled={isButtonDisabled()} variant="primary" onClick={insertNewUpperUnit}>Lisää</Button>
+                  </Col>
+                  <Col md="3" className="warningText">
+                      { err ? t(err) : '' }
                   </Col>
               </Row>
           : ''}

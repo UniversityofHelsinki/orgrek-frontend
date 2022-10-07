@@ -5,6 +5,8 @@ import { switchComing, switchHistory, updateAttributes, updateNodeProperties, up
 import { connect } from 'react-redux';
 import NodeViewControl from './NodeViewControl';
 import { editMode } from '../actions/editModeAction';
+import { validateDates, validateValues } from './Validator';
+
 import {
     fetchNode,
     fetchNodeAttributes,
@@ -16,6 +18,7 @@ import { fetchNodeChildren, fetchNodeParents } from '../actions/hierarchyAction'
 
 const EditButtons = (props) => {
     const { t, i18n } = useTranslation();
+    let err_happened = false;
 
     const toggleEdit = (newMode) => {
         if (!newMode) {
@@ -34,8 +37,19 @@ const EditButtons = (props) => {
 
     const saveModifiedAttributes = async()  => {
         const modifiedArr = Object.values(props.modified);
-        const filteredAttributesArray = modifiedArr.filter(elem => elem.validity === false);
+        let filteredAttributesArray = modifiedArr.filter(elem => elem.validity === false);
         const filteredNodeWithProperties = modifiedArr.find(elem => elem.validity === true);
+        const errorDates = validateDates(filteredAttributesArray);
+        const emptyValues = validateValues(filteredAttributesArray);
+        if (errorDates) {
+            err_happened = true;
+            return;
+        }
+        if (emptyValues) {
+            err_happened = true;
+            return;
+        }
+
         if (filteredAttributesArray && filteredAttributesArray.length > 0) {
             await props.updatingAttributes(props.node, filteredAttributesArray);
         }
@@ -57,6 +71,18 @@ const EditButtons = (props) => {
     useEffect(() => {
     }, [props.feedback]);
 
+    const readDetails = async () => {
+        if (!err_happened) {
+            toggleEdit(false);
+            props.onSwitchComing(false);//switch off coming attributes
+            props.onSwitchHistory(false);
+            await props.fetchNodeDetails(props.node, props.selectedDay, props.showHistory, props.showComing, props.selectedHierarchy);
+        } else {
+            toggleEdit(true);
+            await props.fetchNodeDetails(props.node, props.selectedDay, props.showHistory, props.showComing, props.selectedHierarchy);
+        }
+    };
+
     return (
         <div className="edit-buttons">
             {props.edit ? (
@@ -74,15 +100,9 @@ const EditButtons = (props) => {
                     </Col>
                     <Col md="auto">
                         <Button size="sm" variant="success" onClick={async () => {
-                            props.initval();
-                            toggleEdit(false);
                             await saveModifiedAttributes();
-                            props.onSwitchComing(false);//switch off coming attributes
-                            props.onSwitchHistory(false);
-                            props.fetchNodeDetails(props.node, props.selectedDay, props.showHistory, props.showComing, props.selectedHierarchy);
-                        }}//switch off history attributes
-                        >
-                            {t('edit_mode_save_button')}
+                            await readDetails();
+                        }}>{t('edit_mode_save_button')}
                         </Button>
                     </Col>
                     <Col md="auto">
@@ -106,7 +126,7 @@ const EditButtons = (props) => {
                     </Col>
                 </Row>)}
         <Col md="auto">
-            {props.feedback && <span className={props.feedback.success ? 'success' : 'error'}>{props.feedback.message}<br/>{props.feedback.success || `${t('status_code')}: ${props.feedback.statusCode}`}</span>}
+            {props.feedback && <span className={props.feedback.success ? 'successText' : 'warningText'}>{props.feedback.message}<br/>{props.feedback.success || `${t('status_code')}: ${props.feedback.statusCode}`}</span>}
         </Col>
         </div>
     );
