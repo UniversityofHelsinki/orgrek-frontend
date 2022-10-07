@@ -30,7 +30,7 @@ const NewAttribute = (props) => {
     };
 
     const onValueChange = (event) => {
-      setState(prevState => ({ ...prevState, value: event.target.value }));
+        setState(prevState => ({ ...prevState, value: event.target.value }));
     };
 
     const onKeyChange = (event) => {
@@ -40,11 +40,11 @@ const NewAttribute = (props) => {
     const dateSelection = (value, startDate, endDate) => {
         (startDate ?
             setState(prevState => ({ ...prevState, startDate: value }))
-        : null);
+            : null);
         (endDate ?
             setState(prevState => ({ ...prevState, endDate: value }))
-        : null);
-        };
+            : null);
+    };
 
 
     const emptyAllStates = () => {
@@ -63,7 +63,7 @@ const NewAttribute = (props) => {
     };
 
     const isButtonDisabled = () => {
-            return !key || !value;
+        return !key || !value;
     };
 
     useEffect(() => {
@@ -82,16 +82,15 @@ const NewAttribute = (props) => {
                                     setState(prevState => ({ ...prevState, value: e.target.value }));
                                 }
                                 }/>
-                        : props.availableAttributes ?
-                            //<AttributeDropDown initializeval={initializeval} availableAttributes={props.availableAttributes}
-                            <AttributeDropDown availableAttributes={props.availableAttributes}
-                                onAttributeChange={ (value) => {
-                                    setState(prevState => ({ ...prevState, key: value }));
-                                }}/>
-                        :
-                            <Col>
-                                <Form.Control onChange={ (e) => onKeyChange(e) }/>
-                            </Col>
+                            : props.availableAttributes ?
+                                <AttributeDropDown availableAttributes={props.availableAttributes}
+                                                   onAttributeChange={ (value) => {
+                                                       setState(prevState => ({ ...prevState, key: value }));
+                                                   }}/>
+                                :
+                                <Col>
+                                    <Form.Control onChange={ (e) => onKeyChange(e) }/>
+                                </Col>
                         }
                     </Col>
                     {!props.unit ?

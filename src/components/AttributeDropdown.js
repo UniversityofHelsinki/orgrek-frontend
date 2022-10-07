@@ -1,30 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { Dropdown, DropdownButton } from 'react-bootstrap';
 
 const AttributeDropDown = (props) => {
     const { t } = useTranslation();
     const [value, setValue] = useState('');
-    //let valueSelected = false;
 
-    const handleSelect=(value) => {
-        //valueSelected = true;
-        setValue(value);
-        props.onAttributeChange(value);
+    const handleSelect=(event) => {
+        setValue(event.target.value);
+        props.onAttributeChange(event.target.value);
     };
-
-    /*useEffect(() => {
-        if (!valueSelected) {
-            setValue('');
-        }
-    }, [props.initializeval]);*/
 
     const validAttributes = ( (availableAttributes) => {
         let validAttr = availableAttributes;
-        let countOfSelHier = props.selectedHierarchy.split(',');
-        if (countOfSelHier.length !== (props.selectableHierarchies.length -1)) { //-1 because 'history' is included
-            validAttr = validAttr.filter((s) => {//all hierarchies should be selected to show mainari and laskutus
+        let selectedHierarchiesArrayList = props.selectedHierarchy.split(',');
+        if (selectedHierarchiesArrayList.length !== (props.selectableHierarchies.length -1)) {
+            validAttr = validAttr.filter((s) => {
                 return !s.match('mainari_tunnus') && !s.match('laskutus_tunnus');
             });
         }
@@ -49,13 +40,12 @@ const AttributeDropDown = (props) => {
         <div>
             {props.availableAttributes &&
                 <>
-                    <DropdownButton
-                        title={t(props.attributeValue) ? t(props.attributeValue) : t(value) ?  t(value) : '---'}
-                        onSelect={handleSelect} >
-                            {validAttributes(props.availableAttributes).map((option, i) => (
-                                <Dropdown.Item key={i} eventKey={option} >{t(option)}</Dropdown.Item>
-                            ))}
-                    </DropdownButton>
+                    <select value={value} onChange={handleSelect}>
+                        <option value="">-</option>
+                        {validAttributes(props.availableAttributes).map((option, i) => (
+                            <option key={i} value={option}>{t(option)}</option>
+                        ))}
+                    </select>
                 </>
             }
         </div>
