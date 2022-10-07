@@ -40,10 +40,10 @@ const Tree = (props) => {
     useEffect(() => {
         if (props.selectableHierarchies && props.selectableHierarchies.length > 0) {
             const selectableHierarchies = props.selectableHierarchies.filter(item => item !== 'history');
-            props.onFetchTreeWithAllHierarchies(selectableHierarchies);
+            props.onFetchTreeWithAllHierarchies(selectableHierarchies, props.selectedDay);
         }
         // eslint-disable-next-line
-    }, [props.selectableHierarchies]);
+    }, [props.selectableHierarchies, props.selectedDay]);
 
     const language = i18n.language === 'ia' ? 'fi' : i18n.language;
 
@@ -78,7 +78,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     onFetchTree: (selection, selectedDay) => dispatch(fetchTree(selection, selectedDay)),
-    onFetchTreeWithAllHierarchies: (allHierarchies) => dispatch(fetchTreeWithAllHierarchies(allHierarchies))
+    onFetchTreeWithAllHierarchies: (allHierarchies, selectedDate) => dispatch(fetchTreeWithAllHierarchies(allHierarchies, selectedDate))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Tree);
