@@ -2,16 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { fetchValidHierarchyFilters } from '../actions/hierarchyFiltersAction';
-import { DropdownButton, Dropdown } from 'react-bootstrap';
 
 const UnitDropDown = (props) => {
     const { t } = useTranslation();
-    const [value, setValue] = useState('');
-    const [selectableunits, setSelectableunits] = useState([]);
+    const [value, setValue] = useState(props.elemValue);
+    const [selectableUnits, setSelectableUnits] = useState([]);
 
-    const handleSelect=(event) => {
-        setValue(event);
-        const ev = { target: { name:'value', value: event } };
+    const handleSelect = (event) => {
+        setValue(event.target.value);
+        const ev = { target: { name:'value', value: event.target.value } };
         props.onUnitChange(ev);
     };
 
@@ -43,25 +42,24 @@ const UnitDropDown = (props) => {
     useEffect(() => {
         const selectedHierarchies= props.selectedHierarchies;
         const currentHierarchyFilters = props.hierarchyFilters;
-        let herarchiesWhereKeyValueIsType = [];
-        herarchiesWhereKeyValueIsType = currentHierarchyFilters.filter(item => item.key === 'type');
-        const sortedHierarchies = sortHierarchies(herarchiesWhereKeyValueIsType);
+        let hierarchiesWhereKeyValueIsType = [];
+        hierarchiesWhereKeyValueIsType = currentHierarchyFilters.filter(item => item.key === 'type');
+        const sortedHierarchies = sortHierarchies(hierarchiesWhereKeyValueIsType);
         let units =  concatValues(sortedHierarchies,selectedHierarchies);
-        let unitselectable = units.split(',');
-        setSelectableunits(unitselectable);
+        let selectableUnitArrayList = units.split(',');
+        setSelectableUnits(selectableUnitArrayList);
     }, [props.hierarchyFilters, props.selectedHierarchies]);
 
     return (
         <div>
-            {selectableunits &&
+            {selectableUnits &&
                 <>
-                    <DropdownButton
-                        title={t(props.valueunits) ? t(props.valueunits) : t(value) ?  t(value) : '---'}
-                        onSelect={handleSelect} >
-                        {selectableunits.map((option, i) => (
-                            <Dropdown.Item key={i} eventKey={option} >{t(option)}</Dropdown.Item>
+                    <select value={value} onChange={handleSelect}>
+                        <option value="">-</option>
+                        {selectableUnits.map((option, i) => (
+                            <option key={i} value={option}>{t(option)}</option>
                         ))}
-                    </DropdownButton>
+                    </select>
                 </>
             }
         </div>

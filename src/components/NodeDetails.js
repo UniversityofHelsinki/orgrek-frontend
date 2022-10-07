@@ -25,7 +25,7 @@ import EditButtons from './EditButtons';
 import { isAdmin } from '../actions/userAction';
 import moment from 'moment';
 import NewUpperUnit from './NewUpperUnit';
-import { availablenames, availablecodes } from '../constants/AttibutesForSelect';
+import { availableNames, availablecodes } from '../constants/AttibutesForSelect';
 
 // eslint-disable-next-line complexity
 const NodeDetails = (props) => {
@@ -33,10 +33,10 @@ const NodeDetails = (props) => {
     const lang = i18n.language;
     const [attributeData, setAttributeData] = useState(false);
     const [modified, setModified] = useState({}); //{} makes map. Change map to list when sending to backend
-    const [initvalues, doInitvalues] = useState(0);
-    const initval = () => {
-        doInitvalues((prevState) => ({
-            initvalues: prevState.initvalues + 1,
+    const [initValues, setInitValues] = useState(0);
+    const initVal = () => {
+        setInitValues((prevState) => ({
+            initValues: prevState.initValues + 1,
         }));
     };
     const [modifiedParents, setModifiedParents] = useState({});
@@ -171,10 +171,7 @@ const NodeDetails = (props) => {
             setModified({ ...modified, [elem.id]: target, 'err': '' });//adds this new object in modified map
         }
     };
-    /*const onvalChange = (val) => {
-        setValue(val);
-        console.log('Kutsu tuli');
-    };*/
+
     const onDateChange = (dateChanged) => {
         let elem = dateChanged.elem;
         let date = moment(dateChanged.date).utcOffset(0).format('YYYY-MM-DDTHH:mm:ss.sss+00:00');
@@ -217,7 +214,7 @@ const NodeDetails = (props) => {
         <div>
             {props.nodeAttributes &&
                 <>
-                    {isAdmin(props.user) ? <EditButtons initval={initval}  modifiedParents={modifiedParents} setModified={setModified} node={props.node} selectedDay={props.selectedDay} selectedHierarchy={props.selectedHierarchy} modified={modified} /> : null }
+                    {isAdmin(props.user) ? <EditButtons initval={initVal}  modifiedParents={modifiedParents} setModified={setModified} node={props.node} selectedDay={props.selectedDay} selectedHierarchy={props.selectedHierarchy} modified={modified} /> : null }
                     <div className="right-side">
                         <div>
                             <h3>{props.favorableNames[lang === 'ia' && 'fi' || lang]?.[0]?.name}</h3>
@@ -255,7 +252,7 @@ const NodeDetails = (props) => {
                             onDateChange={onDateChange}
                             fullname={false}
                         />
-                        <NewAttribute availableAttributes={availablenames} initvalues={initvalues} />
+                        <NewAttribute availableAttributes={availableNames} initvalues={initValues} />
                         <NodeDetailsTable
                             selectedDay={props.selectedDay}
                             type='key-value'
@@ -285,7 +282,7 @@ const NodeDetails = (props) => {
                             onDateChange={onDateChange}
                             fullname={false}
                         />
-                        <NewAttribute availableAttributes={availablecodes} initvalues={initvalues} />
+                        <NewAttribute availableAttributes={availablecodes} initvalues={initValues} />
                         <NodeDetailsTable
                             selectedDay={props.selectedDay}
                             type='key-value'
@@ -303,7 +300,7 @@ const NodeDetails = (props) => {
                             onDateChange={onDateChange}
                             fullname={false}
                         />
-                        <NewAttribute unit={true} initvalues={initvalues}/>
+                        <NewAttribute unit={true} initvalues={initValues}/>
                         <NodeDetailsTable
                             selectedDay={props.selectedDay}
                             type='node-hierarchy'
@@ -316,7 +313,7 @@ const NodeDetails = (props) => {
                             onDateChange={onParentDateChange}
                             fullname={false}
                         />
-                        <NewUpperUnit initvalues={initvalues}/>
+                        <NewUpperUnit initvalues={initValues}/>
                         <NodeDetailsTable
                             selectedDay={props.selectedDay}
                             type='node-hierarchy'
@@ -368,7 +365,7 @@ const NodeDetails = (props) => {
                             onDateChange={onDateChange}
                             fullname={false}
                         />
-                        <NewAttribute initvalues={initvalues} />
+                        <NewAttribute initvalues={initValues} />
                     </div>
                 </>
             }
