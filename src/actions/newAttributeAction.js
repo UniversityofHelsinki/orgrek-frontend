@@ -1,8 +1,9 @@
-export const addNewAttributeAction = (nodeId, attribute) => {
+export const addNewAttributeAction = (nodeId, attribute, skipValidation) => {
+    //välitä kutsussa ekana false ja ku backend on palauttanu virheen ni true
     const ORGREK_BACKEND_SERVER = process.env.REACT_APP_ORGREK_BACKEND_SERVER || '';
     const PATH = '/api/node/attributes/';
-    const SKIP_VALIDATION = '/false';
-    const PARAMS = `${nodeId}${SKIP_VALIDATION}`;
+    //const SKIP_VALIDATION = '/false';
+    const PARAMS = `${nodeId}/${skipValidation}`;
 
     return async (dispatch) => {
         const response = await fetch(`${ORGREK_BACKEND_SERVER}${PATH}${PARAMS}`, {
