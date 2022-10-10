@@ -125,9 +125,11 @@ const EditButtons = (props) => {
                         <NodeViewControl node={props.node} selectedDay={props.selectedDay}  selectedHierarchy={props.selectedHierarchy} />
                     </Col>
                 </Row>)}
-        <Col md="auto">
-            {props.feedback && <span className={props.feedback.success ? 'successText' : 'warningText'}>{props.feedback.message}<br/>{props.feedback.success || `${t('status_code')}: ${props.feedback.statusCode}`}</span>}
-        </Col>
+            <Row>
+                <Col md="auto">
+                    {props.feedback && <span className={props.feedback.success ? 'successText' : 'warningText'}>{props.feedback.message}<br/>{props.feedback.success || `${t('status_code')}: ${props.feedback.statusCode}`}</span>}
+                </Col>
+            </Row>
         </div>
     );
 };
