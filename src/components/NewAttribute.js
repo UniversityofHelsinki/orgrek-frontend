@@ -48,6 +48,14 @@ const NewAttribute = (props) => {
 
 
     const emptyAllStates = () => {
+
+        /*tänne tullaan ku tullaan edit tilaan. Kutsu tässä action:a joka tyhjää state.feedback_stored
+        - eli uusi metodi sopivaan actioniin ja nodeReducer.js fileen
+
+        ja sama kuvio EditButtons fileen. Sille ei välitetä props.initvalues. pitää lisätä, että tiedetään, että tullaan edit tilaan.
+
+        Lisäys menee joskus lisäyksen jälkeen katsomistilaan. Senhän pitää pysyä aina editointitilassa.*/
+
         clearState();
     };
 

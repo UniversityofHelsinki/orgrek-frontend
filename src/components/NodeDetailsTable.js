@@ -39,6 +39,9 @@ const NodeDetailsTable = (props) => {
 
         const isEditMode = (elem) => {
             if (props.edit && props.fullname === false && doEdit(elem.key)) {
+                /*if (props.hasValidity) {
+                    elem.validity = true;
+                }*/
                 return true;
             } else {
                 return false;

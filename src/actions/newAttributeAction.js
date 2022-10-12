@@ -1,5 +1,4 @@
 export const addNewAttributeAction = (nodeId, attribute, skipValidation) => {
-    //välitä kutsussa ekana false ja ku backend on palauttanu virheen ni true
     const ORGREK_BACKEND_SERVER = process.env.REACT_APP_ORGREK_BACKEND_SERVER || '';
     const PATH = '/api/node/attributes/';
     //const SKIP_VALIDATION = '/false';
@@ -16,7 +15,7 @@ export const addNewAttributeAction = (nodeId, attribute, skipValidation) => {
         if (response.status === 200 || response.status === 201) {
             dispatch({
                 type: 'SHOW_NOTIFICATION',
-                payload: { message: 'insert_attributes_success', success: true }
+                payload: { message: 'insert_attributes_success', success: true, skipValidation: skipValidation }
             });
             setTimeout(() => {
                 dispatch({ type: 'HIDE_NOTIFICATION' });
@@ -24,7 +23,7 @@ export const addNewAttributeAction = (nodeId, attribute, skipValidation) => {
         } else {
             dispatch({
                 type: 'SHOW_NOTIFICATION',
-                payload: { message: 'insert_attributes_error', success: false, statusCode: response.status }
+                payload: { message: 'insert_attributes_error', success: false, statusCode: response.status, skipValidation: skipValidation }
             });
             setTimeout(() => {
                 dispatch({ type: 'HIDE_NOTIFICATION' });

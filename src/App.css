@@ -120,6 +120,6 @@ th {
 
 .navbar {
   flex-flow: column;
-  display: flow;
+  display: grid;
 }
 
