@@ -1,6 +1,7 @@
 
 const initialState = {
     feedback: undefined,
+    feedback_stored: undefined,
     nodeAttributes : null,
     nodeAttributesHistory: null,
     nodeAttributesFuture: null,
@@ -14,6 +15,11 @@ const initialState = {
 const nodeReducer = (state = initialState, action) => {
     switch (action.type) {
         case 'SHOW_NOTIFICATION':
+            if (action.payload.skipValidation === true) {
+                state.feedback_stored = null;
+            } else if (action.payload.skipValidation === false) {
+                state.feedback_stored = action.payload;
+            }
             return {
                 ...state,
                 feedback: action.payload
