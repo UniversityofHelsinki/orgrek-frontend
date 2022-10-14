@@ -119,3 +119,8 @@ th {
   z-index: 1030;
 }
 
+.navbar {
+  flex-flow: column;
+  display: grid;
+}
+

@@ -45,11 +45,12 @@ export const updateParentUnitProperties = (properties) => {
 };
 
 
-export const updateAttributes = (uniqueId, attributes) => {
+export const updateAttributes = (uniqueId, attributes, skipValidation) => {
     const ORGREK_BACKEND_SERVER = process.env.REACT_APP_ORGREK_BACKEND_SERVER || '';
     const PATH = '/api/node/attributes/';
-    const SKIP_VALIDATION = '/false';
-    const PARAMS = `${uniqueId}${SKIP_VALIDATION}`;
+    //const SKIP_VALIDATION = '/false';
+    //const PARAMS = `${uniqueId}${SKIP_VALIDATION}`;
+    const PARAMS = `${uniqueId}/${skipValidation}`;
 
     return async (dispatch) => {
         const response = await fetch(`${ORGREK_BACKEND_SERVER}${PATH}${PARAMS}`, {
@@ -62,7 +63,7 @@ export const updateAttributes = (uniqueId, attributes) => {
         if (response.status === 200) {
             dispatch({
                 type: 'SHOW_NOTIFICATION',
-                payload: { message: 'update_attributes_success', success: true }
+                payload: { message: 'update_attributes_success', success: true, skipValidation: skipValidation }
             });
             setTimeout(() => {
                 dispatch({ type: 'HIDE_NOTIFICATION' });
@@ -70,7 +71,7 @@ export const updateAttributes = (uniqueId, attributes) => {
         } else {
             dispatch({
                 type: 'SHOW_NOTIFICATION',
-                payload: { message: 'update_attributes_error', success: false, statusCode: response.status }
+                payload: { message: 'update_attributes_error', success: false, statusCode: response.status, skipValidation: skipValidation }
             });
             setTimeout(() => {
                 dispatch({ type: 'HIDE_NOTIFICATION' });

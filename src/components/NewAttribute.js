@@ -48,6 +48,14 @@ const NewAttribute = (props) => {
 
 
     const emptyAllStates = () => {
+
+        /*tänne tullaan ku tullaan edit tilaan. Kutsu tässä action:a joka tyhjää state.feedback_stored
+        - eli uusi metodi sopivaan actioniin ja nodeReducer.js fileen
+
+        ja sama kuvio EditButtons fileen. Sille ei välitetä props.initvalues. pitää lisätä, että tiedetään, että tullaan edit tilaan.
+
+        Lisäys menee joskus lisäyksen jälkeen katsomistilaan. Senhän pitää pysyä aina editointitilassa.*/
+
         clearState();
     };
 
@@ -58,7 +66,11 @@ const NewAttribute = (props) => {
             setState(prevState => ({ ...prevState, err: attribute.err }));
             return;
         }
-        await props.actionAddNewAttribute(props.node.id, attribute);
+        let skipValidation = false;
+        if (props.feedback_stored && props.feedback_stored.success === false) {
+            skipValidation =true;
+        }
+        await props.actionAddNewAttribute(props.node.id, attribute, skipValidation);
         await props.fetchNodeAndTree(props.node, props.selectedHierarchy, props.selectedDay);
     };
 
@@ -120,11 +132,12 @@ const mapStateToProps = state => ({
     node: state.nrd.node,
     selectedHierarchy: state.tree.selectedHierarchy,
     selectedDay : state.dr.selectedDay,
+    feedback_stored : state.nrd.feedback_stored,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    actionAddNewAttribute: (nodeId, attribute) => {
-        dispatch(addNewAttributeAction(nodeId, attribute));
+    actionAddNewAttribute: (nodeId, attribute, skipValidation) => {
+        dispatch(addNewAttributeAction(nodeId, attribute, skipValidation));
     },
     fetchNodeAndTree: (node, selection, date) => {
         dispatch(fetchNode(node.uniqueId, true));
