@@ -482,7 +482,7 @@ const Texts = (props) => {
                 <Pagination pageNo={pageNo} itemsPerPage={itemsPerPage} elements={texts.length} onClick={pageChange} />
             </Col>
             <Col md="auto">
-                {feedback && <span className={feedback.success ? '' : 'error'}>{feedback.message}<br/>{feedback.success || `${t('status_code')}: ${feedback.statusCode}`}</span>}
+                {feedback && <span className={feedback.success ? '' : 'error'}>{t(feedback.message)}<br/>{feedback.success || `${t('status_code')}: ${feedback.statusCode}`}</span>}
             </Col>
             <Col md="auto">
                 <BSRow className="justify-content-end">
