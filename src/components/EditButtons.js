@@ -141,7 +141,7 @@ const EditButtons = (props) => {
                 </Row>)}
             <Row>
                 <Col md="auto">
-                    {props.feedback && <span className={props.feedback.success ? 'successText' : 'warningText'}>{props.feedback.message}<br/>{props.feedback.success || `${t('status_code')}: ${props.feedback.statusCode}`}</span>}
+                    {props.feedback && <span className={props.feedback.success ? 'successText' : 'warningText'}>{t(props.feedback.message)}<br/>{props.feedback.success || `${t('status_code')}: ${props.feedback.statusCode}`}</span>}
                 </Col>
             </Row>
         </div>
