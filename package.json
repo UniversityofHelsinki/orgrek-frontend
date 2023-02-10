@@ -79,7 +79,7 @@
     "format:check": "prettier --check .",
     "cypress:open": "cypress open",
     "storybook": "start-storybook -p 6006 -s public",
-    "build-storybook": "build-storybook -s public",
+    "storybook:build": "build-storybook -s public",
     "prepare": "husky install"
   },
   "eslintConfig": {
