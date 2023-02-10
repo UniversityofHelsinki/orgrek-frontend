@@ -9,6 +9,7 @@ module.exports = {
     'eslint:recommended',
     'plugin:react/recommended',
     'plugin:cypress/recommended',
+    'plugin:storybook/recommended',
     'prettier', // Prettier should always be the last item in this array
   ],
   parserOptions: {
