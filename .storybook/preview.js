@@ -1,6 +1,20 @@
+import React from 'react';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import { DocsContainer } from '@storybook/addon-docs';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { fi } from 'date-fns/locale';
 import theme from '../src/theme';
+
+// Use the same decorators for both stories and docs pages
+const CommonDecorators = ({ children }) => (
+  <ThemeProvider theme={theme}>
+    <CssBaseline />
+    <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={fi}>
+      {children}
+    </LocalizationProvider>
+  </ThemeProvider>
+);
 
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
@@ -12,19 +26,17 @@ export const parameters = {
   },
   docs: {
     container: (props) => (
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
+      <CommonDecorators>
         <DocsContainer {...props} />
-      </ThemeProvider>
+      </CommonDecorators>
     ),
   },
 };
 
 export const decorators = [
   (Story) => (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
+    <CommonDecorators>
       <Story />
-    </ThemeProvider>
+    </CommonDecorators>
   ),
 ];
