@@ -60,6 +60,28 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
+## Code Style
+
+The code is formatted automatically with [Prettier](https://prettier.io/).
+There are several ways to run the formatter:
+
+- automatically on save file by IDE
+- automatically by a pre-commit hook
+- manually from command line by executing `npm run format`
+
+Most text editors have built-in support for Prettier, so refer to the documentation of your favorite tool.
+
+The pre-commit hook runs both ESLint and Prettier on staged files when you do a git commit.
+The hook is installed automatically after running `npm install`.
+
+### Using Prettier in IntelliJ IDEA
+
+In IDEA, two steps are needed:
+
+- [Apply Prettier code style](https://www.jetbrains.com/help/idea/prettier.html#ws_prettier_apply_code_style) from the banner appearing on top of `package.json`
+- [Enable run automatically on save](https://www.jetbrains.com/help/idea/prettier.html#ws_prettier_run_automatically_in_current_project).
+  Check that the file pattern includes all desired files, e.g. `{**/*,*}.{js,jsx,json,css,html,yml,md}`
+
 ## JSON server
 
 The JSON server runs mock api using the db.json-file as database.
