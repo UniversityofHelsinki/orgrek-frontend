@@ -8,7 +8,7 @@
   color: #333 !important;
 }
 
-.table>:not(:first-child) {
+.table > :not(:first-child) {
   border-top: 2px solid lightgray !important;
 }
 
@@ -20,15 +20,16 @@ a:hover {
   text-decoration: underline;
 }
 
-
-#show_history_switch:checked, #show_coming_switch:checked{
+#show_history_switch:checked,
+#show_coming_switch:checked {
   background-color: #0e688b;
   border-color: #0e688b;
 }
 
-h3, h4 {
+h3,
+h4 {
   margin: 10px 10px 10px 0 !important;
-  color : #0e688b;
+  color: #0e688b;
 }
 
 th {
@@ -59,15 +60,14 @@ th {
 }
 
 .treeHierarchiesSelected {
-
 }
 
 .warningText {
-  color: red
+  color: red;
 }
 
 .successText {
-  color: green
+  color: green;
 }
 
 .nodeLinkSelected {
@@ -87,7 +87,8 @@ th {
   width: 1px;
 }
 
-.skip-nav-link:focus-visible, .skip-nav-link:active {
+.skip-nav-link:focus-visible,
+.skip-nav-link:active {
   background: #107eab;
   color: white;
   border: 50px;
@@ -108,7 +109,7 @@ th {
 .right-side {
   overflow-y: scroll;
   max-height: 100vh;
-  padding-top:50px;
+  padding-top: 50px;
   overflow-x: hidden;
 }
 
@@ -123,4 +124,3 @@ th {
   flex-flow: column;
   display: grid;
 }
-

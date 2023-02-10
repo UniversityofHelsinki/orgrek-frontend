@@ -9,39 +9,38 @@ import { useTranslation } from 'react-i18next';
 import MultiSelectHierarchies from './MultiSelectHierarchies';
 
 const Hierarchy = (props) => {
+  useEffect(() => {
+    props.fetchSelectableHierarchies();
+  }, []);
 
-    useEffect(() => {
-        props.fetchSelectableHierarchies();
-    }, []);
-
-    const { t, i18n } = useTranslation();
-    return (
-        <div className="left-side">
-            <Container>
-                <Row>
-                    <h3 id={'main-content'}>{t('units')}</h3>
-                    <Col>
-                        <MultiSelectHierarchies/>
-                    </Col>
-                </Row>
-                <Row>
-                    <h4>{t('display_date')}</h4>
-                    <SelectDate/>
-                </Row>
-                <Row>
-                    <h4>{t('search_by_name_or_code')}</h4>
-                    <TreeSearch />
-                </Row>
-                <Row>
-                    <Tree/>
-                </Row>
-            </Container>
-        </div>
-    );
+  const { t, i18n } = useTranslation();
+  return (
+    <div className="left-side">
+      <Container>
+        <Row>
+          <h3 id={'main-content'}>{t('units')}</h3>
+          <Col>
+            <MultiSelectHierarchies />
+          </Col>
+        </Row>
+        <Row>
+          <h4>{t('display_date')}</h4>
+          <SelectDate />
+        </Row>
+        <Row>
+          <h4>{t('search_by_name_or_code')}</h4>
+          <TreeSearch />
+        </Row>
+        <Row>
+          <Tree />
+        </Row>
+      </Container>
+    </div>
+  );
 };
 
-const mapDispatchToProps = dispatch => ({
-    fetchSelectableHierarchies: () => dispatch(fetchSelectableHierarchies()),
+const mapDispatchToProps = (dispatch) => ({
+  fetchSelectableHierarchies: () => dispatch(fetchSelectableHierarchies()),
 });
 
 export default connect(null, mapDispatchToProps)(Hierarchy);

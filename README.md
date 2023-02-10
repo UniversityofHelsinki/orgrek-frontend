@@ -5,7 +5,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ## Environment variables
 
 Place environment variables in .env.development.local file (create it if it does not exist)
-Add these environment variables to file : 
+Add these environment variables to file :
 
 REACT_APP_ORGREK_BACKEND_SERVER=
 
@@ -16,7 +16,6 @@ http://localhost:8080
 Value to run the project with local json server backend:
 
 http://localhost:3003
-
 
 REACT_APP_ORGREK_LOGIN=https://organisaatiorekisteri-dev.it.helsinki.fi/Shibboleth.sso/Login
 
@@ -63,15 +62,15 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 
 ## JSON server
 
-The JSON server runs mock api using the db.json-file as database. 
+The JSON server runs mock api using the db.json-file as database.
 
-You can make GET, POST, PUT, PATCH and DELETE requests to the mock database. You should include the `Content-Type: application/json` header to your requests to ensure the changes are made to data. 
+You can make GET, POST, PUT, PATCH and DELETE requests to the mock database. You should include the `Content-Type: application/json` header to your requests to ensure the changes are made to data.
 
 ### Adding new endpoints or data
 
 **When creating new mock endpoint or adding data ensure your formatting matches the one coming from the actual database or, in case of yet inexistent endpoint, what have been planned** - switching between mock and actual database should not cause any disturbances on component behavior.
 
-Adding new data is done by adding new JSON objects to the db.json-file. 
+Adding new data is done by adding new JSON objects to the db.json-file.
 
 To create a new endpoint customize one matching your needs to the routes.json-file. Read more from [JSON server custom routes documentation.](https://github.com/typicode/json-serverr#add-custom-routes)
 

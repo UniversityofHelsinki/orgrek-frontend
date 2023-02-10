@@ -1,18 +1,17 @@
-
 const initialState = {
-    selectedDay : new Date()
+  selectedDay: new Date(),
 };
 
 const dayChangeReducer = (state = initialState, action) => {
-    switch (action.type) {
+  switch (action.type) {
     case 'DAY_CHANGE_SUCCESS':
-        return {
-            ...state,
-            selectedDay: action.payload
-        };
+      return {
+        ...state,
+        selectedDay: action.payload,
+      };
     default:
-        return state;
-    }
+      return state;
+  }
 };
 
 export default dayChangeReducer;

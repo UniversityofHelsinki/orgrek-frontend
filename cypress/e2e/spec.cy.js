@@ -1,4 +1,3 @@
 describe('empty spec', () => {
-  it('passes', () => {
-  });
+  it('passes', () => {});
 });

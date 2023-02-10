@@ -6,17 +6,21 @@ import { Provider } from 'react-redux';
 import rootReducer from '../src/reducers/index';
 
 function render(
-    ui,
-    {
-        preloadedState,
-        store = configureStore({ reducer: rootReducer , preloadedState }),
-        ...renderOptions
-    } = {}
+  ui,
+  {
+    preloadedState,
+    store = configureStore({ reducer: rootReducer, preloadedState }),
+    ...renderOptions
+  } = {}
 ) {
-    function Wrapper({ children }) {
-        return <Provider store={store}><Suspense fallback={<div>Loading...</div>}>{children}</Suspense></Provider>;
-    }
-    return rtlRender(ui, { wrapper: Wrapper, ...renderOptions });
+  function Wrapper({ children }) {
+    return (
+      <Provider store={store}>
+        <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
+      </Provider>
+    );
+  }
+  return rtlRender(ui, { wrapper: Wrapper, ...renderOptions });
 }
 
 // re-export everything

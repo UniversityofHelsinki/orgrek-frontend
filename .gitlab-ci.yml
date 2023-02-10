@@ -1,7 +1,7 @@
 image: quay.io/tike/alpine-oc-node
 
 variables:
-  npm_config_cache: "$CI_PROJECT_DIR/.npm"
+  npm_config_cache: '$CI_PROJECT_DIR/.npm'
 
 # Define a hidden job to be used with extends
 # Better than default to avoid activating cache for all jobs
@@ -128,7 +128,6 @@ deploy_dev:
     # set pod memory quota to 100 MB and limit to 500 MB
     - oc set resources dc/organisaatiorekisteri-frontend-dev --limits=memory=500Mi --requests=memory=100Mi
 
-
 deploy_test:
   stage: deploy
   tags:
@@ -154,7 +153,6 @@ deploy_test:
     - oc patch bc/organisaatiorekisteri-frontend-test --patch '{"spec":{"failedBuildsHistoryLimit":1}}'
     # set pod memory quota to 100 MB and limit to 500 MB
     - oc set resources dc/organisaatiorekisteri-frontend-test --limits=memory=500Mi --requests=memory=100Mi
-
 
 deploy_prod:
   stage: deploy
@@ -203,7 +201,7 @@ dependency scanning:
     - echo "=== npm audit security report ===" >> $RESULT_FILE
     - echo "" >> $RESULT_FILE
     # Run npm audit and "catch" the possible non zero exit code (https://docs.gitlab.com/ee/ci/yaml/#script)
-    - "npm audit  >> $RESULT_FILE || exit_code=$?"
+    - 'npm audit  >> $RESULT_FILE || exit_code=$?'
     # npm audit --parseable | awk -F $'\t' 'NF {print "   Package: "$2, "\tLevel: "$3, "\tMore info: "$6}' # this would be nice format
     # Add a message based on npm audit's return code
     - if [ $exit_code -ne 0 ]; then echo "Some vulnerabilities was found, check the above packages." >> $RESULT_FILE; fi;
