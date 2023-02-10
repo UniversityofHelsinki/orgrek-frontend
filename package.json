@@ -62,6 +62,8 @@
     "test": "jest --coverage",
     "eject": "react-scripts eject",
     "lint": "eslint --fix .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "cypress:open": "cypress open"
   },
   "eslintConfig": {
