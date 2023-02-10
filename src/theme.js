@@ -242,6 +242,13 @@ const theme = createTheme({
         },
       },
     },
+    MuiTooltip: {
+      styleOverrides: {
+        tooltip: {
+          ...typography.caption,
+        },
+      },
+    },
   },
 });
 
