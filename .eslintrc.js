@@ -8,7 +8,8 @@ module.exports = {
     'extends': [
         'eslint:recommended',
         'plugin:react/recommended',
-        "plugin:cypress/recommended"
+        "plugin:cypress/recommended",
+        'prettier' // Prettier should always be the last item in this array
     ],
     'parserOptions': {
         'ecmaFeatures': {
@@ -21,25 +22,8 @@ module.exports = {
         'react', 'jest', 'cypress'
     ],
     'rules': {
-        'indent': [0, 2],
-        'linebreak-style': 0,
-        'quotes': [
-            'error',
-            'single'
-        ],
-        'semi': [
-            'error',
-            'always'
-        ],
         'eqeqeq': 'error',
         'no-unused-vars': 'off',
-        'no-trailing-spaces': 'error',
-        'object-curly-spacing': [
-            'error', 'always'
-        ],
-        'arrow-spacing': [
-            'error', { 'before': true, 'after': true }
-        ],
         'complexity': ['error', 20],
         'max-lines-per-function': ['error', 300],
         'max-lines': ['error', 500],
