@@ -14,8 +14,23 @@ import SkipNavLink from './components/SkipNavLink';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Texts from './components/Texts';
 import HierarchyFilters from './components/HierarchyFilters';
+import theme from './theme';
+import { ThemeProvider } from '@mui/material';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { fi, sv, enIE } from 'date-fns/locale';
+import { useTranslation } from 'react-i18next';
+
+const getDateFnsLocale = (language) => {
+  switch (language) {
+    case 'fi': return fi;
+    case 'sv': return sv;
+    default: return enIE;
+  }
+};
 
 const App= (props) => {
+    const { i18n } = useTranslation();
 
     useEffect(() => {
         props.onFetchUser();
@@ -52,28 +67,32 @@ const App= (props) => {
 
     const SHIBBOLETH_LOGIN = process.env.REACT_APP_ORGREK_LOGIN;
 
-    return (
+  return (
+    <ThemeProvider theme={theme}>
+      <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={getDateFnsLocale(i18n.language)}>
         <div className="App">
-                    <LoginRedirect loginUrl={SHIBBOLETH_LOGIN} />
-                    <SkipNavLink id="main-content" />
-                    <Container fluid>
-                        <Row>
-                        <BrowserRouter>
-                            <Header />
-                            <Routes>
-                                <Route path="/" element={<>
-                                        <Col md={4} lg={4}><Hierarchy /></Col>
-                                        <Col >{props.node && <NodeDetails />}</Col>
-                                </> } />
-                                { isAdmin(props.user) ? <Route path="/texts" element={<Texts />} /> : null}
-                                { isAdmin(props.user) ? <Route path="/hierarchyfilters" element={<HierarchyFilters />} /> : null }
-                            </Routes>
-                        </BrowserRouter>
-                        </Row>
-                    </Container>
-                    <Footer />
+          <LoginRedirect loginUrl={SHIBBOLETH_LOGIN}/>
+          <SkipNavLink id="main-content"/>
+          <Container fluid>
+            <Row>
+              <BrowserRouter>
+                <Header/>
+                <Routes>
+                  <Route path="/" element={<>
+                    <Col md={4} lg={4}><Hierarchy/></Col>
+                    <Col>{props.node && <NodeDetails/>}</Col>
+                  </>}/>
+                  {isAdmin(props.user) ? <Route path="/texts" element={<Texts/>}/> : null}
+                  {isAdmin(props.user) ? <Route path="/hierarchyfilters" element={<HierarchyFilters/>}/> : null}
+                </Routes>
+              </BrowserRouter>
+            </Row>
+          </Container>
+          <Footer/>
         </div>
-    );
+      </LocalizationProvider>
+    </ThemeProvider>
+  );
 };
 
 const mapStateToProps = state => ({

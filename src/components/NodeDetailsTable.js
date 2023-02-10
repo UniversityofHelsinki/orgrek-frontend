@@ -3,16 +3,16 @@ import { useTranslation } from 'react-i18next';
 import { hierarchyDate, showValidity } from '../actions/utilAction';
 import { Col, Form, Row, Table } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import styled from 'styled-components';
+import { styled } from '@mui/material/styles';
 import { fetchNode } from '../actions/nodeAction';
 import ChooseDate from './ChooseDate';
 import UnitDropDown from './UnitDropDown';
 import ChooseUpperUnitDate from './ChooseUpperUnitDate';
 
-const ListLink = styled.a`
-  text-decoration: none;
-  color: #337ab7;
-`;
+const ListLink = styled('a')(({ theme }) => ({
+    textDecoration: 'none',
+    color: theme.palette.primary.main
+}));
 
 const NodeDetailsTable = (props) => {
     const { t, i18n } = useTranslation();
