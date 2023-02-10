@@ -236,8 +236,8 @@ const theme = createTheme({
           borderColor: hyPalette.brand.light,
           ':hover': {
             borderWidth: 3,
-            borderColor: hyPalette.brand.mediumLight,
-            color: hyPalette.mediumLight,
+            borderColor: hyPalette.brand.mediumDark,
+            color: hyPalette.brand.mediumDark,
           },
         },
       },
