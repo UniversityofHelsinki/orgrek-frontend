@@ -4,6 +4,7 @@ WORKDIR /app
 COPY build ./
 
 RUN apk update
+RUN apk add tzdata
 
 RUN ls -la
 RUN cp -r . /usr/share/nginx/html

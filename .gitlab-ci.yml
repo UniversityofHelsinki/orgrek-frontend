@@ -26,9 +26,9 @@ stages:
 setup:
   stage: setup
   script:
-    - npm ci
+    - CYPRESS_CACHE_FOLDER='.cache/Cypress' npm ci
   tags:
-    - shared-openshift
+    - ohtu-build-2
   extends: .dependencies_cache
   cache:
     policy: pull-push
@@ -41,7 +41,7 @@ setup:
 test:
   stage: test
   tags:
-    - shared-openshift
+    - ohtu-build-2
   script:
     - npm test
   coverage: /All files\s*\|\s*([\d\.]+)/
@@ -49,12 +49,26 @@ test:
 build_dev:
   stage: build
   tags:
-    - shared-openshift
+    - ohtu-build-2
   only:
     - master
   script:
     - yes | cp -f -v .env.development .env.production || true
-    - npm run build
+    - CI=false npm run build
+  artifacts:
+    name: orgrek-build
+    paths:
+      - build
+
+build_organisation_dev:
+  stage: build
+  tags:
+    - ohtu-build-2
+  only:
+    - organisation-dev
+  script:
+    - yes | cp -f -v .env.organisation-development .env.production || true
+    - CI=false npm run build
   artifacts:
     name: orgrek-build
     paths:
@@ -63,12 +77,12 @@ build_dev:
 build_test:
   stage: build
   tags:
-    - shared-openshift
+    - ohtu-build-2
   only:
     - test
   script:
     - yes | cp -f -v .env.test .env.production || true
-    - npm run build
+    - CI=false npm run build
   artifacts:
     name: orgrek-build
     paths:
@@ -77,11 +91,11 @@ build_test:
 build_prod:
   stage: build
   tags:
-    - shared-openshift
+    - ohtu-build-2
   only:
     - prod
   script:
-    - npm run build
+    - CI=false npm run build
   artifacts:
     name: orgrek-build
     paths:
@@ -91,7 +105,7 @@ build_prod:
 deploy_dev:
   stage: deploy
   tags:
-    - shared-openshift
+    - ohtu-build-2
   environment:
     name: development
   only:
@@ -107,14 +121,18 @@ deploy_dev:
     - oc login https://$OPENSHIFT_ADDR_TEST:$OPENSHIFT_PORT --token=$OPENSHIFT_TOKEN_TEST
     - oc project organisaatiorekisteri
     - oc set env dc/organisaatiorekisteri-frontend-dev REACT_APP_GIT_HASH=$(git rev-parse --short=7 HEAD)
+    - oc set env dc/organisaatiorekisteri-frontend-dev TZ="Europe/Helsinki"
     - oc start-build organisaatiorekisteri-frontend-dev --from-dir=. --follow
     - oc patch bc/organisaatiorekisteri-frontend-dev --patch '{"spec":{"successfulBuildsHistoryLimit":1}}'
     - oc patch bc/organisaatiorekisteri-frontend-dev --patch '{"spec":{"failedBuildsHistoryLimit":1}}'
+    # set pod memory quota to 100 MB and limit to 500 MB
+    - oc set resources dc/organisaatiorekisteri-frontend-dev --limits=memory=500Mi --requests=memory=100Mi
+
 
 deploy_test:
   stage: deploy
   tags:
-    - shared-openshift
+    - ohtu-build-2
   environment:
     name: test
   only:
@@ -130,14 +148,18 @@ deploy_test:
     - oc login https://$OPENSHIFT_ADDR_TEST:$OPENSHIFT_PORT --token=$OPENSHIFT_TOKEN_TEST
     - oc project organisaatiorekisteri
     - oc set env dc/organisaatiorekisteri-frontend-test REACT_APP_GIT_HASH=$(git rev-parse --short=7 HEAD)
+    - oc set env dc/organisaatiorekisteri-frontend-test TZ="Europe/Helsinki"
     - oc start-build organisaatiorekisteri-frontend-test --from-dir=. --follow
     - oc patch bc/organisaatiorekisteri-frontend-test --patch '{"spec":{"successfulBuildsHistoryLimit":1}}'
     - oc patch bc/organisaatiorekisteri-frontend-test --patch '{"spec":{"failedBuildsHistoryLimit":1}}'
+    # set pod memory quota to 100 MB and limit to 500 MB
+    - oc set resources dc/organisaatiorekisteri-frontend-test --limits=memory=500Mi --requests=memory=100Mi
+
 
 deploy_prod:
   stage: deploy
   tags:
-    - shared-openshift
+    - ohtu-build-2
   environment:
     name: prod
   only:
@@ -154,15 +176,18 @@ deploy_prod:
     - oc login https://$OPENSHIFT_ADDR_PROD:$OPENSHIFT_PORT --token=$OPENSHIFT_TOKEN_PROD
     - oc project organisaatiorekisteri
     - oc set env dc/organisaatiorekisteri-frontend-prod REACT_APP_GIT_HASH=$(git rev-parse --short=7 HEAD)
+    - oc set env dc/organisaatiorekisteri-frontend-prod TZ="Europe/Helsinki"
     - oc start-build organisaatiorekisteri-frontend-prod --from-dir=. --follow
     - oc patch bc/organisaatiorekisteri-frontend-prod --patch '{"spec":{"successfulBuildsHistoryLimit":1}}'
     - oc patch bc/organisaatiorekisteri-frontend-prod --patch '{"spec":{"failedBuildsHistoryLimit":1}}'
+    # set pod memory quota to 100 MB and limit to 500 MB
+    - oc set resources dc/organisaatiorekisteri-frontend-prod --limits=memory=500Mi --requests=memory=100Mi
 
 # Rules for the scheduled npm audit and outdated scans
 dependency scanning:
   stage: audit_scan
   tags:
-    - shared-openshift
+    - ohtu-build-2
   allow_failure: true
   only:
     - schedules

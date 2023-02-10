@@ -5,6 +5,9 @@ import dayChangeReducer from './dayChangeReducer';
 import userReducer from './userReducer';
 import nodeReducer from './nodeReducer';
 import nodeDetailsViewReducer from './nodeDetailsViewReducer';
+import textsReducer from './textsReducer';
+import hierarchyFiltersReducer from './hierarchyFilterReducer';
+import editModeReducer from './editModeReducer';
 
 const rootReducer = combineReducers({
     tree : treeReducer,
@@ -12,7 +15,10 @@ const rootReducer = combineReducers({
     nrd : nodeReducer,
     ur : userReducer,
     dr: dayChangeReducer,
-    nvrd: nodeDetailsViewReducer
+    nvrd: nodeDetailsViewReducer,
+    texts: textsReducer,
+    hierarchyFilters: hierarchyFiltersReducer,
+    editModeReducer: editModeReducer
 });
 
 export default rootReducer;

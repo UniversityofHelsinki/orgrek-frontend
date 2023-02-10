@@ -1,4 +1,4 @@
-export const fetchNode = (uniqueId) => {
+export const fetchNode = (uniqueId, openTree) => {
     const ORGREK_BACKEND_SERVER = process.env.REACT_APP_ORGREK_BACKEND_SERVER || '';
     const PATH = `/api/node/${uniqueId}`;
     return async (dispatch)  => {
@@ -7,9 +7,47 @@ export const fetchNode = (uniqueId) => {
         });
         if (response.status === 200) {
             let responseJSON = await response.json();
+            dispatch({
+                type: 'OPEN_TREE',
+                payload: openTree === undefined || openTree
+            });
             dispatch(apiGetNodeSuccessCall(responseJSON));
+        } else if (response.status === 401) {
+            dispatch(api401FailureCall(new Date()));
+        }
+    };
+};
+
+export const fetchNodeFullNames = (uniqueId, selectedDay) => {
+    const ORGREK_BACKEND_SERVER = process.env.REACT_APP_ORGREK_BACKEND_SERVER || '';
+    const date = selectedDay ? selectedDay.toLocaleDateString('fi-FI') : '';
+    const PATH = `/api/node/fullname/${uniqueId}/${date}`;
+    return async (dispatch)  => {
+        let response = await fetch(`${ORGREK_BACKEND_SERVER}${PATH}`, {
+            headers: { 'Content-Type': 'application/json' }
+        });
+        if (response.status === 200) {
+            let responseJSON = await response.json();
+            dispatch(apiGetNodeFullNamesSuccessCall(responseJSON));
         } else {
             dispatch(api401FailureCall(new Date()));
+        }
+    };
+};
+
+export const fetchNodeFavorableFullNames = (uniqueId, selectedDay) => {
+    const ORGREK_BACKEND_SERVER = process.env.REACT_APP_ORGREK_BACKEND_SERVER || '';
+    const date = selectedDay?.toLocaleDateString('fi-FI') || '';
+    const PATH = `/api/node/fullname/favorable/${uniqueId}/${date}`;
+    return async (dispatch) => {
+        let response = await fetch(`${ORGREK_BACKEND_SERVER}${PATH}`, {
+            headers: { 'Content-Type': 'application/json' }
+        });
+        if (response.status === 200) {
+            dispatch({
+                type: 'SUCCESS_API_GET_NODE_FAVORABLE_FULL_NAMES',
+                payload: await response.json()
+            });
         }
     };
 };
@@ -25,12 +63,18 @@ export const apiGetNodeSuccessCall = data => {
         payload: data
     };
 };
+export const apiGetNodeFullNamesSuccessCall = data => {
+    return {
+        type: 'SUCCESS_API_GET_NODE_FULL_NAMES',
+        payload: data
+    };
+};
 
-export const fetchNodeAttributes = (uniqueId, selectedDay) => {
+export const fetchNodeAttributes = (uniqueId, selectedDay, selectedHierarchy) => {
     const ORGREK_BACKEND_SERVER = process.env.REACT_APP_ORGREK_BACKEND_SERVER || '';
     const date = selectedDay ? selectedDay.toLocaleDateString('fi-FI') : new Date().toLocaleDateString('fi-FI');
     const PATH = '/api/node/';
-    const PARAMS = `${uniqueId}/${date}/attributes`;
+    const PARAMS = `${uniqueId}/${date}/${selectedHierarchy}/attributes`;
     return async (dispatch)  => {
         let response = await fetch(`${ORGREK_BACKEND_SERVER}${PATH}${PARAMS}`, {
             headers: { 'Content-Type': 'application/json' }
@@ -51,11 +95,11 @@ export const apiGetNodeAttributesSuccessCall = data => {
     };
 };
 
-export const fetchNodeAttributesHistory = (uniqueId, selectedDay) => {
+export const fetchNodeAttributesHistory = (uniqueId, selectedDay, selectedHierarchy) => {
     const ORGREK_BACKEND_SERVER = process.env.REACT_APP_ORGREK_BACKEND_SERVER || '';
     const date = selectedDay ? selectedDay.toLocaleDateString('fi-FI') : new Date().toLocaleDateString('fi-FI');
     const PATH = '/api/node/historyandcurrent/';
-    const PARAMS = `${uniqueId}/${date}/attributes`;
+    const PARAMS = `${uniqueId}/${date}/${selectedHierarchy}/attributes`;
     return async (dispatch)  => {
         let response = await fetch(`${ORGREK_BACKEND_SERVER}${PATH}${PARAMS}`, {
             headers: { 'Content-Type': 'application/json' }
@@ -76,11 +120,11 @@ export const apiGetNodeAttributesHistorySuccessCall = data => {
     };
 };
 
-export const fetchNodeAttributesFuture = (uniqueId, selectedDay) => {
+export const fetchNodeAttributesFuture = (uniqueId, selectedDay, selectedHierarchy) => {
     const ORGREK_BACKEND_SERVER = process.env.REACT_APP_ORGREK_BACKEND_SERVER || '';
     const date = selectedDay ? selectedDay.toLocaleDateString('fi-FI') : new Date().toLocaleDateString('fi-FI');
     const PATH = '/api/node/futureandcurrent/';
-    const PARAMS = `${uniqueId}/${date}/attributes`;
+    const PARAMS = `${uniqueId}/${date}/${selectedHierarchy}/attributes`;
     return async (dispatch)  => {
         let response = await fetch(`${ORGREK_BACKEND_SERVER}${PATH}${PARAMS}`, {
             headers: { 'Content-Type': 'application/json' }
@@ -144,9 +188,111 @@ export const fetchNodeSuccessors = (uniqueId, selectedDay) => {
     };
 };
 
+export const fetchNodeFullNamesHistory = (uniqueId, selectedDay) => {
+    const ORGREK_BACKEND_SERVER = process.env.REACT_APP_ORGREK_BACKEND_SERVER || '';
+    const date = selectedDay ? selectedDay.toLocaleDateString('fi-FI') : new Date().toLocaleDateString('fi-FI');
+    const PATH = `/api/node/fullname/historyandcurrent/${uniqueId}/${date}`;
+    return async (dispatch)  => {
+        let response = await fetch(`${ORGREK_BACKEND_SERVER}${PATH}`, {
+            headers: { 'Content-Type': 'application/json' }
+        });
+        if (response.status === 200) {
+            let responseJSON = await response.json();
+            dispatch(apiGetNodeFullNamesHistorySuccessCall(responseJSON));
+        } else {
+            dispatch(api401FailureCall(new Date()));
+        }
+    };
+};
+
+export const apiGetNodeFullNamesHistorySuccessCall = data => {
+    return {
+        type: 'SUCCESS_API_GET_FULL_NAMES_HISTORY',
+        payload: data
+    };
+};
+
+export const fetchNodeFullNamesFuture = (uniqueId, selectedDay) => {
+    const ORGREK_BACKEND_SERVER = process.env.REACT_APP_ORGREK_BACKEND_SERVER || '';
+    const date = selectedDay ? selectedDay.toLocaleDateString('fi-FI') : new Date().toLocaleDateString('fi-FI');
+    const PATH = `/api/node/fullname/futureandcurrent/${uniqueId}/${date}`;
+    return async (dispatch)  => {
+        let response = await fetch(`${ORGREK_BACKEND_SERVER}${PATH}`, {
+            headers: { 'Content-Type': 'application/json' }
+        });
+        if (response.status === 200) {
+            let responseJSON = await response.json();
+            dispatch(apiGetNodeFullNamesFutureSuccessCall(responseJSON));
+        } else {
+            dispatch(api401FailureCall(new Date()));
+        }
+    };
+};
+
+export const fetchNodeFullNamesAll = (uniqueId, selectedDay) => {
+    const ORGREK_BACKEND_SERVER = process.env.REACT_APP_ORGREK_BACKEND_SERVER || '';
+    const PATH = `/api/node/fullname/all/${uniqueId}`;
+    return async (dispatch)  => {
+        let response = await fetch(`${ORGREK_BACKEND_SERVER}${PATH}`, {
+            headers: { 'Content-Type': 'application/json' }
+        });
+        if (response.status === 200) {
+            let responseJSON = await response.json();
+            dispatch(apiGetAllFullNamesSuccess(responseJSON));
+        } else {
+            dispatch(api401FailureCall(new Date()));
+        }
+    };
+};
+
+export const apiGetAllFullNamesSuccess = data => {
+    return {
+        type: 'SUCCESS_API_GET_FULL_NAMES_ALL',
+        payload: data
+    };
+};
+
+
+export const clearFullNamesHistory = () => {
+    return {
+        type: 'CLEAR_FULL_NAMES_HISTORY'
+    };
+};
+
+export const clearFullNamesFuture = () => {
+    return {
+        type: 'CLEAR_FULL_NAMES_FUTURE'
+    };
+};
+
+export const apiGetNodeFullNamesFutureSuccessCall = data => {
+    return {
+        type: 'SUCCESS_API_GET_FULL_NAMES_FUTURE',
+        payload: data
+    };
+};
+
 export const apiGetNodeSuccessorsSuccessCall = data => {
     return {
         type: 'SUCCESS_API_GET_NODE_SUCCESSORS',
         payload: data
+    };
+};
+
+export const clearNodeHistory = () => {
+    return {
+        type: 'CLEAR_NODE_ATTRIBUTES_HISTORY'
+    };
+};
+
+export const clearNodeFuture = () => {
+    return {
+        type: 'CLEAR_NODE_ATTRIBUTES_FUTURE'
+    };
+};
+
+export const clearNodeDetails = () => {
+    return {
+        type: 'CLEAR_NODE_DETAILS'
     };
 };

@@ -12,43 +12,14 @@
   border-top: 2px solid lightgray !important;
 }
 
-.orgrek-header {
-  max-height: 60px;
-  min-height: 60px;
-}
-
-.hy-footer {
-  margin-left: 10px;
-}
-
-.treeContainer {
-  border: 1px solid lightgrey;
-  border-radius: 5px;
-  margin-top: 10px;
-  background-color: #F6F6F6;
-}
-
 h4 caption {
   color: black;
-}
-
-a.list-node-link {
-  text-decoration: none;
-  color: #337ab7;
 }
 
 a:hover {
   text-decoration: underline;
 }
 
-.today-button {
-  background-color: #107eab;
-  border-color: #107eab
-}
-
-.today-button:hover {
-  background-color: #0e688b;
-}
 
 #show_history_switch:checked, #show_coming_switch:checked{
   background-color: #0e688b;
@@ -63,3 +34,93 @@ h3, h4 {
 th {
   color: #0e688b;
 }
+
+.nodeLink {
+  padding-right: 5;
+  margin-left: 5px;
+  color: #337ab7;
+}
+
+.nodeLink:hover {
+  text-decoration: underline;
+  color: #0e688b;
+}
+
+.treeNode {
+  list-style: none;
+  padding-left: 0;
+  margin-bottom: inherit;
+}
+
+.treeHierarchies {
+  color: #957b4e;
+  font-size: 0.86em;
+  margin-left: 5px;
+}
+
+.treeHierarchiesSelected {
+
+}
+
+.warningText {
+  color: red
+}
+
+.successText {
+  color: green
+}
+
+.nodeLinkSelected {
+  font-weight: bold;
+  padding-right: 5px;
+  margin-left: 5px;
+  color: #107eab;
+}
+
+.skip-nav-link {
+  border: 0;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+.skip-nav-link:focus-visible, .skip-nav-link:active {
+  background: #107eab;
+  color: white;
+  border: 50px;
+  clip: auto;
+  height: auto;
+  margin: 50px;
+  padding: 1rem;
+  position: fixed;
+  width: auto;
+  z-index: 1001;
+}
+
+.left-side {
+  overflow-y: scroll;
+  max-height: 100vh;
+}
+
+.right-side {
+  overflow-y: scroll;
+  max-height: 100vh;
+  padding-top:50px;
+  overflow-x: hidden;
+}
+
+.edit-buttons {
+  position: fixed;
+  background-color: white;
+  width: 100%;
+  z-index: 1030;
+}
+
+.navbar {
+  flex-flow: column;
+  display: grid;
+}
+

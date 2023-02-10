@@ -7,7 +7,8 @@ module.exports = {
     },
     'extends': [
         'eslint:recommended',
-        'plugin:react/recommended'
+        'plugin:react/recommended',
+        "plugin:cypress/recommended"
     ],
     'parserOptions': {
         'ecmaFeatures': {
@@ -17,7 +18,7 @@ module.exports = {
         'sourceType': 'module'
     },
     'plugins': [
-        'react', 'jest'
+        'react', 'jest', 'cypress'
     ],
     'rules': {
         'indent': [0, 2],
@@ -41,8 +42,9 @@ module.exports = {
         ],
         'complexity': ['error', 20],
         'max-lines-per-function': ['error', 300],
-        'max-lines': ['error', 300],
+        'max-lines': ['error', 500],
         'no-console': 0,
-        'react/prop-types': 0
+        'react/prop-types': 0,
+        "jest/expect-expect": "off"
     }
 };

@@ -13,63 +13,69 @@ jest.mock('../src/actions/treeAction', () => ({
     fetchTree: jest.fn(() => { return  {
         type: 'SUCCESS_API_GET_TREE',
         payload: {
-            'tree': {
-                'id': 42785051,
-                'code': 'HY',
-                'nameFi': 'Helsingin yliopisto',
-                'nameEn': 'University of Helsinki',
-                'nameSv': 'Helsingfors universitet',
-                'displayNameFi': 'Helsingin yliopisto (HY)',
-                'displayNameEn': 'University of Helsinki (HY)',
-                'displayNameSv': 'Helsingfors universitet (HY)',
-                'type': 'yritys_yhteiso',
-                'abbreviation': 'HY',
+            fi: {
+                'id': 'a1',
+                'name': 'Helsingin yliopisto (HY)',
+                'uniqueId': 42785051,
+                'hierarchies': ['talous'],
                 'children': [
                     {
-                        'id': 33539259,
-                        'code': 'KOULOHJ',
-                        'nameFi': 'Koulutusohjelmat',
-                        'nameEn': 'Degree Programmes',
-                        'nameSv': 'Utbildningsprogram',
-                        'displayNameFi': 'HY, Koulutusohjelmat (KOULOHJ)',
-                        'displayNameEn': 'HY, Degree Programmes (KOULOHJ)',
-                        'displayNameSv': 'HY, Utbildningsprogram (KOULOHJ)',
-                        'type': 'koontiyksikko',
-                        'abbreviation': 'KOULOHJ',
-                        'parentAbbreviation': 'HY',
+                        'id': 123,
+                        'name': 'KOULOHJ HY, Koulutusohjelmat (KOULOHJ)',
+                        'uniqueId' : 33539259,
+                        'hierarchies': ['talous'],
                         'children': [
                             {
-                                'id': 54806742,
-                                'code': 'H92',
-                                'nameFi': 'Tohtoriohjelmat',
-                                'nameEn': 'Doctoral Programmes',
-                                'nameSv': 'Doktorandprogram',
-                                'displayNameFi': 'HY, Tohtoriohjelmat (TRI)',
-                                'displayNameEn': 'HY, Doctoral Programmes (TRI)',
-                                'displayNameSv': 'HY, Doktorandprogram (TRI)',
-                                'type': 'tiedekunnan kaltainen,koontiyksikko',
-                                'abbreviation': 'TRI',
-                                'parentAbbreviation': 'HY',
+                                'id': 1234,
+                                'name': 'H92 HY, Tohtoriohjelmat (TRI)',
+                                'uniqueId': 54806742,
+                                'hierarchies': ['talous'],
                                 'children': [
                                     {
-                                        'id': 61974091,
-                                        'code': 'H920',
-                                        'nameFi': 'Humanistis-yhteiskuntatieteellinen tutkijakoulu',
-                                        'nameEn': 'Doctoral School in the Humanities and Social Sciences',
-                                        'nameSv': 'Humanistisk-samhällsvetenskapliga forskarskolan',
-                                        'displayNameFi': 'HY-TRI, Humanistis-yhteiskuntatieteellinen tutkijakoulu (HYMY)',
-                                        'displayNameEn': 'HY-TRI, Doctoral School in the Humanities and Social Sciences (HYMY)',
-                                        'displayNameSv': 'HY-TRI, Humanistisk-samhällsvetenskapliga forskarskolan (HYMY)',
-                                        'type': 'tutkijakoulu',
-                                        'abbreviation': 'HYMY',
-                                        'parentAbbreviation': 'HY-TRI'
+                                        'id': 12345,
+                                        'name': 'H920 HY-TRI, Humanistis-yhteiskuntatieteellinen tutkijakoulu (HYMY)',
+                                        'uniqueId': 61974091
                                     }]
                             }]
                     }]
-            },
-        }
+        } }
     };})
 }));
+
+jest.mock('../src/reducers/treeReducer', () => {
+    const originalModule = jest.requireActual('../src/reducers/treeReducer');
+    return {
+        __esModule: true,
+        ...originalModule,
+        default: jest.fn((state = {
+            selectedHierarchy: 'talous',
+            defaultHierarchy: 'talous',
+            tree: {},
+            selectableHierarchies: [],
+            treeWithAllHierarchies : {},
+        }, action) => {
+            switch (action.type) {
+            case 'SUCCESS_API_GET_TREE':
+                return {
+                    ...state,
+                    tree: action.payload
+                };
+            case 'SUCCESS_API_GET_SELECTABLE_HIERARCHIES':
+                return {
+                    ...state,
+                    selectableHierarchies: action.payload
+                };
+            case 'SWITCH_HIERARCHY':
+                return {
+                    ...state,
+                    selectedHierarchy: action.payload
+                };
+            default:
+                return state;
+            }
+        })
+    };
+});
 
 jest.mock('react-i18next', () => ({
     // this mock makes sure any components using the translate hook can use it without a warning being shown
@@ -78,6 +84,7 @@ jest.mock('react-i18next', () => ({
         t: (str) => str,
         i18n: {
           changeLanguage: () => new Promise(() => {}),
+          language: 'fi'
         },
       };
     },

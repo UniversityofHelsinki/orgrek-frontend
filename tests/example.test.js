@@ -15,9 +15,12 @@ test('renders a div with awesome text', () => {
 test('should return the initial tree state', () => {
     expect(userReducer(undefined, {})).toEqual(
         {
+            defaultHierarchy: 'talous',
             tree : {},
-            selectedHierarchy: 'talous',
-            selectableHierarchies: []
+            selectedHierarchy: undefined,
+            treeWithAllHierarchies: {},
+            selectableHierarchies: [],
+            selectedHierarchies: [],
         }
     );
 });
