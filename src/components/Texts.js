@@ -491,6 +491,7 @@ const Pagination = (props) => {
   );
 };
 
+// eslint-disable-next-line max-lines-per-function
 const Texts = (props) => {
   const { t, i18n } = useTranslation();
   const [pageNo, setPageNo] = useState(1);
