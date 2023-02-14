@@ -1,0 +1,73 @@
+import { Meta, Canvas, ColorPalette, ColorItem } from '@storybook/addon-docs';
+import theme from '../../theme';
+import { Box, Typography } from '@mui/material';
+
+<Meta title="Palette" />
+
+# Palette
+
+These colors defined in the theme.
+See MUI docs for how to access the theme in components by using the
+[useTheme](https://mui.com/material-ui/customization/theming/#accessing-the-theme-in-a-component) hook.
+
+Using colors from the `theme` variable:
+
+<Canvas>
+  <Box
+    sx={{
+      backgroundColor: theme.palette.grey[300],
+      height: theme.spacing(4),
+      width: theme.spacing(4),
+    }}
+  />
+</Canvas>
+
+The `useTheme` hook is not needed when using colors with `Typography`:
+
+<Canvas>
+  <Typography color="primary.main">Primary text</Typography>
+  <Typography color="text.secondary">Secondary text</Typography>
+  <Typography color="error.main">Error text</Typography>
+</Canvas>
+
+<ColorPalette>
+  <ColorItem
+    title="Common"
+    subtitle="Based on HYDS grayscale"
+    colors={theme.palette.common}
+  />
+  <ColorItem
+    title="Primary"
+    subtitle="Based on HYDS brand color"
+    colors={theme.palette.primary}
+  />
+  <ColorItem
+    title="Grey"
+    subtitle="HYDS grayscale colors adapted as Material palette"
+    colors={theme.palette.grey}
+  />
+  <ColorItem title="Divider" subtitle="" colors={[theme.palette.divider]} />
+  <ColorItem
+    title="Error"
+    subtitle="Red from HYDS additional colors"
+    colors={theme.palette.error}
+  />
+  <ColorItem
+    title="Warning"
+    subtitle="Orange from HYDS additional colors"
+    colors={theme.palette.warning}
+  />
+  <ColorItem
+    title="Info"
+    subtitle="Sky-blue from HYDS additional colors"
+    colors={theme.palette.info}
+  />
+  <ColorItem
+    title="Success"
+    subtitle="Green from HYDS additional colors"
+    colors={theme.palette.success}
+  />
+  <ColorItem title="Text" subtitle="" colors={theme.palette.text} />
+  <ColorItem title="Background" subtitle="" colors={theme.palette.background} />
+  <ColorItem title="Actions" subtitle="" colors={theme.palette.action} />
+</ColorPalette>
