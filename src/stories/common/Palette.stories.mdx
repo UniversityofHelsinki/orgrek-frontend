@@ -10,7 +10,9 @@ These colors defined in the theme.
 See MUI docs for how to access the theme in components by using the
 [useTheme](https://mui.com/material-ui/customization/theming/#accessing-the-theme-in-a-component) hook.
 
-Using colors from the `theme` variable:
+## Using colors in components
+
+Using colors from the `theme` variable returned by the `useTheme` hook:
 
 <Canvas>
   <Box
@@ -22,13 +24,18 @@ Using colors from the `theme` variable:
   />
 </Canvas>
 
-The `useTheme` hook is not needed when using colors with `Typography`:
+Note that the hook is not needed when using colors with `Typography`:
 
 <Canvas>
   <Typography color="primary.main">Primary text</Typography>
   <Typography color="text.secondary">Secondary text</Typography>
   <Typography color="error.main">Error text</Typography>
 </Canvas>
+
+## The Palette
+
+These swatches are objects inside the theme variable. For example, `theme.palette.common.black` refers to `black` in the Common
+swatch.
 
 <ColorPalette>
   <ColorItem
