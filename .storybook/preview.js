@@ -5,6 +5,8 @@ import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { fi } from 'date-fns/locale';
 import theme from '../src/theme';
+import { Provider } from 'react-redux';
+import store from '../src/store';
 import { withRouter } from 'storybook-addon-react-router-v6';
 
 // Use the same decorators for both stories and docs pages
@@ -39,6 +41,11 @@ export const decorators = [
     <CommonDecorators>
       <Story />
     </CommonDecorators>
+  ),
+  (Story) => (
+    <Provider store={store}>
+      <Story />
+    </Provider>
   ),
   withRouter,
 ];
