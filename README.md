@@ -95,8 +95,12 @@ npm install
 npm run storybook
 ```
 
-Storybook is used primarily for component development. Whole pages should still be tested using the actual app.
-You can run both the orgrek-frontend and Storybook at the same time,
+Storybook fetches translations from the local backend using the same configuration as the main app,
+so `orgrek-backend` must also be running, and the required auth headers must be mocked in the browser as with the
+main app.
+
+Storybook is used primarily for component development. Whole pages should still be tested using the main app.
+You can run both the main app and Storybook at the same time,
 and all code changes are reloaded in both automatically.
 
 ### Updating Storybook dependencies

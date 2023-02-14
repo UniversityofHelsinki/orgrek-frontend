@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import { DocsContainer } from '@storybook/addon-docs';
 import { LocalizationProvider } from '@mui/x-date-pickers';
@@ -8,6 +8,7 @@ import theme from '../src/theme';
 import { Provider } from 'react-redux';
 import store from '../src/store';
 import { withRouter } from 'storybook-addon-react-router-v6';
+import '../src/i18n';
 
 // These Bootstrap styles are needed only for legacy components and can be
 // removed after everything has been migrated to Material UI
@@ -53,6 +54,13 @@ export const decorators = [
     <Provider store={store}>
       <Story />
     </Provider>
+  ),
+  // react-i18next uses suspense by default, this decorator can be removed
+  // if react.useSuspense is disabled in i18next init
+  (Story) => (
+    <Suspense fallback="Loading…">
+      <Story />
+    </Suspense>
   ),
   withRouter,
 ];
