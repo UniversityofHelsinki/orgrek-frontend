@@ -9,6 +9,13 @@ import { Provider } from 'react-redux';
 import store from '../src/store';
 import { withRouter } from 'storybook-addon-react-router-v6';
 
+// These Bootstrap styles are needed only for legacy components and can be
+// removed after everything has been migrated to Material UI
+import '../src/index.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'react-datepicker/dist/react-datepicker.css';
+import 'react-multiple-select-dropdown-lite/dist/index.css';
+
 // Use the same decorators for both stories and docs pages
 const CommonDecorators = ({ children }) => (
   <ThemeProvider theme={theme}>
