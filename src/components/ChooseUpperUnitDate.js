@@ -7,31 +7,60 @@ import { useTranslation } from 'react-i18next';
 registerLocale('fi', fi);
 
 const ChooseUpperUnitDate = (props) => {
-    const { t, i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
 
-    const emptydate = {
-        date: undefined
-    };
+  const emptydate = {
+    date: undefined,
+  };
 
-    return (
-        <Fragment>
-            {props.field === 'startDate' ?
-                <Col xs={6}>
-                    <DatePicker wrapperClassName="datePicker"  locale="fi" dateFormat="dd.MM.yyyy" className="form-control"
-                                selected={props.hierarchyElement.startDate === null ? emptydate.date : new Date(props.hierarchyElement.startDate)}
-                                onChange={(e) => props.onDateChange({ date:e, whichDate:'startDate', elem:props.elem, hierarchy:props.hierarchyElement.hierarchy })}
-                    />
-                </Col>
-                :
-                <Col xs={6}>
-                    <DatePicker wrapperClassName="datePicker"  locale="fi" dateFormat="dd.MM.yyyy" className="form-control"
-                                selected={props.hierarchyElement.endDate === null ? emptydate.date : new Date(props.hierarchyElement.endDate)}
-                                onChange={(e) => props.onDateChange({ date:e, whichDate:'endDate', elem:props.elem, hierarchy:props.hierarchyElement.hierarchy })}
-                    />
-                </Col>
+  return (
+    <Fragment>
+      {props.field === 'startDate' ? (
+        <Col xs={6}>
+          <DatePicker
+            wrapperClassName="datePicker"
+            locale="fi"
+            dateFormat="dd.MM.yyyy"
+            className="form-control"
+            selected={
+              props.hierarchyElement.startDate === null
+                ? emptydate.date
+                : new Date(props.hierarchyElement.startDate)
             }
-        </Fragment>
-    );
+            onChange={(e) =>
+              props.onDateChange({
+                date: e,
+                whichDate: 'startDate',
+                elem: props.elem,
+                hierarchy: props.hierarchyElement.hierarchy,
+              })
+            }
+          />
+        </Col>
+      ) : (
+        <Col xs={6}>
+          <DatePicker
+            wrapperClassName="datePicker"
+            locale="fi"
+            dateFormat="dd.MM.yyyy"
+            className="form-control"
+            selected={
+              props.hierarchyElement.endDate === null
+                ? emptydate.date
+                : new Date(props.hierarchyElement.endDate)
+            }
+            onChange={(e) =>
+              props.onDateChange({
+                date: e,
+                whichDate: 'endDate',
+                elem: props.elem,
+                hierarchy: props.hierarchyElement.hierarchy,
+              })
+            }
+          />
+        </Col>
+      )}
+    </Fragment>
+  );
 };
 export default connect()(ChooseUpperUnitDate);
-

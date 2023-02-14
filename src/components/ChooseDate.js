@@ -7,30 +7,60 @@ import { useTranslation } from 'react-i18next';
 registerLocale('fi', fi);
 
 const ChooseDate = (props) => {
-    const { t, i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
 
-    const emptydate = {
-        date: undefined
-    };
+  const emptydate = {
+    date: undefined,
+  };
 
-    return (
-        <Fragment>
-            {props.field === 'startDate' ?
-            <Col xs={6}>
-                <DatePicker wrapperClassName="datePicker"  locale="fi" dateFormat="dd.MM.yyyy" className="form-control"
-                            selected={props.elem.startDate === null ? emptydate.date : new Date(props.elem.startDate)}
-                            onChange={(e) => props.onDateChange({ date:e, whichDate:'startDate', elem:props.elem, validity:props.validity })}
-                            />
-            </Col>
-            :
-            <Col xs={6}>
-                <DatePicker wrapperClassName="datePicker"  locale="fi" dateFormat="dd.MM.yyyy" className="form-control"
-                            selected={props.elem.endDate === null ? emptydate.date : new Date(props.elem.endDate)}
-                            onChange={(e) => props.onDateChange({ date:e, whichDate:'endDate', elem:props.elem, validity: props.validity })}
-                />
-            </Col>}
-        </Fragment>
-    );
+  return (
+    <Fragment>
+      {props.field === 'startDate' ? (
+        <Col xs={6}>
+          <DatePicker
+            wrapperClassName="datePicker"
+            locale="fi"
+            dateFormat="dd.MM.yyyy"
+            className="form-control"
+            selected={
+              props.elem.startDate === null
+                ? emptydate.date
+                : new Date(props.elem.startDate)
+            }
+            onChange={(e) =>
+              props.onDateChange({
+                date: e,
+                whichDate: 'startDate',
+                elem: props.elem,
+                validity: props.validity,
+              })
+            }
+          />
+        </Col>
+      ) : (
+        <Col xs={6}>
+          <DatePicker
+            wrapperClassName="datePicker"
+            locale="fi"
+            dateFormat="dd.MM.yyyy"
+            className="form-control"
+            selected={
+              props.elem.endDate === null
+                ? emptydate.date
+                : new Date(props.elem.endDate)
+            }
+            onChange={(e) =>
+              props.onDateChange({
+                date: e,
+                whichDate: 'endDate',
+                elem: props.elem,
+                validity: props.validity,
+              })
+            }
+          />
+        </Col>
+      )}
+    </Fragment>
+  );
 };
 export default connect()(ChooseDate);
-
