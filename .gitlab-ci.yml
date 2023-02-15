@@ -26,8 +26,12 @@ stages:
 setup:
   stage: setup
   script:
-    - apk update && apk add --no-cache wget
-    - wget https://nodejs.org/dist/v18.14.0/node-v18.14.0.tar.gz && tar -xf node-v18.14.0.tar.gz
+    - wget https://nodejs.org/dist/v18.14.0/node-v18.14.0.tar.gz
+    - tar -xf node-v18.14.0.tar.gz
+    - ls
+    - ln -s ./node-v18.14.0-linux-x64/bin/node /usr/local/bin/
+    - ln -s ./node-v18.14.0-linux-x64/bin/npm /usr/local/bin/
+    - ln -s ./node-v18.14.0-linux-x64/bin/npx /usr/local/bin/
     - node -v
     - CYPRESS_CACHE_FOLDER='.cache/Cypress' npm ci
   tags:
