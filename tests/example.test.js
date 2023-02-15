@@ -8,7 +8,7 @@ test('renders a div with awesome text', () => {
 
   const awesomeElement = screen.getByText(/Awesome text/i);
 
-  expect(awesomeElement).toBeInTheDocument;
+  expect(awesomeElement).toBeInTheDocument();
 });
 
 test('should return the initial tree state', () => {
@@ -27,7 +27,7 @@ test('clicks a button', async () => {
   render(<button onClick={clickFunction}>Click Me</button>);
   const button = screen.getByText(/Click Me/i);
 
-  expect(button).toBeInTheDocument;
+  expect(button).toBeInTheDocument();
 
   await userEvent.click(button);
   await userEvent.click(button);
