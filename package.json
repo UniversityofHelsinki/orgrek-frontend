@@ -33,6 +33,17 @@
     "@babel/preset-env": "^7.15.8",
     "@babel/preset-react": "^7.14.5",
     "@reduxjs/toolkit": "^1.6.2",
+    "@storybook/addon-a11y": "^6.5.16",
+    "@storybook/addon-actions": "^6.5.16",
+    "@storybook/addon-essentials": "^6.5.16",
+    "@storybook/addon-interactions": "^6.5.16",
+    "@storybook/addon-links": "^6.5.16",
+    "@storybook/builder-webpack5": "^6.5.16",
+    "@storybook/manager-webpack5": "^6.5.16",
+    "@storybook/node-logger": "^6.5.16",
+    "@storybook/preset-create-react-app": "^4.1.2",
+    "@storybook/react": "^6.5.16",
+    "@storybook/testing-library": "0.0.13",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^12.1.5",
     "@testing-library/user-event": "^14.4.3",
@@ -41,12 +52,14 @@
     "eslint-config-prettier": "^8.6.0",
     "eslint-plugin-cypress": "^2.12.1",
     "eslint-plugin-react": "^7.26.1",
+    "eslint-plugin-storybook": "^0.6.10",
     "husky": "^8.0.3",
     "json-server": "^0.16.3",
     "lint-staged": "^13.1.1",
     "prettier": "2.8.4",
     "react-scripts": "^5.0.0",
-    "react-test-renderer": "^17.0.2"
+    "react-test-renderer": "^17.0.2",
+    "storybook-addon-react-router-v6": "^0.2.1"
   },
   "jest": {
     "testEnvironment": "jsdom",
@@ -67,12 +80,24 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "cypress:open": "cypress open",
+    "storybook": "start-storybook -p 6006 -s public",
+    "storybook:build": "build-storybook -s public",
     "prepare": "husky install"
   },
   "eslintConfig": {
     "extends": [
       "react-app",
       "react-app/jest"
+    ],
+    "overrides": [
+      {
+        "files": [
+          "**/*.stories.*"
+        ],
+        "rules": {
+          "import/no-anonymous-default-export": "off"
+        }
+      }
     ]
   },
   "browserslist": {

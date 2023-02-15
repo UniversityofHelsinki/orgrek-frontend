@@ -82,6 +82,32 @@ In IDEA, two steps are needed:
 - [Enable run automatically on save](https://www.jetbrains.com/help/idea/prettier.html#ws_prettier_run_automatically_in_current_project).
   Check that the file pattern includes all desired files, e.g. `{**/*,*}.{js,jsx,json,css,html,yml,md}`
 
+## Storybook
+
+Storybook is a UI component development tool and also serves as documentation for all custom components and
+the Material UI theme.
+See [Introduction](https://storybook.js.org/docs/react/get-started/introduction) in Storybook docs.
+
+To open Storybook in browser, run:
+
+```bash
+npm install
+npm run storybook
+```
+
+Storybook fetches translations from the local backend using the same configuration as the main app,
+so `orgrek-backend` must also be running, and the required auth headers must be mocked in the browser as with the
+main app.
+
+Storybook is used primarily for component development. Whole pages should still be tested using the main app.
+You can run both the main app and Storybook at the same time,
+and all code changes are reloaded in both automatically.
+
+### Updating Storybook dependencies
+
+Storybook has its own migration tool `npx storybook upgrade` which should be used for updating Storybook packages.
+See [Upgrading Storybook](https://storybook.js.org/docs/react/configure/upgrading)
+
 ## JSON server
 
 The JSON server runs mock api using the db.json-file as database.
