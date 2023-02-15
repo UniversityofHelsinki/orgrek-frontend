@@ -27,6 +27,7 @@ setup:
   stage: setup
   script:
     - CYPRESS_CACHE_FOLDER='.cache/Cypress' npm ci
+    - node -v
   tags:
     - ohtu-build-3
   extends: .dependencies_cache

@@ -20,6 +20,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { fi, sv, enIE } from 'date-fns/locale';
 import { useTranslation } from 'react-i18next';
+import LanguageSelect from './components/LanguageSelect';
 
 const getDateFnsLocale = (language) => {
   switch (language) {
@@ -90,6 +91,7 @@ const App = (props) => {
       >
         <div className="App">
           <LoginRedirect loginUrl={SHIBBOLETH_LOGIN} />
+          <LanguageSelect />
           <SkipNavLink id="main-content" />
           <Container fluid>
             <Row>
