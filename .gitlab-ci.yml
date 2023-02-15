@@ -1,10 +1,5 @@
 image: quay.io/tike/alpine-oc-node
 
-before_script:
-  - apk update
-  - apk upgrade
-  - apk add --update nodejs
-
 variables:
   npm_config_cache: '$CI_PROJECT_DIR/.npm'
 
