@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import Header from './components/Header';
+import Header2 from './components/Header2';
 import Hierarchy from './components/Hierarchy';
 import NodeDetails from './components/NodeDetails';
 import './App.css';
@@ -91,7 +92,7 @@ const App = (props) => {
       >
         <div className="App">
           <LoginRedirect loginUrl={SHIBBOLETH_LOGIN} />
-          <LanguageSelect />
+          <Header2 />
           <SkipNavLink id="main-content" />
           <Container fluid>
             <Row>
