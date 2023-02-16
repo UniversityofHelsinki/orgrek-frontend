@@ -248,6 +248,22 @@ const theme = createTheme({
         },
       },
     },
+    MuiTableCell: {
+      styleOverrides: {
+        root: {
+          borderWidth: 1,
+          borderStyle: 'solid',
+          borderColor: palette.divider,
+        },
+        head: {
+          backgroundColor: palette.grey[50],
+          ...typography.tableHead,
+        },
+        body: {
+          ...typography.tableBody,
+        },
+      },
+    },
   },
 });
 
