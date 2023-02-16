@@ -1,4 +1,4 @@
-import FooterComponent from '../../components/Footer';
+import FooterComponent from '../../components/FooterV2';
 
 export default {
   component: FooterComponent,
