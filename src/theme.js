@@ -71,7 +71,7 @@ const palette = {
     A400: '#bdbdbd',
     A700: '#616161',
   },
-  divider: hyPalette.grayscale.medium,
+  divider: 'rgba(0, 0, 0, 0.12)',
   error: {
     main: hyPalette.additional.redLight,
     dark: hyPalette.additional.redDark,
@@ -197,13 +197,12 @@ const typography = {
     lineHeight: 1.53,
     letterSpacing: -0.13,
   },
-  // Accordion title is almost identical to h5, just tighter letter spacing
   accordionTitle: {
     fontFamily: openSans,
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: 700,
     lineHeight: 1.375,
-    letterSpacing: -0.53,
+    letterSpacing: -0.45,
     color: hyPalette.brand.nearlyBlack,
   },
   tableHead: {

@@ -2,10 +2,6 @@ import * as React from 'react';
 import { render } from './testUtils';
 import SelectDate from '../src/components/SelectDate';
 
-jest.mock('react-i18next', () => ({
-  useTranslation: () => ({ t: (key) => key }),
-}));
-
 test('SelectDate renders', () => {
   const { container } = render(<SelectDate />);
   const selectDate = container.getElementsByClassName(

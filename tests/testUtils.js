@@ -23,6 +23,18 @@ function render(
   return rtlRender(ui, { wrapper: Wrapper, ...renderOptions });
 }
 
+/**
+ * Renders a Storybook story.
+ *
+ * This allows reusing stories in tests without duplicating the same data
+ * for both stories and tests.
+ *
+ * @param story Storybook story object in CSF 3 format
+ */
+export const renderStory = (story) => {
+  return render(story.render(story.args ?? {}));
+};
+
 // re-export everything
 export * from '@testing-library/react';
 // override render method
