@@ -5,16 +5,14 @@ import Box from '@mui/material/Box';
 
 const Header2 = () => {
   return (
-    <div>
-      <Box sx={{ flexGrow: 1 }}>
-        <Grid container spacing={2}>
-          <Grid xs={10}></Grid>
-          <Grid xs={2}>
-            <LanguageSelect />
-          </Grid>
+    <Box sx={{ flexGrow: 1 }}>
+      <Grid container spacing={2}>
+        <Grid xs={10}></Grid>
+        <Grid xs={2}>
+          <LanguageSelect />
         </Grid>
-      </Box>
-    </div>
+      </Grid>
+    </Box>
   );
 };
 
