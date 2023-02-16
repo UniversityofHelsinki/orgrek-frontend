@@ -1,8 +1,5 @@
 import * as React from 'react';
-import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
 import { useTranslation } from 'react-i18next';
 import LanguageIcon from '@mui/icons-material/Language';
 import InputAdornment from '@mui/material/InputAdornment';
@@ -11,8 +8,8 @@ import TextField from '@mui/material/TextField';
 const LanguageSelect = () => {
   const { t, i18n } = useTranslation();
 
-  const handleChange = (event) => {
-    i18n.changeLanguage(event.target.value);
+  const handleChange = async (event) => {
+    await i18n.changeLanguage(event.target.value);
   };
 
   return (
