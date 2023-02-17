@@ -16,43 +16,49 @@ const TodayButton = styled(Button)`
   }
 `;
 const SelectDate = (props) => {
+  const { t, i18n } = useTranslation();
 
-    const { t, i18n } = useTranslation();
+  React.useEffect(() => {}, [props.selectedDay]);
 
-    React.useEffect(() => {
-    }, [props.selectedDay]);
+  const changeToCurrentDate = () => {
+    const date = new Date();
+    props.onDayChange(date);
+    i18n.loadNamespaces('nodeattr' + date.toLocaleDateString('EN-CA'));
+  };
 
-
-    const changeToCurrentDate = () =>  {
-        const date = new Date();
-        props.onDayChange(date);
-        i18n.loadNamespaces('nodeattr' + date.toLocaleDateString('EN-CA'));
-    };
-
-    return (
-        <Fragment>
-            <Col xs={6}>
-                <DatePicker wrapperClassName="datePicker" locale="fi" dateFormat="dd.MM.yyyy" className="form-control"
-                            selected={props.selectedDay ? props.selectedDay : new Date()}
-                            onChange={(date) =>  {
-                                props.onDayChange(date);
-                                i18n.loadNamespaces('nodeattr' + date.toLocaleDateString('EN-CA'));
-                            }} />
-            </Col>
-            <Col xs={6}>
-                <TodayButton className="returnTodayButton" onClick={changeToCurrentDate}>{t('return_to_today')}</TodayButton>
-            </Col>
-           </Fragment>
-    );
+  return (
+    <Fragment>
+      <Col xs={6}>
+        <DatePicker
+          wrapperClassName="datePicker"
+          locale="fi"
+          dateFormat="dd.MM.yyyy"
+          className="form-control"
+          selected={props.selectedDay ? props.selectedDay : new Date()}
+          onChange={(date) => {
+            props.onDayChange(date);
+            i18n.loadNamespaces('nodeattr' + date.toLocaleDateString('EN-CA'));
+          }}
+        />
+      </Col>
+      <Col xs={6}>
+        <TodayButton
+          className="returnTodayButton"
+          onClick={changeToCurrentDate}
+        >
+          {t('return_to_today')}
+        </TodayButton>
+      </Col>
+    </Fragment>
+  );
 };
 
-const mapStateToProps = state => ({
-    selectedDay : state.dr.selectedDay
+const mapStateToProps = (state) => ({
+  selectedDay: state.dr.selectedDay,
 });
 
-const mapDispatchToProps = dispatch => ({
-    onDayChange: (day) => dispatch(changeDate(day))
+const mapDispatchToProps = (dispatch) => ({
+  onDayChange: (day) => dispatch(changeDate(day)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SelectDate);
-

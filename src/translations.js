@@ -1,11 +1,7 @@
 const translationsObject = {
-    en: {
-    },
-    fi: {
-    },
-    sv: {
-    }
+  en: {},
+  fi: {},
+  sv: {},
 };
-
 
 export default translationsObject;

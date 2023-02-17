@@ -1,23 +1,23 @@
 const initialState = {
-   showHistory: false,
-   showComing: false
+  showHistory: false,
+  showComing: false,
 };
 
 const nodeDetailsViewReducer = (state = initialState, action) => {
-    switch (action.type) {
+  switch (action.type) {
     case 'SWITCH_SHOW_HISTORY':
-        return {
-            ...state,
-            showHistory: action.payload
-        };
+      return {
+        ...state,
+        showHistory: action.payload,
+      };
     case 'SWITCH_SHOW_COMING':
-        return {
-            ...state,
-            showComing: action.payload
-        };
+      return {
+        ...state,
+        showComing: action.payload,
+      };
     default:
-        return state;
-    }
+      return state;
+  }
 };
 
 export default nodeDetailsViewReducer;
