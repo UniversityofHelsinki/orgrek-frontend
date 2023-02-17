@@ -36,7 +36,6 @@ export const Accordion = ({ children, sx, ...props }) => {
       {...props}
       disableGutters
       elevation={0}
-      defaultExpanded={true}
       sx={{
         marginBottom: 1.5,
         backgroundColor: 'grey.100',

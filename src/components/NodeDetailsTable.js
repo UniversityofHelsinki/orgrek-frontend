@@ -218,7 +218,7 @@ const NodeDetailsTable = (props) => {
 
   return (
     <>
-      <Accordion>
+      <Accordion defaultExpanded={true}>
         <AccordionSummary>
           <h4>{t(props.heading)}</h4>
         </AccordionSummary>
