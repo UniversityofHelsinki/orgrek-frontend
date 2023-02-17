@@ -223,7 +223,7 @@ const typography = {
     fontFamily: openSans,
     fontSize: 12,
     fontWeight: 700,
-    lineHeight: 1.375,
+    lineHeight: 2,
     letterSpacing: -0.1,
     color: hyPalette.grayscale.white,
     '&:hover': {
