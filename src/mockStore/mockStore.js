@@ -56,3 +56,13 @@ export const withMockStore = (state) => {
     );
   };
 };
+
+/**
+ * For convience decorator that mocks Redux store with the given user.
+ *
+ * Use this decorator when you need to mock only the current user.
+ * As alternative, withMockStore decorator can mock the whole state.
+ *
+ * @param user current user
+ */
+export const withUser = (user) => withMockStore({ ur: user });

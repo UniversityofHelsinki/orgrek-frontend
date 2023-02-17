@@ -1,11 +1,11 @@
 import React from 'react';
 import HeaderComponent from '../../components/Header';
-import { withMockStore } from '../../mockStore';
+import { createAdmin, withUser } from '../../mockStore';
 
 export default {
   component: HeaderComponent,
 };
 
 export const Header = {
-  decorators: [withMockStore()],
+  decorators: [withUser(createAdmin())],
 };
