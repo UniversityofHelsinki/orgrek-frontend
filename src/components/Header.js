@@ -15,8 +15,8 @@ const Div = styled.div`
 const Header = (props) => {
   const { t, i18n } = useTranslation();
   return (
-    <Div>
-      <Navbar fixed="top" collapseOnSelect expand="lg" bg="dark" variant="dark">
+    <div>
+      <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
         <Container fluid>
           <HyLogo />
           <Navbar.Brand>{t('organisational_registry')}</Navbar.Brand>
@@ -66,7 +66,7 @@ const Header = (props) => {
           </Navbar.Collapse>
         </Container>
       </Navbar>
-    </Div>
+    </div>
   );
 };
 
