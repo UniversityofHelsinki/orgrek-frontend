@@ -65,4 +65,4 @@ export const withMockStore = (state) => {
  *
  * @param user current user
  */
-export const withUser = (user) => withMockStore({ ur: user });
+export const withUser = (user) => withMockStore({ ur: { user } });
