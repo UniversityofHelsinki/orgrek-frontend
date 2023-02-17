@@ -222,7 +222,14 @@ const typography = {
 };
 
 const theme = createTheme({
-  palette,
+  palette: {
+    custom: {
+      main: '#f90',
+      dark: '#f00',
+      light: '#eee',
+      contrastText: 'rgba(0, 0, 0, 0.87)',
+    },
+  },
   typography,
   shape: {
     borderRadius: 0,
