@@ -226,13 +226,11 @@ const typography = {
     lineHeight: 2,
     letterSpacing: -0.1,
     color: hyPalette.grayscale.white,
+    textDecoration: 'none',
     '&:hover': {
-      textDecoration: 'underline',
       color: hyPalette.grayscale.white,
+      textDecoration: 'underline',
     },
-  },
-  bold_body1: {
-    fontWeight: 700,
   },
 };
 

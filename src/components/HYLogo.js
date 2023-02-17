@@ -2,13 +2,7 @@ import React from 'react';
 
 const HyLogo = () => {
   return (
-    <svg
-      version="1.1"
-      id="hy-logo"
-      xmlns="http://www.w3.org/2000/svg"
-      width="100"
-      height="30"
-    >
+    <svg viewBox="0 0 32 32">
       <rect x="14" fill="#fff" width="3" height="3" />
       <rect x="14" y="28" fill="#fff" width="3" height="3" />
       <path
