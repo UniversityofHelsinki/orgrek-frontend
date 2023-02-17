@@ -6,10 +6,10 @@ export default {
   component: LanguageSelect,
 };
 
-export const Admin = {
+export const AdminRole = {
   decorators: [withUser(createAdmin())],
 };
 
-export const Reader = {
+export const ReaderRole = {
   decorators: [withUser(createReader())],
 };
