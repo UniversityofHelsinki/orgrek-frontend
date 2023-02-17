@@ -27,7 +27,8 @@ import {
 } from '../actions/hierarchyAction';
 
 const EditButtons = (props) => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
+
   let err_happened = false;
 
   const toggleEdit = (newMode) => {
@@ -264,6 +265,10 @@ const mapStateToProps = (state) => ({
   edit: state.editModeReducer.edit,
   feedback: state.nrd.feedback,
   feedback_stored: state.nrd.feedback_stored,
+  node: state.nrd.node,
+  nodeAttributes: state.nrd.nodeAttributes,
+  selectedDay: state.dr.selectedDay,
+  selectedHierarchy: state.tree.selectedHierarchy,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditButtons);

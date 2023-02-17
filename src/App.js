@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import Header from './components/Header';
 import Header2 from './components/Header2';
 import Hierarchy from './components/Hierarchy';
-import NodeDetails from './components/NodeDetails';
 import './App.css';
 import { fetchUser, isAdmin } from './actions/userAction';
 import { fetchSelectableHierarchies } from './actions/treeAction';
@@ -21,6 +20,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { fi, sv, enIE } from 'date-fns/locale';
 import { useTranslation } from 'react-i18next';
+import NodeDetails2 from './components/nodeDetails/NodeDetails2';
 
 const getDateFnsLocale = (language) => {
   switch (language) {
@@ -105,7 +105,7 @@ const App = (props) => {
                         <Col md={4} lg={4}>
                           <Hierarchy />
                         </Col>
-                        <Col>{props.node && <NodeDetails />}</Col>
+                        <Col>{props.node && <NodeDetails2 />}</Col>
                       </>
                     }
                   />
