@@ -8,6 +8,7 @@ import { fetchNode } from '../actions/nodeAction';
 import ChooseDate from './ChooseDate';
 import UnitDropDown from './UnitDropDown';
 import ChooseUpperUnitDate from './ChooseUpperUnitDate';
+import { Accordion, AccordionDetails, AccordionSummary } from './Accordion';
 
 const ListLink = styled('a')(({ theme }) => ({
   textDecoration: 'none',
@@ -217,11 +218,17 @@ const NodeDetailsTable = (props) => {
 
   return (
     <>
-      <h4>{t(props.heading)}</h4>
-      <Table id={props.heading} size="sm" data-testid="node-details-table">
-        <thead>{renderTableHeader()}</thead>
-        <tbody>{renderTableData()}</tbody>
-      </Table>
+      <Accordion>
+        <AccordionSummary>
+          <h4>{t(props.heading)}</h4>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Table id={props.heading} size="sm" data-testid="node-details-table">
+            <thead>{renderTableHeader()}</thead>
+            <tbody>{renderTableData()}</tbody>
+          </Table>
+        </AccordionDetails>
+      </Accordion>
     </>
   );
 };
