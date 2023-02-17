@@ -1,7 +1,15 @@
-import LanguageSelectComponent from '../../components/LanguageSelect';
+import LanguageSelect from '../../components/LanguageSelect';
+import { createAdmin, createReader, withMockStore } from '../../mockStore';
+import React from 'react';
 
 export default {
-  component: LanguageSelectComponent,
+  component: LanguageSelect,
 };
 
-export const LanguageSelect = {};
+export const Admin = {
+  decorators: [withMockStore({ ur: { user: createAdmin() } })],
+};
+
+export const Reader = {
+  decorators: [withMockStore({ ur: { user: createReader() } })],
+};
