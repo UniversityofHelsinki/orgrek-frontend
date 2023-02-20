@@ -4,14 +4,16 @@ import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import { connect, useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const Tags = (props) => {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   const iterate = (values) => {
     let selectedValues = [];
     for (const value of values) {
-      selectedValues.push(value.title);
+      selectedValues.push(value.value);
     }
     return selectedValues.join(',');
   };
@@ -20,13 +22,18 @@ const Tags = (props) => {
     const selectableHierarchiesList = props.selectableHierarchies
       .filter((item) => item !== 'history')
       .map((v) => ({
-        title: v,
+        value: v,
+        label: t(v),
       }));
 
     const changeSelected = (event, value) => {
       const newValue = value || props.defaultHierarchy;
-      let selectedValues = iterate(newValue);
-      console.log(new String(selectedValues));
+      let selectedValues;
+      if (value && value.length > 0) {
+        selectedValues = iterate(newValue);
+      } else {
+        selectedValues = props.defaultHierarchy;
+      }
       dispatch(dropDownSwitchValueCall(new String(selectedValues)));
     };
 
@@ -36,7 +43,8 @@ const Tags = (props) => {
           multiple
           id="tags-standard"
           options={selectableHierarchiesList}
-          getOptionLabel={(option) => option.title}
+          isOptionEqualToValue={(option, value) => option.value === value.value}
+          getOptionLabel={(option) => option.label}
           defaultValue={[selectableHierarchiesList[0]]}
           onChange={changeSelected}
           renderInput={(params) => (
