@@ -10,6 +10,7 @@ import { fetchSelectableHierarchies } from './actions/treeAction';
 import { fetchNode } from './actions/nodeAction';
 import LoginRedirect from './components/LoginRedirect';
 import Footer from './components/Footer';
+import Footer2 from './components/Footer2';
 import { Container, Col, Row } from 'react-bootstrap';
 import SkipNavLink from './components/SkipNavLink';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
@@ -123,6 +124,7 @@ const App = (props) => {
             </Row>
           </Container>
           <Footer />
+          <Footer2 />
         </div>
       </LocalizationProvider>
     </ThemeProvider>
