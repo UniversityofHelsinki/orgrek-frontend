@@ -1,11 +1,16 @@
 import * as React from 'react';
 import Autocomplete from '@mui/material/Autocomplete';
+import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
+import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import { connect, useDispatch } from 'react-redux';
-import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { editSelectedHierarchies } from '../actions/treeAction';
+import { Checkbox } from '@mui/material';
+
+const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
+const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
 const Tags = (props) => {
   const dispatch = useDispatch();
@@ -27,13 +32,11 @@ const Tags = (props) => {
         label: t(v),
       }));
 
-    let values = [props.defaultHierarchy];
+    let selectedHierarchies = [props.defaultHierarchy];
     if (props.selectedHierarchy) {
-      values = [...props.selectedHierarchy.split(',')];
+      selectedHierarchies = [...props.selectedHierarchy.split(',')];
     }
-    props.editSelectedHierarchies(values);
-
-    console.log(values.map((v) => ({ value: v, label: t(v) })));
+    props.editSelectedHierarchies(selectedHierarchies);
 
     const changeSelected = (event, hierarchies) => {
       const hierarchyList = hierarchies || props.defaultHierarchy;
@@ -47,22 +50,29 @@ const Tags = (props) => {
     };
 
     return (
-      <Stack spacing={3} sx={{ width: 300 }}>
+      <Stack spacing={3} sx={{ width: 400 }}>
         <Autocomplete
           multiple
-          id="tags-standard"
+          id="hierarchy-selection"
+          disableCloseOnSelect
           options={selectableHierarchiesList}
           isOptionEqualToValue={(option, value) => option.value === value.value}
           getOptionLabel={(option) => option.label}
-          defaultValue={[{ value: 'talous', label: t('talous') }]}
+          value={selectedHierarchies.map((v) => ({ value: v, label: t(v) }))}
           onChange={changeSelected}
+          renderOption={(props, option, { selected }) => (
+            <li {...props}>
+              <Checkbox
+                icon={icon}
+                checkedIcon={checkedIcon}
+                style={{ marginRight: 8 }}
+                checked={selected}
+              />
+              {option.label}
+            </li>
+          )}
           renderInput={(params) => (
-            <TextField
-              {...params}
-              variant="standard"
-              label="Multiple values"
-              placeholder="Favorites"
-            />
+            <TextField {...params} variant="standard" label="" placeholder="" />
           )}
         />
       </Stack>

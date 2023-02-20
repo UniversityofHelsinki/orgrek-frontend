@@ -6,8 +6,7 @@ import SelectDate from './SelectDate';
 import { fetchSelectableHierarchies } from '../actions/treeAction';
 import { Container, Row, Col } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import MultiSelectHierarchies from './MultiSelectHierarchies';
-import CustomizedHook from './AutoCompleteMultiSelection';
+import HierarchySelection from './AutoCompleteMultiSelection';
 
 const Hierarchy = (props) => {
   useEffect(() => {
@@ -21,8 +20,7 @@ const Hierarchy = (props) => {
         <Row>
           <h3 id={'main-content'}>{t('units')}</h3>
           <Col>
-            <MultiSelectHierarchies />
-            <CustomizedHook />
+            <HierarchySelection />
           </Col>
         </Row>
         <Row>
