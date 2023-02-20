@@ -10,12 +10,12 @@ const Tags = (props) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
-  const iterate = (values) => {
-    let selectedValues = [];
-    for (const value of values) {
-      selectedValues.push(value.value);
+  const iterate = (hierarchyList) => {
+    let selectedHierarchies = [];
+    for (const hierarchy of hierarchyList) {
+      selectedHierarchies.push(hierarchy.value);
     }
-    return selectedValues.join(',');
+    return selectedHierarchies.join(',');
   };
 
   if (props.selectableHierarchies?.length > 0) {
@@ -26,15 +26,15 @@ const Tags = (props) => {
         label: t(v),
       }));
 
-    const changeSelected = (event, value) => {
-      const newValue = value || props.defaultHierarchy;
-      let selectedValues;
-      if (value && value.length > 0) {
-        selectedValues = iterate(newValue);
+    const changeSelected = (event, hierarchies) => {
+      const hierarchyList = hierarchies || props.defaultHierarchy;
+      let selectedHierarchies;
+      if (hierarchies && hierarchies.length > 0) {
+        selectedHierarchies = iterate(hierarchyList);
       } else {
-        selectedValues = props.defaultHierarchy;
+        selectedHierarchies = props.defaultHierarchy;
       }
-      dispatch(dropDownSwitchValueCall(new String(selectedValues)));
+      dispatch(dropDownSwitchValueCall(new String(selectedHierarchies)));
     };
 
     return (
