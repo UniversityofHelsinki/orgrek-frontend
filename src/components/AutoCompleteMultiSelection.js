@@ -30,7 +30,10 @@ const Tags = (props) => {
       .map((v) => ({
         value: v,
         label: t(v),
-      }));
+      }))
+      .sort((a, b) =>
+        t(a.label).toLowerCase() > t(b.label).toLowerCase() ? 1 : -1
+      );
 
     let selectedHierarchies = [props.defaultHierarchy];
     if (props.selectedHierarchy) {
