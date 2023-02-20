@@ -5,6 +5,7 @@ import Stack from '@mui/material/Stack';
 import { connect, useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { editSelectedHierarchies } from '../actions/treeAction';
 
 const Tags = (props) => {
   const dispatch = useDispatch();
@@ -26,6 +27,14 @@ const Tags = (props) => {
         label: t(v),
       }));
 
+    let values = [props.defaultHierarchy];
+    if (props.selectedHierarchy) {
+      values = [...props.selectedHierarchy.split(',')];
+    }
+    props.editSelectedHierarchies(values);
+
+    console.log(values.map((v) => ({ value: v, label: t(v) })));
+
     const changeSelected = (event, hierarchies) => {
       const hierarchyList = hierarchies || props.defaultHierarchy;
       let selectedHierarchies;
@@ -34,7 +43,7 @@ const Tags = (props) => {
       } else {
         selectedHierarchies = props.defaultHierarchy;
       }
-      dispatch(dropDownSwitchValueCall(new String(selectedHierarchies)));
+      dispatch(dropDownSwitchValueCall(selectedHierarchies));
     };
 
     return (
@@ -45,7 +54,7 @@ const Tags = (props) => {
           options={selectableHierarchiesList}
           isOptionEqualToValue={(option, value) => option.value === value.value}
           getOptionLabel={(option) => option.label}
-          defaultValue={[selectableHierarchiesList[0]]}
+          defaultValue={[{ value: 'talous', label: t('talous') }]}
           onChange={changeSelected}
           renderInput={(params) => (
             <TextField
@@ -70,8 +79,13 @@ export const dropDownSwitchValueCall = (data) => {
 };
 
 const mapStateToProps = (state) => ({
+  selectedHierarchy: state.tree.selectedHierarchy,
   selectableHierarchies: state.tree.selectableHierarchies,
   defaultHierarchy: state.tree.defaultHierarchy,
 });
 
-export default connect(mapStateToProps, null)(Tags);
+const mapDispatchToProps = (dispatch) => ({
+  editSelectedHierarchies: (edit) => dispatch(editSelectedHierarchies(edit)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Tags);
