@@ -8,6 +8,14 @@ import { useEffect, useState } from 'react';
 const Tags = (props) => {
   const dispatch = useDispatch();
 
+  const iterate = (values) => {
+    let selectedValues = [];
+    for (const value of values) {
+      selectedValues.push(value.title);
+    }
+    return selectedValues.join(',');
+  };
+
   if (props.selectableHierarchies?.length > 0) {
     const selectableHierarchiesList = props.selectableHierarchies
       .filter((item) => item !== 'history')
@@ -16,10 +24,10 @@ const Tags = (props) => {
       }));
 
     const changeSelected = (event, value) => {
-      console.log(value);
       const newValue = value || props.defaultHierarchy;
-      console.log(newValue);
-      //dispatch(dropDownSwitchValueCall(new String(newValue)));
+      let selectedValues = iterate(newValue);
+      console.log(new String(selectedValues));
+      dispatch(dropDownSwitchValueCall(new String(selectedValues)));
     };
 
     return (

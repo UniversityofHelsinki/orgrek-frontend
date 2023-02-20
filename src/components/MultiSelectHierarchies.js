@@ -10,6 +10,7 @@ const MultiSelectHierarchies = (props) => {
 
   const changeSelected = (value) => {
     const newValue = value || props.defaultHierarchy;
+    console.log(new String(newValue));
     dispatch(dropDownSwitchValueCall(new String(newValue)));
     // new String for causing a rerender when newValue === previous value.
   };
