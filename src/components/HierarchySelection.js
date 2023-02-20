@@ -7,12 +7,12 @@ import Stack from '@mui/material/Stack';
 import { connect, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { editSelectedHierarchies } from '../actions/treeAction';
-import { Checkbox } from '@mui/material';
+import { Checkbox, InputLabel } from '@mui/material';
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
-const Tags = (props) => {
+const HierarchySelection = (props) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
@@ -58,6 +58,7 @@ const Tags = (props) => {
           multiple
           id="hierarchy-selection"
           disableCloseOnSelect
+          inputProps={{ id: 'input-id' }}
           options={selectableHierarchiesList}
           isOptionEqualToValue={(option, value) => option.value === value.value}
           getOptionLabel={(option) => option.label}
@@ -75,7 +76,12 @@ const Tags = (props) => {
             </li>
           )}
           renderInput={(params) => (
-            <TextField {...params} variant="standard" label="" placeholder="" />
+            <TextField
+              id="search"
+              {...params}
+              variant="standard"
+              placeholder=""
+            />
           )}
         />
       </Stack>
@@ -101,4 +107,4 @@ const mapDispatchToProps = (dispatch) => ({
   editSelectedHierarchies: (edit) => dispatch(editSelectedHierarchies(edit)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Tags);
+export default connect(mapStateToProps, mapDispatchToProps)(HierarchySelection);
