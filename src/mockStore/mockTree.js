@@ -4,7 +4,14 @@ const initialState = {
   tree: {},
   selectedHierarchy: 'talous',
   defaultHierarchy: 'talous',
-  selectableHierarchies: [],
+  selectableHierarchies: [
+    'tutkimus',
+    'henkilosto',
+    'toiminnanohjaus',
+    'opetus',
+    'history',
+    'talous',
+  ],
   treeWithAllHierarchies: {},
   selectedHierarchies: [],
 };
