@@ -54,7 +54,10 @@ const palette = {
     main: hyPalette.brand.light,
     dark: hyPalette.brand.mediumDark,
   },
-  secondary: undefined,
+  secondary: {
+    main: hyPalette.brand.light,
+    dark: hyPalette.brand.mediumDark,
+  },
   grey: {
     50: hyPalette.grayscale.light,
     100: hyPalette.grayscale.mediumLight,
