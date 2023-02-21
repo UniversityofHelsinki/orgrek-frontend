@@ -20,6 +20,7 @@ const ReviewDate = (props) => {
       <Grid container spacing={2}>
         <Grid xs={8}>
           <DateInput
+            label={t('display_date')}
             value={props.selectedDay ? props.selectedDay : new Date()}
             onChange={(newDate) => props.onDayChange(newDate)}
           />
