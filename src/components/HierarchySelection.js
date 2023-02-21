@@ -53,38 +53,30 @@ const HierarchySelection = (props) => {
     };
 
     return (
-      <Stack spacing={3} sx={{ width: 400 }}>
-        <Autocomplete
-          multiple
-          id="hierarchy-selection"
-          disableCloseOnSelect
-          inputProps={{ id: 'input-id' }}
-          options={selectableHierarchiesList}
-          isOptionEqualToValue={(option, value) => option.value === value.value}
-          getOptionLabel={(option) => option.label}
-          value={selectedHierarchies.map((v) => ({ value: v, label: t(v) }))}
-          onChange={changeSelected}
-          renderOption={(props, option, { selected }) => (
-            <li {...props}>
-              <Checkbox
-                icon={icon}
-                checkedIcon={checkedIcon}
-                style={{ marginRight: 8 }}
-                checked={selected}
-              />
-              {option.label}
-            </li>
-          )}
-          renderInput={(params) => (
-            <TextField
-              id="search"
-              {...params}
-              variant="standard"
-              placeholder=""
+      <Autocomplete
+        multiple
+        id="hierarchy-selection"
+        disableCloseOnSelect
+        options={selectableHierarchiesList}
+        isOptionEqualToValue={(option, value) => option.value === value.value}
+        getOptionLabel={(option) => option.label}
+        value={selectedHierarchies.map((v) => ({ value: v, label: t(v) }))}
+        onChange={changeSelected}
+        renderOption={(props, option, { selected }) => (
+          <li {...props}>
+            <Checkbox
+              icon={icon}
+              checkedIcon={checkedIcon}
+              style={{ marginRight: 8 }}
+              checked={selected}
             />
-          )}
-        />
-      </Stack>
+            {option.label}
+          </li>
+        )}
+        renderInput={(params) => (
+          <TextField id="search" {...params} label="" placeholder="" />
+        )}
+      />
     );
   }
   return <></>;

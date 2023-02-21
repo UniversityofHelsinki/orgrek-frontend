@@ -54,7 +54,10 @@ const palette = {
     main: hyPalette.brand.light,
     dark: hyPalette.brand.mediumDark,
   },
-  secondary: undefined,
+  secondary: {
+    main: hyPalette.brand.light,
+    dark: hyPalette.brand.mediumDark,
+  },
   grey: {
     50: hyPalette.grayscale.light,
     100: hyPalette.grayscale.mediumLight,
@@ -222,14 +225,7 @@ const typography = {
 };
 
 const theme = createTheme({
-  palette: {
-    custom: {
-      main: '#f90',
-      dark: '#f00',
-      light: '#eee',
-      contrastText: 'rgba(0, 0, 0, 0.87)',
-    },
-  },
+  palette,
   typography,
   shape: {
     borderRadius: 0,
