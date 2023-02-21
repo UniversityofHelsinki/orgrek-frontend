@@ -28,11 +28,7 @@ const ReviewDate = (props) => {
           />
         </Grid>
         <Grid xs={4} mt={1}>
-          <Button
-            onClick={changeToCurrentDate}
-            className={'returnTodayButton'}
-            variant="contained"
-          >
+          <Button onClick={changeToCurrentDate} variant="contained">
             {t('return_to_today')}
           </Button>
         </Grid>
