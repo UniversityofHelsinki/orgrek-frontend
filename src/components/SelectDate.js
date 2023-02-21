@@ -58,7 +58,10 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onDayChange: (day) => dispatch(changeDate(day)),
+  onDayChange: (day) => {
+    console.log(day);
+    dispatch(changeDate(day));
+  },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SelectDate);

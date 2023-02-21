@@ -7,6 +7,7 @@ import { fetchSelectableHierarchies } from '../actions/treeAction';
 import { Container, Row, Col } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import MultiSelectHierarchies from './MultiSelectHierarchies';
+import ReviewDate from './ReviewDate';
 
 const Hierarchy = (props) => {
   useEffect(() => {
@@ -26,6 +27,7 @@ const Hierarchy = (props) => {
         <Row>
           <h4>{t('display_date')}</h4>
           <SelectDate />
+          <ReviewDate />
         </Row>
         <Row>
           <h4>{t('search_by_name_or_code')}</h4>
