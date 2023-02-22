@@ -7,7 +7,6 @@ import styled from 'styled-components';
 
 const ContainerDiv = styled.div`
   border: 1px solid lightgrey;
-  border-radius: 5px;
   margin-top: 10px;
 `;
 
