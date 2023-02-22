@@ -29,9 +29,18 @@ const TreeSearch2 = (props) => {
     return uniqueId.toString() === text.toLowerCase();
   };
 
+  const changeSelected = (event, organisationUnit) => {
+    organisationUnit
+      ? props.onSearchResultSelection(
+          props.selectedDay,
+          organisationUnit.uniqueId
+        )
+      : '';
+  };
+
   return (
     <Autocomplete
-      id="free-solo-demo"
+      id="tree-search"
       freeSolo
       options={uniqueOptions}
       getOptionLabel={(option) => option.name || ''}
@@ -40,6 +49,7 @@ const TreeSearch2 = (props) => {
           {option.name}
         </li>
       )}
+      onChange={changeSelected}
       filterOptions={(options, state) => {
         if (state.inputValue.length > 2) {
           return options.filter(
@@ -50,7 +60,9 @@ const TreeSearch2 = (props) => {
         }
         return [];
       }}
-      renderInput={(params) => <TextField {...params} label="freeSolo" />}
+      renderInput={(params) => (
+        <TextField {...params} label={t('search_by_name_or_code')} />
+      )}
     />
   );
 };
