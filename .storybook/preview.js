@@ -15,7 +15,6 @@ import '../src/i18n';
 import '../src/index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-datepicker/dist/react-datepicker.css';
-import 'react-multiple-select-dropdown-lite/dist/index.css';
 
 // Use the same decorators for both stories and docs pages
 const CommonDecorators = ({ children }) => (
