@@ -1,5 +1,4 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import EditButtons from '../EditButtons';
 import NodeValiditySection from './NodeValiditySection';
 import NameSection from './NameSection';
@@ -17,14 +16,8 @@ import useFavorableName from '../../hooks/useFavorableName';
 import useFetchNodeDetails from '../../hooks/useFetchNodeDetails';
 
 const NodeDetails = () => {
-  const editMode = useSelector((state) => state.editModeReducer.edit);
   useFetchNodeDetails();
   const title = useFavorableName();
-
-  // Temporarily use legacy NodeDetails as edit view until it can be removed
-  if (editMode) {
-    return <NodeDetails />;
-  }
 
   return (
     <div>
