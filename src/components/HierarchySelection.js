@@ -74,7 +74,12 @@ const HierarchySelection = (props) => {
           </li>
         )}
         renderInput={(params) => (
-          <TextField id="search" {...params} label="" placeholder="" />
+          <TextField
+            id="search"
+            {...params}
+            label={t('units')}
+            placeholder=""
+          />
         )}
       />
     );
