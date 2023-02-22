@@ -2,9 +2,9 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import Tree from './Tree';
 import TreeSearch from './TreeSearch';
-import SelectDate from './SelectDate';
+import ReviewDate from './ReviewDate';
 import { fetchSelectableHierarchies } from '../actions/treeAction';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Col, Container, Row } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import HierarchySelection from './HierarchySelection';
 
@@ -29,7 +29,9 @@ const Hierarchy = (props) => {
         </Row>
         <Row>
           <h4>{t('display_date')}</h4>
-          <SelectDate />
+          <Col>
+            <ReviewDate />
+          </Col>
         </Row>
         <Row>
           <h4>{t('search_by_name_or_code')}</h4>

@@ -222,6 +222,19 @@ const typography = {
     letterSpacing: 0,
     color: hyPalette.grayscale.dark,
   },
+  navigationLink: {
+    fontFamily: openSans,
+    fontSize: 12,
+    fontWeight: 700,
+    lineHeight: 2,
+    letterSpacing: -0.1,
+    color: hyPalette.grayscale.white,
+    textDecoration: 'none',
+    '&:hover': {
+      color: hyPalette.grayscale.white,
+      textDecoration: 'underline',
+    },
+  },
 };
 
 const theme = createTheme({
