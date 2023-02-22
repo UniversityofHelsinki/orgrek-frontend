@@ -7,6 +7,7 @@ import Typography from '@mui/material/Typography';
 import ExternalLinkIcon from '../components/icons/ExternalLink';
 import Box from '@mui/material/Box';
 import { Container } from 'react-bootstrap';
+import { visuallyHidden } from '@mui/utils';
 
 const Footer = () => {
   const { t } = useTranslation();
@@ -19,7 +20,7 @@ const Footer = () => {
               <HYLogo />
             </Box>
           </Grid2>
-          <Grid2 xs={12} sm={3} md={3} lg={2} pb={2}>
+          <Grid2 xs={12} sm={3} md={3} lg={2}>
             <Typography
               variant={'body1'}
               color={'common.white'}
@@ -37,7 +38,7 @@ const Footer = () => {
               {t('hy_switchboard')}
             </Typography>
           </Grid2>
-          <Grid2 xs={12} sm={1} md={1} lg={1}></Grid2>
+          <Grid2 xs={12} sm={1} md={1} lg={1} pt={2}></Grid2>
           <Grid2 xs={12} sm={6} md={5} lg={3}>
             <Link
               href={t('hy_contact_info_link')}
@@ -45,10 +46,15 @@ const Footer = () => {
               rel="noreferrer noopener"
               variant={'navigationLink'}
               color={'common.white'}
+              sx={{ textDecoration: 'none' }}
             >
-              {t('hy_contact_info')}{' '}
-              <span className="screen-reader-only">{t('open_in_new_tab')}</span>
-              <ExternalLinkIcon color={'inherit'} fontSize={'inherit'} />
+              {t('hy_contact_info')}
+              <Box sx={visuallyHidden}>{t('open_in_new_tab')}</Box>
+              <ExternalLinkIcon
+                sx={{ ml: 0.5 }}
+                color={'inherit'}
+                fontSize={'inherit'}
+              />
             </Link>
             <br />
             <Link
@@ -59,9 +65,13 @@ const Footer = () => {
               color={'common.white'}
               sx={{ textDecoration: 'none' }}
             >
-              {t('hy_terms_of_use')}{' '}
-              <span className="screen-reader-only">{t('open_in_new_tab')}</span>
-              <ExternalLinkIcon color={'inherit'} fontSize={'inherit'} />
+              {t('hy_terms_of_use')}
+              <Box sx={visuallyHidden}>{t('open_in_new_tab')}</Box>
+              <ExternalLinkIcon
+                sx={{ ml: 0.5 }}
+                color={'inherit'}
+                fontSize={'inherit'}
+              />
             </Link>
             <br />
             <Link
@@ -70,10 +80,15 @@ const Footer = () => {
               rel="noreferrer noopener"
               variant={'navigationLink'}
               color={'common.white'}
+              sx={{ textDecoration: 'none' }}
             >
-              {t('hy_organisation_instructions')}{' '}
-              <span className="screen-reader-only">{t('open_in_new_tab')}</span>
-              <ExternalLinkIcon color={'inherit'} fontSize={'inherit'} />
+              {t('hy_organisation_instructions')}
+              <Box sx={visuallyHidden}>{t('open_in_new_tab')}</Box>
+              <ExternalLinkIcon
+                sx={{ ml: 0.5 }}
+                color={'inherit'}
+                fontSize={'inherit'}
+              />
             </Link>
             <br />
             <Link
@@ -82,10 +97,15 @@ const Footer = () => {
               rel="noreferrer noopener"
               variant={'navigationLink'}
               color={'common.white'}
+              sx={{ textDecoration: 'none' }}
             >
-              {t('hy_accessibility_statement')}{' '}
-              <span className="screen-reader-only">{t('open_in_new_tab')}</span>
-              <ExternalLinkIcon color={'inherit'} fontSize={'inherit'} />
+              {t('hy_accessibility_statement')}
+              <Box sx={visuallyHidden}>{t('open_in_new_tab')}</Box>
+              <ExternalLinkIcon
+                sx={{ ml: 0.5 }}
+                color={'inherit'}
+                fontSize={'inherit'}
+              />
             </Link>
           </Grid2>
           <Grid2 xs={12} sm={0} md={1} lg={5}></Grid2>
