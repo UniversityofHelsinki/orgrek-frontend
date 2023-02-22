@@ -22,8 +22,6 @@ const TreeSearch = (props) => {
     ...new Map(options.map((item) => [item['uniqueId'], item])).values(),
   ];
 
-  console.log(uniqueOptions);
-
   const nameMatches = (name, text) => {
     return name.toLowerCase().indexOf(text.toLowerCase()) !== -1;
   };
