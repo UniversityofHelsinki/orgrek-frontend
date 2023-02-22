@@ -9,7 +9,6 @@ const ContainerDiv = styled.div`
   border: 1px solid lightgrey;
   border-radius: 5px;
   margin-top: 10px;
-  background-color: #f6f6f6;
 `;
 
 const traverseTree = (current, target) => {
