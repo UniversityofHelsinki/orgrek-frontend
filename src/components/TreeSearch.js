@@ -31,6 +31,8 @@ const TreeSearch = (props) => {
     return uniqueId.toString() === text.toLowerCase();
   };
 
+  console.log(options);
+
   return (
     <Typeahead
       data-testid="treesearch"

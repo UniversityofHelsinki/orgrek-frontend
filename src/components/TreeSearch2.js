@@ -34,7 +34,7 @@ const TreeSearch2 = (props) => {
       id="free-solo-demo"
       freeSolo
       options={uniqueOptions}
-      getOptionLabel={(option) => option.name}
+      getOptionLabel={(option) => option.name || ''}
       renderOption={(props, option) => (
         <li {...props} key={`${option.name}`}>
           {option.name}
@@ -42,8 +42,10 @@ const TreeSearch2 = (props) => {
       )}
       filterOptions={(options, state) => {
         if (state.inputValue.length > 2) {
-          return options.filter((option) =>
-            nameMatches(option.name, state.inputValue)
+          return options.filter(
+            (option) =>
+              nameMatches(option.name, state.inputValue) ||
+              uniqueIdMatches(option.uniqueId, state.inputValue)
           );
         }
         return [];
