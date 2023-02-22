@@ -1,20 +1,15 @@
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
-import { Typeahead } from 'react-bootstrap-typeahead';
-import { useTranslation } from 'react-i18next';
-import { selectNameVersion, flattenTree } from '../actions/utilAction';
 import { fetchNode } from '../actions/nodeAction';
+import { connect } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import Autocomplete from '@mui/material/Autocomplete';
+import { Checkbox } from '@mui/material';
+import TextField from '@mui/material/TextField';
+import Box from '@mui/material/Box';
 
 const TreeSearch = (props) => {
   const { t, i18n } = useTranslation();
   const [singleSelections, setSingleSelections] = useState([]);
-
-  const handleChange = (value) => {
-    setSingleSelections(value);
-    value.length > 0
-      ? props.onSearchResultSelection(props.selectedDay, value[0].uniqueId)
-      : false;
-  };
 
   const flatten = (current) =>
     current.reduce((a, c) => [...a, c, ...flatten(c.children)], []);
@@ -23,32 +18,53 @@ const TreeSearch = (props) => {
     ? flatten(props.tree[language].children)
     : [];
 
+  let uniqueOptions = [
+    ...new Map(options.map((item) => [item['uniqueId'], item])).values(),
+  ];
+
+  console.log(uniqueOptions);
+
   const nameMatches = (name, text) => {
     return name.toLowerCase().indexOf(text.toLowerCase()) !== -1;
   };
-
   const uniqueIdMatches = (uniqueId, text) => {
     return uniqueId.toString() === text.toLowerCase();
   };
 
-  console.log(options);
+  const changeSelected = (event, organisationUnit) => {
+    organisationUnit
+      ? props.onSearchResultSelection(
+          props.selectedDay,
+          organisationUnit.uniqueId
+        )
+      : '';
+  };
 
   return (
-    <Typeahead
-      data-testid="treesearch"
-      id="code-and-name-search"
-      labelKey={(option) => `${option.name}`}
-      filterBy={(option, props) => {
-        return nameMatches(option.name, props.text) ||
-          uniqueIdMatches(option.uniqueId, props.text)
-          ? true
-          : false;
+    <Autocomplete
+      id="tree-search"
+      freeSolo
+      options={uniqueOptions}
+      getOptionLabel={(option) => option.name || ''}
+      renderOption={(props, option) => (
+        <li {...props} key={`${option.name}`}>
+          {option.name}
+        </li>
+      )}
+      onChange={changeSelected}
+      filterOptions={(options, state) => {
+        if (state.inputValue.length > 2) {
+          return options.filter(
+            (option) =>
+              nameMatches(option.name, state.inputValue) ||
+              uniqueIdMatches(option.uniqueId, state.inputValue)
+          );
+        }
+        return [];
       }}
-      onChange={(value) => handleChange(value)}
-      options={options}
-      placeholder={t('type_three_char_to_start_search')}
-      selected={singleSelections}
-      minLength={3}
+      renderInput={(params) => (
+        <TextField {...params} label={t('type_three_char_to_start_search')} />
+      )}
     />
   );
 };

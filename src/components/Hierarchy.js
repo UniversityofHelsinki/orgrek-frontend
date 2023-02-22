@@ -7,7 +7,6 @@ import { fetchSelectableHierarchies } from '../actions/treeAction';
 import { Container, Row, Col } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import HierarchySelection from './HierarchySelection';
-import TreeSearch2 from './TreeSearch2';
 
 const Hierarchy = (props) => {
   useEffect(() => {
@@ -35,7 +34,6 @@ const Hierarchy = (props) => {
         <Row>
           <h4>{t('search_by_name_or_code')}</h4>
           <TreeSearch />
-          <TreeSearch2 />
         </Row>
         <Row>
           <Tree />
