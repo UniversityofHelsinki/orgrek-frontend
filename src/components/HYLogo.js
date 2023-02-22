@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 const HyLogo = () => {
   const { t } = useTranslation();
   return (
-    <svg viewBox="0 0 32 32">
+    <svg role="img" viewBox="0 0 32 32">
       <title>{t('hy_logo')}</title>
       <rect x="14" fill="#fff" width="3" height="3" />
       <rect x="14" y="28" fill="#fff" width="3" height="3" />

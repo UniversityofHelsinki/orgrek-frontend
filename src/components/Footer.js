@@ -6,7 +6,7 @@ import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 import ExternalLinkIcon from '../components/icons/ExternalLink';
 import Box from '@mui/material/Box';
-import { Container } from 'react-bootstrap';
+import Container from '@mui/material/Container';
 import { visuallyHidden } from '@mui/utils';
 
 const Footer = () => {
