@@ -18,13 +18,13 @@ const TreeSearch2 = (props) => {
     ? flatten(props.tree[language].children)
     : [];
 
-  const nameMatches = (name, text) => {
-    console.log(name.toLowerCase());
-    console.log(text.toLowerCase());
-    console.log('matches : ' + name.toLowerCase().includes(text.toLowerCase()));
-    return name.toLowerCase().includes(text.toLowerCase());
-  };
+  let uniqueOptions = [
+    ...new Map(options.map((item) => [item['uniqueId'], item])).values(),
+  ];
 
+  const nameMatches = (name, text) => {
+    return name.toLowerCase().indexOf(text.toLowerCase()) !== -1;
+  };
   const uniqueIdMatches = (uniqueId, text) => {
     return uniqueId.toString() === text.toLowerCase();
   };
@@ -33,10 +33,10 @@ const TreeSearch2 = (props) => {
     <Autocomplete
       id="free-solo-demo"
       freeSolo
-      options={options}
+      options={uniqueOptions}
       getOptionLabel={(option) => option.name}
       renderOption={(props, option) => (
-        <li {...props} key={option.uniqueId}>
+        <li {...props} key={`${option.name}`}>
           {option.name}
         </li>
       )}
@@ -46,8 +46,7 @@ const TreeSearch2 = (props) => {
             nameMatches(option.name, state.inputValue)
           );
         }
-        console.log(options);
-        return options;
+        return [];
       }}
       renderInput={(params) => <TextField {...params} label="freeSolo" />}
     />
