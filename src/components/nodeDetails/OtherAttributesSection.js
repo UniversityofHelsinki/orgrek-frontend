@@ -11,7 +11,7 @@ const OtherAttributesSection = () => {
 
   const columns = [
     { label: t('attribute'), render: (item) => t(item.key) },
-    { label: t('value'), render: (item) => item.value },
+    { label: t('value'), render: (item) => t(item.value) },
     {
       label: t('valid_dates'),
       render: (item) => (
