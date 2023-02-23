@@ -13,6 +13,10 @@ import {
 import { useEffect } from 'react';
 import { datesOverlap } from '../actions/utilAction';
 
+/**
+ * Fetches node attributes when the component using this hook is rendered
+ * first time or when the selected node changes.
+ */
 const useFetchNodeDetails = () => {
   const dispatch = useDispatch();
   const { node, selectedDay, showHistory, showComing, selectedHierarchy } =
