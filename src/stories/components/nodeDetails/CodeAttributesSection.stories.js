@@ -1,8 +1,8 @@
 import { withMockStore, withNode } from '../../../mockStore';
-import CodesetSection from '../../../components/nodeDetails/CodesetSection';
+import CodeAttributesSection from '../../../components/nodeDetails/CodeAttributesSection';
 
 export default {
-  component: CodesetSection,
+  component: CodeAttributesSection,
 };
 
 export const Default = {

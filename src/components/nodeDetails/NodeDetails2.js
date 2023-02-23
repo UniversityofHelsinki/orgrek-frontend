@@ -3,7 +3,7 @@ import EditButtons from '../EditButtons';
 import NodeValiditySection from './NodeValiditySection';
 import NameSection from './NameSection';
 import DisplayNameSection from './DisplayNameSection';
-import CodesetSection from './CodesetSection';
+import CodeAttributesSection from './CodeAttributesSection';
 import UnitTypeSection from './UnitTypeSection';
 import ParentsSection from './ParentsSection';
 import ChildrenSection from './ChildrenSection';
@@ -32,7 +32,7 @@ const NodeDetails = () => {
         <NodeValiditySection />
         <NameSection />
         <DisplayNameSection />
-        <CodesetSection />
+        <CodeAttributesSection />
         <UnitTypeSection />
         <ParentsSection />
         <ChildrenSection />

@@ -6,7 +6,7 @@ import { codeAttributes as codes } from '../../constants/variables';
 import useAttributes from '../../hooks/useAttributes';
 import Validity from '../attributes/Validity';
 
-const CodesetSection = () => {
+const CodeAttributesSection = () => {
   const { t } = useTranslation();
   const { codeAttributes } = useAttributes();
 
@@ -59,4 +59,4 @@ const CodesetSection = () => {
   );
 };
 
-export default CodesetSection;
+export default CodeAttributesSection;
