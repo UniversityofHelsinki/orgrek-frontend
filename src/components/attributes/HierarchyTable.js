@@ -31,10 +31,13 @@ const HierarchyTable = ({ data, ...props }) => {
     },
   ];
 
+  const keyFn = (item) =>
+    `${item.unit}-${item.hierarchy}-${item.startDate}-${item.endDate}`;
+
   const hierarchyData = data
     .map((item) =>
       item.hierarchies.map((hierarchy, index) => ({
-        unit: index === 0 && item.fullName,
+        unit: item.fullName,
         // Unit name cell spans all hierarchies
         rowSpan: index === 0 && item.hierarchies.length,
         ...hierarchy,
@@ -42,7 +45,14 @@ const HierarchyTable = ({ data, ...props }) => {
     )
     .flat();
 
-  return <AttributesTable columns={columns} data={hierarchyData} {...props} />;
+  return (
+    <AttributesTable
+      columns={columns}
+      keyFn={keyFn}
+      data={hierarchyData}
+      {...props}
+    />
+  );
 };
 
 export default HierarchyTable;
