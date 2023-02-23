@@ -22,6 +22,8 @@ export const createNodeState = ({
   nodeAttributes,
   nodeAttributesHistory,
   nodeAttributesFuture,
+  nodePredecessors,
+  nodeSuccessors,
   nodeDisplayNames,
 } = {}) => ({
   nodeAttributes: nodeAttributes || [
@@ -92,12 +94,12 @@ export const createNodeState = ({
   ],
   nodeAttributesHistory: nodeAttributesHistory || null,
   nodeAttributesFuture: nodeAttributesFuture || null,
-  nodePredecessors: {
+  nodePredecessors: nodePredecessors || {
     sv: [],
     fi: [],
     en: [],
   },
-  nodeSuccessors: {
+  nodeSuccessors: nodeSuccessors || {
     fi: [],
     sv: [],
     en: [],

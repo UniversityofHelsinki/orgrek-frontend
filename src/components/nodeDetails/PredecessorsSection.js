@@ -22,16 +22,21 @@ const PredecessorsSection = () => {
     {
       label: t('predecessor_edge_valid'),
       render: (item) => (
-        <Validity startDate={item.edgeStartDate} endDate={item.edgeStartDate} />
+        <Validity startDate={item.edgeStartDate} endDate={item.edgeEndDate} />
       ),
     },
   ];
 
   const data = predecessors[contentLanguage] || [];
   const title = t('predecessors');
+  const empty = data.length === 0;
 
   return (
-    <EditableAccordion title={title} defaultExpanded>
+    <EditableAccordion
+      title={title}
+      empty={empty}
+      placeholder={t('predecessors.empty')}
+    >
       <AttributesTable columns={columns} data={data} summary={title} />
     </EditableAccordion>
   );
