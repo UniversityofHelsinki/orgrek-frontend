@@ -12,9 +12,14 @@ const ParentsSection = () => {
 
   const data = parents[contentLanguage] || [];
   const title = t('upper_units');
+  const empty = data.length === 0;
 
   return (
-    <EditableAccordion title={title} defaultExpanded>
+    <EditableAccordion
+      title={title}
+      empty={empty}
+      placeholder={t('upperUnits.empty')}
+    >
       <HierarchyTable data={data} summary={title} />
     </EditableAccordion>
   );

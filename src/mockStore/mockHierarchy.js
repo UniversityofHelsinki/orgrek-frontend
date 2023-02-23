@@ -9,19 +9,21 @@ const initialState = {
   childrenHistory: { fi: [], sv: [], en: [] },
 };
 
+const defaultHierarchies = [
+  'tutkimus',
+  'henkilosto',
+  'toiminnanohjaus',
+  'opetus',
+  'history',
+  'talous',
+];
+
 export const createHierarchies = (
-  hierarchies = [
-    'tutkimus',
-    'henkilosto',
-    'toiminnanohjaus',
-    'opetus',
-    'history',
-    'talous',
-  ],
+  hierarchies = null,
   startDate = null,
   endDate = null
 ) =>
-  hierarchies.map((hierarchy) => ({
+  (hierarchies || defaultHierarchies).map((hierarchy) => ({
     hierarchy,
     startDate,
     endDate,
