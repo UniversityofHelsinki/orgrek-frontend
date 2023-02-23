@@ -38,9 +38,14 @@ const NameSection = () => {
     : [];
 
   const title = t('name_info');
+  const empty = nameInfoDataOrderedByLanguage.length === 0;
 
   return (
-    <EditableAccordion title={title} defaultExpanded>
+    <EditableAccordion
+      title={title}
+      empty={empty}
+      placeholder={t('nameInfo.empty')}
+    >
       <AttributesTable data={nameInfoDataOrderedByLanguage} summary={title} />
     </EditableAccordion>
   );
