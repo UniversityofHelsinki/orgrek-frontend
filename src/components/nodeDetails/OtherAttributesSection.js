@@ -20,9 +20,14 @@ const OtherAttributesSection = () => {
     },
   ];
   const title = t('other_attributes');
+  const empty = otherAttributes.length === 0;
 
   return (
-    <EditableAccordion title={title} defaultExpanded>
+    <EditableAccordion
+      title={title}
+      empty={empty}
+      placeholder={t('nodeDetailsSection.noAttributes')}
+    >
       <AttributesTable
         columns={columns}
         data={otherAttributes}
