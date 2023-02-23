@@ -27,14 +27,30 @@ const AttributesTable = ({ columns, data, summary, keyFn }) => {
   const cols = columns || defaultColumns;
   const getKey = keyFn || defaultKeyFn;
 
-  const renderedHeaders = cols.map((column) => (
+  const renderHeader = (column) => (
     <TableCell key={column.label}>{column.label}</TableCell>
-  ));
+  );
+
+  const renderCell = (column, item) => (
+    <TableCell key={column.label}>{column.render(item)}</TableCell>
+  );
+
+  const renderedHeaders = cols.map((column) => {
+    if (column.renderHeader) {
+      return column.renderHeader(column);
+    } else {
+      return renderHeader(column);
+    }
+  });
 
   const renderedRows = data.map((item) => {
-    const renderedCells = cols.map((column) => (
-      <TableCell key={column.label}>{column.render(item)}</TableCell>
-    ));
+    const renderedCells = cols.map((column) => {
+      if (column.renderCell) {
+        return column.renderCell(column, item);
+      } else {
+        return renderCell(column, item);
+      }
+    });
 
     return <TableRow key={getKey(item)}>{renderedCells}</TableRow>;
   });
