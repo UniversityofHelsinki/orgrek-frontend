@@ -77,3 +77,15 @@ export const withUser = (user) => withMockStore({ ur: { user } });
  */
 export const withNode = (nodeState) =>
   withMockStore({ nrd: createNodeState(nodeState) });
+
+/**
+ * For convenience a decorator that mocks Redux store with the given hierarchy
+ * data.
+ *
+ * Use this decorator when you need to mock only the hierarchy reducer state.
+ * Alternatively, withMockStore decorator can mock the whole state.
+ *
+ * @param hierarchyState overrides hierarchy reducer initial state
+ */
+export const withHierarchy = (hierarchyState) =>
+  withMockStore({ hr: { ...hierarchyState } });
