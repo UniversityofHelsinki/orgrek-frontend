@@ -30,8 +30,10 @@ const useAttributes = () => {
       nodeAttributesFuture
     );
   } else if (showHistory && nodeAttributesHistory) {
+    // History contains also current data
     attributeData = nodeAttributesHistory;
   } else if (showComing && nodeAttributesFuture) {
+    // Future contains also current data
     attributeData = nodeAttributesFuture;
   }
 
