@@ -21,9 +21,14 @@ const DisplayNameSection = () => {
     }));
 
   const title = t('display_name_info');
+  const empty = data.length === 0;
 
   return (
-    <EditableAccordion title={title} defaultExpanded>
+    <EditableAccordion
+      title={title}
+      empty={empty}
+      placeholder={t('displayName.empty')}
+    >
       <AttributesTable data={data} summary={title} />
     </EditableAccordion>
   );

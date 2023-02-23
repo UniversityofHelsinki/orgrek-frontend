@@ -22,6 +22,7 @@ export const createNodeState = ({
   nodeAttributes,
   nodeAttributesHistory,
   nodeAttributesFuture,
+  nodeDisplayNames,
 } = {}) => ({
   nodeAttributes: nodeAttributes || [
     {
@@ -101,7 +102,7 @@ export const createNodeState = ({
     sv: [],
     en: [],
   },
-  nodeDisplayNames: {
+  nodeDisplayNames: nodeDisplayNames || {
     sv: [
       {
         nodeId: '4820',
