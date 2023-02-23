@@ -8,8 +8,18 @@ const NodeValiditySection = () => {
   const { t } = useTranslation();
   const node = useNode();
 
+  if (!node) {
+    return null;
+  }
+
+  const empty = !node.startDate && !node.endDate;
+
   return (
-    <EditableAccordion title={t('valid_dates')} defaultExpanded>
+    <EditableAccordion
+      title={t('valid_dates')}
+      empty={empty}
+      placeholder={<Validity />}
+    >
       <Validity startDate={node.startDate} endDate={node.endDate} />
     </EditableAccordion>
   );
