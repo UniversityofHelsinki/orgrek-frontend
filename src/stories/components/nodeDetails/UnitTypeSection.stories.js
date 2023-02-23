@@ -1,4 +1,4 @@
-import { createNodeState, withMockStore } from '../../../mockStore';
+import { withNode } from '../../../mockStore';
 import UnitTypeSection from '../../../components/nodeDetails/UnitTypeSection';
 
 export default {
@@ -6,5 +6,22 @@ export default {
 };
 
 export const Default = {
-  decorators: [withMockStore({ nrd: createNodeState() })],
+  decorators: [
+    withNode({
+      nodeAttributes: [
+        {
+          id: 1001,
+          nodeId: '1',
+          key: 'type',
+          value: 'tiedekunta',
+          startDate: null,
+          endDate: null,
+        },
+      ],
+    }),
+  ],
+};
+
+export const Empty = {
+  decorators: [withNode()],
 };
