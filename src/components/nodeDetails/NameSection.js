@@ -3,6 +3,7 @@ import EditableAccordion from '../EditableAccordion';
 import { useTranslation } from 'react-i18next';
 import AttributesTable from '../attributes/AttributesTable';
 import useAttributes from '../../hooks/useAttributes';
+import Validity from '../attributes/Validity';
 
 const NameSection = () => {
   const { t } = useTranslation();
@@ -37,6 +38,17 @@ const NameSection = () => {
     ? orderNameAttributesByLanguage(nameAttributes)
     : [];
 
+  const columns = [
+    { label: t('text_language_header'), render: (item) => t(item.key) },
+    { label: t('name'), render: (item) => item.value },
+    {
+      label: t('valid_dates'),
+      render: (item) => (
+        <Validity startDate={item.startDate} endDate={item.endDate} />
+      ),
+    },
+  ];
+
   const title = t('name_info');
   const empty = nameInfoDataOrderedByLanguage.length === 0;
 
@@ -46,7 +58,11 @@ const NameSection = () => {
       empty={empty}
       placeholder={t('nameInfo.empty')}
     >
-      <AttributesTable data={nameInfoDataOrderedByLanguage} summary={title} />
+      <AttributesTable
+        columns={columns}
+        data={nameInfoDataOrderedByLanguage}
+        summary={title}
+      />
     </EditableAccordion>
   );
 };

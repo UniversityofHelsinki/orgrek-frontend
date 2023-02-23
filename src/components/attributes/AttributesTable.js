@@ -12,8 +12,8 @@ const AttributesTable = ({ columns, data, summary, keyFn }) => {
   const { t } = useTranslation();
 
   const defaultColumns = [
-    { label: t('text_language_header'), render: (item) => t(item.key) },
-    { label: t('name'), render: (item) => t(item.value) },
+    { label: t('attribute'), render: (item) => t(item.key) },
+    { label: t('value'), render: (item) => t(item.value) },
     {
       label: t('valid_dates'),
       render: (item) => (

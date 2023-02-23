@@ -3,6 +3,7 @@ import EditableAccordion from '../EditableAccordion';
 import { useTranslation } from 'react-i18next';
 import AttributesTable from '../attributes/AttributesTable';
 import { useSelector } from 'react-redux';
+import Validity from '../attributes/Validity';
 
 const DisplayNameSection = () => {
   const { t } = useTranslation();
@@ -20,6 +21,17 @@ const DisplayNameSection = () => {
       value: dn.name,
     }));
 
+  const columns = [
+    { label: t('text_language_header'), render: (item) => t(item.key) },
+    { label: t('name'), render: (item) => item.value },
+    {
+      label: t('valid_dates'),
+      render: (item) => (
+        <Validity startDate={item.startDate} endDate={item.endDate} />
+      ),
+    },
+  ];
+
   const title = t('display_name_info');
   const empty = data.length === 0;
 
@@ -29,7 +41,7 @@ const DisplayNameSection = () => {
       empty={empty}
       placeholder={t('displayName.empty')}
     >
-      <AttributesTable data={data} summary={title} />
+      <AttributesTable columns={columns} data={data} summary={title} />
     </EditableAccordion>
   );
 };
