@@ -14,6 +14,7 @@ import Typography from '@mui/material/Typography';
 import IfAdmin from '../auth/IfAdmin';
 import useFavorableName from '../../hooks/useFavorableName';
 import useFetchNodeDetails from '../../hooks/useFetchNodeDetails';
+import Box from '@mui/material/Box';
 
 const NodeDetails = () => {
   useFetchNodeDetails();
@@ -24,8 +25,8 @@ const NodeDetails = () => {
       <IfAdmin>
         <EditButtons modifiedParents={[]} />
       </IfAdmin>
-      <main className="right-side">
-        <Typography variant="h1" component="h2" mt={5} mb={5}>
+      <Box component="main" pt={8} pb={8} overflow="scroll" maxHeight="100vh">
+        <Typography variant="h1" component="h2" mb={5}>
           {title}
         </Typography>
         <NodeValiditySection />
@@ -38,7 +39,7 @@ const NodeDetails = () => {
         <PredecessorsSection />
         <SuccessorsSection />
         <OtherAttributesSection />
-      </main>
+      </Box>
     </div>
   );
 };
