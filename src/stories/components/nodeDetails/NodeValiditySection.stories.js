@@ -1,4 +1,4 @@
-import { createNodeState, withMockStore } from '../../../mockStore';
+import { withNode } from '../../../mockStore';
 import NodeValiditySection from '../../../components/nodeDetails/NodeValiditySection';
 
 export default {
@@ -6,13 +6,9 @@ export default {
 };
 
 export const Default = {
-  decorators: [
-    withMockStore({
-      nrd: createNodeState({ node: { startDate: '2000-01-01' } }),
-    }),
-  ],
+  decorators: [withNode({ node: { startDate: '2000-01-01' } })],
 };
 
 export const Empty = {
-  decorators: [withMockStore({ nrd: createNodeState() })],
+  decorators: [withNode()],
 };

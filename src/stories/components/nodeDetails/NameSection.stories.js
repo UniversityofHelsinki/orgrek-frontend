@@ -1,4 +1,4 @@
-import { createNodeState, withMockStore } from '../../../mockStore';
+import { createNodeState, withMockStore, withNode } from '../../../mockStore';
 import NameSection from '../../../components/nodeDetails/NameSection';
 
 export default {
@@ -7,41 +7,39 @@ export default {
 
 export const Default = {
   decorators: [
-    withMockStore({
-      nrd: createNodeState({
-        nodeAttributes: [
-          {
-            id: 4826,
-            nodeId: '4820',
-            key: 'name_fi',
-            value: 'Tietotekniikkaratkaisut',
-            startDate: null,
-            endDate: null,
-          },
-          {
-            id: 4822,
-            nodeId: '4820',
-            key: 'name_sv',
-            value: 'Datatekniklösningar',
-            startDate: null,
-            endDate: null,
-          },
-          {
-            id: 4821,
-            nodeId: '4820',
-            key: 'name_en',
-            value: 'IT Solutions',
-            startDate: null,
-            endDate: null,
-          },
-        ],
-      }),
+    withNode({
+      nodeAttributes: [
+        {
+          id: 4826,
+          nodeId: '4820',
+          key: 'name_fi',
+          value: 'Tietotekniikkaratkaisut',
+          startDate: null,
+          endDate: null,
+        },
+        {
+          id: 4822,
+          nodeId: '4820',
+          key: 'name_sv',
+          value: 'Datatekniklösningar',
+          startDate: null,
+          endDate: null,
+        },
+        {
+          id: 4821,
+          nodeId: '4820',
+          key: 'name_en',
+          value: 'IT Solutions',
+          startDate: null,
+          endDate: null,
+        },
+      ],
     }),
   ],
 };
 
 export const Empty = {
-  decorators: [withMockStore()],
+  decorators: [withNode({ nodeAttributes: [] })],
 };
 
 export const ShowHistory = {

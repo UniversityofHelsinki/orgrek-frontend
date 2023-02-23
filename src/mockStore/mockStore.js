@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { treeReducer } from './mockTree';
 import { hierarchyReducer } from './mockHierarchy';
-import { nodeReducer } from './mockNode';
+import { createNodeState, nodeReducer } from './mockNode';
 import { userReducer } from './mockUser';
 import { dayReducer } from './mockDay';
 import { nodeDetailsViewReducer } from './mockNodeDetailsView';
@@ -58,11 +58,22 @@ export const withMockStore = (state) => {
 };
 
 /**
- * For convience decorator that mocks Redux store with the given user.
+ * For convenience a decorator that mocks Redux store with the given user.
  *
  * Use this decorator when you need to mock only the current user.
- * As alternative, withMockStore decorator can mock the whole state.
+ * Alternatively, withMockStore decorator can mock the whole state.
  *
  * @param user current user
  */
 export const withUser = (user) => withMockStore({ ur: { user } });
+
+/**
+ * For convenience a decorator that mocks Redux store with the given node data.
+ *
+ * Use this decorator when you need to mock only the node reducer state.
+ * Alternatively, withMockStore decorator can mock the whole state.
+ *
+ * @param nodeState overrides node reducer initial state
+ */
+export const withNode = (nodeState) =>
+  withMockStore({ nrd: createNodeState(nodeState) });
