@@ -22,16 +22,21 @@ const SuccessorsSection = () => {
     {
       label: t('successor_edge_valid'),
       render: (item) => (
-        <Validity startDate={item.edgeStartDate} endDate={item.edgeStartDate} />
+        <Validity startDate={item.edgeStartDate} endDate={item.edgeEndDate} />
       ),
     },
   ];
 
   const data = successors[contentLanguage] || [];
   const title = t('successors');
+  const empty = data.length === 0;
 
   return (
-    <EditableAccordion title={title} defaultExpanded>
+    <EditableAccordion
+      title={title}
+      empty={empty}
+      placeholder={t('successors.empty')}
+    >
       <AttributesTable columns={columns} data={data} summary={title} />
     </EditableAccordion>
   );
