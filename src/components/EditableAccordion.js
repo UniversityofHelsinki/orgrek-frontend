@@ -2,17 +2,28 @@ import React, { useState } from 'react';
 import { Accordion, AccordionDetails, AccordionSummary } from './Accordion';
 import Typography from '@mui/material/Typography';
 import { useTranslation } from 'react-i18next';
+import Placeholder from './Placeholder';
 
 const EditableAccordion = ({
   children,
   title,
+  empty = false,
+  placeholder,
   modified = false,
-  defaultExpanded = false,
   onChange = () => {},
   ...props
 }) => {
   const { t } = useTranslation();
-  const [expanded, setExpanded] = useState(defaultExpanded);
+
+  // TODO: initialState of expanded should be !empty
+  // However currently it does work work correctly because when changing
+  // the current node, this component gets rendered first time with data of the
+  // previous node, so the initialState would reflect the emptiness of that
+  // node. To fix this, there should be a way to check if node details are being
+  // currently fetched, and only render this component after the current data
+  // is available. Migrating to Redux Toolkit Query would probably make it
+  // much easier.
+  const [expanded, setExpanded] = useState(true);
 
   const handleChange = (event, newValue) => {
     if (modified) {
@@ -52,7 +63,11 @@ const EditableAccordion = ({
       onChange={handleChange}
     >
       {summary}
-      <AccordionDetails>{children}</AccordionDetails>
+      <AccordionDetails>
+        <Placeholder empty={empty} placeholder={placeholder}>
+          {children}
+        </Placeholder>
+      </AccordionDetails>
     </Accordion>
   );
 };

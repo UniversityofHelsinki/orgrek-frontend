@@ -20,12 +20,21 @@ export const Default = {
   args: {
     title: 'Title',
     modified: false,
-    defaultExpanded: false,
+    empty: false,
     disabled: false,
   },
   render: (args) => (
     <EditableAccordion {...args}>Editable content</EditableAccordion>
   ),
+};
+
+export const Empty = {
+  ...Default,
+  args: {
+    ...Default.args,
+    empty: true,
+    placeholder: 'Empty placeholder text',
+  },
 };
 
 export const Modified = {
