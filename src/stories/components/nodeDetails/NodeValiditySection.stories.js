@@ -7,7 +7,9 @@ export default {
 
 export const Default = {
   decorators: [
-    withMockStore({ nrd: createNodeState({ startDate: '2000-01-01' }) }),
+    withMockStore({
+      nrd: createNodeState({ node: { startDate: '2000-01-01' } }),
+    }),
   ],
 };
 
