@@ -35,3 +35,27 @@ export const Default = {
     ],
   },
 };
+
+export const DuplicateKey = {
+  args: {
+    summary: 'Duplicate key and validity',
+    data: [
+      {
+        id: 1001,
+        nodeId: '1',
+        key: 'lyhenne',
+        value: 'value1',
+        startDate: null,
+        endDate: null,
+      },
+      {
+        id: 1001,
+        nodeId: '1',
+        key: 'lyhenne',
+        value: 'value2',
+        startDate: null,
+        endDate: null,
+      },
+    ],
+  },
+};

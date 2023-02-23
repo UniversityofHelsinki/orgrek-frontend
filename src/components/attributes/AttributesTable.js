@@ -22,7 +22,7 @@ const AttributesTable = ({ columns, data, summary, keyFn }) => {
     },
   ];
   const defaultKeyFn = (item) =>
-    `${item.key}-${item.startDate}-${item.endDate}`;
+    `${item.key}-${item.value}-${item.startDate}-${item.endDate}`;
 
   const cols = columns || defaultColumns;
   const getKey = keyFn || defaultKeyFn;
