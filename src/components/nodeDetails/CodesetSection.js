@@ -46,9 +46,14 @@ const CodesetSection = () => {
 
   const data = [...codeAttributes].sort(byCodesAndDates);
   const title = t('codes');
+  const empty = data.length === 0;
 
   return (
-    <EditableAccordion title={title} defaultExpanded>
+    <EditableAccordion
+      title={title}
+      empty={empty}
+      placeholder={t('nodeDetailsSection.noAttributes')}
+    >
       <AttributesTable columns={columns} data={data} summary={title} />
     </EditableAccordion>
   );
