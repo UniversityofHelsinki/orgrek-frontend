@@ -2,12 +2,26 @@ import React from 'react';
 import AttributesTable from './AttributesTable';
 import Validity from './Validity';
 import { useTranslation } from 'react-i18next';
+import TableCell from '@mui/material/TableCell';
 
-const HierarchyTable = (props) => {
+const HierarchyTable = ({ data, ...props }) => {
   const { t } = useTranslation();
 
   const columns = [
-    { label: t('unit'), render: (item) => item.fullName },
+    {
+      label: t('unit'),
+      renderCell: (column, item) =>
+        // Render unit cell only on the first hierarchy row
+        item.rowSpan && (
+          <TableCell
+            key={column.label}
+            rowSpan={item.rowSpan}
+            sx={{ verticalAlign: 'top' }}
+          >
+            {item.unit}
+          </TableCell>
+        ),
+    },
     { label: t('hierarchies'), render: (item) => t(item.hierarchy) },
     {
       label: t('hierarchy_valid'),
@@ -17,7 +31,18 @@ const HierarchyTable = (props) => {
     },
   ];
 
-  return <AttributesTable columns={columns} {...props} />;
+  const hierarchyData = data
+    .map((item) =>
+      item.hierarchies.map((hierarchy, index) => ({
+        unit: index === 0 && item.fullName,
+        // Unit name cell spans all hierarchies
+        rowSpan: index === 0 && item.hierarchies.length,
+        ...hierarchy,
+      }))
+    )
+    .flat();
+
+  return <AttributesTable columns={columns} data={hierarchyData} {...props} />;
 };
 
 export default HierarchyTable;

@@ -9,38 +9,53 @@ export const Default = {
     summary: 'Yläyksiköt',
     data: [
       {
-        id: '840',
-        uniqueId: 46582376,
+        id: '1001',
+        uniqueId: 10000001,
         startDate: null,
         endDate: null,
         hierarchies: [
           {
             hierarchy: 'talous',
-            startDate: '2018-12-31T22:00:00.000+00:00',
+            startDate: '2018-12-31',
             endDate: null,
           },
           {
             hierarchy: 'henkilosto',
-            startDate: '2018-12-31T22:00:00.000+00:00',
+            startDate: '2018-12-31',
             endDate: null,
           },
           {
             hierarchy: 'opetus',
-            startDate: '2018-12-31T22:00:00.000+00:00',
+            startDate: '2018-12-31',
             endDate: null,
           },
           {
             hierarchy: 'tutkimus',
-            startDate: '2018-12-31T22:00:00.000+00:00',
+            startDate: '2018-12-31',
             endDate: null,
           },
           {
             hierarchy: 'toiminnanohjaus',
-            startDate: '2017-12-31T22:00:00.000+00:00',
+            startDate: '2017-12-31',
             endDate: null,
           },
         ],
-        fullName: 'HY, Yhteinen toiminta (YHT)',
+        fullName: 'Alayksikkö 1',
+        language: 'fi',
+      },
+      {
+        id: '1002',
+        uniqueId: 10000002,
+        startDate: null,
+        endDate: null,
+        hierarchies: [
+          {
+            hierarchy: 'talous',
+            startDate: null,
+            endDate: null,
+          },
+        ],
+        fullName: 'Alayksikkö 2',
         language: 'fi',
       },
     ],
