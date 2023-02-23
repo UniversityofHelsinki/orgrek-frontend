@@ -17,7 +17,7 @@ const initialState = {
   },
 };
 
-export const createNodeState = () => ({
+export const createNodeState = (node = {}) => ({
   nodeAttributes: [
     {
       id: 4824,
@@ -161,6 +161,7 @@ export const createNodeState = () => ({
     endDate: null,
     timestamp: '2022-01-18T15:39:54.603+00:00',
     uniqueId: 38919588,
+    ...node,
   },
 });
 
