@@ -17,8 +17,8 @@ const initialState = {
   },
 };
 
-export const createNodeState = (node = {}) => ({
-  nodeAttributes: [
+export const createNodeState = (node = {}, attributes, attributesHistory) => ({
+  nodeAttributes: attributes || [
     {
       id: 4824,
       nodeId: '4820',
@@ -84,7 +84,7 @@ export const createNodeState = (node = {}) => ({
       endDate: null,
     },
   ],
-  nodeAttributesHistory: null,
+  nodeAttributesHistory: attributesHistory || null,
   nodeAttributesFuture: null,
   nodePredecessors: {
     sv: [],
