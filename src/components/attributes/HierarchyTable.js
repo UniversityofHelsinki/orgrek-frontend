@@ -3,6 +3,7 @@ import AttributesTable from './AttributesTable';
 import Validity from './Validity';
 import { useTranslation } from 'react-i18next';
 import TableCell from '@mui/material/TableCell';
+import Link from '../Link';
 
 const HierarchyTable = ({ data, ...props }) => {
   const { t } = useTranslation();
@@ -18,7 +19,7 @@ const HierarchyTable = ({ data, ...props }) => {
             rowSpan={item.rowSpan}
             sx={{ verticalAlign: 'top' }}
           >
-            {item.unit}
+            <Link node={item.uniqueId}>{item.unit}</Link>
           </TableCell>
         ),
     },
