@@ -9,6 +9,9 @@ import {
 
 export default {
   component: NodeDetails,
+  parameters: {
+    layout: 'fullscreen',
+  },
 };
 
 export const AdminRole = {
