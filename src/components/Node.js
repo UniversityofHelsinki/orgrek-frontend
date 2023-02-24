@@ -2,17 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { containsAll } from '../actions/utilAction';
-import { fetchNode } from '../actions/nodeAction';
+import Link from './Link';
 
 const Node = (props) => {
   const [showHierarchies, setShowHierarchies] = useState(false);
   const { t } = useTranslation();
-
-  useEffect(() => {
-    if (props.node && props.node.uniqueId === props.item.uniqueId) {
-      props.onNodeSelection();
-    }
-  }, [props.selectedDay]);
 
   useEffect(() => {
     if (props.item?.hierarchies) {
@@ -21,6 +15,8 @@ const Node = (props) => {
       );
     }
   }, [props.item]);
+
+  const selected = props.node?.uniqueId === props.item.uniqueId;
 
   return (
     <div
@@ -43,31 +39,9 @@ const Node = (props) => {
         </div>
       )}
       <div className="treeNode">
-        <span
-          className={
-            props.node && props.node.uniqueId === props.item.uniqueId
-              ? 'nodeLinkSelected'
-              : 'nodeLink'
-          }
-          onClick={() =>
-            props.onNodeSelection(
-              props.selectedDay,
-              props.showHistory,
-              props.showComing
-            )
-          }
-          onKeyUp={(e) =>
-            e.key === 'Enter' &&
-            props.onNodeSelection(
-              props.selectedDay,
-              props.showHistory,
-              props.showComing
-            )
-          }
-          tabIndex={0}
-        >
+        <Link node={props.item.uniqueId} fontWeight={selected && 'bold'} ml={1}>
           {props.item?.name}
-        </span>
+        </Link>
         {showHierarchies && (
           <span className="treeHierarchies">
             {props.item?.hierarchies
@@ -88,10 +62,4 @@ const mapStateToProps = (state) => ({
   showComing: state.nvrd.showComing,
 });
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
-  onNodeSelection: () => {
-    dispatch(fetchNode(ownProps.item.uniqueId, false));
-  },
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Node);
+export default connect(mapStateToProps)(Node);

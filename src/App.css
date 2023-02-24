@@ -36,17 +36,6 @@ th {
   color: #0e688b;
 }
 
-.nodeLink {
-  padding-right: 5;
-  margin-left: 5px;
-  color: #337ab7;
-}
-
-.nodeLink:hover {
-  text-decoration: underline;
-  color: #0e688b;
-}
-
 .treeNode {
   list-style: none;
   padding-left: 0;
@@ -59,22 +48,12 @@ th {
   margin-left: 5px;
 }
 
-.treeHierarchiesSelected {
-}
-
 .warningText {
   color: red;
 }
 
 .successText {
   color: green;
-}
-
-.nodeLinkSelected {
-  font-weight: bold;
-  padding-right: 5px;
-  margin-left: 5px;
-  color: #107eab;
 }
 
 .skip-nav-link {
