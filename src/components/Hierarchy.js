@@ -38,7 +38,7 @@ const Hierarchy = (props) => {
           <TreeSearch />
         </Row>
         <Row>
-          <Tree />
+          <Tree sx={{ mt: 2 }} />
         </Row>
       </Container>
     </div>
