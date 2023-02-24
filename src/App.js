@@ -6,7 +6,6 @@ import Hierarchy from './components/Hierarchy';
 import './App.css';
 import { fetchUser, isAdmin } from './actions/userAction';
 import { fetchSelectableHierarchies } from './actions/treeAction';
-import { fetchNode } from './actions/nodeAction';
 import LoginRedirect from './components/LoginRedirect';
 import Footer from './components/Footer';
 import { Container, Col, Row } from 'react-bootstrap';
@@ -62,10 +61,6 @@ const App = (props) => {
       } else if (props.selectableHierarchies?.length > 0) {
         props.setHierarchies(props.defaultHierarchy);
       }
-      const uid = parameters.get('uid');
-      if (uid) {
-        props.fetchNode(uid);
-      }
     }
   }, [props.selectableHierarchies]);
 
@@ -110,8 +105,8 @@ const App = (props) => {
                           <Hierarchy />
                         </Col>
                         <Col>
-                          {!editMode && props.node && <NodeDetails2 />}
-                          {editMode && props.node && <NodeDetails />}
+                          {!editMode && <NodeDetails2 />}
+                          {editMode && <NodeDetails />}
                         </Col>
                       </>
                     }
@@ -147,7 +142,6 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   onFetchUser: () => dispatch(fetchUser()),
   fetchSelectableHierarchies: () => dispatch(fetchSelectableHierarchies()),
-  fetchNode: (uniqueId) => dispatch(fetchNode(uniqueId)),
   setHierarchies: (hierarchies) =>
     dispatch({
       type: 'SWITCH_HIERARCHY',

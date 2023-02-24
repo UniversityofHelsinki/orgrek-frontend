@@ -15,12 +15,16 @@ import IfAdmin from '../auth/IfAdmin';
 import useFavorableName from '../../hooks/useFavorableName';
 import useFetchNodeDetails from '../../hooks/useFetchNodeDetails';
 import Box from '@mui/material/Box';
-import useNode from '../../hooks/useNode';
+import useFetchNode from '../../hooks/useFetchNode';
 
 const NodeDetails = () => {
-  const node = useNode();
+  const node = useFetchNode();
   useFetchNodeDetails();
   const title = useFavorableName();
+
+  if (!node) {
+    return null;
+  }
 
   return (
     <div>
