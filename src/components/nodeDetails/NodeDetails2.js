@@ -23,10 +23,17 @@ const NodeDetails = () => {
   return (
     <div>
       <IfAdmin>
-        <EditButtons modifiedParents={[]} />
+        <EditButtons />
       </IfAdmin>
-      <Box component="main" pt={8} pb={8} overflow="scroll" maxHeight="100vh">
-        <Typography variant="h1" component="h2" mb={5}>
+      <Box
+        component="main"
+        sx={{
+          pl: { xs: 1, md: 4 },
+          pr: { xs: 1, md: 4 },
+          pb: 8,
+        }}
+      >
+        <Typography variant="h1" component="h2" mt={5} mb={5}>
           {title}
         </Typography>
         <NodeValiditySection />
