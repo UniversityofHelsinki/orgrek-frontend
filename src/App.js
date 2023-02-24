@@ -1,26 +1,22 @@
 import React, { useEffect } from 'react';
-import { connect, useSelector } from 'react-redux';
+import { connect } from 'react-redux';
 import Header from './components/Header';
 import Header2 from './components/Header2';
-import Hierarchy from './components/Hierarchy';
 import './App.css';
-import { fetchUser, isAdmin } from './actions/userAction';
+import { fetchUser } from './actions/userAction';
 import { fetchSelectableHierarchies } from './actions/treeAction';
 import LoginRedirect from './components/LoginRedirect';
 import Footer from './components/Footer';
-import { Container, Col, Row } from 'react-bootstrap';
+import { Container, Row } from 'react-bootstrap';
 import SkipNavLink from './components/SkipNavLink';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Texts from './components/Texts';
-import HierarchyFilters from './components/HierarchyFilters';
+import { BrowserRouter } from 'react-router-dom';
 import theme from './theme';
 import { ThemeProvider } from '@mui/material';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { fi, sv, enIE } from 'date-fns/locale';
 import { useTranslation } from 'react-i18next';
-import NodeDetails2 from './components/nodeDetails/NodeDetails2';
-import NodeDetails from './components/NodeDetails';
+import Routes from './pages/Routes';
 
 const getDateFnsLocale = (language) => {
   switch (language) {
@@ -35,9 +31,6 @@ const getDateFnsLocale = (language) => {
 
 const App = (props) => {
   const { i18n } = useTranslation();
-
-  // Temporary solution until the old NodeDetails component is removed
-  const editMode = useSelector((state) => state.editModeReducer.edit);
 
   useEffect(() => {
     props.onFetchUser();
@@ -96,31 +89,7 @@ const App = (props) => {
             <Row>
               <BrowserRouter>
                 <Header />
-                <Routes>
-                  <Route
-                    path="/"
-                    element={
-                      <>
-                        <Col md={4} lg={4}>
-                          <Hierarchy />
-                        </Col>
-                        <Col>
-                          {!editMode && <NodeDetails2 />}
-                          {editMode && <NodeDetails />}
-                        </Col>
-                      </>
-                    }
-                  />
-                  {isAdmin(props.user) ? (
-                    <Route path="/texts" element={<Texts />} />
-                  ) : null}
-                  {isAdmin(props.user) ? (
-                    <Route
-                      path="/hierarchyfilters"
-                      element={<HierarchyFilters />}
-                    />
-                  ) : null}
-                </Routes>
+                <Routes />
               </BrowserRouter>
             </Row>
           </Container>
@@ -136,7 +105,6 @@ const mapStateToProps = (state) => ({
   selectedHierarchy: state.tree.selectedHierarchy,
   defaultHierarchy: state.tree.defaultHierarchy,
   node: state.nrd.node,
-  user: state.ur.user,
 });
 
 const mapDispatchToProps = (dispatch) => ({
