@@ -43,7 +43,7 @@ const AttributesTable = ({ columns, data, summary, keyFn }) => {
     }
   });
 
-  const renderedRows = data.map((item) => {
+  const renderedRows = data.map((item, index) => {
     const renderedCells = cols.map((column) => {
       if (column.renderCell) {
         return column.renderCell(column, item);
@@ -52,7 +52,7 @@ const AttributesTable = ({ columns, data, summary, keyFn }) => {
       }
     });
 
-    return <TableRow key={getKey(item)}>{renderedCells}</TableRow>;
+    return <TableRow key={getKey(item, index)}>{renderedCells}</TableRow>;
   });
 
   return (
