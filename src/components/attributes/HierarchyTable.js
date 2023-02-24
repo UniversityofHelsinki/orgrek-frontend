@@ -31,12 +31,13 @@ const HierarchyTable = ({ data, ...props }) => {
     },
   ];
 
-  const keyFn = (item) =>
-    `${item.unit}-${item.hierarchy}-${item.startDate}-${item.endDate}`;
+  const keyFn = (item, index) =>
+    `${index}-${item.uniqueId}-${item.hierarchy}-${item.startDate}-${item.endDate}`;
 
   const hierarchyData = data
     .map((item) =>
       item.hierarchies.map((hierarchy, index) => ({
+        uniqueId: item.uniqueId,
         unit: item.fullName,
         // Unit name cell spans all hierarchies
         rowSpan: index === 0 && item.hierarchies.length,
