@@ -7,6 +7,7 @@ import { fetchSelectableHierarchies } from '../actions/treeAction';
 import { Col, Container, Row } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import HierarchySelection from './HierarchySelection';
+import Box from '@mui/material/Box';
 
 const Hierarchy = (props) => {
   useEffect(() => {
@@ -15,7 +16,7 @@ const Hierarchy = (props) => {
 
   const { t } = useTranslation();
   return (
-    <div>
+    <Box sx={{ pl: 1, pr: 1 }}>
       <Container>
         <Row>
           <h3 id={'main-content'}>
@@ -41,7 +42,7 @@ const Hierarchy = (props) => {
           <Tree sx={{ mt: 2 }} />
         </Row>
       </Container>
-    </div>
+    </Box>
   );
 };
 

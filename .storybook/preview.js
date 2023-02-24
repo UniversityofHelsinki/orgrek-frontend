@@ -11,6 +11,7 @@ import '../src/i18n';
 // These Bootstrap styles are needed only for legacy components and can be
 // removed after everything has been migrated to Material UI
 import '../src/index.css';
+import '../src/App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-datepicker/dist/react-datepicker.css';
 

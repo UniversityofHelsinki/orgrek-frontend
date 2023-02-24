@@ -1,14 +1,8 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import Header from './components/Header';
-import Header2 from './components/Header2';
 import './App.css';
 import { fetchUser } from './actions/userAction';
 import { fetchSelectableHierarchies } from './actions/treeAction';
-import LoginRedirect from './components/LoginRedirect';
-import Footer from './components/Footer';
-import { Container, Row } from 'react-bootstrap';
-import SkipNavLink from './components/SkipNavLink';
 import { BrowserRouter } from 'react-router-dom';
 import theme from './theme';
 import { ThemeProvider } from '@mui/material';
@@ -73,28 +67,15 @@ const App = (props) => {
     }
   }, [props.node, props.selectedHierarchy]);
 
-  const SHIBBOLETH_LOGIN = process.env.REACT_APP_ORGREK_LOGIN;
-
   return (
     <ThemeProvider theme={theme}>
       <LocalizationProvider
         dateAdapter={AdapterDateFns}
         adapterLocale={getDateFnsLocale(i18n.language)}
       >
-        <div className="App">
-          <LoginRedirect loginUrl={SHIBBOLETH_LOGIN} />
-          <Header2 />
-          <SkipNavLink id="main-content" />
-          <Container fluid>
-            <Row>
-              <BrowserRouter>
-                <Header />
-                <Routes />
-              </BrowserRouter>
-            </Row>
-          </Container>
-          <Footer />
-        </div>
+        <BrowserRouter>
+          <Routes />
+        </BrowserRouter>
       </LocalizationProvider>
     </ThemeProvider>
   );
