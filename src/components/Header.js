@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import { isAdmin } from '../actions/userAction';
+import Box from '@mui/material/Box';
 
 const Div = styled.div`
   max-height: 60px;
@@ -18,7 +19,9 @@ const Header = (props) => {
     <div>
       <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
         <Container fluid>
-          <HyLogo />
+          <Box width={30} height={30} pr={1}>
+            <HyLogo />
+          </Box>
           <Navbar.Brand>{t('organisational_registry')}</Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
