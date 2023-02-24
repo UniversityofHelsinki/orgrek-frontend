@@ -10,7 +10,7 @@ const useScrollToTop = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [pathName, searchParams]);
+  }, [pathName, searchParams.get('uid')]);
 };
 
 export default useScrollToTop;
