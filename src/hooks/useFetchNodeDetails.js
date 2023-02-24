@@ -11,7 +11,9 @@ import {
   fetchNodeParents,
 } from '../actions/hierarchyAction';
 import { useEffect } from 'react';
-import { datesOverlap } from '../actions/utilAction';
+import parseISO from 'date-fns/parseISO';
+import isAfter from 'date-fns/isAfter';
+import isBefore from 'date-fns/isBefore';
 
 /**
  * Fetches node attributes when the component using this hook is rendered
@@ -49,57 +51,23 @@ const useFetchNodeDetails = () => {
   };
 
   useEffect(() => {
-    if (!node) {
+    if (!node || !selectedDay) {
       return;
     }
 
-    const startDate = Date.parse(node.startDate) || undefined;
-    const endDate = Date.parse(node.endDate) || undefined;
+    const startDate = node.startDate ? parseISO(node.startDate) : null;
+    const endDate = node.endDate ? parseISO(node.endDate) : null;
 
-    if (
-      datesOverlap(
-        startDate && new Date(startDate),
-        endDate && new Date(endDate),
-        selectedDay
-      )
-    ) {
-      fetchNodeDetails(
-        node,
-        selectedDay,
-        showHistory,
-        showComing,
-        selectedHierarchy
-      );
-    } else if (
-      endDate &&
-      new Date(endDate).getTime() <= selectedDay.getTime()
-    ) {
-      fetchNodeDetails(
-        node,
-        new Date(endDate),
-        showHistory,
-        showComing,
-        selectedHierarchy
-      );
-    } else if (
-      startDate &&
-      new Date(startDate).getTime() >= selectedDay.getTime()
-    ) {
-      fetchNodeDetails(
-        node,
-        new Date(startDate),
-        showHistory,
-        showComing,
-        selectedHierarchy
-      );
+    let date;
+    if (isBefore(selectedDay, startDate)) {
+      date = startDate;
+    } else if (isAfter(selectedDay, endDate)) {
+      date = endDate;
+    } else {
+      date = selectedDay;
     }
-    fetchNodeDetails(
-      node,
-      new Date(endDate),
-      showHistory,
-      showComing,
-      selectedHierarchy
-    );
+
+    fetchNodeDetails(node, date, showHistory, showComing, selectedHierarchy);
   }, [node, showComing, showHistory, selectedHierarchy]);
 };
 
