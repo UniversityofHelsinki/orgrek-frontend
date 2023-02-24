@@ -25,7 +25,7 @@ export const AccordionSummary = ({ children, sx, ...props }) => {
 
 export const AccordionDetails = ({ children, sx, ...props }) => (
   <MuiAccordionDetails {...props} sx={{ pt: 0, ...sx }}>
-    <Divider />
+    <Divider role="presentation" />
     <Box mt={2}>{children}</Box>
   </MuiAccordionDetails>
 );

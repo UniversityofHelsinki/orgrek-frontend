@@ -1,9 +1,8 @@
 import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import Header from './components/Header';
 import Header2 from './components/Header2';
 import Hierarchy from './components/Hierarchy';
-import NodeDetails from './components/NodeDetails';
 import './App.css';
 import { fetchUser, isAdmin } from './actions/userAction';
 import { fetchSelectableHierarchies } from './actions/treeAction';
@@ -21,6 +20,8 @@ import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { fi, sv, enIE } from 'date-fns/locale';
 import { useTranslation } from 'react-i18next';
+import NodeDetails2 from './components/nodeDetails/NodeDetails2';
+import NodeDetails from './components/NodeDetails';
 
 const getDateFnsLocale = (language) => {
   switch (language) {
@@ -35,6 +36,9 @@ const getDateFnsLocale = (language) => {
 
 const App = (props) => {
   const { i18n } = useTranslation();
+
+  // Temporary solution until the old NodeDetails component is removed
+  const editMode = useSelector((state) => state.editModeReducer.edit);
 
   useEffect(() => {
     props.onFetchUser();
@@ -105,7 +109,10 @@ const App = (props) => {
                         <Col md={4} lg={4}>
                           <Hierarchy />
                         </Col>
-                        <Col>{props.node && <NodeDetails />}</Col>
+                        <Col>
+                          {!editMode && props.node && <NodeDetails2 />}
+                          {editMode && props.node && <NodeDetails />}
+                        </Col>
                       </>
                     }
                   />

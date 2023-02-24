@@ -25,9 +25,11 @@ import {
   fetchNodeChildren,
   fetchNodeParents,
 } from '../actions/hierarchyAction';
+import Paper from '@mui/material/Paper';
 
 const EditButtons = (props) => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
+
   let err_happened = false;
 
   const toggleEdit = (newMode) => {
@@ -79,7 +81,7 @@ const EditButtons = (props) => {
       await props.updateNodeProperties(props.node, filteredNodeWithProperties);
       await props.getNodeDetails(props.node);
     }
-    const modifiedParents = Object.values(props.modifiedParents);
+    const modifiedParents = Object.values(props.modifiedParents || []);
     await props.updatingAttributes(props.node, modifiedArr, skipValidation);
     if (
       modifiedParents &&
@@ -141,7 +143,18 @@ const EditButtons = (props) => {
   };
 
   return (
-    <div className="navbar edit-buttons">
+    <Paper
+      elevation={0}
+      sx={{
+        top: 0,
+        position: 'sticky',
+        zIndex: (theme) => theme.zIndex.appBar,
+        pt: 1,
+        pb: 1,
+        pl: { xs: 1, md: 4 },
+        pr: { xs: 1, md: 4 },
+      }}
+    >
       {props.edit ? (
         <Row>
           <Col md="auto">
@@ -215,7 +228,7 @@ const EditButtons = (props) => {
           )}
         </Col>
       </Row>
-    </div>
+    </Paper>
   );
 };
 
@@ -264,6 +277,10 @@ const mapStateToProps = (state) => ({
   edit: state.editModeReducer.edit,
   feedback: state.nrd.feedback,
   feedback_stored: state.nrd.feedback_stored,
+  node: state.nrd.node,
+  nodeAttributes: state.nrd.nodeAttributes,
+  selectedDay: state.dr.selectedDay,
+  selectedHierarchy: state.tree.selectedHierarchy,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditButtons);

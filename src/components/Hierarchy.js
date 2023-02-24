@@ -13,9 +13,9 @@ const Hierarchy = (props) => {
     props.fetchSelectableHierarchies();
   }, []);
 
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   return (
-    <div className="left-side">
+    <div>
       <Container>
         <Row>
           <h3 id={'main-content'}>
