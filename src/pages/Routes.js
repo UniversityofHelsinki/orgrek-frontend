@@ -6,8 +6,10 @@ import HierarchyFiltersPage from './HierarchyFiltersPage';
 import useCurrentUser from '../hooks/useCurrentUser';
 import { isAdmin } from '../actions/userAction';
 import Layout from '../components/Layout';
+import useScrollToTop from '../hooks/useScrollToTop';
 
 const AppRoutes = () => {
+  useScrollToTop();
   const user = useCurrentUser();
 
   return (
