@@ -30,9 +30,17 @@ function render(
  * for both stories and tests.
  *
  * @param story Storybook story object in CSF 3 format
+ * @param meta Story metadata (i.e. the default export from the story file),
+ * required if the given story does not have a render function
  */
-export const renderStory = (story) => {
-  return render(story.render(story.args ?? {}));
+export const renderStory = (story, meta) => {
+  const args = story.args ?? {};
+
+  if (story.render) {
+    return render(story.render(args));
+  } else {
+    return render(meta.component(args));
+  }
 };
 
 // re-export everything

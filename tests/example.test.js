@@ -18,7 +18,6 @@ test('should return the initial tree state', () => {
     selectedHierarchy: undefined,
     treeWithAllHierarchies: {},
     selectableHierarchies: [],
-    selectedHierarchies: [],
   });
 });
 

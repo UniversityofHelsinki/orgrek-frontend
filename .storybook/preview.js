@@ -5,8 +5,6 @@ import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { fi } from 'date-fns/locale';
 import theme from '../src/theme';
-import { Provider } from 'react-redux';
-import store from '../src/store';
 import { withRouter } from 'storybook-addon-react-router-v6';
 import '../src/i18n';
 
@@ -54,11 +52,6 @@ export const decorators = [
     <CommonDecorators>
       <Story />
     </CommonDecorators>
-  ),
-  (Story) => (
-    <Provider store={store}>
-      <Story />
-    </Provider>
   ),
   // react-i18next uses suspense by default, this decorator can be removed
   // if react.useSuspense is disabled in i18next init

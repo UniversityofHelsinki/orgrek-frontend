@@ -3,11 +3,9 @@ import Autocomplete from '@mui/material/Autocomplete';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import TextField from '@mui/material/TextField';
-import Stack from '@mui/material/Stack';
 import { connect, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { editSelectedHierarchies } from '../actions/treeAction';
-import { Checkbox, InputLabel } from '@mui/material';
+import { Checkbox } from '@mui/material';
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -39,7 +37,6 @@ const HierarchySelection = (props) => {
     if (props.selectedHierarchy) {
       selectedHierarchies = [...props.selectedHierarchy.split(',')];
     }
-    props.editSelectedHierarchies(selectedHierarchies);
 
     const changeSelected = (event, hierarchies) => {
       const hierarchyList = hierarchies || props.defaultHierarchy;
@@ -100,8 +97,4 @@ const mapStateToProps = (state) => ({
   defaultHierarchy: state.tree.defaultHierarchy,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  editSelectedHierarchies: (edit) => dispatch(editSelectedHierarchies(edit)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(HierarchySelection);
+export default connect(mapStateToProps)(HierarchySelection);

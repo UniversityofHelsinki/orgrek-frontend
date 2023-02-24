@@ -1,45 +1,31 @@
+import parseISO from 'date-fns/parseISO';
+import format from 'date-fns/format';
+import { fi } from 'date-fns/locale';
+
+const formatDate = (date) => format(parseISO(date), 'P', { locale: fi });
+
 export const showValidity = (startDate, endDate, i18n, t) => {
   const lang = i18n.language;
   if (startDate && endDate) {
-    return (
-      new Date(startDate).toLocaleDateString('fi-FI') +
-      ' - ' +
-      new Date(endDate).toLocaleDateString('fi-FI')
-    );
+    return formatDate(startDate) + ' - ' + formatDate(endDate);
   }
   if (startDate) {
     switch (lang) {
       case 'fi':
-        return (
-          new Date(startDate).toLocaleDateString('fi-FI') +
-          ' ' +
-          t('from_date_react')
-        );
+        return formatDate(startDate) + ' ' + t('from_date_react');
 
       default:
-        return (
-          t('from_date_react') +
-          ' ' +
-          new Date(startDate).toLocaleDateString('fi-FI')
-        );
+        return t('from_date_react') + ' ' + formatDate(startDate);
     }
   }
 
   if (endDate) {
     switch (lang) {
       case 'fi':
-        return (
-          new Date(endDate).toLocaleDateString('fi-FI') +
-          ' ' +
-          t('until_date_react')
-        );
+        return formatDate(endDate) + ' ' + t('until_date_react');
 
       default:
-        return (
-          t('until_date_react') +
-          ' ' +
-          new Date(endDate).toLocaleDateString('fi-FI')
-        );
+        return t('until_date_react') + ' ' + formatDate(endDate);
     }
   }
 
