@@ -27,6 +27,9 @@ const PredecessorsSection = () => {
     },
   ];
 
+  const keyFn = (item) =>
+    `${item.fullName}-${item.startDate}-${item.endDate}-${item.edgeStartDate}-${item.edgeEndDate}`;
+
   const data = predecessors[contentLanguage] || [];
   const title = t('predecessors');
   const empty = data.length === 0;
@@ -37,7 +40,12 @@ const PredecessorsSection = () => {
       empty={empty}
       placeholder={t('predecessors.empty')}
     >
-      <AttributesTable columns={columns} data={data} summary={title} />
+      <AttributesTable
+        columns={columns}
+        keyFn={keyFn}
+        data={data}
+        summary={title}
+      />
     </EditableAccordion>
   );
 };

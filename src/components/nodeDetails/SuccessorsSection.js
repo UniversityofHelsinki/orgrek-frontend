@@ -27,6 +27,9 @@ const SuccessorsSection = () => {
     },
   ];
 
+  const keyFn = (item) =>
+    `${item.fullName}-${item.startDate}-${item.endDate}-${item.edgeStartDate}-${item.edgeEndDate}`;
+
   const data = successors[contentLanguage] || [];
   const title = t('successors');
   const empty = data.length === 0;
@@ -37,7 +40,12 @@ const SuccessorsSection = () => {
       empty={empty}
       placeholder={t('successors.empty')}
     >
-      <AttributesTable columns={columns} data={data} summary={title} />
+      <AttributesTable
+        columns={columns}
+        keyFn={keyFn}
+        data={data}
+        summary={title}
+      />
     </EditableAccordion>
   );
 };
