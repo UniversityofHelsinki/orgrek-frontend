@@ -15,8 +15,10 @@ import IfAdmin from '../auth/IfAdmin';
 import useFavorableName from '../../hooks/useFavorableName';
 import useFetchNodeDetails from '../../hooks/useFetchNodeDetails';
 import Box from '@mui/material/Box';
+import useNode from '../../hooks/useNode';
 
 const NodeDetails = () => {
+  const node = useNode();
   useFetchNodeDetails();
   const title = useFavorableName();
 
@@ -26,6 +28,7 @@ const NodeDetails = () => {
         <EditButtons />
       </IfAdmin>
       <Box
+        key={node.uniqueId}
         component="main"
         sx={{
           pl: { xs: 1, md: 4 },
