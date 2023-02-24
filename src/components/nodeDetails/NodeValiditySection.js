@@ -3,6 +3,7 @@ import Validity from '../attributes/Validity';
 import EditableAccordion from '../EditableAccordion';
 import { useTranslation } from 'react-i18next';
 import useNode from '../../hooks/useNode';
+import Typography from '@mui/material/Typography';
 
 const NodeValiditySection = () => {
   const { t } = useTranslation();
@@ -20,7 +21,9 @@ const NodeValiditySection = () => {
       empty={empty}
       placeholder={<Validity />}
     >
-      <Validity startDate={node.startDate} endDate={node.endDate} />
+      <Typography variant="body1">
+        <Validity startDate={node.startDate} endDate={node.endDate} />
+      </Typography>
     </EditableAccordion>
   );
 };
