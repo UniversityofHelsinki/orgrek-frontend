@@ -14,7 +14,6 @@ const initialState = {
     'talous',
   ],
   treeWithAllHierarchies: {},
-  selectedHierarchies: [],
 };
 
 const treeSlice = createSlice({

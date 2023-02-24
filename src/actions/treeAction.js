@@ -81,16 +81,3 @@ export const apiGetSelectableHierarchiesSuccessCall = (data) => {
     payload: data,
   };
 };
-
-export const editSelectedHierarchies = (values) => {
-  return (dispatch) => {
-    dispatch(changeSelectedHierarchiesSuccessCall(values));
-  };
-};
-
-export const changeSelectedHierarchiesSuccessCall = (data) => {
-  return {
-    type: 'SELECTED_HIERARCHIES_SUCCESS',
-    payload: data,
-  };
-};
