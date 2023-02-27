@@ -10,6 +10,9 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { fi, sv, enIE } from 'date-fns/locale';
 import { useTranslation } from 'react-i18next';
 import Routes from './pages/Routes';
+import LoginRedirect from './components/LoginRedirect';
+
+const SHIBBOLETH_LOGIN = process.env.REACT_APP_ORGREK_LOGIN;
 
 const getDateFnsLocale = (language) => {
   switch (language) {
@@ -36,6 +39,7 @@ const App = () => {
         dateAdapter={AdapterDateFns}
         adapterLocale={getDateFnsLocale(i18n.language)}
       >
+        <LoginRedirect loginUrl={SHIBBOLETH_LOGIN} />
         <BrowserRouter>
           <Routes />
         </BrowserRouter>
