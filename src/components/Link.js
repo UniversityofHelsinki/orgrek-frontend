@@ -12,9 +12,10 @@ import MuiLink from '@mui/material/Link';
  * @param to router path
  * @param node uid query param
  * @param hierarchies hierarchies query param
+ * @param sx The system prop that allows defining system overrides as well as additional CSS styles.
  * @param props any other props passed to MUI and router Link
  */
-const Link = ({ to, node, hierarchies, ...props }) => {
+const Link = ({ to, node, hierarchies, sx, ...props }) => {
   const [searchParams] = useSearchParams();
 
   const toParams = new URLSearchParams(searchParams.toString());
@@ -31,6 +32,11 @@ const Link = ({ to, node, hierarchies, ...props }) => {
     <MuiLink
       component={RouterLink}
       {...props}
+      sx={{
+        fontWeight: 'medium',
+        ':hover': { color: 'primary.dark' },
+        ...sx,
+      }}
       to={`${to || ''}?${toParams.toString()}`}
     />
   );
