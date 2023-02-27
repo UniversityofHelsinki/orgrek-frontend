@@ -39,7 +39,10 @@ const Node = (props) => {
         </div>
       )}
       <div className="treeNode">
-        <Link node={props.item.uniqueId} fontWeight={selected && 'bold'} ml={1}>
+        <Link
+          node={props.item.uniqueId}
+          sx={{ ml: 1, textDecoration: 'none', fontWeight: selected && 'bold' }}
+        >
           {props.item?.name}
         </Link>
         {showHierarchies && (
