@@ -7,7 +7,7 @@ import { Outlet } from 'react-router-dom';
 
 const Layout = () => {
   return (
-    <div className="App">
+    <div>
       <SkipNavLink id="main-content" />
       <Header2 />
       <Header />
