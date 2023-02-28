@@ -1,14 +1,14 @@
 import * as React from 'react';
-import { render } from './testUtils';
-import Header from '../src/components/Header';
-import { BrowserRouter } from 'react-router-dom';
+import { renderStory, screen } from './testUtils';
+import * as HeaderStories from '../src/stories/components/Header.stories';
 
-test('Header renders', () => {
-  const { container } = render(
-    <BrowserRouter>
-      <Header />
-    </BrowserRouter>
-  );
-  const header = container.getElementsByClassName('navbar');
-  expect(header).toBeDefined();
+describe('navigation', () => {
+  test('expect texts navigation to be visible for admin role', () => {
+    renderStory(HeaderStories.AdminRole);
+    expect(screen.queryByText('texts')).toBeVisible();
+  });
+  test('expect texts navigation to not be visible for reader role', () => {
+    renderStory(HeaderStories.ReaderRole);
+    expect(screen.queryByText('texts')).not.toBeVisible();
+  });
 });
