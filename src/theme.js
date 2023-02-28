@@ -182,7 +182,15 @@ const typography = {
     lineHeight: 1.36,
     letterSpacing: 0,
   },
-  overline: undefined,
+  overline: {
+    fontFamily: openSans,
+    fontColour: hyPalette.grayscale.mediumDark,
+    fontSize: 11,
+    fontWeight: 400,
+    lineHeight: 1.36,
+    letterSpacing: 0,
+    textTransform: 'uppercase',
+  },
   label: {
     fontFamily: openSans,
     fontSize: 12,
@@ -218,6 +226,13 @@ const typography = {
     fontWeight: 400,
     letterSpacing: 0,
     color: hyPalette.grayscale.dark,
+  },
+  mainNavigation: {
+    fontSize: 14,
+    letterSpacing: -0.7,
+    fontWeight: 700,
+    textTransform: 'uppercase',
+    color: hyPalette.brand.nearlyBlack,
   },
 };
 
