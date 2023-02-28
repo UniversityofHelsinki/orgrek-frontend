@@ -6,19 +6,54 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import LanguageSelect from './LanguageSelect';
 import Container from '@mui/material/Container';
+import { visuallyHidden } from '@mui/utils';
+import ExternalLinkIcon from './icons/ExternalLink';
+import Link from '@mui/material/Link';
+import AccountCircle from '@mui/icons-material/AccountCircle';
+import useCurrentUser from '../hooks/useCurrentUser';
+import Button from '@mui/material/Button';
+import Stack from '@mui/material/Stack';
+import NavLink from './NavLink';
 
-const Header = (props) => {
-  const { t, i18n } = useTranslation();
+const Header = () => {
+  const { t } = useTranslation();
+  const user = useCurrentUser();
   return (
-    <Box component="header" pt={2}>
+    <Box component="header" pt={2} pb={0.5}>
       <Container>
         <Box>
           <Grid container>
             <Grid lg={2} xs={12}>
-              <Typography variant="overline">Helsingin Yliopisto</Typography>
+              <Link
+                href={t('hy_contact_info_link')}
+                target="_blank"
+                rel="noreferrer noopener"
+                variant={'overline'}
+                color={'text.secondary'}
+                sx={{
+                  textDecoration: 'none',
+                  ':hover': { textDecoration: 'none', color: 'grey.700' },
+                }}
+              >
+                {t('university_of_helsinki')}
+                <Box sx={visuallyHidden}>{t('open_in_new_tab')}</Box>
+                <ExternalLinkIcon
+                  sx={{ ml: 0.5 }}
+                  color={'inherit'}
+                  fontSize={'inherit'}
+                />
+              </Link>
             </Grid>
             <Grid lg={3} lgOffset={6} xs={12}>
-              afafs
+              <Stack direction="row" alignItems="center">
+                <AccountCircle color={'action'} />
+                <Typography variant={'body1'} component="span" ml={1}>
+                  {user.displayName}
+                </Typography>
+                <Button href="/Shibboleth.sso/Logout" variant={'text'}>
+                  {t('logout')}
+                </Button>
+              </Stack>
             </Grid>
             <Grid lg={1} xs={12}>
               <LanguageSelect />
@@ -38,37 +73,12 @@ const Header = (props) => {
           borderColor: 'divider',
         }}
       >
-        sdfsdfs
+        <Container sx={{ height: '62px' }}>
+          <NavLink text={t('organisation')} to={'/'} />
+          <NavLink text={t('texts')} to={'/texts'} />
+          <NavLink text={t('hierarchy_filters')} to={'/hierarchyfilters'} />
+        </Container>
       </Box>
-      {/*<Navbar collapseOnSelect expand="lg">
-            <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-            <Navbar.Collapse id="responsive-navbar-nav">
-              <Nav className="me-auto">
-                <NavLink className="nav-link" to="/">
-                  {' '}
-                  {t('organisation')}{' '}
-                </NavLink>
-                {isAdmin(props.user) ? (
-                  <NavLink className="nav-link" to="/texts">
-                    {' '}
-                    {t('texts')}{' '}
-                  </NavLink>
-                ) : null}
-                {isAdmin(props.user) ? (
-                  <NavLink className="nav-link" to="/hierarchyfilters">
-                    {' '}
-                    {t('hierarchy_filters')}{' '}
-                  </NavLink>
-                ) : null}
-              </Nav>
-              <Nav>
-                <Nav.Link eventKey="disabled" disabled>
-                  {props.user ? t('logged_in') + ' ' + props.user.eppn : ''}
-                </Nav.Link>
-                <Nav.Link href="/Shibboleth.sso/Logout">{t('logout')}</Nav.Link>
-              </Nav>
-            </Navbar.Collapse>
-        </Navbar>*/}
     </Box>
   );
 };

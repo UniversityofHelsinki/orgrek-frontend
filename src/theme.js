@@ -53,6 +53,7 @@ const palette = {
   primary: {
     main: hyPalette.brand.light,
     dark: hyPalette.brand.mediumDark,
+    nearlyBlack: hyPalette.brand.nearlyBlack,
   },
   secondary: {
     main: hyPalette.brand.light,
