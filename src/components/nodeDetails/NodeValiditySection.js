@@ -2,12 +2,12 @@ import React from 'react';
 import Validity from '../attributes/Validity';
 import EditableAccordion from '../EditableAccordion';
 import { useTranslation } from 'react-i18next';
-import useNode from '../../hooks/useNode';
 import Typography from '@mui/material/Typography';
+import { useSelector } from 'react-redux';
 
 const NodeValiditySection = () => {
   const { t } = useTranslation();
-  const node = useNode();
+  const node = useSelector((state) => state.nrd.node);
 
   if (!node) {
     return null;

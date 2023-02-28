@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import Validity from '../attributes/Validity';
 import AttributesTable from '../attributes/AttributesTable';
 import useContentLanguage from '../../hooks/useContentLanguage';
+import Link from '../Link';
 
 const SuccessorsSection = () => {
   const { t } = useTranslation();
@@ -12,7 +13,10 @@ const SuccessorsSection = () => {
   const contentLanguage = useContentLanguage();
 
   const columns = [
-    { label: t('name'), render: (item) => item.fullName },
+    {
+      label: t('name'),
+      render: (item) => <Link node={item.uniqueId}>{item.fullName}</Link>,
+    },
     {
       label: t('valid_dates'),
       render: (item) => (

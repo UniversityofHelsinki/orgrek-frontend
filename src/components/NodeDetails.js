@@ -4,16 +4,12 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import NodeDetailsTable from './NodeDetailsTable';
 import NewAttribute from './NewAttribute';
-import { filterAttributeDuplicates, datesOverlap } from '../actions/utilAction';
-import {
-  switchHistory,
-  switchComing,
-  updateAttributes,
-} from '../actions/nodeViewAction';
+import { datesOverlap, filterAttributeDuplicates } from '../actions/utilAction';
+import { switchComing, switchHistory } from '../actions/nodeViewAction';
 
 import {
-  fetchNodeParents,
   fetchNodeChildren,
+  fetchNodeParents,
 } from '../actions/hierarchyAction';
 import {
   fetchNode,
@@ -30,12 +26,14 @@ import { isAdmin } from '../actions/userAction';
 import moment from 'moment';
 import NewUpperUnit from './NewUpperUnit';
 import {
-  availableNames,
   availablecodes,
+  availableNames,
 } from '../constants/AttibutesForSelect';
+import useFetchNode from '../hooks/useFetchNode';
 
 // eslint-disable-next-line complexity
 const NodeDetails = (props) => {
+  useFetchNode();
   const { t, i18n } = useTranslation();
   const lang = i18n.language;
   const [attributeData, setAttributeData] = useState(false);
@@ -62,7 +60,7 @@ const NodeDetails = (props) => {
       };
 
   const sortOtherAttributes = (elems) => {
-    const sortedList = elems.sort((a, b) => {
+    return elems.sort((a, b) => {
       if (!a.startDate && !a.endDate) {
         return -1;
       }
@@ -74,7 +72,6 @@ const NodeDetails = (props) => {
       }
       return new Date(a.startDate) - new Date(b.startDate);
     });
-    return sortedList;
   };
 
   const byCodesAndDates = (a, b) => {
