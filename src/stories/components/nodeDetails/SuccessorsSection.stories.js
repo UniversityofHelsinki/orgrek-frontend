@@ -22,8 +22,8 @@ export const Default = {
             language: 'fi',
           },
           {
-            id: '1001',
-            uniqueId: 10000001,
+            id: '1002',
+            uniqueId: 10000002,
             startDate: '1970-01-01',
             endDate: null,
             hierarchy: null,
