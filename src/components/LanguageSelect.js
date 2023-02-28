@@ -19,7 +19,7 @@ const LanguageSelect = (props) => {
       size="small"
       select
       label={t('language')}
-      defaultValue={i18n.language}
+      value={i18n.language}
       onChange={handleChange}
       InputProps={{
         startAdornment: (
