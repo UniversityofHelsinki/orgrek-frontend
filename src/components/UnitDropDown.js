@@ -42,17 +42,16 @@ const UnitDropDown = (props) => {
   }, []);
 
   useEffect(() => {
-    const selectedHierarchies = props.selectedHierarchies;
+    const selectedHierarchies = props.selectedHierarchy;
     const currentHierarchyFilters = props.hierarchyFilters;
-    let hierarchiesWhereKeyValueIsType = [];
-    hierarchiesWhereKeyValueIsType = currentHierarchyFilters.filter(
+    const hierarchiesWhereKeyValueIsType = currentHierarchyFilters.filter(
       (item) => item.key === 'type'
     );
     const sortedHierarchies = sortHierarchies(hierarchiesWhereKeyValueIsType);
     let units = concatValues(sortedHierarchies, selectedHierarchies);
     let selectableUnitArrayList = units.split(',');
     setSelectableUnits(selectableUnitArrayList);
-  }, [props.hierarchyFilters, props.selectedHierarchies]);
+  }, [props.hierarchyFilters, props.selectedHierarchy]);
 
   return (
     <div>
@@ -74,7 +73,7 @@ const UnitDropDown = (props) => {
 
 const mapStateToProps = (state) => ({
   hierarchyFilters: state.hierarchyFilters.validhierarchyFilters,
-  selectedHierarchies: state.tree.selectedHierarchies,
+  selectedHierarchy: state.tree.selectedHierarchy,
 });
 
 const mapDispatchToProps = (dispatch) => ({

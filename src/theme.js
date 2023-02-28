@@ -54,7 +54,10 @@ const palette = {
     main: hyPalette.brand.light,
     dark: hyPalette.brand.mediumDark,
   },
-  secondary: undefined,
+  secondary: {
+    main: hyPalette.brand.light,
+    dark: hyPalette.brand.mediumDark,
+  },
   grey: {
     50: hyPalette.grayscale.light,
     100: hyPalette.grayscale.mediumLight,
@@ -227,6 +230,19 @@ const typography = {
     letterSpacing: 0,
     color: hyPalette.grayscale.dark,
   },
+  navigationLink: {
+    fontFamily: openSans,
+    fontSize: 12,
+    fontWeight: 700,
+    lineHeight: 2,
+    letterSpacing: -0.1,
+    color: hyPalette.grayscale.white,
+    textDecoration: 'none',
+    '&:hover': {
+      color: hyPalette.grayscale.white,
+      textDecoration: 'underline',
+    },
+  },
   mainNavigation: {
     fontSize: 14,
     letterSpacing: -0.7,
@@ -260,6 +276,22 @@ const theme = createTheme({
       styleOverrides: {
         tooltip: {
           ...typography.caption,
+        },
+      },
+    },
+    MuiTableCell: {
+      styleOverrides: {
+        root: {
+          borderWidth: 1,
+          borderStyle: 'solid',
+          borderColor: palette.divider,
+        },
+        head: {
+          backgroundColor: palette.grey[50],
+          ...typography.tableHead,
+        },
+        body: {
+          ...typography.tableBody,
         },
       },
     },

@@ -3,14 +3,7 @@ import { connect } from 'react-redux';
 import Branch from './Branch';
 import { fetchTree, fetchTreeWithAllHierarchies } from '../actions/treeAction';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
-
-const ContainerDiv = styled.div`
-  border: 1px solid lightgrey;
-  border-radius: 5px;
-  margin-top: 10px;
-  background-color: #f6f6f6;
-`;
+import Card from '@mui/material/Card';
 
 const traverseTree = (current, target) => {
   if (current.uniqueId === target) {
@@ -27,7 +20,7 @@ const traverseTree = (current, target) => {
 };
 
 const Tree = (props) => {
-  const { t, i18n } = useTranslation();
+  const { i18n } = useTranslation();
   const [pathsToTarget, setPathsToTarget] = useState();
 
   useEffect(() => {
@@ -68,7 +61,11 @@ const Tree = (props) => {
   }, [props.tree, props.node, props.openTree]);
 
   return (
-    <ContainerDiv data-testid="tree">
+    <Card
+      variant="outlined"
+      data-testid="tree"
+      sx={{ padding: 1, ...props.sx }}
+    >
       {props.tree?.[language] && (
         <Branch
           item={props.tree[language]}
@@ -77,7 +74,7 @@ const Tree = (props) => {
           parent=""
         />
       )}
-    </ContainerDiv>
+    </Card>
   );
 };
 

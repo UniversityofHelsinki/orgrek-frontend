@@ -15,3 +15,8 @@ jest.mock('react-i18next', () => ({
     };
   },
 }));
+
+// Reset screen content before every test
+beforeEach(() => {
+  document.body.innerHTML = '';
+});
