@@ -4,6 +4,9 @@ import { createAdmin, createReader, withUser } from '../../mockStore';
 
 export default {
   component: HeaderComponent,
+  parameters: {
+    layout: 'fullscreen',
+  },
 };
 
 export const AdminRole = {
