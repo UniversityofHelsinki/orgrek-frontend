@@ -27,8 +27,9 @@ const NavLink = ({ to, text, sx }) => {
           color: 'divider',
           textDecoration: 'none',
         },
+        position: 'relative',
         ':focus': {
-          borderLeft: 0,
+          zIndex: 'tooltip',
         },
         borderLeft: 1,
         '&:last-of-type': {
