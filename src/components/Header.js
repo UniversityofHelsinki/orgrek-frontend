@@ -44,7 +44,7 @@ const Header = () => {
                 />
               </Link>
             </Grid>
-            <Grid md={5} mdOffset={5} xs={12}>
+            <Grid md={7} mdOffset={3} xs={12}>
               <Stack
                 direction="row"
                 alignItems="center"
