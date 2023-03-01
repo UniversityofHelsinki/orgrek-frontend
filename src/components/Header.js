@@ -76,6 +76,7 @@ const Header = () => {
           borderTop: 1,
           borderBottom: 1,
           borderColor: 'divider',
+          overflowX: 'scroll',
         }}
       >
         <Container sx={{ height: '62px' }}>
