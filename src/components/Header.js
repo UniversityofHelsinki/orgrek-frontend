@@ -1,6 +1,5 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { connect } from 'react-redux';
 import Grid from '@mui/material/Unstable_Grid2';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
@@ -86,8 +85,4 @@ const Header = () => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  user: state.ur.user,
-});
-
-export default connect(mapStateToProps, null)(Header);
+export default Header;
