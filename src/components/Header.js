@@ -76,7 +76,7 @@ const Header = () => {
           borderTop: 1,
           borderBottom: 1,
           borderColor: 'divider',
-          overflowX: 'scroll',
+          overflowX: 'auto',
           whiteSpace: 'nowrap',
         }}
       >
