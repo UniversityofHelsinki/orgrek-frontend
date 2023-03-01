@@ -23,7 +23,7 @@ const Header = () => {
       <Container>
         <Box>
           <Grid container>
-            <Grid lg={2} xs={12}>
+            <Grid md={2} xs={12}>
               <Link
                 href={t('hy_contact_info_link')}
                 target="_blank"
@@ -44,19 +44,22 @@ const Header = () => {
                 />
               </Link>
             </Grid>
-            <Grid lg={3} lgOffset={6} xs={12}>
-              <Stack direction="row" alignItems="center">
+            <Grid md={5} mdOffset={5} xs={12}>
+              <Stack
+                direction="row"
+                alignItems="center"
+                gap={1}
+                justifyContent="flex-end"
+              >
                 <AccountCircle color={'action'} />
-                <Typography variant={'body1'} component="span" ml={1}>
+                <Typography variant={'body1'} component="span">
                   {user.displayName}
                 </Typography>
                 <Button href="/Shibboleth.sso/Logout" variant={'text'}>
                   {t('logout')}
                 </Button>
+                <LanguageSelect />
               </Stack>
-            </Grid>
-            <Grid lg={1} xs={12}>
-              <LanguageSelect />
             </Grid>
           </Grid>
         </Box>
