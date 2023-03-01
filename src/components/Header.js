@@ -64,7 +64,9 @@ const Header = () => {
           </Grid>
         </Box>
         <Box sx={{ my: 5 }}>
-          <Typography variant="h1">{t('organisational_registry')}</Typography>
+          <Typography component="h1" variant="h2" textTransform="uppercase">
+            {t('organisational_registry')}
+          </Typography>
         </Box>
       </Container>
       <Box
