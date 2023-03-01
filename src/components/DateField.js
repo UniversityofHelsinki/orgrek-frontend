@@ -2,7 +2,7 @@ import * as React from 'react';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import TextField from '@mui/material/TextField';
 
-const DateField = ({ helperText, required, error, ...props }) => (
+const DateField = ({ helperText, required, error, fullWidth, ...props }) => (
   <DatePicker
     {...props}
     renderInput={(textFieldProps) => (
@@ -11,6 +11,7 @@ const DateField = ({ helperText, required, error, ...props }) => (
         helperText={helperText}
         required={required}
         error={error}
+        fullWidth={fullWidth}
       />
     )}
   />
