@@ -19,7 +19,7 @@ const Header = () => {
   const { t } = useTranslation();
   const user = useCurrentUser();
   return (
-    <Box component="header" pt={2} pb={0.5}>
+    <Box component="header" pt={2}>
       <Container>
         <Box>
           <Grid container>

@@ -28,8 +28,10 @@ const NavLink = ({ to, text, sx }) => {
           textDecoration: 'none',
         },
         position: 'relative',
-        ':focus': {
+        ':focus-visible': {
           zIndex: 'tooltip',
+          outline: 'none',
+          backgroundColor: 'action.focus',
         },
         borderLeft: 1,
         '&:last-of-type': {
