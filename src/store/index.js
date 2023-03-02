@@ -7,3 +7,4 @@ export * from './node';
 export * from './tree';
 export * from './texts';
 export * from './user';
+export * from './store';
