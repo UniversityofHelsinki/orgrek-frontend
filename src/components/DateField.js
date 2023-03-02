@@ -4,6 +4,7 @@ import TextField from '@mui/material/TextField';
 
 const DateField = ({ helperText, required, error, fullWidth, ...props }) => (
   <DatePicker
+    disableMaskedInput
     {...props}
     renderInput={(textFieldProps) => (
       <TextField
