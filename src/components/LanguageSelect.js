@@ -19,7 +19,7 @@ const LanguageSelect = (props) => {
       size="small"
       select
       label={t('language')}
-      defaultValue={i18n.language}
+      value={i18n.language}
       onChange={handleChange}
       InputProps={{
         startAdornment: (
@@ -30,7 +30,7 @@ const LanguageSelect = (props) => {
       }}
     >
       <MenuItem value={'fi'}>Suomeksi</MenuItem>
-      <MenuItem value={'sv'}>På Svenska</MenuItem>
+      <MenuItem value={'sv'}>På svenska</MenuItem>
       <MenuItem value={'en'}>In English</MenuItem>
       {isAdmin(props.user) ? (
         <MenuItem value={'ia'}>{t('text_key')}</MenuItem>
