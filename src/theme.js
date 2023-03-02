@@ -53,6 +53,7 @@ const palette = {
   primary: {
     main: hyPalette.brand.light,
     dark: hyPalette.brand.mediumDark,
+    nearlyBlack: hyPalette.brand.nearlyBlack,
   },
   secondary: {
     main: hyPalette.brand.light,
@@ -185,7 +186,15 @@ const typography = {
     lineHeight: 1.36,
     letterSpacing: 0,
   },
-  overline: undefined,
+  overline: {
+    fontFamily: openSans,
+    fontColour: hyPalette.grayscale.mediumDark,
+    fontSize: 11,
+    fontWeight: 400,
+    lineHeight: 1.36,
+    letterSpacing: 0,
+    textTransform: 'uppercase',
+  },
   label: {
     fontFamily: openSans,
     fontSize: 12,
@@ -235,6 +244,13 @@ const typography = {
       textDecoration: 'underline',
     },
   },
+  mainNavigation: {
+    fontSize: 14,
+    letterSpacing: -0.7,
+    fontWeight: 700,
+    textTransform: 'uppercase',
+    color: hyPalette.brand.nearlyBlack,
+  },
 };
 
 const theme = createTheme({
@@ -278,6 +294,11 @@ const theme = createTheme({
         body: {
           ...typography.tableBody,
         },
+      },
+    },
+    MuiContainer: {
+      defaultProps: {
+        maxWidth: 'xl',
       },
     },
   },
