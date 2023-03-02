@@ -30,7 +30,7 @@ const LanguageSelect = (props) => {
       }}
     >
       <MenuItem value={'fi'}>Suomeksi</MenuItem>
-      <MenuItem value={'sv'}>På Svenska</MenuItem>
+      <MenuItem value={'sv'}>På svenska</MenuItem>
       <MenuItem value={'en'}>In English</MenuItem>
       {isAdmin(props.user) ? (
         <MenuItem value={'ia'}>{t('text_key')}</MenuItem>
