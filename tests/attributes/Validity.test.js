@@ -1,32 +1,32 @@
-import { renderStory, screen } from '../testUtils';
-import Meta, * as ValidityStories from '../../src/stories/components/attributes/Validity.stories';
+import React from 'react';
+import { render, screen } from '@testing-library/react';
+import * as stories from '../../src/stories/components/attributes/Validity.stories';
+import { composeStories } from '@storybook/testing-react';
+
+const { Default, From, Until, Undefined } = composeStories(stories);
 
 test('start and end dates defined', () => {
-  renderStory(ValidityStories.Default, Meta);
-
+  render(<Default />);
   expect(screen.getByTestId('validity')).toHaveTextContent(
     '1.1.2022 - 31.12.2022'
   );
 });
 
 test('valid from', () => {
-  renderStory(ValidityStories.From, Meta);
-
+  render(<From />);
   expect(screen.getByTestId('validity')).toHaveTextContent(
     'from_date_react 1.1.2022'
   );
 });
 
 test('valid until', () => {
-  renderStory(ValidityStories.Until, Meta);
-
+  render(<Until />);
   expect(screen.getByTestId('validity')).toHaveTextContent(
     'until_date_react 31.12.2022'
   );
 });
 
 test('undefined', () => {
-  renderStory(ValidityStories.Undefined, Meta);
-
+  render(<Undefined />);
   expect(screen.getByTestId('validity')).toHaveTextContent('not_specified');
 });
