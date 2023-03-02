@@ -48,7 +48,7 @@ export const Default = {
 
     const handleChange = (newData) => {
       setData(newData);
-      args.onChange(newData);
+      args.onChange && args.onChange(newData);
     };
 
     return <AttributeEditor {...args} data={data} onChange={handleChange} />;
@@ -105,7 +105,7 @@ export const DropdownEditor = {
 
     const handleChange = (newData) => {
       setData(newData);
-      args.onChange(newData);
+      args.onChange && args.onChange(newData);
     };
 
     const renderValueField = (valueFieldProps) => (
