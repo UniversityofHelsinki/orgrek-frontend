@@ -155,12 +155,19 @@ const AttributeEditorRow = ({
     />
   );
 
-  const valueDescription = `${value.value}, ${showValidity(
-    value.startDate,
-    value.endDate,
-    i18n,
-    t
-  )}`;
+  let valueDescriptions = [];
+
+  if (!valueError && value.value) {
+    valueDescriptions.push(value.value);
+  }
+
+  if (!startDateError && !endDateError) {
+    valueDescriptions.push(
+      showValidity(value.startDate, value.endDate, i18n, t)
+    );
+  }
+
+  const valueDescription = valueDescriptions.join(', ');
 
   const renderedActions = (
     <Box pt={1} className={classNames('actions', { menuOpen })}>
