@@ -12,3 +12,8 @@ export const useTranslation = () => {
     },
   };
 };
+
+export const initReactI18next = {
+  type: '3rdParty',
+  init: () => {},
+};
