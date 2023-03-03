@@ -25,7 +25,7 @@ const Header = () => {
           <Grid container>
             <Grid md={2} xs={12}>
               <Link
-                href={t('hy_contact_info_link')}
+                href={t('hy_website')}
                 target="_blank"
                 rel="noreferrer noopener"
                 variant={'overline'}
@@ -53,7 +53,7 @@ const Header = () => {
               >
                 <AccountCircle color={'action'} />
                 <Typography variant={'body1'} component="span">
-                  {user.displayName}
+                  {user.displayName || user.eppn}
                 </Typography>
                 <Button href="/Shibboleth.sso/Logout" variant={'text'}>
                   {t('logout')}
