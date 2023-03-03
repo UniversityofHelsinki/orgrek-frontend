@@ -16,7 +16,7 @@ const NodePage = () => {
   return (
     <Container>
       <Grid container>
-        <Grid xs={12} md={5} lg={4}>
+        <Grid xs={12} md={5} lg={4} mb={2}>
           <Hierarchy />
         </Grid>
         <Grid xs={12} md={7} lg={8}>
