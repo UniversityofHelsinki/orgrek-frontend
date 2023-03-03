@@ -1,14 +1,18 @@
-import * as React from 'react';
-import { renderStory, screen } from './testUtils';
-import Meta, * as HeaderStories from '../src/stories/components/Header.stories';
+import React from 'react';
+import { render, screen } from '@testing-library/react';
+import * as stories from '../src/stories/components/Header.stories';
+import { composeStories } from '@storybook/testing-react';
+
+const { AdminRole, ReaderRole } = composeStories(stories);
 
 describe('navigation', () => {
-  test.skip('expect texts navigation to be visible for admin role', () => {
-    renderStory(HeaderStories.AdminRole, Meta);
-    expect(screen.queryByText('texts')).toBeVisible();
+  test('expect texts navigation to be visible for admin role', () => {
+    render(<AdminRole />);
+    expect(screen.queryByText('texts')).toBeInTheDocument();
   });
-  test.skip('expect texts navigation to not be visible for reader role', () => {
-    renderStory(HeaderStories.ReaderRole, Meta);
-    expect(screen.queryByText('texts')).not.toBeVisible();
+
+  test('expect texts navigation to not be visible for reader role', () => {
+    render(<ReaderRole />);
+    expect(screen.queryByText('texts')).not.toBeInTheDocument();
   });
 });

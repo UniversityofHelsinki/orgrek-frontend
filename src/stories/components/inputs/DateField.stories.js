@@ -1,8 +1,8 @@
 import React from 'react';
-import TextField from '@mui/material/TextField';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { useState } from 'react';
 import { parseISO } from 'date-fns';
+import DateField from '../../../components/DateField';
 
 export default {
   component: DatePicker,
@@ -30,18 +30,10 @@ export const Basic = {
     );
 
     return (
-      <DatePicker
+      <DateField
         {...args}
         value={value}
         onChange={(newValue) => setValue(newValue)}
-        renderInput={(props) => (
-          <TextField
-            {...props}
-            helperText={args.helperText}
-            required={args.required}
-            error={args.error}
-          />
-        )}
       />
     );
   },
