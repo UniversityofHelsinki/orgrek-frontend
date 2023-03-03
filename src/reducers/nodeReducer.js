@@ -21,8 +21,8 @@ const nodeReducer = (state = initialState, action) => {
     case 'SHOW_NOTIFICATION':
       return {
         ...state,
-        feedback_stored: action.payload,
-        feedback: action.payload.skipValidation ? null : action.payload,
+        feedback_stored: action.payload.skipValidation ? null : action.payload,
+        feedback: action.payload,
       };
     case 'HIDE_NOTIFICATION':
       return {
