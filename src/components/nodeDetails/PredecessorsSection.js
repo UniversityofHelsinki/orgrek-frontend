@@ -6,6 +6,7 @@ import Validity from '../attributes/Validity';
 import AttributesTable from '../attributes/AttributesTable';
 import useContentLanguage from '../../hooks/useContentLanguage';
 import Link from '../Link';
+import Placeholder from '../Placeholder';
 
 const PredecessorsSection = () => {
   const { t } = useTranslation();
@@ -39,17 +40,15 @@ const PredecessorsSection = () => {
   const empty = data.length === 0;
 
   return (
-    <EditableAccordion
-      title={title}
-      empty={empty}
-      placeholder={t('predecessors.empty')}
-    >
-      <AttributesTable
-        columns={columns}
-        keyFn={keyFn}
-        data={data}
-        summary={title}
-      />
+    <EditableAccordion title={title}>
+      <Placeholder empty={empty} placeholder={t('predecessors.empty')}>
+        <AttributesTable
+          columns={columns}
+          keyFn={keyFn}
+          data={data}
+          summary={title}
+        />
+      </Placeholder>
     </EditableAccordion>
   );
 };

@@ -2,13 +2,10 @@ import React, { useState } from 'react';
 import { Accordion, AccordionDetails, AccordionSummary } from './Accordion';
 import Typography from '@mui/material/Typography';
 import { useTranslation } from 'react-i18next';
-import Placeholder from './Placeholder';
 
 const EditableAccordion = ({
   children,
   title,
-  empty = false,
-  placeholder,
   modified = false,
   onChange = () => {},
   ...props
@@ -63,11 +60,7 @@ const EditableAccordion = ({
       onChange={handleChange}
     >
       {summary}
-      <AccordionDetails>
-        <Placeholder empty={empty} placeholder={placeholder}>
-          {children}
-        </Placeholder>
-      </AccordionDetails>
+      <AccordionDetails>{children}</AccordionDetails>
     </Accordion>
   );
 };
