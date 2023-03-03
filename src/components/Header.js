@@ -53,7 +53,7 @@ const Header = () => {
               >
                 <AccountCircle color={'action'} />
                 <Typography variant={'body1'} component="span">
-                  {user.displayName}
+                  {user.displayName || user.eppn}
                 </Typography>
                 <Button href="/Shibboleth.sso/Logout" variant={'text'}>
                   {t('logout')}
