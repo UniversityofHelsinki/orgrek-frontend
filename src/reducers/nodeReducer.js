@@ -19,13 +19,9 @@ const initialState = {
 const nodeReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'SHOW_NOTIFICATION':
-      if (action.payload.skipValidation === true) {
-        state.feedback_stored = null;
-      } else if (action.payload.skipValidation === false) {
-        state.feedback_stored = action.payload;
-      }
       return {
         ...state,
+        feedback_stored: action.payload.skipValidation ? null : action.payload,
         feedback: action.payload,
       };
     case 'HIDE_NOTIFICATION':

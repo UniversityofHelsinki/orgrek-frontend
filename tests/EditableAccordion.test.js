@@ -1,26 +1,26 @@
 import userEvent from '@testing-library/user-event';
-import { renderStory, screen } from './testUtils';
-import {
-  Default,
-  Empty,
-  Modified,
-} from '../src/stories/components/EditableAccordion.stories';
+import React from 'react';
+import { render, screen } from '@testing-library/react';
+import * as stories from '../src/stories/components/EditableAccordion.stories';
+import { composeStories } from '@storybook/testing-react';
+
+const { Default, Modified, Empty } = composeStories(stories);
 
 describe('unmodified', () => {
   test('initially expanded', () => {
-    renderStory(Default);
+    render(<Default />);
     expect(screen.queryByText('Title')).toBeVisible();
     expect(screen.queryByText('Editable content')).toBeVisible();
   });
 
   test('collapses when clicked', async () => {
-    renderStory(Default);
+    render(<Default />);
     await userEvent.click(screen.getByText('Title'));
     expect(screen.queryByText('Editable content')).not.toBeVisible();
   });
 
   test('expands when clicked', async () => {
-    renderStory(Default);
+    render(<Default />);
     await userEvent.click(screen.getByText('Title'));
     await userEvent.click(screen.getByText('Title'));
     expect(screen.queryByText('Editable content')).toBeVisible();
@@ -29,12 +29,12 @@ describe('unmodified', () => {
 
 describe('modified', () => {
   test('does not allow collapsing', async () => {
-    renderStory(Modified);
+    render(<Modified />);
     expect(screen.getByRole('button')).toHaveAttribute('aria-disabled', 'true');
   });
 
   test('modified indicator', () => {
-    renderStory(Modified);
+    render(<Modified />);
     expect(
       screen.queryByText('accordion.modifiedSaveBeforeClosing')
     ).toBeVisible();
@@ -42,6 +42,6 @@ describe('modified', () => {
 });
 
 describe('empty', () => {
-  renderStory(Empty);
+  render(<Empty />);
   expect(screen.queryByText('Empty placeholder text')).toBeVisible();
 });
