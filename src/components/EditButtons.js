@@ -34,8 +34,10 @@ const EditButtons = (props) => {
 
   const toggleEdit = (newMode) => {
     if (!newMode) {
-      props.setModified({}); //initialize modified map, when cancel button presses. When response got after
-      //save button pressed, modidied should be initialized.
+      if (props.setModified) {
+        props.setModified({}); //initialize modified map, when cancel button presses. When response got after
+        //save button pressed, modidied should be initialized.
+      }
     }
     props.onEditChange(newMode);
   };
