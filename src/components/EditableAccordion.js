@@ -2,17 +2,21 @@ import React, { useState } from 'react';
 import { Accordion, AccordionDetails, AccordionSummary } from './Accordion';
 import Typography from '@mui/material/Typography';
 import { useTranslation } from 'react-i18next';
+import useEditMode from '../hooks/useEditMode';
+import { EditModeProvider } from '../contexts/EditModeContext';
 
 const EditableAccordion = ({
   children,
   title,
-  modified = false,
   onChange = () => {},
+  renderActions = () => {},
+  renderEditor = () => {},
+  defaultExpanded = true,
   ...props
 }) => {
   const { t } = useTranslation();
 
-  // TODO: initialState of expanded should be !empty
+  // TODO: pass !empty from sections to defaultExpanded prop
   // However currently it does work work correctly because when changing
   // the current node, this component gets rendered first time with data of the
   // previous node, so the initialState would reflect the emptiness of that
@@ -20,7 +24,8 @@ const EditableAccordion = ({
   // currently fetched, and only render this component after the current data
   // is available. Migrating to Redux Toolkit Query would probably make it
   // much easier.
-  const [expanded, setExpanded] = useState(true);
+  const [expanded, setExpanded] = useState(defaultExpanded);
+  const { modified } = useEditMode();
 
   const handleChange = (event, newValue) => {
     if (modified) {
@@ -65,4 +70,11 @@ const EditableAccordion = ({
   );
 };
 
-export default EditableAccordion;
+// Every EditableAccordion needs its own edit mode context
+const EditableAccordionWrapper = ({ defaultModified = false, ...props }) => (
+  <EditModeProvider defaultModified={defaultModified}>
+    <EditableAccordion {...props} />
+  </EditModeProvider>
+);
+
+export default EditableAccordionWrapper;
