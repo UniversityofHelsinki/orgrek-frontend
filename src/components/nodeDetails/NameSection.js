@@ -4,6 +4,9 @@ import { useTranslation } from 'react-i18next';
 import AttributesTable from '../attributes/AttributesTable';
 import useAttributes from '../../hooks/useAttributes';
 import Validity from '../attributes/Validity';
+import EditNameForm from './EditNameForm';
+import EditableContent from '../EditableContent';
+import Placeholder from '../Placeholder';
 
 const NameSection = () => {
   const { t } = useTranslation();
@@ -52,17 +55,41 @@ const NameSection = () => {
   const title = t('name_info');
   const empty = nameInfoDataOrderedByLanguage.length === 0;
 
+  const initialValues = {
+    nameFi: nameInfoDataOrderedByLanguage.filter(
+      (value) => value.key === 'name_fi'
+    ),
+    nameSv: nameInfoDataOrderedByLanguage.filter(
+      (value) => value.key === 'name_sv'
+    ),
+    nameEn: nameInfoDataOrderedByLanguage.filter(
+      (value) => value.key === 'name_en'
+    ),
+  };
+
+  const handleSubmit = (values) => {
+    // TODO
+  };
+
+  const renderedContent = (
+    <AttributesTable
+      columns={columns}
+      data={nameInfoDataOrderedByLanguage}
+      summary={title}
+    />
+  );
+
   return (
-    <EditableAccordion
-      title={title}
-      empty={empty}
-      placeholder={t('nameInfo.empty')}
-    >
-      <AttributesTable
-        columns={columns}
-        data={nameInfoDataOrderedByLanguage}
-        summary={title}
-      />
+    <EditableAccordion title={title}>
+      <EditableContent
+        renderEditor={() => <EditNameForm />}
+        initialValues={initialValues}
+        onSubmit={handleSubmit}
+      >
+        <Placeholder empty={empty} placeholder={t('nameInfo.empty')}>
+          {renderedContent}
+        </Placeholder>
+      </EditableContent>
     </EditableAccordion>
   );
 };
