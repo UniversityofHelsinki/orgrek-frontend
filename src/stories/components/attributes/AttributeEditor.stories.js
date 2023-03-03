@@ -22,7 +22,7 @@ export const Default = {
         value: 'value3',
         startDate: '2023-01-01',
         endDate: null,
-        new: false,
+        isNew: false,
         deleted: false,
       },
       {
@@ -30,7 +30,7 @@ export const Default = {
         value: 'value2',
         startDate: '2022-01-01',
         endDate: '2022-12-31',
-        new: false,
+        isNew: false,
         deleted: false,
       },
       {
@@ -38,7 +38,7 @@ export const Default = {
         value: 'value1',
         startDate: null,
         endDate: '2021-12-31',
-        new: false,
+        isNew: false,
         deleted: false,
       },
     ],
