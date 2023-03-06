@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import AttributesTable from '../attributes/AttributesTable';
 import { useSelector } from 'react-redux';
 import Validity from '../attributes/Validity';
+import orderNameAttributesByLanguage from '../../hooks/sortAttributesByDate';
 
 const DisplayNameSection = () => {
   const { t } = useTranslation();
@@ -31,9 +32,10 @@ const DisplayNameSection = () => {
       ),
     },
   ];
+  const sortedData = data ? orderNameAttributesByLanguage(data) : [];
 
   const title = t('display_name_info');
-  const empty = data.length === 0;
+  const empty = sortedData.length === 0;
 
   return (
     <EditableAccordion
@@ -41,7 +43,7 @@ const DisplayNameSection = () => {
       empty={empty}
       placeholder={t('displayName.empty')}
     >
-      <AttributesTable columns={columns} data={data} summary={title} />
+      <AttributesTable columns={columns} data={sortedData} summary={title} />
     </EditableAccordion>
   );
 };
