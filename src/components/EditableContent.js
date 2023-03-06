@@ -12,7 +12,7 @@ import IfAdmin from './auth/IfAdmin';
 const FormActions = () => {
   const { t } = useTranslation();
   const { close, setModified } = useEditMode();
-  const { dirty, submit } = useForm();
+  const { dirty } = useForm();
 
   useEffect(() => {
     setModified(dirty);
@@ -23,7 +23,7 @@ const FormActions = () => {
       <Button variant="outlined" onClick={close}>
         {t('cancel_button')}
       </Button>
-      <Button variant="contained" onClick={submit} disabled>
+      <Button variant="contained" type="submit">
         {t('edit_mode_save_button')}
       </Button>
     </ActionBar>
