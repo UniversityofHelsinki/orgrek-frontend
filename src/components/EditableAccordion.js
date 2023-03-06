@@ -4,26 +4,18 @@ import Typography from '@mui/material/Typography';
 import { useTranslation } from 'react-i18next';
 import useEditMode from '../hooks/useEditMode';
 import { EditModeProvider } from '../contexts/EditModeContext';
+import { Skeleton } from '@mui/material';
+import Box from '@mui/material/Box';
+import PropTypes from 'prop-types';
 
 const EditableAccordion = ({
   children,
   title,
   onChange = () => {},
-  renderActions = () => {},
-  renderEditor = () => {},
   defaultExpanded = true,
   ...props
 }) => {
   const { t } = useTranslation();
-
-  // TODO: pass !empty from sections to defaultExpanded prop
-  // However currently it does work work correctly because when changing
-  // the current node, this component gets rendered first time with data of the
-  // previous node, so the initialState would reflect the emptiness of that
-  // node. To fix this, there should be a way to check if node details are being
-  // currently fetched, and only render this component after the current data
-  // is available. Migrating to Redux Toolkit Query would probably make it
-  // much easier.
   const [expanded, setExpanded] = useState(defaultExpanded);
   const { modified } = useEditMode();
 
@@ -70,11 +62,51 @@ const EditableAccordion = ({
   );
 };
 
-// Every EditableAccordion needs its own edit mode context
-const EditableAccordionWrapper = ({ defaultModified = false, ...props }) => (
-  <EditModeProvider defaultModified={defaultModified}>
-    <EditableAccordion {...props} />
-  </EditModeProvider>
-);
+/**
+ * An accordion with an edit mode context
+ */
+const EditableAccordionWrapper = ({
+  defaultModified = false,
+  loading = false,
+  ...props
+}) => {
+  // Render loading placeholder outside EditableAccordion so that the initial
+  // state of expanded resets when loading is completed.
+  if (loading) {
+    return (
+      <Box mb={1.5}>
+        <Skeleton variant="rectangular" height={48} />
+      </Box>
+    );
+  }
+
+  // EditableAccordion is wrapped into EditModeProvider because every
+  // accordion needs its own edit mode context
+  return (
+    <EditModeProvider defaultModified={defaultModified}>
+      <EditableAccordion {...props} />
+    </EditModeProvider>
+  );
+};
+
+EditableAccordionWrapper.propTypes = {
+  /** Title text displayed in the accordion summary */
+  title: PropTypes.string.isRequired,
+
+  /** If true, accordion is initially expanded */
+  defaultExpanded: PropTypes.bool,
+
+  /** If true, modified indicator is initially displayed in accordion summary */
+  defaultModified: PropTypes.bool,
+
+  /** If true, accordion cannot be collapsed or expanded */
+  disabled: PropTypes.bool,
+
+  /** If true, renders a loading placeholder in place of the accordion */
+  loading: PropTypes.bool,
+
+  /** Called when the accordion is collapsed or expanded */
+  onChange: PropTypes.func,
+};
 
 export default EditableAccordionWrapper;
