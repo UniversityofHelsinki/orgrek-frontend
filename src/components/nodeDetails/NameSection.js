@@ -2,44 +2,35 @@ import React from 'react';
 import EditableAccordion from '../EditableAccordion';
 import { useTranslation } from 'react-i18next';
 import AttributesTable from '../attributes/AttributesTable';
-import useAttributes from '../../hooks/useAttributes';
 import Validity from '../attributes/Validity';
 import EditNameForm from './EditNameForm';
 import EditableContent from '../EditableContent';
 import Placeholder from '../Placeholder';
+import { useNodeId } from '../../hooks/useNodeId';
+import {
+  useGetNameAttributesQuery,
+  useSaveNameAttributesMutation,
+} from '../../store';
+import useSortAttributesByDate from '../../hooks/useSortAttributesByDate';
 
 const NameSection = () => {
   const { t } = useTranslation();
-  const { nameAttributes } = useAttributes();
+  const nodeId = useNodeId();
+  const { data, error, isFetching } = useGetNameAttributesQuery(nodeId);
+  const [saveNameAttributes, saveResult] = useSaveNameAttributesMutation();
+  const sortedData = useSortAttributesByDate(data);
 
-  const sortNameAttributesByDate = (elems, order) => {
-    let result = [];
-    for (let property in order) {
-      const filteredBatch = elems.filter((e) => {
-        return e.key === property;
-      });
-      filteredBatch.sort((a, b) => {
-        return (
-          (!(a.endDate || b.endDate) && 0) ||
-          (!a.endDate && -1) ||
-          (!b.endDate && 1) ||
-          new Date(b.endDate) - new Date(a.endDate)
-        );
-      });
-      result.push(filteredBatch);
-    }
-    return result.flat();
+  // TODO: show success snackbar when saveResult is completed
+  // success message t('update_attributes_success')
+  // TODO: show error snackbar if saveResult has error
+
+  if (error) {
+    // TODO: Fetching data failed, show error snackbar
+  }
+
+  const handleSubmit = (values) => {
+    // TODO: call and return saveNameAttributes({ nodeId, values }).unwrap()
   };
-
-  const orderNameAttributesByLanguage = (elems) => {
-    const order = { name_fi: 0, name_sv: 1, name_en: 2, default: 3 };
-    elems.sort((a, b) => order[a.key] - order[b.key]);
-    return sortNameAttributesByDate(elems, order);
-  };
-
-  const nameInfoDataOrderedByLanguage = nameAttributes
-    ? orderNameAttributesByLanguage(nameAttributes)
-    : [];
 
   const columns = [
     { label: t('text_language_header'), render: (item) => t(item.key) },
@@ -53,37 +44,29 @@ const NameSection = () => {
   ];
 
   const title = t('name_info');
-  const empty = nameInfoDataOrderedByLanguage.length === 0;
+  const empty = sortedData.length === 0;
 
-  const initialValues = {
-    nameFi: nameInfoDataOrderedByLanguage.filter(
-      (value) => value.key === 'name_fi'
-    ),
-    nameSv: nameInfoDataOrderedByLanguage.filter(
-      (value) => value.key === 'name_sv'
-    ),
-    nameEn: nameInfoDataOrderedByLanguage.filter(
-      (value) => value.key === 'name_en'
-    ),
-  };
-
-  const handleSubmit = (values) => {
-    // TODO
-  };
+  const nameFi = sortedData.filter((value) => value.key === 'name_fi');
+  const nameSv = sortedData.filter((value) => value.key === 'name_sv');
+  const nameEn = sortedData.filter((value) => value.key === 'name_en');
 
   const renderedContent = (
     <AttributesTable
       columns={columns}
-      data={nameInfoDataOrderedByLanguage}
+      data={[...nameFi, ...nameSv, ...nameEn]}
       summary={title}
     />
   );
 
   return (
-    <EditableAccordion title={title}>
+    <EditableAccordion
+      title={title}
+      loading={isFetching}
+      defaultExpanded={!empty}
+    >
       <EditableContent
-        renderEditor={() => <EditNameForm />}
-        initialValues={initialValues}
+        editorComponent={<EditNameForm />}
+        initialValues={{ nameFi, nameSv, nameEn }}
         onSubmit={handleSubmit}
       >
         <Placeholder empty={empty} placeholder={t('nameInfo.empty')}>
