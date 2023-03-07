@@ -5,6 +5,8 @@ import AttributesTable from '../attributes/AttributesTable';
 import { useSelector } from 'react-redux';
 import Validity from '../attributes/Validity';
 import Placeholder from '../Placeholder';
+import useSortAttributesByDate from '../../hooks/useSortAttributesByDate';
+import useSortAttributesByLanguage from '../../hooks/useSortAttributesByLanguage';
 
 const DisplayNameSection = () => {
   const { t } = useTranslation();
@@ -32,14 +34,18 @@ const DisplayNameSection = () => {
       ),
     },
   ];
+  const sortedAttributesByDate = data ? useSortAttributesByDate(data) : [];
+  const sortedData = data
+    ? useSortAttributesByLanguage(sortedAttributesByDate)
+    : [];
 
   const title = t('display_name_info');
-  const empty = data.length === 0;
+  const empty = sortedData.length === 0;
 
   return (
     <EditableAccordion title={title}>
       <Placeholder empty={empty} placeholder={t('displayName.empty')}>
-        <AttributesTable columns={columns} data={data} summary={title} />
+        <AttributesTable columns={columns} data={sortedData} summary={title} />
       </Placeholder>
     </EditableAccordion>
   );
