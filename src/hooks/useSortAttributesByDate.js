@@ -1,6 +1,7 @@
 const useSortAttributesByDate = (elems) => {
-  let result = [];
-  elems.sort((a, b) => {
+  let result = [...elems];
+
+  result.sort((a, b) => {
     return (
       (!(a.endDate || b.endDate) && 0) ||
       (!a.endDate && -1) ||
@@ -8,8 +9,8 @@ const useSortAttributesByDate = (elems) => {
       new Date(b.endDate) - new Date(a.endDate)
     );
   });
-  result.push(elems);
-  return result.flat();
+
+  return result;
 };
 
 export default useSortAttributesByDate;
