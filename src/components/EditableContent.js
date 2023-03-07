@@ -36,16 +36,13 @@ const EditableContent = ({
   initialValues,
   validate,
   onSubmit,
-  successMessage = 'update_attributes_success',
   children,
 }) => {
   const { t } = useTranslation();
   const { editMode, edit, close } = useEditMode();
 
   const handleSubmit = (values) => {
-    close();
-    onSubmit(values);
-    // TODO: Display successMessage in snackbar (call Redux dispatch)
+    onSubmit(values).then(() => close());
   };
 
   const actions = { edit };
