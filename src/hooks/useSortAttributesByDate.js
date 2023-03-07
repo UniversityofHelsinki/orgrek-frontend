@@ -1,4 +1,8 @@
 const useSortAttributesByDate = (elems) => {
+  if (!elems) {
+    return [];
+  }
+
   let result = [...elems];
 
   result.sort((a, b) => {
