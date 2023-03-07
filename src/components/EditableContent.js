@@ -32,7 +32,7 @@ const FormActions = () => {
 
 const EditableContent = ({
   renderActions,
-  renderEditor,
+  editorComponent,
   initialValues,
   validate,
   onSubmit,
@@ -58,7 +58,6 @@ const EditableContent = ({
   );
 
   if (editMode) {
-    const renderedEditor = renderEditor();
     return (
       <FormContextProvider
         initialValues={initialValues}
@@ -67,7 +66,7 @@ const EditableContent = ({
       >
         <Form>
           <Stack spacing={2}>
-            {renderedEditor}
+            {editorComponent}
             <FormActions />
           </Stack>
         </Form>
