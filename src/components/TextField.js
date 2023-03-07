@@ -5,7 +5,7 @@ import MuiTextField, {
 import Box from '@mui/material/Box';
 
 const TextField = React.forwardRef((props, ref) => {
-  const { inputProps, onFocus, onBlur, helperText, ...other } = props;
+  const { onFocus, onBlur, helperText, ...other } = props;
   const maxLength = props.inputProps?.maxLength;
 
   const [visible, setVisible] = React.useState(false);
