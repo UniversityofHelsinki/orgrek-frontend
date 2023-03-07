@@ -4,7 +4,7 @@ import isValid from 'date-fns/isValid';
 import format from 'date-fns/format';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Unstable_Grid2';
-import TextField from '@mui/material/TextField';
+import TextField from '../TextField';
 import DateField from '../DateField';
 import classNames from 'classnames';
 import IconButton from '@mui/material/IconButton';
@@ -124,6 +124,7 @@ const AttributeEditorRow = ({
     required: true,
     error: Boolean(valueError),
     helperText: valueError || ' ',
+    inputProps: { maxLength: 250 },
   };
 
   const renderedValueField = renderValueField ? (
