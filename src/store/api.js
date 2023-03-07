@@ -20,9 +20,10 @@ export const api = createApi({
       invalidatesTags: (result, error, nodeId) => [
         { type: 'NameAttributes', nodeId },
       ],
-      query: (nodeId) => ({
+      query: ({ nodeId, values }) => ({
         url: `/node/attributes/names/${nodeId}`,
         method: 'PUT',
+        body: values,
       }),
     }),
   }),
