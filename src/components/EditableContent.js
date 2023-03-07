@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next';
 import useForm from '../hooks/useForm';
 import { FormContextProvider } from '../contexts/FormContext';
 import IfAdmin from './auth/IfAdmin';
+import PropTypes from 'prop-types';
 
 /**
  * Submit and cancel buttons are defined in this subcomponent because useForm
@@ -100,6 +101,35 @@ const EditableContent = ({
       <div>{children}</div>
     </Stack>
   );
+};
+
+EditableContent.propTypes = {
+  /** Content displayed in edit mode */
+  editorComponent: PropTypes.element.isRequired,
+
+  /** Initial form values passed to form context */
+  initialValues: PropTypes.object.isRequired,
+
+  /**
+   * Called when the form is submitted. Takes form values as the first arg.
+   * Must return a Promise. Closes edit mode when the promise is resolved.
+   * Remains in edit mode if the promise is rejected.
+   */
+  onSubmit: PropTypes.func.isRequired,
+
+  /**
+   * Optional callback for validating form values.
+   * Gets called every time when the form values change.
+   * Takes form values as the first arg. Returns a map of error messages.
+   */
+  validate: PropTypes.func,
+
+  /**
+   * Pass a function to customize action buttons displayed above content.
+   * Takes a map of default action handlers (i.e. edit) as the first arg.
+   * Use them to render the default actions.
+   */
+  renderActions: PropTypes.func,
 };
 
 export default EditableContent;
