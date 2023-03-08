@@ -24,7 +24,7 @@ const store = configureStore({
     hierarchyFilters: hierarchyFilterReducer,
     editModeReducer: editModeReducer,
   },
-  middleware: [thunk],
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(thunk),
 });
 
 syncTranslationWithStore(store);
