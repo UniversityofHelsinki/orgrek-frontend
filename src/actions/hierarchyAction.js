@@ -1,11 +1,11 @@
-export const fetchNodeParents = (uniqueId, selectedDay) => {
+export const fetchNodeParents = (uniqueId, selectedDay, selectedHierarchy) => {
   const ORGREK_BACKEND_SERVER =
     process.env.REACT_APP_ORGREK_BACKEND_SERVER || '';
   const date = selectedDay
     ? selectedDay.toLocaleDateString('fi-FI')
     : new Date().toLocaleDateString('fi-FI');
   const PATH = '/api/node/parents/';
-  const PARAMS = `${uniqueId}/${date}`;
+  const PARAMS = `${uniqueId}/${date}/${selectedHierarchy}`;
   return async (dispatch) => {
     let response = await fetch(`${ORGREK_BACKEND_SERVER}${PATH}${PARAMS}`, {
       headers: { 'Content-Type': 'application/json' },
@@ -26,14 +26,18 @@ export const apiGetParentsSuccessCall = (data) => {
   };
 };
 
-export const fetchNodeParentsHistory = (uniqueId, selectedDay) => {
+export const fetchNodeParentsHistory = (
+  uniqueId,
+  selectedDay,
+  selectedHierarchy
+) => {
   const ORGREK_BACKEND_SERVER =
     process.env.REACT_APP_ORGREK_BACKEND_SERVER || '';
   const date = selectedDay
     ? selectedDay.toLocaleDateString('fi-FI')
     : new Date().toLocaleDateString('fi-FI');
   const PATH = '/api/node/historyandcurrent/parents/';
-  const PARAMS = `${uniqueId}/${date}`;
+  const PARAMS = `${uniqueId}/${date}/${selectedHierarchy}`;
   return async (dispatch) => {
     let response = await fetch(`${ORGREK_BACKEND_SERVER}${PATH}${PARAMS}`, {
       headers: { 'Content-Type': 'application/json' },
@@ -80,14 +84,18 @@ export const apiGetParentsAllSuccess = (data) => {
   };
 };
 
-export const fetchNodeParentsFuture = (uniqueId, selectedDay) => {
+export const fetchNodeParentsFuture = (
+  uniqueId,
+  selectedDay,
+  selectedHierarchy
+) => {
   const ORGREK_BACKEND_SERVER =
     process.env.REACT_APP_ORGREK_BACKEND_SERVER || '';
   const date = selectedDay
     ? selectedDay.toLocaleDateString('fi-FI')
     : new Date().toLocaleDateString('fi-FI');
   const PATH = '/api/node/futureandcurrent/parents/';
-  const PARAMS = `${uniqueId}/${date}`;
+  const PARAMS = `${uniqueId}/${date}/${selectedHierarchy}`;
   return async (dispatch) => {
     let response = await fetch(`${ORGREK_BACKEND_SERVER}${PATH}${PARAMS}`, {
       headers: { 'Content-Type': 'application/json' },
@@ -108,14 +116,14 @@ export const apiGetParentsFutureSuccessCall = (data) => {
   };
 };
 
-export const fetchNodeChildren = (uniqueId, selectedDay) => {
+export const fetchNodeChildren = (uniqueId, selectedDay, selectedHierarchy) => {
   const ORGREK_BACKEND_SERVER =
     process.env.REACT_APP_ORGREK_BACKEND_SERVER || '';
   const date = selectedDay
     ? selectedDay.toLocaleDateString('fi-FI')
     : new Date().toLocaleDateString('fi-FI');
   const PATH = '/api/node/children/';
-  const PARAMS = `${uniqueId}/${date}`;
+  const PARAMS = `${uniqueId}/${date}/${selectedHierarchy}`;
   return async (dispatch) => {
     let response = await fetch(`${ORGREK_BACKEND_SERVER}${PATH}${PARAMS}`, {
       headers: { 'Content-Type': 'application/json' },
@@ -136,14 +144,18 @@ export const apiGetChildrenSuccessCall = (data) => {
   };
 };
 
-export const fetchNodeChildrenHistory = (uniqueId, selectedDay) => {
+export const fetchNodeChildrenHistory = (
+  uniqueId,
+  selectedDay,
+  selectedHierarchy
+) => {
   const ORGREK_BACKEND_SERVER =
     process.env.REACT_APP_ORGREK_BACKEND_SERVER || '';
   const date = selectedDay
     ? selectedDay.toLocaleDateString('fi-FI')
     : new Date().toLocaleDateString('fi-FI');
   const PATH = '/api/node/historyandcurrent/children/';
-  const PARAMS = `${uniqueId}/${date}`;
+  const PARAMS = `${uniqueId}/${date}/${selectedHierarchy}`;
   return async (dispatch) => {
     let response = await fetch(`${ORGREK_BACKEND_SERVER}${PATH}${PARAMS}`, {
       headers: { 'Content-Type': 'application/json' },
@@ -190,14 +202,18 @@ export const apiGetNodeChildrenAll = (data) => {
   };
 };
 
-export const fetchNodeChildrenFuture = (uniqueId, selectedDay) => {
+export const fetchNodeChildrenFuture = (
+  uniqueId,
+  selectedDay,
+  selectedHierarchy
+) => {
   const ORGREK_BACKEND_SERVER =
     process.env.REACT_APP_ORGREK_BACKEND_SERVER || '';
   const date = selectedDay
     ? selectedDay.toLocaleDateString('fi-FI')
     : new Date().toLocaleDateString('fi-FI');
   const PATH = '/api/node/futureandcurrent/children/';
-  const PARAMS = `${uniqueId}/${date}`;
+  const PARAMS = `${uniqueId}/${date}/${selectedHierarchy}`;
   return async (dispatch) => {
     let response = await fetch(`${ORGREK_BACKEND_SERVER}${PATH}${PARAMS}`, {
       headers: { 'Content-Type': 'application/json' },
