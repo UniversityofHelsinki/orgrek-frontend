@@ -2,12 +2,13 @@ import FormContext from '../contexts/FormContext';
 import { useContext } from 'react';
 
 /**
- * Use this hook to access form value and functions
+ * Use this hook to access form values, validation errors and other form state
+ * variables.
  *
- * @return {unknown}
+ * This hook can be used only in components inside FormContextProvider.
  */
-const useFormContext = () => {
+const useForm = () => {
   return useContext(FormContext);
 };
 
-export default useFormContext;
+export default useForm;
