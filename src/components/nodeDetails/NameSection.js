@@ -3,7 +3,7 @@ import EditableAccordion from '../EditableAccordion';
 import { useTranslation } from 'react-i18next';
 import AttributesTable from '../attributes/AttributesTable';
 import Validity from '../attributes/Validity';
-import EditNameForm from './EditNameForm';
+import NameEditor from './NameEditor';
 import EditableContent from '../EditableContent';
 import Placeholder from '../Placeholder';
 import { useNodeId } from '../../hooks/useNodeId';
@@ -91,7 +91,7 @@ const NameSection = () => {
       defaultExpanded={!empty}
     >
       <EditableContent
-        editorComponent={<EditNameForm />}
+        editorComponent={<NameEditor />}
         validate={validate}
         initialValues={toFormValues(sortedData)}
         onSubmit={handleSubmit}

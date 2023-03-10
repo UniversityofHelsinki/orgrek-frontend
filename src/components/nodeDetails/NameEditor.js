@@ -4,7 +4,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import useForm from '../../hooks/useForm';
 
-const EditNameForm = () => {
+const NameEditor = () => {
   const { t } = useTranslation();
   const { values, setValues } = useForm();
 
@@ -32,4 +32,4 @@ const EditNameForm = () => {
   );
 };
 
-export default EditNameForm;
+export default NameEditor;
