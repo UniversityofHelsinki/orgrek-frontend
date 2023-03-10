@@ -1,5 +1,5 @@
 import React from 'react';
-import TextField from '@mui/material/TextField';
+import TextField from '../../../components/TextField';
 import { useState } from 'react';
 
 export default {
@@ -14,6 +14,9 @@ export const Basic = {
     required: false,
     disabled: false,
     error: false,
+    inputProps: {
+      maxLength: 30,
+    },
   },
   render: (args) => {
     const [value, setValue] = useState(args.value);
@@ -35,6 +38,9 @@ export const FormProps = {
     value: 'Text field',
     helperText: 'Assistive text',
     required: true,
+    inputProps: {
+      maxLength: 30,
+    },
   },
 };
 
