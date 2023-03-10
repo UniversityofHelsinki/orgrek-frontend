@@ -155,7 +155,8 @@ const AttributeEditorRow = ({
       onError={(reason, value) => {
         if (reason) {
           //setStartDateError(t('reason')); Kommenteissa, että näkee virheen "nimen",
-          //joka lisätään käännösteksteihin
+          //joka lisätään käännösteksteihin. Tämä otetaan käyttöön kun pääsee lisäämään
+          //käännöstekstin
           setStartDateError(reason);
           setErrorInStartDate(true);
         } else {
@@ -178,7 +179,8 @@ const AttributeEditorRow = ({
       onError={(reason, value) => {
         if (reason) {
           //setEndDateError(t('reason')); Kommenteissa, että näkee virheen "nimen",
-          //joka lisätään käännösteksteihin
+          //joka lisätään käännösteksteihin. Tämä otetaan käyttöön kun pääsee lisäämään
+          //käännöstekstin
           setEndDateError(reason);
           setErrorInEndDate(true);
         } else {
