@@ -31,7 +31,8 @@ export const FormContextProvider = ({
     setDirty(false);
   };
 
-  const valid = Object.keys(errors).length === 0;
+  // Form is invalid when errors contain at least one truthy value
+  const valid = Object.values(errors).every((error) => !error);
 
   const context = { values, setValues, submit, reset, dirty, valid, errors };
 
