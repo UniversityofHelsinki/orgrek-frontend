@@ -9,10 +9,40 @@ import useForm from '../hooks/useForm';
 import { FormContextProvider } from '../contexts/FormContext';
 import IfAdmin from './auth/IfAdmin';
 import PropTypes from 'prop-types';
+import Typography from '@mui/material/Typography';
 
 /**
- * Submit and cancel buttons are defined in this subcomponent because useForm
- * hook can be used only inside FormContextProvider.
+ * Renders form validation error message.
+ *
+ * Errors are rendered in this subcomponent because useForm hook cannot be used
+ * directly in EditableContent, as it must be called inside FormContextProvider.
+ */
+const ValidationResult = () => {
+  const { errors } = useForm();
+
+  if (!errors.error) {
+    return null;
+  }
+
+  // Display form validation error returned from validate function
+  // errors.error is now just a single message for the whole form, but it can
+  // be changed into something else if needed.
+  //
+  // Expects errors.error to be already translated. The message may contain
+  // also variables, therefore the validator function should take care of the
+  // translation.
+  return (
+    <Typography align="right" color="error.main">
+      {errors.error}
+    </Typography>
+  );
+};
+
+/**
+ * Renders submit and cancel buttons.
+ *
+ * Buttons are rendered in this subcomponent because useForm hook cannot be used
+ * directly in EditableContent, as it must be called inside FormContextProvider.
  */
 const FormActions = () => {
   const { t } = useTranslation();
@@ -76,6 +106,7 @@ const EditableContent = ({
         <Form>
           <Stack spacing={2}>
             {editorComponent}
+            <ValidationResult />
             <FormActions />
           </Stack>
         </Form>
@@ -83,6 +114,7 @@ const EditableContent = ({
     );
   }
 
+  // Default actions contains edit button above the view mode content
   const defaultActions = (
     <IfAdmin>
       <ActionBar>
