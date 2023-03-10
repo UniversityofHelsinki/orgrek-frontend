@@ -17,19 +17,21 @@ import PropTypes from 'prop-types';
 const FormActions = () => {
   const { t } = useTranslation();
   const { close, setModified } = useEditMode();
-  const { dirty } = useForm();
+  const { dirty, valid } = useForm();
 
   // Update modified state for EditableAccordion when form values become modified
   useEffect(() => {
     setModified(dirty);
   }, [dirty]);
 
+  const canSubmit = dirty && valid;
+
   return (
     <ActionBar>
       <Button variant="outlined" onClick={close}>
         {t('cancel_button')}
       </Button>
-      <Button variant="contained" type="submit">
+      <Button variant="contained" type="submit" loading disabled={!canSubmit}>
         {t('edit_mode_save_button')}
       </Button>
     </ActionBar>
