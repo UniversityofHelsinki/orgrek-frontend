@@ -48,6 +48,8 @@ const AttributeEditorRow = ({
 
     if (!newValue) {
       setValueError(t('attribute.required'));
+    } else if (newValue.startsWith(' ')) {
+      setValueError(t('attribute.startsWithSpace'));
     } else {
       setValueError(null);
     }
@@ -56,6 +58,13 @@ const AttributeEditorRow = ({
       ...value,
       value: newValue,
     });
+  };
+
+  const handleLeavingFocus = (event) => {
+    const newValue = event.target.value;
+    if (newValue.endsWith(' ')) {
+      setValueError(t('attribute.endsWithSpace'));
+    }
   };
 
   const handleDateStartChange = (date) => {
@@ -125,6 +134,7 @@ const AttributeEditorRow = ({
     error: Boolean(valueError),
     helperText: valueError || ' ',
     inputProps: { maxLength: 250 },
+    onBlur: handleLeavingFocus,
   };
 
   const renderedValueField = renderValueField ? (
