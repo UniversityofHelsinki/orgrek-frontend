@@ -1,5 +1,7 @@
 import { mockGetNameAttributes, withMockStore } from '../../../mockStore';
 import NameSection from '../../../components/nodeDetails/NameSection';
+import { expect } from '@storybook/jest';
+import { userEvent, waitFor, within } from '@storybook/testing-library';
 
 const nodeId = '1';
 
@@ -104,4 +106,28 @@ export const ShowHistory = {
       },
     }),
   ],
+};
+
+export const EditMode = {
+  ...Default,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    await waitFor(async () => {
+      await expect(canvas.getByTestId('editButton')).toBeInTheDocument();
+    });
+
+    await userEvent.click(canvas.getByTestId('editButton'));
+  },
+};
+
+export const Modified = {
+  ...EditMode,
+  play: async (context) => {
+    await EditMode.play(context);
+
+    const canvas = within(context.canvasElement);
+
+    await userEvent.type(canvas.getAllByRole('textbox')[2], '31.12.2023');
+  },
 };
