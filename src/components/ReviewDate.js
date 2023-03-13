@@ -34,9 +34,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   onDayChange: (date) => {
-    isValid(date)
-      ? dispatch(changeDate(new Date(date).toLocaleDateString('fi-FI')))
-      : '';
+    isValid(date) ? dispatch(changeDate(new Date(date))) : '';
   },
 });
 
