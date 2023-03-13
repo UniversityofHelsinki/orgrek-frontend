@@ -118,7 +118,7 @@ const EditableContent = ({
   const defaultActions = (
     <IfAdmin>
       <ActionBar>
-        <Button variant="outlined" onClick={edit}>
+        <Button variant="outlined" onClick={edit} data-testid="editButton">
           {t('edit_mode_edit_button')}
         </Button>
       </ActionBar>
