@@ -32,7 +32,7 @@ const NameSection = () => {
   const sortedData = useSortAttributesByDate(data);
 
   // In view mode filter history and future depending on selection
-  const sortedAndFilteredData = useFilterAttributesByDate(data);
+  const sortedAndFilteredData = useFilterAttributesByDate(sortedData);
 
   // TODO: show success snackbar when saveResult is completed
   // success message t('update_attributes_success')
