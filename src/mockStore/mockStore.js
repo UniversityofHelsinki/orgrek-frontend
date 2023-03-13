@@ -7,13 +7,16 @@ import { dayReducer } from './mockDay';
 import { nodeDetailsViewReducer } from './mockNodeDetailsView';
 import { hierarchyFiltersReducer } from './mockHierarchyFilters';
 import { editModeReducer } from './mockEditMode';
+import { api } from '../store';
 import { Provider } from 'react-redux';
 import React from 'react';
+import { setupListeners } from '@reduxjs/toolkit/query';
 
-export const configureMockStore = (preloadedState = {}) =>
-  configureStore({
+export const configureMockStore = (preloadedState = {}) => {
+  const store = configureStore({
     preloadedState,
     reducer: {
+      [api.reducerPath]: api.reducer,
       tree: treeReducer,
       hr: hierarchyReducer,
       nrd: nodeReducer,
@@ -23,7 +26,14 @@ export const configureMockStore = (preloadedState = {}) =>
       hierarchyFilters: hierarchyFiltersReducer,
       editModeReducer: editModeReducer,
     },
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware().concat(api.middleware),
   });
+
+  setupListeners(store.dispatch);
+
+  return store;
+};
 
 /**
  * Configures Redux store from initial state and any additional test data
