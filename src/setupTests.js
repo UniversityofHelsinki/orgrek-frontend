@@ -15,6 +15,8 @@ global.crypto = {
   randomUUID: jest.fn(),
 };
 
+global.fetch = jest.fn();
+
 setGlobalConfig({
   decorators: [
     (Story) => (
