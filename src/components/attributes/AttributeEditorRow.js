@@ -231,7 +231,7 @@ AttributeEditorRow.propTypes = {
   /** Attribute value with start and end dates */
   value: PropTypes.shape({
     /** Must be unique on every row */
-    id: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
 
     /** Attribute value */
     value: PropTypes.string,

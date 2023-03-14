@@ -41,6 +41,7 @@
     "@storybook/addon-interactions": "^6.5.16",
     "@storybook/addon-links": "^6.5.16",
     "@storybook/builder-webpack5": "^6.5.16",
+    "@storybook/jest": "^0.0.10",
     "@storybook/manager-webpack5": "^6.5.16",
     "@storybook/node-logger": "^6.5.16",
     "@storybook/preset-create-react-app": "^4.1.2",
@@ -59,6 +60,8 @@
     "husky": "^8.0.3",
     "json-server": "^0.16.3",
     "lint-staged": "^13.1.1",
+    "msw": "^1.1.0",
+    "msw-storybook-addon": "^1.8.0",
     "prettier": "2.8.4",
     "react-scripts": "^5.0.0",
     "react-test-renderer": "^17.0.2",
@@ -81,6 +84,7 @@
     "start:server": "json-server --watch db.json --routes routes.json  --port 3003",
     "dev": "REACT_APP_GIT_HASH=\"$(git rev-parse --short=7 HEAD)\" react-scripts start",
     "build": "REACT_APP_GIT_HASH=\"$(git rev-parse --short=7 HEAD)\" react-scripts build",
+    "postbuild": "rm build/mockServiceWorker.js",
     "test": "jest --coverage",
     "eject": "react-scripts eject",
     "lint": "eslint --fix .",
@@ -122,5 +126,8 @@
   "lint-staged": {
     "*.{js,jsx}": "eslint --cache --fix",
     "*.{js,jsx,json,css,html,yml,md}": "prettier --write"
+  },
+  "msw": {
+    "workerDirectory": "public"
   }
 }
