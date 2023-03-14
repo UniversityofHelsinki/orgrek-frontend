@@ -18,7 +18,7 @@ export const Default = {
     attributeLabel: 'Attribuutti',
     data: [
       {
-        id: '1001',
+        id: 1001,
         value: 'value3',
         startDate: '2023-01-01',
         endDate: null,
@@ -26,7 +26,7 @@ export const Default = {
         deleted: false,
       },
       {
-        id: '1002',
+        id: 1002,
         value: 'value2',
         startDate: '2022-01-01',
         endDate: '2022-12-31',
@@ -34,7 +34,7 @@ export const Default = {
         deleted: false,
       },
       {
-        id: '1003',
+        id: 1003,
         value: 'value1',
         startDate: null,
         endDate: '2021-12-31',

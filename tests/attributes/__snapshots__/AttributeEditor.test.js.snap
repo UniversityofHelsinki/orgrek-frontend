@@ -57,6 +57,7 @@ exports[`Renders ActionMenuOpen story 1`] = `
                       aria-invalid="false"
                       class="MuiInputBase-input MuiOutlinedInput-input css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
                       id="mui-1"
+                      maxlength="250"
                       required=""
                       type="text"
                       value="value3"
@@ -81,9 +82,11 @@ exports[`Renders ActionMenuOpen story 1`] = `
                     id="mui-1-helper-text"
                   >
                     <span
-                      class="notranslate"
+                      class="MuiBox-root css-gg4vpm"
                     >
-                      ​
+                      <span>
+                         
+                      </span>
                     </span>
                   </p>
                 </div>
@@ -316,6 +319,7 @@ exports[`Renders ActionMenuOpen story 1`] = `
                       aria-invalid="false"
                       class="MuiInputBase-input MuiOutlinedInput-input css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
                       id="mui-4"
+                      maxlength="250"
                       required=""
                       type="text"
                       value="value2"
@@ -340,9 +344,11 @@ exports[`Renders ActionMenuOpen story 1`] = `
                     id="mui-4-helper-text"
                   >
                     <span
-                      class="notranslate"
+                      class="MuiBox-root css-gg4vpm"
                     >
-                      ​
+                      <span>
+                         
+                      </span>
                     </span>
                   </p>
                 </div>
@@ -569,6 +575,7 @@ exports[`Renders ActionMenuOpen story 1`] = `
                       aria-invalid="false"
                       class="MuiInputBase-input MuiOutlinedInput-input css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
                       id="mui-7"
+                      maxlength="250"
                       required=""
                       type="text"
                       value="value1"
@@ -593,9 +600,11 @@ exports[`Renders ActionMenuOpen story 1`] = `
                     id="mui-7-helper-text"
                   >
                     <span
-                      class="notranslate"
+                      class="MuiBox-root css-gg4vpm"
                     >
-                      ​
+                      <span>
+                         
+                      </span>
                     </span>
                   </p>
                 </div>
@@ -904,6 +913,7 @@ exports[`Renders Default story 1`] = `
                       aria-invalid="false"
                       class="MuiInputBase-input MuiOutlinedInput-input css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
                       id="mui-10"
+                      maxlength="250"
                       required=""
                       type="text"
                       value="value3"
@@ -928,9 +938,11 @@ exports[`Renders Default story 1`] = `
                     id="mui-10-helper-text"
                   >
                     <span
-                      class="notranslate"
+                      class="MuiBox-root css-gg4vpm"
                     >
-                      ​
+                      <span>
+                         
+                      </span>
                     </span>
                   </p>
                 </div>
@@ -1154,6 +1166,7 @@ exports[`Renders Default story 1`] = `
                       aria-invalid="false"
                       class="MuiInputBase-input MuiOutlinedInput-input css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
                       id="mui-13"
+                      maxlength="250"
                       required=""
                       type="text"
                       value="value2"
@@ -1178,9 +1191,11 @@ exports[`Renders Default story 1`] = `
                     id="mui-13-helper-text"
                   >
                     <span
-                      class="notranslate"
+                      class="MuiBox-root css-gg4vpm"
                     >
-                      ​
+                      <span>
+                         
+                      </span>
                     </span>
                   </p>
                 </div>
@@ -1407,6 +1422,7 @@ exports[`Renders Default story 1`] = `
                       aria-invalid="false"
                       class="MuiInputBase-input MuiOutlinedInput-input css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
                       id="mui-16"
+                      maxlength="250"
                       required=""
                       type="text"
                       value="value1"
@@ -1431,9 +1447,11 @@ exports[`Renders Default story 1`] = `
                     id="mui-16-helper-text"
                   >
                     <span
-                      class="notranslate"
+                      class="MuiBox-root css-gg4vpm"
                     >
-                      ​
+                      <span>
+                         
+                      </span>
                     </span>
                   </p>
                 </div>
@@ -1691,6 +1709,7 @@ exports[`Renders DropdownEditor story 1`] = `
                     <input
                       aria-hidden="true"
                       class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
+                      maxlength="250"
                       required=""
                       tabindex="-1"
                       value="value3"
@@ -1961,6 +1980,7 @@ exports[`Renders DropdownEditor story 1`] = `
                     <input
                       aria-hidden="true"
                       class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
+                      maxlength="250"
                       required=""
                       tabindex="-1"
                       value="value2"
@@ -2234,6 +2254,7 @@ exports[`Renders DropdownEditor story 1`] = `
                     <input
                       aria-hidden="true"
                       class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
+                      maxlength="250"
                       required=""
                       tabindex="-1"
                       value="value1"
@@ -2520,6 +2541,7 @@ exports[`Renders Empty story 1`] = `
                       aria-invalid="false"
                       class="MuiInputBase-input MuiOutlinedInput-input css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
                       id="mui-28"
+                      maxlength="250"
                       required=""
                       type="text"
                       value=""
@@ -2544,9 +2566,11 @@ exports[`Renders Empty story 1`] = `
                     id="mui-28-helper-text"
                   >
                     <span
-                      class="notranslate"
+                      class="MuiBox-root css-gg4vpm"
                     >
-                      ​
+                      <span>
+                         
+                      </span>
                     </span>
                   </p>
                 </div>
@@ -2795,6 +2819,7 @@ exports[`Renders InvalidDate story 1`] = `
                       aria-invalid="false"
                       class="MuiInputBase-input MuiOutlinedInput-input css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
                       id="mui-31"
+                      maxlength="250"
                       required=""
                       type="text"
                       value="value3"
@@ -2819,9 +2844,11 @@ exports[`Renders InvalidDate story 1`] = `
                     id="mui-31-helper-text"
                   >
                     <span
-                      class="notranslate"
+                      class="MuiBox-root css-gg4vpm"
                     >
-                      ​
+                      <span>
+                         
+                      </span>
                     </span>
                   </p>
                 </div>
@@ -3045,6 +3072,7 @@ exports[`Renders InvalidDate story 1`] = `
                       aria-invalid="false"
                       class="MuiInputBase-input MuiOutlinedInput-input css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
                       id="mui-34"
+                      maxlength="250"
                       required=""
                       type="text"
                       value="value2"
@@ -3069,9 +3097,11 @@ exports[`Renders InvalidDate story 1`] = `
                     id="mui-34-helper-text"
                   >
                     <span
-                      class="notranslate"
+                      class="MuiBox-root css-gg4vpm"
                     >
-                      ​
+                      <span>
+                         
+                      </span>
                     </span>
                   </p>
                 </div>
@@ -3298,6 +3328,7 @@ exports[`Renders InvalidDate story 1`] = `
                       aria-invalid="false"
                       class="MuiInputBase-input MuiOutlinedInput-input css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
                       id="mui-37"
+                      maxlength="250"
                       required=""
                       type="text"
                       value="value1"
@@ -3322,9 +3353,11 @@ exports[`Renders InvalidDate story 1`] = `
                     id="mui-37-helper-text"
                   >
                     <span
-                      class="notranslate"
+                      class="MuiBox-root css-gg4vpm"
                     >
-                      ​
+                      <span>
+                         
+                      </span>
                     </span>
                   </p>
                 </div>
@@ -3573,6 +3606,7 @@ exports[`Renders ValueRequired story 1`] = `
                       aria-invalid="true"
                       class="MuiInputBase-input MuiOutlinedInput-input css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
                       id="mui-40"
+                      maxlength="250"
                       required=""
                       type="text"
                       value=""
@@ -3596,7 +3630,16 @@ exports[`Renders ValueRequired story 1`] = `
                     class="MuiFormHelperText-root Mui-error MuiFormHelperText-sizeMedium MuiFormHelperText-contained Mui-focused Mui-required css-1wc848c-MuiFormHelperText-root"
                     id="mui-40-helper-text"
                   >
-                    attribute.required
+                    <span
+                      class="MuiBox-root css-gg4vpm"
+                    >
+                      <span>
+                        attribute.required
+                      </span>
+                      <span>
+                        0 / 250
+                      </span>
+                    </span>
                   </p>
                 </div>
               </div>
@@ -3819,6 +3862,7 @@ exports[`Renders ValueRequired story 1`] = `
                       aria-invalid="false"
                       class="MuiInputBase-input MuiOutlinedInput-input css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
                       id="mui-43"
+                      maxlength="250"
                       required=""
                       type="text"
                       value="value2"
@@ -3843,9 +3887,11 @@ exports[`Renders ValueRequired story 1`] = `
                     id="mui-43-helper-text"
                   >
                     <span
-                      class="notranslate"
+                      class="MuiBox-root css-gg4vpm"
                     >
-                      ​
+                      <span>
+                         
+                      </span>
                     </span>
                   </p>
                 </div>
@@ -4072,6 +4118,7 @@ exports[`Renders ValueRequired story 1`] = `
                       aria-invalid="false"
                       class="MuiInputBase-input MuiOutlinedInput-input css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
                       id="mui-46"
+                      maxlength="250"
                       required=""
                       type="text"
                       value="value1"
@@ -4096,9 +4143,11 @@ exports[`Renders ValueRequired story 1`] = `
                     id="mui-46-helper-text"
                   >
                     <span
-                      class="notranslate"
+                      class="MuiBox-root css-gg4vpm"
                     >
-                      ​
+                      <span>
+                         
+                      </span>
                     </span>
                   </p>
                 </div>

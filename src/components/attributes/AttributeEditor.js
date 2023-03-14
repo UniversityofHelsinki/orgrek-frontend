@@ -21,7 +21,7 @@ const AttributeEditor = ({
 }) => {
   const createRow = () => ({
     // Also new rows must have some unique id before they are stored to database
-    id: crypto.randomUUID(),
+    id: Math.floor(Math.random() * -1000000),
     value: null,
     startDate: null,
     endDate: null,
