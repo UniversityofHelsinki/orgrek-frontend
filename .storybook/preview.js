@@ -6,6 +6,7 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { fi } from 'date-fns/locale';
 import theme from '../src/theme';
 import { withRouter } from 'storybook-addon-react-router-v6';
+import { initialize, mswDecorator } from 'msw-storybook-addon';
 import i18n from '../src/i18n';
 
 i18n.init({
@@ -20,6 +21,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-datepicker/dist/react-datepicker.css';
 import '../src/index.css';
 import '../src/App.css';
+
+// Initialize mock service worker
+initialize();
 
 // Use the same decorators for both stories and docs pages
 const CommonDecorators = ({ children }) => (
@@ -61,4 +65,5 @@ export const decorators = [
     </CommonDecorators>
   ),
   withRouter,
+  mswDecorator,
 ];

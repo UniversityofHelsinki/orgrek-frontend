@@ -11,9 +11,7 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { fi } from 'date-fns/locale';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 
-global.crypto = {
-  randomUUID: jest.fn(),
-};
+global.fetch = jest.fn();
 
 setGlobalConfig({
   decorators: [

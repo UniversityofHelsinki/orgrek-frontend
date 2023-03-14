@@ -36,25 +36,27 @@ export const Accordion = ({ children, sx, ...props }) => {
       {...props}
       disableGutters
       elevation={0}
-      sx={{
-        marginBottom: 1.5,
-        backgroundColor: 'grey.100',
-        borderColor: 'grey.100',
-        borderStyle: 'solid',
-        borderWidth: 1,
-        '&:last-of-type': {
-          marginBottom: 0,
-        },
-        '&.Mui-expanded': {
-          backgroundColor: 'background.paper',
-          borderColor: 'grey.500',
+      sx={[
+        {
+          marginBottom: 1.5,
+          backgroundColor: 'grey.100',
+          borderColor: 'grey.100',
           borderStyle: 'solid',
+          borderWidth: 1,
+          '&:last-of-type': {
+            marginBottom: 0,
+          },
+          '&.Mui-expanded': {
+            backgroundColor: 'background.paper',
+            borderColor: 'grey.500',
+            borderStyle: 'solid',
+          },
+          '&:before': {
+            display: 'none',
+          },
         },
-        '&:before': {
-          display: 'none',
-        },
-        ...sx,
-      }}
+        ...(Array.isArray(sx) ? sx : [sx]),
+      ]}
     >
       {children}
     </MuiAccordion>

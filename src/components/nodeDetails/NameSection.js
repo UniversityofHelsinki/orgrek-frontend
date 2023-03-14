@@ -2,41 +2,62 @@ import React from 'react';
 import EditableAccordion from '../EditableAccordion';
 import { useTranslation } from 'react-i18next';
 import AttributesTable from '../attributes/AttributesTable';
-import useAttributes from '../../hooks/useAttributes';
 import Validity from '../attributes/Validity';
+import NameEditor from './NameEditor';
+import EditableContent from '../EditableContent';
+import Placeholder from '../Placeholder';
+import { useNodeId } from '../../hooks/useNodeId';
+import {
+  useGetNameAttributesQuery,
+  useSaveNameAttributesMutation,
+} from '../../store';
+import useSortAttributesByDate from '../../hooks/useSortAttributesByDate';
+import useFilterAttributesByDate from '../../hooks/useFilterAttributesByDate';
+
+const toFormValues = (data) => {
+  const nameFi = data.filter((value) => value.key === 'name_fi');
+  const nameSv = data.filter((value) => value.key === 'name_sv');
+  const nameEn = data.filter((value) => value.key === 'name_en');
+
+  return { nameFi, nameSv, nameEn };
+};
 
 const NameSection = () => {
   const { t } = useTranslation();
-  const { nameAttributes } = useAttributes();
+  const nodeId = useNodeId();
+  const { data, error, isFetching } = useGetNameAttributesQuery(nodeId);
+  const [saveNameAttributes, saveResult] = useSaveNameAttributesMutation();
 
-  const sortNameAttributesByDate = (elems, order) => {
-    let result = [];
-    for (let property in order) {
-      const filteredBatch = elems.filter((e) => {
-        return e.key === property;
-      });
-      filteredBatch.sort((a, b) => {
-        return (
-          (!(a.endDate || b.endDate) && 0) ||
-          (!a.endDate && -1) ||
-          (!b.endDate && 1) ||
-          new Date(b.endDate) - new Date(a.endDate)
-        );
-      });
-      result.push(filteredBatch);
-    }
-    return result.flat();
+  // In edit mode data includes also history and future
+  const sortedData = useSortAttributesByDate(data);
+
+  // In view mode filter history and future depending on selection
+  const sortedAndFilteredData = useFilterAttributesByDate(sortedData);
+
+  // TODO: show success snackbar when saveResult is completed
+  // success message t('update_attributes_success')
+
+  // TODO: show error snackbar if saveResult has error
+
+  if (error) {
+    // TODO: Fetching data failed, show error snackbar
+  }
+
+  // Validates form values every time when the values change
+  // Submit button is disabled when errors contain any truthy values
+  // EditableContent handles displaying form-level validation error messages
+  const validate = (values) => {
+    const errors = {};
+
+    // TODO: add validation rules here
+    // errors.error = t('…');
+
+    return errors;
   };
 
-  const orderNameAttributesByLanguage = (elems) => {
-    const order = { name_fi: 0, name_sv: 1, name_en: 2, default: 3 };
-    elems.sort((a, b) => order[a.key] - order[b.key]);
-    return sortNameAttributesByDate(elems, order);
+  const handleSubmit = (values) => {
+    // TODO: call and return saveNameAttributes({ nodeId, values }).unwrap()
   };
-
-  const nameInfoDataOrderedByLanguage = nameAttributes
-    ? orderNameAttributesByLanguage(nameAttributes)
-    : [];
 
   const columns = [
     { label: t('text_language_header'), render: (item) => t(item.key) },
@@ -50,19 +71,35 @@ const NameSection = () => {
   ];
 
   const title = t('name_info');
-  const empty = nameInfoDataOrderedByLanguage.length === 0;
+  const empty = sortedAndFilteredData.length === 0;
+
+  // Sort by language
+  const { nameFi, nameSv, nameEn } = toFormValues(sortedAndFilteredData);
+
+  const renderedContent = (
+    <AttributesTable
+      columns={columns}
+      data={[...nameFi, ...nameSv, ...nameEn]}
+      summary={title}
+    />
+  );
 
   return (
     <EditableAccordion
       title={title}
-      empty={empty}
-      placeholder={t('nameInfo.empty')}
+      loading={isFetching}
+      defaultExpanded={!empty}
     >
-      <AttributesTable
-        columns={columns}
-        data={nameInfoDataOrderedByLanguage}
-        summary={title}
-      />
+      <EditableContent
+        editorComponent={<NameEditor />}
+        validate={validate}
+        initialValues={toFormValues(sortedData)}
+        onSubmit={handleSubmit}
+      >
+        <Placeholder empty={empty} placeholder={t('nameInfo.empty')}>
+          {renderedContent}
+        </Placeholder>
+      </EditableContent>
     </EditableAccordion>
   );
 };
