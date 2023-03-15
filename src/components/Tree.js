@@ -4,6 +4,7 @@ import Branch from './Branch';
 import { fetchTree, fetchTreeWithAllHierarchies } from '../actions/treeAction';
 import { useTranslation } from 'react-i18next';
 import Card from '@mui/material/Card';
+import { useGetTreeQuery } from '../store';
 
 const traverseTree = (current, target) => {
   if (current.uniqueId === target) {
@@ -22,26 +23,14 @@ const traverseTree = (current, target) => {
 const Tree = (props) => {
   const { i18n } = useTranslation();
   const [pathsToTarget, setPathsToTarget] = useState();
-
-  useEffect(() => {
-    if (props.selectedHierarchy) {
-      props.onFetchTree(props.selectedHierarchy, props.selectedDay);
-    }
-    // eslint-disable-next-line
-  }, [props.selectedHierarchy, props.selectedDay]);
-
-  useEffect(() => {
-    if (props.selectableHierarchies && props.selectableHierarchies.length > 0) {
-      const selectableHierarchies = props.selectableHierarchies.filter(
-        (item) => item !== 'history'
-      );
-      props.onFetchTreeWithAllHierarchies(
-        selectableHierarchies,
-        props.selectedDay
-      );
-    }
-    // eslint-disable-next-line
-  }, [props.selectableHierarchies, props.selectedDay]);
+  const {
+    data: tree,
+    error,
+    isFetching,
+  } = useGetTreeQuery({
+    hierarchies: props.selectedHierarchy ? props.selectedHierarchy : 'talous',
+    selectedDay: props.selectedDay,
+  });
 
   const language = i18n.language === 'ia' ? 'fi' : i18n.language;
 
@@ -49,16 +38,13 @@ const Tree = (props) => {
     if (!props.openTree) {
       setPathsToTarget(undefined);
     }
-    if (props.tree[language] && props.node?.uniqueId && props.openTree) {
-      const foundInTree = traverseTree(
-        props.tree[language],
-        props.node.uniqueId
-      );
+    if (tree && tree[language] && props.node?.uniqueId && props.openTree) {
+      const foundInTree = traverseTree(tree[language], props.node.uniqueId);
       if (foundInTree) {
         setPathsToTarget(foundInTree);
       }
     }
-  }, [props.tree, props.node, props.openTree]);
+  }, [tree, props.node, props.openTree]);
 
   return (
     <Card
@@ -66,9 +52,9 @@ const Tree = (props) => {
       data-testid="tree"
       sx={{ padding: 1, ...props.sx }}
     >
-      {props.tree?.[language] && (
+      {tree?.[language] && (
         <Branch
-          item={props.tree[language]}
+          item={tree[language]}
           openableTree={props.openTree ? pathsToTarget : undefined}
           level={0}
           parent=""
@@ -79,7 +65,6 @@ const Tree = (props) => {
 };
 
 const mapStateToProps = (state) => ({
-  tree: state.tree.tree,
   selectedHierarchy: state.tree.selectedHierarchy,
   selectedDay: state.dr.selectedDay,
   node: state.nrd.node,
@@ -87,11 +72,4 @@ const mapStateToProps = (state) => ({
   selectableHierarchies: state.tree.selectableHierarchies,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  onFetchTree: (selection, selectedDay) =>
-    dispatch(fetchTree(selection, selectedDay)),
-  onFetchTreeWithAllHierarchies: (allHierarchies, selectedDate) =>
-    dispatch(fetchTreeWithAllHierarchies(allHierarchies, selectedDate)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Tree);
+export default connect(mapStateToProps, null)(Tree);
