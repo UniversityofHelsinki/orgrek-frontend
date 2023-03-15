@@ -1,5 +1,7 @@
+import format from 'date-fns/format';
+
 const initialState = {
-  selectedDay: new Date(),
+  selectedDay: format(new Date(), 'yyyy-MM-dd'),
 };
 
 const dayChangeReducer = (state = initialState, action) => {

@@ -101,7 +101,6 @@ const EditButtons = (props) => {
   }, [props.edit]);
 
   useEffect(async () => {
-    console.log('feedback:' + props.feedback);
     if (
       props.feedback &&
       props.feedback.success &&
