@@ -30,7 +30,9 @@ const store = configureStore({
     notifications: notificationsReducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(api.middleware).concat(thunk),
+    getDefaultMiddleware({ serializableCheck: false })
+      .concat(api.middleware)
+      .concat(thunk),
 });
 
 setupListeners(store.dispatch);

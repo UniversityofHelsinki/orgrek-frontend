@@ -93,7 +93,9 @@ const EditableContent = ({
   const { editMode, edit, close } = useEditMode();
 
   const handleSubmit = (values) => {
-    onSubmit(values).then(() => close());
+    onSubmit(values)
+      .then(() => close())
+      .catch((error) => console.log(error));
   };
 
   if (editMode) {
