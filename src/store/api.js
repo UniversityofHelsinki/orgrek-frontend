@@ -17,14 +17,19 @@ export const api = createApi({
       }),
     }),
     saveNameAttributes: builder.mutation({
-      invalidatesTags: (result, error, nodeId) => [
-        { type: 'NameAttributes', nodeId },
-      ],
-      query: ({ nodeId, values }) => ({
-        url: `/node/attributes/names/${nodeId}`,
-        method: 'PUT',
-        body: values,
-      }),
+      invalidatesTags: (result, error, { nodeId }) => {
+        if (error) {
+          return [];
+        }
+        return [{ type: 'NameAttributes', nodeId }];
+      },
+      query: ({ combinedArrays }) => {
+        return {
+          url: `/node/attributes/names`,
+          method: 'PUT',
+          body: combinedArrays,
+        };
+      },
     }),
   }),
 });
