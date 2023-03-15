@@ -34,6 +34,7 @@ const hyPalette = {
     redDark: '#a31621',
     redLight: '#e5053a',
     skyBlue: '#48c5f8',
+    soft: '#b1e7ff', // See 'A new way to use colours' spec
     yellow: '#f9a21a',
   },
 };
@@ -81,14 +82,10 @@ const palette = {
     dark: hyPalette.additional.redDark,
   },
   warning: {
-    main: hyPalette.additional.orange,
+    main: hyPalette.additional.yellow,
   },
   info: {
-    main: hyPalette.additional.skyBlue,
-  },
-  success: {
-    main: hyPalette.additional.greenLight,
-    dark: hyPalette.additional.greenDark,
+    main: hyPalette.additional.soft,
   },
 };
 
