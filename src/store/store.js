@@ -13,6 +13,7 @@ import { textsReducer } from './texts';
 import { userReducer } from './user';
 import { api } from './api';
 import { setupListeners } from '@reduxjs/toolkit/query';
+import { notificationsReducer } from './notifications';
 
 const store = configureStore({
   reducer: {
@@ -26,6 +27,7 @@ const store = configureStore({
     texts: textsReducer,
     hierarchyFilters: hierarchyFilterReducer,
     editModeReducer: editModeReducer,
+    notifications: notificationsReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(api.middleware).concat(thunk),
