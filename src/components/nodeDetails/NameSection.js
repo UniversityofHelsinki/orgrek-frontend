@@ -13,6 +13,7 @@ import {
 } from '../../store';
 import useSortAttributesByDate from '../../hooks/useSortAttributesByDate';
 import useFilterAttributesByDate from '../../hooks/useFilterAttributesByDate';
+import { compareAndCheckDates, valueNotEmpty } from './validations';
 import { parse, isValid, format } from 'date-fns';
 import { fi } from 'date-fns/locale';
 
@@ -45,66 +46,11 @@ const NameSection = () => {
     // TODO: Fetching data failed, show error snackbar
   }
 
-  const validStartDate = (date) => {
-    if (date !== null && !isValid(date)) {
-      const parsedDate = parse(date, 'yyyy-MM-DD', new Date(), { locale: fi });
-      const isValidDate = isValid(parsedDate);
-      return false;
-    }
-    return true;
-  };
-
-  const validEndDate = (date) => {
-    if (date !== null && !isValid(date)) {
-      const parsedDate = parse(date, 'yyyy-MM-DD', new Date(), { locale: fi });
-      const isValidDate = isValid(parsedDate);
-      return false;
-    }
-    return true;
-  };
-
-  const compareStartAndEndDates = (startDate, endDate, days) => {
-    const start_date = new Date(startDate);
-    start_date.setDate(start_date.getDate() + days);
-    start_date.setHours(0, 0, 0, 0);
-
-    if (startDate >= endDate) {
-      return false;
-    }
-
-    const end_date = new Date(endDate);
-    end_date.setDate(end_date.getDate() - days);
-    end_date.setHours(0, 0, 0, 0);
-
-    if (endDate <= startDate) {
-      return false;
-    }
-
-    return true;
-  };
-
   // Validates form values every time when the values change
   // Submit button is disabled when errors contain any truthy values
   // EditableContent handles displaying form-level validation error messages
   const validate = (values) => {
-    let errors = {};
-
-    // TODO: add validation rules here
-    // errors.error = t('…');
-    const arrOfNames = [...values.nameFi, ...values.nameSv, ...values.nameEn];
-    arrOfNames.forEach((elem) => {
-      if (!validStartDate(elem.startDate)) {
-        errors = { error: 'invalid date' };
-      }
-      if (!validEndDate(elem.endDate)) {
-        errors = { error: 'invalid date' };
-      }
-      if (compareStartAndEndDates(elem.startDate, elem.endDate, 3)) {
-        errors = { error: 'invalid date' };
-      }
-    });
-
-    return errors;
+    return { ...valueNotEmpty(values), ...compareAndCheckDates(values) };
   };
 
   const handleSubmit = (values) => {

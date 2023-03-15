@@ -61,8 +61,8 @@ const FormActions = () => {
       <Button variant="outlined" onClick={close}>
         {t('cancel_button')}
       </Button>
-      <Button variant="contained" type="submit" loading disabled={!canSubmit}>
-        {t('edit_mode_save_button')}RR
+      <Button variant="contained" type="submit" disabled={!canSubmit}>
+        {t('edit_mode_save_button')}
       </Button>
     </ActionBar>
   );
