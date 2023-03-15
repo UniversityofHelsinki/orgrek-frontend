@@ -58,12 +58,16 @@ export const apiGetParentsHistorySuccessCall = (data) => {
   };
 };
 
-export const fetchNodeParentsAll = (uniqueId, selectedDay) => {
+export const fetchNodeParentsAll = (
+  uniqueId,
+  selectedDay,
+  selectedHierarchy
+) => {
   const ORGREK_BACKEND_SERVER =
     process.env.REACT_APP_ORGREK_BACKEND_SERVER || '';
   const PATH = `/api/node/all/parents/${uniqueId}/${selectedDay.toLocaleDateString(
     'fi-FI'
-  )}`;
+  )}/${selectedHierarchy}`;
   return async (dispatch) => {
     let response = await fetch(`${ORGREK_BACKEND_SERVER}${PATH}`, {
       headers: { 'Content-Type': 'application/json' },
@@ -176,12 +180,16 @@ export const apiGetChildrenHistorySuccessCall = (data) => {
   };
 };
 
-export const fetchNodeChildrenAll = (uniqueId, selectedDay) => {
+export const fetchNodeChildrenAll = (
+  uniqueId,
+  selectedDay,
+  selectedHierarchy
+) => {
   const ORGREK_BACKEND_SERVER =
     process.env.REACT_APP_ORGREK_BACKEND_SERVER || '';
   const PATH = `/api/node/all/children/${uniqueId}/${selectedDay.toLocaleDateString(
     'fi-FI'
-  )}`;
+  )}/${selectedHierarchy}`;
   return async (dispatch) => {
     let response = await fetch(`${ORGREK_BACKEND_SERVER}${PATH}`, {
       headers: { 'Content-Type': 'application/json' },

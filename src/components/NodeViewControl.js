@@ -92,9 +92,19 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     dispatch(
       fetchNodeFullNamesAll(ownProps.node.uniqueId, ownProps.selectedDay)
     );
-    dispatch(fetchNodeParentsAll(ownProps.node.uniqueId, ownProps.selectedDay));
     dispatch(
-      fetchNodeChildrenAll(ownProps.node.uniqueId, ownProps.selectedDay)
+      fetchNodeParentsAll(
+        ownProps.node.uniqueId,
+        ownProps.selectedDay,
+        ownProps.selectedHierarchy
+      )
+    );
+    dispatch(
+      fetchNodeChildrenAll(
+        ownProps.node.uniqueId,
+        ownProps.selectedDay,
+        ownProps.selectedHierarchy
+      )
     );
     dispatch(
       fetchNodeAttributesHistory(
@@ -117,12 +127,22 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   },
   fetchAllParents: () => {
     dispatch(clearParentsFuture());
-    dispatch(fetchNodeParentsAll(ownProps.node.uniqueId, ownProps.selectedDay));
+    dispatch(
+      fetchNodeParentsAll(
+        ownProps.node.uniqueId,
+        ownProps.selectedDay,
+        ownProps.selectedHierarchy
+      )
+    );
   },
   fetchAllChildren: () => {
     dispatch(clearChildrenFuture());
     dispatch(
-      fetchNodeChildrenAll(ownProps.node.uniqueId, ownProps.selectedDay)
+      fetchNodeChildrenAll(
+        ownProps.node.uniqueId,
+        ownProps.selectedDay,
+        ownProps.selectedHierarchy
+      )
     );
   },
   fetchHistory: (showComing) => {
