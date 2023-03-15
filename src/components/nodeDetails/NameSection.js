@@ -61,10 +61,7 @@ const NameSection = () => {
       ...values.nameFi,
       ...values.nameSv,
     ];
-
     return saveNameAttributes({ combinedArrays, nodeId }).unwrap();
-
-    // TODO: call and return saveNameAttributes({ nodeId, values }).unwrap()
   };
 
   const columns = [
