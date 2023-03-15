@@ -19,8 +19,7 @@ export default {
 export const Default = {
   args: {
     title: 'Title',
-    modified: false,
-    empty: false,
+    defaultModified: false,
     disabled: false,
   },
   render: (args) => (
@@ -28,19 +27,10 @@ export const Default = {
   ),
 };
 
-export const Empty = {
-  ...Default,
-  args: {
-    ...Default.args,
-    empty: true,
-    placeholder: 'Empty placeholder text',
-  },
-};
-
 export const Modified = {
   ...Default,
   args: {
     ...Default.args,
-    modified: true,
+    defaultModified: true,
   },
 };

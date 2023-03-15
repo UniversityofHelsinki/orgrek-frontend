@@ -23,5 +23,5 @@ export const Default = {
 };
 
 export const Empty = {
-  decorators: [withNode()],
+  decorators: [withNode({ nodeAttributes: [] })],
 };

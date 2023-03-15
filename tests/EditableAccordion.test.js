@@ -4,7 +4,7 @@ import { render, screen } from '@testing-library/react';
 import * as stories from '../src/stories/components/EditableAccordion.stories';
 import { composeStories } from '@storybook/testing-react';
 
-const { Default, Modified, Empty } = composeStories(stories);
+const { Default, Modified } = composeStories(stories);
 
 describe('unmodified', () => {
   test('initially expanded', () => {
@@ -39,9 +39,4 @@ describe('modified', () => {
       screen.queryByText('accordion.modifiedSaveBeforeClosing')
     ).toBeVisible();
   });
-});
-
-describe('empty', () => {
-  render(<Empty />);
-  expect(screen.queryByText('Empty placeholder text')).toBeVisible();
 });

@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import useHierarchy from '../../hooks/useHierarchy';
 import HierarchyTable from '../attributes/HierarchyTable';
 import useContentLanguage from '../../hooks/useContentLanguage';
+import Placeholder from '../Placeholder';
 
 const ChildrenSection = () => {
   const { t } = useTranslation();
@@ -15,12 +16,10 @@ const ChildrenSection = () => {
   const empty = data.length === 0;
 
   return (
-    <EditableAccordion
-      title={title}
-      empty={empty}
-      placeholder={t('subunits.empty')}
-    >
-      <HierarchyTable data={data} summary={title} />
+    <EditableAccordion title={title}>
+      <Placeholder empty={empty} placeholder={t('subunits.empty')}>
+        <HierarchyTable data={data} summary={title} />
+      </Placeholder>
     </EditableAccordion>
   );
 };
