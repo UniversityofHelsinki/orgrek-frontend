@@ -10,6 +10,8 @@ import { FormContextProvider } from '../contexts/FormContext';
 import IfAdmin from './auth/IfAdmin';
 import PropTypes from 'prop-types';
 import Typography from '@mui/material/Typography';
+import { showNotification } from '../store';
+import { useDispatch } from 'react-redux';
 
 /**
  * Renders form validation error message.
@@ -88,14 +90,34 @@ const EditableContent = ({
   validate,
   onSubmit,
   children,
+  successMessage = null,
+  errorMessage = null,
 }) => {
   const { t } = useTranslation();
   const { editMode, edit, close } = useEditMode();
+  const dispatch = useDispatch();
 
   const handleSubmit = (values) => {
     onSubmit(values)
-      .then(() => close())
-      .catch((error) => console.log(error));
+      .then(() => {
+        dispatch(
+          showNotification({
+            message: successMessage || t('update_attributes_success'),
+            severity: 'success',
+          })
+        );
+
+        close();
+      })
+      .catch((error) => {
+        console.error(error);
+        dispatch(
+          showNotification({
+            message: errorMessage || t('update_attributes_error'),
+            severity: 'error',
+          })
+        );
+      });
   };
 
   if (editMode) {
@@ -166,6 +188,16 @@ EditableContent.propTypes = {
    * Use them to render the default actions.
    */
   renderActions: PropTypes.func,
+
+  /**
+   * Custom notification message displayed after content has been saved
+   */
+  successMessage: PropTypes.string,
+
+  /**
+   * Custom notification message displayed when saving content fails
+   */
+  errorMessage: PropTypes.string,
 };
 
 export default EditableContent;
