@@ -21,7 +21,6 @@ const traverseTree = (current, target) => {
 };
 
 const Tree = (props) => {
-  console.log(props.selectedHierarchy);
   const { i18n } = useTranslation();
   const [pathsToTarget, setPathsToTarget] = useState();
   const {
