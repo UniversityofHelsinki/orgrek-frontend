@@ -62,7 +62,7 @@ const FormActions = () => {
         {t('cancel_button')}
       </Button>
       <Button variant="contained" type="submit" loading disabled={!canSubmit}>
-        {t('edit_mode_save_button')}
+        {t('edit_mode_save_button')}RR
       </Button>
     </ActionBar>
   );
