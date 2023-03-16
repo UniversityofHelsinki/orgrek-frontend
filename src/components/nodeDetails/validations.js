@@ -2,7 +2,7 @@ import { isValid, parse } from 'date-fns';
 import { fi } from 'date-fns/locale';
 
 export const valueNotEmpty = (values) => {
-  let errors = {};
+  const errors = {};
 
   [...values.nameFi, ...values.nameSv, ...values.nameEn].forEach((value) => {
     if (!value.value.trim()) {
@@ -13,6 +13,7 @@ export const valueNotEmpty = (values) => {
       errors.valueNotEmpty[value.id] = true;
     }
   });
+  return errors;
 };
 
 const validStartDate = (date) => {
@@ -62,7 +63,7 @@ const compareStartAndEndDates = (startDate, endDate, days) => {
 // TODO: add validation rules here
 // errors.error = t('…');
 export const compareAndCheckDates = (values) => {
-  let errors = {};
+  const errors = {};
 
   let arrOfNames = [...values.nameFi, ...values.nameSv, ...values.nameEn];
   arrOfNames.forEach((elem) => {
