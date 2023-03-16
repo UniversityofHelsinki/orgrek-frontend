@@ -84,8 +84,6 @@ const compareStartAndEndDates = (startDate, endDate, days) => {
   return true;
 };
 
-// TODO: add validation rules here
-// errors.error = t('…');
 export const compareAndCheckDates = (values) => {
   const errors = {};
 
