@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import useEditMode from '../hooks/useEditMode';
 import Form from './Form';
 import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
+import Button from './Button';
 import ActionBar from './nodeDetails/ActionBar';
 import { useTranslation } from 'react-i18next';
 import useForm from '../hooks/useForm';
@@ -49,7 +49,7 @@ const ValidationResult = () => {
 const FormActions = () => {
   const { t } = useTranslation();
   const { close, setModified } = useEditMode();
-  const { dirty, valid } = useForm();
+  const { dirty, valid, submitting } = useForm();
 
   // Update modified state for EditableAccordion when form values become modified
   useEffect(() => {
@@ -60,10 +60,15 @@ const FormActions = () => {
 
   return (
     <ActionBar>
-      <Button variant="outlined" onClick={close}>
+      <Button variant="outlined" onClick={close} disabled={submitting}>
         {t('cancel_button')}
       </Button>
-      <Button variant="contained" type="submit" disabled={!canSubmit}>
+      <Button
+        variant="contained"
+        type="submit"
+        loading={submitting}
+        disabled={!canSubmit}
+      >
         {t('edit_mode_save_button')}
       </Button>
     </ActionBar>
