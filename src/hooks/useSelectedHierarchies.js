@@ -23,6 +23,10 @@ const useSelectedHierarchies = () => {
     });
 
   useEffect(() => {
+    setHierarchies(searchParams.get('hierarchies'));
+  }, []);
+
+  useEffect(() => {
     const hierarchies = searchParams.get('hierarchies');
 
     if (hierarchies && selectableHierarchies?.length > 0) {
@@ -41,9 +45,11 @@ const useSelectedHierarchies = () => {
   }, [selectableHierarchies]);
 
   useEffect(() => {
-    const newParams = new URLSearchParams(searchParams.toString());
-    newParams.set('hierarchies', selectedHierarchy);
-    setSearchParams(newParams);
+    if (selectedHierarchy) {
+      const newParams = new URLSearchParams(searchParams.toString());
+      newParams.set('hierarchies', selectedHierarchy);
+      setSearchParams(newParams);
+    }
   }, [selectedHierarchy]);
 };
 
