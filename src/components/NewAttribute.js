@@ -4,7 +4,6 @@ import PickDate from './PickDate';
 import Button from 'react-bootstrap/Button';
 import { connect } from 'react-redux';
 import { fetchNode } from '../actions/nodeAction';
-import { fetchTree } from '../actions/treeAction';
 import { addNewAttributeAction } from '../actions/newAttributeAction';
 import AttributeDropDown from './AttributeDropdown';
 import UnitDropDown from './UnitDropDown';
@@ -169,9 +168,8 @@ const mapDispatchToProps = (dispatch) => ({
   actionAddNewAttribute: (nodeId, attribute, skipValidation) => {
     dispatch(addNewAttributeAction(nodeId, attribute, skipValidation));
   },
-  fetchNodeAndTree: (node, selection, date) => {
+  fetchNodeAndTree: (node) => {
     dispatch(fetchNode(node.uniqueId, true));
-    dispatch(fetchTree(selection, date));
   },
 });
 
