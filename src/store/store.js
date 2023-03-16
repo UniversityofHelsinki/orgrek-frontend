@@ -14,6 +14,7 @@ import { userReducer } from './user';
 import { api } from './api';
 import { setupListeners } from '@reduxjs/toolkit/query';
 import { notificationsReducer } from './notifications';
+import { errorHandler } from './errorHandler';
 
 const store = configureStore({
   reducer: {
@@ -30,9 +31,11 @@ const store = configureStore({
     notifications: notificationsReducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({ serializableCheck: false })
-      .concat(api.middleware)
-      .concat(thunk),
+    getDefaultMiddleware({ serializableCheck: false }).concat([
+      api.middleware,
+      errorHandler,
+      thunk,
+    ]),
 });
 
 setupListeners(store.dispatch);
