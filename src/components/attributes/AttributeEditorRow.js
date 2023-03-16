@@ -32,7 +32,9 @@ const AttributeEditorRow = ({
   const { t, i18n } = useTranslation();
   const [valueError, setValueError] = useState(null);
   const [startDateError, setStartDateError] = useState(null);
+  const [errorInStartDate, setErrorInStartDate] = useState(null);
   const [endDateError, setEndDateError] = useState(null);
+  const [errorInEndDate, setErrorInEndDate] = useState(null);
   const [menuAnchorRef, setMenuAnchorRef] = useState(null);
   const menuOpen = Boolean(menuAnchorRef);
 
@@ -61,6 +63,7 @@ const AttributeEditorRow = ({
   const handleDateStartChange = (date) => {
     if (date !== null && !isValid(date)) {
       setStartDateError(t('invalidDate'));
+      setErrorInStartDate(true);
 
       onChange({
         ...value,
@@ -71,6 +74,7 @@ const AttributeEditorRow = ({
     }
 
     setStartDateError(null);
+    setErrorInStartDate(false);
 
     onChange({
       ...value,
@@ -81,6 +85,7 @@ const AttributeEditorRow = ({
   const handleDateEndChange = (date) => {
     if (date !== null && !isValid(date)) {
       setEndDateError(t('invalidDate'));
+      setErrorInEndDate(true);
 
       onChange({
         ...value,
@@ -91,6 +96,7 @@ const AttributeEditorRow = ({
     }
 
     setEndDateError(null);
+    setErrorInEndDate(false);
 
     onChange({
       ...value,
@@ -133,14 +139,33 @@ const AttributeEditorRow = ({
     <TextField data-testid="attributeValueTextField" {...valueFieldProps} />
   );
 
+  const addDays = (date, days) => {
+    const result = new Date(date);
+    result.setDate(result.getDate() + days);
+    return result;
+  };
+
   const renderedStartDateField = (
     <DateField
       label={t('attribute.validFrom')}
       margin="normal"
       value={value.startDate}
       onChange={handleDateStartChange}
+      maxDate={value.endDate !== null ? addDays(value.endDate, -2) : null}
       fullWidth
-      error={Boolean(startDateError)}
+      onError={(reason, value) => {
+        if (reason) {
+          //setStartDateError(t('reason')); Kommenteissa, että näkee virheen "nimen",
+          //joka lisätään käännösteksteihin. Tämä koodirivi otetaan käyttöön kun pääsee lisäämään
+          //käännöstekstin. Samalla alla oleva rivi poistetaan.
+          setStartDateError(reason);
+          setErrorInStartDate(true);
+        } else {
+          setStartDateError(null);
+          setErrorInStartDate(false);
+        }
+      }}
+      error={errorInStartDate}
       helperText={startDateError || ' '}
     />
   );
@@ -151,7 +176,20 @@ const AttributeEditorRow = ({
       fullWidth
       value={value.endDate}
       onChange={handleDateEndChange}
-      error={Boolean(endDateError)}
+      minDate={value.startDate !== null ? addDays(value.startDate, 2) : null}
+      onError={(reason, value) => {
+        if (reason) {
+          //setEndDateError(t('reason')); Kommenteissa, että näkee virheen "nimen",
+          //joka lisätään käännösteksteihin. Tämä koodirivi otetaan käyttöön kun pääsee lisäämään
+          //käännöstekstin. Samalla alla oleva rivi poistetaan.
+          setEndDateError(reason);
+          setErrorInEndDate(true);
+        } else {
+          setEndDateError(null);
+          setErrorInEndDate(false);
+        }
+      }}
+      error={errorInEndDate}
       helperText={endDateError || ' '}
     />
   );

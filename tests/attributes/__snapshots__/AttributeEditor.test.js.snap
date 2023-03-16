@@ -110,7 +110,6 @@ exports[`Renders ActionMenuOpen story 1`] = `
                   >
                     <input
                       aria-describedby="mui-2-helper-text"
-                      aria-invalid="false"
                       class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
                       id="mui-2"
                       placeholder="d.m.y"
@@ -186,7 +185,6 @@ exports[`Renders ActionMenuOpen story 1`] = `
                   >
                     <input
                       aria-describedby="mui-3-helper-text"
-                      aria-invalid="false"
                       class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
                       id="mui-3"
                       placeholder="d.m.y"
@@ -377,7 +375,6 @@ exports[`Renders ActionMenuOpen story 1`] = `
                   >
                     <input
                       aria-describedby="mui-5-helper-text"
-                      aria-invalid="false"
                       class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
                       id="mui-5"
                       placeholder="d.m.y"
@@ -453,7 +450,6 @@ exports[`Renders ActionMenuOpen story 1`] = `
                   >
                     <input
                       aria-describedby="mui-6-helper-text"
-                      aria-invalid="false"
                       class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
                       id="mui-6"
                       placeholder="d.m.y"
@@ -635,7 +631,6 @@ exports[`Renders ActionMenuOpen story 1`] = `
                   >
                     <input
                       aria-describedby="mui-8-helper-text"
-                      aria-invalid="false"
                       class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
                       id="mui-8"
                       placeholder="d.m.y"
@@ -711,7 +706,6 @@ exports[`Renders ActionMenuOpen story 1`] = `
                   >
                     <input
                       aria-describedby="mui-9-helper-text"
-                      aria-invalid="false"
                       class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
                       id="mui-9"
                       placeholder="d.m.y"
@@ -975,7 +969,6 @@ exports[`Renders Default story 1`] = `
                   >
                     <input
                       aria-describedby="mui-11-helper-text"
-                      aria-invalid="false"
                       class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
                       id="mui-11"
                       placeholder="d.m.y"
@@ -1051,7 +1044,6 @@ exports[`Renders Default story 1`] = `
                   >
                     <input
                       aria-describedby="mui-12-helper-text"
-                      aria-invalid="false"
                       class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
                       id="mui-12"
                       placeholder="d.m.y"
@@ -1233,7 +1225,6 @@ exports[`Renders Default story 1`] = `
                   >
                     <input
                       aria-describedby="mui-14-helper-text"
-                      aria-invalid="false"
                       class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
                       id="mui-14"
                       placeholder="d.m.y"
@@ -1309,7 +1300,6 @@ exports[`Renders Default story 1`] = `
                   >
                     <input
                       aria-describedby="mui-15-helper-text"
-                      aria-invalid="false"
                       class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
                       id="mui-15"
                       placeholder="d.m.y"
@@ -1491,7 +1481,6 @@ exports[`Renders Default story 1`] = `
                   >
                     <input
                       aria-describedby="mui-17-helper-text"
-                      aria-invalid="false"
                       class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
                       id="mui-17"
                       placeholder="d.m.y"
@@ -1567,7 +1556,6 @@ exports[`Renders Default story 1`] = `
                   >
                     <input
                       aria-describedby="mui-18-helper-text"
-                      aria-invalid="false"
                       class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
                       id="mui-18"
                       placeholder="d.m.y"
@@ -1789,7 +1777,6 @@ exports[`Renders DropdownEditor story 1`] = `
                   >
                     <input
                       aria-describedby="mui-20-helper-text"
-                      aria-invalid="false"
                       class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
                       id="mui-20"
                       placeholder="d.m.y"
@@ -1865,7 +1852,6 @@ exports[`Renders DropdownEditor story 1`] = `
                   >
                     <input
                       aria-describedby="mui-21-helper-text"
-                      aria-invalid="false"
                       class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
                       id="mui-21"
                       placeholder="d.m.y"
@@ -2065,7 +2051,6 @@ exports[`Renders DropdownEditor story 1`] = `
                   >
                     <input
                       aria-describedby="mui-23-helper-text"
-                      aria-invalid="false"
                       class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
                       id="mui-23"
                       placeholder="d.m.y"
@@ -2141,7 +2126,6 @@ exports[`Renders DropdownEditor story 1`] = `
                   >
                     <input
                       aria-describedby="mui-24-helper-text"
-                      aria-invalid="false"
                       class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
                       id="mui-24"
                       placeholder="d.m.y"
@@ -2341,7 +2325,6 @@ exports[`Renders DropdownEditor story 1`] = `
                   >
                     <input
                       aria-describedby="mui-26-helper-text"
-                      aria-invalid="false"
                       class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
                       id="mui-26"
                       placeholder="d.m.y"
@@ -2417,7 +2400,6 @@ exports[`Renders DropdownEditor story 1`] = `
                   >
                     <input
                       aria-describedby="mui-27-helper-text"
-                      aria-invalid="false"
                       class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
                       id="mui-27"
                       placeholder="d.m.y"
@@ -2621,7 +2603,6 @@ exports[`Renders Empty story 1`] = `
                   >
                     <input
                       aria-describedby="mui-29-helper-text"
-                      aria-invalid="false"
                       class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
                       id="mui-29"
                       placeholder="d.m.y"
@@ -2697,7 +2678,6 @@ exports[`Renders Empty story 1`] = `
                   >
                     <input
                       aria-describedby="mui-30-helper-text"
-                      aria-invalid="false"
                       class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
                       id="mui-30"
                       placeholder="d.m.y"
@@ -2973,7 +2953,6 @@ exports[`Renders InvalidDate story 1`] = `
                   >
                     <input
                       aria-describedby="mui-33-helper-text"
-                      aria-invalid="false"
                       class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
                       id="mui-33"
                       placeholder="d.m.y"
@@ -3155,7 +3134,6 @@ exports[`Renders InvalidDate story 1`] = `
                   >
                     <input
                       aria-describedby="mui-35-helper-text"
-                      aria-invalid="false"
                       class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
                       id="mui-35"
                       placeholder="d.m.y"
@@ -3231,7 +3209,6 @@ exports[`Renders InvalidDate story 1`] = `
                   >
                     <input
                       aria-describedby="mui-36-helper-text"
-                      aria-invalid="false"
                       class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
                       id="mui-36"
                       placeholder="d.m.y"
@@ -3413,7 +3390,6 @@ exports[`Renders InvalidDate story 1`] = `
                   >
                     <input
                       aria-describedby="mui-38-helper-text"
-                      aria-invalid="false"
                       class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
                       id="mui-38"
                       placeholder="d.m.y"
@@ -3489,7 +3465,6 @@ exports[`Renders InvalidDate story 1`] = `
                   >
                     <input
                       aria-describedby="mui-39-helper-text"
-                      aria-invalid="false"
                       class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
                       id="mui-39"
                       placeholder="d.m.y"
@@ -3696,7 +3671,6 @@ exports[`Renders ValueRequired story 1`] = `
                   >
                     <input
                       aria-describedby="mui-41-helper-text"
-                      aria-invalid="false"
                       class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
                       id="mui-41"
                       placeholder="d.m.y"
@@ -3772,7 +3746,6 @@ exports[`Renders ValueRequired story 1`] = `
                   >
                     <input
                       aria-describedby="mui-42-helper-text"
-                      aria-invalid="false"
                       class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
                       id="mui-42"
                       placeholder="d.m.y"
@@ -3954,7 +3927,6 @@ exports[`Renders ValueRequired story 1`] = `
                   >
                     <input
                       aria-describedby="mui-44-helper-text"
-                      aria-invalid="false"
                       class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
                       id="mui-44"
                       placeholder="d.m.y"
@@ -4030,7 +4002,6 @@ exports[`Renders ValueRequired story 1`] = `
                   >
                     <input
                       aria-describedby="mui-45-helper-text"
-                      aria-invalid="false"
                       class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
                       id="mui-45"
                       placeholder="d.m.y"
@@ -4212,7 +4183,6 @@ exports[`Renders ValueRequired story 1`] = `
                   >
                     <input
                       aria-describedby="mui-47-helper-text"
-                      aria-invalid="false"
                       class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
                       id="mui-47"
                       placeholder="d.m.y"
@@ -4288,7 +4258,6 @@ exports[`Renders ValueRequired story 1`] = `
                   >
                     <input
                       aria-describedby="mui-48-helper-text"
-                      aria-invalid="false"
                       class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
                       id="mui-48"
                       placeholder="d.m.y"

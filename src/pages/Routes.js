@@ -1,15 +1,18 @@
-import React from 'react';
-import { Route, Routes } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Route, Routes, useSearchParams } from 'react-router-dom';
 import NodePage from './NodePage';
 import TextsPage from './TextsPage';
 import HierarchyFiltersPage from './HierarchyFiltersPage';
 import useCurrentUser from '../hooks/useCurrentUser';
+import useSelectedHierarchies from '../hooks/useSelectedHierarchies';
 import { isAdmin } from '../actions/userAction';
 import Layout from '../components/Layout';
 import useScrollToTop from '../hooks/useScrollToTop';
+import { useDispatch } from 'react-redux';
 
 const AppRoutes = () => {
   useScrollToTop();
+  useSelectedHierarchies();
   const user = useCurrentUser();
 
   return (

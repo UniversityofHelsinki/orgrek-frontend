@@ -61,7 +61,7 @@ const FormActions = () => {
       <Button variant="outlined" onClick={close}>
         {t('cancel_button')}
       </Button>
-      <Button variant="contained" type="submit" loading disabled={!canSubmit}>
+      <Button variant="contained" type="submit" disabled={!canSubmit}>
         {t('edit_mode_save_button')}
       </Button>
     </ActionBar>
@@ -93,7 +93,9 @@ const EditableContent = ({
   const { editMode, edit, close } = useEditMode();
 
   const handleSubmit = (values) => {
-    onSubmit(values).then(() => close());
+    onSubmit(values)
+      .then(() => close())
+      .catch((error) => console.log(error));
   };
 
   if (editMode) {
