@@ -6,9 +6,26 @@ import CloseIcon from '@mui/icons-material/Close';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { dismissNotification } from '../store';
+import InfoIcon from './icons/InfoStroke';
+import WarningIcon from './icons/Warning';
+import DoneIcon from './icons/Done';
+import ErrorIcon from './icons/Error';
 
 const Alert = React.forwardRef(function Alert(props, ref) {
-  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  return (
+    <MuiAlert
+      elevation={6}
+      ref={ref}
+      variant="filled"
+      iconMapping={{
+        info: <InfoIcon />,
+        success: <DoneIcon />,
+        warning: <WarningIcon />,
+        error: <ErrorIcon />,
+      }}
+      {...props}
+    />
+  );
 });
 
 /**
