@@ -13,6 +13,9 @@ import {
 } from '../../store';
 import useSortAttributesByDate from '../../hooks/useSortAttributesByDate';
 import useFilterAttributesByDate from '../../hooks/useFilterAttributesByDate';
+import { compareAndCheckDates, valueNotEmpty } from './validations';
+import { parse, isValid, format } from 'date-fns';
+import { fi } from 'date-fns/locale';
 
 const toFormValues = (data) => {
   const nameFi = data.filter((value) => value.key === 'name_fi');
@@ -47,12 +50,7 @@ const NameSection = () => {
   // Submit button is disabled when errors contain any truthy values
   // EditableContent handles displaying form-level validation error messages
   const validate = (values) => {
-    const errors = {};
-
-    // TODO: add validation rules here
-    // errors.error = t('…');
-
-    return errors;
+    return { ...valueNotEmpty(values), ...compareAndCheckDates(values) };
   };
 
   const handleSubmit = (values) => {
