@@ -28,7 +28,7 @@ const DeletedAttributeRow = React.forwardRef(function DeletedAttributeRow(
         sx={{
           position: 'relative',
           padding: 1.5,
-          height: 56,
+          minHeight: 56,
         }}
       >
         <DashedBorder />
