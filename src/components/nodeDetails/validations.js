@@ -45,14 +45,14 @@ const compareStartAndEndDates = (startDate, endDate, days) => {
   const end_date = new Date(endDate);
   end_date.setHours(0, 0, 0, 0);
 
-  if (start_date.getTime() >= end_date.getTime() && endDate !== null) {
+  if (endDate !== null && start_date.getTime() >= end_date.getTime()) {
     return false;
   }
 
   start_date.setDate(start_date.getDate() - days);
   end_date.setDate(end_date.getDate() - days);
 
-  if (end_date.getTime() <= start_date.getTime() && endDate !== null) {
+  if (endDate !== null && end_date.getTime() <= start_date.getTime()) {
     return false;
   }
 
