@@ -267,6 +267,9 @@ const theme = createTheme({
             borderColor: hyPalette.brand.mediumDark,
             color: hyPalette.brand.mediumDark,
           },
+          ':disabled': {
+            borderWidth: 3,
+          },
         },
       },
     },
