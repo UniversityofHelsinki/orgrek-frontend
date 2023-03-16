@@ -35,25 +35,18 @@ const AttributeEditor = ({
     onChange(newData);
   };
 
-  const insert = (arr, index, ...newItems) => [
-    // part of the array before the specified index
-    ...arr.slice(0, index),
-    // inserted items
-    ...newItems,
-    // part of the array after the specified index
-    ...arr.slice(index),
-  ];
-
   const handleInsertBefore = (index) => {
     const newRow = createRow();
-    data.splice(index, 0, newRow);
-    onChange(data);
+    const newData = [...data];
+    newData.splice(index, 0, newRow);
+    onChange(newData);
   };
 
   const handleInsertAfter = (index) => {
     const newRow = createRow();
-    data.splice(index + 1, 0, newRow);
-    onChange(data);
+    const newData = [...data];
+    newData.splice(index + 1, 0, newRow);
+    onChange(newData);
   };
 
   // Display a blank row if data is empty
