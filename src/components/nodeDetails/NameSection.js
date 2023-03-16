@@ -54,7 +54,12 @@ const NameSection = () => {
   };
 
   const handleSubmit = (values) => {
-    // TODO: call and return saveNameAttributes({ nodeId, values }).unwrap()
+    const combinedArrays = [
+      ...values.nameEn,
+      ...values.nameFi,
+      ...values.nameSv,
+    ];
+    return saveNameAttributes({ combinedArrays, nodeId }).unwrap();
   };
 
   const columns = [
