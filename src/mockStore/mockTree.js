@@ -2,7 +2,6 @@ import { createSlice } from '@reduxjs/toolkit';
 import legacyReducer from '../reducers/treeReducer';
 
 const initialState = {
-  tree: {},
   selectedHierarchy: 'talous',
   defaultHierarchy: 'talous',
   selectableHierarchies: [
@@ -13,7 +12,6 @@ const initialState = {
     'history',
     'talous',
   ],
-  treeWithAllHierarchies: {},
 };
 
 const treeSlice = createSlice({

@@ -36,16 +36,16 @@ const AttributeEditor = ({
   };
 
   const handleInsertBefore = (index) => {
-    // TODO: Insert blank row before index, then call onChange with new data
-    // createRow()
+    const newRow = createRow();
     const newData = [...data];
+    newData.splice(index, 0, newRow);
     onChange(newData);
   };
 
   const handleInsertAfter = (index) => {
-    // TODO: Insert blank row after index, then call onChange with new data
-    // createRow()
+    const newRow = createRow();
     const newData = [...data];
+    newData.splice(index + 1, 0, newRow);
     onChange(newData);
   };
 

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import Branch from './Branch';
-import { fetchTree, fetchTreeWithAllHierarchies } from '../actions/treeAction';
-import { useTranslation } from 'react-i18next';
 import Card from '@mui/material/Card';
-import { useGetTreeQuery } from '../store';
+import useContentLanguage from '../hooks/useContentLanguage';
+import useTree from '../hooks/useTree';
+import { Skeleton } from '@mui/material';
 
 const traverseTree = (current, target) => {
   if (current.uniqueId === target) {
@@ -20,42 +20,42 @@ const traverseTree = (current, target) => {
   return paths;
 };
 
-const Tree = (props) => {
-  const { i18n } = useTranslation();
+const Tree = ({ sx }) => {
   const [pathsToTarget, setPathsToTarget] = useState();
-  const {
-    data: tree,
-    error,
-    isFetching,
-  } = useGetTreeQuery({
-    hierarchies: props.selectedHierarchy ? props.selectedHierarchy : 'talous',
-    selectedDay: props.selectedDay,
-  });
+  const { tree, isFetching } = useTree();
+  const { node, openTree } = useSelector((state) => ({
+    node: state.nrd.node,
+    openTree: state.nrd.openTree,
+  }));
 
-  const language = i18n.language === 'ia' ? 'fi' : i18n.language;
+  const language = useContentLanguage();
 
   useEffect(() => {
-    if (!props.openTree) {
+    if (!openTree) {
       setPathsToTarget(undefined);
     }
-    if (tree && tree[language] && props.node?.uniqueId && props.openTree) {
-      const foundInTree = traverseTree(tree[language], props.node.uniqueId);
+    if (tree && tree[language] && node?.uniqueId && openTree) {
+      const foundInTree = traverseTree(tree[language], node.uniqueId);
       if (foundInTree) {
         setPathsToTarget(foundInTree);
       }
     }
-  }, [tree, props.node, props.openTree]);
+  }, [tree, node, openTree]);
+
+  if (isFetching) {
+    return <Skeleton variant="rectangular" sx={sx} height={162} />;
+  }
 
   return (
     <Card
       variant="outlined"
       data-testid="tree"
-      sx={{ padding: 1, ...props.sx }}
+      sx={[{ padding: 1 }, ...(Array.isArray(sx) ? sx : [sx])]}
     >
       {tree?.[language] && (
         <Branch
           item={tree[language]}
-          openableTree={props.openTree ? pathsToTarget : undefined}
+          openableTree={openTree ? pathsToTarget : undefined}
           level={0}
           parent=""
         />
@@ -64,12 +64,4 @@ const Tree = (props) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  selectedHierarchy: state.tree.selectedHierarchy,
-  selectedDay: state.dr.selectedDay,
-  node: state.nrd.node,
-  openTree: state.nrd.openTree,
-  selectableHierarchies: state.tree.selectableHierarchies,
-});
-
-export default connect(mapStateToProps, null)(Tree);
+export default Tree;
