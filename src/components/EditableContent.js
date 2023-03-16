@@ -98,7 +98,7 @@ const EditableContent = ({
   const dispatch = useDispatch();
 
   const handleSubmit = (values) => {
-    onSubmit(values)
+    return onSubmit(values)
       .then(() => {
         dispatch(
           showNotification({
