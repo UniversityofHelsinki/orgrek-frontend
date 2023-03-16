@@ -1,51 +1,41 @@
 import React from 'react';
 import { screen, render } from './testUtils';
-import * as reactRedux from 'react-redux';
 import userEvent from '@testing-library/user-event';
 import Tree from '../src/components/Tree';
 
-jest.spyOn(reactRedux, 'useDispatch');
-
-// eslint-disable-next-line max-lines-per-function
-jest.mock('../src/actions/treeAction', () => ({
-  __esModule: true,
-  // eslint-disable-next-line max-lines-per-function
-  fetchTree: jest.fn(() => {
-    return {
-      type: 'SUCCESS_API_GET_TREE',
-      payload: {
-        fi: {
-          id: 'a1',
-          name: 'Helsingin yliopisto (HY)',
-          uniqueId: 42785051,
+jest.mock('../src/hooks/useTree', () => () => ({
+  isFetching: false,
+  tree: {
+    fi: {
+      id: 'a1',
+      name: 'Helsingin yliopisto (HY)',
+      uniqueId: 42785051,
+      hierarchies: ['talous'],
+      children: [
+        {
+          id: 123,
+          name: 'KOULOHJ HY, Koulutusohjelmat (KOULOHJ)',
+          uniqueId: 33539259,
           hierarchies: ['talous'],
           children: [
             {
-              id: 123,
-              name: 'KOULOHJ HY, Koulutusohjelmat (KOULOHJ)',
-              uniqueId: 33539259,
+              id: 1234,
+              name: 'H92 HY, Tohtoriohjelmat (TRI)',
+              uniqueId: 54806742,
               hierarchies: ['talous'],
               children: [
                 {
-                  id: 1234,
-                  name: 'H92 HY, Tohtoriohjelmat (TRI)',
-                  uniqueId: 54806742,
-                  hierarchies: ['talous'],
-                  children: [
-                    {
-                      id: 12345,
-                      name: 'H920 HY-TRI, Humanistis-yhteiskuntatieteellinen tutkijakoulu (HYMY)',
-                      uniqueId: 61974091,
-                    },
-                  ],
+                  id: 12345,
+                  name: 'H920 HY-TRI, Humanistis-yhteiskuntatieteellinen tutkijakoulu (HYMY)',
+                  uniqueId: 61974091,
                 },
               ],
             },
           ],
         },
-      },
-    };
-  }),
+      ],
+    },
+  },
 }));
 
 jest.mock('../src/reducers/treeReducer', () => {
@@ -58,18 +48,11 @@ jest.mock('../src/reducers/treeReducer', () => {
         state = {
           selectedHierarchy: 'talous',
           defaultHierarchy: 'talous',
-          tree: {},
           selectableHierarchies: [],
-          treeWithAllHierarchies: {},
         },
         action
       ) => {
         switch (action.type) {
-          case 'SUCCESS_API_GET_TREE':
-            return {
-              ...state,
-              tree: action.payload,
-            };
           case 'SUCCESS_API_GET_SELECTABLE_HIERARCHIES':
             return {
               ...state,
