@@ -9,11 +9,15 @@ import DateField from '../DateField';
 import classNames from 'classnames';
 import IconButton from '@mui/material/IconButton';
 import SlimHamburgerMenuIcon from '../icons/SlimHamburgerMenu';
+import ReplayIcon from '../icons/Replay';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import PropTypes from 'prop-types';
 import Stack from '@mui/material/Stack';
 import { showValidity } from '../../actions/utilAction';
+import { Tooltip } from '@mui/material';
+import Grow from '@mui/material/Grow';
+import DeletedAttributeRow from './DeletedAttributeRow';
 
 /**
  * Edits a single attribute value with a start date and an end date.
@@ -37,6 +41,9 @@ const AttributeEditorRow = ({
   const [errorInEndDate, setErrorInEndDate] = useState(null);
   const [menuAnchorRef, setMenuAnchorRef] = useState(null);
   const menuOpen = Boolean(menuAnchorRef);
+
+  // True after user has interacted with the row
+  const [touched, setTouched] = useState(false);
 
   const handleMenuButtonClick = (event) => {
     setMenuAnchorRef(event.currentTarget);
@@ -116,9 +123,18 @@ const AttributeEditorRow = ({
 
   const handleDelete = () => {
     handleMenuClose();
+    setTouched(true);
     onChange({
       ...value,
       deleted: true,
+    });
+  };
+
+  const handleUndoDelete = () => {
+    setTouched(true);
+    onChange({
+      ...value,
+      deleted: false,
     });
   };
 
@@ -208,26 +224,71 @@ const AttributeEditorRow = ({
 
   const valueDescription = valueDescriptions.join(', ');
 
-  const renderedActions = (
-    <Box pt={1} className={classNames('actions', { menuOpen })}>
-      <IconButton
-        data-testid="attributeRowMenuButton"
-        onClick={handleMenuButtonClick}
-        aria-label={`${t('attribute.actions')} ${valueDescription}`}
-      >
-        <SlimHamburgerMenuIcon />
-      </IconButton>
-      <Menu open={menuOpen} anchorEl={menuAnchorRef} onClose={handleMenuClose}>
-        <MenuItem onClick={handleInsertBefore}>
-          {t('attribute.insertBefore')}
-        </MenuItem>
-        <MenuItem onClick={handleInsertAfter}>
-          {t('attribute.insertAfter')}
-        </MenuItem>
-        <MenuItem onClick={handleDelete}>{t('attribute.deleteRow')}</MenuItem>
-      </Menu>
-    </Box>
-  );
+  let renderedRow;
+  let renderedActions;
+
+  if (value.deleted) {
+    renderedRow = (
+      <Grid xs={12}>
+        <DeletedAttributeRow value={value} />
+      </Grid>
+    );
+
+    renderedActions = (
+      <Box pt={1} className={classNames('actions')}>
+        <Tooltip title={t('attribute.undoDelete')}>
+          <IconButton
+            data-testid="attributeRowUndoDeleteButton"
+            onClick={handleUndoDelete}
+            aria-label={`${t('attribute.undoDelete')} ${valueDescription}`}
+          >
+            <ReplayIcon />
+          </IconButton>
+        </Tooltip>
+      </Box>
+    );
+  } else {
+    renderedRow = (
+      <>
+        <Grid xs={12} sm={12} md={6}>
+          {renderedValueField}
+        </Grid>
+        <Grid xs={12} sm={6} md={3}>
+          {renderedStartDateField}
+        </Grid>
+        <Grid xs={12} sm={6} md={3}>
+          {renderedEndDateField}
+        </Grid>
+      </>
+    );
+
+    renderedActions = (
+      <Box pt={1} className={classNames('actions', { menuOpen })}>
+        <Tooltip title={t('attribute.actions')}>
+          <IconButton
+            data-testid="attributeRowMenuButton"
+            onClick={handleMenuButtonClick}
+            aria-label={`${t('attribute.actions')} ${valueDescription}`}
+          >
+            <SlimHamburgerMenuIcon />
+          </IconButton>
+        </Tooltip>
+        <Menu
+          open={menuOpen}
+          anchorEl={menuAnchorRef}
+          onClose={handleMenuClose}
+        >
+          <MenuItem onClick={handleInsertBefore}>
+            {t('attribute.insertBefore')}
+          </MenuItem>
+          <MenuItem onClick={handleInsertAfter}>
+            {t('attribute.insertAfter')}
+          </MenuItem>
+          <MenuItem onClick={handleDelete}>{t('attribute.deleteRow')}</MenuItem>
+        </Menu>
+      </Box>
+    );
+  }
 
   return (
     <Box
@@ -245,17 +306,11 @@ const AttributeEditorRow = ({
       }}
     >
       <Stack direction="row" spacing={1}>
-        <Grid flex="auto" container xs={11} rowSpacing={2} columnSpacing={2}>
-          <Grid xs={12} sm={12} md={6}>
-            {renderedValueField}
+        <Grow in appear={value.isNew || touched} key={value.deleted}>
+          <Grid flex="auto" container xs={11} rowSpacing={2} columnSpacing={2}>
+            {renderedRow}
           </Grid>
-          <Grid xs={12} sm={6} md={3}>
-            {renderedStartDateField}
-          </Grid>
-          <Grid xs={12} sm={6} md={3}>
-            {renderedEndDateField}
-          </Grid>
-        </Grid>
+        </Grow>
         {renderedActions}
       </Stack>
     </Box>

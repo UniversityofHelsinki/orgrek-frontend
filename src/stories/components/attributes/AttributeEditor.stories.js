@@ -91,6 +91,39 @@ export const InvalidDate = {
   },
 };
 
+export const DeletedRow = {
+  ...Default,
+  args: {
+    ...Default.args,
+    data: [
+      {
+        id: 1001,
+        value: 'value3',
+        startDate: '2023-01-01',
+        endDate: null,
+        isNew: false,
+        deleted: false,
+      },
+      {
+        id: 1002,
+        value: 'value2',
+        startDate: '2022-01-01',
+        endDate: '2022-12-31',
+        isNew: false,
+        deleted: true,
+      },
+      {
+        id: 1003,
+        value: 'value1',
+        startDate: null,
+        endDate: '2021-12-31',
+        isNew: false,
+        deleted: false,
+      },
+    ],
+  },
+};
+
 export const DropdownEditor = {
   ...Default,
   parameters: {
