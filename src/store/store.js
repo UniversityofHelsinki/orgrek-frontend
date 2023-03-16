@@ -11,9 +11,12 @@ import { nodeReducer } from './node';
 import { treeReducer } from './tree';
 import { textsReducer } from './texts';
 import { userReducer } from './user';
+import { api } from './api';
+import { setupListeners } from '@reduxjs/toolkit/query';
 
 const store = configureStore({
   reducer: {
+    [api.reducerPath]: api.reducer,
     tree: treeReducer,
     hr: hierarchyReducer,
     nrd: nodeReducer,
@@ -24,8 +27,13 @@ const store = configureStore({
     hierarchyFilters: hierarchyFilterReducer,
     editModeReducer: editModeReducer,
   },
-  middleware: [thunk],
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({ serializableCheck: false })
+      .concat(api.middleware)
+      .concat(thunk),
 });
+
+setupListeners(store.dispatch);
 
 syncTranslationWithStore(store);
 store.dispatch(loadTranslations(translationsObject));

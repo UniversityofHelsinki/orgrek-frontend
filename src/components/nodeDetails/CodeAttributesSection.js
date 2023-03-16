@@ -5,6 +5,7 @@ import AttributesTable from '../attributes/AttributesTable';
 import { codeAttributes as codes } from '../../constants/variables';
 import useAttributes from '../../hooks/useAttributes';
 import Validity from '../attributes/Validity';
+import Placeholder from '../Placeholder';
 
 const CodeAttributesSection = () => {
   const { t } = useTranslation();
@@ -49,12 +50,13 @@ const CodeAttributesSection = () => {
   const empty = data.length === 0;
 
   return (
-    <EditableAccordion
-      title={title}
-      empty={empty}
-      placeholder={t('nodeDetailsSection.noAttributes')}
-    >
-      <AttributesTable columns={columns} data={data} summary={title} />
+    <EditableAccordion title={title}>
+      <Placeholder
+        empty={empty}
+        placeholder={t('nodeDetailsSection.noAttributes')}
+      >
+        <AttributesTable columns={columns} data={data} summary={title} />
+      </Placeholder>
     </EditableAccordion>
   );
 };

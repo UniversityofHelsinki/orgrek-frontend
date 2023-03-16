@@ -1,17 +1,17 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { useSearchParams } from 'react-router-dom';
 import { fetchNode } from '../actions/nodeAction';
 import { useEffect } from 'react';
+import { useNodeId } from './useNodeId';
 
 /**
  * Fetches and updates node state when query param uid changes.
  *
- * @return {*}
+ * This hook fetches data for the legacy reducers. Use useNodeId hook when
+ * passing node id to Redux Toolkit queries.
  */
 const useFetchNode = () => {
   const dispatch = useDispatch();
-  const [searchParams] = useSearchParams();
-  const nodeId = searchParams.get('uid');
+  const nodeId = useNodeId();
 
   useEffect(() => {
     if (nodeId) {
