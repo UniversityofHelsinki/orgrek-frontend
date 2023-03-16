@@ -151,7 +151,7 @@ const AttributeEditorRow = ({
       margin="normal"
       value={value.startDate}
       onChange={handleDateStartChange}
-      maxDate={value.endDate !== null ? addDays(value.endDate, -3) : null}
+      maxDate={value.endDate !== null ? addDays(value.endDate, -2) : null}
       fullWidth
       onError={(reason, value) => {
         if (reason) {
@@ -176,7 +176,7 @@ const AttributeEditorRow = ({
       fullWidth
       value={value.endDate}
       onChange={handleDateEndChange}
-      minDate={value.startDate !== null ? addDays(value.startDate, 3) : null}
+      minDate={value.startDate !== null ? addDays(value.startDate, 2) : null}
       onError={(reason, value) => {
         if (reason) {
           //setEndDateError(t('reason')); Kommenteissa, että näkee virheen "nimen",

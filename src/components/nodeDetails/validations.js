@@ -72,7 +72,7 @@ export const compareAndCheckDates = (values) => {
     if (!validEndDate(elem.endDate)) {
       errors.compareAndCheckDates = { error: 'invalid date' };
     }
-    if (!compareStartAndEndDates(elem.startDate, elem.endDate, 2)) {
+    if (!compareStartAndEndDates(elem.startDate, elem.endDate, 1)) {
       errors.compareAndCheckDates = { error: 'invalid date' };
     }
   });
