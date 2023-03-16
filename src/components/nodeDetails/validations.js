@@ -16,6 +16,30 @@ export const valueNotEmpty = (values) => {
   return errors;
 };
 
+export const valueStartsWithSpace = (values) => {
+  const errors = {};
+  let arrOfNames = [...values.nameFi, ...values.nameSv, ...values.nameEn];
+
+  arrOfNames.forEach((value) => {
+    if (value.value.startsWith(' ')) {
+      errors.startsWithSpace = { error: 'attribute.startsWithSpace' };
+    }
+  });
+  return errors;
+};
+
+export const valueEndsWithSpace = (values) => {
+  const errors = {};
+  let arrOfNames = [...values.nameFi, ...values.nameSv, ...values.nameEn];
+
+  arrOfNames.forEach((value) => {
+    if (value.value.endsWith(' ')) {
+      errors.startsWithSpace = { error: 'attribute.endsWithSpace' };
+    }
+  });
+  return errors;
+};
+
 const validStartDate = (date) => {
   if (date !== null && !isValid(date)) {
     const parsedDate = parse(date, 'yyyy-MM-dd', new Date(), { locale: fi });

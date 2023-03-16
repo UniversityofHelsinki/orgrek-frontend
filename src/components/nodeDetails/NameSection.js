@@ -13,7 +13,12 @@ import {
 } from '../../store';
 import useSortAttributesByDate from '../../hooks/useSortAttributesByDate';
 import useFilterAttributesByDate from '../../hooks/useFilterAttributesByDate';
-import { compareAndCheckDates, valueNotEmpty } from './validations';
+import {
+  compareAndCheckDates,
+  valueEndsWithSpace,
+  valueNotEmpty,
+  valueStartsWithSpace,
+} from './validations';
 import { parse, isValid, format } from 'date-fns';
 import { fi } from 'date-fns/locale';
 
@@ -50,7 +55,12 @@ const NameSection = () => {
   // Submit button is disabled when errors contain any truthy values
   // EditableContent handles displaying form-level validation error messages
   const validate = (values) => {
-    return { ...valueNotEmpty(values), ...compareAndCheckDates(values) };
+    return {
+      ...valueNotEmpty(values),
+      ...compareAndCheckDates(values),
+      ...valueStartsWithSpace(values),
+      ...valueEndsWithSpace(values),
+    };
   };
 
   const handleSubmit = (values) => {
