@@ -7,7 +7,6 @@ import Button from 'react-bootstrap/Button';
 import { actionAddNewUpperUnit } from '../actions/newUpperUnitAction';
 import { connect } from 'react-redux';
 import { fetchNode } from '../actions/nodeAction';
-import { fetchTree } from '../actions/treeAction';
 import { t } from 'i18next';
 import { validateStartAndEndDates } from './Validator';
 
@@ -144,9 +143,8 @@ const mapDispatchToProps = (dispatch) => ({
       )
     );
   },
-  fetchNodeAndTree: (node, selection, date) => {
+  fetchNodeAndTree: (node) => {
     dispatch(fetchNode(node.uniqueId, true));
-    dispatch(fetchTree(selection, date));
   },
 });
 const mapStateToProps = (state) => ({

@@ -1,38 +1,43 @@
 import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
 import { Typeahead } from 'react-bootstrap-typeahead';
 import { useTranslation } from 'react-i18next';
+import useTree from '../hooks/useTree';
+import useContentLanguage from '../hooks/useContentLanguage';
 
-const OrganisationUnitSearch = (props) => {
-  const { t, i18n } = useTranslation();
+const OrganisationUnitSearch = ({
+  onOrganisationUnitChange,
+  selectedParentOrganisationUnit,
+}) => {
+  const { t } = useTranslation();
   const [singleSelections, setSingleSelections] = useState([]);
+  const { tree } = useTree();
+  const language = useContentLanguage();
 
   const handleChange = (value) => {
     setSingleSelections(value);
-    props.onOrganisationUnitChange(value[0]);
+    onOrganisationUnitChange(value[0]);
   };
 
   useEffect(() => {
-    if (!props.selectedParentOrganisationUnit) {
+    if (!selectedParentOrganisationUnit) {
       setSingleSelections([]);
     }
-  }, [props.selectedParentOrganisationUnit]);
+  }, [selectedParentOrganisationUnit]);
 
   const flatten = (current) =>
     current.reduce((a, c) => [...a, c, ...flatten(c.children)], []);
-  const language = i18n.language === 'ia' ? 'fi' : i18n.language;
-  const options = props.treeWithAllHierarchies[language]
-    ? flatten(props.treeWithAllHierarchies[language].children)
-    : [];
+
+  const options =
+    tree && tree[language] ? flatten(tree[language].children) : [];
   const uniqueOptions = options.filter(
     (elem, index) =>
       options.findIndex((obj) => obj.uniqueId === elem.uniqueId) === index
   );
-  if (props.treeWithAllHierarchies[language]) {
+  if (tree && tree[language]) {
     const hy = {
-      id: props.treeWithAllHierarchies[language].id,
-      name: props.treeWithAllHierarchies[language].name,
-      uniqueId: props.treeWithAllHierarchies[language].uniqueId,
+      id: tree[language].id,
+      name: tree[language].name,
+      uniqueId: tree[language].uniqueId,
     };
     uniqueOptions.push(hy);
   }
@@ -51,10 +56,10 @@ const OrganisationUnitSearch = (props) => {
       id="ou-code-and-name-search"
       labelKey={(option) => `${option.name}`}
       filterBy={(option, props) => {
-        return nameMatches(option.name, props.text) ||
+        return (
+          nameMatches(option.name, props.text) ||
           uniqueIdMatches(option.uniqueId, props.text)
-          ? true
-          : false;
+        );
       }}
       onChange={(value) => handleChange(value)}
       options={uniqueOptions}
@@ -65,13 +70,4 @@ const OrganisationUnitSearch = (props) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  treeWithAllHierarchies: state.tree.treeWithAllHierarchies,
-});
-
-const mapDispatchToProps = (dispatch) => ({});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(OrganisationUnitSearch);
+export default OrganisationUnitSearch;
