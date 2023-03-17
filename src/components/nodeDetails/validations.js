@@ -40,20 +40,35 @@ export const valueEndsWithSpace = (values) => {
   return errors;
 };
 
+const dateFormats = [
+  'yyyy-MM-dd',
+  "yyyy-MM-dd'T'HH:mm:ss.SSSxxx", //"2016-12-31T22:00:00.000+00:00"
+];
+
 const validStartDate = (date) => {
   if (date !== null && !isValid(date)) {
-    const parsedDate = parse(date, 'yyyy-MM-dd', new Date(), { locale: fi });
-    const isValidDate = isValid(parsedDate);
-    return isValidDate;
+    for (let i = 0; i < dateFormats.length; i++) {
+      const parsedDate = parse(date, dateFormats[i], new Date());
+      const isValidDate = isValid(parsedDate);
+      if (isValidDate) {
+        return true;
+      }
+    }
+    return false;
   }
   return true;
 };
 
 const validEndDate = (date) => {
   if (date !== null && !isValid(date)) {
-    const parsedDate = parse(date, 'yyyy-MM-dd', new Date(), { locale: fi });
-    const isValidDate = isValid(parsedDate);
-    return isValidDate;
+    for (let i = 0; i < dateFormats.length; i++) {
+      const parsedDate = parse(date, dateFormats[i], new Date());
+      const isValidDate = isValid(parsedDate);
+      if (isValidDate) {
+        return true;
+      }
+    }
+    return false;
   }
   return true;
 };
