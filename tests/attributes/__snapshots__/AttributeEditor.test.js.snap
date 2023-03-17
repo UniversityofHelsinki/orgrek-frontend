@@ -1955,6 +1955,7 @@ exports[`Renders DeletedRow story 1`] = `
               >
                 <div
                   class="MuiBox-root css-1up9enl"
+                  data-testid="deletedAttributeRow"
                 >
                   <div
                     class="css-1owqxi5-MuiStack-root"
@@ -2585,13 +2586,14 @@ exports[`Renders DeletedRowDisplayText story 1`] = `
           >
             <div
               class="MuiGrid2-root MuiGrid2-container MuiGrid2-direction-xs-row MuiGrid2-grid-xs-11 css-1wogeuu-MuiGrid2-root"
-              style="opacity: 1; transform: scale(1, 1); transition: opacity 0ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,transform 0ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;"
+              style="opacity: 1; transform: none; transition: opacity 0ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,transform 0ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;"
             >
               <div
                 class="MuiGrid2-root MuiGrid2-direction-xs-row MuiGrid2-grid-xs-12 css-16fnxy3-MuiGrid2-root"
               >
                 <div
                   class="MuiBox-root css-1up9enl"
+                  data-testid="deletedAttributeRow"
                 >
                   <div
                     class="css-1owqxi5-MuiStack-root"

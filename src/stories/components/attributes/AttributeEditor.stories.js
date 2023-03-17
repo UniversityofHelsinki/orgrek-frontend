@@ -3,7 +3,8 @@ import AttributeEditor from '../../../components/attributes/AttributeEditor';
 import AttributeEditorRow from '../../../components/attributes/AttributeEditorRow';
 import MenuItem from '@mui/material/MenuItem';
 import TextField from '@mui/material/TextField';
-import { within, userEvent, waitFor, screen } from '@storybook/testing-library';
+import { within, userEvent, waitFor } from '@storybook/testing-library';
+import { expect } from '@storybook/jest';
 
 export default {
   component: AttributeEditor,
@@ -181,6 +182,10 @@ export const DeletedRowDisplayText = {
 
     await waitFor(async () => {
       await userEvent.click(canvas.getByTestId('deleteRowMenuItem'));
+    });
+
+    await waitFor(() => {
+      expect(canvas.getByTestId('deletedAttributeRow')).toBeInTheDocument();
     });
   },
 };

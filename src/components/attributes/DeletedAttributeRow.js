@@ -34,7 +34,7 @@ const DeletedAttributeRow = React.forwardRef(function DeletedAttributeRow(
   ).toLowerCase();
 
   return (
-    <Box pb="18px" ref={ref}>
+    <Box pb="18px" ref={ref} data-testid="deletedAttributeRow">
       <Stack
         direction="row"
         alignItems="center"
