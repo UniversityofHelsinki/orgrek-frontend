@@ -48,7 +48,9 @@ const dateFormats = [
 const validStartDate = (date) => {
   if (date !== null && !isValid(date)) {
     for (let i = 0; i < dateFormats.length; i++) {
-      const parsedDate = parse(date, dateFormats[i], new Date());
+      const parsedDate = parse(date, dateFormats[i], new Date(), {
+        locale: fi,
+      });
       const isValidDate = isValid(parsedDate);
       if (isValidDate) {
         return true;
@@ -62,7 +64,9 @@ const validStartDate = (date) => {
 const validEndDate = (date) => {
   if (date !== null && !isValid(date)) {
     for (let i = 0; i < dateFormats.length; i++) {
-      const parsedDate = parse(date, dateFormats[i], new Date());
+      const parsedDate = parse(date, dateFormats[i], new Date(), {
+        locale: fi,
+      });
       const isValidDate = isValid(parsedDate);
       if (isValidDate) {
         return true;
