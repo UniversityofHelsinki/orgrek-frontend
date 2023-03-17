@@ -5,12 +5,25 @@ import Typography from '@mui/material/Typography';
 import DashedBorder from '../DashedBorder';
 import { useTranslation } from 'react-i18next';
 import { showValidity } from '../../actions/utilAction';
+import PropTypes from 'prop-types';
 
+/**
+ * Renders a placeholder for a deleted attribute value.
+ */
 const DeletedAttributeRow = React.forwardRef(function DeletedAttributeRow(
-  { value },
+  { value, getDisplayText },
   ref
 ) {
   const { t, i18n } = useTranslation();
+
+  let displayText;
+  if (!value.value) {
+    displayText = t('attribute.empty');
+  } else if (getDisplayText) {
+    displayText = getDisplayText(value);
+  } else {
+    displayText = value.value;
+  }
 
   const hasValidity = value.startDate || value.endDate;
   const validity = showValidity(
@@ -36,7 +49,7 @@ const DeletedAttributeRow = React.forwardRef(function DeletedAttributeRow(
           {t(
             hasValidity ? 'attribute.deleted' : 'attribute.deletedNoValidity',
             {
-              value: value.value || t('attribute.empty'),
+              value: displayText,
               validity,
             }
           )}
@@ -45,5 +58,27 @@ const DeletedAttributeRow = React.forwardRef(function DeletedAttributeRow(
     </Box>
   );
 });
+
+DeletedAttributeRow.propTypes = {
+  /** Attribute value with start and end dates */
+  value: PropTypes.shape({
+    /** Attribute value */
+    value: PropTypes.string,
+
+    /** Validity start date, ISO 8601 date string without time component */
+    startDate: PropTypes.string,
+
+    /** Validity end date, ISO 8601 date string without time component */
+    endDate: PropTypes.string,
+  }).isRequired,
+
+  /**
+   * Specifies how the value should be displayed.
+   *
+   * Takes an attribute object as the first arg and returns the display text as
+   * string.
+   */
+  getDisplayText: PropTypes.func,
+};
 
 export default DeletedAttributeRow;

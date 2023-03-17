@@ -32,6 +32,7 @@ const AttributeEditorRow = ({
   onInsertBefore,
   onInsertAfter,
   renderValueField,
+  getDisplayText,
 }) => {
   const { t, i18n } = useTranslation();
   const [valueError, setValueError] = useState(null);
@@ -213,7 +214,9 @@ const AttributeEditorRow = ({
   let valueDescriptions = [];
 
   if (!valueError && value.value) {
-    valueDescriptions.push(value.value);
+    valueDescriptions.push(
+      getDisplayText ? getDisplayText(value) : value.value
+    );
   }
 
   if (!startDateError && !endDateError) {
@@ -230,7 +233,7 @@ const AttributeEditorRow = ({
   if (value.deleted) {
     renderedRow = (
       <Grid xs={12}>
-        <DeletedAttributeRow value={value} />
+        <DeletedAttributeRow value={value} getDisplayText={getDisplayText} />
       </Grid>
     );
 
@@ -278,13 +281,21 @@ const AttributeEditorRow = ({
           anchorEl={menuAnchorRef}
           onClose={handleMenuClose}
         >
-          <MenuItem onClick={handleInsertBefore}>
+          <MenuItem
+            data-testid="insertBeforeMenuItem"
+            onClick={handleInsertBefore}
+          >
             {t('attribute.insertBefore')}
           </MenuItem>
-          <MenuItem onClick={handleInsertAfter}>
+          <MenuItem
+            data-testid="insertAfterMenuItem"
+            onClick={handleInsertAfter}
+          >
             {t('attribute.insertAfter')}
           </MenuItem>
-          <MenuItem onClick={handleDelete}>{t('attribute.deleteRow')}</MenuItem>
+          <MenuItem data-testid="deleteRowMenuItem" onClick={handleDelete}>
+            {t('attribute.deleteRow')}
+          </MenuItem>
         </Menu>
       </Box>
     );
@@ -358,6 +369,15 @@ AttributeEditorRow.propTypes = {
    * passed to TextField
    */
   renderValueField: PropTypes.func,
+
+  /**
+   * Specifies how the value should be displayed in view mode and a11y
+   * description.
+   *
+   * Takes an attribute object as the first arg and returns the display text as
+   * string.
+   */
+  getDisplayText: PropTypes.func,
 };
 
 export default AttributeEditorRow;
