@@ -6,18 +6,13 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Unstable_Grid2';
 import TextField from '../TextField';
 import DateField from '../DateField';
-import classNames from 'classnames';
-import IconButton from '@mui/material/IconButton';
-import SlimHamburgerMenuIcon from '../icons/SlimHamburgerMenu';
-import ReplayIcon from '../icons/Replay';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
 import PropTypes from 'prop-types';
 import Stack from '@mui/material/Stack';
-import { showValidity } from '../../actions/utilAction';
-import { Tooltip } from '@mui/material';
 import Grow from '@mui/material/Grow';
 import DeletedAttributeRow from './DeletedAttributeRow';
+import { getValueDescription } from './attributeUtils';
+import DeletedAttributeRowActions from './DeletedAttributeRowActions';
+import AttributeEditorRowActions from './AttributeEditorRowActions';
 
 /**
  * Edits a single attribute value with a start date and an end date.
@@ -34,24 +29,15 @@ const AttributeEditorRow = ({
   renderValueField,
   getDisplayText,
 }) => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const [valueError, setValueError] = useState(null);
   const [startDateError, setStartDateError] = useState(null);
   const [errorInStartDate, setErrorInStartDate] = useState(null);
   const [endDateError, setEndDateError] = useState(null);
   const [errorInEndDate, setErrorInEndDate] = useState(null);
-  const [menuAnchorRef, setMenuAnchorRef] = useState(null);
-  const menuOpen = Boolean(menuAnchorRef);
 
   // True after user has interacted with the row
   const [touched, setTouched] = useState(false);
-
-  const handleMenuButtonClick = (event) => {
-    setMenuAnchorRef(event.currentTarget);
-  };
-  const handleMenuClose = () => {
-    setMenuAnchorRef(null);
-  };
 
   const handleValueChange = (event) => {
     const newValue = event.target.value;
@@ -122,18 +108,7 @@ const AttributeEditorRow = ({
     });
   };
 
-  const handleInsertAfter = () => {
-    handleMenuClose();
-    onInsertAfter();
-  };
-
-  const handleInsertBefore = () => {
-    handleMenuClose();
-    onInsertBefore();
-  };
-
   const handleDelete = () => {
-    handleMenuClose();
     setTouched(true);
     onChange({
       ...value,
@@ -181,7 +156,7 @@ const AttributeEditorRow = ({
       onChange={handleDateStartChange}
       maxDate={value.endDate !== null ? addDays(value.endDate, -2) : null}
       fullWidth
-      onError={(reason, value) => {
+      onError={(reason) => {
         if (reason) {
           //setStartDateError(t('reason')); Kommenteissa, että näkee virheen "nimen",
           //joka lisätään käännösteksteihin. Tämä koodirivi otetaan käyttöön kun pääsee lisäämään
@@ -205,7 +180,7 @@ const AttributeEditorRow = ({
       value={value.endDate}
       onChange={handleDateEndChange}
       minDate={value.startDate !== null ? addDays(value.startDate, 2) : null}
-      onError={(reason, value) => {
+      onError={(reason) => {
         if (reason) {
           //setEndDateError(t('reason')); Kommenteissa, että näkee virheen "nimen",
           //joka lisätään käännösteksteihin. Tämä koodirivi otetaan käyttöön kun pääsee lisäämään
@@ -222,21 +197,11 @@ const AttributeEditorRow = ({
     />
   );
 
-  let valueDescriptions = [];
-
-  if (!valueError && value.value) {
-    valueDescriptions.push(
-      getDisplayText ? getDisplayText(value) : value.value
-    );
-  }
-
-  if (!startDateError && !endDateError) {
-    valueDescriptions.push(
-      showValidity(value.startDate, value.endDate, i18n, t)
-    );
-  }
-
-  const valueDescription = valueDescriptions.join(', ');
+  const valueDescription = getValueDescription({
+    value,
+    displayText: getDisplayText ? getDisplayText(value) : value.value,
+    withValidity: !startDateError && !endDateError,
+  });
 
   let renderedRow;
   let renderedActions;
@@ -249,17 +214,11 @@ const AttributeEditorRow = ({
     );
 
     renderedActions = (
-      <Box pt={1} className={classNames('actions')}>
-        <Tooltip title={t('attribute.undoDelete')}>
-          <IconButton
-            data-testid="attributeRowUndoDeleteButton"
-            onClick={handleUndoDelete}
-            aria-label={`${t('attribute.undoDelete')} ${valueDescription}`}
-          >
-            <ReplayIcon />
-          </IconButton>
-        </Tooltip>
-      </Box>
+      <DeletedAttributeRowActions
+        onUndoDelete={handleUndoDelete}
+        valueDescription={valueDescription}
+        sx={{ pt: 1 }}
+      />
     );
   } else {
     renderedRow = (
@@ -277,38 +236,13 @@ const AttributeEditorRow = ({
     );
 
     renderedActions = (
-      <Box pt={1} className={classNames('actions', { menuOpen })}>
-        <Tooltip title={t('attribute.actions')}>
-          <IconButton
-            data-testid="attributeRowMenuButton"
-            onClick={handleMenuButtonClick}
-            aria-label={`${t('attribute.actions')} ${valueDescription}`}
-          >
-            <SlimHamburgerMenuIcon />
-          </IconButton>
-        </Tooltip>
-        <Menu
-          open={menuOpen}
-          anchorEl={menuAnchorRef}
-          onClose={handleMenuClose}
-        >
-          <MenuItem
-            data-testid="insertBeforeMenuItem"
-            onClick={handleInsertBefore}
-          >
-            {t('attribute.insertBefore')}
-          </MenuItem>
-          <MenuItem
-            data-testid="insertAfterMenuItem"
-            onClick={handleInsertAfter}
-          >
-            {t('attribute.insertAfter')}
-          </MenuItem>
-          <MenuItem data-testid="deleteRowMenuItem" onClick={handleDelete}>
-            {t('attribute.deleteRow')}
-          </MenuItem>
-        </Menu>
-      </Box>
+      <AttributeEditorRowActions
+        onInsertBefore={onInsertBefore}
+        onInsertAfter={onInsertAfter}
+        onDelete={handleDelete}
+        valueDescription={valueDescription}
+        sx={{ pt: 1 }}
+      />
     );
   }
 
