@@ -13,12 +13,7 @@ import {
 } from '../../store';
 import useSortAttributesByDate from '../../hooks/useSortAttributesByDate';
 import useFilterAttributesByDate from '../../hooks/useFilterAttributesByDate';
-import {
-  compareAndCheckDates,
-  valueEndsWithSpace,
-  valueNotEmpty,
-  valueStartsWithSpace,
-} from './validations';
+import { compareAndCheckDates, valueNotEmpty } from './validations';
 import { parse, isValid, format } from 'date-fns';
 import { fi } from 'date-fns/locale';
 
@@ -58,8 +53,6 @@ const NameSection = () => {
     return {
       ...valueNotEmpty(values),
       ...compareAndCheckDates(values),
-      ...valueStartsWithSpace(values),
-      ...valueEndsWithSpace(values),
     };
   };
 

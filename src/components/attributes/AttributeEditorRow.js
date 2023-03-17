@@ -50,8 +50,6 @@ const AttributeEditorRow = ({
 
     if (!newValue) {
       setValueError(t('attribute.required'));
-    } else if (newValue.startsWith(' ')) {
-      setValueError(t('attribute.startsWithSpace'));
     } else {
       setValueError(null);
     }
@@ -64,8 +62,11 @@ const AttributeEditorRow = ({
 
   const handleLeavingFocus = (event) => {
     const newValue = event.target.value;
-    if (newValue.endsWith(' ')) {
-      setValueError(t('attribute.endsWithSpace'));
+    if (newValue.endsWith(' ') || newValue.startsWith(' ')) {
+      onChange({
+        ...value,
+        value: newValue.trim(),
+      });
     }
   };
 
