@@ -60,6 +60,16 @@ const AttributeEditorRow = ({
     });
   };
 
+  const handleLeavingFocus = (event) => {
+    const newValue = event.target.value;
+    if (newValue.endsWith(' ') || newValue.startsWith(' ')) {
+      onChange({
+        ...value,
+        value: newValue.trim(),
+      });
+    }
+  };
+
   const handleDateStartChange = (date) => {
     if (date !== null && !isValid(date)) {
       setStartDateError(t('invalidDate'));
@@ -131,6 +141,7 @@ const AttributeEditorRow = ({
     error: Boolean(valueError),
     helperText: valueError || ' ',
     inputProps: { maxLength: 250 },
+    onBlur: handleLeavingFocus,
   };
 
   const renderedValueField = renderValueField ? (

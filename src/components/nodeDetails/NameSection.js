@@ -50,7 +50,10 @@ const NameSection = () => {
   // Submit button is disabled when errors contain any truthy values
   // EditableContent handles displaying form-level validation error messages
   const validate = (values) => {
-    return { ...valueNotEmpty(values), ...compareAndCheckDates(values) };
+    return {
+      ...valueNotEmpty(values),
+      ...compareAndCheckDates(values),
+    };
   };
 
   const handleSubmit = (values) => {
