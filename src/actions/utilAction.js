@@ -1,10 +1,13 @@
 import parseISO from 'date-fns/parseISO';
 import format from 'date-fns/format';
 import { fi } from 'date-fns/locale';
+import i18n from '../i18n';
+
+const { t } = i18n;
 
 const formatDate = (date) => format(parseISO(date), 'P', { locale: fi });
 
-export const showValidity = (startDate, endDate, i18n, t) => {
+export const showValidity = (startDate, endDate) => {
   const lang = i18n.language;
   if (startDate && endDate) {
     return formatDate(startDate) + ' - ' + formatDate(endDate);
@@ -45,7 +48,7 @@ export const selectNameVersion = (i18n, item) => {
   }
 };
 
-export const hierarchyDate = (hierarchy, i18n, t) => {
+export const hierarchyDate = (hierarchy) => {
   return showValidity(hierarchy.startDate, hierarchy.endDate, i18n, t);
 };
 
