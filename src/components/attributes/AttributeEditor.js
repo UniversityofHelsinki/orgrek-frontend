@@ -17,6 +17,7 @@ const AttributeEditor = ({
   data,
   onChange,
   renderValueField,
+  getDisplayText,
   sx,
 }) => {
   const createRow = () => ({
@@ -61,6 +62,7 @@ const AttributeEditor = ({
       onInsertBefore={() => handleInsertBefore(index)}
       onInsertAfter={() => handleInsertAfter(index)}
       renderValueField={renderValueField}
+      getDisplayText={getDisplayText}
     />
   ));
 
@@ -99,6 +101,15 @@ AttributeEditor.propTypes = {
    * passed to TextField
    */
   renderValueField: PropTypes.func,
+
+  /**
+   * Specifies how the value should be displayed in view mode and a11y
+   * description.
+   *
+   * Takes an attribute object as the first arg and returns the display text as
+   * string.
+   */
+  getDisplayText: PropTypes.func,
 };
 
 export default AttributeEditor;

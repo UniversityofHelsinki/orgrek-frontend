@@ -3,7 +3,8 @@ import AttributeEditor from '../../../components/attributes/AttributeEditor';
 import AttributeEditorRow from '../../../components/attributes/AttributeEditorRow';
 import MenuItem from '@mui/material/MenuItem';
 import TextField from '@mui/material/TextField';
-import { within, userEvent } from '@storybook/testing-library';
+import { within, userEvent, waitFor } from '@storybook/testing-library';
+import { expect } from '@storybook/jest';
 
 export default {
   component: AttributeEditor,
@@ -91,6 +92,39 @@ export const InvalidDate = {
   },
 };
 
+export const DeletedRow = {
+  ...Default,
+  args: {
+    ...Default.args,
+    data: [
+      {
+        id: 1001,
+        value: 'value3',
+        startDate: '2023-01-01',
+        endDate: null,
+        isNew: false,
+        deleted: false,
+      },
+      {
+        id: 1002,
+        value: 'value2',
+        startDate: '2022-01-01',
+        endDate: '2022-12-31',
+        isNew: false,
+        deleted: true,
+      },
+      {
+        id: 1003,
+        value: 'value1',
+        startDate: null,
+        endDate: '2021-12-31',
+        isNew: false,
+        deleted: false,
+      },
+    ],
+  },
+};
+
 export const DropdownEditor = {
   ...Default,
   parameters: {
@@ -108,13 +142,24 @@ export const DropdownEditor = {
       args.onChange && args.onChange(newData);
     };
 
+    const options = [
+      { value: 'value1', label: 'praesent dictum' },
+      { value: 'value2', label: 'interdum lectus' },
+      { value: 'value3', label: 'pretium metus in pellentesque' },
+    ];
+
     const renderValueField = (valueFieldProps) => (
       <TextField select {...valueFieldProps}>
-        <MenuItem value="value1">Arvo 1</MenuItem>
-        <MenuItem value="value2">Arvo 2</MenuItem>
-        <MenuItem value="value3">Arvo 3</MenuItem>
+        {options.map((option) => (
+          <MenuItem key={option.value} value={option.value}>
+            {option.label}
+          </MenuItem>
+        ))}
       </TextField>
     );
+
+    const getDisplayText = (value) =>
+      options.find((option) => option.value === value.value)?.label;
 
     return (
       <AttributeEditor
@@ -122,7 +167,25 @@ export const DropdownEditor = {
         data={data}
         onChange={handleChange}
         renderValueField={renderValueField}
+        getDisplayText={getDisplayText}
       />
     );
+  },
+};
+
+export const DeletedRowDisplayText = {
+  ...DropdownEditor,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement.parentElement);
+
+    await userEvent.click(canvas.getAllByTestId('attributeRowMenuButton')[1]);
+
+    await waitFor(async () => {
+      await userEvent.click(canvas.getByTestId('deleteRowMenuItem'));
+    });
+
+    await waitFor(() => {
+      expect(canvas.getByTestId('deletedAttributeRow')).toBeInTheDocument();
+    });
   },
 };
