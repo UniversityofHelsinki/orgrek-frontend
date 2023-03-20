@@ -32,3 +32,5 @@ setGlobalConfig({
 beforeEach(() => {
   document.body.innerHTML = '';
 });
+
+jest.mock('./i18n');

@@ -1,5 +1,4 @@
-import { isValid, parse } from 'date-fns';
-import { fi } from 'date-fns/locale';
+import { isValid, parseISO } from 'date-fns';
 
 export const valueNotEmpty = (values) => {
   const errors = {};
@@ -15,21 +14,41 @@ export const valueNotEmpty = (values) => {
   });
   return errors;
 };
+/*
+export const valueStartsWithSpace = (values) => {
+  const errors = {};
+  let arrOfNames = [...values.nameFi, ...values.nameSv, ...values.nameEn];
 
+  arrOfNames.forEach((value) => {
+    if (value.value.startsWith(' ')) {
+      errors.startsWithSpace = { error: 'attribute.startsWithSpace' };
+    }
+  });
+  return errors;
+};
+
+export const valueEndsWithSpace = (values) => {
+  const errors = {};
+  let arrOfNames = [...values.nameFi, ...values.nameSv, ...values.nameEn];
+
+  arrOfNames.forEach((value) => {
+    if (value.value.endsWith(' ')) {
+      errors.startsWithSpace = { error: 'attribute.endsWithSpace' };
+    }
+  });
+  return errors;
+};
+*/
 const validStartDate = (date) => {
   if (date !== null && !isValid(date)) {
-    const parsedDate = parse(date, 'yyyy-MM-dd', new Date(), { locale: fi });
-    const isValidDate = isValid(parsedDate);
-    return isValidDate;
+    return isValid(parseISO(date));
   }
   return true;
 };
 
 const validEndDate = (date) => {
   if (date !== null && !isValid(date)) {
-    const parsedDate = parse(date, 'yyyy-MM-dd', new Date(), { locale: fi });
-    const isValidDate = isValid(parsedDate);
-    return isValidDate;
+    return isValid(parseISO(date));
   }
   return true;
 };
@@ -60,8 +79,6 @@ const compareStartAndEndDates = (startDate, endDate, days) => {
   return true;
 };
 
-// TODO: add validation rules here
-// errors.error = t('…');
 export const compareAndCheckDates = (values) => {
   const errors = {};
 
