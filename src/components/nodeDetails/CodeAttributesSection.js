@@ -10,7 +10,18 @@ import EditableContent from '../EditableContent';
 import CodeAttributesEditor from './CodeAttributesEditor';
 
 const toFormValues = (attributes) => {
-  return { ...attributes };
+  const byKey = {};
+  attributes.forEach((attribute) => {
+    if (!byKey[attribute.key]) {
+      byKey[attribute.key] = [];
+    }
+    byKey[attribute.key].push(attribute);
+  });
+  return byKey;
+};
+
+const withoutUniqueID = (attributes) => {
+  return attributes.filter((attribute) => attribute.key !== 'unique_id');
 };
 
 const CodeAttributesSection = () => {
@@ -63,9 +74,7 @@ const CodeAttributesSection = () => {
       >
         <EditableContent
           editorComponent={<CodeAttributesEditor />}
-          initialValues={toFormValues(
-            data.filter((a) => a.key !== 'unique_id')
-          )}
+          initialValues={toFormValues(withoutUniqueID(data))}
           validate={(o) => console.log(o) || {}}
           onSubmit={(o) => Promise.resolve(console.log(o) || o)}
         >

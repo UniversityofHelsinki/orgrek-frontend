@@ -10,13 +10,18 @@ const CodeAttributesEditor = () => {
 
   return (
     <Stack spacing={2}>
-      {Object.entries(values).map(([key, attribute]) => (
+      {Object.entries(values).map(([key, attributes]) => (
         <AttributeEditor
           key={key}
-          attributeLabel={t(attribute.key)}
+          attributeLabel={t(key)}
           valueLabel={t('attribute_value')}
-          data={[attribute]}
-          onChange={(newData) => setValues({ ...values, [key]: newData[0] })}
+          data={attributes}
+          onChange={(newData) =>
+            setValues({
+              ...values,
+              [key]: newData,
+            })
+          }
         />
       ))}
     </Stack>
