@@ -1,4 +1,8 @@
-import { mockGetNameAttributes, withMockStore } from '../../../mockStore';
+import {
+  mockGetNameAttributes,
+  mockPutNameAttributes,
+  withMockStore,
+} from '../../../mockStore';
 import NameSection from '../../../components/nodeDetails/NameSection';
 import { expect } from '@storybook/jest';
 import { userEvent, waitFor, within } from '@storybook/testing-library';
@@ -78,7 +82,7 @@ export default {
 export const Default = {
   parameters: {
     msw: {
-      handlers: [mockGetNameAttributes(nodeId, data)],
+      handlers: [mockGetNameAttributes(nodeId, data), mockPutNameAttributes()],
     },
   },
   decorators: [withMockStore()],
@@ -87,7 +91,7 @@ export const Default = {
 export const Empty = {
   parameters: {
     msw: {
-      handlers: [mockGetNameAttributes(nodeId, [])],
+      handlers: [mockGetNameAttributes(nodeId, []), mockPutNameAttributes()],
     },
   },
   decorators: [withMockStore()],
@@ -96,7 +100,7 @@ export const Empty = {
 export const ShowHistory = {
   parameters: {
     msw: {
-      handlers: [mockGetNameAttributes(nodeId, data)],
+      handlers: [mockGetNameAttributes(nodeId, data), mockPutNameAttributes()],
     },
   },
   decorators: [
