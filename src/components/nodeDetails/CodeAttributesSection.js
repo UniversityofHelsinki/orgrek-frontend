@@ -6,6 +6,12 @@ import { codeAttributes as codes } from '../../constants/variables';
 import useAttributes from '../../hooks/useAttributes';
 import Validity from '../attributes/Validity';
 import Placeholder from '../Placeholder';
+import EditableContent from '../EditableContent';
+import CodeAttributesEditor from './CodeAttributesEditor';
+
+const toFormValues = (attributes) => {
+  return { ...attributes };
+};
 
 const CodeAttributesSection = () => {
   const { t } = useTranslation();
@@ -55,7 +61,16 @@ const CodeAttributesSection = () => {
         empty={empty}
         placeholder={t('nodeDetailsSection.noAttributes')}
       >
-        <AttributesTable columns={columns} data={data} summary={title} />
+        <EditableContent
+          editorComponent={<CodeAttributesEditor />}
+          initialValues={toFormValues(
+            data.filter((a) => a.key !== 'unique_id')
+          )}
+          validate={(o) => console.log(o) || {}}
+          onSubmit={(o) => Promise.resolve(console.log(o) || o)}
+        >
+          <AttributesTable columns={columns} data={data} summary={title} />
+        </EditableContent>
       </Placeholder>
     </EditableAccordion>
   );
