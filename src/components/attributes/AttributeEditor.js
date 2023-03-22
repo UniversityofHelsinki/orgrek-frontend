@@ -23,12 +23,9 @@ const AttributeEditor = ({
   getDisplayText,
   sx,
 }) => {
-  const node = useSelector((state) => state.nrd.node);
-
   const createRow = () => ({
     // Also new rows must have some unique id before they are stored to database
     id: Math.floor(Math.random() * -1000000),
-    nodeId: node.id,
     key: null,
     value: null,
     startDate: null,
