@@ -4,6 +4,8 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 import AttributeEditorRow from './AttributeEditorRow';
+import parseISO from 'date-fns/parseISO';
+import { addDays, formatISO } from 'date-fns';
 
 /**
  * Edits single attribute having multiple values with different validity date ranges.
@@ -36,9 +38,32 @@ const AttributeEditor = ({
     onChange(newData);
   };
 
+  const updateEndDate = (oldrow, date) => {
+    return { ...oldrow, endDate: formatISO(date, { representation: 'date' }) };
+  };
+
+  const updateDates = (oldrow, row, days) => {
+    if (oldrow.endDate === null || !oldrow.endDate) {
+      const date = new Date();
+      const startDate = addDays(date, days);
+      row.startDate = formatISO(startDate, { representation: 'date' });
+      return date;
+    } else {
+      const parsedDate = parseISO(oldrow.endDate);
+      const startDate = addDays(parsedDate, days);
+      row.startDate = formatISO(startDate, { representation: 'date' });
+      return null;
+    }
+  };
+
   const handleInsertBefore = (index) => {
     const newRow = createRow();
+    const oldrow = values[index];
+    const endDate = updateDates(oldrow, newRow, 1);
     const newData = [...data];
+    if (endDate !== null) {
+      newData[index] = updateEndDate(newData[index], endDate);
+    }
     newData.splice(index, 0, newRow);
     onChange(newData);
   };

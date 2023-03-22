@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import useEditMode from '../hooks/useEditMode';
 import Form from './Form';
 import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
+import Button from './Button';
 import ActionBar from './nodeDetails/ActionBar';
 import { useTranslation } from 'react-i18next';
 import useForm from '../hooks/useForm';
@@ -10,6 +10,8 @@ import { FormContextProvider } from '../contexts/FormContext';
 import IfAdmin from './auth/IfAdmin';
 import PropTypes from 'prop-types';
 import Typography from '@mui/material/Typography';
+import { showNotification } from '../store';
+import { useDispatch } from 'react-redux';
 
 /**
  * Renders form validation error message.
@@ -47,7 +49,7 @@ const ValidationResult = () => {
 const FormActions = () => {
   const { t } = useTranslation();
   const { close, setModified } = useEditMode();
-  const { dirty, valid } = useForm();
+  const { dirty, valid, submitting } = useForm();
 
   // Update modified state for EditableAccordion when form values become modified
   useEffect(() => {
@@ -58,10 +60,15 @@ const FormActions = () => {
 
   return (
     <ActionBar>
-      <Button variant="outlined" onClick={close}>
+      <Button variant="outlined" onClick={close} disabled={submitting}>
         {t('cancel_button')}
       </Button>
-      <Button variant="contained" type="submit" disabled={!canSubmit}>
+      <Button
+        variant="contained"
+        type="submit"
+        loading={submitting}
+        disabled={!canSubmit}
+      >
         {t('edit_mode_save_button')}
       </Button>
     </ActionBar>
@@ -88,14 +95,35 @@ const EditableContent = ({
   validate,
   onSubmit,
   children,
+  successMessage = null,
+  errorMessage = null,
 }) => {
   const { t } = useTranslation();
   const { editMode, edit, close } = useEditMode();
+  const dispatch = useDispatch();
 
   const handleSubmit = (values) => {
-    onSubmit(values)
-      .then(() => close())
-      .catch((error) => console.log(error));
+    return onSubmit(values)
+      .then(() => {
+        dispatch(
+          showNotification({
+            message: successMessage || t('update_attributes_success'),
+            severity: 'success',
+          })
+        );
+
+        close();
+      })
+      .catch(() => {
+        // Middleware shows a generic notification for every error,
+        // this notification overrides it with a more specific message.
+        dispatch(
+          showNotification({
+            message: errorMessage || t('update_attributes_error'),
+            severity: 'error',
+          })
+        );
+      });
   };
 
   if (editMode) {
@@ -166,6 +194,16 @@ EditableContent.propTypes = {
    * Use them to render the default actions.
    */
   renderActions: PropTypes.func,
+
+  /**
+   * Custom notification message displayed after content has been saved
+   */
+  successMessage: PropTypes.string,
+
+  /**
+   * Custom notification message displayed when saving content fails
+   */
+  errorMessage: PropTypes.string,
 };
 
 export default EditableContent;
