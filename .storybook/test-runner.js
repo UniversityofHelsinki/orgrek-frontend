@@ -14,5 +14,8 @@ module.exports = {
       false,
       'v2'
     );
+
+    const accessibilityTree = await page.accessibility.snapshot();
+    expect(accessibilityTree).toMatchSnapshot();
   },
 };

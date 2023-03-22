@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`stories/components/nodeDetails/NodeDetails2 AdminRole smoke-test 1`] = `
+Object {
+  "checked": undefined,
+  "children": undefined,
+  "name": "stories-components-nodedetails-nodedetails2--admin-role",
+  "pressed": undefined,
+  "role": "WebArea",
+  "value": undefined,
+}
+`;
+
+exports[`stories/components/nodeDetails/NodeDetails2 ReaderRole smoke-test 1`] = `
+Object {
+  "checked": undefined,
+  "children": undefined,
+  "name": "stories-components-nodedetails-nodedetails2--reader-role",
+  "pressed": undefined,
+  "role": "WebArea",
+  "value": undefined,
+}
+`;

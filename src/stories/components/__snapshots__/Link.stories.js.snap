@@ -1,0 +1,61 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`stories/components/Link HierarchiesLink smoke-test 1`] = `
+Object {
+  "checked": undefined,
+  "children": Array [
+    Object {
+      "checked": undefined,
+      "children": undefined,
+      "name": "Hierarchy link",
+      "pressed": undefined,
+      "role": "link",
+      "value": undefined,
+    },
+  ],
+  "name": "stories-components-link--hierarchies-link",
+  "pressed": undefined,
+  "role": "WebArea",
+  "value": undefined,
+}
+`;
+
+exports[`stories/components/Link NodeLink smoke-test 1`] = `
+Object {
+  "checked": undefined,
+  "children": Array [
+    Object {
+      "checked": undefined,
+      "children": undefined,
+      "name": "Helsingin yliopisto (HY)",
+      "pressed": undefined,
+      "role": "link",
+      "value": undefined,
+    },
+  ],
+  "name": "stories-components-link--node-link",
+  "pressed": undefined,
+  "role": "WebArea",
+  "value": undefined,
+}
+`;
+
+exports[`stories/components/Link PathLink smoke-test 1`] = `
+Object {
+  "checked": undefined,
+  "children": Array [
+    Object {
+      "checked": undefined,
+      "children": undefined,
+      "name": "Texts",
+      "pressed": undefined,
+      "role": "link",
+      "value": undefined,
+    },
+  ],
+  "name": "stories-components-link--path-link",
+  "pressed": undefined,
+  "role": "WebArea",
+  "value": undefined,
+}
+`;

@@ -1,0 +1,59 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`stories/components/nodeDetails/NodeValiditySection Default smoke-test 1`] = `
+Object {
+  "checked": undefined,
+  "children": Array [
+    Object {
+      "checked": undefined,
+      "children": undefined,
+      "expanded": true,
+      "name": "valid_dates",
+      "pressed": undefined,
+      "role": "button",
+      "value": undefined,
+    },
+    Object {
+      "checked": undefined,
+      "children": undefined,
+      "name": "1.1.2000 from_date_react",
+      "pressed": undefined,
+      "role": "text",
+      "value": undefined,
+    },
+  ],
+  "name": "stories-components-nodedetails-nodevaliditysection--default",
+  "pressed": undefined,
+  "role": "WebArea",
+  "value": undefined,
+}
+`;
+
+exports[`stories/components/nodeDetails/NodeValiditySection Empty smoke-test 1`] = `
+Object {
+  "checked": undefined,
+  "children": Array [
+    Object {
+      "checked": undefined,
+      "children": undefined,
+      "expanded": true,
+      "name": "valid_dates",
+      "pressed": undefined,
+      "role": "button",
+      "value": undefined,
+    },
+    Object {
+      "checked": undefined,
+      "children": undefined,
+      "name": "not_specified",
+      "pressed": undefined,
+      "role": "text",
+      "value": undefined,
+    },
+  ],
+  "name": "stories-components-nodedetails-nodevaliditysection--empty",
+  "pressed": undefined,
+  "role": "WebArea",
+  "value": undefined,
+}
+`;

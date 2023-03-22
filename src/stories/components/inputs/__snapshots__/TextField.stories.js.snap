@@ -1,0 +1,106 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`stories/components/inputs/TextField Basic smoke-test 1`] = `
+Object {
+  "checked": undefined,
+  "children": Array [
+    Object {
+      "checked": undefined,
+      "children": undefined,
+      "name": "Label",
+      "pressed": undefined,
+      "role": "text",
+      "value": undefined,
+    },
+    Object {
+      "checked": undefined,
+      "children": undefined,
+      "name": "Label",
+      "pressed": undefined,
+      "role": "textbox",
+      "value": undefined,
+    },
+  ],
+  "name": "stories-components-inputs-textfield--basic",
+  "pressed": undefined,
+  "role": "WebArea",
+  "value": undefined,
+}
+`;
+
+exports[`stories/components/inputs/TextField FormProps smoke-test 1`] = `
+Object {
+  "checked": undefined,
+  "children": Array [
+    Object {
+      "checked": undefined,
+      "children": undefined,
+      "name": "Label",
+      "pressed": undefined,
+      "role": "text",
+      "value": undefined,
+    },
+    Object {
+      "checked": undefined,
+      "children": undefined,
+      "description": "Assistive text",
+      "name": "Label",
+      "pressed": undefined,
+      "required": true,
+      "role": "textbox",
+      "value": "Text field",
+    },
+    Object {
+      "checked": undefined,
+      "children": undefined,
+      "name": "Assistive text",
+      "pressed": undefined,
+      "role": "text",
+      "value": undefined,
+    },
+  ],
+  "name": "stories-components-inputs-textfield--form-props",
+  "pressed": undefined,
+  "role": "WebArea",
+  "value": undefined,
+}
+`;
+
+exports[`stories/components/inputs/TextField Validation smoke-test 1`] = `
+Object {
+  "checked": undefined,
+  "children": Array [
+    Object {
+      "checked": undefined,
+      "children": undefined,
+      "name": "Label",
+      "pressed": undefined,
+      "role": "text",
+      "value": undefined,
+    },
+    Object {
+      "checked": undefined,
+      "children": undefined,
+      "description": "Validation error message",
+      "invalid": "true",
+      "name": "Label",
+      "pressed": undefined,
+      "required": true,
+      "role": "textbox",
+      "value": "Text field",
+    },
+    Object {
+      "checked": undefined,
+      "children": undefined,
+      "name": "Validation error message",
+      "pressed": undefined,
+      "role": "text",
+      "value": undefined,
+    },
+  ],
+  "name": "stories-components-inputs-textfield--validation",
+  "pressed": undefined,
+  "role": "WebArea",
+  "value": undefined,
+}
+`;
