@@ -3,15 +3,19 @@ import { isValid, parseISO } from 'date-fns';
 export const valueNotEmpty = (values) => {
   const errors = {};
 
-  [...values.nameFi, ...values.nameSv, ...values.nameEn].forEach((value) => {
-    if (value.value !== null && !value.value.trim()) {
-      if (!errors.valueNotEmpty) {
+  [...values.nameFi, ...values.nameSv, ...values.nameEn]
+    .filter((value) => !value.deleted)
+    .forEach((value) => {
+      if (value.value === null) {
         errors.valueNotEmpty = {};
-      }
+      } else if (!value.value.trim()) {
+        if (!errors.valueNotEmpty) {
+          errors.valueNotEmpty = {};
+        }
 
-      errors.valueNotEmpty[value.id] = true;
-    }
-  });
+        errors.valueNotEmpty[value.id] = true;
+      }
+    });
   return errors;
 };
 /*
