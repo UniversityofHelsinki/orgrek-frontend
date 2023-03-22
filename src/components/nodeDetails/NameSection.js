@@ -26,23 +26,14 @@ const toFormValues = (data) => {
 const NameSection = () => {
   const { t } = useTranslation();
   const nodeId = useNodeId();
-  const { data, error, isFetching } = useGetNameAttributesQuery(nodeId);
-  const [saveNameAttributes, saveResult] = useSaveNameAttributesMutation();
+  const { data, isFetching } = useGetNameAttributesQuery(nodeId);
+  const [saveNameAttributes] = useSaveNameAttributesMutation();
 
   // In edit mode data includes also history and future
   const sortedData = useSortAttributesByDate(data);
 
   // In view mode filter history and future depending on selection
   const sortedAndFilteredData = useFilterAttributesByDate(sortedData);
-
-  // TODO: show success snackbar when saveResult is completed
-  // success message t('update_attributes_success')
-
-  // TODO: show error snackbar if saveResult has error
-
-  if (error) {
-    // TODO: Fetching data failed, show error snackbar
-  }
 
   // Validates form values every time when the values change
   // Submit button is disabled when errors contain any truthy values
@@ -99,6 +90,8 @@ const NameSection = () => {
         validate={validate}
         initialValues={toFormValues(sortedData)}
         onSubmit={handleSubmit}
+        successMessage={t('nameInfo.saveSuccess')}
+        errorMessage={t('nameInfo.saveError')}
       >
         <Placeholder empty={empty} placeholder={t('nameInfo.empty')}>
           {renderedContent}

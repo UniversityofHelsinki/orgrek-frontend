@@ -9,5 +9,5 @@ export const mockGetNameAttributes = (nodeId, body) =>
 
 export const mockPutNameAttributes = (nodeId) =>
   rest.put(`${baseUrl}/node/${nodeId}/attributes/names`, (req, res, ctx) =>
-    res(ctx.json(req.json()))
+    res(ctx.delay(2000), ctx.json(req.json()))
   );

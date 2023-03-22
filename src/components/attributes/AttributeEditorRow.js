@@ -292,10 +292,10 @@ AttributeEditorRow.propTypes = {
     endDate: PropTypes.string,
 
     /* True if the row has not yet been saved to database */
-    isNew: PropTypes.bool.isRequired,
+    isNew: PropTypes.bool,
 
     /** Soft deletion marker so that it can be reverted */
-    deleted: PropTypes.bool.isRequired,
+    deleted: PropTypes.bool,
   }).isRequired,
 
   /** Called when the value changes, taking the new value as the first argument */
