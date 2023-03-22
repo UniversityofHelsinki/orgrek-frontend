@@ -7,7 +7,7 @@ import { dayReducer } from './mockDay';
 import { nodeDetailsViewReducer } from './mockNodeDetailsView';
 import { hierarchyFiltersReducer } from './mockHierarchyFilters';
 import { editModeReducer } from './mockEditMode';
-import { api } from '../store';
+import { api, notificationsReducer } from '../store';
 import { Provider } from 'react-redux';
 import React from 'react';
 import { setupListeners } from '@reduxjs/toolkit/query';
@@ -25,6 +25,7 @@ export const configureMockStore = (preloadedState = {}) => {
       nvrd: nodeDetailsViewReducer,
       hierarchyFilters: hierarchyFiltersReducer,
       editModeReducer: editModeReducer,
+      notifications: notificationsReducer,
     },
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware().concat(api.middleware),
