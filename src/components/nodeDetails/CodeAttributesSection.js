@@ -6,6 +6,23 @@ import { codeAttributes as codes } from '../../constants/variables';
 import useAttributes from '../../hooks/useAttributes';
 import Validity from '../attributes/Validity';
 import Placeholder from '../Placeholder';
+import EditableContent from '../EditableContent';
+import CodeAttributesEditor from './CodeAttributesEditor';
+
+const toFormValues = (attributes) => {
+  const byKey = {};
+  attributes.forEach((attribute) => {
+    if (!byKey[attribute.key]) {
+      byKey[attribute.key] = [];
+    }
+    byKey[attribute.key].push(attribute);
+  });
+  return byKey;
+};
+
+const withoutUniqueID = (attributes) => {
+  return attributes.filter((attribute) => attribute.key !== 'unique_id');
+};
 
 const CodeAttributesSection = () => {
   const { t } = useTranslation();
@@ -55,7 +72,15 @@ const CodeAttributesSection = () => {
         empty={empty}
         placeholder={t('nodeDetailsSection.noAttributes')}
       >
-        <AttributesTable columns={columns} data={data} summary={title} />
+        <EditableContent
+          editorComponent={<CodeAttributesEditor />}
+          initialValues={toFormValues(withoutUniqueID(data))}
+          // TODO: change to use validation from validations.js
+          validate={(o) => {}}
+          onSubmit={(o) => Promise.resolve(o)}
+        >
+          <AttributesTable columns={columns} data={data} summary={title} />
+        </EditableContent>
       </Placeholder>
     </EditableAccordion>
   );
