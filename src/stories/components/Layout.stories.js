@@ -15,7 +15,7 @@ export default {
 export const Layout = {
   render: () => {
     const content = (
-      <Box sx={{ pt: 8, pb: 8, minHeight: '75vh' }}>
+      <Box sx={{ pt: 8, pb: 8, minHeight: '75vh' }} id="main-content">
         <Typography align="center">Page content</Typography>
       </Box>
     );
