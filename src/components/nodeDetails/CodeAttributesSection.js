@@ -75,8 +75,9 @@ const CodeAttributesSection = () => {
         <EditableContent
           editorComponent={<CodeAttributesEditor />}
           initialValues={toFormValues(withoutUniqueID(data))}
-          validate={(o) => console.log(o) || {}}
-          onSubmit={(o) => Promise.resolve(console.log(o) || o)}
+          // TODO: change to use validation from validations.js
+          validate={(o) => {}}
+          onSubmit={(o) => Promise.resolve(o)}
         >
           <AttributesTable columns={columns} data={data} summary={title} />
         </EditableContent>
