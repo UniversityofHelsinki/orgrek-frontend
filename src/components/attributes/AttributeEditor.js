@@ -6,6 +6,7 @@ import Stack from '@mui/material/Stack';
 import AttributeEditorRow from './AttributeEditorRow';
 import parseISO from 'date-fns/parseISO';
 import { addDays, formatISO } from 'date-fns';
+import { useSelector } from 'react-redux';
 
 /**
  * Edits single attribute having multiple values with different validity date ranges.
@@ -25,6 +26,7 @@ const AttributeEditor = ({
   const createRow = () => ({
     // Also new rows must have some unique id before they are stored to database
     id: Math.floor(Math.random() * -1000000),
+    key: null,
     value: null,
     startDate: null,
     endDate: null,
@@ -42,6 +44,10 @@ const AttributeEditor = ({
     return { ...oldrow, endDate: formatISO(date, { representation: 'date' }) };
   };
 
+  const updateKey = (oldRow, newRow) => {
+    return { ...newRow, key: oldRow.key };
+  };
+
   const updateDates = (oldrow, row, days) => {
     if (oldrow.endDate === null || !oldrow.endDate) {
       const date = new Date();
@@ -57,10 +63,11 @@ const AttributeEditor = ({
   };
 
   const handleInsertBefore = (index) => {
-    const newRow = createRow();
-    const oldrow = values[index];
-    const endDate = updateDates(oldrow, newRow, 1);
+    let newRow = createRow();
+    const oldRow = values[index];
+    const endDate = updateDates(oldRow, newRow, 1);
     const newData = [...data];
+    newRow = updateKey(oldRow, newRow);
     if (endDate !== null) {
       newData[index] = updateEndDate(newData[index], endDate);
     }
@@ -69,7 +76,9 @@ const AttributeEditor = ({
   };
 
   const handleInsertAfter = (index) => {
-    const newRow = createRow();
+    let newRow = createRow();
+    const oldRow = values[index];
+    newRow = updateKey(oldRow, newRow);
     const newData = [...data];
     newData.splice(index + 1, 0, newRow);
     onChange(newData);
