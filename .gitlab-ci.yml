@@ -27,7 +27,7 @@ setup:
   stage: setup
   script:
     - node -v
-    - CYPRESS_CACHE_FOLDER='.cache/Cypress' npm ci
+    - CYPRESS_CACHE_FOLDER='.cache/Cypress' PLAYWRIGHT_BROWSERS_PATH=0 npm ci
   tags:
     - ohtu-build-3
   extends: .dependencies_cache
