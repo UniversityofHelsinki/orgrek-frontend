@@ -45,6 +45,8 @@ test:
     - ohtu-build-3
   script:
     - npm test
+    - npm run storybook:build
+    - npm run storybook:test:ci
   coverage: /All files\s*\|\s*([\d\.]+)/
 
 build_dev:
