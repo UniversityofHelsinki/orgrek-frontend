@@ -8,3 +8,4 @@ export * from './mockNodeDetailsView';
 export * from './mockStore';
 export * from './mockTree';
 export * from './mockUser';
+export * from './mockDate';

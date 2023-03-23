@@ -7,6 +7,7 @@ import { fi } from 'date-fns/locale';
 import theme from '../src/theme';
 import { withRouter } from 'storybook-addon-react-router-v6';
 import { initialize, mswDecorator } from 'msw-storybook-addon';
+import { withMockDate } from '../src/mockStore';
 import i18n from '../src/i18n';
 
 i18n.init({
@@ -66,4 +67,5 @@ export const decorators = [
   ),
   withRouter,
   mswDecorator,
+  withMockDate,
 ];
