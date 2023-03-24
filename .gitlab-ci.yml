@@ -52,7 +52,7 @@ test:
 
 storybook_test:
   stage: test
-  image: mcr.microsoft.com/playwright:v1.32.0-focal
+  image: mcr.microsoft.com/playwright:v1.31.2-focal
   tags:
     - ohtu-build-3
   script:
