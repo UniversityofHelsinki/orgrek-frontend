@@ -27,7 +27,10 @@ setup:
   stage: setup
   script:
     - node -v
-    - CYPRESS_CACHE_FOLDER='.cache/Cypress' PLAYWRIGHT_BROWSERS_PATH=0 npm ci
+    - >
+      CYPRESS_CACHE_FOLDER='.cache/Cypress'
+      PLAYWRIGHT_BROWSERS_PATH=.cache/ms-playwright
+      npm ci
   tags:
     - ohtu-build-3
   extends: .dependencies_cache
@@ -45,6 +48,14 @@ test:
     - ohtu-build-3
   script:
     - npm test
+  coverage: /All files\s*\|\s*([\d\.]+)/
+
+storybook_test:
+  stage: test
+  image: mcr.microsoft.com/playwright:v1.32.0-focal
+  tags:
+    - ohtu-build-3
+  script:
     - npm run storybook:build
     - npm run storybook:test:ci
   coverage: /All files\s*\|\s*([\d\.]+)/
