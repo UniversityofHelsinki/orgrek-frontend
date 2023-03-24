@@ -5,7 +5,7 @@ export const api = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: `${process.env.REACT_APP_ORGREK_BACKEND_SERVER || ''}/api`,
   }),
-  tagTypes: ['NameAttributes', 'Tree'],
+  tagTypes: ['NameAttributes', 'Tree', 'TypeAttributes'],
   endpoints: (builder) => ({
     getTree: builder.query({
       providesTags: (result, error) => [{ type: 'Tree' }],
@@ -46,6 +46,15 @@ export const api = createApi({
         };
       },
     }),
+    getTypeAttributes: builder.query({
+      providesTags: (result, error, nodeId) => [
+        { type: 'TypeAttributes', nodeId },
+      ],
+      query: (nodeId) => ({
+        url: `node/attributes/types/${nodeId}`,
+        method: 'GET',
+      }),
+    }),
   }),
 });
 
@@ -53,4 +62,5 @@ export const {
   useGetNameAttributesQuery,
   useSaveNameAttributesMutation,
   useGetTreeQuery,
+  useGetTypeAttributesQuery,
 } = api;
