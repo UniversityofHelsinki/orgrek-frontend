@@ -12,6 +12,7 @@ export const FormContextProvider = ({
   const [values, setValuesState] = useState(initialValues);
   const [dirty, setDirty] = useState(false);
   const [errors, setErrors] = useState({});
+  const [submitting, setSubmitting] = useState(false);
 
   const setValues = (newValues) => {
     setDirty(true);
@@ -23,7 +24,8 @@ export const FormContextProvider = ({
   };
 
   const submit = () => {
-    onSubmit(values);
+    setSubmitting(true);
+    onSubmit(values).finally(() => setSubmitting(false));
   };
 
   const reset = () => {
@@ -34,7 +36,16 @@ export const FormContextProvider = ({
   // Form is invalid when errors contain at least one truthy value
   const valid = Object.values(errors).every((error) => !error);
 
-  const context = { values, setValues, submit, reset, dirty, valid, errors };
+  const context = {
+    values,
+    setValues,
+    submit,
+    reset,
+    dirty,
+    valid,
+    errors,
+    submitting,
+  };
 
   return (
     <FormContext.Provider value={context}>{children}</FormContext.Provider>

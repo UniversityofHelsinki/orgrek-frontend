@@ -27,7 +27,7 @@ export const api = createApi({
         { type: 'NameAttributes', nodeId },
       ],
       query: (nodeId) => ({
-        url: `/node/attributes/names/${nodeId}`,
+        url: `/node/${nodeId}/attributes/names`,
         method: 'GET',
       }),
     }),
@@ -38,9 +38,9 @@ export const api = createApi({
         }
         return [{ type: 'NameAttributes', nodeId }, { type: 'Tree' }];
       },
-      query: ({ combinedArrays }) => {
+      query: ({ combinedArrays, nodeId }) => {
         return {
-          url: `/node/attributes/names`,
+          url: `/node/${nodeId}/attributes/names`,
           method: 'PUT',
           body: combinedArrays,
         };
