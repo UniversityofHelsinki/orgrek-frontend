@@ -55,6 +55,8 @@ storybook_test:
   image: mcr.microsoft.com/playwright:v1.31.2-focal
   tags:
     - ohtu-build-3
+  only:
+    - master
   script:
     - npm run storybook:build
     - npm run storybook:test:ci
