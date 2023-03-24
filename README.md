@@ -103,6 +103,18 @@ Storybook is used primarily for component development. Whole pages should still 
 You can run both the main app and Storybook at the same time,
 and all code changes are reloaded in both automatically.
 
+### Storybook Test Runner
+
+The test runner checks that all components are rendered without errors and
+that [interactions](https://storybook.js.org/docs/react/writing-tests/interaction-testing) pass if the story has any.
+It also runs all [accessibility tests](https://storybook.js.org/blog/automate-accessibility-tests-with-storybook/).
+
+First start Storybook as above, then run in another window:
+
+```bash
+npm run storybook:test
+```
+
 ### Updating Storybook dependencies
 
 Storybook has its own migration tool `npx storybook upgrade` which should be used for updating Storybook packages.
