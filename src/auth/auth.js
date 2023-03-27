@@ -1,7 +1,9 @@
 const roleAdmin = 'ROLE_ADMIN';
+const roleWriter = 'ROLE_WRITER';
+const roleReader = 'ROLE_READER';
 
-const allWriterRoles = [roleAdmin];
-const allRoles = ['ROLE_READER', ...allWriterRoles];
+const allWriterRoles = [roleAdmin, roleWriter];
+const allRoles = [roleReader, ...allWriterRoles];
 
 /**
  * Defines which actions are allowed for each role.
