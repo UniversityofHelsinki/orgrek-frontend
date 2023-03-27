@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import LanguageIcon from '@mui/icons-material/Language';
 import InputAdornment from '@mui/material/InputAdornment';
 import TextField from '@mui/material/TextField';
-import { isAdmin } from '../actions/userAction';
+import { isAdmin } from './auth/auth';
 import { connect } from 'react-redux';
 
 const LanguageSelect = (props) => {

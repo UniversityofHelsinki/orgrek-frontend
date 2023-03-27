@@ -1,4 +1,4 @@
-import { isAdmin } from '../../actions/userAction';
+import { isAdmin } from './auth';
 import useCurrentUser from '../../hooks/useCurrentUser';
 
 /**

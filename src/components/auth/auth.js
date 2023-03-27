@@ -1,4 +1,4 @@
-import { roleAdmin } from '../../constants/roles';
+const roleAdmin = 'ROLE_ADMIN';
 
 const allWriterRoles = [roleAdmin];
 const allRoles = ['ROLE_READER', ...allWriterRoles];
@@ -38,4 +38,16 @@ export const isAuthorized = (user, action) => {
   }
 
   return action.allowRoles.some((role) => user.roles.includes(role));
+};
+
+/**
+ * Check if the given user has admin role.
+ *
+ * Prefer action-based authorization isAuthorized instead of this function.
+ *
+ * @param user user object must have roles
+ * @return {boolean} true if user is admin
+ */
+export const isAdmin = (user) => {
+  return user.roles.includes(roleAdmin);
 };
