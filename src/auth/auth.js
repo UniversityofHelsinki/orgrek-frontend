@@ -24,6 +24,9 @@ export const authActions = {
   texts: {
     edit: { allowRoles: [roleAdmin] },
   },
+  hierarchyFilters: {
+    edit: { allowRoles: [roleAdmin] },
+  },
 };
 
 /**
