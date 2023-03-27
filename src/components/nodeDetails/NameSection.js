@@ -14,6 +14,7 @@ import {
 import useSortAttributesByDate from '../../hooks/useSortAttributesByDate';
 import useFilterAttributesByDate from '../../hooks/useFilterAttributesByDate';
 import { compareAndCheckDates, valueNotEmpty } from './validations';
+import { authActions } from '../auth/auth';
 
 const toFormValues = (data) => {
   const nameFi = data.filter((value) => value.key === 'name_fi');
@@ -92,6 +93,7 @@ const NameSection = () => {
         onSubmit={handleSubmit}
         successMessage={t('nameInfo.saveSuccess')}
         errorMessage={t('nameInfo.saveError')}
+        authActions={authActions.nameAttributes}
       >
         <Placeholder empty={empty} placeholder={t('nameInfo.empty')}>
           {renderedContent}

@@ -8,6 +8,7 @@ import Validity from '../attributes/Validity';
 import Placeholder from '../Placeholder';
 import EditableContent from '../EditableContent';
 import CodeAttributesEditor from './CodeAttributesEditor';
+import { authActions } from '../auth/auth';
 
 const toFormValues = (attributes) => {
   const byKey = {};
@@ -78,6 +79,7 @@ const CodeAttributesSection = () => {
           // TODO: change to use validation from validations.js
           validate={(o) => {}}
           onSubmit={(o) => Promise.resolve(o)}
+          authActions={authActions.codeAttributes}
         >
           <AttributesTable columns={columns} data={data} summary={title} />
         </EditableContent>
