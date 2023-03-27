@@ -4,22 +4,51 @@ import { useTranslation } from 'react-i18next';
 import AttributesTable from '../attributes/AttributesTable';
 import Placeholder from '../Placeholder';
 import EditableContent from '../EditableContent';
-import { compareAndCheckDates, valueNotEmpty } from './validations';
 import UnitTypeEditor from './UnitTypeEditor';
-import { useGetTypeAttributesQuery } from '../../store';
+import {
+  useGetTypeAttributesQuery,
+  useGetValidHierarchyFiltersQuery,
+} from '../../store';
 import { useNodeId } from '../../hooks/useNodeId';
 import useSortAttributesByDate from '../../hooks/useSortAttributesByDate';
+import { useSelector } from 'react-redux';
+import fillSelectableUnits from '../../hooks/filterSelectableUnits';
 
 const UnitTypeSection = () => {
   const { t } = useTranslation();
   const nodeId = useNodeId();
   const { data, error, isFetching } = useGetTypeAttributesQuery(nodeId);
+  const {
+    data: hierarchies,
+    hierarchyerror,
+    isFetchingHierarchy,
+  } = useGetValidHierarchyFiltersQuery();
+  const selectedHierarchies = useSelector(
+    (state) => state.tree.selectedHierarchy
+  );
+  const selectableUnits = [];
 
   // In edit mode data includes also history and future
   const sortedData = useSortAttributesByDate(data);
 
   const title = t('unit_type');
   const empty = sortedData.length === 0;
+
+  const toFormValues = (data) => {
+    const foundTypes = [];
+    fillSelectableUnits(selectableUnits, hierarchies, selectedHierarchies);
+    data.forEach((value) => {
+      selectableUnits.forEach((o) => {
+        if (o.value === value.value) {
+          foundTypes.push(value);
+        }
+      });
+    });
+    const type = [...foundTypes];
+    return { type };
+  };
+
+  const { type } = toFormValues(sortedData);
 
   // TODO: show success snackbar when saveResult is completed
   // success message t('update_attributes_success')
@@ -32,8 +61,8 @@ const UnitTypeSection = () => {
   // EditableContent handles displaying form-level validation error messages
   const validate = (values) => {
     return {
-      ...valueNotEmpty(values),
-      ...compareAndCheckDates(values),
+      //...valueNotEmpty(values),
+      //...compareAndCheckDates(values),
     };
   };
 
@@ -56,12 +85,11 @@ const UnitTypeSection = () => {
       <EditableContent
         editorComponent={<UnitTypeEditor />}
         validate={validate}
-        initialValues={sortedData}
+        initialValues={toFormValues(sortedData)}
         onSubmit={handleSubmit}
       >
         <Placeholder empty={empty} placeholder={t('unittype.empty')}>
-          <AttributesTable data={sortedData} summary={title} />
-          {/* {renderedContent} */}
+          <AttributesTable data={[...type]} summary={title} />
         </Placeholder>
       </EditableContent>
     </EditableAccordion>

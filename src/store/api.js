@@ -5,7 +5,7 @@ export const api = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: `${process.env.REACT_APP_ORGREK_BACKEND_SERVER || ''}/api`,
   }),
-  tagTypes: ['NameAttributes', 'Tree', 'TypeAttributes'],
+  tagTypes: ['NameAttributes', 'Tree', 'TypeAttributes', 'HierarchyFilters'],
   endpoints: (builder) => ({
     getTree: builder.query({
       providesTags: (result, error) => [{ type: 'Tree' }],
@@ -51,9 +51,19 @@ export const api = createApi({
         { type: 'TypeAttributes', nodeId },
       ],
       query: (nodeId) => ({
-        url: `node/attributes/types/${nodeId}`,
+        url: `node/${nodeId}/attributes/types`,
         method: 'GET',
       }),
+    }),
+    getValidHierarchyFilters: builder.query({
+      providesTags: (result, error, nodeId) => [{ type: 'HierarchyFilters' }],
+      query: () => {
+        const dateString = new Date().toLocaleDateString('FI-fi');
+        return {
+          url: `hierarchyFilters/${dateString}`,
+          method: 'GET',
+        };
+      },
     }),
   }),
 });
@@ -63,4 +73,5 @@ export const {
   useSaveNameAttributesMutation,
   useGetTreeQuery,
   useGetTypeAttributesQuery,
+  useGetValidHierarchyFiltersQuery,
 } = api;
