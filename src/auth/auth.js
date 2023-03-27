@@ -19,6 +19,9 @@ export const authActions = {
   unitType: {
     edit: { allowRoles: allWriterRoles },
   },
+  texts: {
+    edit: { allowRoles: [roleAdmin] },
+  },
 };
 
 /**

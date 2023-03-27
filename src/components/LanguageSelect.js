@@ -4,7 +4,8 @@ import { useTranslation } from 'react-i18next';
 import LanguageIcon from '@mui/icons-material/Language';
 import InputAdornment from '@mui/material/InputAdornment';
 import TextField from '@mui/material/TextField';
-import IfAdmin from '../auth/IfAdmin';
+import IfAuthorized from '../auth/IfAuthorized';
+import { authActions } from '../auth';
 
 const LanguageSelect = () => {
   const { t, i18n } = useTranslation();
@@ -31,9 +32,9 @@ const LanguageSelect = () => {
       <MenuItem value={'fi'}>Suomeksi</MenuItem>
       <MenuItem value={'sv'}>På svenska</MenuItem>
       <MenuItem value={'en'}>In English</MenuItem>
-      <IfAdmin>
+      <IfAuthorized action={authActions.texts.edit}>
         <MenuItem value={'ia'}>{t('text_key')}</MenuItem>
-      </IfAdmin>
+      </IfAuthorized>
     </TextField>
   );
 };
