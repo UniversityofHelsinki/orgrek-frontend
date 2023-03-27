@@ -11,7 +11,7 @@ import PropTypes from 'prop-types';
 import Typography from '@mui/material/Typography';
 import { showNotification } from '../store';
 import { useDispatch } from 'react-redux';
-import IfAuthorized from './auth/IfAuthorized';
+import IfAuthorized from '../auth/IfAuthorized';
 
 /**
  * Renders form validation error message.

@@ -14,7 +14,7 @@ import {
 import useSortAttributesByDate from '../../hooks/useSortAttributesByDate';
 import useFilterAttributesByDate from '../../hooks/useFilterAttributesByDate';
 import { compareAndCheckDates, valueNotEmpty } from './validations';
-import { authActions } from '../auth/auth';
+import { authActions } from '../../auth';
 
 const toFormValues = (data) => {
   const nameFi = data.filter((value) => value.key === 'name_fi');

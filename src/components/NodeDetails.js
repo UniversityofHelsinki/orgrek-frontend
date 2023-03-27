@@ -22,7 +22,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import { codeAttributes } from '../constants/variables';
 import EditButtons from './EditButtons';
-import { isAdmin } from './auth/auth';
+import { isAdmin } from '../auth';
 import moment from 'moment';
 import NewUpperUnit from './NewUpperUnit';
 import {

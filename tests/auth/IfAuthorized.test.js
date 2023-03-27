@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '../testUtils';
-import IfAuthorized from '../../src/components/auth/IfAuthorized';
-import { authActions } from '../../src/components/auth/auth';
+import IfAuthorized from '../../src/auth/IfAuthorized';
+import { authActions } from '../../src/auth';
 
 jest.mock('../../src/hooks/useCurrentUser', () => () => ({
   roles: ['ROLE_READER'],

@@ -1,4 +1,4 @@
-import useCurrentUser from '../../hooks/useCurrentUser';
+import useCurrentUser from '../hooks/useCurrentUser';
 import { isAuthorized } from './auth';
 import PropTypes from 'prop-types';
 

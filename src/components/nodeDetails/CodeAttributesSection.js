@@ -8,7 +8,7 @@ import Validity from '../attributes/Validity';
 import Placeholder from '../Placeholder';
 import EditableContent from '../EditableContent';
 import CodeAttributesEditor from './CodeAttributesEditor';
-import { authActions } from '../auth/auth';
+import { authActions } from '../../auth';
 
 const toFormValues = (attributes) => {
   const byKey = {};

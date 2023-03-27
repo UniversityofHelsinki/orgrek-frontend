@@ -1,4 +1,4 @@
-import { isAuthorized } from '../../src/components/auth/auth';
+import { isAuthorized } from '../../src/auth';
 
 test.each([
   { roles: [], action: { allowRoles: ['ROLE_READER'] }, expected: false },

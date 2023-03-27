@@ -13,7 +13,7 @@ import useCurrentUser from '../hooks/useCurrentUser';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import NavLink from './NavLink';
-import IfAdmin from './auth/IfAdmin';
+import IfAdmin from '../auth/IfAdmin';
 
 const Header = () => {
   const { t } = useTranslation();

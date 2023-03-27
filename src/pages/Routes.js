@@ -5,7 +5,7 @@ import TextsPage from './TextsPage';
 import HierarchyFiltersPage from './HierarchyFiltersPage';
 import useCurrentUser from '../hooks/useCurrentUser';
 import useSelectedHierarchies from '../hooks/useSelectedHierarchies';
-import { isAdmin } from '../components/auth/auth';
+import { isAdmin } from '../auth';
 import Layout from '../components/Layout';
 import useScrollToTop from '../hooks/useScrollToTop';
 
