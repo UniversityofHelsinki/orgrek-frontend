@@ -13,7 +13,8 @@ import useCurrentUser from '../hooks/useCurrentUser';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import NavLink from './NavLink';
-import IfAdmin from '../auth/IfAdmin';
+import IfAuthorized from '../auth/IfAuthorized';
+import { authActions } from '../auth';
 
 const Header = () => {
   const { t } = useTranslation();
@@ -82,10 +83,12 @@ const Header = () => {
       >
         <Container sx={{ height: '62px' }}>
           <NavLink text={t('organisation')} to={'/'} />
-          <IfAdmin>
+          <IfAuthorized action={authActions.texts.edit}>
             <NavLink text={t('texts')} to={'/texts'} />
+          </IfAuthorized>
+          <IfAuthorized action={authActions.hierarchyFilters.edit}>
             <NavLink text={t('hierarchy_filters')} to={'/hierarchyfilters'} />
-          </IfAdmin>
+          </IfAuthorized>
         </Container>
       </Box>
     </Box>
