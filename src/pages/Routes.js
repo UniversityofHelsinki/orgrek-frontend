@@ -1,14 +1,13 @@
-import React, { useEffect } from 'react';
-import { Route, Routes, useSearchParams } from 'react-router-dom';
+import React from 'react';
+import { Route, Routes } from 'react-router-dom';
 import NodePage from './NodePage';
 import TextsPage from './TextsPage';
 import HierarchyFiltersPage from './HierarchyFiltersPage';
 import useCurrentUser from '../hooks/useCurrentUser';
 import useSelectedHierarchies from '../hooks/useSelectedHierarchies';
-import { isAdmin } from '../actions/userAction';
+import { authActions, isAuthorized } from '../auth';
 import Layout from '../components/Layout';
 import useScrollToTop from '../hooks/useScrollToTop';
-import { useDispatch } from 'react-redux';
 
 const AppRoutes = () => {
   useScrollToTop();
@@ -19,11 +18,11 @@ const AppRoutes = () => {
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<NodePage />} />
-        {isAdmin(user) && (
-          <>
-            <Route path="texts" element={<TextsPage />} />
-            <Route path="hierarchyfilters" element={<HierarchyFiltersPage />} />
-          </>
+        {isAuthorized(user, authActions.texts.edit) && (
+          <Route path="texts" element={<TextsPage />} />
+        )}
+        {isAuthorized(user, authActions.hierarchyFilters.edit) && (
+          <Route path="hierarchyfilters" element={<HierarchyFiltersPage />} />
         )}
       </Route>
     </Routes>
