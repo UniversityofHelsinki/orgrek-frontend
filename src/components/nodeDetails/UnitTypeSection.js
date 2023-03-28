@@ -44,8 +44,7 @@ const UnitTypeSection = () => {
         }
       });
     });
-    const type = [...foundTypes];
-    return { type };
+    return { type: [...foundTypes] };
   };
 
   const { type } = toFormValues(sortedData);
@@ -60,21 +59,10 @@ const UnitTypeSection = () => {
   // Submit button is disabled when errors contain any truthy values
   // EditableContent handles displaying form-level validation error messages
   const validate = (values) => {
-    return {
-      //...valueNotEmpty(values),
-      //...compareAndCheckDates(values),
-    };
+    return {};
   };
 
-  const handleSubmit = (values) => {
-    /*const combinedArrays = [
-            ...values.nameEn,
-            ...values.nameFi,
-            ...values.nameSv,
-        ];
-        return saveNameAttributes({ combinedArrays, nodeId }).unwrap();*/
-    //return saveXXX({ ...values.typeAttributes, nodeId }).unwrap();
-  };
+  const handleSubmit = (values) => {};
 
   return (
     <EditableAccordion
