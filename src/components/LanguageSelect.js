@@ -4,10 +4,10 @@ import { useTranslation } from 'react-i18next';
 import LanguageIcon from '@mui/icons-material/Language';
 import InputAdornment from '@mui/material/InputAdornment';
 import TextField from '@mui/material/TextField';
-import { isAdmin } from '../actions/userAction';
-import { connect } from 'react-redux';
+import IfAuthorized from '../auth/IfAuthorized';
+import { authActions } from '../auth';
 
-const LanguageSelect = (props) => {
+const LanguageSelect = () => {
   const { t, i18n } = useTranslation();
 
   const handleChange = async (event) => {
@@ -32,17 +32,11 @@ const LanguageSelect = (props) => {
       <MenuItem value={'fi'}>Suomeksi</MenuItem>
       <MenuItem value={'sv'}>På svenska</MenuItem>
       <MenuItem value={'en'}>In English</MenuItem>
-      {isAdmin(props.user) ? (
+      <IfAuthorized action={authActions.texts.edit}>
         <MenuItem value={'ia'}>{t('text_key')}</MenuItem>
-      ) : (
-        ''
-      )}
+      </IfAuthorized>
     </TextField>
   );
 };
 
-const mapStateToProps = (state) => ({
-  user: state.ur.user,
-});
-
-export default connect(mapStateToProps, null)(LanguageSelect);
+export default LanguageSelect;

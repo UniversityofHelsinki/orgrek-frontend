@@ -1,5 +1,3 @@
-import { roleAdmin } from '../constants/roles';
-
 export const fetchUser = () => {
   const ORGREK_BACKEND_SERVER =
     process.env.REACT_APP_ORGREK_BACKEND_SERVER || '';
@@ -26,7 +24,3 @@ export const api401FailureCall = (failureTime) => ({
   type: 'STATUS_401_API_CALL',
   payload: failureTime,
 });
-
-export const isAdmin = (user) => {
-  return user.roles.includes(roleAdmin) ? true : false;
-};
