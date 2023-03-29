@@ -38,11 +38,11 @@ export const api = createApi({
         }
         return [{ type: 'NameAttributes', nodeId }, { type: 'Tree' }];
       },
-      query: ({ combinedArrays, nodeId }) => {
+      query: ({ cleanedAttributes, nodeId }) => {
         return {
           url: `/node/${nodeId}/attributes/names`,
           method: 'PUT',
-          body: combinedArrays,
+          body: cleanedAttributes,
         };
       },
     }),
