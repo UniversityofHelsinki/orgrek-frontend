@@ -8,9 +8,15 @@ import Validity from '../attributes/Validity';
 import Placeholder from '../Placeholder';
 import EditableContent from '../EditableContent';
 import CodeAttributesEditor from './CodeAttributesEditor';
-import { useGetAttributeKeysQuery } from '../../store';
+import {
+  useGetAttributeKeysQuery,
+  useSaveCodeAttributesMutation,
+} from '../../store';
 import { useSelector } from 'react-redux';
 import { authActions } from '../../auth';
+import { useNodeId } from '../../hooks/useNodeId';
+import { useCodeAttributes } from '../../hooks/useCodeAttributes';
+import useSortAttributesByDate from '../../hooks/useSortAttributesByDate';
 
 const toFormValues = (attributes) => {
   const byKey = {};
@@ -34,6 +40,7 @@ const includeMissing = (attributes, allKeys) => {
     key: key,
     startDate: null,
     endDate: null,
+    isNew: true,
   }));
   const missingIncluded = { ...attributes };
   missingAttributes.forEach((attribute) => {
@@ -44,12 +51,19 @@ const includeMissing = (attributes, allKeys) => {
 
 const CodeAttributesSection = () => {
   const { t } = useTranslation();
-  const { codeAttributes } = useAttributes();
+  const nodeId = useNodeId();
+  const { codeAttributes } = useCodeAttributes();
   const selectedHierarchies = useSelector(
     (s) => s.tree.selectedHierarchy || s.tree.defaultHierarchy
   );
   const { data, isFetching } = useGetAttributeKeysQuery(selectedHierarchies);
   const attributeKeys = data;
+
+  const [saveCodeAttributes] = useSaveCodeAttributesMutation();
+
+  if (isFetching || !attributeKeys) {
+    return <></>;
+  }
 
   const columns = [
     { label: t('code_namespace'), render: (item) => t(item.key) },
@@ -62,36 +76,14 @@ const CodeAttributesSection = () => {
     },
   ];
 
-  const byCodesAndDates = (a, b) => {
-    if (a.key === b.key) {
-      if (!a.startDate && !a.endDate) {
-        return -1;
-      }
-      if (!b.startDate && !b.endDate) {
-        return 1;
-      }
-      if (b.endDate && a.startDate) {
-        return new Date(b.endDate) - new Date(a.startDate);
-      }
-      return new Date(a.startDate) - new Date(b.startDate);
-    }
-    const aOrder = codes.findIndex((key) => key === a.key);
-    const bOrder = codes.findIndex((key) => key === b.key);
-    if (aOrder < bOrder) {
-      return -1;
-    } else if (aOrder > bOrder) {
-      return 1;
-    }
-    return 0;
-  };
-
-  const sortedCodeAttributes = [...codeAttributes].sort(byCodesAndDates);
   const title = t('codes');
-  const empty = sortedCodeAttributes.length === 0;
+  const empty = codeAttributes.length === 0;
 
-  if (isFetching || !attributeKeys) {
-    return <></>;
-  }
+  const handleSubmit = (input) => {
+    const attributes = Object.values(input).flat();
+    const sanitized = attributes.filter((a) => !(a.isNew && a.deleted));
+    return saveCodeAttributes({ attributes: sanitized, nodeId }).unwrap();
+  };
 
   return (
     <EditableAccordion title={title}>
@@ -102,17 +94,17 @@ const CodeAttributesSection = () => {
         <EditableContent
           editorComponent={<CodeAttributesEditor />}
           initialValues={includeMissing(
-            toFormValues(withoutUniqueID(sortedCodeAttributes)),
+            toFormValues(withoutUniqueID(codeAttributes)),
             attributeKeys
           )}
           // TODO: change to use validation from validations.js
           validate={(o) => {}}
-          onSubmit={(o) => Promise.resolve(o)}
+          onSubmit={handleSubmit}
           authActions={authActions.codeAttributes}
         >
           <AttributesTable
             columns={columns}
-            data={sortedCodeAttributes}
+            data={codeAttributes}
             summary={title}
           />
         </EditableContent>

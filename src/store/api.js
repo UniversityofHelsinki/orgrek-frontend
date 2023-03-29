@@ -46,14 +46,47 @@ export const api = createApi({
         };
       },
     }),
+    getPresentCodeAttributes: builder.query({
+      providesTags: (result, error, { nodeId }) => [
+        { type: 'PresentCodeAttributes', id: nodeId },
+      ],
+      query: ({ nodeId, selectedDay, selectedHierarchies }) => {
+        const date =
+          selectedDay?.toLocaleDateString('FI-fi') ||
+          new Date().toLocaleDateString('FI-fi');
+        return {
+          url: `/node/${nodeId}/${date}/${selectedHierarchies}/attributes/codes`,
+          method: 'GET',
+        };
+      },
+    }),
     getCodeAttributes: builder.query({
-      providesTags: (result, error, nodeId) => [
-        { type: 'CodeAttributes', nodeId },
+      providesTags: (result, error, { nodeId }) => [
+        { type: 'CodeAttributes', id: nodeId },
       ],
       query: (nodeId) => ({
         url: `/node/${nodeId}/attributes/codes`,
         method: 'GET',
       }),
+    }),
+    saveCodeAttributes: builder.mutation({
+      invalidatesTags: (result, error, { nodeId }) => {
+        if (error) {
+          return [];
+        }
+        return [
+          { type: 'CodeAttributes', id: nodeId },
+          { type: 'PresentCodeAttributes', id: nodeId },
+          { type: 'Tree' },
+        ];
+      },
+      query: ({ attributes, nodeId }) => {
+        return {
+          url: `/node/${nodeId}/attributes/codes`,
+          method: 'PUT',
+          body: attributes,
+        };
+      },
     }),
     getAttributeKeys: builder.query({
       providesTags: (result, error, selectedHierarchies) => [
@@ -70,7 +103,9 @@ export const api = createApi({
 export const {
   useGetNameAttributesQuery,
   useSaveNameAttributesMutation,
+  useGetPresentCodeAttributesQuery,
   useGetCodeAttributesQuery,
+  useSaveCodeAttributesMutation,
   useGetAttributeKeysQuery,
   useGetTreeQuery,
 } = api;
