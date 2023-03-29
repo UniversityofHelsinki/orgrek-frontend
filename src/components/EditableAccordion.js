@@ -41,7 +41,7 @@ const EditableAccordion = ({
   const summary = (
     <AccordionSummary
       id={`${id}-summary`}
-      ariaControls={`${id}-details`}
+      aria-controls={`${id}-details`}
       disabled={modified}
       sx={{
         ...(modified && {
