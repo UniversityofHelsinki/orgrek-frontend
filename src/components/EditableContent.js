@@ -7,11 +7,11 @@ import ActionBar from './nodeDetails/ActionBar';
 import { useTranslation } from 'react-i18next';
 import useForm from '../hooks/useForm';
 import { FormContextProvider } from '../contexts/FormContext';
-import IfAdmin from './auth/IfAdmin';
 import PropTypes from 'prop-types';
 import Typography from '@mui/material/Typography';
 import { showNotification } from '../store';
 import { useDispatch } from 'react-redux';
+import IfAuthorized from '../auth/IfAuthorized';
 
 /**
  * Renders form validation error message.
@@ -95,6 +95,7 @@ const EditableContent = ({
   validate,
   onSubmit,
   children,
+  authActions,
   successMessage = null,
   errorMessage = null,
 }) => {
@@ -146,13 +147,13 @@ const EditableContent = ({
 
   // Default actions contains edit button above the view mode content
   const defaultActions = (
-    <IfAdmin>
+    <IfAuthorized action={authActions.edit}>
       <ActionBar>
         <Button variant="outlined" onClick={edit} data-testid="editButton">
           {t('edit_mode_edit_button')}
         </Button>
       </ActionBar>
-    </IfAdmin>
+    </IfAuthorized>
   );
 
   const renderedActions = renderActions
@@ -194,6 +195,14 @@ EditableContent.propTypes = {
    * Use them to render the default actions.
    */
   renderActions: PropTypes.func,
+
+  /**
+   * Defines which actions are used for checking authorization. Pass the
+   * appropriate object from auth.js.
+   */
+  authActions: PropTypes.shape({
+    edit: PropTypes.object.isRequired,
+  }).isRequired,
 
   /**
    * Custom notification message displayed after content has been saved

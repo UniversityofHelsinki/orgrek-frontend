@@ -11,7 +11,7 @@ import PredecessorsSection from './PredecessorsSection';
 import SuccessorsSection from './SuccessorsSection';
 import OtherAttributesSection from './OtherAttributesSection';
 import Typography from '@mui/material/Typography';
-import IfAdmin from '../auth/IfAdmin';
+import IfAdmin from '../../auth/IfAdmin';
 import useFavorableName from '../../hooks/useFavorableName';
 import useFetchNodeDetails from '../../hooks/useFetchNodeDetails';
 import Box from '@mui/material/Box';

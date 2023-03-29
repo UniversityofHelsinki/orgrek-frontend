@@ -10,6 +10,7 @@ import EditableContent from '../EditableContent';
 import CodeAttributesEditor from './CodeAttributesEditor';
 import { useGetAttributeKeysQuery } from '../../store';
 import { useSelector } from 'react-redux';
+import { authActions } from '../../auth';
 
 const toFormValues = (attributes) => {
   const byKey = {};
@@ -105,6 +106,7 @@ const CodeAttributesSection = () => {
           // TODO: change to use validation from validations.js
           validate={(o) => {}}
           onSubmit={(o) => Promise.resolve(o)}
+          authActions={authActions.codeAttributes}
         >
           <AttributesTable
             columns={columns}
