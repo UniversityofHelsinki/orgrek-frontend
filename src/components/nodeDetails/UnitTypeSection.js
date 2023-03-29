@@ -58,6 +58,7 @@ const UnitTypeSection = () => {
   if (error) {
     // TODO: Fetching data failed, show error snackbar
   }
+
   // Validates form values every time when the values change
   // Submit button is disabled when errors contain any truthy values
   // EditableContent handles displaying form-level validation error messages
