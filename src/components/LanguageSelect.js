@@ -4,11 +4,12 @@ import { useTranslation } from 'react-i18next';
 import LanguageIcon from '@mui/icons-material/Language';
 import InputAdornment from '@mui/material/InputAdornment';
 import TextField from '@mui/material/TextField';
-import IfAuthorized from '../auth/IfAuthorized';
-import { authActions } from '../auth';
+import { authActions, isAuthorized } from '../auth';
+import useCurrentUser from '../hooks/useCurrentUser';
 
 const LanguageSelect = () => {
   const { t, i18n } = useTranslation();
+  const user = useCurrentUser();
 
   const handleChange = async (event) => {
     await i18n.changeLanguage(event.target.value);
@@ -32,9 +33,9 @@ const LanguageSelect = () => {
       <MenuItem value={'fi'}>Suomeksi</MenuItem>
       <MenuItem value={'sv'}>På svenska</MenuItem>
       <MenuItem value={'en'}>In English</MenuItem>
-      <IfAuthorized action={authActions.texts.edit}>
+      {isAuthorized(user, authActions.texts.edit) && (
         <MenuItem value={'ia'}>{t('text_key')}</MenuItem>
-      </IfAuthorized>
+      )}
     </TextField>
   );
 };
