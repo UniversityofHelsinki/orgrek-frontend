@@ -8,6 +8,7 @@ import UnitTypeEditor from './UnitTypeEditor';
 import {
   useGetTypeAttributesQuery,
   useGetValidHierarchyFiltersQuery,
+  useSaveTypeAttributesMutation,
 } from '../../store';
 import { useNodeId } from '../../hooks/useNodeId';
 import useSortAttributesByDate from '../../hooks/useSortAttributesByDate';
@@ -26,6 +27,7 @@ const UnitTypeSection = () => {
   const selectedHierarchies = useSelector(
     (state) => state.tree.selectedHierarchy
   );
+  const [saveTypeAttributes] = useSaveTypeAttributesMutation();
   const selectableUnits = [];
 
   // In edit mode data includes also history and future
@@ -62,7 +64,12 @@ const UnitTypeSection = () => {
     return {};
   };
 
-  const handleSubmit = (values) => {};
+  const ObjetToArray = (obj) => Object.assign([], Object.values(obj));
+
+  const handleSubmit = (values) => {
+    const valuesArray = ObjetToArray(values.type);
+    return saveTypeAttributes({ valuesArray, nodeId }).unwrap();
+  };
 
   return (
     <EditableAccordion
