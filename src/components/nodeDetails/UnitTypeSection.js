@@ -13,6 +13,7 @@ import { useNodeId } from '../../hooks/useNodeId';
 import useSortAttributesByDate from '../../hooks/useSortAttributesByDate';
 import { useSelector } from 'react-redux';
 import fillSelectableUnits from '../../hooks/filterSelectableUnits';
+import { authActions } from '../../auth';
 
 const UnitTypeSection = () => {
   const { t } = useTranslation();
@@ -75,6 +76,7 @@ const UnitTypeSection = () => {
         validate={validate}
         initialValues={toFormValues(sortedData)}
         onSubmit={handleSubmit}
+        authActions={authActions.unitType}
       >
         <Placeholder empty={empty} placeholder={t('unittype.empty')}>
           <AttributesTable data={[...type]} summary={title} />
