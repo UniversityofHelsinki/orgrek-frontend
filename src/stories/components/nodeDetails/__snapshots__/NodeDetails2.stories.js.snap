@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`stories/components/nodeDetails/NodeDetails2 AdminRole smoke-test 1`] = `
+exports[`stories/components/nodeDetails/NodeDetails2 AdminRole play-test 1`] = `
 Object {
   "checked": undefined,
   "children": Array [
@@ -39,7 +39,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "29.3.2023",
+      "name": "22.3.2023",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -300,7 +300,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "38919588",
+      "name": "1",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -390,6 +390,14 @@ Object {
       "children": undefined,
       "expanded": true,
       "name": "unit_type",
+      "pressed": undefined,
+      "role": "button",
+      "value": undefined,
+    },
+    Object {
+      "checked": undefined,
+      "children": undefined,
+      "name": "edit_mode_edit_button",
       "pressed": undefined,
       "role": "button",
       "value": undefined,
@@ -575,7 +583,7 @@ Object {
 }
 `;
 
-exports[`stories/components/nodeDetails/NodeDetails2 ReaderRole smoke-test 1`] = `
+exports[`stories/components/nodeDetails/NodeDetails2 ReaderRole play-test 1`] = `
 Object {
   "checked": undefined,
   "children": Array [
@@ -811,7 +819,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "38919588",
+      "name": "1",
       "pressed": undefined,
       "role": "text",
       "value": undefined,

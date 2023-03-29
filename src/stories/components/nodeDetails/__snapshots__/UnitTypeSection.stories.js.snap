@@ -16,6 +16,14 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
+      "name": "edit_mode_edit_button",
+      "pressed": undefined,
+      "role": "button",
+      "value": undefined,
+    },
+    Object {
+      "checked": undefined,
+      "children": undefined,
       "name": "attribute",
       "pressed": undefined,
       "role": "text",
@@ -76,18 +84,9 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "expanded": true,
       "name": "unit_type",
       "pressed": undefined,
       "role": "button",
-      "value": undefined,
-    },
-    Object {
-      "checked": undefined,
-      "children": undefined,
-      "name": "nodeDetailsSection.noAttributes",
-      "pressed": undefined,
-      "role": "text",
       "value": undefined,
     },
   ],

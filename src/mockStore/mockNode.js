@@ -17,6 +17,9 @@ const initialState = {
   },
 };
 
+/**
+ * @deprecated not needed after everything has been migrated to RTK Query
+ */
 export const createNodeState = ({
   node,
   nodeAttributes,
