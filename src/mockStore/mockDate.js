@@ -9,19 +9,21 @@ const RealDate = Date;
  * parameters, otherwise uses the real time.
  */
 export const withMockDate = (Story, { parameters }) => {
-  if (parameters.systemTime instanceof Date) {
+  if (parameters.systemTime) {
+    const systemTime = new Date(parameters.systemTime);
+
     // eslint-disable-next-line no-global-assign
     Date = class extends Date {
       constructor(...args) {
         if (args.length === 0) {
-          super(parameters.systemTime.valueOf());
+          super(systemTime.valueOf());
         } else {
           super(...args);
         }
       }
 
       static now() {
-        return parameters.systemTime.getTime();
+        return systemTime.getTime();
       }
     };
   } else {
