@@ -32,6 +32,8 @@ const includeMissing = (attributes, allKeys) => {
   const missingAttributes = missingKeys.map((key) => ({
     id: -1,
     key: key,
+    startDate: null,
+    endDate: null,
   }));
   const missingIncluded = { ...attributes };
   missingAttributes.forEach((attribute) => {
