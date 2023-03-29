@@ -13,7 +13,8 @@ import {
 } from '../../store';
 import useSortAttributesByDate from '../../hooks/useSortAttributesByDate';
 import useFilterAttributesByDate from '../../hooks/useFilterAttributesByDate';
-import { compareAndCheckDates, valueNotEmpty } from './validations';
+import { compareAndCheckDates, valueNotEmpty } from './Validations';
+import { attributeSanitation } from './Sanitations';
 import { authActions } from '../../auth';
 
 const toFormValues = (data) => {
@@ -52,7 +53,10 @@ const NameSection = () => {
       ...values.nameFi,
       ...values.nameSv,
     ];
-    return saveNameAttributes({ combinedArrays, nodeId }).unwrap();
+
+    const cleanedAttributes = attributeSanitation(combinedArrays);
+
+    return saveNameAttributes({ cleanedAttributes, nodeId }).unwrap();
   };
 
   const columns = [
