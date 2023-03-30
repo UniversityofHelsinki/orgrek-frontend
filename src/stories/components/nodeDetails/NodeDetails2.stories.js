@@ -6,6 +6,7 @@ import {
   createNodeState,
   createReader,
   hierarchyFilters,
+  mockGetAttributeKeys,
   mockGetAttributes,
   mockGetChildren,
   mockGetFavorableFullNames,
@@ -92,6 +93,11 @@ export const AdminRole = {
           },
         ]),
         mockPutTypeAttributes(nodeId),
+        mockGetAttributeKeys(selectedHierarchy, [
+          'emo_lyhenne',
+          'lyhenne',
+          'talous_tunnus',
+        ]),
         mockGetValidHierarchyFilters(now, hierarchyFilters),
         mockGetFullNames(nodeId, now, {
           sv: [

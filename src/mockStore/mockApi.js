@@ -34,6 +34,12 @@ export const mockGetValidHierarchyFilters = (date, body) =>
     (req, res, ctx) => res(ctx.json(body))
   );
 
+export const mockGetAttributeKeys = (selectedHierarchies, body) =>
+  rest.get(
+    `${baseUrl}/hierarchyFilters/${selectedHierarchies}/attributes/keys`,
+    (req, res, ctx) => res(ctx.json(body))
+  );
+
 export const mockGetFullNames = (nodeId, date, body) =>
   rest.get(
     `${baseUrl}/node/fullname/${nodeId}/${formatApiDate(date)}`,
