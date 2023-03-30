@@ -5,7 +5,7 @@ export const api = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: `${process.env.REACT_APP_ORGREK_BACKEND_SERVER || ''}/api`,
   }),
-  tagTypes: ['NameAttributes', 'Tree', , 'AttributeKeys', 'TypeAttributes', 'HierarchyFilters'],
+  tagTypes: ['NameAttributes', 'Tree', 'AttributeKeys', 'TypeAttributes', 'HierarchyFilters'],
   endpoints: (builder) => ({
     getTree: builder.query({
       providesTags: (result, error) => [{ type: 'Tree' }],
