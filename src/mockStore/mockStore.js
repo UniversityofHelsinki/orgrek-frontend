@@ -1,20 +1,29 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { treeReducer } from '../store';
 import { hierarchyReducer } from './mockHierarchy';
 import { createNodeState, nodeReducer } from './mockNode';
-import { userReducer } from './mockUser';
-import { dayReducer } from '../store';
 import { nodeDetailsViewReducer } from './mockNodeDetailsView';
 import { hierarchyFiltersReducer } from './mockHierarchyFilters';
 import { editModeReducer } from './mockEditMode';
-import { api, notificationsReducer } from '../store';
+import {
+  api,
+  notificationsReducer,
+  treeReducer,
+  userReducer,
+  dayReducer,
+} from '../store';
 import { Provider } from 'react-redux';
 import React from 'react';
 import { setupListeners } from '@reduxjs/toolkit/query';
+import { createAdmin } from './mockUser';
 
 export const configureMockStore = (preloadedState = {}) => {
   const store = configureStore({
-    preloadedState,
+    preloadedState: {
+      ur: {
+        user: createAdmin(),
+      },
+      ...preloadedState,
+    },
     reducer: {
       [api.reducerPath]: api.reducer,
       tree: treeReducer,
