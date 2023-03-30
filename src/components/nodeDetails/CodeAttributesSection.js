@@ -8,6 +8,8 @@ import Validity from '../attributes/Validity';
 import Placeholder from '../Placeholder';
 import EditableContent from '../EditableContent';
 import CodeAttributesEditor from './CodeAttributesEditor';
+import { useGetAttributeKeysQuery } from '../../store';
+import { useSelector } from 'react-redux';
 import { authActions } from '../../auth';
 
 const toFormValues = (attributes) => {
@@ -25,9 +27,29 @@ const withoutUniqueID = (attributes) => {
   return attributes.filter((attribute) => attribute.key !== 'unique_id');
 };
 
+const includeMissing = (attributes, allKeys) => {
+  const missingKeys = allKeys.filter((key) => !attributes[key]);
+  const missingAttributes = missingKeys.map((key) => ({
+    id: -1,
+    key: key,
+    startDate: null,
+    endDate: null,
+  }));
+  const missingIncluded = { ...attributes };
+  missingAttributes.forEach((attribute) => {
+    missingIncluded[attribute.key] = [attribute];
+  });
+  return missingIncluded;
+};
+
 const CodeAttributesSection = () => {
   const { t } = useTranslation();
   const { codeAttributes } = useAttributes();
+  const selectedHierarchies = useSelector(
+    (s) => s.tree.selectedHierarchy || s.tree.defaultHierarchy
+  );
+  const { data, isFetching } = useGetAttributeKeysQuery(selectedHierarchies);
+  const attributeKeys = data;
 
   const columns = [
     { label: t('code_namespace'), render: (item) => t(item.key) },
@@ -63,9 +85,13 @@ const CodeAttributesSection = () => {
     return 0;
   };
 
-  const data = [...codeAttributes].sort(byCodesAndDates);
+  const sortedCodeAttributes = [...codeAttributes].sort(byCodesAndDates);
   const title = t('codes');
-  const empty = data.length === 0;
+  const empty = sortedCodeAttributes.length === 0;
+
+  if (isFetching || !attributeKeys) {
+    return <></>;
+  }
 
   return (
     <EditableAccordion title={title}>
@@ -75,13 +101,20 @@ const CodeAttributesSection = () => {
       >
         <EditableContent
           editorComponent={<CodeAttributesEditor />}
-          initialValues={toFormValues(withoutUniqueID(data))}
+          initialValues={includeMissing(
+            toFormValues(withoutUniqueID(sortedCodeAttributes)),
+            attributeKeys
+          )}
           // TODO: change to use validation from validations.js
           validate={(o) => {}}
           onSubmit={(o) => Promise.resolve(o)}
           authActions={authActions.codeAttributes}
         >
-          <AttributesTable columns={columns} data={data} summary={title} />
+          <AttributesTable
+            columns={columns}
+            data={sortedCodeAttributes}
+            summary={title}
+          />
         </EditableContent>
       </Placeholder>
     </EditableAccordion>
