@@ -1,11 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { createNodeState, nodeReducer } from './mockNode';
+import { createNodeState } from './mockNode';
 import {
   api,
   notificationsReducer,
   treeReducer,
   userReducer,
   dayReducer,
+  nodeReducer,
   hierarchyReducer,
   editModeReducer,
   nodeDetailsViewReducer,

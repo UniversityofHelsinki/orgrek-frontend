@@ -172,6 +172,30 @@ export const AdminRole = {
         // Remove after all sections have been migrated to RTK Query
         mockGetAttributes(nodeId, now, selectedHierarchy, [
           {
+            id: 4824,
+            nodeId: '4820',
+            key: 'talous_tunnus',
+            value: 'H9073',
+            startDate: null,
+            endDate: null,
+          },
+          {
+            id: 4823,
+            nodeId: '4820',
+            key: 'lyhenne',
+            value: 'TIRA',
+            startDate: null,
+            endDate: null,
+          },
+          {
+            id: 14528,
+            nodeId: '4820',
+            key: 'emo_lyhenne',
+            value: 'TIKE',
+            startDate: null,
+            endDate: null,
+          },
+          {
             id: 27788,
             nodeId: '4820',
             key: 'publicity',
