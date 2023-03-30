@@ -115,12 +115,13 @@ const EditableContent = ({
 
         close();
       })
-      .catch(() => {
+      .catch((error) => {
         // Middleware shows a generic notification for every error,
         // this notification overrides it with a more specific message.
         dispatch(
           showNotification({
-            message: errorMessage || t('update_attributes_error'),
+            message:
+              t(error.data[0].errorMessage) || t('update_attributes_error'),
             severity: 'error',
           })
         );
