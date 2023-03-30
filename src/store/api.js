@@ -46,25 +46,11 @@ export const api = createApi({
         };
       },
     }),
-    getPresentCodeAttributes: builder.query({
-      providesTags: (result, error, { nodeId }) => [
-        { type: 'PresentCodeAttributes', id: nodeId },
-      ],
-      query: ({ nodeId, selectedDay, selectedHierarchies }) => {
-        const date =
-          selectedDay?.toLocaleDateString('FI-fi') ||
-          new Date().toLocaleDateString('FI-fi');
-        return {
-          url: `/node/${nodeId}/${date}/${selectedHierarchies}/attributes/codes`,
-          method: 'GET',
-        };
-      },
-    }),
     getCodeAttributes: builder.query({
       providesTags: (result, error, { nodeId }) => [
         { type: 'CodeAttributes', id: nodeId },
       ],
-      query: (nodeId) => ({
+      query: ({ nodeId }) => ({
         url: `/node/${nodeId}/attributes/codes`,
         method: 'GET',
       }),
@@ -74,11 +60,7 @@ export const api = createApi({
         if (error) {
           return [];
         }
-        return [
-          { type: 'CodeAttributes', id: nodeId },
-          { type: 'PresentCodeAttributes', id: nodeId },
-          { type: 'Tree' },
-        ];
+        return [{ type: 'CodeAttributes', id: nodeId }, { type: 'Tree' }];
       },
       query: ({ attributes, nodeId }) => {
         return {
@@ -103,7 +85,6 @@ export const api = createApi({
 export const {
   useGetNameAttributesQuery,
   useSaveNameAttributesMutation,
-  useGetPresentCodeAttributesQuery,
   useGetCodeAttributesQuery,
   useSaveCodeAttributesMutation,
   useGetAttributeKeysQuery,

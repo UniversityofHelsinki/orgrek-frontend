@@ -2,8 +2,6 @@ import React from 'react';
 import EditableAccordion from '../EditableAccordion';
 import { useTranslation } from 'react-i18next';
 import AttributesTable from '../attributes/AttributesTable';
-import { codeAttributes as codes } from '../../constants/variables';
-import useAttributes from '../../hooks/useAttributes';
 import Validity from '../attributes/Validity';
 import Placeholder from '../Placeholder';
 import EditableContent from '../EditableContent';
@@ -16,7 +14,7 @@ import { useSelector } from 'react-redux';
 import { authActions } from '../../auth';
 import { useNodeId } from '../../hooks/useNodeId';
 import { useCodeAttributes } from '../../hooks/useCodeAttributes';
-import useSortAttributesByDate from '../../hooks/useSortAttributesByDate';
+import useFilterAttributesByDate from '../../hooks/useFilterAttributesByDate';
 
 const toFormValues = (attributes) => {
   const byKey = {};
@@ -49,6 +47,12 @@ const includeMissing = (attributes, allKeys) => {
   return missingIncluded;
 };
 
+const filterExcess = (attributes, allKeys) => {
+  return attributes.filter((attribute) => {
+    return allKeys.includes(attribute.key) || attribute.key === 'unique_id';
+  });
+};
+
 const CodeAttributesSection = () => {
   const { t } = useTranslation();
   const nodeId = useNodeId();
@@ -56,6 +60,7 @@ const CodeAttributesSection = () => {
   const selectedHierarchies = useSelector(
     (s) => s.tree.selectedHierarchy || s.tree.defaultHierarchy
   );
+  const presentCodeAttributes = useFilterAttributesByDate(codeAttributes);
   const { data, isFetching } = useGetAttributeKeysQuery(selectedHierarchies);
   const attributeKeys = data;
 
@@ -94,17 +99,21 @@ const CodeAttributesSection = () => {
         <EditableContent
           editorComponent={<CodeAttributesEditor />}
           initialValues={includeMissing(
-            toFormValues(withoutUniqueID(codeAttributes)),
+            toFormValues(
+              withoutUniqueID(filterExcess(codeAttributes, attributeKeys))
+            ),
             attributeKeys
           )}
           // TODO: change to use validation from validations.js
           validate={(o) => {}}
           onSubmit={handleSubmit}
+          successMessage={t('codeInfo.saveSuccess')}
+          errorMessage={t('codeInfo.saveError')}
           authActions={authActions.codeAttributes}
         >
           <AttributesTable
             columns={columns}
-            data={codeAttributes}
+            data={filterExcess(presentCodeAttributes, attributeKeys)}
             summary={title}
           />
         </EditableContent>

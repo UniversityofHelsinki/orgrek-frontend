@@ -1,4 +1,4 @@
-import { useGetPresentCodeAttributesQuery } from '../store';
+import { useGetCodeAttributesQuery } from '../store';
 import { useNodeId } from './useNodeId';
 import { useSelector } from 'react-redux';
 
@@ -11,11 +11,18 @@ export const useCodeAttributes = () => {
     return state.tree.selectedDay;
   });
 
-  const { data, error, isFetching } = useGetPresentCodeAttributesQuery({
-    nodeId,
-    selectedDay,
-    selectedHierarchies,
-  });
+  const { data, error, isFetching } = useGetCodeAttributesQuery({ nodeId });
 
-  return { codeAttributes: data || [], error, isFetching };
+  const uniqueId = {
+    key: 'unique_id',
+    value: nodeId,
+    startDate: null,
+    endDate: null,
+  };
+
+  return {
+    codeAttributes: (data && [uniqueId, ...data]) || [uniqueId],
+    error,
+    isFetching,
+  };
 };
