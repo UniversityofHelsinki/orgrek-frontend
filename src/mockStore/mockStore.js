@@ -1,6 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { createNodeState, nodeReducer } from './mockNode';
-import { hierarchyFiltersReducer } from './mockHierarchyFilters';
 import {
   api,
   notificationsReducer,
@@ -10,6 +9,7 @@ import {
   hierarchyReducer,
   editModeReducer,
   nodeDetailsViewReducer,
+  hierarchyFilterReducer,
 } from '../store';
 import { Provider } from 'react-redux';
 import React from 'react';
@@ -32,7 +32,7 @@ export const configureMockStore = (preloadedState = {}) => {
       ur: userReducer,
       dr: dayReducer,
       nvrd: nodeDetailsViewReducer,
-      hierarchyFilters: hierarchyFiltersReducer,
+      hierarchyFilters: hierarchyFilterReducer,
       editModeReducer: editModeReducer,
       notifications: notificationsReducer,
     },
