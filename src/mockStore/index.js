@@ -6,6 +6,5 @@ export * from './mockHierarchyFilters';
 export * from './mockNode';
 export * from './mockNodeDetailsView';
 export * from './mockStore';
-export * from './mockTree';
 export * from './mockUser';
 export * from './mockDate';

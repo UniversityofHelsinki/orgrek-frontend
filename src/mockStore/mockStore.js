@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { treeReducer } from './mockTree';
+import { treeReducer } from '../store';
 import { hierarchyReducer } from './mockHierarchy';
 import { createNodeState, nodeReducer } from './mockNode';
 import { userReducer } from './mockUser';
