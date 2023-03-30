@@ -1,5 +1,4 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { hierarchyReducer } from './mockHierarchy';
 import { createNodeState, nodeReducer } from './mockNode';
 import { nodeDetailsViewReducer } from './mockNodeDetailsView';
 import { hierarchyFiltersReducer } from './mockHierarchyFilters';
@@ -10,6 +9,7 @@ import {
   treeReducer,
   userReducer,
   dayReducer,
+  hierarchyReducer,
 } from '../store';
 import { Provider } from 'react-redux';
 import React from 'react';
