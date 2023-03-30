@@ -3,7 +3,7 @@ import { treeReducer } from '../store';
 import { hierarchyReducer } from './mockHierarchy';
 import { createNodeState, nodeReducer } from './mockNode';
 import { userReducer } from './mockUser';
-import { dayReducer } from './mockDay';
+import { dayReducer } from '../store';
 import { nodeDetailsViewReducer } from './mockNodeDetailsView';
 import { hierarchyFiltersReducer } from './mockHierarchyFilters';
 import { editModeReducer } from './mockEditMode';
