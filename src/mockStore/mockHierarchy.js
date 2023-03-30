@@ -29,9 +29,15 @@ export const createHierarchies = (
     endDate,
   }));
 
+/**
+ * @deprecated not needed after everything has been migrated to RTK Query
+ */
 const hierarchySlice = createSlice({
   name: 'hierarchy',
   initialState,
 });
 
+/**
+ * @deprecated not needed after everything has been migrated to RTK Query
+ */
 export const hierarchyReducer = hierarchySlice.reducer;

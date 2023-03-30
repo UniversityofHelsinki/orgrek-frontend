@@ -176,9 +176,15 @@ export const createNodeState = ({
   },
 });
 
+/**
+ * @deprecated not needed after everything has been migrated to RTK Query
+ */
 const nodeSlice = createSlice({
   name: 'node',
   initialState,
 });
 
+/**
+ * @deprecated not needed after everything has been migrated to RTK Query
+ */
 export const nodeReducer = nodeSlice.reducer;

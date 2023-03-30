@@ -5,6 +5,9 @@ const initialState = {
   edit: false,
 };
 
+/**
+ * @deprecated used only in the legacy edit view
+ */
 const editModeSlice = createSlice({
   name: 'editMode',
   initialState,
@@ -13,4 +16,7 @@ const editModeSlice = createSlice({
   },
 });
 
+/**
+ * @deprecated used only in the legacy edit view
+ */
 export const editModeReducer = editModeSlice.reducer;

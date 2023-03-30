@@ -85,6 +85,7 @@ export const withUser = (user) => withMockStore({ ur: { user } });
  * Alternatively, withMockStore decorator can mock the whole state.
  *
  * @param nodeState overrides node reducer initial state
+ * @deprecated not needed after everything has been migrated to RTK Query
  */
 export const withNode = (nodeState) =>
   withMockStore({ nrd: createNodeState(nodeState) });
@@ -97,6 +98,7 @@ export const withNode = (nodeState) =>
  * Alternatively, withMockStore decorator can mock the whole state.
  *
  * @param hierarchyState overrides hierarchy reducer initial state
+ * @deprecated not needed after everything has been migrated to RTK Query
  */
 export const withHierarchy = (hierarchyState) =>
   withMockStore({ hr: { ...hierarchyState } });
