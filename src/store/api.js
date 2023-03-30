@@ -5,7 +5,7 @@ export const api = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: `${process.env.REACT_APP_ORGREK_BACKEND_SERVER || ''}/api`,
   }),
-  tagTypes: ['NameAttributes', 'AttributeKeys', 'Tree'],
+  tagTypes: ['NameAttributes', 'Tree', 'AttributeKeys', 'TypeAttributes', 'HierarchyFilters'],
   endpoints: (builder) => ({
     getTree: builder.query({
       providesTags: (result, error) => [{ type: 'Tree' }],
@@ -38,11 +38,45 @@ export const api = createApi({
         }
         return [{ type: 'NameAttributes', nodeId }, { type: 'Tree' }];
       },
-      query: ({ combinedArrays, nodeId }) => {
+      query: ({ cleanedAttributes, nodeId }) => {
         return {
           url: `/node/${nodeId}/attributes/names`,
           method: 'PUT',
-          body: combinedArrays,
+          body: cleanedAttributes,
+        };
+      },
+    }),
+    getTypeAttributes: builder.query({
+      providesTags: (result, error, nodeId) => [
+        { type: 'TypeAttributes', nodeId },
+      ],
+      query: (nodeId) => ({
+        url: `node/${nodeId}/attributes/types`,
+        method: 'GET',
+      }),
+    }),
+    saveTypeAttributes: builder.mutation({
+      invalidatesTags: (result, error, { nodeId }) => {
+        if (error) {
+          return [];
+        }
+        return [{ type: 'TypeAttributes', nodeId }, { type: 'Tree' }];
+      },
+      query: ({ valuesArray, nodeId }) => {
+        return {
+          url: `/node/${nodeId}/attributes/types`,
+          method: 'PUT',
+          body: valuesArray,
+        };
+      },
+    }),
+    getValidHierarchyFilters: builder.query({
+      providesTags: (result, error, nodeId) => [{ type: 'HierarchyFilters' }],
+      query: () => {
+        const dateString = new Date().toLocaleDateString('FI-fi');
+        return {
+          url: `hierarchyFilters/${dateString}`,
+          method: 'GET',
         };
       },
     }),
@@ -89,4 +123,7 @@ export const {
   useSaveCodeAttributesMutation,
   useGetAttributeKeysQuery,
   useGetTreeQuery,
+  useGetTypeAttributesQuery,
+  useGetValidHierarchyFiltersQuery,
+  useSaveTypeAttributesMutation,
 } = api;
