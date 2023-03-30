@@ -55,6 +55,21 @@ export const api = createApi({
         method: 'GET',
       }),
     }),
+    saveTypeAttributes: builder.mutation({
+      invalidatesTags: (result, error, { nodeId }) => {
+        if (error) {
+          return [];
+        }
+        return [{ type: 'TypeAttributes', nodeId }, { type: 'Tree' }];
+      },
+      query: ({ valuesArray, nodeId }) => {
+        return {
+          url: `/node/${nodeId}/attributes/types`,
+          method: 'PUT',
+          body: valuesArray,
+        };
+      },
+    }),
     getValidHierarchyFilters: builder.query({
       providesTags: (result, error, nodeId) => [{ type: 'HierarchyFilters' }],
       query: () => {
@@ -94,4 +109,5 @@ export const {
   useGetTreeQuery,
   useGetTypeAttributesQuery,
   useGetValidHierarchyFiltersQuery,
+  useSaveTypeAttributesMutation,
 } = api;
