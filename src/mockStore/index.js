@@ -1,5 +1,4 @@
 export * from './mockApi';
-export * from './mockEditMode';
 export * from './mockHierarchy';
 export * from './mockHierarchyFilters';
 export * from './mockNode';

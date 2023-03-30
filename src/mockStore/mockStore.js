@@ -2,7 +2,6 @@ import { configureStore } from '@reduxjs/toolkit';
 import { createNodeState, nodeReducer } from './mockNode';
 import { nodeDetailsViewReducer } from './mockNodeDetailsView';
 import { hierarchyFiltersReducer } from './mockHierarchyFilters';
-import { editModeReducer } from './mockEditMode';
 import {
   api,
   notificationsReducer,
@@ -10,6 +9,7 @@ import {
   userReducer,
   dayReducer,
   hierarchyReducer,
+  editModeReducer,
 } from '../store';
 import { Provider } from 'react-redux';
 import React from 'react';
