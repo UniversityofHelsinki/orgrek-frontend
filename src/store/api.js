@@ -5,7 +5,14 @@ export const api = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: `${process.env.REACT_APP_ORGREK_BACKEND_SERVER || ''}/api`,
   }),
-  tagTypes: ['NameAttributes', 'Tree', 'AttributeKeys', 'TypeAttributes', 'HierarchyFilters'],
+  tagTypes: [
+    'NameAttributes',
+    'Tree',
+    'AttributeKeys',
+    'TypeAttributes',
+    'HierarchyFilters',
+    'CodeAttributes',
+  ],
   endpoints: (builder) => ({
     getTree: builder.query({
       providesTags: (result, error) => [{ type: 'Tree' }],
@@ -81,13 +88,28 @@ export const api = createApi({
       },
     }),
     getCodeAttributes: builder.query({
-      providesTags: (result, error, nodeId) => [
-        { type: 'CodeAttributes', nodeId },
+      providesTags: (result, error, { nodeId }) => [
+        { type: 'CodeAttributes', id: nodeId },
       ],
-      query: (nodeId) => ({
+      query: ({ nodeId }) => ({
         url: `/node/${nodeId}/attributes/codes`,
         method: 'GET',
       }),
+    }),
+    saveCodeAttributes: builder.mutation({
+      invalidatesTags: (result, error, { nodeId }) => {
+        if (error) {
+          return [];
+        }
+        return [{ type: 'CodeAttributes', id: nodeId }, { type: 'Tree' }];
+      },
+      query: ({ attributes, nodeId }) => {
+        return {
+          url: `/node/${nodeId}/attributes/codes`,
+          method: 'PUT',
+          body: attributes,
+        };
+      },
     }),
     getAttributeKeys: builder.query({
       providesTags: (result, error, selectedHierarchies) => [
@@ -105,6 +127,7 @@ export const {
   useGetNameAttributesQuery,
   useSaveNameAttributesMutation,
   useGetCodeAttributesQuery,
+  useSaveCodeAttributesMutation,
   useGetAttributeKeysQuery,
   useGetTreeQuery,
   useGetTypeAttributesQuery,
