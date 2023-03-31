@@ -76,6 +76,10 @@ const AttributeEditorRow = ({
     } else if (date === null) {
       setErrorInStartDate(true);
       setStartDateError(t('attribute.required'));
+      onChange({
+        ...value,
+        startDate: 'invalid date',
+      });
     } else {
       setStartDateError(null);
       setErrorInStartDate(false);

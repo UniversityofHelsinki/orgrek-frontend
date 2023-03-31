@@ -88,6 +88,10 @@ export const compareAndCheckDates = (values) => {
 
   let arrOfNames = [...values.nameFi, ...values.nameSv, ...values.nameEn];
   arrOfNames.forEach((elem) => {
+    if (!elem.startDate) {
+      errors.compareAndCheckDates = { error: 'start date required' };
+      return;
+    }
     if (!validStartDate(elem.startDate)) {
       errors.compareAndCheckDates = { error: 'invalid date' };
     }
