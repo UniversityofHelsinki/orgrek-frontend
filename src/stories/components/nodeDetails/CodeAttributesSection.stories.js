@@ -1,4 +1,9 @@
-import { mockGetAttributeKeys, withMockStore } from '../../../mockStore';
+import {
+  mockGetAttributeKeys,
+  mockGetCodeAttributes,
+  mockSaveCodeAttributes,
+  withMockStore,
+} from '../../../mockStore';
 import CodeAttributesSection from '../../../components/nodeDetails/CodeAttributesSection';
 
 // Use a fixed date to ensure that tests always have a consistent result
@@ -28,16 +33,7 @@ export const Default = {
           'lyhenne',
           'talous_tunnus',
         ]),
-      ],
-    },
-  },
-  decorators: [
-    withMockStore({
-      nrd: {
-        node: {
-          uniqueId: nodeId,
-        },
-        nodeAttributes: [
+        mockGetCodeAttributes(nodeId, [
           {
             id: 1001,
             nodeId: '1',
@@ -118,7 +114,17 @@ export const Default = {
             startDate: null,
             endDate: null,
           },
-        ],
+        ]),
+        mockSaveCodeAttributes(nodeId),
+      ],
+    },
+  },
+  decorators: [
+    withMockStore({
+      nrd: {
+        node: {
+          uniqueId: nodeId,
+        },
       },
       tree: { selectedHierarchy },
     }),
@@ -134,12 +140,13 @@ export const Empty = {
           'lyhenne',
           'talous_tunnus',
         ]),
+        mockGetCodeAttributes(nodeId, []),
+        mockSaveCodeAttributes(nodeId),
       ],
     },
   },
   decorators: [
     withMockStore({
-      nrd: { node: null, nodeAttributes: [] },
       tree: { selectedHierarchy },
     }),
   ],

@@ -34,6 +34,16 @@ export const mockGetValidHierarchyFilters = (date, body) =>
     (req, res, ctx) => res(ctx.json(body))
   );
 
+export const mockGetCodeAttributes = (nodeId, body) =>
+  rest.get(`${baseUrl}/node/${nodeId}/attributes/codes`, (req, res, ctx) =>
+    res(ctx.json(body))
+  );
+
+export const mockSaveCodeAttributes = (nodeId) =>
+  rest.put(`${baseUrl}/node/${nodeId}/attributes/codes`, (req, res, ctx) =>
+    res(ctx.delay(2000), ctx.json(req.json()))
+  );
+
 export const mockGetAttributeKeys = (selectedHierarchies, body) =>
   rest.get(
     `${baseUrl}/hierarchyFilters/${selectedHierarchies}/attributes/keys`,
