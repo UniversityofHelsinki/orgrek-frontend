@@ -3,7 +3,7 @@ import { isValid, parseISO } from 'date-fns';
 export const valueNotEmpty = (values) => {
   const errors = {};
 
-  [...values.nameFi, ...values.nameSv, ...values.nameEn]
+  values
     .filter((value) => !value.deleted)
     .forEach((value) => {
       if (value.value === null) {
@@ -86,8 +86,7 @@ const compareStartAndEndDates = (startDate, endDate, days) => {
 export const compareAndCheckDates = (values) => {
   const errors = {};
 
-  let arrOfNames = [...values.nameFi, ...values.nameSv, ...values.nameEn];
-  arrOfNames.forEach((elem) => {
+  values.forEach((elem) => {
     if (!validStartDate(elem.startDate)) {
       errors.compareAndCheckDates = { error: 'invalid date' };
     }
