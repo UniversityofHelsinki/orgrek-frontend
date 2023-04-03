@@ -53,13 +53,6 @@ const UnitTypeSection = () => {
 
   const { type } = toFormValues(sortedData);
 
-  // TODO: show success snackbar when saveResult is completed
-  // success message t('update_attributes_success')
-  // TODO: show error snackbar if saveResult has error
-  if (error) {
-    // TODO: Fetching data failed, show error snackbar
-  }
-
   // Validates form values every time when the values change
   // Submit button is disabled when errors contain any truthy values
   // EditableContent handles displaying form-level validation error messages
