@@ -62,6 +62,11 @@ export const Empty = {
     ...Default.args,
     data: [],
   },
+  play: async () => {
+    // Empty row appears with an animation, so wait for it before running
+    // a11y tests
+    await new Promise((resolve) => setTimeout(resolve, 200));
+  },
 };
 
 export const ActionMenuOpen = {

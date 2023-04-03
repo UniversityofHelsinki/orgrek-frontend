@@ -4,6 +4,9 @@ import { useTranslation } from 'react-i18next';
 import { useMemo } from 'react';
 import { codeAttributes as codes } from '../constants/variables';
 
+/**
+ * @deprecated use RTK Query instead
+ */
 const useAttributes = () => {
   const { t } = useTranslation();
   const {

@@ -19,6 +19,10 @@ const EditableAccordion = ({
   const [expanded, setExpanded] = useState(defaultExpanded);
   const { modified } = useEditMode();
 
+  // This can be replaced with useId hook after upgrading to React 18
+  // See: https://react.dev/reference/react/useId
+  const id = title.toLowerCase().replace(/\s/, '');
+
   const handleChange = (event, newValue) => {
     if (modified) {
       return;
@@ -36,6 +40,8 @@ const EditableAccordion = ({
 
   const summary = (
     <AccordionSummary
+      id={`${id}-summary`}
+      aria-controls={`${id}-details`}
       disabled={modified}
       sx={{
         ...(modified && {
