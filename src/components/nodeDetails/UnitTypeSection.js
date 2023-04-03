@@ -92,7 +92,7 @@ const UnitTypeSection = () => {
         errorMessage={t('typeInfo.saveError')}
         authActions={authActions.unitType}
       >
-        <Placeholder empty={empty} placeholder={t('unittype.empty')}>
+        <Placeholder empty={empty} placeholder={t('typeInfo.empty')}>
           <AttributesTable data={[...type]} summary={title} />
         </Placeholder>
       </EditableContent>
