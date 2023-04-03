@@ -15,6 +15,7 @@ import useSortAttributesByDate from '../../hooks/useSortAttributesByDate';
 import { useSelector } from 'react-redux';
 import fillSelectableUnits from '../../hooks/filterSelectableUnits';
 import { authActions } from '../../auth';
+import { compareAndCheckDates, valueNotEmpty } from './Validations';
 
 const UnitTypeSection = () => {
   const { t } = useTranslation();
@@ -63,7 +64,10 @@ const UnitTypeSection = () => {
   // Submit button is disabled when errors contain any truthy values
   // EditableContent handles displaying form-level validation error messages
   const validate = (values) => {
-    return {};
+    return {
+      ...valueNotEmpty(values.type),
+      ...compareAndCheckDates(values.type),
+    };
   };
 
   const ObjetToArray = (obj) => Object.assign([], Object.values(obj));
