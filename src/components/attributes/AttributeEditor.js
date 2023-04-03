@@ -22,11 +22,12 @@ const AttributeEditor = ({
   renderValueField,
   getDisplayText,
   sx,
+  attributeKey,
 }) => {
   const createRow = () => ({
     // Also new rows must have some unique id before they are stored to database
     id: Math.floor(Math.random() * -1000000),
-    key: null,
+    key: attributeKey,
     value: null,
     startDate: null,
     endDate: null,
@@ -42,10 +43,6 @@ const AttributeEditor = ({
 
   const updateEndDate = (oldrow, date) => {
     return { ...oldrow, endDate: formatISO(date, { representation: 'date' }) };
-  };
-
-  const updateKey = (oldRow, newRow) => {
-    return { ...newRow, key: oldRow.key };
   };
 
   const updateDates = (oldrow, row, days) => {
@@ -67,7 +64,6 @@ const AttributeEditor = ({
     const oldRow = values[index];
     const endDate = updateDates(oldRow, newRow, 1);
     const newData = [...data];
-    newRow = updateKey(oldRow, newRow);
     if (endDate !== null) {
       newData[index] = updateEndDate(newData[index], endDate);
     }
@@ -78,7 +74,6 @@ const AttributeEditor = ({
   const handleInsertAfter = (index) => {
     let newRow = createRow();
     const oldRow = values[index];
-    newRow = updateKey(oldRow, newRow);
     const newData = [...data];
     newData.splice(index + 1, 0, newRow);
     onChange(newData);
@@ -144,6 +139,11 @@ AttributeEditor.propTypes = {
    * string.
    */
   getDisplayText: PropTypes.func,
+
+  /**
+   *
+   */
+  attributeKey: PropTypes.string.isRequired,
 };
 
 export default AttributeEditor;
