@@ -92,10 +92,7 @@ const CodeAttributesSection = () => {
 
   return (
     <EditableAccordion title={title}>
-      <Placeholder
-        empty={empty}
-        placeholder={t('nodeDetailsSection.noAttributes')}
-      >
+      <Placeholder empty={empty} placeholder={t('codeInfo.empty')}>
         <EditableContent
           editorComponent={<CodeAttributesEditor />}
           initialValues={includeMissing(
