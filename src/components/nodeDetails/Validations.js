@@ -3,7 +3,7 @@ import { isValid, parseISO } from 'date-fns';
 export const valueNotEmpty = (values) => {
   const errors = {};
 
-  [...values.nameFi, ...values.nameSv, ...values.nameEn]
+  values
     .filter((value) => !value.deleted)
     .forEach((value) => {
       if (value.value === null) {

@@ -80,6 +80,13 @@ const AttributeEditorRow = ({
         ...value,
         startDate: 'invalid date',
       });
+    } else if (date.getFullYear() < 1600) {
+      setErrorInStartDate(true);
+      setStartDateError(t('invalidDate'));
+      onChange({
+        ...value,
+        startDate: 'invalid date',
+      });
     } else {
       setStartDateError(null);
       setErrorInStartDate(false);
