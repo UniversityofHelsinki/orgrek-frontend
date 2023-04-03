@@ -6,5 +6,19 @@ export default {
 };
 
 export const HierarchySelection = {
-  decorators: [withMockStore()],
+  decorators: [
+    withMockStore({
+      tree: {
+        selectedHierarchy: 'talous',
+        selectableHierarchies: [
+          'tutkimus',
+          'henkilosto',
+          'toiminnanohjaus',
+          'opetus',
+          'history',
+          'talous',
+        ],
+      },
+    }),
+  ],
 };

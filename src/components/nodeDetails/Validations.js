@@ -86,8 +86,7 @@ const compareStartAndEndDates = (startDate, endDate, days) => {
 export const compareAndCheckDates = (values) => {
   const errors = {};
 
-  let arrOfNames = [...values.nameFi, ...values.nameSv, ...values.nameEn];
-  arrOfNames.forEach((elem) => {
+  values.forEach((elem) => {
     if (!elem.startDate) {
       errors.compareAndCheckDates = { error: 'start date required' };
       return;

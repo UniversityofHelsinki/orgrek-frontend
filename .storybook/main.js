@@ -7,6 +7,18 @@ module.exports = {
     '@storybook/addon-a11y',
     '@storybook/preset-create-react-app',
     'storybook-addon-react-router-v6',
+    {
+      name: '@storybook/addon-coverage',
+      options: {
+        istanbul: {
+          exclude: [
+            'src/mockStore/**', // test utils need no coverage
+            'src/actions/**', // legacy code not tested in Storybook
+            'src/reducers/**', // same as above
+          ],
+        },
+      },
+    },
   ],
   framework: '@storybook/react',
   core: {
