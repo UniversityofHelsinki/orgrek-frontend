@@ -1,0 +1,99 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`stories/components/nodeDetails/PredecessorsSection Default smoke-test 1`] = `
+Object {
+  "checked": undefined,
+  "children": Array [
+    Object {
+      "checked": undefined,
+      "children": undefined,
+      "expanded": true,
+      "name": "predecessors",
+      "pressed": undefined,
+      "role": "button",
+      "value": undefined,
+    },
+    Object {
+      "checked": undefined,
+      "children": undefined,
+      "name": "name",
+      "pressed": undefined,
+      "role": "text",
+      "value": undefined,
+    },
+    Object {
+      "checked": undefined,
+      "children": undefined,
+      "name": "valid_dates",
+      "pressed": undefined,
+      "role": "text",
+      "value": undefined,
+    },
+    Object {
+      "checked": undefined,
+      "children": undefined,
+      "name": "predecessor_edge_valid",
+      "pressed": undefined,
+      "role": "text",
+      "value": undefined,
+    },
+    Object {
+      "checked": undefined,
+      "children": undefined,
+      "name": "Rehtorin kanslia (H01A)",
+      "pressed": undefined,
+      "role": "link",
+      "value": undefined,
+    },
+    Object {
+      "checked": undefined,
+      "children": undefined,
+      "name": "29.4.2016 until_date_react",
+      "pressed": undefined,
+      "role": "text",
+      "value": undefined,
+    },
+    Object {
+      "checked": undefined,
+      "children": undefined,
+      "name": "30.4.2016 from_date_react",
+      "pressed": undefined,
+      "role": "text",
+      "value": undefined,
+    },
+  ],
+  "name": "stories-components-nodedetails-predecessorssection--default",
+  "pressed": undefined,
+  "role": "WebArea",
+  "value": undefined,
+}
+`;
+
+exports[`stories/components/nodeDetails/PredecessorsSection Empty smoke-test 1`] = `
+Object {
+  "checked": undefined,
+  "children": Array [
+    Object {
+      "checked": undefined,
+      "children": undefined,
+      "expanded": true,
+      "name": "predecessors",
+      "pressed": undefined,
+      "role": "button",
+      "value": undefined,
+    },
+    Object {
+      "checked": undefined,
+      "children": undefined,
+      "name": "predecessors.empty",
+      "pressed": undefined,
+      "role": "text",
+      "value": undefined,
+    },
+  ],
+  "name": "stories-components-nodedetails-predecessorssection--empty",
+  "pressed": undefined,
+  "role": "WebArea",
+  "value": undefined,
+}
+`;

@@ -58,6 +58,7 @@ const AttributesTable = ({ columns, data, summary, keyFn, sx }) => {
   return (
     <TableContainer
       component="div"
+      data-testid="attributesTable"
       sx={[{ mb: 2 }, ...(Array.isArray(sx) ? sx : [sx])]}
     >
       <Table size="small" aria-label={summary} summary={summary}>

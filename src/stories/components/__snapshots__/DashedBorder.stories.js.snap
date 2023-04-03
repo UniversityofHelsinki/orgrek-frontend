@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`stories/components/DashedBorder DashedBorder smoke-test 1`] = `
+Object {
+  "checked": undefined,
+  "children": undefined,
+  "name": "stories-components-dashedborder--dashed-border",
+  "pressed": undefined,
+  "role": "WebArea",
+  "value": undefined,
+}
+`;

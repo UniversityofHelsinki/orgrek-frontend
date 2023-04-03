@@ -1,5 +1,3 @@
-import { createSlice } from '@reduxjs/toolkit';
-
 export const createReader = (value = {}) => ({
   eppn: 'user',
   hyGroupCn: [],
@@ -17,14 +15,3 @@ export const createAdmin = (value = {}) => ({
   roles: ['ROLE_READER', 'ROLE_ADMIN'],
   ...value,
 });
-
-const initialState = {
-  user: createAdmin(),
-};
-
-const userSlice = createSlice({
-  name: 'user',
-  initialState,
-});
-
-export const userReducer = userSlice.reducer;
