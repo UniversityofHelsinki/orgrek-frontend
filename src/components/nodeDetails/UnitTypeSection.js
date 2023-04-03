@@ -88,6 +88,8 @@ const UnitTypeSection = () => {
         validate={validate}
         initialValues={toFormValues(sortedData)}
         onSubmit={handleSubmit}
+        successMessage={t('typeInfo.saveSuccess')}
+        errorMessage={t('typeInfo.saveError')}
         authActions={authActions.unitType}
       >
         <Placeholder empty={empty} placeholder={t('unittype.empty')}>
