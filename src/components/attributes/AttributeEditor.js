@@ -74,7 +74,7 @@ const AttributeEditor = ({
   const handleInsertAfter = (index) => {
     let newRow = createRow();
     const oldRow = values[index];
-    const newData = [...data];
+    const newData = data.length !== 0 ? [...data] : [{ ...oldRow }];
     newData.splice(index + 1, 0, newRow);
     onChange(newData);
   };
