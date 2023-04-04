@@ -92,32 +92,29 @@ const CodeAttributesSection = () => {
 
   return (
     <EditableAccordion title={title}>
-      <Placeholder
-        empty={empty}
-        placeholder={t('nodeDetailsSection.noAttributes')}
+      <EditableContent
+        editorComponent={<CodeAttributesEditor />}
+        initialValues={includeMissing(
+          toFormValues(
+            withoutUniqueID(filterExcess(codeAttributes, attributeKeys))
+          ),
+          attributeKeys
+        )}
+        // TODO: change to use validation from validations.js
+        validate={(o) => {}}
+        onSubmit={handleSubmit}
+        successMessage={t('codeInfo.saveSuccess')}
+        errorMessage={t('codeInfo.saveError')}
+        authActions={authActions.codeAttributes}
       >
-        <EditableContent
-          editorComponent={<CodeAttributesEditor />}
-          initialValues={includeMissing(
-            toFormValues(
-              withoutUniqueID(filterExcess(codeAttributes, attributeKeys))
-            ),
-            attributeKeys
-          )}
-          // TODO: change to use validation from validations.js
-          validate={(o) => {}}
-          onSubmit={handleSubmit}
-          successMessage={t('codeInfo.saveSuccess')}
-          errorMessage={t('codeInfo.saveError')}
-          authActions={authActions.codeAttributes}
-        >
+        <Placeholder empty={empty} placeholder={t('codeInfo.empty')}>
           <AttributesTable
             columns={columns}
             data={filterExcess(presentCodeAttributes, attributeKeys)}
             summary={title}
           />
-        </EditableContent>
-      </Placeholder>
+        </Placeholder>
+      </EditableContent>
     </EditableAccordion>
   );
 };
