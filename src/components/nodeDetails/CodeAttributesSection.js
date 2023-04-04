@@ -15,6 +15,7 @@ import { authActions } from '../../auth';
 import { useNodeId } from '../../hooks/useNodeId';
 import { useCodeAttributes } from '../../hooks/useCodeAttributes';
 import useFilterAttributesByDate from '../../hooks/useFilterAttributesByDate';
+import { compareAndCheckDates, valueNotEmpty } from './Validations';
 
 const toFormValues = (attributes) => {
   const byKey = {};
@@ -36,6 +37,7 @@ const includeMissing = (attributes, allKeys) => {
   const missingAttributes = missingKeys.map((key) => ({
     id: -1,
     key: key,
+    value: '',
     startDate: null,
     endDate: null,
     isNew: true,
@@ -80,7 +82,13 @@ const CodeAttributesSection = () => {
       ),
     },
   ];
-
+  const validate = (values) => {
+    const all = Object.values(values).flat();
+    return {
+      ...compareAndCheckDates(all),
+      ...valueNotEmpty(all),
+    };
+  };
   const title = t('codes');
   const empty = codeAttributes.length === 0;
 
@@ -100,8 +108,7 @@ const CodeAttributesSection = () => {
           ),
           attributeKeys
         )}
-        // TODO: change to use validation from validations.js
-        validate={(o) => {}}
+        validate={validate}
         onSubmit={handleSubmit}
         successMessage={t('codeInfo.saveSuccess')}
         errorMessage={t('codeInfo.saveError')}
