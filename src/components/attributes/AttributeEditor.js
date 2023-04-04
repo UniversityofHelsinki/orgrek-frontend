@@ -63,16 +63,11 @@ const AttributeEditor = ({
     let newRow = createRow();
     const oldRow = values[index];
     const endDate = updateDates(oldRow, newRow, 1);
-    const newData = [...data];
+    const newData = data.length !== 0 ? [...data] : [{ ...oldRow }];
     if (endDate !== null) {
       newData[index] = updateEndDate(newData[index], endDate);
     }
-    if (oldRow.isNew) {
-      newData.splice(index, 1, oldRow);
-      newData.splice(index + 1, 0, newRow);
-    } else {
-      newData.splice(index, 0, newRow);
-    }
+    newData.splice(index, 0, newRow);
     onChange(newData);
   };
 
