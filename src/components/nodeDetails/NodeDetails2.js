@@ -11,18 +11,23 @@ import PredecessorsSection from './PredecessorsSection';
 import SuccessorsSection from './SuccessorsSection';
 import OtherAttributesSection from './OtherAttributesSection';
 import Typography from '@mui/material/Typography';
-import IfAdmin from '../auth/IfAdmin';
+import IfAdmin from '../../auth/IfAdmin';
 import useFavorableName from '../../hooks/useFavorableName';
 import useFetchNodeDetails from '../../hooks/useFetchNodeDetails';
 import Box from '@mui/material/Box';
 import useFetchNode from '../../hooks/useFetchNode';
+import { useNodeId } from '../../hooks/useNodeId';
 
 const NodeDetails = () => {
-  const node = useFetchNode();
-  useFetchNodeDetails();
+  const nodeId = useNodeId();
   const title = useFavorableName();
 
-  if (!node) {
+  // These legacy fetch hooks can be removed after everything has been migrated
+  // to use RTK Query
+  useFetchNode();
+  useFetchNodeDetails();
+
+  if (!nodeId) {
     return null;
   }
 
@@ -32,7 +37,7 @@ const NodeDetails = () => {
         <EditButtons />
       </IfAdmin>
       <Box
-        key={node.uniqueId}
+        key={nodeId}
         component="main"
         sx={{
           pl: { xs: 1, md: 4 },

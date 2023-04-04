@@ -1,29 +1,50 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { treeReducer } from './mockTree';
-import { hierarchyReducer } from './mockHierarchy';
-import { createNodeState, nodeReducer } from './mockNode';
-import { userReducer } from './mockUser';
-import { dayReducer } from './mockDay';
-import { nodeDetailsViewReducer } from './mockNodeDetailsView';
-import { hierarchyFiltersReducer } from './mockHierarchyFilters';
-import { editModeReducer } from './mockEditMode';
+import { createNodeState } from './mockNode';
+import {
+  api,
+  notificationsReducer,
+  treeReducer,
+  userReducer,
+  dayReducer,
+  nodeReducer,
+  hierarchyReducer,
+  editModeReducer,
+  nodeDetailsViewReducer,
+  hierarchyFilterReducer,
+} from '../store';
 import { Provider } from 'react-redux';
 import React from 'react';
+import { setupListeners } from '@reduxjs/toolkit/query';
+import { createAdmin } from './mockUser';
 
-export const configureMockStore = (preloadedState = {}) =>
-  configureStore({
-    preloadedState,
+export const configureMockStore = (preloadedState = {}) => {
+  const store = configureStore({
+    preloadedState: {
+      ur: {
+        user: createAdmin(),
+      },
+      ...preloadedState,
+    },
     reducer: {
+      [api.reducerPath]: api.reducer,
       tree: treeReducer,
       hr: hierarchyReducer,
       nrd: nodeReducer,
       ur: userReducer,
       dr: dayReducer,
       nvrd: nodeDetailsViewReducer,
-      hierarchyFilters: hierarchyFiltersReducer,
+      hierarchyFilters: hierarchyFilterReducer,
       editModeReducer: editModeReducer,
+      notifications: notificationsReducer,
     },
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware().concat(api.middleware),
   });
+
+  setupListeners(store.dispatch);
+
+  return store;
+};
 
 /**
  * Configures Redux store from initial state and any additional test data
@@ -74,6 +95,7 @@ export const withUser = (user) => withMockStore({ ur: { user } });
  * Alternatively, withMockStore decorator can mock the whole state.
  *
  * @param nodeState overrides node reducer initial state
+ * @deprecated not needed after everything has been migrated to RTK Query
  */
 export const withNode = (nodeState) =>
   withMockStore({ nrd: createNodeState(nodeState) });
@@ -86,6 +108,7 @@ export const withNode = (nodeState) =>
  * Alternatively, withMockStore decorator can mock the whole state.
  *
  * @param hierarchyState overrides hierarchy reducer initial state
+ * @deprecated not needed after everything has been migrated to RTK Query
  */
 export const withHierarchy = (hierarchyState) =>
   withMockStore({ hr: { ...hierarchyState } });

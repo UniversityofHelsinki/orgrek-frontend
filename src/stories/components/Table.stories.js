@@ -23,7 +23,7 @@ export const Basic = {
   },
   render: ({ size, caption }) => (
     <TableContainer component="div">
-      <Table size={size} aria-label="example" summary={caption}>
+      <Table size={size} aria-label="example">
         {caption && <caption>{caption}</caption>}
         <TableHead>
           <TableRow>

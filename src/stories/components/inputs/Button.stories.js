@@ -1,5 +1,5 @@
 import React from 'react';
-import Button from '@mui/material/Button';
+import Button from '../../../components/Button';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
@@ -18,6 +18,7 @@ export const Primary = {
     variant: 'contained',
     text: 'Button',
     disabled: false,
+    loading: false,
   },
   render: ({ text, ...args }) => <Button {...args}>{text}</Button>,
 };

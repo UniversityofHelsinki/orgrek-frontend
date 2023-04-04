@@ -6,6 +6,8 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { fi } from 'date-fns/locale';
 import theme from '../src/theme';
 import { withRouter } from 'storybook-addon-react-router-v6';
+import { initialize, mswDecorator } from 'msw-storybook-addon';
+import { withMockDate } from '../src/mockStore';
 import i18n from '../src/i18n';
 
 i18n.init({
@@ -20,6 +22,29 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-datepicker/dist/react-datepicker.css';
 import '../src/index.css';
 import '../src/App.css';
+
+// Initialize mock service worker
+initialize({
+  // Specify how to handle requests without a matching mock handler
+  onUnhandledRequest: (request, { error }) => {
+    // Allow fetching translations from the real backend
+    if (
+      request.url.pathname.startsWith('/api/texts/') &&
+      request.method === 'GET'
+    ) {
+      return;
+    }
+
+    // Besides texts, real backend should never be called from Storybook,
+    // so reject all non-mock requests
+    if (request.url.pathname.startsWith('/api/')) {
+      error();
+    }
+
+    // Let all other requests through without warning
+    // including Storybook resources, Google Fonts etc.
+  },
+});
 
 // Use the same decorators for both stories and docs pages
 const CommonDecorators = ({ children }) => (
@@ -61,4 +86,6 @@ export const decorators = [
     </CommonDecorators>
   ),
   withRouter,
+  mswDecorator,
+  withMockDate,
 ];

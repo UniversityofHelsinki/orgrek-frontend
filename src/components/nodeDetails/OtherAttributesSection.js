@@ -3,6 +3,7 @@ import EditableAccordion from '../EditableAccordion';
 import { useTranslation } from 'react-i18next';
 import useAttributes from '../../hooks/useAttributes';
 import AttributesTable from '../attributes/AttributesTable';
+import Placeholder from '../Placeholder';
 
 const OtherAttributesSection = () => {
   const { t } = useTranslation();
@@ -12,12 +13,13 @@ const OtherAttributesSection = () => {
   const empty = otherAttributes.length === 0;
 
   return (
-    <EditableAccordion
-      title={title}
-      empty={empty}
-      placeholder={t('nodeDetailsSection.noAttributes')}
-    >
-      <AttributesTable data={otherAttributes} summary={title} />
+    <EditableAccordion title={title}>
+      <Placeholder
+        empty={empty}
+        placeholder={t('nodeDetailsSection.noAttributes')}
+      >
+        <AttributesTable data={otherAttributes} summary={title} />
+      </Placeholder>
     </EditableAccordion>
   );
 };

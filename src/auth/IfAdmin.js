@@ -1,5 +1,5 @@
-import { isAdmin } from '../../actions/userAction';
-import useCurrentUser from '../../hooks/useCurrentUser';
+import { isAdmin } from './auth';
+import useCurrentUser from '../hooks/useCurrentUser';
 
 /**
  * Renders content only if current user has admin role.

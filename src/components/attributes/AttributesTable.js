@@ -8,7 +8,7 @@ import TableContainer from '@mui/material/TableContainer';
 import Validity from './Validity';
 import { useTranslation } from 'react-i18next';
 
-const AttributesTable = ({ columns, data, summary, keyFn }) => {
+const AttributesTable = ({ columns, data, summary, keyFn, sx }) => {
   const { t } = useTranslation();
 
   const defaultColumns = [
@@ -56,7 +56,11 @@ const AttributesTable = ({ columns, data, summary, keyFn }) => {
   });
 
   return (
-    <TableContainer component="div">
+    <TableContainer
+      component="div"
+      data-testid="attributesTable"
+      sx={[{ mb: 2 }, ...(Array.isArray(sx) ? sx : [sx])]}
+    >
       <Table size="small" aria-label={summary} summary={summary}>
         <TableHead>
           <TableRow>{renderedHeaders}</TableRow>

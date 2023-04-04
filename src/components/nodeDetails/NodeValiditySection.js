@@ -4,6 +4,7 @@ import EditableAccordion from '../EditableAccordion';
 import { useTranslation } from 'react-i18next';
 import Typography from '@mui/material/Typography';
 import { useSelector } from 'react-redux';
+import Placeholder from '../Placeholder';
 
 const NodeValiditySection = () => {
   const { t } = useTranslation();
@@ -16,14 +17,12 @@ const NodeValiditySection = () => {
   const empty = !node.startDate && !node.endDate;
 
   return (
-    <EditableAccordion
-      title={t('valid_dates')}
-      empty={empty}
-      placeholder={<Validity />}
-    >
-      <Typography variant="body1">
-        <Validity startDate={node.startDate} endDate={node.endDate} />
-      </Typography>
+    <EditableAccordion title={t('valid_dates')}>
+      <Placeholder empty={empty} placeholder={<Validity />}>
+        <Typography variant="body1">
+          <Validity startDate={node.startDate} endDate={node.endDate} />
+        </Typography>
+      </Placeholder>
     </EditableAccordion>
   );
 };
