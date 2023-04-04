@@ -39,7 +39,12 @@ const NodeViewControl = (props) => {
     } else if (props.showComing) {
       props.fetchComing(props.showHistory);
     }
-  }, [props.showHistory, props.showComing, props.node]);
+  }, [
+    props.showHistory,
+    props.showComing,
+    props.node,
+    props.selectedHierarchy,
+  ]);
   return (
     <Form>
       <Row className="align-items-center">
