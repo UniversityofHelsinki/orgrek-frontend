@@ -67,7 +67,12 @@ const AttributeEditor = ({
     if (endDate !== null) {
       newData[index] = updateEndDate(newData[index], endDate);
     }
-    newData.splice(index, 0, newRow);
+    if (oldRow.isNew) {
+      newData.splice(index, 1, oldRow);
+      newData.splice(index + 1, 0, newRow);
+    } else {
+      newData.splice(index, 0, newRow);
+    }
     onChange(newData);
   };
 
