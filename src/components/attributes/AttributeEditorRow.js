@@ -68,22 +68,33 @@ const AttributeEditorRow = ({
     if (date !== null && !isValid(date)) {
       setStartDateError(t('invalidDate'));
       setErrorInStartDate(true);
-
       onChange({
         ...value,
         startDate: 'invalid date',
       });
-
       return;
+    } else if (date === null) {
+      setErrorInStartDate(true);
+      setStartDateError(t('attribute.required'));
+      onChange({
+        ...value,
+        startDate: 'invalid date',
+      });
+    } else if (date.getFullYear() < 1600) {
+      setErrorInStartDate(true);
+      setStartDateError(t('invalidDate'));
+      onChange({
+        ...value,
+        startDate: 'invalid date',
+      });
+    } else {
+      setStartDateError(null);
+      setErrorInStartDate(false);
+      onChange({
+        ...value,
+        startDate: date && format(date, 'yyyy-MM-dd'),
+      });
     }
-
-    setStartDateError(null);
-    setErrorInStartDate(false);
-
-    onChange({
-      ...value,
-      startDate: date && format(date, 'yyyy-MM-dd'),
-    });
   };
 
   const handleDateEndChange = (date) => {
@@ -150,6 +161,7 @@ const AttributeEditorRow = ({
 
   const renderedStartDateField = (
     <DateField
+      required
       label={t('attribute.validFrom')}
       margin="normal"
       value={value.startDate}
