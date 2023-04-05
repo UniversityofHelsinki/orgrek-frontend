@@ -1,7 +1,11 @@
-import format from 'date-fns/format';
+const midnight = (date) => {
+  const copy = new Date(date);
+  copy.setHours(0, 0, 0, 0);
+  return copy;
+};
 
 const initialState = {
-  selectedDay: format(new Date(), 'yyyy-MM-dd'),
+  selectedDay: midnight(new Date()),
 };
 
 const dayChangeReducer = (state = initialState, action) => {
@@ -9,7 +13,7 @@ const dayChangeReducer = (state = initialState, action) => {
     case 'DAY_CHANGE_SUCCESS':
       return {
         ...state,
-        selectedDay: action.payload,
+        selectedDay: midnight(action.payload),
       };
     default:
       return state;

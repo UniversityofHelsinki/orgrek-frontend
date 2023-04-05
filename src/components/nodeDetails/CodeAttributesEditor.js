@@ -23,6 +23,7 @@ const CodeAttributesEditor = () => {
           <AttributeEditor
             key={`${key}-${i}`}
             attributeLabel={t(key)}
+            attributeKey={`${key}`}
             valueLabel={t('attribute_value')}
             data={attributes}
             onChange={(newData) =>

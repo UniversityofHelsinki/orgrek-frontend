@@ -12,18 +12,21 @@ const NameEditor = () => {
     <Stack spacing={2}>
       <AttributeEditor
         attributeLabel={t('name_fi')}
+        attributeKey={'name_fi'}
         valueLabel={t('name')}
         data={values.nameFi}
         onChange={(newData) => setValues({ ...values, nameFi: newData })}
       />
       <AttributeEditor
         attributeLabel={t('name_sv')}
+        attributeKey={'name_sv'}
         valueLabel={t('name')}
         data={values.nameSv}
         onChange={(newData) => setValues({ ...values, nameSv: newData })}
       />
       <AttributeEditor
         attributeLabel={t('name_en')}
+        attributeKey={'name_en'}
         valueLabel={t('name')}
         data={values.nameEn}
         onChange={(newData) => setValues({ ...values, nameEn: newData })}

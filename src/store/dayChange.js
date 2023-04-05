@@ -1,8 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
 import legacyReducer from '../reducers/dayChangeReducer';
 
+const midnight = (date) => {
+  const copy = new Date(date);
+  copy.setHours(0, 0, 0, 0);
+  return copy;
+};
+
 const initialState = {
-  selectedDay: new Date(),
+  selectedDay: midnight(new Date()),
 };
 
 const daySlice = createSlice({
