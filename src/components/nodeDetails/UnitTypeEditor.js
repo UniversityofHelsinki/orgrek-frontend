@@ -36,8 +36,9 @@ const UnitTypeEditor = () => {
   return (
     <Stack spacing={2}>
       <AttributeEditor
-        attributeLabel={t('name_fi')}
-        valueLabel={t('type')}
+        attributeLabel={t('type')}
+        attributeKey={'type'}
+        valueLabel={t('value')}
         data={values.type}
         renderValueField={renderValueField}
         onChange={(newData) => setValues({ ...values.type, type: newData })}

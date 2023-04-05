@@ -11,6 +11,7 @@ const ReviewDate = (props) => {
   const { t, i18n } = useTranslation();
   const changeToCurrentDate = () => {
     const date = new Date();
+    date.setHours(0, 0, 0, 0);
     props.onDayChange(date);
   };
 
@@ -34,7 +35,9 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   onDayChange: (date) => {
-    isValid(date) ? dispatch(changeDate(new Date(date))) : '';
+    if (isValid(date)) {
+      dispatch(changeDate(new Date(date)));
+    }
   },
 });
 
