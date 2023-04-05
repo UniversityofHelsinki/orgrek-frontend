@@ -15,6 +15,7 @@ import { authActions } from '../../auth';
 import { useNodeId } from '../../hooks/useNodeId';
 import { useCodeAttributes } from '../../hooks/useCodeAttributes';
 import useFilterAttributesByDate from '../../hooks/useFilterAttributesByDate';
+import { compareAndCheckDates, valueNotEmpty } from './Validations';
 
 const toFormValues = (attributes) => {
   const byKey = {};
@@ -36,6 +37,7 @@ const includeMissing = (attributes, allKeys) => {
   const missingAttributes = missingKeys.map((key) => ({
     id: -1,
     key: key,
+    value: '',
     startDate: null,
     endDate: null,
     isNew: true,
@@ -80,7 +82,13 @@ const CodeAttributesSection = () => {
       ),
     },
   ];
-
+  const validate = (values) => {
+    const all = Object.values(values).flat();
+    return {
+      ...compareAndCheckDates(all),
+      ...valueNotEmpty(all),
+    };
+  };
   const title = t('codes');
   const empty = codeAttributes.length === 0;
 
@@ -92,32 +100,28 @@ const CodeAttributesSection = () => {
 
   return (
     <EditableAccordion title={title}>
-      <Placeholder
-        empty={empty}
-        placeholder={t('nodeDetailsSection.noAttributes')}
+      <EditableContent
+        editorComponent={<CodeAttributesEditor />}
+        initialValues={includeMissing(
+          toFormValues(
+            withoutUniqueID(filterExcess(codeAttributes, attributeKeys))
+          ),
+          attributeKeys
+        )}
+        validate={validate}
+        onSubmit={handleSubmit}
+        successMessage={t('codeInfo.saveSuccess')}
+        errorMessage={t('codeInfo.saveError')}
+        authActions={authActions.codeAttributes}
       >
-        <EditableContent
-          editorComponent={<CodeAttributesEditor />}
-          initialValues={includeMissing(
-            toFormValues(
-              withoutUniqueID(filterExcess(codeAttributes, attributeKeys))
-            ),
-            attributeKeys
-          )}
-          // TODO: change to use validation from validations.js
-          validate={(o) => {}}
-          onSubmit={handleSubmit}
-          successMessage={t('codeInfo.saveSuccess')}
-          errorMessage={t('codeInfo.saveError')}
-          authActions={authActions.codeAttributes}
-        >
+        <Placeholder empty={empty} placeholder={t('codeInfo.empty')}>
           <AttributesTable
             columns={columns}
             data={filterExcess(presentCodeAttributes, attributeKeys)}
             summary={title}
           />
-        </EditableContent>
-      </Placeholder>
+        </Placeholder>
+      </EditableContent>
     </EditableAccordion>
   );
 };

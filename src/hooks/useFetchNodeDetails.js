@@ -44,14 +44,16 @@ const useFetchNodeDetails = () => {
       dispatch(
         fetchNodeAttributes(node.uniqueId, selectedDay, selectedHierarchy)
       );
-      dispatch(fetchNodeParents(node.uniqueId, selectedDay));
-      dispatch(fetchNodeChildren(node.uniqueId, selectedDay));
+      dispatch(fetchNodeParents(node.uniqueId, selectedDay, selectedHierarchy));
+      dispatch(
+        fetchNodeChildren(node.uniqueId, selectedDay, selectedHierarchy)
+      );
       dispatch(fetchNodeFullNames(node.uniqueId, selectedDay));
     }
   };
 
   useEffect(() => {
-    if (!node || !selectedDay) {
+    if (!node || !selectedDay || !selectedHierarchy) {
       return;
     }
 
