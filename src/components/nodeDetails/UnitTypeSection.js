@@ -16,6 +16,7 @@ import { useSelector } from 'react-redux';
 import fillSelectableUnits from '../../hooks/filterSelectableUnits';
 import { authActions } from '../../auth';
 import { compareAndCheckDates, valueNotEmpty } from './Validations';
+import useFilterAttributesByDate from '../../hooks/useFilterAttributesByDate';
 
 const UnitTypeSection = () => {
   const { t } = useTranslation();
@@ -35,8 +36,11 @@ const UnitTypeSection = () => {
   // In edit mode data includes also history and future
   const sortedData = useSortAttributesByDate(data);
 
+  // In view mode filter history and future depending on selection
+  const sortedAndFilteredData = useFilterAttributesByDate(sortedData);
+
   const title = t('unit_type');
-  const empty = sortedData.length === 0;
+  const empty = sortedAndFilteredData.length === 0;
 
   const toFormValues = (data) => {
     const foundTypes = [];
@@ -51,7 +55,7 @@ const UnitTypeSection = () => {
     return { type: [...foundTypes] };
   };
 
-  const { type } = toFormValues(sortedData);
+  const { type } = toFormValues(sortedAndFilteredData);
 
   // Validates form values every time when the values change
   // Submit button is disabled when errors contain any truthy values
