@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { createContext } from 'react';
+import PropTypes from 'prop-types';
 
 const FormContext = createContext();
 
@@ -50,6 +51,22 @@ export const FormContextProvider = ({
   return (
     <FormContext.Provider value={context}>{children}</FormContext.Provider>
   );
+};
+
+FormContextProvider.propTypes = {
+  /** Initial form values */
+  initialValues: PropTypes.object,
+
+  /** Called when the form is submitted. Takes form values as the first arg. */
+  onSubmit: PropTypes.func.isRequired,
+
+  /**
+   * Called every time when the form values change.
+   *
+   * Takes form values as the first arg. Return an object with at least one
+   * property to disable submitting.
+   */
+  validate: PropTypes.func.isRequired,
 };
 
 export default FormContext;
