@@ -28,8 +28,18 @@ const toFormValues = (attributes) => {
   return byKey;
 };
 
-const withoutUniqueID = (attributes) => {
-  return attributes.filter((attribute) => attribute.key !== 'unique_id');
+const readOnlyFields = (attributes, keys) => {
+  const result = {};
+  attributes.forEach((attribute) => {
+    if (keys.includes(attribute.key)) {
+      if (!result[attribute.key]) {
+        result[attribute.key] = [attribute];
+      } else {
+        result[attribute.key] = [...result[attribute.key], attribute];
+      }
+    }
+  });
+  return result;
 };
 
 const includeMissing = (attributes, allKeys) => {
@@ -55,6 +65,12 @@ const filterExcess = (attributes, allKeys) => {
   });
 };
 
+const withoutReadOnlyFields = (attributes, readOnlyFieldKeys) => {
+  return attributes.filter((attribute) => {
+    return !readOnlyFieldKeys.includes(attribute.key);
+  });
+};
+
 const CodeAttributesSection = () => {
   const { t } = useTranslation();
   const nodeId = useNodeId();
@@ -65,6 +81,8 @@ const CodeAttributesSection = () => {
   const presentCodeAttributes = useFilterAttributesByDate(codeAttributes);
   const { data, isFetching } = useGetAttributeKeysQuery(selectedHierarchies);
   const attributeKeys = data;
+
+  const readOnlyFieldKeys = ['unique_id'];
 
   const [saveCodeAttributes] = useSaveCodeAttributesMutation();
 
@@ -101,10 +119,17 @@ const CodeAttributesSection = () => {
   return (
     <EditableAccordion title={title}>
       <EditableContent
-        editorComponent={<CodeAttributesEditor />}
+        editorComponent={
+          <CodeAttributesEditor
+            readOnlyFields={readOnlyFields(codeAttributes, readOnlyFieldKeys)}
+          />
+        }
         initialValues={includeMissing(
           toFormValues(
-            withoutUniqueID(filterExcess(codeAttributes, attributeKeys))
+            withoutReadOnlyFields(
+              filterExcess(codeAttributes, attributeKeys),
+              readOnlyFieldKeys
+            )
           ),
           attributeKeys
         )}
