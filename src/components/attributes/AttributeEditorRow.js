@@ -212,7 +212,7 @@ const AttributeEditorRow = ({
   const valueDescription = getValueDescription({
     value,
     displayText: getDisplayText ? getDisplayText(value) : value.value,
-    withValidity: !startDateError && !endDateError,
+    withValidity: true,
   });
 
   let renderedRow;
