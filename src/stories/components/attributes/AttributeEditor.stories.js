@@ -16,7 +16,9 @@ export default {
 
 export const Default = {
   args: {
+    attributeKey: 'data',
     attributeLabel: 'Attribuutti',
+    path: 'data',
     data: [
       {
         id: 1001,

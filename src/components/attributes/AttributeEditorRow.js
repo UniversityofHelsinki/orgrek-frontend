@@ -23,6 +23,7 @@ import AttributeEditorRowActions from './AttributeEditorRowActions';
 const AttributeEditorRow = ({
   valueLabel,
   value,
+  path,
   onChange,
   onInsertBefore,
   onInsertAfter,
@@ -288,6 +289,9 @@ const AttributeEditorRow = ({
 AttributeEditorRow.propTypes = {
   /** Label of the value text field */
   valueLabel: PropTypes.string,
+
+  /** The path in form values where to look for validation schema and errors */
+  path: PropTypes.string.isRequired,
 
   /** Attribute value with start and end dates */
   value: PropTypes.shape({

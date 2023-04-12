@@ -12,7 +12,7 @@ const selectableUnits = [];
 
 const UnitTypeEditor = () => {
   const { t } = useTranslation();
-  const { data, error, isFetching } = useGetValidHierarchyFiltersQuery();
+  const { data } = useGetValidHierarchyFiltersQuery();
   const selectedHierarchies = useSelector(
     (state) => state.tree.selectedHierarchy
   );
@@ -39,6 +39,7 @@ const UnitTypeEditor = () => {
         attributeLabel={t('type')}
         attributeKey={'type'}
         valueLabel={t('value')}
+        path="type"
         data={values.type}
         renderValueField={renderValueField}
         onChange={(newData) => setValues({ ...values.type, type: newData })}

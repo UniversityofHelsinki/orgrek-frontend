@@ -25,6 +25,7 @@ const CodeAttributesEditor = () => {
             attributeLabel={t(key)}
             attributeKey={`${key}`}
             valueLabel={t('attribute_value')}
+            path={key}
             data={attributes}
             onChange={(newData) =>
               setValues({
