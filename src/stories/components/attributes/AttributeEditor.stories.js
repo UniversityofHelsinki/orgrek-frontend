@@ -5,6 +5,8 @@ import MenuItem from '@mui/material/MenuItem';
 import TextField from '@mui/material/TextField';
 import { within, userEvent, waitFor } from '@storybook/testing-library';
 import { expect } from '@storybook/jest';
+import { FormContextProvider } from '../../../contexts/FormContext';
+import useForm from '../../../hooks/useForm';
 
 export default {
   component: AttributeEditor,
@@ -48,9 +50,11 @@ export const Default = {
   },
   render: (args) => {
     const [data, setData] = useState(args.data);
+    const { setValues } = useForm();
 
     const handleChange = (newData) => {
       setData(newData);
+      setValues && setValues({ data: newData });
       args.onChange && args.onChange(newData);
     };
 
@@ -96,6 +100,46 @@ export const InvalidDate = {
 
     await userEvent.clear(canvas.getAllByRole('textbox')[1]);
     await userEvent.type(canvas.getAllByRole('textbox')[1], '1.1.');
+  },
+};
+
+export const ValidationErrors = {
+  ...Default,
+  decorators: [
+    (Story) => {
+      const validate = (values) => {
+        const errors = {};
+
+        // Simple example to test path including index
+        values.data.forEach((item, index) => {
+          const value = item.value || '';
+
+          if (value.length < 3) {
+            errors[`data[${index}].value`] = ['Minimipituus 3 merkkiä'];
+          }
+        });
+
+        // Some hard-coded errors just for an example
+        errors['data[0].startDate'] = [
+          'Päivä voi olla aikaisintaan 3.1.2023',
+          'Päivämäärä vinksin vonksin tai ainakin heikun keikun',
+        ];
+        errors['data[1].endDate'] = ['Valitse jokin muu päivä'];
+
+        return errors;
+      };
+
+      return (
+        <FormContextProvider validate={validate} onSubmit={async () => {}}>
+          <Story />
+        </FormContextProvider>
+      );
+    },
+  ],
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    await userEvent.clear(canvas.getAllByRole('textbox')[0]);
   },
 };
 

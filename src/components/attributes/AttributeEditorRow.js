@@ -13,6 +13,12 @@ import DeletedAttributeRow from './DeletedAttributeRow';
 import { getValueDescription } from './attributeUtils';
 import DeletedAttributeRowActions from './DeletedAttributeRowActions';
 import AttributeEditorRowActions from './AttributeEditorRowActions';
+import useForm from '../../hooks/useForm';
+import HelperText from '../inputs/HelperText';
+
+const getErrors = (errors, path) => (errors && errors[path]) || [];
+
+const filterEmpty = (errors) => errors.filter((error) => Boolean(error));
 
 /**
  * Edits a single attribute value with a start date and an end date.
@@ -20,6 +26,8 @@ import AttributeEditorRowActions from './AttributeEditorRowActions';
  * By default, uses TextField for editing the value but this can be customized
  * by passing a custom render function as renderValueField prop.
  */
+// TODO: refactor complexity
+// eslint-disable-next-line complexity
 const AttributeEditorRow = ({
   valueLabel,
   value,
@@ -31,14 +39,29 @@ const AttributeEditorRow = ({
   getDisplayText,
 }) => {
   const { t } = useTranslation();
+  const { errors } = useForm();
+
+  // TODO: Remove these states (OR-1031)
   const [valueError, setValueError] = useState(null);
   const [startDateError, setStartDateError] = useState(null);
-  const [errorInStartDate, setErrorInStartDate] = useState(null);
   const [endDateError, setEndDateError] = useState(null);
-  const [errorInEndDate, setErrorInEndDate] = useState(null);
 
   // True after user has interacted with the row
   const [touched, setTouched] = useState(false);
+
+  // TODO: remove valueError, startDateError and endDateError (OR-1031)
+  const valueErrors = filterEmpty([
+    valueError,
+    ...getErrors(errors, `${path}.value`),
+  ]);
+  const startDateErrors = filterEmpty([
+    startDateError,
+    ...getErrors(errors, `${path}.startDate`),
+  ]);
+  const endDateErrors = filterEmpty([
+    endDateError,
+    ...getErrors(errors, `${path}.endDate`),
+  ]);
 
   const handleValueChange = (event) => {
     const newValue = event.target.value;
@@ -68,21 +91,17 @@ const AttributeEditorRow = ({
   const handleDateStartChange = (date) => {
     if (date !== null && !isValid(date)) {
       setStartDateError(t('invalidDate'));
-      setErrorInStartDate(true);
       onChange({
         ...value,
         startDate: 'invalid date',
       });
-      return;
     } else if (date === null) {
-      setErrorInStartDate(true);
       setStartDateError(t('attribute.required'));
       onChange({
         ...value,
         startDate: 'invalid date',
       });
     } else if (date.getFullYear() < 1600) {
-      setErrorInStartDate(true);
       setStartDateError(t('invalidDate'));
       onChange({
         ...value,
@@ -90,7 +109,6 @@ const AttributeEditorRow = ({
       });
     } else {
       setStartDateError(null);
-      setErrorInStartDate(false);
       onChange({
         ...value,
         startDate: date && format(date, 'yyyy-MM-dd'),
@@ -101,7 +119,6 @@ const AttributeEditorRow = ({
   const handleDateEndChange = (date) => {
     if (date !== null && !isValid(date)) {
       setEndDateError(t('invalidDate'));
-      setErrorInEndDate(true);
 
       onChange({
         ...value,
@@ -112,7 +129,6 @@ const AttributeEditorRow = ({
     }
 
     setEndDateError(null);
-    setErrorInEndDate(false);
 
     onChange({
       ...value,
@@ -142,8 +158,8 @@ const AttributeEditorRow = ({
     onChange: handleValueChange,
     fullWidth: true,
     required: true,
-    error: Boolean(valueError),
-    helperText: valueError || ' ',
+    error: valueErrors.length > 0,
+    helperText: <HelperText errors={valueErrors} />,
     inputProps: { maxLength: 250 },
     onBlur: handleLeavingFocus,
   };
@@ -175,14 +191,12 @@ const AttributeEditorRow = ({
           //joka lisätään käännösteksteihin. Tämä koodirivi otetaan käyttöön kun pääsee lisäämään
           //käännöstekstin. Samalla alla oleva rivi poistetaan.
           setStartDateError(reason);
-          setErrorInStartDate(true);
         } else {
           setStartDateError(null);
-          setErrorInStartDate(false);
         }
       }}
-      error={errorInStartDate}
-      helperText={startDateError || ' '}
+      error={startDateErrors.length > 0}
+      helperText={<HelperText errors={startDateErrors} />}
     />
   );
 
@@ -199,14 +213,12 @@ const AttributeEditorRow = ({
           //joka lisätään käännösteksteihin. Tämä koodirivi otetaan käyttöön kun pääsee lisäämään
           //käännöstekstin. Samalla alla oleva rivi poistetaan.
           setEndDateError(reason);
-          setErrorInEndDate(true);
         } else {
           setEndDateError(null);
-          setErrorInEndDate(false);
         }
       }}
-      error={errorInEndDate}
-      helperText={endDateError || ' '}
+      error={endDateErrors.length > 0}
+      helperText={<HelperText errors={endDateErrors} />}
     />
   );
 

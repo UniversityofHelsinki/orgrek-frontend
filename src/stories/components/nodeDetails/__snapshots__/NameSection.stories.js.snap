@@ -174,7 +174,6 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "description": "​",
       "name": "attribute.validFrom",
       "pressed": undefined,
       "required": true,
@@ -192,14 +191,6 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "​",
-      "pressed": undefined,
-      "role": "text",
-      "value": undefined,
-    },
-    Object {
-      "checked": undefined,
-      "children": undefined,
       "name": "attribute.validUntil",
       "pressed": undefined,
       "role": "text",
@@ -208,7 +199,6 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "description": "​",
       "name": "attribute.validUntil",
       "pressed": undefined,
       "role": "textbox",
@@ -220,14 +210,6 @@ Object {
       "name": "Choose date",
       "pressed": undefined,
       "role": "button",
-      "value": undefined,
-    },
-    Object {
-      "checked": undefined,
-      "children": undefined,
-      "name": "​",
-      "pressed": undefined,
-      "role": "text",
       "value": undefined,
     },
     Object {
@@ -266,7 +248,6 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "description": "​",
       "name": "attribute.validFrom",
       "pressed": undefined,
       "required": true,
@@ -284,14 +265,6 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "​",
-      "pressed": undefined,
-      "role": "text",
-      "value": undefined,
-    },
-    Object {
-      "checked": undefined,
-      "children": undefined,
       "name": "attribute.validUntil",
       "pressed": undefined,
       "role": "text",
@@ -300,7 +273,6 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "description": "​",
       "name": "attribute.validUntil",
       "pressed": undefined,
       "role": "textbox",
@@ -312,14 +284,6 @@ Object {
       "name": "Choose date, selected date is 31. joulu 2022",
       "pressed": undefined,
       "role": "button",
-      "value": undefined,
-    },
-    Object {
-      "checked": undefined,
-      "children": undefined,
-      "name": "​",
-      "pressed": undefined,
-      "role": "text",
       "value": undefined,
     },
     Object {
@@ -358,7 +322,6 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "description": "​",
       "name": "attribute.validFrom",
       "pressed": undefined,
       "required": true,
@@ -376,14 +339,6 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "​",
-      "pressed": undefined,
-      "role": "text",
-      "value": undefined,
-    },
-    Object {
-      "checked": undefined,
-      "children": undefined,
       "name": "attribute.validUntil",
       "pressed": undefined,
       "role": "text",
@@ -392,7 +347,6 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "description": "​",
       "name": "attribute.validUntil",
       "pressed": undefined,
       "role": "textbox",
@@ -404,14 +358,6 @@ Object {
       "name": "Choose date, selected date is 31. joulu 1999",
       "pressed": undefined,
       "role": "button",
-      "value": undefined,
-    },
-    Object {
-      "checked": undefined,
-      "children": undefined,
-      "name": "​",
-      "pressed": undefined,
-      "role": "text",
       "value": undefined,
     },
     Object {
@@ -458,7 +404,6 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "description": "​",
       "name": "attribute.validFrom",
       "pressed": undefined,
       "required": true,
@@ -476,14 +421,6 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "​",
-      "pressed": undefined,
-      "role": "text",
-      "value": undefined,
-    },
-    Object {
-      "checked": undefined,
-      "children": undefined,
       "name": "attribute.validUntil",
       "pressed": undefined,
       "role": "text",
@@ -492,7 +429,6 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "description": "​",
       "name": "attribute.validUntil",
       "pressed": undefined,
       "role": "textbox",
@@ -504,14 +440,6 @@ Object {
       "name": "Choose date",
       "pressed": undefined,
       "role": "button",
-      "value": undefined,
-    },
-    Object {
-      "checked": undefined,
-      "children": undefined,
-      "name": "​",
-      "pressed": undefined,
-      "role": "text",
       "value": undefined,
     },
     Object {
@@ -558,7 +486,6 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "description": "​",
       "name": "attribute.validFrom",
       "pressed": undefined,
       "required": true,
@@ -576,14 +503,6 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "​",
-      "pressed": undefined,
-      "role": "text",
-      "value": undefined,
-    },
-    Object {
-      "checked": undefined,
-      "children": undefined,
       "name": "attribute.validUntil",
       "pressed": undefined,
       "role": "text",
@@ -592,7 +511,6 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "description": "​",
       "name": "attribute.validUntil",
       "pressed": undefined,
       "role": "textbox",
@@ -604,14 +522,6 @@ Object {
       "name": "Choose date",
       "pressed": undefined,
       "role": "button",
-      "value": undefined,
-    },
-    Object {
-      "checked": undefined,
-      "children": undefined,
-      "name": "​",
-      "pressed": undefined,
-      "role": "text",
       "value": undefined,
     },
     Object {
@@ -650,7 +560,6 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "description": "​",
       "name": "attribute.validFrom",
       "pressed": undefined,
       "required": true,
@@ -668,14 +577,6 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "​",
-      "pressed": undefined,
-      "role": "text",
-      "value": undefined,
-    },
-    Object {
-      "checked": undefined,
-      "children": undefined,
       "name": "attribute.validUntil",
       "pressed": undefined,
       "role": "text",
@@ -684,7 +585,6 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "description": "​",
       "name": "attribute.validUntil",
       "pressed": undefined,
       "role": "textbox",
@@ -696,14 +596,6 @@ Object {
       "name": "Choose date, selected date is 31. joulu 2022",
       "pressed": undefined,
       "role": "button",
-      "value": undefined,
-    },
-    Object {
-      "checked": undefined,
-      "children": undefined,
-      "name": "​",
-      "pressed": undefined,
-      "role": "text",
       "value": undefined,
     },
     Object {
@@ -742,7 +634,6 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "description": "​",
       "name": "attribute.validFrom",
       "pressed": undefined,
       "required": true,
@@ -760,14 +651,6 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "​",
-      "pressed": undefined,
-      "role": "text",
-      "value": undefined,
-    },
-    Object {
-      "checked": undefined,
-      "children": undefined,
       "name": "attribute.validUntil",
       "pressed": undefined,
       "role": "text",
@@ -776,7 +659,6 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "description": "​",
       "name": "attribute.validUntil",
       "pressed": undefined,
       "role": "textbox",
@@ -788,14 +670,6 @@ Object {
       "name": "Choose date, selected date is 31. joulu 1999",
       "pressed": undefined,
       "role": "button",
-      "value": undefined,
-    },
-    Object {
-      "checked": undefined,
-      "children": undefined,
-      "name": "​",
-      "pressed": undefined,
-      "role": "text",
       "value": undefined,
     },
     Object {
@@ -901,7 +775,6 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "description": "​",
       "name": "attribute.validFrom",
       "pressed": undefined,
       "required": true,
@@ -919,14 +792,6 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "​",
-      "pressed": undefined,
-      "role": "text",
-      "value": undefined,
-    },
-    Object {
-      "checked": undefined,
-      "children": undefined,
       "name": "attribute.validUntil",
       "pressed": undefined,
       "role": "text",
@@ -935,7 +800,6 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "description": "​",
       "focused": true,
       "name": "attribute.validUntil",
       "pressed": undefined,
@@ -948,14 +812,6 @@ Object {
       "name": "Choose date, selected date is 31. joulu 2023",
       "pressed": undefined,
       "role": "button",
-      "value": undefined,
-    },
-    Object {
-      "checked": undefined,
-      "children": undefined,
-      "name": "​",
-      "pressed": undefined,
-      "role": "text",
       "value": undefined,
     },
     Object {
@@ -994,7 +850,6 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "description": "​",
       "name": "attribute.validFrom",
       "pressed": undefined,
       "required": true,
@@ -1012,14 +867,6 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "​",
-      "pressed": undefined,
-      "role": "text",
-      "value": undefined,
-    },
-    Object {
-      "checked": undefined,
-      "children": undefined,
       "name": "attribute.validUntil",
       "pressed": undefined,
       "role": "text",
@@ -1028,7 +875,6 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "description": "​",
       "name": "attribute.validUntil",
       "pressed": undefined,
       "role": "textbox",
@@ -1040,14 +886,6 @@ Object {
       "name": "Choose date, selected date is 31. joulu 2022",
       "pressed": undefined,
       "role": "button",
-      "value": undefined,
-    },
-    Object {
-      "checked": undefined,
-      "children": undefined,
-      "name": "​",
-      "pressed": undefined,
-      "role": "text",
       "value": undefined,
     },
     Object {
@@ -1086,7 +924,6 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "description": "​",
       "name": "attribute.validFrom",
       "pressed": undefined,
       "required": true,
@@ -1104,14 +941,6 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "​",
-      "pressed": undefined,
-      "role": "text",
-      "value": undefined,
-    },
-    Object {
-      "checked": undefined,
-      "children": undefined,
       "name": "attribute.validUntil",
       "pressed": undefined,
       "role": "text",
@@ -1120,7 +949,6 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "description": "​",
       "name": "attribute.validUntil",
       "pressed": undefined,
       "role": "textbox",
@@ -1132,14 +960,6 @@ Object {
       "name": "Choose date, selected date is 31. joulu 1999",
       "pressed": undefined,
       "role": "button",
-      "value": undefined,
-    },
-    Object {
-      "checked": undefined,
-      "children": undefined,
-      "name": "​",
-      "pressed": undefined,
-      "role": "text",
       "value": undefined,
     },
     Object {
@@ -1186,7 +1006,6 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "description": "​",
       "name": "attribute.validFrom",
       "pressed": undefined,
       "required": true,
@@ -1204,14 +1023,6 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "​",
-      "pressed": undefined,
-      "role": "text",
-      "value": undefined,
-    },
-    Object {
-      "checked": undefined,
-      "children": undefined,
       "name": "attribute.validUntil",
       "pressed": undefined,
       "role": "text",
@@ -1220,7 +1031,6 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "description": "​",
       "name": "attribute.validUntil",
       "pressed": undefined,
       "role": "textbox",
@@ -1232,14 +1042,6 @@ Object {
       "name": "Choose date",
       "pressed": undefined,
       "role": "button",
-      "value": undefined,
-    },
-    Object {
-      "checked": undefined,
-      "children": undefined,
-      "name": "​",
-      "pressed": undefined,
-      "role": "text",
       "value": undefined,
     },
     Object {
@@ -1286,7 +1088,6 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "description": "​",
       "name": "attribute.validFrom",
       "pressed": undefined,
       "required": true,
@@ -1304,14 +1105,6 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "​",
-      "pressed": undefined,
-      "role": "text",
-      "value": undefined,
-    },
-    Object {
-      "checked": undefined,
-      "children": undefined,
       "name": "attribute.validUntil",
       "pressed": undefined,
       "role": "text",
@@ -1320,7 +1113,6 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "description": "​",
       "name": "attribute.validUntil",
       "pressed": undefined,
       "role": "textbox",
@@ -1332,14 +1124,6 @@ Object {
       "name": "Choose date",
       "pressed": undefined,
       "role": "button",
-      "value": undefined,
-    },
-    Object {
-      "checked": undefined,
-      "children": undefined,
-      "name": "​",
-      "pressed": undefined,
-      "role": "text",
       "value": undefined,
     },
     Object {
@@ -1378,7 +1162,6 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "description": "​",
       "name": "attribute.validFrom",
       "pressed": undefined,
       "required": true,
@@ -1396,14 +1179,6 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "​",
-      "pressed": undefined,
-      "role": "text",
-      "value": undefined,
-    },
-    Object {
-      "checked": undefined,
-      "children": undefined,
       "name": "attribute.validUntil",
       "pressed": undefined,
       "role": "text",
@@ -1412,7 +1187,6 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "description": "​",
       "name": "attribute.validUntil",
       "pressed": undefined,
       "role": "textbox",
@@ -1424,14 +1198,6 @@ Object {
       "name": "Choose date, selected date is 31. joulu 2022",
       "pressed": undefined,
       "role": "button",
-      "value": undefined,
-    },
-    Object {
-      "checked": undefined,
-      "children": undefined,
-      "name": "​",
-      "pressed": undefined,
-      "role": "text",
       "value": undefined,
     },
     Object {
@@ -1470,7 +1236,6 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "description": "​",
       "name": "attribute.validFrom",
       "pressed": undefined,
       "required": true,
@@ -1488,14 +1253,6 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "​",
-      "pressed": undefined,
-      "role": "text",
-      "value": undefined,
-    },
-    Object {
-      "checked": undefined,
-      "children": undefined,
       "name": "attribute.validUntil",
       "pressed": undefined,
       "role": "text",
@@ -1504,7 +1261,6 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "description": "​",
       "name": "attribute.validUntil",
       "pressed": undefined,
       "role": "textbox",
@@ -1516,14 +1272,6 @@ Object {
       "name": "Choose date, selected date is 31. joulu 1999",
       "pressed": undefined,
       "role": "button",
-      "value": undefined,
-    },
-    Object {
-      "checked": undefined,
-      "children": undefined,
-      "name": "​",
-      "pressed": undefined,
-      "role": "text",
       "value": undefined,
     },
     Object {
