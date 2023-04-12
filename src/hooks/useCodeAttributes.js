@@ -14,6 +14,7 @@ export const useCodeAttributes = () => {
   const { data, error, isFetching } = useGetCodeAttributesQuery({ nodeId });
 
   const uniqueId = {
+    id: Math.floor(Math.random() * -100000),
     key: 'unique_id',
     value: nodeId,
     startDate: null,
