@@ -121,7 +121,9 @@ const EditableContent = ({
         dispatch(
           showNotification({
             message:
-              t(error.data[0].errorMessage) || t('update_attributes_error'),
+              t(error.data[0].errorMessage) ||
+              errorMessage ||
+              t('update_attributes_error'),
             severity: 'error',
           })
         );
