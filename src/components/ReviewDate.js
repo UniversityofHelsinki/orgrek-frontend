@@ -4,11 +4,11 @@ import { connect } from 'react-redux';
 import { isValid } from 'date-fns';
 import Button from '@mui/material/Button';
 import { useTranslation } from 'react-i18next';
-import DateField from './DateField';
+import DateField from './inputs/DateField';
 import Stack from '@mui/material/Stack';
 
 const ReviewDate = (props) => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const changeToCurrentDate = () => {
     const date = new Date();
     date.setHours(0, 0, 0, 0);

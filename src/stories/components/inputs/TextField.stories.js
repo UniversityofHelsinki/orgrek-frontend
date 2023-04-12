@@ -1,5 +1,5 @@
 import React from 'react';
-import TextField from '../../../components/TextField';
+import TextField from '../../../components/inputs/TextField';
 import { useState } from 'react';
 
 export default {

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import useEditMode from '../hooks/useEditMode';
 import Form from './Form';
 import Stack from '@mui/material/Stack';
-import Button from './Button';
+import Button from './inputs/Button';
 import ActionBar from './nodeDetails/ActionBar';
 import { useTranslation } from 'react-i18next';
 import useForm from '../hooks/useForm';
