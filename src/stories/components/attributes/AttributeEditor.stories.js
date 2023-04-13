@@ -7,10 +7,18 @@ import { within, userEvent, waitFor } from '@storybook/testing-library';
 import { expect } from '@storybook/jest';
 import { FormContextProvider } from '../../../contexts/FormContext';
 import useForm from '../../../hooks/useForm';
+import ValueField from '../../../components/attributes/ValueField';
+import StartDateField from '../../../components/attributes/StartDateField';
+import EndDateField from '../../../components/attributes/EndDateField';
 
 export default {
   component: AttributeEditor,
-  subcomponents: { AttributeEditorRow },
+  subcomponents: {
+    AttributeEditorRow,
+    ValueField,
+    StartDateField,
+    EndDateField,
+  },
   argTypes: {
     onChange: { action: true },
   },

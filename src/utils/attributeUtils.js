@@ -1,4 +1,4 @@
-import { showValidity } from '../../actions/utilAction';
+import { showValidity } from '../actions/utilAction';
 import { isValid } from 'date-fns';
 import parseISO from 'date-fns/parseISO';
 
