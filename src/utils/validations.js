@@ -76,11 +76,7 @@ const compareStartAndEndDates = (startDate, endDate, days) => {
   start_date.setDate(start_date.getDate() - days);
   end_date.setDate(end_date.getDate() - days);
 
-  if (endDate !== null && end_date.getTime() <= start_date.getTime()) {
-    return false;
-  }
-
-  return true;
+  return !(endDate !== null && end_date.getTime() <= start_date.getTime());
 };
 
 export const compareAndCheckDates = (values) => {

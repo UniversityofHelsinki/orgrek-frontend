@@ -15,8 +15,8 @@ import { authActions } from '../../auth';
 import { useNodeId } from '../../hooks/useNodeId';
 import { useCodeAttributes } from '../../hooks/useCodeAttributes';
 import useFilterAttributesByDate from '../../hooks/useFilterAttributesByDate';
-import { compareAndCheckDates, valueNotEmpty } from './Validations';
-import { attributeSanitation } from './Sanitations';
+import { compareAndCheckDates, valueNotEmpty } from '../../utils/validations';
+import { attributeSanitation } from '../../utils/sanitations';
 
 const toFormValues = (attributes) => {
   const byKey = {};

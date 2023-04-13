@@ -15,18 +15,14 @@ import useSortAttributesByDate from '../../hooks/useSortAttributesByDate';
 import { useSelector } from 'react-redux';
 import fillSelectableUnits from '../../hooks/filterSelectableUnits';
 import { authActions } from '../../auth';
-import { compareAndCheckDates, valueNotEmpty } from './Validations';
+import { compareAndCheckDates, valueNotEmpty } from '../../utils/validations';
 import useFilterAttributesByDate from '../../hooks/useFilterAttributesByDate';
 
 const UnitTypeSection = () => {
   const { t } = useTranslation();
   const nodeId = useNodeId();
-  const { data, error, isFetching } = useGetTypeAttributesQuery(nodeId);
-  const {
-    data: hierarchies,
-    hierarchyerror,
-    isFetchingHierarchy,
-  } = useGetValidHierarchyFiltersQuery();
+  const { data, isFetching } = useGetTypeAttributesQuery(nodeId);
+  const { data: hierarchies } = useGetValidHierarchyFiltersQuery();
   const selectedHierarchies = useSelector(
     (state) => state.tree.selectedHierarchy
   );

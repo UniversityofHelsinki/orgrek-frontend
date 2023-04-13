@@ -13,8 +13,8 @@ import {
 } from '../../store';
 import useSortAttributesByDate from '../../hooks/useSortAttributesByDate';
 import useFilterAttributesByDate from '../../hooks/useFilterAttributesByDate';
-import { compareAndCheckDates, valueNotEmpty } from './Validations';
-import { attributeSanitation } from './Sanitations';
+import { compareAndCheckDates, valueNotEmpty } from '../../utils/validations';
+import { attributeSanitation } from '../../utils/sanitations';
 import { authActions } from '../../auth';
 
 const toFormValues = (data) => {
