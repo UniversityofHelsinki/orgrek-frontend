@@ -24,7 +24,7 @@ const UnitTypeEditor = () => {
     <TextField select {...valueFieldProps}>
       {selectableUnits.map((option) => (
         <MenuItem key={option.value} value={option.value}>
-          {option.label}
+          {t(option.label)}
         </MenuItem>
       ))}
     </TextField>
