@@ -31,7 +31,7 @@ const UnitTypeEditor = () => {
   );
 
   const getDisplayText = (value) =>
-    selectableUnits.find((option) => option.value === value.value)?.label;
+    t(selectableUnits.find((option) => option.value === value.value)?.label);
 
   return (
     <Stack spacing={2}>
