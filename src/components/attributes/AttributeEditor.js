@@ -6,7 +6,7 @@ import Stack from '@mui/material/Stack';
 import AttributeEditorRow from './AttributeEditorRow';
 import parseISO from 'date-fns/parseISO';
 import { addDays, formatISO } from 'date-fns';
-import Button from '../Button';
+import Button from '@mui/material/Button';
 import { t } from 'i18next';
 
 /**
