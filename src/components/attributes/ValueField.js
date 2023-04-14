@@ -2,7 +2,7 @@ import React from 'react';
 import useForm from '../../hooks/useForm';
 import HelperText from '../inputs/HelperText';
 import TextField from '../inputs/TextField';
-import { filterEmpty, getErrors } from '../../utils/validationUtils';
+import { getErrors, getMax, isRequired } from '../../utils/validationUtils';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
@@ -13,7 +13,7 @@ import PropTypes from 'prop-types';
  */
 const ValueField = ({ label, path, value, onChange, renderValueField }) => {
   const { t } = useTranslation();
-  const { errors } = useForm();
+  const { errors, validationSchema } = useForm();
 
   const valuePath = `${path}.value`;
   const valueErrors = getErrors(errors, valuePath);
@@ -42,10 +42,10 @@ const ValueField = ({ label, path, value, onChange, renderValueField }) => {
     value: value.value || '',
     onChange: handleValueChange,
     fullWidth: true,
-    required: true,
+    required: isRequired(validationSchema, valuePath),
     error: valueErrors.length > 0,
     helperText: <HelperText errors={valueErrors} />,
-    inputProps: { maxLength: 250 },
+    inputProps: { maxLength: getMax(validationSchema, valuePath) },
     onBlur: handleLeavingFocus,
   };
 

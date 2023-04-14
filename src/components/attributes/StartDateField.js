@@ -5,7 +5,7 @@ import format from 'date-fns/format';
 import DateField from '../inputs/DateField';
 import HelperText from '../inputs/HelperText';
 import { useTranslation } from 'react-i18next';
-import { getErrors } from '../../utils/validationUtils';
+import { getErrors, isRequired } from '../../utils/validationUtils';
 import subDays from 'date-fns/subDays';
 import PropTypes from 'prop-types';
 import parseISO from 'date-fns/parseISO';
@@ -17,9 +17,10 @@ import parseISO from 'date-fns/parseISO';
  */
 const StartDateField = ({ path, value, onChange }) => {
   const { t } = useTranslation();
-  const { errors } = useForm();
+  const { errors, validationSchema } = useForm();
 
-  const startDateErrors = getErrors(errors, `${path}.startDate`);
+  const startDatePath = `${path}.startDate`;
+  const startDateErrors = getErrors(errors, startDatePath);
 
   const handleDateStartChange = (date) => {
     if (date !== null && !isValid(date)) {
@@ -37,7 +38,7 @@ const StartDateField = ({ path, value, onChange }) => {
 
   return (
     <DateField
-      required
+      required={isRequired(validationSchema, startDatePath)}
       label={t('attribute.validFrom')}
       margin="normal"
       value={value.startDate}

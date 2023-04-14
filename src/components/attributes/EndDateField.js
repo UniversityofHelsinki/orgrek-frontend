@@ -5,7 +5,7 @@ import format from 'date-fns/format';
 import DateField from '../inputs/DateField';
 import HelperText from '../inputs/HelperText';
 import { useTranslation } from 'react-i18next';
-import { getErrors } from '../../utils/validationUtils';
+import { getErrors, isRequired } from '../../utils/validationUtils';
 import addDays from 'date-fns/addDays';
 import PropTypes from 'prop-types';
 import parseISO from 'date-fns/parseISO';
@@ -17,9 +17,10 @@ import parseISO from 'date-fns/parseISO';
  */
 const EndDateField = ({ path, value, onChange }) => {
   const { t } = useTranslation();
-  const { errors } = useForm();
+  const { errors, validationSchema } = useForm();
 
-  const endDateErrors = getErrors(errors, `${path}.endDate`);
+  const endDatePath = `${path}.endDate`;
+  const endDateErrors = getErrors(errors, endDatePath);
 
   const handleDateEndChange = (date) => {
     if (date !== null && !isValid(date)) {
@@ -39,6 +40,7 @@ const EndDateField = ({ path, value, onChange }) => {
 
   return (
     <DateField
+      required={isRequired(validationSchema, endDatePath)}
       label={t('attribute.validUntil')}
       fullWidth
       value={value.endDate}
