@@ -24,14 +24,14 @@ const UnitTypeEditor = () => {
     <TextField select {...valueFieldProps}>
       {selectableUnits.map((option) => (
         <MenuItem key={option.value} value={option.value}>
-          {option.label}
+          {t(option.label)}
         </MenuItem>
       ))}
     </TextField>
   );
 
   const getDisplayText = (value) =>
-    selectableUnits.find((option) => option.value === value.value)?.label;
+    t(selectableUnits.find((option) => option.value === value.value)?.label);
 
   return (
     <Stack spacing={2}>
