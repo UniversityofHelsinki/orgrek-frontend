@@ -6,7 +6,8 @@ import Stack from '@mui/material/Stack';
 import AttributeEditorRow from './AttributeEditorRow';
 import parseISO from 'date-fns/parseISO';
 import { addDays, formatISO } from 'date-fns';
-import { useSelector } from 'react-redux';
+import Button from '../Button';
+import { t } from 'i18next';
 
 /**
  * Edits single attribute having multiple values with different validity date ranges.
@@ -34,6 +35,7 @@ const AttributeEditor = ({
     isNew: true,
     deleted: false,
   });
+  const values = data;
 
   const handleChange = (index, newValue) => {
     const newData = [...data];
@@ -79,9 +81,6 @@ const AttributeEditor = ({
     onChange(newData);
   };
 
-  // Display a blank row if data is empty
-  const values = data.length > 0 ? data : [createRow()];
-
   const renderedRows = values.map((value, index) => (
     <AttributeEditorRow
       key={`${value.id}`}
@@ -95,12 +94,23 @@ const AttributeEditor = ({
     />
   ));
 
+  const addFirstRow = () => {
+    onChange([createRow()]);
+  };
+
+  const addRowButton = (
+    <Button onClick={addFirstRow} variant="outlined">
+      {t('add_row')}
+    </Button>
+  );
+
   return (
     <Box component="fieldset" sx={sx}>
       <Typography component="legend" variant="h6" mb={2}>
         {attributeLabel}
       </Typography>
       <Stack spacing={{ xs: 4, md: 2 }}>{renderedRows}</Stack>
+      {renderedRows.length === 0 && addRowButton}
     </Box>
   );
 };
