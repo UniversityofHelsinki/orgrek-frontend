@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import useForm from '../../hooks/useForm';
 import isValid from 'date-fns/isValid';
 import format from 'date-fns/format';
 import DateField from '../inputs/DateField';
 import HelperText from '../inputs/HelperText';
 import { useTranslation } from 'react-i18next';
-import { filterEmpty, getErrors } from '../../utils/validationUtils';
+import { getErrors } from '../../utils/validationUtils';
 import addDays from 'date-fns/addDays';
 import PropTypes from 'prop-types';
 import parseISO from 'date-fns/parseISO';
@@ -19,19 +19,10 @@ const EndDateField = ({ path, value, onChange }) => {
   const { t } = useTranslation();
   const { errors } = useForm();
 
-  // TODO: Remove this state (OR-1031)
-  const [endDateError, setEndDateError] = useState(null);
-
-  // TODO: remove endDateError and use only errors from useForm (OR-1031)
-  const endDateErrors = filterEmpty([
-    endDateError,
-    ...getErrors(errors, `${path}.endDate`),
-  ]);
+  const endDateErrors = getErrors(errors, `${path}.endDate`);
 
   const handleDateEndChange = (date) => {
     if (date !== null && !isValid(date)) {
-      setEndDateError(t('invalidDate'));
-
       onChange({
         ...value,
         endDate: 'invalid date',
@@ -39,8 +30,6 @@ const EndDateField = ({ path, value, onChange }) => {
 
       return;
     }
-
-    setEndDateError(null);
 
     onChange({
       ...value,
@@ -57,16 +46,6 @@ const EndDateField = ({ path, value, onChange }) => {
       minDate={
         value.startDate !== null ? addDays(parseISO(value.startDate), 2) : null
       }
-      onError={(reason) => {
-        if (reason) {
-          //setEndDateError(t('reason')); Kommenteissa, että näkee virheen "nimen",
-          //joka lisätään käännösteksteihin. Tämä koodirivi otetaan käyttöön kun pääsee lisäämään
-          //käännöstekstin. Samalla alla oleva rivi poistetaan.
-          setEndDateError(reason);
-        } else {
-          setEndDateError(null);
-        }
-      }}
       error={endDateErrors.length > 0}
       helperText={<HelperText errors={endDateErrors} />}
     />

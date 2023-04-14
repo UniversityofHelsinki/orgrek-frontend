@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import useForm from '../../hooks/useForm';
 import HelperText from '../inputs/HelperText';
 import TextField from '../inputs/TextField';
@@ -15,23 +15,11 @@ const ValueField = ({ label, path, value, onChange, renderValueField }) => {
   const { t } = useTranslation();
   const { errors } = useForm();
 
-  // TODO: Remove this state (OR-1031)
-  const [valueError, setValueError] = useState(null);
-
-  // TODO: remove valueError and use only errors from useForm (OR-1031)
-  const valueErrors = filterEmpty([
-    valueError,
-    ...getErrors(errors, `${path}.value`),
-  ]);
+  const valuePath = `${path}.value`;
+  const valueErrors = getErrors(errors, valuePath);
 
   const handleValueChange = (event) => {
     const newValue = event.target.value;
-
-    if (!newValue) {
-      setValueError(t('attribute.required'));
-    } else {
-      setValueError(null);
-    }
 
     onChange({
       ...value,

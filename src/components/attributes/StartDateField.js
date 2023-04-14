@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import useForm from '../../hooks/useForm';
 import isValid from 'date-fns/isValid';
 import format from 'date-fns/format';
 import DateField from '../inputs/DateField';
 import HelperText from '../inputs/HelperText';
 import { useTranslation } from 'react-i18next';
-import { filterEmpty, getErrors } from '../../utils/validationUtils';
+import { getErrors } from '../../utils/validationUtils';
 import subDays from 'date-fns/subDays';
 import PropTypes from 'prop-types';
 import parseISO from 'date-fns/parseISO';
@@ -19,36 +19,15 @@ const StartDateField = ({ path, value, onChange }) => {
   const { t } = useTranslation();
   const { errors } = useForm();
 
-  // TODO: Remove this state (OR-1031)
-  const [startDateError, setStartDateError] = useState(null);
-
-  // TODO: remove startDateError and use only errors from useForm (OR-1031)
-  const startDateErrors = filterEmpty([
-    startDateError,
-    ...getErrors(errors, `${path}.startDate`),
-  ]);
+  const startDateErrors = getErrors(errors, `${path}.startDate`);
 
   const handleDateStartChange = (date) => {
     if (date !== null && !isValid(date)) {
-      setStartDateError(t('invalidDate'));
-      onChange({
-        ...value,
-        startDate: 'invalid date',
-      });
-    } else if (date === null) {
-      setStartDateError(t('attribute.required'));
-      onChange({
-        ...value,
-        startDate: 'invalid date',
-      });
-    } else if (date.getFullYear() < 1600) {
-      setStartDateError(t('invalidDate'));
       onChange({
         ...value,
         startDate: 'invalid date',
       });
     } else {
-      setStartDateError(null);
       onChange({
         ...value,
         startDate: date && format(date, 'yyyy-MM-dd'),
@@ -67,16 +46,6 @@ const StartDateField = ({ path, value, onChange }) => {
         value.endDate !== null ? subDays(parseISO(value.endDate), 2) : null
       }
       fullWidth
-      onError={(reason) => {
-        if (reason) {
-          //setStartDateError(t('reason')); Kommenteissa, että näkee virheen "nimen",
-          //joka lisätään käännösteksteihin. Tämä koodirivi otetaan käyttöön kun pääsee lisäämään
-          //käännöstekstin. Samalla alla oleva rivi poistetaan.
-          setStartDateError(reason);
-        } else {
-          setStartDateError(null);
-        }
-      }}
       error={startDateErrors.length > 0}
       helperText={<HelperText errors={startDateErrors} />}
     />
