@@ -1006,6 +1006,7 @@ Object {
       "checked": undefined,
       "children": undefined,
       "name": "attribute.actions not_specified",
+      "name": "add_row",
       "pressed": undefined,
       "role": "button",
       "value": undefined,
