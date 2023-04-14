@@ -12,6 +12,7 @@ import Typography from '@mui/material/Typography';
 import { showNotification } from '../store';
 import { useDispatch } from 'react-redux';
 import IfAuthorized from '../auth/IfAuthorized';
+import HelperText from './inputs/HelperText';
 
 /**
  * Renders form validation error message.
@@ -26,16 +27,19 @@ const ValidationResult = () => {
     return null;
   }
 
-  // Display form validation error returned from validate function
-  // errors.error is now just a single message for the whole form, but it can
-  // be changed into something else if needed.
+  if (Array.isArray(errors.error) && errors.error.length === 0) {
+    return null;
+  }
+
+  // Display form validation errors returned from validate function
+  // errors.error can be either a single string or an array of strings.
   //
   // Expects errors.error to be already translated. The message may contain
   // also variables, therefore the validator function should take care of the
   // translation.
   return (
     <Typography align="right" color="error.main">
-      {errors.error}
+      <HelperText errors={errors.error} />
     </Typography>
   );
 };
@@ -92,6 +96,7 @@ const EditableContent = ({
   editorComponent,
   renderActions,
   initialValues,
+  validationSchema,
   validate,
   onSubmit,
   children,
@@ -134,6 +139,7 @@ const EditableContent = ({
     return (
       <FormContextProvider
         initialValues={initialValues}
+        validationSchema={validationSchema}
         validate={validate}
         onSubmit={handleSubmit}
       >
@@ -186,9 +192,28 @@ EditableContent.propTypes = {
   onSubmit: PropTypes.func.isRequired,
 
   /**
+   * Yup validation schema.
+   *
+   * Validates form values when the values change.
+   * Supports also async validation.
+   * This is the preferred method for doing the validation (see also validate
+   * prop).
+   */
+  validationSchema: PropTypes.object,
+
+  /**
    * Optional callback for validating form values.
+   *
    * Gets called every time when the form values change.
    * Takes form values as the first arg. Returns a map of error messages.
+   * Async functions are also supported.
+   *
+   * Validation schema is the preferred method to do the validation. However,
+   * this alternative method may serve better for some more complex validation
+   * rules concerning the whole form.
+   *
+   * Use key 'error' to display errors at the bottom of the form or a field path
+   * to display it below a specific field.
    */
   validate: PropTypes.func,
 

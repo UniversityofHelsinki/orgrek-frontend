@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { createContext } from 'react';
 import PropTypes from 'prop-types';
+import { validateAndMergeResults } from '../utils/validationUtils';
 
 const FormContext = createContext();
 
 export const FormContextProvider = ({
   initialValues = {},
   onSubmit,
+  validationSchema,
   validate,
   children,
 }) => {
@@ -19,9 +21,16 @@ export const FormContextProvider = ({
     setDirty(true);
     setValuesState(newValues);
 
-    if (validate) {
-      setErrors(validate(newValues) || {});
-    }
+    const options = {
+      abortEarly: false,
+    };
+
+    validateAndMergeResults(
+      newValues,
+      validate,
+      validationSchema,
+      options
+    ).then((result) => setErrors(result));
   };
 
   const submit = () => {
@@ -50,6 +59,7 @@ export const FormContextProvider = ({
     valid,
     errors,
     submitting,
+    validationSchema,
   };
 
   return (
@@ -65,12 +75,27 @@ FormContextProvider.propTypes = {
   onSubmit: PropTypes.func.isRequired,
 
   /**
-   * Called every time when the form values change.
+   * Yup validation schema.
    *
-   * Takes form values as the first arg. Return an object with at least one
-   * property to disable submitting.
+   * Validates form values when the values change.
+   * Supports also async validation.
+   * This is the preferred method for doing the validation (see also validate
+   * prop).
    */
-  validate: PropTypes.func.isRequired,
+  validationSchema: PropTypes.object,
+
+  /**
+   * Optional callback for validating form values.
+   *
+   * Gets called every time when the form values change.
+   * Takes form values as the first arg. Returns a map of error messages.
+   * Async functions are also supported.
+   *
+   * Validation schema is the preferred method to do the validation. However,
+   * this alternative method may serve better for some more complex validation
+   * rules concerning the whole form.
+   */
+  validate: PropTypes.func,
 };
 
 export default FormContext;

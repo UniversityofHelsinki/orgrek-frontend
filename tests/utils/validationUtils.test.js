@@ -4,6 +4,7 @@ import {
   mergeErrors,
   isRequired,
   getMax,
+  validateAndMergeResults,
 } from '../../src/utils/validationUtils';
 import { object, array, string } from 'yup';
 
@@ -54,6 +55,12 @@ describe('mergeErrors', () => {
     const a = { path1: ['required'] };
     const b = undefined;
     expect(mergeErrors(a, b)).toEqual(a);
+  });
+
+  test('converts string to array', () => {
+    const a = { path1: 'required' };
+    const b = undefined;
+    expect(mergeErrors(a, b)).toEqual({ path1: ['required'] });
   });
 
   test('different paths', () => {
@@ -157,6 +164,80 @@ describe('convertYupErrors', () => {
   });
 });
 
+describe('validateAndMergeResults', () => {
+  test('validate and schema undefined', async () => {
+    const validate = undefined;
+    const validationSchema = undefined;
+
+    const result = await validateAndMergeResults(
+      {},
+      validate,
+      validationSchema
+    );
+
+    expect(result).toEqual({});
+  });
+
+  test('validate returns errors', async () => {
+    const validate = () => ({ error: 'invalid form' });
+    const validationSchema = undefined;
+
+    const result = await validateAndMergeResults(
+      {},
+      validate,
+      validationSchema
+    );
+
+    expect(result).toEqual({ error: ['invalid form'] });
+  });
+
+  test('validate returns promise', async () => {
+    const validate = async () => ({ error: 'invalid form' });
+    const validationSchema = undefined;
+
+    const result = await validateAndMergeResults(
+      {},
+      validate,
+      validationSchema
+    );
+
+    expect(result).toEqual({ error: ['invalid form'] });
+  });
+
+  test('validation schema', async () => {
+    const validate = undefined;
+    const validationSchema = object({
+      name: string().required(),
+    }).required();
+
+    const result = await validateAndMergeResults(
+      {},
+      validate,
+      validationSchema
+    );
+
+    expect(result).toEqual({ name: ['name is a required field'] });
+  });
+
+  test('merges results', async () => {
+    const validate = () => ({ error: 'invalid form' });
+    const validationSchema = object({
+      name: string().required(),
+    }).required();
+
+    const result = await validateAndMergeResults(
+      {},
+      validate,
+      validationSchema
+    );
+
+    expect(result).toEqual({
+      error: ['invalid form'],
+      name: ['name is a required field'],
+    });
+  });
+});
+
 describe('isRequired', () => {
   const schema = object({
     values: array().of(
@@ -165,6 +246,10 @@ describe('isRequired', () => {
         endDate: string().nullable(),
       })
     ),
+  });
+
+  test('schema undefined', () => {
+    expect(isRequired(undefined, 'values[0].startDate')).toBeFalsy();
   });
 
   test('required returns true', () => {
@@ -184,6 +269,10 @@ describe('getMax', () => {
         startDate: string().required(),
       })
     ),
+  });
+
+  test('schema undefined', () => {
+    expect(getMax(undefined, 'values[0].value')).toBeUndefined();
   });
 
   test('max defined', () => {
