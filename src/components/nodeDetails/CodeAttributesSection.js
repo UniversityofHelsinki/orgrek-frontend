@@ -16,6 +16,7 @@ import { useNodeId } from '../../hooks/useNodeId';
 import { useCodeAttributes } from '../../hooks/useCodeAttributes';
 import useFilterAttributesByDate from '../../hooks/useFilterAttributesByDate';
 import { compareAndCheckDates, valueNotEmpty } from './Validations';
+import { attributeSanitation } from './Sanitations';
 
 const toFormValues = (attributes) => {
   const byKey = {};
@@ -44,17 +45,9 @@ const readOnlyFields = (attributes, keys) => {
 
 const includeMissing = (attributes, allKeys) => {
   const missingKeys = allKeys.filter((key) => !attributes[key]);
-  const missingAttributes = missingKeys.map((key) => ({
-    id: -1,
-    key: key,
-    value: '',
-    startDate: null,
-    endDate: null,
-    isNew: true,
-  }));
   const missingIncluded = { ...attributes };
-  missingAttributes.forEach((attribute) => {
-    missingIncluded[attribute.key] = [attribute];
+  missingKeys.forEach((key) => {
+    missingIncluded[key] = [];
   });
   return missingIncluded;
 };
@@ -102,9 +95,10 @@ const CodeAttributesSection = () => {
   ];
   const validate = (values) => {
     const all = Object.values(values).flat();
+    const sanitized = attributeSanitation(all);
     return {
-      ...compareAndCheckDates(all),
-      ...valueNotEmpty(all),
+      ...compareAndCheckDates(sanitized),
+      ...valueNotEmpty(sanitized),
     };
   };
   const title = t('codes');
@@ -112,7 +106,7 @@ const CodeAttributesSection = () => {
 
   const handleSubmit = (input) => {
     const attributes = Object.values(input).flat();
-    const sanitized = attributes.filter((a) => !(a.isNew && a.deleted));
+    const sanitized = attributeSanitation(attributes);
     return saveCodeAttributes({ attributes: sanitized, nodeId }).unwrap();
   };
 
