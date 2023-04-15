@@ -15,6 +15,9 @@ export const getDateFnsLocale = (language) => {
     case 'fi':
       return fi;
     case 'sv':
+      // Should use sv-FI instead of sv-SE but date-fns does not provide it out of the box
+      // Affects date format used in the date picker and other localized dates
+      // Change this return value if a custom sv-FI locale is created later
       return sv;
     default:
       return enIE;
