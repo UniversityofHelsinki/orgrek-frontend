@@ -4,8 +4,8 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import DashedBorder from '../DashedBorder';
 import { useTranslation } from 'react-i18next';
-import { showValidity } from '../../actions/utilAction';
 import PropTypes from 'prop-types';
+import { showValidity } from '../../utils/showValidity';
 
 /**
  * Renders a placeholder for a deleted attribute value.
@@ -14,7 +14,7 @@ const DeletedAttributeRow = React.forwardRef(function DeletedAttributeRow(
   { value, getDisplayText },
   ref
 ) {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
   let displayText;
   if (!value.value) {
@@ -26,12 +26,7 @@ const DeletedAttributeRow = React.forwardRef(function DeletedAttributeRow(
   }
 
   const hasValidity = value.startDate || value.endDate;
-  const validity = showValidity(
-    value.startDate,
-    value.endDate,
-    i18n,
-    t
-  ).toLowerCase();
+  const validity = showValidity(value.startDate, value.endDate).toLowerCase();
 
   return (
     <Box pb="18px" ref={ref} data-testid="deletedAttributeRow">
