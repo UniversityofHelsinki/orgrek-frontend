@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen } from '../testUtils';
+import { render, screen, waitFor } from '../testUtils';
 import { FormContextProvider } from '../../src/contexts/FormContext';
 import useForm from '../../src/hooks/useForm';
 import { userEvent } from '@storybook/testing-library';
@@ -67,7 +67,11 @@ describe('validate', () => {
     [{ field1: [], field2: '' }, true],
   ])('validation result %j valid %s', async (validationResult, valid) => {
     renderTestForm({ validate: () => validationResult });
-    await userEvent.click(screen.getByText('Set values'));
+
+    await waitFor(async () => {
+      await userEvent.click(screen.getByText('Set values'));
+    });
+
     expect(screen.getByTestId('valid')).toHaveTextContent(String(valid));
     expect(screen.getByTestId('invalid')).toHaveTextContent(String(!valid));
   });
@@ -81,7 +85,11 @@ describe('dirty', () => {
 
   test('true after modified', async () => {
     renderTestForm();
-    await userEvent.click(screen.getByText('Set values'));
+
+    await waitFor(async () => {
+      await userEvent.click(screen.getByText('Set values'));
+    });
+
     expect(screen.getByTestId('dirty')).toHaveTextContent('true');
   });
 });
@@ -94,7 +102,11 @@ describe('errors', () => {
 
   test('returns values from validate', async () => {
     renderTestForm({ validate: () => ({ error: ['Form has errors'] }) });
-    await userEvent.click(screen.getByText('Set values'));
+
+    await waitFor(async () => {
+      await userEvent.click(screen.getByText('Set values'));
+    });
+
     expect(screen.getByTestId('errors')).toHaveTextContent(
       '{"error":["Form has errors"]}'
     );
@@ -109,7 +121,11 @@ describe('values', () => {
 
   test('modified', async () => {
     renderTestForm({ initialValues: { value: 4 } });
-    await userEvent.click(screen.getByText('Set values'));
+
+    await waitFor(async () => {
+      await userEvent.click(screen.getByText('Set values'));
+    });
+
     expect(screen.getByTestId('values')).toHaveTextContent('{"value":1}');
   });
 });
