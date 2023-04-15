@@ -93,7 +93,7 @@
     "dev": "REACT_APP_GIT_HASH=\"$(git rev-parse --short=7 HEAD)\" react-scripts start",
     "build": "REACT_APP_GIT_HASH=\"$(git rev-parse --short=7 HEAD)\" react-scripts build",
     "postbuild": "rm build/mockServiceWorker.js",
-    "test": "jest --coverage",
+    "test": "TZ=Europe/Helsinki jest --coverage",
     "eject": "react-scripts eject",
     "lint": "eslint --fix .",
     "format": "prettier --write .",
