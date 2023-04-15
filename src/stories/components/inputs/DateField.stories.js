@@ -13,6 +13,9 @@ export default {
       },
     },
   },
+  argTypes: {
+    onChange: { action: true },
+  },
 };
 
 export const Basic = {
@@ -24,7 +27,7 @@ export const Basic = {
     disabled: false,
     error: false,
   },
-  render: (args) => {
+  render: ({ onChange, ...args }) => {
     const [value, setValue] = useState(
       args.value ? parseISO(args.value) : null
     );
@@ -33,7 +36,10 @@ export const Basic = {
       <DateField
         {...args}
         value={value}
-        onChange={(newValue) => setValue(newValue)}
+        onChange={(date, keyboardInputValue, dateString) => {
+          setValue(date);
+          onChange(date, keyboardInputValue, dateString);
+        }}
       />
     );
   },
