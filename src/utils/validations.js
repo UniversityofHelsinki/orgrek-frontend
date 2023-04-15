@@ -1,4 +1,44 @@
-import { isValid, parseISO } from 'date-fns';
+import isValid from 'date-fns/isValid';
+import add from 'date-fns/add';
+import sub from 'date-fns/sub';
+import isAfter from 'date-fns/isAfter';
+import isBefore from 'date-fns/isBefore';
+import {
+  object,
+  array,
+  string,
+  date,
+  number,
+  boolean,
+  setLocale,
+  addMethod,
+} from 'yup';
+import { formatDate, toDate } from './dateUtils';
+
+// Customize yup validation error messages
+// Message is either a translation key or an object containing the key and
+// variable values for interpolation
+setLocale({
+  mixed: {
+    default: 'invalid',
+    required: 'attribute.required',
+  },
+  string: {
+    max: ({ max }) => {
+      return { key: 'maxLength', values: { max } };
+    },
+  },
+  date: {
+    min: ({ min }) => ({
+      key: 'minDate',
+      values: { min: formatDate(min) },
+    }),
+    max: ({ max }) => ({
+      key: 'maxDate',
+      values: { max: formatDate(max) },
+    }),
+  },
+});
 
 export const valueNotEmpty = (values) => {
   const errors = {};
@@ -45,14 +85,14 @@ export const valueEndsWithSpace = (values) => {
 */
 const validStartDate = (date) => {
   if (date !== null && !isValid(date)) {
-    return isValid(parseISO(date));
+    return isValid(toDate(date));
   }
   return true;
 };
 
 const validEndDate = (date) => {
   if (date !== null && !isValid(date)) {
-    return isValid(parseISO(date));
+    return isValid(toDate(date));
   }
   return true;
 };
@@ -100,3 +140,65 @@ export const compareAndCheckDates = (values) => {
 
   return errors;
 };
+
+addMethod(date, 'beforeEndDate', function (minDuration) {
+  return this.test({
+    name: 'beforeEndDate',
+    params: {
+      minDuration,
+    },
+    test: (value, context) => {
+      const endDate = context.parent.endDate;
+      const maxDate = isValid(endDate) ? sub(endDate, minDuration) : undefined;
+
+      if (maxDate && isAfter(value, maxDate)) {
+        return context.createError({
+          message: { key: 'maxDate', values: { max: formatDate(maxDate) } },
+        });
+      } else {
+        return true;
+      }
+    },
+  });
+});
+
+addMethod(date, 'afterStartDate', function (minDuration) {
+  return this.test({
+    name: 'afterStartDate',
+    params: {
+      minDuration,
+    },
+    test: (value, context) => {
+      const startDate = context.parent.startDate;
+      const minDate = isValid(startDate)
+        ? add(startDate, minDuration)
+        : undefined;
+
+      if (minDate && isBefore(value, minDate)) {
+        return context.createError({
+          message: { key: 'minDate', values: { min: formatDate(minDate) } },
+        });
+      } else {
+        return true;
+      }
+    },
+  });
+});
+
+export const validAttributeValue = object({
+  id: number().required(),
+  value: string().required().max(250),
+  startDate: date()
+    .typeError('invalidDate')
+    .required()
+    .min('1600-01-01')
+    .beforeEndDate({ days: 2 }),
+  endDate: date()
+    .typeError('invalidDate')
+    .nullable()
+    .afterStartDate({ days: 2 }),
+  isNew: boolean().required(),
+  deleted: boolean().required(),
+});
+
+export const validAttribute = array().required().of(validAttributeValue);

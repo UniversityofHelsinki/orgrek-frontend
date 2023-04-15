@@ -1,5 +1,9 @@
 import { reach } from 'yup';
+import add from 'date-fns/add';
+import sub from 'date-fns/sub';
+import isValid from 'date-fns/isValid';
 import i18n from '../i18n';
+import { toDate, toISODateString } from './dateUtils';
 
 const { t } = i18n;
 
@@ -85,7 +89,7 @@ export const mergeErrors = (a, b) => {
 export const convertYupErrors = (yupError) => {
   let result = {};
 
-  if (yupError.errors.length > 0) {
+  if (yupError.path !== undefined && yupError.errors.length > 0) {
     result[yupError.path] = translateErrors(yupError.errors);
   }
 
@@ -145,6 +149,15 @@ export const validateAndMergeResults = (
   );
 };
 
+const getTest = (schema, path, testName) => {
+  if (!schema) {
+    return undefined;
+  }
+
+  const desc = reach(schema, path).describe();
+  return desc.tests.find((test) => test.name === testName);
+};
+
 /**
  * Checks if the given field is defined as required in the given schema.
  *
@@ -153,10 +166,17 @@ export const validateAndMergeResults = (
  * @return {boolean} true if the field is required
  */
 export const isRequired = (schema, path) =>
-  schema !== undefined &&
-  reach(schema, path)
-    .describe()
-    .tests.some((test) => test.name === 'required');
+  schema !== undefined && !reach(schema, path).describe().optional;
+
+/**
+ * Returns the min param of the given field in the given schema.
+ *
+ * @param schema Yup validation schema
+ * @param path field path
+ * @return {number|undefined}
+ */
+export const getMin = (schema, path) =>
+  getTest(schema, path, 'min')?.params.min;
 
 /**
  * Returns the max param of the given field in the given schema.
@@ -165,11 +185,56 @@ export const isRequired = (schema, path) =>
  * @param path field path
  * @return {number|undefined}
  */
-export const getMax = (schema, path) => {
-  if (!schema) {
+export const getMax = (schema, path) =>
+  getTest(schema, path, 'max')?.params.max;
+
+/**
+ * Returns attribute value max start date in the given schema.
+ *
+ * Max value depends on attribute end date.
+ *
+ * @param schema Yup validation schema
+ * @param path path to attribute value start date in the given schema
+ * @param value
+ * @return {Date|*|undefined}
+ */
+export const getMaxStartDate = (schema, path, value) => {
+  const minDuration = getTest(schema, path, 'beforeEndDate')?.params
+    .minDuration;
+
+  if (minDuration === undefined) {
     return undefined;
   }
 
-  const desc = reach(schema, path).describe();
-  return desc.tests.find((test) => test.name === 'max')?.params.max;
+  const endDate = toDate(value.endDate);
+
+  return isValid(endDate)
+    ? toISODateString(sub(endDate, minDuration))
+    : undefined;
+};
+
+/**
+ * Returns attribute value min end date in the given schema.
+ *
+ * Min value depends on attribute start date.
+ *
+ * @param schema
+ * @param path path to attribute value end date in the given schema
+ * @param value
+ * @return {Date|*|undefined}
+ */
+export const getMinEndDate = (schema, path, value) => {
+  const minDuration = getTest(schema, path, 'afterStartDate')?.params
+    .minDuration;
+
+  // If afterStartDate test is not defined, use min value instead
+  if (minDuration === undefined) {
+    return getMin(schema, path);
+  }
+
+  const startDate = toDate(value.startDate);
+
+  return isValid(startDate)
+    ? toISODateString(add(startDate, minDuration))
+    : undefined;
 };

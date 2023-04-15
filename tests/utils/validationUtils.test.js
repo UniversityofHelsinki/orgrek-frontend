@@ -5,8 +5,19 @@ import {
   isRequired,
   getMax,
   validateAndMergeResults,
+  getMin,
+  getMaxStartDate,
+  getMinEndDate,
 } from '../../src/utils/validationUtils';
-import { object, array, string } from 'yup';
+import { object, array, string, date } from 'yup';
+
+// register custom methods
+import '../../src/utils/validations';
+
+global.console = {
+  ...console,
+  error: jest.fn(),
+};
 
 describe('getErrors', () => {
   test('errors undefined', () => {
@@ -95,7 +106,7 @@ describe('convertYupErrors', () => {
       errors = convertYupErrors(yupError);
     }
 
-    expect(errors).toEqual({ '': ['this is a required field'] });
+    expect(errors).toEqual({ '': ['attribute.required'] });
   });
 
   test('simple object', () => {
@@ -112,7 +123,7 @@ describe('convertYupErrors', () => {
       errors = convertYupErrors(yupError);
     }
 
-    expect(errors).toEqual({ value: ['value is a required field'] });
+    expect(errors).toEqual({ value: ['attribute.required'] });
   });
 
   test('nested object', () => {
@@ -132,7 +143,36 @@ describe('convertYupErrors', () => {
     }
 
     expect(errors).toEqual({
-      'values[1].value': ['values[1].value is a required field'],
+      'values[1].value': ['attribute.required'],
+    });
+  });
+
+  test('recursive', () => {
+    const schema = object({
+      values: array().of(
+        object({
+          id: string().required(),
+          obj: object({
+            value: string().required(),
+          }),
+        })
+      ),
+    });
+
+    const data = {
+      values: [{ obj: { value: null } }],
+    };
+
+    let errors;
+    try {
+      schema.validateSync(data, { abortEarly: false });
+    } catch (yupError) {
+      errors = convertYupErrors(yupError);
+    }
+
+    expect(errors).toEqual({
+      'values[0].id': ['attribute.required'],
+      'values[0].obj.value': ['attribute.required'],
     });
   });
 
@@ -216,7 +256,7 @@ describe('validateAndMergeResults', () => {
       validationSchema
     );
 
-    expect(result).toEqual({ name: ['name is a required field'] });
+    expect(result).toEqual({ name: ['attribute.required'] });
   });
 
   test('merges results', async () => {
@@ -233,8 +273,30 @@ describe('validateAndMergeResults', () => {
 
     expect(result).toEqual({
       error: ['invalid form'],
-      name: ['name is a required field'],
+      name: ['attribute.required'],
     });
+  });
+
+  test('validation schema throws error', async () => {
+    const testError = new Error('test fail');
+    const validate = undefined;
+    const validationSchema = object({
+      name: string().test({
+        name: 'fail',
+        test: () => {
+          throw testError;
+        },
+      }),
+    }).required();
+
+    const result = await validateAndMergeResults(
+      { name: '' },
+      validate,
+      validationSchema
+    );
+
+    expect(result).toEqual({});
+    expect(console.error).toHaveBeenCalledWith(testError);
   });
 });
 
@@ -261,12 +323,41 @@ describe('isRequired', () => {
   });
 });
 
+describe('getMin', () => {
+  const schema = object({
+    values: array().of(
+      object({
+        value: string().required().min(10),
+        startDate: date().required(),
+        endDate: date().required().min('2000-01-01'),
+      })
+    ),
+  });
+
+  test('schema undefined', () => {
+    expect(getMin(undefined, 'values[0].value')).toBeUndefined();
+  });
+
+  test('string min length', () => {
+    expect(getMin(schema, 'values[0].value')).toBe(10);
+  });
+
+  test('min undefined', () => {
+    expect(getMin(schema, 'values[0].startDate')).toBeUndefined();
+  });
+
+  test('min date', () => {
+    expect(getMin(schema, 'values[0].endDate')).toBe('2000-01-01');
+  });
+});
+
 describe('getMax', () => {
   const schema = object({
     values: array().of(
       object({
         value: string().required().max(50),
-        startDate: string().required(),
+        startDate: date().required(),
+        endDate: date().required().max('2029-12-31'),
       })
     ),
   });
@@ -275,11 +366,76 @@ describe('getMax', () => {
     expect(getMax(undefined, 'values[0].value')).toBeUndefined();
   });
 
-  test('max defined', () => {
+  test('string max length', () => {
     expect(getMax(schema, 'values[0].value')).toBe(50);
   });
 
   test('max undefined', () => {
     expect(getMax(schema, 'values[0].startDate')).toBeUndefined();
+  });
+
+  test('max date', () => {
+    expect(getMax(schema, 'values[0].endDate')).toBe('2029-12-31');
+  });
+});
+
+describe('getMaxStartDate', () => {
+  const schema = object({
+    value: string(),
+    startDate: date().beforeEndDate({ days: 2 }),
+    endDate: date().afterStartDate({ days: 2 }),
+  });
+  const value = {
+    value: 'foo',
+    startDate: '2000-01-01',
+    endDate: '2009-12-31',
+  };
+
+  test('returns date string', () => {
+    expect(getMaxStartDate(schema, 'startDate', value)).toEqual('2009-12-29');
+  });
+
+  test('undefined', () => {
+    expect(getMaxStartDate(schema, 'endDate', value)).toBeUndefined();
+  });
+
+  test('invalid end date', () => {
+    expect(
+      getMaxStartDate(schema, 'startDate', {
+        ...value,
+        endDate: 'Invalid Date',
+      })
+    ).toBeUndefined();
+  });
+});
+
+describe('getMinEndDate', () => {
+  const schema = object({
+    value: string(),
+    startDate: date().beforeEndDate({ days: 2 }).min('1600-01-01'),
+    endDate: date().afterStartDate({ days: 2 }),
+  });
+  const value = {
+    value: 'foo',
+    startDate: '2000-01-01',
+    endDate: '2009-12-31',
+  };
+
+  test('returns date string', () => {
+    expect(getMinEndDate(schema, 'endDate', value)).toBe('2000-01-03');
+  });
+
+  test('undefined', () => {
+    expect(getMinEndDate(schema, 'value', value)).toBeUndefined();
+  });
+
+  test('returns min if afterStartDate not defined', () => {
+    expect(getMinEndDate(schema, 'startDate', value)).toBe('1600-01-01');
+  });
+
+  test('invalid start date', () => {
+    expect(
+      getMinEndDate(schema, 'endDate', { ...value, startDate: 'Invalid Date' })
+    ).toBeUndefined();
   });
 });

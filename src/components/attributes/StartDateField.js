@@ -1,14 +1,15 @@
 import React from 'react';
 import useForm from '../../hooks/useForm';
-import isValid from 'date-fns/isValid';
-import format from 'date-fns/format';
 import DateField from '../inputs/DateField';
 import HelperText from '../inputs/HelperText';
 import { useTranslation } from 'react-i18next';
-import { getErrors, isRequired } from '../../utils/validationUtils';
-import subDays from 'date-fns/subDays';
+import {
+  getErrors,
+  getMaxStartDate,
+  getMin,
+  isRequired,
+} from '../../utils/validationUtils';
 import PropTypes from 'prop-types';
-import parseISO from 'date-fns/parseISO';
 
 /**
  * Renders a date field for editing attribute start date.
@@ -22,30 +23,21 @@ const StartDateField = ({ path, value, onChange }) => {
   const startDatePath = `${path}.startDate`;
   const startDateErrors = getErrors(errors, startDatePath);
 
-  const handleDateStartChange = (date) => {
-    if (date !== null && !isValid(date)) {
-      onChange({
-        ...value,
-        startDate: 'invalid date',
-      });
-    } else {
-      onChange({
-        ...value,
-        startDate: date && format(date, 'yyyy-MM-dd'),
-      });
-    }
+  const handleChange = (date, keyboardInputValue, dateString) => {
+    onChange({
+      ...value,
+      startDate: dateString,
+    });
   };
 
   return (
     <DateField
       required={isRequired(validationSchema, startDatePath)}
       label={t('attribute.validFrom')}
-      margin="normal"
       value={value.startDate}
-      onChange={handleDateStartChange}
-      maxDate={
-        value.endDate !== null ? subDays(parseISO(value.endDate), 2) : null
-      }
+      onChange={handleChange}
+      minDate={getMin(validationSchema, startDatePath)}
+      maxDate={getMaxStartDate(validationSchema, startDatePath, value)}
       fullWidth
       error={startDateErrors.length > 0}
       helperText={<HelperText errors={startDateErrors} />}

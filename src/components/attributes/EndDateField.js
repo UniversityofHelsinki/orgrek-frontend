@@ -1,14 +1,15 @@
 import React from 'react';
 import useForm from '../../hooks/useForm';
-import isValid from 'date-fns/isValid';
-import format from 'date-fns/format';
 import DateField from '../inputs/DateField';
 import HelperText from '../inputs/HelperText';
 import { useTranslation } from 'react-i18next';
-import { getErrors, isRequired } from '../../utils/validationUtils';
-import addDays from 'date-fns/addDays';
+import {
+  getErrors,
+  getMax,
+  getMinEndDate,
+  isRequired,
+} from '../../utils/validationUtils';
 import PropTypes from 'prop-types';
-import parseISO from 'date-fns/parseISO';
 
 /**
  * Renders a date field for editing attribute end date.
@@ -22,19 +23,10 @@ const EndDateField = ({ path, value, onChange }) => {
   const endDatePath = `${path}.endDate`;
   const endDateErrors = getErrors(errors, endDatePath);
 
-  const handleDateEndChange = (date) => {
-    if (date !== null && !isValid(date)) {
-      onChange({
-        ...value,
-        endDate: 'invalid date',
-      });
-
-      return;
-    }
-
+  const handleChange = (date, keyboardInputValue, dateString) => {
     onChange({
       ...value,
-      endDate: date && format(date, 'yyyy-MM-dd'),
+      endDate: dateString,
     });
   };
 
@@ -44,10 +36,9 @@ const EndDateField = ({ path, value, onChange }) => {
       label={t('attribute.validUntil')}
       fullWidth
       value={value.endDate}
-      onChange={handleDateEndChange}
-      minDate={
-        value.startDate !== null ? addDays(parseISO(value.startDate), 2) : null
-      }
+      onChange={handleChange}
+      minDate={getMinEndDate(validationSchema, endDatePath, value)}
+      maxDate={getMax(validationSchema, endDatePath)}
       error={endDateErrors.length > 0}
       helperText={<HelperText errors={endDateErrors} />}
     />
