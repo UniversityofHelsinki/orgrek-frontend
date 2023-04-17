@@ -1,18 +1,16 @@
-import { useTranslation } from 'react-i18next';
 import React, { useState } from 'react';
-import isValid from 'date-fns/isValid';
-import format from 'date-fns/format';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Unstable_Grid2';
-import TextField from '../TextField';
-import DateField from '../DateField';
 import PropTypes from 'prop-types';
 import Stack from '@mui/material/Stack';
 import Grow from '@mui/material/Grow';
 import DeletedAttributeRow from './DeletedAttributeRow';
-import { getValueDescription } from './attributeUtils';
+import { getValueDescription } from '../../utils/attributeUtils';
 import DeletedAttributeRowActions from './DeletedAttributeRowActions';
 import AttributeEditorRowActions from './AttributeEditorRowActions';
+import ValueField from './ValueField';
+import StartDateField from './StartDateField';
+import EndDateField from './EndDateField';
 
 /**
  * Edits a single attribute value with a start date and an end date.
@@ -23,101 +21,15 @@ import AttributeEditorRowActions from './AttributeEditorRowActions';
 const AttributeEditorRow = ({
   valueLabel,
   value,
+  path,
   onChange,
   onInsertBefore,
   onInsertAfter,
   renderValueField,
   getDisplayText,
 }) => {
-  const { t } = useTranslation();
-  const [valueError, setValueError] = useState(null);
-  const [startDateError, setStartDateError] = useState(null);
-  const [errorInStartDate, setErrorInStartDate] = useState(null);
-  const [endDateError, setEndDateError] = useState(null);
-  const [errorInEndDate, setErrorInEndDate] = useState(null);
-
   // True after user has interacted with the row
   const [touched, setTouched] = useState(false);
-
-  const handleValueChange = (event) => {
-    const newValue = event.target.value;
-
-    if (!newValue) {
-      setValueError(t('attribute.required'));
-    } else {
-      setValueError(null);
-    }
-
-    onChange({
-      ...value,
-      value: newValue,
-    });
-  };
-
-  const handleLeavingFocus = (event) => {
-    const newValue = event.target.value;
-    if (newValue.endsWith(' ') || newValue.startsWith(' ')) {
-      onChange({
-        ...value,
-        value: newValue.trim(),
-      });
-    }
-  };
-
-  const handleDateStartChange = (date) => {
-    if (date !== null && !isValid(date)) {
-      setStartDateError(t('invalidDate'));
-      setErrorInStartDate(true);
-      onChange({
-        ...value,
-        startDate: 'invalid date',
-      });
-      return;
-    } else if (date === null) {
-      setErrorInStartDate(true);
-      setStartDateError(t('attribute.required'));
-      onChange({
-        ...value,
-        startDate: 'invalid date',
-      });
-    } else if (date.getFullYear() < 1600) {
-      setErrorInStartDate(true);
-      setStartDateError(t('invalidDate'));
-      onChange({
-        ...value,
-        startDate: 'invalid date',
-      });
-    } else {
-      setStartDateError(null);
-      setErrorInStartDate(false);
-      onChange({
-        ...value,
-        startDate: date && format(date, 'yyyy-MM-dd'),
-      });
-    }
-  };
-
-  const handleDateEndChange = (date) => {
-    if (date !== null && !isValid(date)) {
-      setEndDateError(t('invalidDate'));
-      setErrorInEndDate(true);
-
-      onChange({
-        ...value,
-        endDate: 'invalid date',
-      });
-
-      return;
-    }
-
-    setEndDateError(null);
-    setErrorInEndDate(false);
-
-    onChange({
-      ...value,
-      endDate: date && format(date, 'yyyy-MM-dd'),
-    });
-  };
 
   const handleDelete = () => {
     setTouched(true);
@@ -135,84 +47,10 @@ const AttributeEditorRow = ({
     });
   };
 
-  const valueFieldProps = {
-    label: valueLabel || t('value'),
-    value: value.value || '',
-    onChange: handleValueChange,
-    fullWidth: true,
-    required: true,
-    error: Boolean(valueError),
-    helperText: valueError || ' ',
-    inputProps: { maxLength: 250 },
-    onBlur: handleLeavingFocus,
-  };
-
-  const renderedValueField = renderValueField ? (
-    renderValueField(valueFieldProps)
-  ) : (
-    <TextField data-testid="attributeValueTextField" {...valueFieldProps} />
-  );
-
-  const addDays = (date, days) => {
-    const result = new Date(date);
-    result.setDate(result.getDate() + days);
-    return result;
-  };
-
-  const renderedStartDateField = (
-    <DateField
-      required
-      label={t('attribute.validFrom')}
-      margin="normal"
-      value={value.startDate}
-      onChange={handleDateStartChange}
-      maxDate={value.endDate !== null ? addDays(value.endDate, -2) : null}
-      fullWidth
-      onError={(reason) => {
-        if (reason) {
-          //setStartDateError(t('reason')); Kommenteissa, että näkee virheen "nimen",
-          //joka lisätään käännösteksteihin. Tämä koodirivi otetaan käyttöön kun pääsee lisäämään
-          //käännöstekstin. Samalla alla oleva rivi poistetaan.
-          setStartDateError(reason);
-          setErrorInStartDate(true);
-        } else {
-          setStartDateError(null);
-          setErrorInStartDate(false);
-        }
-      }}
-      error={errorInStartDate}
-      helperText={startDateError || ' '}
-    />
-  );
-
-  const renderedEndDateField = (
-    <DateField
-      label={t('attribute.validUntil')}
-      fullWidth
-      value={value.endDate}
-      onChange={handleDateEndChange}
-      minDate={value.startDate !== null ? addDays(value.startDate, 2) : null}
-      onError={(reason) => {
-        if (reason) {
-          //setEndDateError(t('reason')); Kommenteissa, että näkee virheen "nimen",
-          //joka lisätään käännösteksteihin. Tämä koodirivi otetaan käyttöön kun pääsee lisäämään
-          //käännöstekstin. Samalla alla oleva rivi poistetaan.
-          setEndDateError(reason);
-          setErrorInEndDate(true);
-        } else {
-          setEndDateError(null);
-          setErrorInEndDate(false);
-        }
-      }}
-      error={errorInEndDate}
-      helperText={endDateError || ' '}
-    />
-  );
-
   const valueDescription = getValueDescription({
     value,
     displayText: getDisplayText ? getDisplayText(value) : value.value,
-    withValidity: !startDateError && !endDateError,
+    withValidity: true,
   });
 
   let renderedRow;
@@ -236,13 +74,19 @@ const AttributeEditorRow = ({
     renderedRow = (
       <>
         <Grid xs={12} sm={12} md={6}>
-          {renderedValueField}
+          <ValueField
+            label={valueLabel}
+            path={path}
+            value={value}
+            onChange={onChange}
+            renderValueField={renderValueField}
+          />
         </Grid>
         <Grid xs={12} sm={6} md={3}>
-          {renderedStartDateField}
+          <StartDateField path={path} value={value} onChange={onChange} />
         </Grid>
         <Grid xs={12} sm={6} md={3}>
-          {renderedEndDateField}
+          <EndDateField path={path} value={value} onChange={onChange} />
         </Grid>
       </>
     );
@@ -288,6 +132,9 @@ const AttributeEditorRow = ({
 AttributeEditorRow.propTypes = {
   /** Label of the value text field */
   valueLabel: PropTypes.string,
+
+  /** The path in form values where to look for validation schema and errors */
+  path: PropTypes.string.isRequired,
 
   /** Attribute value with start and end dates */
   value: PropTypes.shape({

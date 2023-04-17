@@ -6,7 +6,7 @@ import Stack from '@mui/material/Stack';
 import AttributeEditorRow from './AttributeEditorRow';
 import parseISO from 'date-fns/parseISO';
 import { addDays, formatISO } from 'date-fns';
-import Button from '../Button';
+import Button from '../inputs/Button';
 import { t } from 'i18next';
 
 /**
@@ -18,6 +18,7 @@ import { t } from 'i18next';
 const AttributeEditor = ({
   attributeLabel,
   valueLabel,
+  path,
   data,
   onChange,
   renderValueField,
@@ -86,6 +87,7 @@ const AttributeEditor = ({
       key={`${value.id}`}
       valueLabel={valueLabel}
       value={value}
+      path={`${path}[${index}]`}
       onChange={(newValue) => handleChange(index, newValue)}
       onInsertBefore={() => handleInsertBefore(index)}
       onInsertAfter={() => handleInsertAfter(index)}
@@ -121,6 +123,9 @@ AttributeEditor.propTypes = {
 
   /** Label of value text field */
   valueLabel: PropTypes.string,
+
+  /** The path in form values where to look for validation schema and errors */
+  path: PropTypes.string.isRequired,
 
   /** Array of attribute values and dates */
   data: PropTypes.arrayOf(PropTypes.shape(AttributeEditorRow.propTypes.value))

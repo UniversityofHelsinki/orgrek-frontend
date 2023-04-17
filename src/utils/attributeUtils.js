@@ -1,4 +1,8 @@
-import { showValidity } from '../../actions/utilAction';
+import { showValidity } from '../actions/utilAction';
+import { isValid } from 'date-fns';
+import parseISO from 'date-fns/parseISO';
+
+const isValidOrNull = (date) => date === null || isValid(parseISO(date));
 
 /**
  * Value description for aria-label.
@@ -16,7 +20,11 @@ export const getValueDescription = ({ value, displayText, withValidity }) => {
     valueDescriptions.push(displayText);
   }
 
-  if (withValidity) {
+  if (
+    withValidity &&
+    isValidOrNull(value.startDate) &&
+    isValidOrNull(value.endDate)
+  ) {
     valueDescriptions.push(showValidity(value.startDate, value.endDate));
   }
 

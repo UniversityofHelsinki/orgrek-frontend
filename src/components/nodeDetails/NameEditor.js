@@ -14,6 +14,7 @@ const NameEditor = () => {
         attributeLabel={t('name_fi')}
         attributeKey={'name_fi'}
         valueLabel={t('name')}
+        path="nameFi"
         data={values.nameFi}
         onChange={(newData) => setValues({ ...values, nameFi: newData })}
       />
@@ -21,6 +22,7 @@ const NameEditor = () => {
         attributeLabel={t('name_sv')}
         attributeKey={'name_sv'}
         valueLabel={t('name')}
+        path="nameSv"
         data={values.nameSv}
         onChange={(newData) => setValues({ ...values, nameSv: newData })}
       />
@@ -28,6 +30,7 @@ const NameEditor = () => {
         attributeLabel={t('name_en')}
         attributeKey={'name_en'}
         valueLabel={t('name')}
+        path="nameEn"
         data={values.nameEn}
         onChange={(newData) => setValues({ ...values, nameEn: newData })}
       />

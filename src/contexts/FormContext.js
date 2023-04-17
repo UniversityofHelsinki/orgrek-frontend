@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { createContext } from 'react';
+import PropTypes from 'prop-types';
 
 const FormContext = createContext();
 
@@ -33,8 +34,11 @@ export const FormContextProvider = ({
     setDirty(false);
   };
 
-  // Form is invalid when errors contain at least one truthy value
-  const valid = Object.values(errors).every((error) => !error);
+  // Form is invalid when errors contain at least one value
+  const invalid = Object.values(errors).some((error) =>
+    Array.isArray(error) ? error.length > 0 : Boolean(error)
+  );
+  const valid = !invalid;
 
   const context = {
     values,
@@ -42,6 +46,7 @@ export const FormContextProvider = ({
     submit,
     reset,
     dirty,
+    invalid,
     valid,
     errors,
     submitting,
@@ -50,6 +55,22 @@ export const FormContextProvider = ({
   return (
     <FormContext.Provider value={context}>{children}</FormContext.Provider>
   );
+};
+
+FormContextProvider.propTypes = {
+  /** Initial form values */
+  initialValues: PropTypes.object,
+
+  /** Called when the form is submitted. Takes form values as the first arg. */
+  onSubmit: PropTypes.func.isRequired,
+
+  /**
+   * Called every time when the form values change.
+   *
+   * Takes form values as the first arg. Return an object with at least one
+   * property to disable submitting.
+   */
+  validate: PropTypes.func.isRequired,
 };
 
 export default FormContext;

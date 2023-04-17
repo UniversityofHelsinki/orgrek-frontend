@@ -4,10 +4,10 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import useForm from '../../hooks/useForm';
 import { codeAttributes } from '../../constants/variables';
-import TextField from '../TextField';
+import TextField from '../inputs/TextField';
 import Grid from '@mui/material/Unstable_Grid2';
-import { Grow, Typography, Box, IconButton } from '@mui/material';
-import DateField from '../DateField';
+import { Typography, Box } from '@mui/material';
+import DateField from '../inputs/DateField';
 import { t } from 'i18next';
 
 const attributeEntryComparator = (a, b) => {
@@ -73,6 +73,7 @@ const CodeAttributesEditor = ({ readOnlyFields }) => {
               attributeLabel={t(key)}
               attributeKey={`${key}`}
               valueLabel={t('attribute_value')}
+              path={key}
               data={attributes}
               onChange={(newData) =>
                 setValues({
