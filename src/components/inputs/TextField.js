@@ -1,7 +1,5 @@
 import * as React from 'react';
-import MuiTextField, {
-  TextFieldProps as MuiTextFieldProps,
-} from '@mui/material/TextField';
+import MuiTextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 
 const TextField = React.forwardRef((props, ref) => {

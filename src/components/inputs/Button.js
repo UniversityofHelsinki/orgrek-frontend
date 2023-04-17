@@ -1,6 +1,6 @@
 import React from 'react';
 import MuiButton from '@mui/material/Button';
-import Spinner from './Spinner';
+import Spinner from '../Spinner';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 

@@ -2,7 +2,7 @@ import React from 'react';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { useState } from 'react';
 import { parseISO } from 'date-fns';
-import DateField from '../../../components/DateField';
+import DateField from '../../../components/inputs/DateField';
 
 export default {
   component: DatePicker,
