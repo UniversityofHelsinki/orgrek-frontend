@@ -8,6 +8,7 @@ import EditableContent from '../EditableContent';
 import CodeAttributesEditor from './CodeAttributesEditor';
 import {
   useGetAttributeKeysQuery,
+  useGetSectionTypeAttributesQuery,
   useSaveCodeAttributesMutation,
 } from '../../store';
 import { useSelector } from 'react-redux';
@@ -73,6 +74,8 @@ const CodeAttributesSection = () => {
   );
   const presentCodeAttributes = useFilterAttributesByDate(codeAttributes);
   const { data, isFetching } = useGetAttributeKeysQuery(selectedHierarchies);
+  const sectionTypeData = useGetSectionTypeAttributesQuery('names');
+  const sectionTypeAttributes = sectionTypeData ? sectionTypeData.data : {};
   const attributeKeys = data;
 
   const readOnlyFieldKeys = ['unique_id'];

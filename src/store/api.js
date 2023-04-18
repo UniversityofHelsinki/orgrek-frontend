@@ -9,6 +9,7 @@ export const api = createApi({
     'NameAttributes',
     'Tree',
     'AttributeKeys',
+    'SectionTypeAttributes',
     'TypeAttributes',
     'HierarchyFilters',
     'CodeAttributes',
@@ -120,6 +121,15 @@ export const api = createApi({
         method: 'GET',
       }),
     }),
+    getSectionTypeAttributes: builder.query({
+      providesTags: (result, error, sectionType) => [
+        { type: 'SectionTypeAttributes', sectionType },
+      ],
+      query: (sectionType) => ({
+        url: `/node/section/${sectionType}/attributes`,
+        method: 'GET',
+      }),
+    }),
   }),
 });
 
@@ -129,6 +139,7 @@ export const {
   useGetCodeAttributesQuery,
   useSaveCodeAttributesMutation,
   useGetAttributeKeysQuery,
+  useGetSectionTypeAttributesQuery,
   useGetTreeQuery,
   useGetTypeAttributesQuery,
   useGetValidHierarchyFiltersQuery,
