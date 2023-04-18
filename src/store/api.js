@@ -9,7 +9,6 @@ export const api = createApi({
     'NameAttributes',
     'Tree',
     'AttributeKeys',
-    'SectionTypeAttributes',
     'TypeAttributes',
     'HierarchyFilters',
     'CodeAttributes',
@@ -46,11 +45,11 @@ export const api = createApi({
         }
         return [{ type: 'NameAttributes', nodeId }, { type: 'Tree' }];
       },
-      query: ({ cleanedAttributes, nodeId }) => {
+      query: ({ attributes, nodeId }) => {
         return {
           url: `/node/${nodeId}/attributes/names`,
           method: 'PUT',
-          body: cleanedAttributes,
+          body: attributes,
         };
       },
     }),
@@ -121,10 +120,7 @@ export const api = createApi({
         method: 'GET',
       }),
     }),
-    getSectionTypeAttributes: builder.query({
-      providesTags: (result, error, sectionType) => [
-        { type: 'SectionTypeAttributes', sectionType },
-      ],
+    getAttributeKeysBySection: builder.query({
       query: (sectionType) => ({
         url: `/node/section/${sectionType}/attributes`,
         method: 'GET',
@@ -139,9 +135,9 @@ export const {
   useGetCodeAttributesQuery,
   useSaveCodeAttributesMutation,
   useGetAttributeKeysQuery,
-  useGetSectionTypeAttributesQuery,
   useGetTreeQuery,
   useGetTypeAttributesQuery,
   useGetValidHierarchyFiltersQuery,
   useSaveTypeAttributesMutation,
+  useGetAttributeKeysBySectionQuery,
 } = api;
