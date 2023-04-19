@@ -24,6 +24,11 @@ setLocale({
     required: 'attribute.required',
   },
   string: {
+    min: ({ min }) => ({
+      key: 'minLength',
+      // Values available for interpolation in the text
+      values: { min },
+    }),
     max: ({ max }) => ({
       key: 'maxLength',
       // Values available for interpolation in the text

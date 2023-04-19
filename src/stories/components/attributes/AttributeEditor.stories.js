@@ -4,12 +4,15 @@ import AttributeEditorRow from '../../../components/attributes/AttributeEditorRo
 import MenuItem from '@mui/material/MenuItem';
 import TextField from '@mui/material/TextField';
 import { within, userEvent, waitFor } from '@storybook/testing-library';
+import { object, array, string } from 'yup';
 import { expect } from '@storybook/jest';
 import { FormContextProvider } from '../../../contexts/FormContext';
 import useForm from '../../../hooks/useForm';
 import ValueField from '../../../components/attributes/ValueField';
 import StartDateField from '../../../components/attributes/StartDateField';
 import EndDateField from '../../../components/attributes/EndDateField';
+import { attributeValidityDate } from '../../../utils/validations';
+import { toDate } from '../../../utils/dateUtils';
 
 export default {
   component: AttributeEditor,
@@ -148,6 +151,43 @@ export const ValidationErrors = {
     const canvas = within(canvasElement);
 
     await userEvent.clear(canvas.getAllByRole('textbox')[0]);
+  },
+};
+
+export const ValidationSchema = {
+  ...Default,
+  decorators: [
+    (Story) => {
+      const validationSchema = object({
+        data: array().of(
+          object({
+            value: string().min(3).max(32).required(),
+            startDate: attributeValidityDate
+              .required()
+              .min(toDate('1600-01-01')),
+            endDate: attributeValidityDate.nullable(),
+          })
+        ),
+      });
+
+      return (
+        <FormContextProvider
+          validationSchema={validationSchema}
+          onSubmit={async () => {}}
+        >
+          <Story />
+        </FormContextProvider>
+      );
+    },
+  ],
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    await userEvent.clear(canvas.getAllByRole('textbox')[0]);
+    await userEvent.type(canvas.getAllByRole('textbox')[0], 'v');
+
+    await userEvent.clear(canvas.getAllByRole('textbox')[1]);
+    await userEvent.type(canvas.getAllByRole('textbox')[1], '1.1.1599');
   },
 };
 
