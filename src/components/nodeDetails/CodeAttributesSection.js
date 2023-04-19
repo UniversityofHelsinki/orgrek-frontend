@@ -17,17 +17,7 @@ import { useCodeAttributes } from '../../hooks/useCodeAttributes';
 import useFilterAttributesByDate from '../../hooks/useFilterAttributesByDate';
 import { compareAndCheckDates, valueNotEmpty } from './Validations';
 import { attributeSanitation } from './Sanitations';
-
-const toFormValues = (attributes) => {
-  const byKey = {};
-  attributes.forEach((attribute) => {
-    if (!byKey[attribute.key]) {
-      byKey[attribute.key] = [];
-    }
-    byKey[attribute.key].push(attribute);
-  });
-  return byKey;
-};
+import { flattenAttributes, toFormValues } from '../../utils/attributeUtils';
 
 const readOnlyFields = (attributes, keys) => {
   const result = {};
@@ -105,7 +95,7 @@ const CodeAttributesSection = () => {
   const empty = codeAttributes.length === 0;
 
   const handleSubmit = (input) => {
-    const attributes = Object.values(input).flat();
+    const attributes = flattenAttributes(input);
     const sanitized = attributeSanitation(attributes);
     return saveCodeAttributes({ attributes: sanitized, nodeId }).unwrap();
   };

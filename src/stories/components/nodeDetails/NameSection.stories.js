@@ -1,5 +1,6 @@
 import {
   mockGetNameAttributes,
+  mockGetSectionTypeAttributes,
   mockPutNameAttributes,
   withMockStore,
 } from '../../../mockStore';
@@ -68,6 +69,24 @@ const data = [
   },
 ];
 
+const sectionTypeData = [
+  {
+    id: 14,
+    section: 'names',
+    attr: 'name_fi',
+  },
+  {
+    id: 15,
+    section: 'names',
+    attr: 'name_sv',
+  },
+  {
+    id: 16,
+    section: 'names',
+    attr: 'name_en',
+  },
+];
+
 export default {
   component: NameSection,
   parameters: {
@@ -82,7 +101,11 @@ export default {
 export const Default = {
   parameters: {
     msw: {
-      handlers: [mockGetNameAttributes(nodeId, data), mockPutNameAttributes()],
+      handlers: [
+        mockGetNameAttributes(nodeId, data),
+        mockPutNameAttributes(),
+        mockGetSectionTypeAttributes('names', sectionTypeData),
+      ],
     },
   },
   decorators: [withMockStore()],
@@ -91,7 +114,11 @@ export const Default = {
 export const Empty = {
   parameters: {
     msw: {
-      handlers: [mockGetNameAttributes(nodeId, []), mockPutNameAttributes()],
+      handlers: [
+        mockGetNameAttributes(nodeId, []),
+        mockPutNameAttributes(),
+        mockGetSectionTypeAttributes('names', sectionTypeData),
+      ],
     },
   },
   decorators: [withMockStore()],
@@ -100,7 +127,11 @@ export const Empty = {
 export const ShowHistory = {
   parameters: {
     msw: {
-      handlers: [mockGetNameAttributes(nodeId, data), mockPutNameAttributes()],
+      handlers: [
+        mockGetNameAttributes(nodeId, data),
+        mockPutNameAttributes(),
+        mockGetSectionTypeAttributes('names', sectionTypeData),
+      ],
     },
   },
   decorators: [
