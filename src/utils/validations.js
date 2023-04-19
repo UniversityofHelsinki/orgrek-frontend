@@ -24,22 +24,27 @@ setLocale({
     required: 'attribute.required',
   },
   string: {
-    max: ({ max }) => {
-      return { key: 'maxLength', values: { max } };
-    },
+    max: ({ max }) => ({
+      key: 'maxLength',
+      // Values available for interpolation in the text
+      values: { max },
+    }),
   },
   date: {
     min: ({ min }) => ({
       key: 'minDate',
+      // Values available for interpolation in the text
       values: { min: formatDate(min) },
     }),
     max: ({ max }) => ({
       key: 'maxDate',
+      // Values available for interpolation in the text
       values: { max: formatDate(max) },
     }),
   },
 });
 
+/** @deprecated use Yup schema instead */
 export const valueNotEmpty = (values) => {
   const errors = {};
 
@@ -58,31 +63,8 @@ export const valueNotEmpty = (values) => {
     });
   return errors;
 };
-/*
-export const valueStartsWithSpace = (values) => {
-  const errors = {};
-  let arrOfNames = [...values.nameFi, ...values.nameSv, ...values.nameEn];
 
-  arrOfNames.forEach((value) => {
-    if (value.value.startsWith(' ')) {
-      errors.startsWithSpace = { error: 'attribute.startsWithSpace' };
-    }
-  });
-  return errors;
-};
-
-export const valueEndsWithSpace = (values) => {
-  const errors = {};
-  let arrOfNames = [...values.nameFi, ...values.nameSv, ...values.nameEn];
-
-  arrOfNames.forEach((value) => {
-    if (value.value.endsWith(' ')) {
-      errors.startsWithSpace = { error: 'attribute.endsWithSpace' };
-    }
-  });
-  return errors;
-};
-*/
+/** @deprecated use Yup schema instead */
 const validStartDate = (date) => {
   if (date !== null && !isValid(date)) {
     return isValid(toDate(date));
@@ -90,6 +72,7 @@ const validStartDate = (date) => {
   return true;
 };
 
+/** @deprecated use Yup schema instead */
 const validEndDate = (date) => {
   if (date !== null && !isValid(date)) {
     return isValid(toDate(date));
@@ -97,6 +80,7 @@ const validEndDate = (date) => {
   return true;
 };
 
+/** @deprecated use Yup schema instead */
 const compareStartAndEndDates = (startDate, endDate, days) => {
   if (startDate === null && endDate === null) {
     return true;
@@ -119,6 +103,7 @@ const compareStartAndEndDates = (startDate, endDate, days) => {
   return !(endDate !== null && end_date.getTime() <= start_date.getTime());
 };
 
+/** @deprecated use Yup schema instead */
 export const compareAndCheckDates = (values) => {
   const errors = {};
 
@@ -141,64 +126,118 @@ export const compareAndCheckDates = (values) => {
   return errors;
 };
 
-addMethod(date, 'beforeEndDate', function (minDuration) {
-  return this.test({
-    name: 'beforeEndDate',
-    params: {
-      minDuration,
-    },
-    test: (value, context) => {
-      const endDate = context.parent.endDate;
-      const maxDate = isValid(endDate) ? sub(endDate, minDuration) : undefined;
+addMethod(
+  date,
+  'beforeEndDate',
+  /**
+   * Validates attribute value start date is before end date.
+   *
+   * Use this test on attribute value startDate.
+   *
+   * @param minDuration date-fns duration object specifying minimum duration
+   * (e.g. days) between the start and the end dates
+   */
+  function (minDuration) {
+    return this.test({
+      name: 'beforeEndDate',
+      params: {
+        minDuration,
+      },
+      test: (value, context) => {
+        const endDate = context.parent.endDate;
+        const maxDate = isValid(endDate)
+          ? sub(endDate, minDuration)
+          : undefined;
 
-      if (maxDate && isAfter(value, maxDate)) {
-        return context.createError({
-          message: { key: 'maxDate', values: { max: formatDate(maxDate) } },
-        });
-      } else {
-        return true;
-      }
-    },
-  });
-});
+        if (maxDate && isAfter(value, maxDate)) {
+          return context.createError({
+            message: { key: 'maxDate', values: { max: formatDate(maxDate) } },
+          });
+        } else {
+          return true;
+        }
+      },
+    });
+  }
+);
 
-addMethod(date, 'afterStartDate', function (minDuration) {
-  return this.test({
-    name: 'afterStartDate',
-    params: {
-      minDuration,
-    },
-    test: (value, context) => {
-      const startDate = context.parent.startDate;
-      const minDate = isValid(startDate)
-        ? add(startDate, minDuration)
-        : undefined;
+addMethod(
+  date,
+  'afterStartDate',
+  /**
+   * Validates attribute value end date is after end date.
+   *
+   * Use this test on attribute value endDate.
+   *
+   * @param minDuration date-fns duration object specifying minimum duration
+   * (e.g. days) between the start and the end dates
+   */
+  function (minDuration) {
+    return this.test({
+      name: 'afterStartDate',
+      params: {
+        minDuration,
+      },
+      test: (value, context) => {
+        const startDate = context.parent.startDate;
+        const minDate = isValid(startDate)
+          ? add(startDate, minDuration)
+          : undefined;
 
-      if (minDate && isBefore(value, minDate)) {
-        return context.createError({
-          message: { key: 'minDate', values: { min: formatDate(minDate) } },
-        });
-      } else {
-        return true;
-      }
-    },
-  });
-});
+        if (minDate && isBefore(value, minDate)) {
+          return context.createError({
+            message: { key: 'minDate', values: { min: formatDate(minDate) } },
+          });
+        } else {
+          return true;
+        }
+      },
+    });
+  }
+);
+
+export const attributeValidityDate = date()
+  .typeError('invalidDate')
+  .transform((value, originalValue) => toDate(originalValue));
 
 export const validAttributeValue = object({
   id: number().required(),
-  value: string().required().max(250),
-  startDate: date()
-    .typeError('invalidDate')
+  key: string().required(),
+  value: string().required().max(250), // TODO: trim
+  // TODO: transform dates to ISO date strings
+  startDate: attributeValidityDate
     .required()
-    .min('1600-01-01')
+    .min(toDate('1600-01-01'))
     .beforeEndDate({ days: 2 }),
-  endDate: date()
-    .typeError('invalidDate')
-    .nullable()
-    .afterStartDate({ days: 2 }),
+  endDate: attributeValidityDate.nullable().afterStartDate({ days: 2 }),
   isNew: boolean().required(),
   deleted: boolean().required(),
 });
 
-export const validAttribute = array().required().of(validAttributeValue);
+// TODO: transform to filter new deleted values
+export const arrayOfAttributeValues = array()
+  .required()
+  .of(validAttributeValue);
+
+/**
+ * Builds a schema dynamically for the given attribute keys.
+ *
+ * This schema expects form values to be an object containing the given keys
+ * and attribute values in arrays separately for each key.
+ *
+ * keys = ['key1', 'key2'];
+ * values = {
+ *   key1: [{...}, {...}, ...],
+ *   key2: [{...}, {...}, ...],
+ * };
+ *
+ * @param {string[]} keys
+ * @return Yup validation schema
+ */
+export const defaultSchemaForAttributes = (keys) =>
+  object(
+    keys.reduce((schema, key) => {
+      schema[key] = arrayOfAttributeValues;
+      return schema;
+    }, {})
+  );

@@ -1,0 +1,176 @@
+import { convertYupErrors } from '../../src/utils/validationUtils';
+import {
+  defaultSchemaForAttributes,
+  validAttributeValue,
+} from '../../src/utils/validations';
+
+const validTestValue = {
+  id: 1,
+  key: 'key1',
+  value: 'foo',
+  startDate: '2023-01-01',
+  endDate: null,
+  isNew: false,
+  deleted: false,
+};
+
+const doValidate = (schema, value) => {
+  let errors = {};
+  try {
+    schema.validateSync(value, { abortEarly: false });
+  } catch (yupError) {
+    errors = convertYupErrors(yupError);
+  }
+
+  return errors;
+};
+
+describe('validAttributeValue', () => {
+  const schema = validAttributeValue;
+
+  test.each([
+    ['A'.repeat(250), []],
+    ['A'.repeat(251), ['maxLength [250]']],
+  ])('value results in errors #%#', (value, expectedErrors) => {
+    const data = {
+      ...validTestValue,
+      value,
+    };
+
+    const errors = doValidate(schema, data);
+
+    expect(errors['value'] || []).toEqual(expectedErrors);
+  });
+
+  test('min date', () => {
+    const data = {
+      ...validTestValue,
+      startDate: '1599-12-31',
+    };
+
+    const errors = doValidate(schema, data);
+
+    expect(errors['startDate'] || []).toEqual(['minDate ["01/01/1600"]']);
+  });
+});
+
+describe('beforeEndDate', () => {
+  const schema = validAttributeValue;
+
+  test.each([
+    [
+      {
+        startDate: '2023-01-01',
+        endDate: '2023-01-03',
+      },
+      [],
+    ],
+    [
+      {
+        startDate: '2023-01-02',
+        endDate: '2023-01-03',
+      },
+      ['maxDate ["01/01/2023"]'],
+    ],
+    [
+      {
+        startDate: '2023-01-04',
+        endDate: '2023-01-03',
+      },
+      ['maxDate ["01/01/2023"]'],
+    ],
+    [
+      {
+        startDate: '2023-01-04',
+        endDate: null,
+      },
+      [],
+    ],
+  ])('%p results in validation errors %p', (values, expectedErrors) => {
+    const data = {
+      ...validTestValue,
+      ...values,
+    };
+
+    const errors = doValidate(schema, data);
+
+    expect(errors['startDate'] || []).toEqual(expectedErrors);
+  });
+});
+
+describe('afterStartDate', () => {
+  const schema = validAttributeValue;
+
+  test.each([
+    [
+      {
+        startDate: '2023-01-01',
+        endDate: '2023-01-03',
+      },
+      [],
+    ],
+    [
+      {
+        startDate: '2023-01-01',
+        endDate: '2023-01-02',
+      },
+      ['minDate ["03/01/2023"]'],
+    ],
+    [
+      {
+        startDate: '2023-01-01',
+        endDate: '2022-12-31',
+      },
+      ['minDate ["03/01/2023"]'],
+    ],
+    [
+      {
+        startDate: null,
+        endDate: '2023-01-03',
+      },
+      [],
+    ],
+  ])('%p results in validation errors %s', (values, expectedErrors) => {
+    const data = {
+      ...validTestValue,
+      ...values,
+    };
+
+    const errors = doValidate(schema, data);
+
+    expect(errors['endDate'] || []).toEqual(expectedErrors);
+  });
+});
+
+describe('defaultSchemaForAttributes', () => {
+  const schema = defaultSchemaForAttributes(['key1', 'key2']);
+
+  test('valid', () => {
+    const data = {
+      key1: [validTestValue],
+      key2: [],
+    };
+
+    const errors = doValidate(schema, data);
+
+    expect(errors).toEqual({});
+  });
+
+  test('invalid', () => {
+    const data = {
+      key1: [], // empty array should be valid
+      key2: [{}], // value object missing all props
+    };
+
+    const errors = doValidate(schema, data);
+
+    expect(errors).toEqual({
+      'key2[0].id': ['attribute.required'],
+      'key2[0].key': ['attribute.required'],
+      'key2[0].value': ['attribute.required'],
+      'key2[0].startDate': ['attribute.required'],
+      'key2[0].isNew': ['attribute.required'],
+      'key2[0].deleted': ['attribute.required'],
+    });
+  });
+});
