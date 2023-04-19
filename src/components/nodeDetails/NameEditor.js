@@ -18,7 +18,7 @@ const NameEditor = ({ keys }) => {
           attributeKey={`${key}`}
           valueLabel={t('attribute_value')}
           path={key}
-          data={values[key]}
+          data={values[key] || []}
           onChange={(newData) =>
             setValues({
               ...values,

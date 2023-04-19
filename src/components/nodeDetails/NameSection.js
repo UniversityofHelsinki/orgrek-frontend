@@ -23,7 +23,8 @@ const NameSection = () => {
   const { t } = useTranslation();
   const nodeId = useNodeId();
   const { data, isFetching } = useGetNameAttributesQuery(nodeId);
-  const { data: keysData } = useGetAttributeKeysBySectionQuery('names');
+  const { data: keysData, isFetching: isFetchingKeys } =
+    useGetAttributeKeysBySectionQuery('names');
   const [saveNameAttributes] = useSaveNameAttributesMutation();
 
   // In edit mode data includes also history and future
@@ -81,7 +82,7 @@ const NameSection = () => {
   return (
     <EditableAccordion
       title={title}
-      loading={isFetching}
+      loading={isFetching || isFetchingKeys}
       defaultExpanded={!empty}
     >
       <EditableContent
