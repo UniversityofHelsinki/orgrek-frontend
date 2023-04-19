@@ -30,16 +30,3 @@ export const getValueDescription = ({ value, displayText, withValidity }) => {
 
   return valueDescriptions.join(', ');
 };
-
-export const toFormValues = (attributes) => {
-  const byKey = {};
-  attributes.forEach((attribute) => {
-    if (!byKey[attribute.key]) {
-      byKey[attribute.key] = [];
-    }
-    byKey[attribute.key].push(attribute);
-  });
-  return byKey;
-};
-
-export const flattenAttributes = (values) => Object.values(values).flat();

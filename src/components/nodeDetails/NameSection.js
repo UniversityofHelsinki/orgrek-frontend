@@ -59,9 +59,9 @@ const NameSection = () => {
       ...values.nameSv,
     ];
 
-    const cleanedAttributes = attributeSanitation(combinedArrays);
+    const attributes = attributeSanitation(combinedArrays);
 
-    return saveNameAttributes({ cleanedAttributes, nodeId }).unwrap();
+    return saveNameAttributes({ attributes, nodeId }).unwrap();
   };
 
   const columns = [
