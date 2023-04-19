@@ -10,20 +10,25 @@ import { useNodeId } from '../../hooks/useNodeId';
 import {
   useGetNameAttributesQuery,
   useSaveNameAttributesMutation,
-  useGetAttributeKeysBySectionQuery,
 } from '../../store';
 import useSortAttributesByDate from '../../hooks/useSortAttributesByDate';
 import useFilterAttributesByDate from '../../hooks/useFilterAttributesByDate';
 import { compareAndCheckDates, valueNotEmpty } from './Validations';
 import { attributeSanitation } from './Sanitations';
 import { authActions } from '../../auth';
-import { flattenAttributes, toFormValues } from '../../utils/attributeUtils';
+
+const toFormValues = (data) => {
+  const nameFi = data.filter((value) => value.key === 'name_fi');
+  const nameSv = data.filter((value) => value.key === 'name_sv');
+  const nameEn = data.filter((value) => value.key === 'name_en');
+
+  return { nameFi, nameSv, nameEn };
+};
 
 const NameSection = () => {
   const { t } = useTranslation();
   const nodeId = useNodeId();
   const { data, isFetching } = useGetNameAttributesQuery(nodeId);
-  const { data: keysData } = useGetAttributeKeysBySectionQuery('names');
   const [saveNameAttributes] = useSaveNameAttributesMutation();
 
   // In edit mode data includes also history and future
@@ -36,18 +41,27 @@ const NameSection = () => {
   // Submit button is disabled when errors contain any truthy values
   // EditableContent handles displaying form-level validation error messages
   const validate = (values) => {
-    const combinedArrays = flattenAttributes(values);
+    const combinedArrays = [
+      ...values.nameEn,
+      ...values.nameFi,
+      ...values.nameSv,
+    ];
     return {
       ...valueNotEmpty(combinedArrays),
       ...compareAndCheckDates(combinedArrays),
     };
   };
 
-  const handleSubmit = (input) => {
-    const attributes = flattenAttributes(input);
-    const sanitized = attributeSanitation(attributes);
+  const handleSubmit = (values) => {
+    const combinedArrays = [
+      ...values.nameEn,
+      ...values.nameFi,
+      ...values.nameSv,
+    ];
 
-    return saveNameAttributes({ attributes: sanitized, nodeId }).unwrap();
+    const cleanedAttributes = attributeSanitation(combinedArrays);
+
+    return saveNameAttributes({ cleanedAttributes, nodeId }).unwrap();
   };
 
   const columns = [
@@ -64,16 +78,13 @@ const NameSection = () => {
   const title = t('name_info');
   const empty = sortedAndFilteredData.length === 0;
 
-  const keys = (keysData || []).map((key) => key.attr);
-
-  const sortedDataByKeys = keys
-    .map((key) => sortedAndFilteredData.filter((value) => value.key === key))
-    .flat();
+  // Sort by language
+  const { nameFi, nameSv, nameEn } = toFormValues(sortedAndFilteredData);
 
   const renderedContent = (
     <AttributesTable
       columns={columns}
-      data={sortedDataByKeys}
+      data={[...nameFi, ...nameSv, ...nameEn]}
       summary={title}
     />
   );
@@ -85,7 +96,7 @@ const NameSection = () => {
       defaultExpanded={!empty}
     >
       <EditableContent
-        editorComponent={<NameEditor keys={keys} />}
+        editorComponent={<NameEditor />}
         validate={validate}
         initialValues={toFormValues(sortedData)}
         onSubmit={handleSubmit}
