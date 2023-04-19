@@ -15,7 +15,7 @@ import { authActions } from '../../auth';
 import { useNodeId } from '../../hooks/useNodeId';
 import { useCodeAttributes } from '../../hooks/useCodeAttributes';
 import useFilterAttributesByDate from '../../hooks/useFilterAttributesByDate';
-import { compareAndCheckDates, valueNotEmpty } from '../../utils/validations';
+import { defaultSchemaForAttributes } from '../../utils/validations';
 import { attributeSanitation } from '../../utils/sanitations';
 
 const toFormValues = (attributes) => {
@@ -72,8 +72,8 @@ const CodeAttributesSection = () => {
     (s) => s.tree.selectedHierarchy || s.tree.defaultHierarchy
   );
   const presentCodeAttributes = useFilterAttributesByDate(codeAttributes);
-  const { data, isFetching } = useGetAttributeKeysQuery(selectedHierarchies);
-  const attributeKeys = data;
+  const { data: attributeKeys, isFetching } =
+    useGetAttributeKeysQuery(selectedHierarchies);
 
   const readOnlyFieldKeys = ['unique_id'];
 
@@ -93,16 +93,12 @@ const CodeAttributesSection = () => {
       ),
     },
   ];
-  const validate = (values) => {
-    const all = Object.values(values).flat();
-    const sanitized = attributeSanitation(all);
-    return {
-      ...compareAndCheckDates(sanitized),
-      ...valueNotEmpty(sanitized),
-    };
-  };
   const title = t('codes');
   const empty = codeAttributes.length === 0;
+
+  // Validates form values every time when the values change
+  // Submit button is disabled when validation fails
+  const validationSchema = defaultSchemaForAttributes(attributeKeys);
 
   const handleSubmit = (input) => {
     const attributes = Object.values(input).flat();
@@ -127,7 +123,7 @@ const CodeAttributesSection = () => {
           ),
           attributeKeys
         )}
-        validate={validate}
+        validationSchema={validationSchema}
         onSubmit={handleSubmit}
         successMessage={t('codeInfo.saveSuccess')}
         errorMessage={t('codeInfo.saveError')}

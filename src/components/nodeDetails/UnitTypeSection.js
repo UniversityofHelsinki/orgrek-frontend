@@ -15,7 +15,7 @@ import useSortAttributesByDate from '../../hooks/useSortAttributesByDate';
 import { useSelector } from 'react-redux';
 import fillSelectableUnits from '../../hooks/filterSelectableUnits';
 import { authActions } from '../../auth';
-import { compareAndCheckDates, valueNotEmpty } from '../../utils/validations';
+import { defaultSchemaForAttributes } from '../../utils/validations';
 import useFilterAttributesByDate from '../../hooks/useFilterAttributesByDate';
 
 const UnitTypeSection = () => {
@@ -54,14 +54,10 @@ const UnitTypeSection = () => {
   const { type } = toFormValues(sortedAndFilteredData);
 
   // Validates form values every time when the values change
-  // Submit button is disabled when errors contain any truthy values
-  // EditableContent handles displaying form-level validation error messages
-  const validate = (values) => {
-    return {
-      ...valueNotEmpty(values.type),
-      ...compareAndCheckDates(values.type),
-    };
-  };
+  // Submit button is disabled when validation fails
+  // TODO: Use keys from backend (implemented in OR-1046)
+  const keys = ['type'];
+  const validationSchema = defaultSchemaForAttributes(keys);
 
   const ObjetToArray = (obj) => Object.assign([], Object.values(obj));
 
@@ -78,7 +74,7 @@ const UnitTypeSection = () => {
     >
       <EditableContent
         editorComponent={<UnitTypeEditor />}
-        validate={validate}
+        validationSchema={validationSchema}
         initialValues={toFormValues(sortedData)}
         onSubmit={handleSubmit}
         successMessage={t('typeInfo.saveSuccess')}

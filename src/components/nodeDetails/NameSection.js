@@ -13,7 +13,7 @@ import {
 } from '../../store';
 import useSortAttributesByDate from '../../hooks/useSortAttributesByDate';
 import useFilterAttributesByDate from '../../hooks/useFilterAttributesByDate';
-import { compareAndCheckDates, valueNotEmpty } from '../../utils/validations';
+import { defaultSchemaForAttributes } from '../../utils/validations';
 import { attributeSanitation } from '../../utils/sanitations';
 import { authActions } from '../../auth';
 
@@ -38,19 +38,10 @@ const NameSection = () => {
   const sortedAndFilteredData = useFilterAttributesByDate(sortedData);
 
   // Validates form values every time when the values change
-  // Submit button is disabled when errors contain any truthy values
-  // EditableContent handles displaying form-level validation error messages
-  const validate = (values) => {
-    const combinedArrays = [
-      ...values.nameEn,
-      ...values.nameFi,
-      ...values.nameSv,
-    ];
-    return {
-      ...valueNotEmpty(combinedArrays),
-      ...compareAndCheckDates(combinedArrays),
-    };
-  };
+  // Submit button is disabled when validation fails
+  // TODO: Use keys from backend (implemented in OR-1044)
+  const keys = ['nameFi', 'nameSv', 'nameEn'];
+  const validationSchema = defaultSchemaForAttributes(keys);
 
   const handleSubmit = (values) => {
     const combinedArrays = [
@@ -97,7 +88,7 @@ const NameSection = () => {
     >
       <EditableContent
         editorComponent={<NameEditor />}
-        validate={validate}
+        validationSchema={validationSchema}
         initialValues={toFormValues(sortedData)}
         onSubmit={handleSubmit}
         successMessage={t('nameInfo.saveSuccess')}
