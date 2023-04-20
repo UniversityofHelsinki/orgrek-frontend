@@ -38,7 +38,7 @@ export const configureMockStore = (preloadedState = {}) => {
       notifications: notificationsReducer,
     },
     middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware().concat(api.middleware),
+      getDefaultMiddleware({ serializableCheck: false }).concat(api.middleware),
   });
 
   setupListeners(store.dispatch);

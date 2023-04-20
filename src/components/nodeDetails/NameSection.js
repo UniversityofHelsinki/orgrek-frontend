@@ -10,25 +10,21 @@ import { useNodeId } from '../../hooks/useNodeId';
 import {
   useGetNameAttributesQuery,
   useSaveNameAttributesMutation,
+  useGetAttributeKeysBySectionQuery,
 } from '../../store';
 import useSortAttributesByDate from '../../hooks/useSortAttributesByDate';
 import useFilterAttributesByDate from '../../hooks/useFilterAttributesByDate';
 import { defaultSchemaForAttributes } from '../../utils/validations';
 import { attributeSanitation } from '../../utils/sanitations';
 import { authActions } from '../../auth';
-
-const toFormValues = (data) => {
-  const nameFi = data.filter((value) => value.key === 'name_fi');
-  const nameSv = data.filter((value) => value.key === 'name_sv');
-  const nameEn = data.filter((value) => value.key === 'name_en');
-
-  return { nameFi, nameSv, nameEn };
-};
+import { flattenAttributes, toFormValues } from '../../utils/attributeUtils';
 
 const NameSection = () => {
   const { t } = useTranslation();
   const nodeId = useNodeId();
   const { data, isFetching } = useGetNameAttributesQuery(nodeId);
+  const { data: keysData, isFetching: isFetchingKeys } =
+    useGetAttributeKeysBySectionQuery('names');
   const [saveNameAttributes] = useSaveNameAttributesMutation();
 
   // In edit mode data includes also history and future
@@ -39,20 +35,14 @@ const NameSection = () => {
 
   // Validates form values every time when the values change
   // Submit button is disabled when validation fails
-  // TODO: Use keys from backend (implemented in OR-1044)
-  const keys = ['nameFi', 'nameSv', 'nameEn'];
+  const keys = (keysData || []).map((key) => key.attr);
   const validationSchema = defaultSchemaForAttributes(keys);
 
-  const handleSubmit = (values) => {
-    const combinedArrays = [
-      ...values.nameEn,
-      ...values.nameFi,
-      ...values.nameSv,
-    ];
+  const handleSubmit = (input) => {
+    const attributes = flattenAttributes(input);
+    const sanitized = attributeSanitation(attributes);
 
-    const cleanedAttributes = attributeSanitation(combinedArrays);
-
-    return saveNameAttributes({ cleanedAttributes, nodeId }).unwrap();
+    return saveNameAttributes({ attributes: sanitized, nodeId }).unwrap();
   };
 
   const columns = [
@@ -69,13 +59,14 @@ const NameSection = () => {
   const title = t('name_info');
   const empty = sortedAndFilteredData.length === 0;
 
-  // Sort by language
-  const { nameFi, nameSv, nameEn } = toFormValues(sortedAndFilteredData);
+  const sortedDataByKeys = keys
+    .map((key) => sortedAndFilteredData.filter((value) => value.key === key))
+    .flat();
 
   const renderedContent = (
     <AttributesTable
       columns={columns}
-      data={[...nameFi, ...nameSv, ...nameEn]}
+      data={sortedDataByKeys}
       summary={title}
     />
   );
@@ -83,11 +74,11 @@ const NameSection = () => {
   return (
     <EditableAccordion
       title={title}
-      loading={isFetching}
+      loading={isFetching || isFetchingKeys}
       defaultExpanded={!empty}
     >
       <EditableContent
-        editorComponent={<NameEditor />}
+        editorComponent={<NameEditor keys={keys} />}
         validationSchema={validationSchema}
         initialValues={toFormValues(sortedData)}
         onSubmit={handleSubmit}

@@ -86,6 +86,12 @@ export const mockGetSuccessors = (nodeId, date, body) =>
     (req, res, ctx) => res(ctx.json(body))
   );
 
+export const mockGetSectionTypeAttributes = (sectionType, body) =>
+  rest.get(
+    `${baseUrl}/node/section/${sectionType}/attributes`,
+    (req, res, ctx) => res(ctx.json(body))
+  );
+
 /**
  * @deprecated not needed after everything has been migrated to RTK Query
  */
