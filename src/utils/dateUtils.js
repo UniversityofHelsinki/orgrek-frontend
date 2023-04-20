@@ -35,8 +35,8 @@ export const toDate = (date) => {
     return null;
   } else if (typeof date === 'string' || typeof date === 'number') {
     return new Date(date);
-  } else if (date instanceof Date) {
-    return date;
+  } else if (Object.prototype.toString.call(date) === '[object Date]') {
+    return new Date(date);
   } else {
     throw new Error(`Expected string or Date but got ${date}`);
   }
