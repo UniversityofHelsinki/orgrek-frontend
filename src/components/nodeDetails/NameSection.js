@@ -26,6 +26,8 @@ const NameSection = () => {
     useGetAttributeKeysBySectionQuery('names');
   const [saveNameAttributes] = useSaveNameAttributesMutation();
 
+  const keys = (keysData || []).map((key) => key.attr);
+
   // In edit mode data includes also history and future
   const sortedData = useSortAttributesByDate(data);
 
@@ -34,7 +36,6 @@ const NameSection = () => {
 
   // Validates form values every time when the values change
   // Submit button is disabled when validation fails
-  const keys = (keysData || []).map((key) => key.attr);
   const validationSchema = defaultSchemaForAttributes(keys);
 
   const handleSubmit = (input) => {
