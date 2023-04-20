@@ -16,7 +16,6 @@ import { useNodeId } from '../../hooks/useNodeId';
 import { useCodeAttributes } from '../../hooks/useCodeAttributes';
 import useFilterAttributesByDate from '../../hooks/useFilterAttributesByDate';
 import { defaultSchemaForAttributes } from '../../utils/validations';
-import { attributeSanitation } from '../../utils/sanitations';
 import { flattenAttributes, toFormValues } from '../../utils/attributeUtils';
 
 const readOnlyFields = (attributes, keys) => {
@@ -92,8 +91,7 @@ const CodeAttributesSection = () => {
 
   const handleSubmit = (input) => {
     const attributes = flattenAttributes(input);
-    const sanitized = attributeSanitation(attributes);
-    return saveCodeAttributes({ attributes: sanitized, nodeId }).unwrap();
+    return saveCodeAttributes({ attributes, nodeId }).unwrap();
   };
 
   return (

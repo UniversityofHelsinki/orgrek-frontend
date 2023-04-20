@@ -15,7 +15,6 @@ import {
 import useSortAttributesByDate from '../../hooks/useSortAttributesByDate';
 import useFilterAttributesByDate from '../../hooks/useFilterAttributesByDate';
 import { defaultSchemaForAttributes } from '../../utils/validations';
-import { attributeSanitation } from '../../utils/sanitations';
 import { authActions } from '../../auth';
 import { flattenAttributes, toFormValues } from '../../utils/attributeUtils';
 
@@ -40,9 +39,7 @@ const NameSection = () => {
 
   const handleSubmit = (input) => {
     const attributes = flattenAttributes(input);
-    const sanitized = attributeSanitation(attributes);
-
-    return saveNameAttributes({ attributes: sanitized, nodeId }).unwrap();
+    return saveNameAttributes({ attributes, nodeId }).unwrap();
   };
 
   const columns = [

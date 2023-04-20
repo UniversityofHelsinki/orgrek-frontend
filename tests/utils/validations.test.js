@@ -1,6 +1,7 @@
 import { string } from 'yup';
 import { convertYupErrors } from '../../src/utils/validationUtils';
 import {
+  arrayOfAttributeValues,
   defaultSchemaForAttributes,
   validAttributeValue,
 } from '../../src/utils/validations';
@@ -31,6 +32,14 @@ const doValidate = (schema, value) => {
 
   return errors;
 };
+
+describe('min', () => {
+  test('translation', () => {
+    const schema = string().min(4);
+    const errors = doValidate(schema, 'foo');
+    expect(errors).toEqual({ '': ['minLength [4]'] });
+  });
+});
 
 describe('date string', () => {
   const schema = string().date();
@@ -206,6 +215,32 @@ describe('afterStartDate', () => {
     const errors = doValidate(schema, data);
 
     expect(errors['endDate'] || []).toEqual(expectedErrors);
+  });
+});
+
+describe('arrayOfAttributeValues', () => {
+  test('filters new deleted rows', () => {
+    const schema = arrayOfAttributeValues;
+    const data = [
+      validTestValue,
+      { ...validTestValue, id: -1, isNew: true, deleted: true },
+    ];
+
+    expect(schema.cast(data)).toEqual([validTestValue]);
+  });
+
+  test('does not filter new rows', () => {
+    const schema = arrayOfAttributeValues;
+    const data = [validTestValue, { ...validTestValue, id: -1, isNew: true }];
+
+    expect(schema.cast(data)).toEqual(data);
+  });
+
+  test('does not filter deleted rows', () => {
+    const schema = arrayOfAttributeValues;
+    const data = [validTestValue, { ...validTestValue, id: 2, deleted: true }];
+
+    expect(schema.cast(data)).toEqual(data);
   });
 });
 

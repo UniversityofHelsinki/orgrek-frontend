@@ -189,6 +189,20 @@ addMethod(
   }
 );
 
+addMethod(
+  array,
+  'filterDeletedNew',
+  /**
+   * Filters out new and deleted attributes values because we do not want to
+   * post those to the backend.
+   */
+  function () {
+    return this.transform((attributes) =>
+      attributes.filter((attribute) => !(attribute.isNew && attribute.deleted))
+    );
+  }
+);
+
 export const validAttributeValue = object({
   id: number().required(),
   key: string().required(),
@@ -203,10 +217,10 @@ export const validAttributeValue = object({
   deleted: boolean().required(),
 });
 
-// TODO: transform to filter new deleted values
 export const arrayOfAttributeValues = array()
+  .of(validAttributeValue)
   .required()
-  .of(validAttributeValue);
+  .filterDeletedNew();
 
 /**
  * Builds a schema dynamically for the given attribute keys.
