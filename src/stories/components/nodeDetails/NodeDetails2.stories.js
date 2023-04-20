@@ -16,6 +16,7 @@ import {
   mockGetNode,
   mockGetParents,
   mockGetPredecessors,
+  mockGetSectionTypeAttributes,
   mockGetSuccessors,
   mockGetTypeAttributes,
   mockGetValidHierarchyFilters,
@@ -57,6 +58,23 @@ export const AdminRole = {
           timestamp: '2022-01-18T15:39:54.603+00:00',
           uniqueId: nodeId,
         }),
+        mockGetSectionTypeAttributes('names', [
+          {
+            id: 14,
+            section: 'names',
+            attr: 'name_fi',
+          },
+          {
+            id: 15,
+            section: 'names',
+            attr: 'name_sv',
+          },
+          {
+            id: 16,
+            section: 'names',
+            attr: 'name_en',
+          },
+        ]),
         mockGetNameAttributes(nodeId, [
           {
             id: 4899999926,
