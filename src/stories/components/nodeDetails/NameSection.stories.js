@@ -89,7 +89,10 @@ export default {
 export const Default = {
   parameters: {
     msw: {
-      handlers: [mockGetNameAttributes(nodeId, data), mockPutNameAttributes()],
+      handlers: [
+        mockGetNameAttributes(nodeId, data),
+        mockPutNameAttributes(nodeId),
+      ],
     },
   },
   decorators: [withMockStore()],
@@ -98,7 +101,10 @@ export const Default = {
 export const Empty = {
   parameters: {
     msw: {
-      handlers: [mockGetNameAttributes(nodeId, []), mockPutNameAttributes()],
+      handlers: [
+        mockGetNameAttributes(nodeId, []),
+        mockPutNameAttributes(nodeId),
+      ],
     },
   },
   decorators: [withMockStore()],
@@ -107,7 +113,10 @@ export const Empty = {
 export const ShowHistory = {
   parameters: {
     msw: {
-      handlers: [mockGetNameAttributes(nodeId, data), mockPutNameAttributes()],
+      handlers: [
+        mockGetNameAttributes(nodeId, data),
+        mockPutNameAttributes(nodeId),
+      ],
     },
   },
   decorators: [

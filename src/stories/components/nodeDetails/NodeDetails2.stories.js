@@ -63,15 +63,15 @@ export const AdminRole = {
             nodeId: '4820',
             key: 'name_fi',
             value: 'Tietotekniikkaratkaisut 1',
-            startDate: null,
-            endDate: '1999-12-31',
+            startDate: '1999-12-31',
+            endDate: null,
           },
           {
             id: 48111122,
             nodeId: '4820',
             key: 'name_sv',
             value: 'Datatekniklösningar',
-            startDate: null,
+            startDate: '1999-12-31',
             endDate: null,
           },
           {
@@ -79,11 +79,11 @@ export const AdminRole = {
             nodeId: '4820',
             key: 'name_en',
             value: 'IT Solutions 1',
-            startDate: null,
-            endDate: '1999-12-31',
+            startDate: '1999-12-31',
+            endDate: null,
           },
         ]),
-        mockPutNameAttributes(),
+        mockPutNameAttributes(nodeId),
         mockGetCodeAttributes(nodeId, [
           {
             id: 4824,
