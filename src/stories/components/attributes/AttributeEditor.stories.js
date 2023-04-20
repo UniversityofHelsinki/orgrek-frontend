@@ -11,8 +11,8 @@ import useForm from '../../../hooks/useForm';
 import ValueField from '../../../components/attributes/ValueField';
 import StartDateField from '../../../components/attributes/StartDateField';
 import EndDateField from '../../../components/attributes/EndDateField';
-import { attributeValidityDate } from '../../../utils/validations';
 import { toDate } from '../../../utils/dateUtils';
+import '../../../utils/validations'; // Register custom validators
 
 export default {
   component: AttributeEditor,
@@ -162,10 +162,8 @@ export const ValidationSchema = {
         data: array().of(
           object({
             value: string().min(3).max(32).required(),
-            startDate: attributeValidityDate
-              .required()
-              .min(toDate('1600-01-01')),
-            endDate: attributeValidityDate.nullable(),
+            startDate: string().date().required().minDate(toDate('1600-01-01')),
+            endDate: string().date().nullable(),
           })
         ),
       });
