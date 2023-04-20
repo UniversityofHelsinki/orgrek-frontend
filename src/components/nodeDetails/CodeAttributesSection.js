@@ -56,21 +56,16 @@ const withoutReadOnlyFields = (attributes, readOnlyFieldKeys) => {
 const CodeAttributesSection = () => {
   const { t } = useTranslation();
   const nodeId = useNodeId();
-  const { codeAttributes } = useCodeAttributes();
+  const { codeAttributes, isFetching } = useCodeAttributes();
   const selectedHierarchies = useSelector(
     (s) => s.tree.selectedHierarchy || s.tree.defaultHierarchy
   );
   const presentCodeAttributes = useFilterAttributesByDate(codeAttributes);
-  const { data: attributeKeys, isFetching } =
+  const { data: attributeKeys, isFetching: isFetchingKeys } =
     useGetAttributeKeysQuery(selectedHierarchies);
-
-  const readOnlyFieldKeys = ['unique_id'];
-
   const [saveCodeAttributes] = useSaveCodeAttributesMutation();
 
-  if (isFetching || !attributeKeys) {
-    return <></>;
-  }
+  const readOnlyFieldKeys = ['unique_id'];
 
   const columns = [
     { label: t('code_namespace'), render: (item) => t(item.key) },
@@ -85,9 +80,25 @@ const CodeAttributesSection = () => {
   const title = t('codes');
   const empty = codeAttributes.length === 0;
 
+  if (isFetching || isFetchingKeys) {
+    return <EditableAccordion title={title} loading />;
+  }
+
+  const initialValues = includeMissing(
+    toFormValues(
+      withoutReadOnlyFields(
+        filterExcess(codeAttributes, attributeKeys),
+        readOnlyFieldKeys
+      )
+    ),
+    attributeKeys
+  );
+
   // Validates form values every time when the values change
   // Submit button is disabled when validation fails
-  const validationSchema = defaultSchemaForAttributes(attributeKeys);
+  const validationSchema = defaultSchemaForAttributes(
+    Object.keys(initialValues)
+  );
 
   const handleSubmit = (input) => {
     const attributes = flattenAttributes(input);
@@ -102,15 +113,7 @@ const CodeAttributesSection = () => {
             readOnlyFields={readOnlyFields(codeAttributes, readOnlyFieldKeys)}
           />
         }
-        initialValues={includeMissing(
-          toFormValues(
-            withoutReadOnlyFields(
-              filterExcess(codeAttributes, attributeKeys),
-              readOnlyFieldKeys
-            )
-          ),
-          attributeKeys
-        )}
+        initialValues={initialValues}
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
         successMessage={t('codeInfo.saveSuccess')}
