@@ -17,6 +17,7 @@ import { formatDate, toDate, toISODateString } from './dateUtils';
 // Customize yup validation error messages
 // Message is either a translation key or an object containing the key and
 // variable values for interpolation
+// See all possible messages: https://github.com/jquense/yup/blob/master/src/locale.ts
 setLocale({
   mixed: {
     default: 'invalid',
@@ -36,6 +37,8 @@ setLocale({
   },
 });
 
+// addMethod registers custom validation functions that can be used in the schema
+// See https://github.com/jquense/yup#addmethodschematype-schema-name-string-method--schema-void
 addMethod(
   string,
   'minDate',
@@ -203,7 +206,39 @@ addMethod(
   }
 );
 
-export const validAttributeValue = object({
+addMethod(
+  array,
+  'sameKey',
+  /**
+   * Checks that all attribute values in one array have the same key
+   */
+  function () {
+    return this.test({
+      name: 'sameKey',
+      test: (attributes, context) => {
+        const keys = attributes
+          .map((attribute) => attribute.key)
+          .filter((key, index, keys) => keys.indexOf(key) === index);
+
+        if (keys.length > 1) {
+          return context.createError({
+            message: {
+              key: 'attribute.multipleKeys',
+              values: { keys: keys.join(', ') },
+            },
+          });
+        }
+
+        return true;
+      },
+    });
+  }
+);
+
+/**
+ * Validation schema for one attribute value
+ */
+export const attributeSchema = object({
   id: number().required(),
   key: string().required(),
   value: string().trim().required().max(250),
@@ -217,10 +252,14 @@ export const validAttributeValue = object({
   deleted: boolean().required(),
 });
 
+/**
+ * Validation schema for all values of one attribute (all values having the same key)
+ */
 export const arrayOfAttributeValues = array()
-  .of(validAttributeValue)
+  .of(attributeSchema)
   .required()
-  .filterDeletedNew();
+  .filterDeletedNew()
+  .sameKey();
 
 /**
  * Builds a schema dynamically for the given attribute keys.

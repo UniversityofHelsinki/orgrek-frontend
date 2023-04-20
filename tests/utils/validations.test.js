@@ -3,7 +3,7 @@ import { convertYupErrors } from '../../src/utils/validationUtils';
 import {
   arrayOfAttributeValues,
   defaultSchemaForAttributes,
-  validAttributeValue,
+  attributeSchema,
 } from '../../src/utils/validations';
 
 const validTestValue = {
@@ -74,7 +74,7 @@ describe('date string', () => {
 });
 
 describe('validAttributeValue', () => {
-  const schema = validAttributeValue;
+  const schema = attributeSchema;
 
   const valid = []; // no errors
 
@@ -154,7 +154,7 @@ describe('maxDate', () => {
 });
 
 describe('beforeEndDate', () => {
-  const schema = validAttributeValue;
+  const schema = attributeSchema;
 
   test.each([
     [
@@ -198,7 +198,7 @@ describe('beforeEndDate', () => {
 });
 
 describe('afterStartDate', () => {
-  const schema = validAttributeValue;
+  const schema = attributeSchema;
 
   test.each([
     [
@@ -264,6 +264,23 @@ describe('arrayOfAttributeValues', () => {
     const data = [validTestValue, { ...validTestValue, id: 2, deleted: true }];
 
     expect(schema.cast(data)).toEqual(data);
+  });
+
+  test('all values have the same key', () => {
+    const schema = arrayOfAttributeValues;
+    const data = [validTestValue, { ...validTestValue, id: 2 }];
+
+    const errors = doValidate(schema, data);
+    expect(errors).toEqual({});
+  });
+
+  test('values with different keys', () => {
+    const schema = arrayOfAttributeValues;
+    const data = [validTestValue, { ...validTestValue, id: 2, key: 'key2' }];
+
+    const errors = doValidate(schema, data);
+
+    expect(errors[''] || []).toEqual(['attribute.multipleKeys ["key1, key2"]']);
   });
 });
 
