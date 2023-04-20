@@ -28,10 +28,14 @@ const DummyField = ({ label, value }) => {
             <TextField label={t('value')} disabled fullWidth value={value} />
           </Grid>
           <Grid xs={12} sm={6} md={3}>
-            <DateField label={t('attribute.validFrom')} disabled />
+            <DateField value={null} label={t('attribute.validFrom')} disabled />
           </Grid>
           <Grid xs={12} sm={6} md={3}>
-            <DateField label={t('attribute.validUntil')} disabled />
+            <DateField
+              value={null}
+              label={t('attribute.validUntil')}
+              disabled
+            />
           </Grid>
         </Grid>
       </Stack>
