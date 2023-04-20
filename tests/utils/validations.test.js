@@ -76,10 +76,18 @@ describe('date string', () => {
 describe('validAttributeValue', () => {
   const schema = validAttributeValue;
 
+  const valid = []; // no errors
+
   test.each([
-    ['A'.repeat(250), []],
-    ['A'.repeat(251), ['maxLength [250]']],
-  ])('value results in errors #%#', (value, expectedErrors) => {
+    { value: '', expected: ['attribute.required'] },
+    { value: ' ', expected: ['attribute.required'] },
+    { value: '\n', expected: ['attribute.required'] },
+    { value: '\t', expected: ['attribute.required'] },
+    { value: '\xa0', expected: ['attribute.required'] }, // nbsp
+    { value: 'A', expected: valid },
+    { value: 'A'.repeat(250), expected: valid },
+    { value: 'A'.repeat(251), expected: ['maxLength [250]'] },
+  ])('value %j', ({ value, expected }) => {
     const data = {
       ...validTestValue,
       value,
@@ -87,7 +95,7 @@ describe('validAttributeValue', () => {
 
     const errors = doValidate(schema, data);
 
-    expect(errors['value'] || []).toEqual(expectedErrors);
+    expect(errors['value'] || []).toEqual(expected);
   });
 
   test('min date', () => {
@@ -99,6 +107,21 @@ describe('validAttributeValue', () => {
     const errors = doValidate(schema, data);
 
     expect(errors['startDate'] || []).toEqual(['minDate ["01/01/1600"]']);
+  });
+
+  test('startDate after endDate', () => {
+    const data = {
+      ...validTestValue,
+      startDate: '2023-01-02',
+      endDate: '2023-01-01',
+    };
+
+    const errors = doValidate(schema, data);
+
+    expect(errors).toEqual({
+      startDate: ['maxDate ["30/12/2022"]'],
+      endDate: ['minDate ["04/01/2023"]'],
+    });
   });
 });
 
