@@ -33,9 +33,17 @@ export const FormContextProvider = ({
     ).then((result) => setErrors(result));
   };
 
-  const submit = () => {
+  const submit = async () => {
     setSubmitting(true);
-    onSubmit(values).finally(() => setSubmitting(false));
+    const submitValues = validationSchema
+      ? validationSchema.cast(values)
+      : values;
+
+    try {
+      await onSubmit(submitValues);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const reset = () => {
