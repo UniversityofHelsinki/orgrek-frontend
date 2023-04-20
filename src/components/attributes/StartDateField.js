@@ -23,10 +23,10 @@ const StartDateField = ({ path, value, onChange }) => {
   const startDatePath = `${path}.startDate`;
   const startDateErrors = getErrors(errors, startDatePath);
 
-  const handleChange = (date, keyboardInputValue, dateString) => {
+  const handleChange = (date) => {
     onChange({
       ...value,
-      startDate: dateString,
+      startDate: date,
     });
   };
 

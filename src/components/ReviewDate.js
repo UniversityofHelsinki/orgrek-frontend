@@ -6,6 +6,7 @@ import Button from '@mui/material/Button';
 import { useTranslation } from 'react-i18next';
 import DateField from './inputs/DateField';
 import Stack from '@mui/material/Stack';
+import { toDate } from '../utils/dateUtils';
 
 const ReviewDate = (props) => {
   const { t } = useTranslation();
@@ -20,7 +21,7 @@ const ReviewDate = (props) => {
       <DateField
         label={t('display_date')}
         value={props.selectedDay ? props.selectedDay : new Date()}
-        onChange={(newDate) => props.onDayChange(newDate)}
+        onChange={(newDate) => props.onDayChange(toDate(newDate))}
       />
       <Button onClick={changeToCurrentDate} variant="outlined">
         {t('return_to_today')}
