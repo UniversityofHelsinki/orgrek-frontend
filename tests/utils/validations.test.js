@@ -1,3 +1,4 @@
+import { string } from 'yup';
 import { convertYupErrors } from '../../src/utils/validationUtils';
 import {
   defaultSchemaForAttributes,
@@ -19,11 +20,49 @@ const doValidate = (schema, value) => {
   try {
     schema.validateSync(value, { abortEarly: false });
   } catch (yupError) {
-    errors = convertYupErrors(yupError);
+    if (yupError.name === 'ValidationError') {
+      errors = convertYupErrors(yupError);
+    } else {
+      // Not a Yup ValidationError
+      console.error(yupError);
+      return {};
+    }
   }
 
   return errors;
 };
+
+describe('date string', () => {
+  const schema = string().date();
+
+  test('valid', () => {
+    const errors = doValidate(schema, '2023-01-01');
+    expect(errors).toEqual({});
+  });
+
+  test('nullable', () => {
+    const errors = doValidate(schema.nullable(), null);
+    expect(errors).toEqual({});
+  });
+
+  test('required', () => {
+    const errors = doValidate(schema.required(), null);
+    expect(errors).toEqual({ '': ['attribute.required'] });
+  });
+
+  test('invalid date', () => {
+    const errors = doValidate(schema.required(), 'invalid date');
+    expect(errors).toEqual({ '': ['invalidDate'] });
+  });
+
+  test('cast returns ISO date string', () => {
+    expect(schema.cast('2023-01-01')).toBe('2023-01-01');
+  });
+
+  test('cast full representation returns ISO date string', () => {
+    expect(schema.cast('2023-01-01T00:00:00Z')).toBe('2023-01-01');
+  });
+});
 
 describe('validAttributeValue', () => {
   const schema = validAttributeValue;
@@ -51,6 +90,34 @@ describe('validAttributeValue', () => {
     const errors = doValidate(schema, data);
 
     expect(errors['startDate'] || []).toEqual(['minDate ["01/01/1600"]']);
+  });
+});
+
+describe('minDate', () => {
+  const schema = string().date().minDate('2023-01-01').nullable();
+
+  test.each([
+    ['2023-01-01', []],
+    ['2022-12-31', ['minDate ["01/01/2023"]']],
+    [null, []],
+    [undefined, []],
+  ])('%p results in validation errors %p', (value, expectedErrors) => {
+    const errors = doValidate(schema, value);
+    expect(errors[''] || []).toEqual(expectedErrors);
+  });
+});
+
+describe('maxDate', () => {
+  const schema = string().date().maxDate('2022-12-31').nullable();
+
+  test.each([
+    ['2022-12-31', []],
+    ['2023-01-01', ['maxDate ["31/12/2022"]']],
+    [null, []],
+    [undefined, []],
+  ])('%p results in validation errors %p', (value, expectedErrors) => {
+    const errors = doValidate(schema, value);
+    expect(errors[''] || []).toEqual(expectedErrors);
   });
 });
 

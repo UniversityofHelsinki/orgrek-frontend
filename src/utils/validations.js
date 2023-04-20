@@ -7,13 +7,12 @@ import {
   object,
   array,
   string,
-  date,
   number,
   boolean,
   setLocale,
   addMethod,
 } from 'yup';
-import { formatDate, toDate } from './dateUtils';
+import { formatDate, toDate, toISODateString } from './dateUtils';
 
 // Customize yup validation error messages
 // Message is either a translation key or an object containing the key and
@@ -33,18 +32,6 @@ setLocale({
       key: 'maxLength',
       // Values available for interpolation in the text
       values: { max },
-    }),
-  },
-  date: {
-    min: ({ min }) => ({
-      key: 'minDate',
-      // Values available for interpolation in the text
-      values: { min: formatDate(min) },
-    }),
-    max: ({ max }) => ({
-      key: 'maxDate',
-      // Values available for interpolation in the text
-      values: { max: formatDate(max) },
     }),
   },
 });
@@ -132,7 +119,69 @@ export const compareAndCheckDates = (values) => {
 };
 
 addMethod(
-  date,
+  string,
+  'minDate',
+  /**
+   * Validates minimum date.
+   *
+   * @param {string|Date} min earliest allowed date
+   */
+  function (min) {
+    return this.test({
+      name: 'minDate',
+      params: {
+        min, // Used by getMin util
+      },
+      test: (value, context) => {
+        if (value === null || value === undefined) {
+          return true;
+        }
+
+        if (isBefore(toDate(value), toDate(min))) {
+          return context.createError({
+            message: { key: 'minDate', values: { min: formatDate(min) } },
+          });
+        }
+
+        return true;
+      },
+    });
+  }
+);
+
+addMethod(
+  string,
+  'maxDate',
+  /**
+   * Validates maximum date.
+   *
+   * @param {string|Date} max latest allowed date
+   */
+  function (max) {
+    return this.test({
+      name: 'maxDate',
+      params: {
+        max, // Used by getMax util
+      },
+      test: (value, context) => {
+        if (value === null || value === undefined) {
+          return true;
+        }
+
+        if (isAfter(toDate(value), toDate(max))) {
+          return context.createError({
+            message: { key: 'maxDate', values: { max: formatDate(max) } },
+          });
+        }
+
+        return true;
+      },
+    });
+  }
+);
+
+addMethod(
+  string,
   'beforeEndDate',
   /**
    * Validates attribute value start date is before end date.
@@ -149,12 +198,12 @@ addMethod(
         minDuration,
       },
       test: (value, context) => {
-        const endDate = context.parent.endDate;
+        const endDate = toDate(context.parent.endDate || null);
         const maxDate = isValid(endDate)
           ? sub(endDate, minDuration)
           : undefined;
 
-        if (maxDate && isAfter(value, maxDate)) {
+        if (maxDate && isAfter(toDate(value), maxDate)) {
           return context.createError({
             message: { key: 'maxDate', values: { max: formatDate(maxDate) } },
           });
@@ -167,7 +216,7 @@ addMethod(
 );
 
 addMethod(
-  date,
+  string,
   'afterStartDate',
   /**
    * Validates attribute value end date is after end date.
@@ -184,12 +233,12 @@ addMethod(
         minDuration,
       },
       test: (value, context) => {
-        const startDate = context.parent.startDate;
+        const startDate = toDate(context.parent.startDate || null);
         const minDate = isValid(startDate)
           ? add(startDate, minDuration)
           : undefined;
 
-        if (minDate && isBefore(value, minDate)) {
+        if (minDate && isBefore(toDate(value), minDate)) {
           return context.createError({
             message: { key: 'minDate', values: { min: formatDate(minDate) } },
           });
@@ -201,20 +250,37 @@ addMethod(
   }
 );
 
-export const attributeValidityDate = date()
-  .typeError('invalidDate')
-  .transform((value, originalValue) => toDate(originalValue));
+addMethod(
+  string,
+  'date',
+  /**
+   * Yup schema for ISO 8601 date string.
+   *
+   * Use string() instead of date() because Yup does not support converting
+   * Date object back to ISO string after the validation.
+   * See https://github.com/jquense/yup/issues/1442
+   */
+  function () {
+    return this.transform((value) => toISODateString(toDate(value))).test({
+      name: 'dateString',
+      message: 'invalidDate',
+      test: (value) => {
+        return value === null || value === undefined || isValid(toDate(value));
+      },
+    });
+  }
+);
 
 export const validAttributeValue = object({
   id: number().required(),
   key: string().required(),
-  value: string().required().max(250), // TODO: trim
-  // TODO: transform dates to ISO date strings
-  startDate: attributeValidityDate
+  value: string().trim().required().max(250),
+  startDate: string()
+    .date()
     .required()
-    .min(toDate('1600-01-01'))
+    .minDate('1600-01-01')
     .beforeEndDate({ days: 2 }),
-  endDate: attributeValidityDate.nullable().afterStartDate({ days: 2 }),
+  endDate: string().date().nullable().afterStartDate({ days: 2 }),
   isNew: boolean().required(),
   deleted: boolean().required(),
 });

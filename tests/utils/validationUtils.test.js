@@ -9,7 +9,7 @@ import {
   getMaxStartDate,
   getMinEndDate,
 } from '../../src/utils/validationUtils';
-import { object, array, string, date } from 'yup';
+import { object, array, string } from 'yup';
 
 // register custom methods
 import '../../src/utils/validations';
@@ -328,8 +328,8 @@ describe('getMin', () => {
     values: array().of(
       object({
         value: string().required().min(10),
-        startDate: date().required(),
-        endDate: date().required().min('2000-01-01'),
+        startDate: string().date().required(),
+        endDate: string().date().required().minDate('2000-01-01'),
       })
     ),
   });
@@ -356,8 +356,8 @@ describe('getMax', () => {
     values: array().of(
       object({
         value: string().required().max(50),
-        startDate: date().required(),
-        endDate: date().required().max('2029-12-31'),
+        startDate: string().date().required(),
+        endDate: string().date().required().maxDate('2029-12-31'),
       })
     ),
   });
@@ -382,8 +382,8 @@ describe('getMax', () => {
 describe('getMaxStartDate', () => {
   const schema = object({
     value: string(),
-    startDate: date().beforeEndDate({ days: 2 }),
-    endDate: date().afterStartDate({ days: 2 }),
+    startDate: string().date().beforeEndDate({ days: 2 }),
+    endDate: string().date().afterStartDate({ days: 2 }),
   });
   const value = {
     value: 'foo',
@@ -412,8 +412,8 @@ describe('getMaxStartDate', () => {
 describe('getMinEndDate', () => {
   const schema = object({
     value: string(),
-    startDate: date().beforeEndDate({ days: 2 }).min('1600-01-01'),
-    endDate: date().afterStartDate({ days: 2 }),
+    startDate: string().date().beforeEndDate({ days: 2 }).min('1600-01-01'),
+    endDate: string().date().afterStartDate({ days: 2 }),
   });
   const value = {
     value: 'foo',

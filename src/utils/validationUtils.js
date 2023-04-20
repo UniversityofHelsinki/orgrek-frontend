@@ -176,7 +176,8 @@ export const isRequired = (schema, path) =>
  * @return {number|undefined}
  */
 export const getMin = (schema, path) =>
-  getTest(schema, path, 'min')?.params.min;
+  getTest(schema, path, 'min')?.params.min ||
+  getTest(schema, path, 'minDate')?.params.min;
 
 /**
  * Returns the max param of the given field in the given schema.
@@ -186,7 +187,8 @@ export const getMin = (schema, path) =>
  * @return {number|undefined}
  */
 export const getMax = (schema, path) =>
-  getTest(schema, path, 'max')?.params.max;
+  getTest(schema, path, 'max')?.params.max ||
+  getTest(schema, path, 'maxDate')?.params.max;
 
 /**
  * Returns attribute value max start date in the given schema.
