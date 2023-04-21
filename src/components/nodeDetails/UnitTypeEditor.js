@@ -10,7 +10,7 @@ import { useSelector } from 'react-redux';
 import fillSelectableUnits from '../../hooks/filterSelectableUnits';
 const selectableUnits = [];
 
-const UnitTypeEditor = () => {
+const UnitTypeEditor = ({ keys }) => {
   const { t } = useTranslation();
   const { data } = useGetValidHierarchyFiltersQuery();
   const selectedHierarchies = useSelector(
@@ -18,7 +18,7 @@ const UnitTypeEditor = () => {
   );
   const { values, setValues } = useForm();
 
-  fillSelectableUnits(selectableUnits, data, selectedHierarchies);
+  fillSelectableUnits(selectableUnits, data, selectedHierarchies, keys);
 
   const renderValueField = (valueFieldProps) => (
     <TextField select {...valueFieldProps}>
@@ -36,8 +36,8 @@ const UnitTypeEditor = () => {
   return (
     <Stack spacing={2}>
       <AttributeEditor
-        attributeLabel={t('type')}
-        attributeKey={'type'}
+        attributeLabel={t(keys[0])}
+        attributeKey={keys[0]}
         valueLabel={t('value')}
         path="type"
         data={values.type}

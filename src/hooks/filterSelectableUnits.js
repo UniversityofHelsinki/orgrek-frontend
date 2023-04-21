@@ -23,10 +23,15 @@ const concatValues = (data, hierarchyValues) => {
   return uniqueValues.toString().replace(/,\s*$/, ''); //removes last comma and space (if there is a one)
 };
 
-const fillSelectableUnits = (selectableUnits, data, selectedHierarchies) => {
-  if (data) {
+const fillSelectableUnits = (
+  selectableUnits,
+  data,
+  selectedHierarchies,
+  keys
+) => {
+  if (data && keys && keys.length > 0) {
     const hierarchiesWhereKeyValueIsType = Object.values(data).filter(
-      (item) => item.key === 'type'
+      (item) => item.key === keys[0]
     );
     const sortedHierarchies = sortHierarchies(hierarchiesWhereKeyValueIsType);
     const units = concatValues(sortedHierarchies, selectedHierarchies);

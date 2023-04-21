@@ -6,6 +6,7 @@ import Placeholder from '../Placeholder';
 import EditableContent from '../EditableContent';
 import UnitTypeEditor from './UnitTypeEditor';
 import {
+  useGetAttributeKeysBySectionQuery,
   useGetTypeAttributesQuery,
   useGetValidHierarchyFiltersQuery,
   useSaveTypeAttributesMutation,
@@ -22,12 +23,15 @@ const UnitTypeSection = () => {
   const { t } = useTranslation();
   const nodeId = useNodeId();
   const { data, isFetching } = useGetTypeAttributesQuery(nodeId);
+  const { data: keysData } = useGetAttributeKeysBySectionQuery('types');
   const { data: hierarchies } = useGetValidHierarchyFiltersQuery();
   const selectedHierarchies = useSelector(
     (state) => state.tree.selectedHierarchy
   );
   const [saveTypeAttributes] = useSaveTypeAttributesMutation();
   const selectableUnits = [];
+
+  const keys = (keysData || []).map((key) => key.attr);
 
   // In edit mode data includes also history and future
   const sortedData = useSortAttributesByDate(data);
@@ -40,7 +44,12 @@ const UnitTypeSection = () => {
 
   const toFormValues = (data) => {
     const foundTypes = [];
-    fillSelectableUnits(selectableUnits, hierarchies, selectedHierarchies);
+    fillSelectableUnits(
+      selectableUnits,
+      hierarchies,
+      selectedHierarchies,
+      keys
+    );
     data.forEach((value) => {
       selectableUnits.forEach((o) => {
         if (o.value === value.value) {
@@ -55,8 +64,6 @@ const UnitTypeSection = () => {
 
   // Validates form values every time when the values change
   // Submit button is disabled when validation fails
-  // TODO: Use keys from backend (implemented in OR-1046)
-  const keys = ['type'];
   const validationSchema = defaultSchemaForAttributes(keys);
 
   const ObjetToArray = (obj) => Object.assign([], Object.values(obj));
@@ -73,7 +80,7 @@ const UnitTypeSection = () => {
       defaultExpanded={!empty}
     >
       <EditableContent
-        editorComponent={<UnitTypeEditor />}
+        editorComponent={<UnitTypeEditor keys={keys} />}
         validationSchema={validationSchema}
         initialValues={toFormValues(sortedData)}
         onSubmit={handleSubmit}
