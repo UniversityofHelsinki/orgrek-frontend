@@ -6,6 +6,7 @@ import Placeholder from '../Placeholder';
 import EditableContent from '../EditableContent';
 import UnitTypeEditor from './UnitTypeEditor';
 import {
+  useGetAttributeKeysBySectionQuery,
   useGetTypeAttributesQuery,
   useGetValidHierarchyFiltersQuery,
   useSaveTypeAttributesMutation,
@@ -22,6 +23,7 @@ const UnitTypeSection = () => {
   const { t } = useTranslation();
   const nodeId = useNodeId();
   const { data, error, isFetching } = useGetTypeAttributesQuery(nodeId);
+  const { data: keysData } = useGetAttributeKeysBySectionQuery('types');
   const {
     data: hierarchies,
     hierarchyerror,
@@ -32,6 +34,8 @@ const UnitTypeSection = () => {
   );
   const [saveTypeAttributes] = useSaveTypeAttributesMutation();
   const selectableUnits = [];
+
+  const keys = (keysData || []).map((key) => key.attr);
 
   // In edit mode data includes also history and future
   const sortedData = useSortAttributesByDate(data);
@@ -44,7 +48,12 @@ const UnitTypeSection = () => {
 
   const toFormValues = (data) => {
     const foundTypes = [];
-    fillSelectableUnits(selectableUnits, hierarchies, selectedHierarchies);
+    fillSelectableUnits(
+      selectableUnits,
+      hierarchies,
+      selectedHierarchies,
+      keys
+    );
     data.forEach((value) => {
       selectableUnits.forEach((o) => {
         if (o.value === value.value) {
@@ -81,7 +90,7 @@ const UnitTypeSection = () => {
       defaultExpanded={!empty}
     >
       <EditableContent
-        editorComponent={<UnitTypeEditor />}
+        editorComponent={<UnitTypeEditor keys={keys} />}
         validate={validate}
         initialValues={toFormValues(sortedData)}
         onSubmit={handleSubmit}
