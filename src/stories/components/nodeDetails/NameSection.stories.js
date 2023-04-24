@@ -13,59 +13,66 @@ const nodeId = '1';
 const data = [
   {
     id: 4899999926,
-    nodeId: '4820',
     key: 'name_fi',
     value: 'Tietotekniikkaratkaisut 1',
-    startDate: null,
+    startDate: '1970-01-01',
     endDate: '1999-12-31',
+    isNew: false,
+    deleted: false,
   },
   {
     id: 48111122,
-    nodeId: '4820',
     key: 'name_sv',
     value: 'Datatekniklösningar',
-    startDate: null,
+    startDate: '1970-01-01',
     endDate: null,
+    isNew: false,
+    deleted: false,
   },
   {
     id: 480021,
-    nodeId: '4820',
     key: 'name_en',
     value: 'IT Solutions 1',
-    startDate: null,
+    startDate: '1970-01-01',
     endDate: '1999-12-31',
+    isNew: false,
+    deleted: false,
   },
   {
     id: 4856726,
-    nodeId: '4820',
     key: 'name_fi',
     value: 'Tietotekniikkaratkaisut 2',
     startDate: '2000-01-01',
     endDate: '2022-12-31',
+    isNew: false,
+    deleted: false,
   },
   {
     id: 44821,
-    nodeId: '4820',
     key: 'name_en',
     value: 'IT Solutions 2',
     startDate: '2000-01-01',
     endDate: '2022-12-31',
+    isNew: false,
+    deleted: false,
   },
   {
     id: 48246,
-    nodeId: '4820',
     key: 'name_fi',
     value: 'Tietotekniikkaratkaisut 3',
     startDate: '2023-01-01',
     endDate: null,
+    isNew: false,
+    deleted: false,
   },
   {
     id: 4821989,
-    nodeId: '4820',
     key: 'name_en',
     value: 'IT Solutions 3',
     startDate: '2023-01-01',
     endDate: null,
+    isNew: false,
+    deleted: false,
   },
 ];
 
@@ -103,7 +110,7 @@ export const Default = {
     msw: {
       handlers: [
         mockGetNameAttributes(nodeId, data),
-        mockPutNameAttributes(),
+        mockPutNameAttributes(nodeId),
         mockGetSectionTypeAttributes('names', sectionTypeData),
       ],
     },
@@ -116,7 +123,7 @@ export const Empty = {
     msw: {
       handlers: [
         mockGetNameAttributes(nodeId, []),
-        mockPutNameAttributes(),
+        mockPutNameAttributes(nodeId),
         mockGetSectionTypeAttributes('names', sectionTypeData),
       ],
     },
@@ -129,7 +136,7 @@ export const ShowHistory = {
     msw: {
       handlers: [
         mockGetNameAttributes(nodeId, data),
-        mockPutNameAttributes(),
+        mockPutNameAttributes(nodeId),
         mockGetSectionTypeAttributes('names', sectionTypeData),
       ],
     },

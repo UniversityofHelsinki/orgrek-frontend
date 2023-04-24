@@ -1,8 +1,8 @@
 import React from 'react';
-import { render, screen } from '../testUtils';
+import { object, string } from 'yup';
+import { render, screen, waitFor } from '../testUtils';
 import { FormContextProvider } from '../../src/contexts/FormContext';
 import useForm from '../../src/hooks/useForm';
-import { userEvent } from '@storybook/testing-library';
 
 const TestForm = () => {
   const {
@@ -26,7 +26,7 @@ const TestForm = () => {
       <p data-testid="dirty">{String(dirty)}</p>
       <p data-testid="invalid">{String(invalid)}</p>
       <p data-testid="valid">{String(valid)}</p>
-      <p data-testid="submitting">{String(submitting)}</p>
+      {submitting && <p>submitting</p>}
       <p data-testid="errors">{JSON.stringify(errors)}</p>
     </div>
   );
@@ -37,6 +37,7 @@ const renderTestForm = (props) => {
     initialValues: {},
     onSubmit: async () => {},
     validate: () => {},
+    validationSchema: null,
   };
 
   return render(
@@ -66,8 +67,12 @@ describe('validate', () => {
     [{ field1: [], field2: 'error' }, false],
     [{ field1: [], field2: '' }, true],
   ])('validation result %j valid %s', async (validationResult, valid) => {
-    renderTestForm({ validate: () => validationResult });
-    await userEvent.click(screen.getByText('Set values'));
+    const { user } = renderTestForm({ validate: () => validationResult });
+
+    await waitFor(async () => {
+      await user.click(screen.getByText('Set values'));
+    });
+
     expect(screen.getByTestId('valid')).toHaveTextContent(String(valid));
     expect(screen.getByTestId('invalid')).toHaveTextContent(String(!valid));
   });
@@ -80,8 +85,12 @@ describe('dirty', () => {
   });
 
   test('true after modified', async () => {
-    renderTestForm();
-    await userEvent.click(screen.getByText('Set values'));
+    const { user } = renderTestForm();
+
+    await waitFor(async () => {
+      await user.click(screen.getByText('Set values'));
+    });
+
     expect(screen.getByTestId('dirty')).toHaveTextContent('true');
   });
 });
@@ -93,8 +102,14 @@ describe('errors', () => {
   });
 
   test('returns values from validate', async () => {
-    renderTestForm({ validate: () => ({ error: ['Form has errors'] }) });
-    await userEvent.click(screen.getByText('Set values'));
+    const { user } = renderTestForm({
+      validate: () => ({ error: ['Form has errors'] }),
+    });
+
+    await waitFor(async () => {
+      await user.click(screen.getByText('Set values'));
+    });
+
     expect(screen.getByTestId('errors')).toHaveTextContent(
       '{"error":["Form has errors"]}'
     );
@@ -108,8 +123,44 @@ describe('values', () => {
   });
 
   test('modified', async () => {
-    renderTestForm({ initialValues: { value: 4 } });
-    await userEvent.click(screen.getByText('Set values'));
+    const { user } = renderTestForm({ initialValues: { value: 4 } });
+
+    await waitFor(async () => {
+      await user.click(screen.getByText('Set values'));
+    });
+
     expect(screen.getByTestId('values')).toHaveTextContent('{"value":1}');
+  });
+});
+
+describe('submit', () => {
+  test('casts values if validationSchema is defined', async () => {
+    const validationSchema = object({
+      value: string().trim(),
+    });
+    const onSubmit = jest.fn();
+
+    const { user } = renderTestForm({
+      validationSchema,
+      initialValues: { value: ' foo  ' },
+      onSubmit,
+    });
+
+    await user.click(screen.getByText('Submit'));
+
+    expect(onSubmit).toHaveBeenCalledWith({ value: 'foo' });
+  });
+
+  test('validationSchema not defined', async () => {
+    const onSubmit = jest.fn();
+
+    const { user } = renderTestForm({
+      initialValues: { value: ' foo  ' },
+      onSubmit,
+    });
+
+    await user.click(screen.getByText('Submit'));
+
+    expect(onSubmit).toHaveBeenCalledWith({ value: ' foo  ' });
   });
 });

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { hierarchyDate, showValidity } from '../actions/utilAction';
+import { hierarchyDate } from '../actions/utilAction';
 import { Col, Form, Row, Table } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { styled } from '@mui/material/styles';
@@ -9,6 +9,7 @@ import ChooseDate from './ChooseDate';
 import UnitDropDown from './UnitDropDown';
 import ChooseUpperUnitDate from './ChooseUpperUnitDate';
 import { Accordion, AccordionDetails, AccordionSummary } from './Accordion';
+import { showValidity } from '../utils/showValidity';
 
 const ListLink = styled('a')(({ theme }) => ({
   textDecoration: 'none',
@@ -16,8 +17,7 @@ const ListLink = styled('a')(({ theme }) => ({
 }));
 
 const NodeDetailsTable = (props) => {
-  const { t, i18n } = useTranslation();
-  const lang = i18n.language;
+  const { t } = useTranslation();
 
   useEffect(() => {}, [props.edit]);
 
@@ -125,7 +125,7 @@ const NodeDetailsTable = (props) => {
           <td>
             {isEditMode(elem)
               ? renderDateComponent(elem)
-              : t(showValidity(elem.startDate, elem.endDate, i18n, t))}
+              : t(showValidity(elem.startDate, elem.endDate))}
           </td>
         ) : (
           <></>
@@ -177,7 +177,7 @@ const NodeDetailsTable = (props) => {
             <td>
               {isEditMode(true) && isUpperUnit()
                 ? renderUpperUnitDate(elem, hierarchy)
-                : hierarchyDate(hierarchy, i18n, t)}
+                : hierarchyDate(hierarchy)}
             </td>
           </tr>
         ))}
@@ -205,10 +205,8 @@ const NodeDetailsTable = (props) => {
                 <td onClick={() => props.onNodeSelection(elem)}>
                   <ListLink href="#">{elem.fullName}</ListLink>
                 </td>
-                <td>{showValidity(elem.startDate, elem.endDate, i18n, t)}</td>
-                <td>
-                  {showValidity(elem.edgeStartDate, elem.edgeEndDate, i18n, t)}
-                </td>
+                <td>{showValidity(elem.startDate, elem.endDate)}</td>
+                <td>{showValidity(elem.edgeStartDate, elem.edgeEndDate)}</td>
               </tr>
             );
           }
@@ -237,7 +235,7 @@ const mapStateToProps = (state) => ({
   node: state.nrd.node,
 });
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
+const mapDispatchToProps = (dispatch) => ({
   onNodeSelection: (elem) => {
     dispatch(fetchNode(elem.uniqueId));
   },

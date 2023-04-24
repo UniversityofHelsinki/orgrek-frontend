@@ -9,7 +9,6 @@ const notificationsSlice = createSlice({
   initialState,
   reducers: {
     showNotification: (state, action) => {
-      console.log(action.payload);
       state.queue.push({
         ...action.payload,
         key: new Date().getTime(),

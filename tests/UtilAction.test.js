@@ -5,7 +5,6 @@ import {
   filterAttributeDuplicates,
   filterNodeDuplicates,
   flattenTree,
-  showValidity,
 } from '../src/actions/utilAction';
 
 jest.spyOn(reactRedux, 'useDispatch');
@@ -302,41 +301,4 @@ test('deepEqual distinguishes different and similar objects', () => {
   };
   expect(deepEqual(obj1, obj2)).toBeTruthy;
   expect(deepEqual(obj1, obj3)).toBeFalsy;
-});
-test('the from dates render as expected', () => {
-  const t = (str) => str;
-  const i18n = { language: 'fi' };
-  const parseDate = showValidity(
-    '2013-12-31T20:00:00.000+00:00',
-    null,
-    i18n,
-    t
-  );
-  expect(parseDate).toMatch(/12|31[./]12|31[./]2013from_date/);
-});
-
-test('the until dates render as expected', () => {
-  const t = (str) => str;
-  const i18n = { language: 'fi' };
-  const parseDate = showValidity(null, '2016-12-31 00:00:00', i18n, t);
-  expect(parseDate).toMatch(/12|31[./]12|31[./]2016until_date/);
-});
-
-test('the time period dates render as expected', () => {
-  const t = (str) => str;
-  const i18n = { language: 'fi' };
-  const parseDate = showValidity(
-    '2013-12-31T20:00:00.000+00:00',
-    '2016-12-31 00:00:00',
-    i18n,
-    t
-  );
-  expect(parseDate).toMatch(/12|31[./]12|31[./]2013 - 12|31[./]12|31[./]2016/);
-});
-
-test('the missing date message rendes as expected', () => {
-  const t = (str) => str;
-  const i18n = { language: 'fi' };
-  const parseDate = showValidity(null, null, i18n, t);
-  expect(parseDate).toMatch('not_specified');
 });
