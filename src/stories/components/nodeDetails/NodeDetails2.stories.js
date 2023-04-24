@@ -16,6 +16,7 @@ import {
   mockGetNode,
   mockGetParents,
   mockGetPredecessors,
+  mockGetSectionTypeAttributes,
   mockGetSuccessors,
   mockGetTypeAttributes,
   mockGetValidHierarchyFilters,
@@ -57,21 +58,38 @@ export const AdminRole = {
           timestamp: '2022-01-18T15:39:54.603+00:00',
           uniqueId: nodeId,
         }),
+        mockGetSectionTypeAttributes('names', [
+          {
+            id: 14,
+            section: 'names',
+            attr: 'name_fi',
+          },
+          {
+            id: 15,
+            section: 'names',
+            attr: 'name_sv',
+          },
+          {
+            id: 16,
+            section: 'names',
+            attr: 'name_en',
+          },
+        ]),
         mockGetNameAttributes(nodeId, [
           {
             id: 4899999926,
             nodeId: '4820',
             key: 'name_fi',
             value: 'Tietotekniikkaratkaisut 1',
-            startDate: null,
-            endDate: '1999-12-31',
+            startDate: '1999-12-31',
+            endDate: null,
           },
           {
             id: 48111122,
             nodeId: '4820',
             key: 'name_sv',
             value: 'Datatekniklösningar',
-            startDate: null,
+            startDate: '1999-12-31',
             endDate: null,
           },
           {
@@ -79,11 +97,11 @@ export const AdminRole = {
             nodeId: '4820',
             key: 'name_en',
             value: 'IT Solutions 1',
-            startDate: null,
-            endDate: '1999-12-31',
+            startDate: '1999-12-31',
+            endDate: null,
           },
         ]),
-        mockPutNameAttributes(),
+        mockPutNameAttributes(nodeId),
         mockGetCodeAttributes(nodeId, [
           {
             id: 4824,

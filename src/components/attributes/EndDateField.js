@@ -1,14 +1,15 @@
-import React, { useState } from 'react';
+import React from 'react';
 import useForm from '../../hooks/useForm';
-import isValid from 'date-fns/isValid';
-import format from 'date-fns/format';
 import DateField from '../inputs/DateField';
 import HelperText from '../inputs/HelperText';
 import { useTranslation } from 'react-i18next';
-import { filterEmpty, getErrors } from '../../utils/validationUtils';
-import addDays from 'date-fns/addDays';
+import {
+  getErrors,
+  getMax,
+  getMinEndDate,
+  isRequired,
+} from '../../utils/validationUtils';
 import PropTypes from 'prop-types';
-import parseISO from 'date-fns/parseISO';
 
 /**
  * Renders a date field for editing attribute end date.
@@ -17,56 +18,27 @@ import parseISO from 'date-fns/parseISO';
  */
 const EndDateField = ({ path, value, onChange }) => {
   const { t } = useTranslation();
-  const { errors } = useForm();
+  const { errors, validationSchema } = useForm();
 
-  // TODO: Remove this state (OR-1031)
-  const [endDateError, setEndDateError] = useState(null);
+  const endDatePath = `${path}.endDate`;
+  const endDateErrors = getErrors(errors, endDatePath);
 
-  // TODO: remove endDateError and use only errors from useForm (OR-1031)
-  const endDateErrors = filterEmpty([
-    endDateError,
-    ...getErrors(errors, `${path}.endDate`),
-  ]);
-
-  const handleDateEndChange = (date) => {
-    if (date !== null && !isValid(date)) {
-      setEndDateError(t('invalidDate'));
-
-      onChange({
-        ...value,
-        endDate: 'invalid date',
-      });
-
-      return;
-    }
-
-    setEndDateError(null);
-
+  const handleChange = (date) => {
     onChange({
       ...value,
-      endDate: date && format(date, 'yyyy-MM-dd'),
+      endDate: date,
     });
   };
 
   return (
     <DateField
+      required={isRequired(validationSchema, endDatePath)}
       label={t('attribute.validUntil')}
       fullWidth
       value={value.endDate}
-      onChange={handleDateEndChange}
-      minDate={
-        value.startDate !== null ? addDays(parseISO(value.startDate), 2) : null
-      }
-      onError={(reason) => {
-        if (reason) {
-          //setEndDateError(t('reason')); Kommenteissa, että näkee virheen "nimen",
-          //joka lisätään käännösteksteihin. Tämä koodirivi otetaan käyttöön kun pääsee lisäämään
-          //käännöstekstin. Samalla alla oleva rivi poistetaan.
-          setEndDateError(reason);
-        } else {
-          setEndDateError(null);
-        }
-      }}
+      onChange={handleChange}
+      minDate={getMinEndDate(validationSchema, endDatePath, value)}
+      maxDate={getMax(validationSchema, endDatePath)}
       error={endDateErrors.length > 0}
       helperText={<HelperText errors={endDateErrors} />}
     />

@@ -15,8 +15,7 @@ import { authActions } from '../../auth';
 import { useNodeId } from '../../hooks/useNodeId';
 import { useCodeAttributes } from '../../hooks/useCodeAttributes';
 import useFilterAttributesByDate from '../../hooks/useFilterAttributesByDate';
-import { compareAndCheckDates, valueNotEmpty } from './Validations';
-import { attributeSanitation } from './Sanitations';
+import { defaultSchemaForAttributes } from '../../utils/validations';
 import { flattenAttributes, toFormValues } from '../../utils/attributeUtils';
 
 const readOnlyFields = (attributes, keys) => {
@@ -57,21 +56,16 @@ const withoutReadOnlyFields = (attributes, readOnlyFieldKeys) => {
 const CodeAttributesSection = () => {
   const { t } = useTranslation();
   const nodeId = useNodeId();
-  const { codeAttributes } = useCodeAttributes();
+  const { codeAttributes, isFetching } = useCodeAttributes();
   const selectedHierarchies = useSelector(
     (s) => s.tree.selectedHierarchy || s.tree.defaultHierarchy
   );
   const presentCodeAttributes = useFilterAttributesByDate(codeAttributes);
-  const { data, isFetching } = useGetAttributeKeysQuery(selectedHierarchies);
-  const attributeKeys = data;
-
-  const readOnlyFieldKeys = ['unique_id'];
-
+  const { data: attributeKeys, isFetching: isFetchingKeys } =
+    useGetAttributeKeysQuery(selectedHierarchies);
   const [saveCodeAttributes] = useSaveCodeAttributesMutation();
 
-  if (isFetching || !attributeKeys) {
-    return <></>;
-  }
+  const readOnlyFieldKeys = ['unique_id'];
 
   const columns = [
     { label: t('code_namespace'), render: (item) => t(item.key) },
@@ -83,21 +77,32 @@ const CodeAttributesSection = () => {
       ),
     },
   ];
-  const validate = (values) => {
-    const all = Object.values(values).flat();
-    const sanitized = attributeSanitation(all);
-    return {
-      ...compareAndCheckDates(sanitized),
-      ...valueNotEmpty(sanitized),
-    };
-  };
   const title = t('codes');
   const empty = codeAttributes.length === 0;
 
+  if (isFetching || isFetchingKeys) {
+    return <EditableAccordion title={title} loading />;
+  }
+
+  const initialValues = includeMissing(
+    toFormValues(
+      withoutReadOnlyFields(
+        filterExcess(codeAttributes, attributeKeys),
+        readOnlyFieldKeys
+      )
+    ),
+    attributeKeys
+  );
+
+  // Validates form values every time when the values change
+  // Submit button is disabled when validation fails
+  const validationSchema = defaultSchemaForAttributes(
+    Object.keys(initialValues)
+  );
+
   const handleSubmit = (input) => {
     const attributes = flattenAttributes(input);
-    const sanitized = attributeSanitation(attributes);
-    return saveCodeAttributes({ attributes: sanitized, nodeId }).unwrap();
+    return saveCodeAttributes({ attributes, nodeId }).unwrap();
   };
 
   return (
@@ -108,16 +113,8 @@ const CodeAttributesSection = () => {
             readOnlyFields={readOnlyFields(codeAttributes, readOnlyFieldKeys)}
           />
         }
-        initialValues={includeMissing(
-          toFormValues(
-            withoutReadOnlyFields(
-              filterExcess(codeAttributes, attributeKeys),
-              readOnlyFieldKeys
-            )
-          ),
-          attributeKeys
-        )}
-        validate={validate}
+        initialValues={initialValues}
+        validationSchema={validationSchema}
         onSubmit={handleSubmit}
         successMessage={t('codeInfo.saveSuccess')}
         errorMessage={t('codeInfo.saveError')}

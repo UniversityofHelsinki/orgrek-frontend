@@ -14,8 +14,7 @@ import {
 } from '../../store';
 import useSortAttributesByDate from '../../hooks/useSortAttributesByDate';
 import useFilterAttributesByDate from '../../hooks/useFilterAttributesByDate';
-import { compareAndCheckDates, valueNotEmpty } from './Validations';
-import { attributeSanitation } from './Sanitations';
+import { defaultSchemaForAttributes } from '../../utils/validations';
 import { authActions } from '../../auth';
 import { flattenAttributes, toFormValues } from '../../utils/attributeUtils';
 
@@ -27,6 +26,8 @@ const NameSection = () => {
     useGetAttributeKeysBySectionQuery('names');
   const [saveNameAttributes] = useSaveNameAttributesMutation();
 
+  const keys = (keysData || []).map((key) => key.attr);
+
   // In edit mode data includes also history and future
   const sortedData = useSortAttributesByDate(data);
 
@@ -34,21 +35,12 @@ const NameSection = () => {
   const sortedAndFilteredData = useFilterAttributesByDate(sortedData);
 
   // Validates form values every time when the values change
-  // Submit button is disabled when errors contain any truthy values
-  // EditableContent handles displaying form-level validation error messages
-  const validate = (values) => {
-    const combinedArrays = flattenAttributes(values);
-    return {
-      ...valueNotEmpty(combinedArrays),
-      ...compareAndCheckDates(combinedArrays),
-    };
-  };
+  // Submit button is disabled when validation fails
+  const validationSchema = defaultSchemaForAttributes(keys);
 
   const handleSubmit = (input) => {
     const attributes = flattenAttributes(input);
-    const sanitized = attributeSanitation(attributes);
-
-    return saveNameAttributes({ attributes: sanitized, nodeId }).unwrap();
+    return saveNameAttributes({ attributes, nodeId }).unwrap();
   };
 
   const columns = [
@@ -64,8 +56,6 @@ const NameSection = () => {
 
   const title = t('name_info');
   const empty = sortedAndFilteredData.length === 0;
-
-  const keys = (keysData || []).map((key) => key.attr);
 
   const sortedDataByKeys = keys
     .map((key) => sortedAndFilteredData.filter((value) => value.key === key))
@@ -87,7 +77,7 @@ const NameSection = () => {
     >
       <EditableContent
         editorComponent={<NameEditor keys={keys} />}
-        validate={validate}
+        validationSchema={validationSchema}
         initialValues={toFormValues(sortedData)}
         onSubmit={handleSubmit}
         successMessage={t('nameInfo.saveSuccess')}

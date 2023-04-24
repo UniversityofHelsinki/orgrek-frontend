@@ -1,7 +1,6 @@
 import React from 'react';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { useState } from 'react';
-import { parseISO } from 'date-fns';
 import DateField from '../../../components/inputs/DateField';
 
 export default {
@@ -12,6 +11,9 @@ export default {
         component: 'A wrapper component for MUI X date picker',
       },
     },
+  },
+  argTypes: {
+    onChange: { action: true },
   },
 };
 
@@ -24,16 +26,17 @@ export const Basic = {
     disabled: false,
     error: false,
   },
-  render: (args) => {
-    const [value, setValue] = useState(
-      args.value ? parseISO(args.value) : null
-    );
+  render: ({ onChange, ...args }) => {
+    const [value, setValue] = useState(args.value || null);
 
     return (
       <DateField
         {...args}
         value={value}
-        onChange={(newValue) => setValue(newValue)}
+        onChange={(date, keyboardInputValue) => {
+          setValue(date);
+          onChange(date, keyboardInputValue);
+        }}
       />
     );
   },
