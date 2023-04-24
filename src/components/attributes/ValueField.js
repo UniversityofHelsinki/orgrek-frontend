@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import useForm from '../../hooks/useForm';
 import HelperText from '../inputs/HelperText';
 import TextField from '../inputs/TextField';
-import { filterEmpty, getErrors } from '../../utils/validationUtils';
+import { getErrors, getMax, isRequired } from '../../utils/validationUtils';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
@@ -13,25 +13,13 @@ import PropTypes from 'prop-types';
  */
 const ValueField = ({ label, path, value, onChange, renderValueField }) => {
   const { t } = useTranslation();
-  const { errors } = useForm();
+  const { errors, validationSchema } = useForm();
 
-  // TODO: Remove this state (OR-1031)
-  const [valueError, setValueError] = useState(null);
-
-  // TODO: remove valueError and use only errors from useForm (OR-1031)
-  const valueErrors = filterEmpty([
-    valueError,
-    ...getErrors(errors, `${path}.value`),
-  ]);
+  const valuePath = `${path}.value`;
+  const valueErrors = getErrors(errors, valuePath);
 
   const handleValueChange = (event) => {
     const newValue = event.target.value;
-
-    if (!newValue) {
-      setValueError(t('attribute.required'));
-    } else {
-      setValueError(null);
-    }
 
     onChange({
       ...value,
@@ -54,10 +42,10 @@ const ValueField = ({ label, path, value, onChange, renderValueField }) => {
     value: value.value || '',
     onChange: handleValueChange,
     fullWidth: true,
-    required: true,
+    required: isRequired(validationSchema, valuePath),
     error: valueErrors.length > 0,
     helperText: <HelperText errors={valueErrors} />,
-    inputProps: { maxLength: 250 },
+    inputProps: { maxLength: getMax(validationSchema, valuePath) },
     onBlur: handleLeavingFocus,
   };
 

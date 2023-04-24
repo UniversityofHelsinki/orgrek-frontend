@@ -1,55 +1,8 @@
-import parseISO from 'date-fns/parseISO';
-import format from 'date-fns/format';
-import { fi } from 'date-fns/locale';
-import i18n from '../i18n';
+import { showValidity } from '../utils/showValidity';
 
-const { t } = i18n;
-
-const formatDate = (date) => format(parseISO(date), 'P', { locale: fi });
-
-export const showValidity = (startDate, endDate) => {
-  const lang = i18n.language;
-  if (startDate && endDate) {
-    return formatDate(startDate) + ' - ' + formatDate(endDate);
-  }
-  if (startDate) {
-    switch (lang) {
-      case 'fi':
-        return formatDate(startDate) + ' ' + t('from_date_react');
-
-      default:
-        return t('from_date_react') + ' ' + formatDate(startDate);
-    }
-  }
-
-  if (endDate) {
-    switch (lang) {
-      case 'fi':
-        return formatDate(endDate) + ' ' + t('until_date_react');
-
-      default:
-        return t('until_date_react') + ' ' + formatDate(endDate);
-    }
-  }
-
-  return t('not_specified');
-};
-
-export const selectNameVersion = (i18n, item) => {
-  switch (i18n.language) {
-    case 'en':
-      return item.nameEn;
-    case 'fi':
-      return item.nameFi;
-    case 'sv':
-      return item.nameSv;
-    default:
-      return item.nameFi;
-  }
-};
-
+/** @deprecated */
 export const hierarchyDate = (hierarchy) => {
-  return showValidity(hierarchy.startDate, hierarchy.endDate, i18n, t);
+  return showValidity(hierarchy.startDate, hierarchy.endDate);
 };
 
 /*

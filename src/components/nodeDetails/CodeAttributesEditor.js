@@ -28,19 +28,13 @@ const DummyField = ({ label, value }) => {
             <TextField label={t('value')} disabled fullWidth value={value} />
           </Grid>
           <Grid xs={12} sm={6} md={3}>
-            <DateField
-              value={null}
-              label={t('attribute.validFrom')}
-              disabled
-              onChange={() => {}}
-            />
+            <DateField value={null} label={t('attribute.validFrom')} disabled />
           </Grid>
           <Grid xs={12} sm={6} md={3}>
             <DateField
               value={null}
               label={t('attribute.validUntil')}
               disabled
-              onChange={() => {}}
             />
           </Grid>
         </Grid>
