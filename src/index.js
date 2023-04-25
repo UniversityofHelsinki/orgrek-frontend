@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import store from './store/store';
 import { Provider } from 'react-redux';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -9,13 +9,14 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import './i18n';
 
-ReactDOM.render(
+const el = document.getElementById('root');
+const root = createRoot(el);
+root.render(
   <Provider store={store}>
     <Suspense fallback={<div>Loading...</div>}>
       <App />
     </Suspense>
-  </Provider>,
-  document.getElementById('root')
+  </Provider>
 );
 
 // If you want to start measuring performance in your app, pass a function
