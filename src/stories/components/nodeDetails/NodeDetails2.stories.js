@@ -140,11 +140,13 @@ export const AdminRole = {
           },
         ]),
         mockPutTypeAttributes(nodeId),
-        mockGetAttributeKeys(selectedHierarchy, [
-          'emo_lyhenne',
-          'lyhenne',
-          'talous_tunnus',
-        ]),
+        mockGetAttributeKeys(
+          {
+            selectedHierarchies: selectedHierarchy,
+            sections: ['codes'],
+          },
+          ['emo_lyhenne', 'lyhenne', 'talous_tunnus']
+        ),
         mockGetValidHierarchyFilters(now, hierarchyFilters),
         mockGetFullNames(nodeId, now, {
           sv: [

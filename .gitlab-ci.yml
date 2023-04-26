@@ -26,7 +26,7 @@ stages:
 setup:
   stage: setup
   script:
-    - node -v
+    - curl -X GET https://gw-api-test.it.helsinki.fi/organisation/info/v1/texts -H accept:application/json -H X-Api-Key:$TEST_API_GW_KEY -o texts.json
     - >
       CYPRESS_CACHE_FOLDER='.cache/Cypress'
       PLAYWRIGHT_BROWSERS_PATH=.cache/ms-playwright
@@ -40,6 +40,7 @@ setup:
     expire_in: 1h
     paths:
       - node_modules
+      - texts.json
 
 # Define the process for test stage
 test:
