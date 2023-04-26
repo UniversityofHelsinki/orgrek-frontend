@@ -28,11 +28,13 @@ export const Default = {
   parameters: {
     msw: {
       handlers: [
-        mockGetAttributeKeys(selectedHierarchy, [
-          'emo_lyhenne',
-          'lyhenne',
-          'talous_tunnus',
-        ]),
+        mockGetAttributeKeys(
+          {
+            selectedHierarchies: selectedHierarchy,
+            sections: ['codes'],
+          },
+          ['emo_lyhenne', 'lyhenne', 'talous_tunnus']
+        ),
         mockGetCodeAttributes(nodeId, [
           {
             id: 1001,
@@ -135,11 +137,13 @@ export const Empty = {
   parameters: {
     msw: {
       handlers: [
-        mockGetAttributeKeys('talous', [
-          'emo_lyhenne',
-          'lyhenne',
-          'talous_tunnus',
-        ]),
+        mockGetAttributeKeys(
+          {
+            selectedHierarchies: 'talous',
+            sections: ['codes'],
+          },
+          ['emo_lyhenne', 'lyhenne', 'talous_tunnus']
+        ),
         mockGetCodeAttributes(nodeId, []),
         mockSaveCodeAttributes(nodeId),
       ],
