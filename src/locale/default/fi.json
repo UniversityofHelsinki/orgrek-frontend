@@ -422,7 +422,7 @@
   "units": "Organisaatiorakenteet",
   "university_of_helsinki": "Helsingin yliopisto",
   "until_date": "{{date}} asti",
-  "until_date_react": " asti",
+  "until_date_react": "asti",
   "update_attributes_error": "Attribuuttien päivitys ei onnistunut",
   "update_attributes_success": "Attribuuttien päivitys onnistui",
   "update_failed": "Tallennus epäonnistui",
