@@ -115,8 +115,8 @@ export const api = createApi({
       providesTags: (result, error, selectedHierarchies) => [
         { type: 'AttributeKeys', selectedHierarchies },
       ],
-      query: (selectedHierarchies) => ({
-        url: `/hierarchyFilters/${selectedHierarchies}/attributes/keys`,
+      query: ({ selectedHierarchies, sections }) => ({
+        url: `/hierarchyFilters/${selectedHierarchies}/${sections.toString()}/attributes/keys`,
         method: 'GET',
       }),
     }),

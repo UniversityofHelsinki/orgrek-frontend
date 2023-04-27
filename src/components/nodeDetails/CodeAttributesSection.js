@@ -62,7 +62,7 @@ const CodeAttributesSection = () => {
   );
   const presentCodeAttributes = useFilterAttributesByDate(codeAttributes);
   const { data: attributeKeys, isFetching: isFetchingKeys } =
-    useGetAttributeKeysQuery(selectedHierarchies);
+    useGetAttributeKeysQuery({ selectedHierarchies, sections: ['codes'] });
   const [saveCodeAttributes] = useSaveCodeAttributesMutation();
 
   const readOnlyFieldKeys = ['unique_id'];

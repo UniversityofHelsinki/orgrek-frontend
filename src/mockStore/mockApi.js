@@ -44,9 +44,11 @@ export const mockSaveCodeAttributes = (nodeId) =>
     res(ctx.delay(2000), ctx.json(req.json()))
   );
 
-export const mockGetAttributeKeys = (selectedHierarchies, body) =>
+export const mockGetAttributeKeys = ({ selectedHierarchies, sections }, body) =>
   rest.get(
-    `${baseUrl}/hierarchyFilters/${selectedHierarchies}/attributes/keys`,
+    `${baseUrl}/hierarchyFilters/${selectedHierarchies}/${
+      (sections && sections.toString()) || 'talous'
+    }/attributes/keys`,
     (req, res, ctx) => res(ctx.json(body))
   );
 
