@@ -24,6 +24,7 @@
   "attribute.empty": "attribute.empty",
   "attribute.insertAfter": "attribute.insertAfter",
   "attribute.insertBefore": "attribute.insertBefore",
+  "attribute.multipleKeys": "attribute.multipleKeys {{keys}}",
   "attribute.required": "attribute.required",
   "attribute.undoDelete": "attribute.undoDelete",
   "attribute.validFrom": "attribute.validFrom",
