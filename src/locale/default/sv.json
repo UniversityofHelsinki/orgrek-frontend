@@ -7,7 +7,9 @@
   "Talous": "Ekonomi",
   "Toiminnanohjaus": "ERP",
   "Tutkimus": "Forskning",
-  "accordion.modifiedSaveBeforeClosing": "accordion.modifiedSaveBeforeClosing",
+  "accordion": {
+    "modifiedSaveBeforeClosing": "accordion.modifiedSaveBeforeClosing"
+  },
   "add_button": "Lägg till",
   "add_edge": "SAAKO POISTAA? - Tillägg förbindelsen",
   "add_new": "Tillägg förbindelsen",
@@ -38,9 +40,11 @@
   "cancel_button": "Avbryt",
   "clear_selection": "Tömm filtret",
   "code": "SAAKO POISTAA? - Resultatenhetens kod",
-  "codeInfo.empty": "codeInfo.empty",
-  "codeInfo.saveError": "codeInfo.saveError",
-  "codeInfo.saveSuccess": "codeInfo.saveSuccess",
+  "codeInfo": {
+    "empty": "codeInfo.empty",
+    "saveError": "codeInfo.saveError",
+    "saveSuccess": "codeInfo.saveSuccess"
+  },
   "code_namespace": "Kod",
   "codes": "Koder",
   "create_edge": "Upprätt förbindelsen",
@@ -57,7 +61,9 @@
   "delete_edge_end_date": "Avställ förbindelsens sista dag",
   "delete_edge_start_date": "Avställ förbindelsens första dag",
   "delete_hierarchy_filters_success": "delete_hierarchy_filters_success",
-  "displayName.empty": "displayName.empty",
+  "displayName": {
+    "empty": "displayName.empty"
+  },
   "display_name_info": "Fullt nanm",
   "download_attribute_excel": "Lataa attribuuttitaulukko",
   "download_attribute_info": "Mitä tästä napista tapahtuu",
@@ -87,9 +93,11 @@
   "english": "på engelska",
   "erillinen laitos": "Fristående institutionen som lyder under rektorn",
   "erilliset opinnot": "erilliset opinnot",
-  "error.fetchFailed": "error.fetchFailed",
-  "error.saveFailed": "error.saveFailed",
-  "error.unexpected": "error.unexpected",
+  "error": {
+    "fetchFailed": "error.fetchFailed",
+    "saveFailed": "error.saveFailed",
+    "unexpected": "error.unexpected"
+  },
   "error_code_exists": "Koden existerar redan för denna giltighetstid",
   "error_date_is_after_node_end_date": "Datum är efter förfallodag nod",
   "error_date_is_within_node_date_range": "Datum är inom enheten datumintervall",
@@ -199,9 +207,11 @@
   "minDate": "minDate",
   "minLength": "minLength",
   "name": "Namn",
-  "nameInfo.empty": "nameInfo.empty",
-  "nameInfo.saveError": "nameInfo.saveError",
-  "nameInfo.saveSuccess": "nameInfo.saveSuccess",
+  "nameInfo": {
+    "empty": "nameInfo.empty",
+    "saveError": "nameInfo.saveError",
+    "saveSuccess": "nameInfo.saveSuccess"
+  },
   "name_en": "På engelska",
   "name_english": "engelska",
   "name_fi": "På finska",
@@ -209,12 +219,16 @@
   "name_info": "Namn information",
   "name_sv": "På svenska",
   "name_swedish": "svenska",
-  "nodeDetailsSection.noAttributes": "nodeDetailsSection.noAttributes",
+  "nodeDetailsSection": {
+    "noAttributes": "nodeDetailsSection.noAttributes"
+  },
   "node_excel": "Yksikkötaulukko",
   "normal_view_button": "Tillbaka till läsutsikt",
   "not_specified": "Giltigheten inte bestämt",
   "not_valid_yet": "Inte ännu giltig",
-  "notification.close": "notification.close",
+  "notification": {
+    "close": "notification.close"
+  },
   "open_in_new_tab": "Öppnas i ny flik",
   "opetus": "Undervisningenheter",
   "opetus_header": "Undervisning",
@@ -311,9 +325,11 @@
   "tutkimusyhteiso": "Forskningssamfund",
   "DUPLICATE.tutkimusyhteiso": "Forskningssamfundet",
   "type": "Typ",
-  "typeInfo.empty": "typeInfo.empty",
-  "typeInfo.saveError": "typeInfo.saveError",
-  "typeInfo.saveSuccess": "typeInfo.saveSuccess",
+  "typeInfo": {
+    "empty": "typeInfo.empty",
+    "saveError": "typeInfo.saveError",
+    "saveSuccess": "typeInfo.saveSuccess"
+  },
   "type_three_char_to_start_search": "type_three_char_to_start_search",
   "ulkopuolisten-kanssa-yhteinen-laitos": "Samt institutionen gemensam med andra universiteten, sammanslutningar eller stiftelser",
   "unique_id": "Unik identifikationskod",
@@ -338,7 +354,9 @@
   "upload_node_info": "Mitä tästä napista tapahtuu",
   "upload_org_info": "upload_org_info",
   "upload_success": "Tiedot päivitetty onnistuneesti",
-  "upperUnits.empty": "upperUnits.empty",
+  "upperUnits": {
+    "empty": "upperUnits.empty"
+  },
   "user_name": "Användarnamn",
   "uusi_henkilosto": "Uusi henkilöstö SV",
   "valid_dates": "Giltighet",

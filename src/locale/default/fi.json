@@ -7,7 +7,9 @@
   "Talous": "Talous",
   "Toiminnanohjaus": "Ohjaus",
   "Tutkimus": "Tutkimus",
-  "accordion.modifiedSaveBeforeClosing": "Muokattu, tallenna muutokset ennen sulkemista",
+  "accordion": {
+    "modifiedSaveBeforeClosing": "Muokattu, tallenna muutokset ennen sulkemista"
+  },
   "add_button": "Lisää",
   "add_edge": "SAAKO POISTAA? - Lisää yhteys",
   "add_new": "Lisää yhteys",
@@ -42,9 +44,11 @@
   "children_units": "Alayksiköt",
   "clear_selection": "Tyhjennä valinta",
   "code": "SAAKO POISTAA? - Taloustunnus",
-  "codeInfo.empty": "(ei arvoa)",
-  "codeInfo.saveError": "Päivittäminen ei onnistu",
-  "codeInfo.saveSuccess": "Koodin päivittäminen onnistui",
+  "codeInfo": {
+    "empty": "(ei arvoa)",
+    "saveError": "Päivittäminen ei onnistu",
+    "saveSuccess": "Koodin päivittäminen onnistui"
+  },
   "code_namespace": "Koodi",
   "codes": "Koodisto",
   "correct_error": "Virheenkorjaustila (korjaukset)",
@@ -65,7 +69,9 @@
   "delete_edge_end_date": "Poista yhteyden loppupäivämäärä",
   "delete_edge_start_date": "Poista yhteyden alkupäivämäärä",
   "delete_hierarchy_filters_success": "Rivin poisto onnistui",
-  "displayName.empty": "Koko nimi puuttuu",
+  "displayName": {
+    "empty": "Koko nimi puuttuu"
+  },
   "display_date": "Ajankohta",
   "display_name_info": "Koko nimi",
   "display_view": "Takaisin katselunäkymään",
@@ -105,9 +111,11 @@
   "english": "englanniksi",
   "erillinen laitos": "Rehtorin alainen erillinen laitos",
   "erilliset opinnot": "Tutkintoon johtamaton opetus",
-  "error.fetchFailed": "Tietojen haku epäonnistui",
-  "error.saveFailed": "Tietojen tallennus epäonnistui",
-  "error.unexpected": "Tuntematon virhe",
+  "error": {
+    "fetchFailed": "Tietojen haku epäonnistui",
+    "saveFailed": "Tietojen tallennus epäonnistui",
+    "unexpected": "Tuntematon virhe"
+  },
   "error_attribute_date_overlay": "Arvojen voimassaolot ovat päällekkäisiä.",
   "error_attribute_key_and_value_required": "Attribuutille annettava nimi ja arvo.",
   "error_attribute_name_same_as_current": "Attribuutin arvo sama kuin nykyinen.",
@@ -241,9 +249,11 @@
   "minLength": "Vähimmäispituus {{min}} merkkiä",
   "modify_edge": "Muokkaa yhteyttä",
   "name": "Nimi",
-  "nameInfo.empty": "Ei nimitietoja",
-  "nameInfo.saveError": "Nimitietojen tallennus epäonnistui",
-  "nameInfo.saveSuccess": "Nimitiedot tallennettu",
+  "nameInfo": {
+    "empty": "Ei nimitietoja",
+    "saveError": "Nimitietojen tallennus epäonnistui",
+    "saveSuccess": "Nimitiedot tallennettu"
+  },
   "name_en": "Englanniksi",
   "name_english": "englanti",
   "name_fi": "Suomeksi",
@@ -252,14 +262,18 @@
   "name_sv": "Ruotsiksi",
   "name_swedish": "ruotsi",
   "no_results": "Hakusanalla ei löytynyt yhtään tulosta",
-  "nodeDetailsSection.noAttributes": "Ei attribuutteja",
+  "nodeDetailsSection": {
+    "noAttributes": "Ei attribuutteja"
+  },
   "node_attr_key": "Attribuutin nimi*",
   "node_attr_value": "Attribuutin arvo*",
   "node_excel": "Yksikkötaulukko",
   "normal_view_button": "Katselunäkymään",
   "not_specified": "Voimassaoloa ei määritetty",
   "not_valid_yet": "Ei vielä voimassa",
-  "notification.close": "Sulje",
+  "notification": {
+    "close": "Sulje"
+  },
   "open_in_new_tab": "Avautuu uuteen välilehteen",
   "opetus": "Opetusyksiköt",
   "opetus_header": "Opetus",
@@ -390,9 +404,11 @@
   "tutkimusryhma": "Tutkimusryhmä",
   "tutkimusyhteiso": "Tutkimusyhteisö",
   "type": "Yksikön tyyppi",
-  "typeInfo.empty": "Ei tyyppiä",
-  "typeInfo.saveError": "Yksikön tyypin tallennus epäonnistui",
-  "typeInfo.saveSuccess": "Yksikön tyyppi tallennettu",
+  "typeInfo": {
+    "empty": "Ei tyyppiä",
+    "saveError": "Yksikön tyypin tallennus epäonnistui",
+    "saveSuccess": "Yksikön tyyppi tallennettu"
+  },
   "type_three_char_to_start_search": "Anna kolme merkkiä aloittaaksesi haun",
   "ulkopuolisten-kanssa-yhteinen-laitos": "Muiden yliopistojen ja yhteisöjen tai säätiöiden kanssa yhteinen laitos",
   "unique_id": "Yksilöivä tunniste",
@@ -418,7 +434,9 @@
   "upload_node_info": "Tallenna excelin yksiköiden tiedot tietokantaan. Excel-pohjan saat lataamalla yksikkötaulukon (valitse kaikki attribuutit).",
   "upload_org_info": "Organisaatiotietojen päivitys",
   "upload_success": "Tiedot päivitetty onnistuneesti",
-  "upperUnits.empty": "Ei yläyksiköitä",
+  "upperUnits": {
+    "empty": "Ei yläyksiköitä"
+  },
   "upper_units": "Yläyksiköt",
   "user_name": "Käyttäjätunnus",
   "uusi_henkilosto": "Uusi henkilöstö",

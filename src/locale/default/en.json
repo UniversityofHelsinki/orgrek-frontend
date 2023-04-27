@@ -7,7 +7,9 @@
   "Talous": "Finance",
   "Toiminnanohjaus": "ERP",
   "Tutkimus": "Research",
-  "accordion.modifiedSaveBeforeClosing": "Modified, save before closing",
+  "accordion": {
+    "modifiedSaveBeforeClosing": "Modified, save before closing"
+  },
   "add_button": "Add",
   "add_edge": "SAAKO POISTAA? - Add connection",
   "add_new": "Add connection",
@@ -39,9 +41,11 @@
   "cancel_button": "Cancel",
   "clear_selection": "Clear selection",
   "code": "SAAKO POISTAA? - Profit centre code",
-  "codeInfo.empty": "No code attributes",
-  "codeInfo.saveError": "Saving code attributes failed",
-  "codeInfo.saveSuccess": "Code attributes saved",
+  "codeInfo": {
+    "empty": "No code attributes",
+    "saveError": "Saving code attributes failed",
+    "saveSuccess": "Code attributes saved"
+  },
   "code_namespace": "Code",
   "codes": "Codes",
   "correct_error": "Error correction mode",
@@ -61,7 +65,9 @@
   "delete_edge_end_date": "Remove relation's end date",
   "delete_edge_start_date": "Remove relation's start date",
   "delete_hierarchy_filters_success": "delete_hierarchy_filters_success",
-  "displayName.empty": "Long name missing",
+  "displayName": {
+    "empty": "Long name missing"
+  },
   "display_date": "Date",
   "display_name_info": "Long name",
   "display_view": "Return to viewing mode",
@@ -93,9 +99,11 @@
   "english": "in English",
   "erillinen laitos": "Independent institute under the rector",
   "erilliset opinnot": "erilliset opinnot",
-  "error.fetchFailed": "Fetching data failed",
-  "error.saveFailed": "Saving data failed",
-  "error.unexpected": "Unexpected error",
+  "error": {
+    "fetchFailed": "Fetching data failed",
+    "saveFailed": "Saving data failed",
+    "unexpected": "Unexpected error"
+  },
   "error_attribute_date_overlay": "Overlapping date ranges of values.",
   "error_attribute_key_and_value_required": "Attribute needs both name and value.",
   "error_attribute_name_same_as_current": "Value of the attribute is same as the current one.",
@@ -220,9 +228,11 @@
   "minDate": "minDate",
   "minLength": "minLength",
   "name": "Name",
-  "nameInfo.empty": "No name information",
-  "nameInfo.saveError": "Saving name attributes failed",
-  "nameInfo.saveSuccess": "Name attributes saved",
+  "nameInfo": {
+    "empty": "No name information",
+    "saveError": "Saving name attributes failed",
+    "saveSuccess": "Name attributes saved"
+  },
   "name_en": "In English",
   "name_english": "English",
   "name_fi": "In Finnish",
@@ -230,12 +240,16 @@
   "name_info": "Name information",
   "name_sv": "In Swedish",
   "name_swedish": "Swedish",
-  "nodeDetailsSection.noAttributes": "No attributes",
+  "nodeDetailsSection": {
+    "noAttributes": "No attributes"
+  },
   "node_excel": "Yksikkötaulukko",
   "normal_view_button": "Back to read view",
   "not_specified": "Validity not specified",
   "not_valid_yet": "Not yet valid",
-  "notification.close": "Dismiss",
+  "notification": {
+    "close": "Dismiss"
+  },
   "open_in_new_tab": "Opens in new tab",
   "opetus": "Education units",
   "opetus_header": "Education",
@@ -346,9 +360,11 @@
   "tutkimusryhma": "Research Group",
   "tutkimusyhteiso": "Research community",
   "type": "Unit type",
-  "typeInfo.empty": "No unit type",
-  "typeInfo.saveError": "Saving unit type failed",
-  "typeInfo.saveSuccess": "Unit type saved",
+  "typeInfo": {
+    "empty": "No unit type",
+    "saveError": "Saving unit type failed",
+    "saveSuccess": "Unit type saved"
+  },
   "type_three_char_to_start_search": "Type three char to start search",
   "ulkopuolisten-kanssa-yhteinen-laitos": "Joint institute together with other universities",
   "unique_id": "Unique Id",
@@ -373,7 +389,9 @@
   "upload_node_info": "Update organisation data from the excel to the database. Get the excel template by downloading the units (choose all the attributes).",
   "upload_org_info": "Update Organisation Data",
   "upload_success": "Update succeeded",
-  "upperUnits.empty": "No upper units",
+  "upperUnits": {
+    "empty": "No upper units"
+  },
   "upper_units": "Upper Units",
   "user_name": "User Name",
   "uusi_henkilosto": "Uusi henkilöstö EN",
