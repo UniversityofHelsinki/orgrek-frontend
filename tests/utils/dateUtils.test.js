@@ -1,4 +1,3 @@
-import i18n from '../../src/i18n';
 import {
   formatDate,
   toDate,
@@ -44,16 +43,6 @@ describe('toDate', () => {
 
 describe('formatDate', () => {
   const date = new Date('2023-04-14T00:00:00.000Z');
-  let originalLanguage;
-
-  beforeEach(() => {
-    originalLanguage = i18n.language;
-    i18n.changeLanguage('fi');
-  });
-
-  afterEach(() => {
-    i18n.language = originalLanguage;
-  });
 
   test('current language', () => {
     expect(formatDate(date)).toBe('14.4.2023');

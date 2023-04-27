@@ -106,7 +106,7 @@ describe('convertYupErrors', () => {
       errors = convertYupErrors(yupError);
     }
 
-    expect(errors).toEqual({ '': ['attribute.required'] });
+    expect(errors).toEqual({ '': ['Pakollinen tieto'] });
   });
 
   test('simple object', () => {
@@ -123,7 +123,7 @@ describe('convertYupErrors', () => {
       errors = convertYupErrors(yupError);
     }
 
-    expect(errors).toEqual({ value: ['attribute.required'] });
+    expect(errors).toEqual({ value: ['Pakollinen tieto'] });
   });
 
   test('nested object', () => {
@@ -143,7 +143,7 @@ describe('convertYupErrors', () => {
     }
 
     expect(errors).toEqual({
-      'values[1].value': ['attribute.required'],
+      'values[1].value': ['Pakollinen tieto'],
     });
   });
 
@@ -171,8 +171,8 @@ describe('convertYupErrors', () => {
     }
 
     expect(errors).toEqual({
-      'values[0].id': ['attribute.required'],
-      'values[0].obj.value': ['attribute.required'],
+      'values[0].id': ['Pakollinen tieto'],
+      'values[0].obj.value': ['Pakollinen tieto'],
     });
   });
 
@@ -183,7 +183,7 @@ describe('convertYupErrors', () => {
       test: (value, context) =>
         context.createError({
           message: {
-            key: 'invalidValue',
+            key: 'invalidValue: {{foo}}, {{bar}}',
             values: { foo: value, bar: 123 },
           },
         }),
@@ -200,7 +200,7 @@ describe('convertYupErrors', () => {
 
     // Interpolated values appear in the mock translation as 'key [values]'
     // See: src/__mocks__/i18n.js
-    expect(errors).toEqual({ '': ['invalidValue ["hipsun ipsum",123]'] });
+    expect(errors).toEqual({ '': ['invalidValue: hipsun ipsum, 123'] });
   });
 });
 
@@ -256,7 +256,7 @@ describe('validateAndMergeResults', () => {
       validationSchema
     );
 
-    expect(result).toEqual({ name: ['attribute.required'] });
+    expect(result).toEqual({ name: ['Pakollinen tieto'] });
   });
 
   test('merges results', async () => {
@@ -273,7 +273,7 @@ describe('validateAndMergeResults', () => {
 
     expect(result).toEqual({
       error: ['invalid form'],
-      name: ['attribute.required'],
+      name: ['Pakollinen tieto'],
     });
   });
 
