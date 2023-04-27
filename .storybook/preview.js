@@ -8,13 +8,9 @@ import theme from '../src/theme';
 import { withRouter } from 'storybook-addon-react-router-v6';
 import { initialize, mswDecorator } from 'msw-storybook-addon';
 import { withMockDate } from '../src/mockStore';
-import i18n from '../src/i18n';
+import { initI18n } from '../src/i18n';
 
-i18n.init({
-  react: {
-    useSuspense: false,
-  },
-});
+initI18n(false);
 
 // These Bootstrap styles are needed only for legacy components and can be
 // removed after everything has been migrated to Material UI
