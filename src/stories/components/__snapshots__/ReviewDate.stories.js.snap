@@ -7,7 +7,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "display_date",
+      "name": "Ajankohta",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -15,7 +15,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "display_date",
+      "name": "Ajankohta",
       "pressed": undefined,
       "role": "textbox",
       "value": "22.3.2023",
@@ -31,7 +31,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "return_to_today",
+      "name": "Tämä päivä",
       "pressed": undefined,
       "role": "button",
       "value": undefined,
