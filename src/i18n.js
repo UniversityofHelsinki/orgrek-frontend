@@ -3,9 +3,9 @@ import { initReactI18next } from 'react-i18next';
 import ChainedBackend from 'i18next-chained-backend';
 import HttpBackend from 'i18next-http-backend';
 import resourcesToBackend from 'i18next-resources-to-backend';
-import defaultFi from './locale/default/fi.json';
-import defaultSv from './locale/default/sv.json';
-import defaultEn from './locale/default/en.json';
+import defaultFi from './locales/default.fi.json';
+import defaultSv from './locales/default.sv.json';
+import defaultEn from './locales/default.en.json';
 
 const ORGREK_BACKEND_SERVER = process.env.REACT_APP_ORGREK_BACKEND_SERVER || '';
 
