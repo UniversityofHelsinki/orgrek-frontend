@@ -101,7 +101,7 @@
     "cypress:open": "cypress open",
     "storybook": "start-storybook -p 6006 -s public",
     "storybook:test": "test-storybook --coverage",
-    "storybook:test:ci": "concurrently -k -s first -n \"storybook,test\" -c \"magenta,blue\" \"npx http-server storybook-static -a localhost --port 6006 --silent\" \"wait-on tcp:6006 && npm run storybook:test\"",
+    "storybook:test:ci": "concurrently -k -s first -n \"storybook,test\" -c \"magenta,blue\" \"npx http-server storybook-static -a localhost --port 6006 --silent\" \"wait-on tcp:6006 && npm run storybook:test --maxWorkers=2\"",
     "storybook:build": "build-storybook -s public",
     "prepare": "husky install"
   },
