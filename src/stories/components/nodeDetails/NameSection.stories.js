@@ -160,6 +160,10 @@ export const EditMode = {
     });
 
     await userEvent.click(canvas.getByTestId('editButton'));
+
+    await waitFor(async () => {
+      await expect(canvas.getByText('edit_mode_save_button')).toBeDisabled();
+    });
   },
 };
 
@@ -171,5 +175,7 @@ export const Modified = {
     const canvas = within(context.canvasElement);
 
     await userEvent.type(canvas.getAllByRole('textbox')[2], '31.12.2023');
+
+    expect(canvas.getByText('edit_mode_save_button')).not.toBeDisabled();
   },
 };
