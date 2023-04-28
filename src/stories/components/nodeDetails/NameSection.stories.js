@@ -176,6 +176,8 @@ export const Modified = {
 
     await userEvent.type(canvas.getAllByRole('textbox')[2], '31.12.2023');
 
-    expect(canvas.getByText('edit_mode_save_button')).not.toBeDisabled();
+    await waitFor(async () => {
+      await expect(canvas.getByText('edit_mode_save_button')).toBeEnabled();
+    });
   },
 };
