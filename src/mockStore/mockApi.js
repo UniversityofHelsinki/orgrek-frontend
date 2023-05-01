@@ -94,6 +94,12 @@ export const mockGetSectionTypeAttributes = (sectionType, body) =>
     (req, res, ctx) => res(ctx.json(body))
   );
 
+export const mockGetTree = ({ hierarchies, selectedDay }, body) =>
+  rest.get(
+    `${baseUrl}/tree/${hierarchies}/${selectedDay.toLocaleDateString('FI-fi')}`,
+    (req, res, ctx) => res(ctx.json(body))
+  );
+
 /**
  * @deprecated not needed after everything has been migrated to RTK Query
  */
