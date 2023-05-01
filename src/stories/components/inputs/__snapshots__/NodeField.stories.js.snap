@@ -1,0 +1,40 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`stories/components/inputs/NodeField NodeField smoke-test 1`] = `
+Object {
+  "checked": undefined,
+  "children": Array [
+    Object {
+      "checked": undefined,
+      "children": undefined,
+      "name": "type_three_char_to_start_search",
+      "pressed": undefined,
+      "role": "text",
+      "value": undefined,
+    },
+    Object {
+      "autocomplete": "list",
+      "checked": undefined,
+      "children": undefined,
+      "haspopup": "listbox",
+      "name": "type_three_char_to_start_search",
+      "pressed": undefined,
+      "role": "combobox",
+      "value": undefined,
+    },
+    Object {
+      "checked": undefined,
+      "children": undefined,
+      "description": "Open",
+      "name": "Open",
+      "pressed": undefined,
+      "role": "button",
+      "value": undefined,
+    },
+  ],
+  "name": "stories-components-inputs-nodefield--node-field",
+  "pressed": undefined,
+  "role": "WebArea",
+  "value": undefined,
+}
+`;
