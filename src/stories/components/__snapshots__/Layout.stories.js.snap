@@ -7,7 +7,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "skip_to_content",
+      "name": "Siirry sisältöön",
       "pressed": undefined,
       "role": "link",
       "value": undefined,
@@ -15,7 +15,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "UNIVERSITY_OF_HELSINKI OPEN_IN_NEW_TAB",
+      "name": "HELSINGIN YLIOPISTO AVAUTUU UUTEEN VÄLILEHTEEN",
       "pressed": undefined,
       "role": "link",
       "value": undefined,
@@ -31,7 +31,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "logout",
+      "name": "Kirjaudu ulos",
       "pressed": undefined,
       "role": "link",
       "value": undefined,
@@ -39,7 +39,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "language",
+      "name": "Kieli",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -56,7 +56,7 @@ Object {
       "checked": undefined,
       "children": undefined,
       "haspopup": "listbox",
-      "name": "language Suomeksi",
+      "name": "Kieli Suomeksi",
       "pressed": undefined,
       "role": "button",
       "value": undefined,
@@ -65,7 +65,7 @@ Object {
       "checked": undefined,
       "children": undefined,
       "level": 1,
-      "name": "ORGANISATIONAL_REGISTRY",
+      "name": "ORGANISAATIOREKISTERI",
       "pressed": undefined,
       "role": "heading",
       "value": undefined,
@@ -73,7 +73,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "ORGANISATION",
+      "name": "ORGANISAATIOYKSIKÖT",
       "pressed": undefined,
       "role": "link",
       "value": undefined,
@@ -81,7 +81,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "TEXTS",
+      "name": "TEKSTIT",
       "pressed": undefined,
       "role": "link",
       "value": undefined,
@@ -89,7 +89,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "HIERARCHY_FILTERS",
+      "name": "SUODATTIMET",
       "pressed": undefined,
       "role": "link",
       "value": undefined,
@@ -113,7 +113,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "university_of_helsinki",
+      "name": "Helsingin yliopisto",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -121,7 +121,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "hy_address_part1",
+      "name": "PL 4 (Yliopistonkatu 3)",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -138,7 +138,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "hy_address_part2",
+      "name": "00014 Helsingin yliopisto",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -146,7 +146,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "hy_switchboard",
+      "name": "Puhelinvaihde: 02941 911",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
