@@ -7,7 +7,9 @@ import 'react-datepicker/dist/react-datepicker.css';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import './i18n';
+import { initI18n } from './i18n';
+
+initI18n();
 
 const el = document.getElementById('root');
 const root = createRoot(el);

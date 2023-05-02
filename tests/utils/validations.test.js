@@ -37,7 +37,7 @@ describe('min', () => {
   test('translation', () => {
     const schema = string().min(4);
     const errors = doValidate(schema, 'foo');
-    expect(errors).toEqual({ '': ['minLength [4]'] });
+    expect(errors).toEqual({ '': ['Vähimmäispituus 4 merkkiä'] });
   });
 });
 
@@ -56,12 +56,12 @@ describe('date string', () => {
 
   test('required', () => {
     const errors = doValidate(schema.required(), null);
-    expect(errors).toEqual({ '': ['attribute.required'] });
+    expect(errors).toEqual({ '': ['Pakollinen tieto'] });
   });
 
   test('invalid date', () => {
     const errors = doValidate(schema.required(), 'invalid date');
-    expect(errors).toEqual({ '': ['invalidDate'] });
+    expect(errors).toEqual({ '': ['Virheellinen päivämäärä'] });
   });
 
   test('cast returns ISO date string', () => {
@@ -79,14 +79,14 @@ describe('validAttributeValue', () => {
   const valid = []; // no errors
 
   test.each([
-    { value: '', expected: ['attribute.required'] },
-    { value: ' ', expected: ['attribute.required'] },
-    { value: '\n', expected: ['attribute.required'] },
-    { value: '\t', expected: ['attribute.required'] },
-    { value: '\xa0', expected: ['attribute.required'] }, // nbsp
+    { value: '', expected: ['Pakollinen tieto'] },
+    { value: ' ', expected: ['Pakollinen tieto'] },
+    { value: '\n', expected: ['Pakollinen tieto'] },
+    { value: '\t', expected: ['Pakollinen tieto'] },
+    { value: '\xa0', expected: ['Pakollinen tieto'] }, // nbsp
     { value: 'A', expected: valid },
     { value: 'A'.repeat(250), expected: valid },
-    { value: 'A'.repeat(251), expected: ['maxLength [250]'] },
+    { value: 'A'.repeat(251), expected: ['Enimmäispituus 250 merkkiä'] },
   ])('value %j', ({ value, expected }) => {
     const data = {
       ...validTestValue,
@@ -106,7 +106,9 @@ describe('validAttributeValue', () => {
 
     const errors = doValidate(schema, data);
 
-    expect(errors['startDate'] || []).toEqual(['minDate ["01/01/1600"]']);
+    expect(errors['startDate'] || []).toEqual([
+      'Päivämäärä voi olla aikaisintaan 1.1.1600',
+    ]);
   });
 
   test('startDate after endDate', () => {
@@ -119,8 +121,8 @@ describe('validAttributeValue', () => {
     const errors = doValidate(schema, data);
 
     expect(errors).toEqual({
-      startDate: ['maxDate ["30/12/2022"]'],
-      endDate: ['minDate ["04/01/2023"]'],
+      startDate: ['Päivämäärä voi olla korkeintaan 30.12.2022'],
+      endDate: ['Päivämäärä voi olla aikaisintaan 4.1.2023'],
     });
   });
 });
@@ -130,7 +132,7 @@ describe('minDate', () => {
 
   test.each([
     ['2023-01-01', []],
-    ['2022-12-31', ['minDate ["01/01/2023"]']],
+    ['2022-12-31', ['Päivämäärä voi olla aikaisintaan 1.1.2023']],
     [null, []],
     [undefined, []],
   ])('%p results in validation errors %p', (value, expectedErrors) => {
@@ -144,7 +146,7 @@ describe('maxDate', () => {
 
   test.each([
     ['2022-12-31', []],
-    ['2023-01-01', ['maxDate ["31/12/2022"]']],
+    ['2023-01-01', ['Päivämäärä voi olla korkeintaan 31.12.2022']],
     [null, []],
     [undefined, []],
   ])('%p results in validation errors %p', (value, expectedErrors) => {
@@ -169,14 +171,14 @@ describe('beforeEndDate', () => {
         startDate: '2023-01-02',
         endDate: '2023-01-03',
       },
-      ['maxDate ["01/01/2023"]'],
+      ['Päivämäärä voi olla korkeintaan 1.1.2023'],
     ],
     [
       {
         startDate: '2023-01-04',
         endDate: '2023-01-03',
       },
-      ['maxDate ["01/01/2023"]'],
+      ['Päivämäärä voi olla korkeintaan 1.1.2023'],
     ],
     [
       {
@@ -213,14 +215,14 @@ describe('afterStartDate', () => {
         startDate: '2023-01-01',
         endDate: '2023-01-02',
       },
-      ['minDate ["03/01/2023"]'],
+      ['Päivämäärä voi olla aikaisintaan 3.1.2023'],
     ],
     [
       {
         startDate: '2023-01-01',
         endDate: '2022-12-31',
       },
-      ['minDate ["03/01/2023"]'],
+      ['Päivämäärä voi olla aikaisintaan 3.1.2023'],
     ],
     [
       {
@@ -280,7 +282,9 @@ describe('arrayOfAttributeValues', () => {
 
     const errors = doValidate(schema, data);
 
-    expect(errors[''] || []).toEqual(['attribute.multipleKeys ["key1, key2"]']);
+    expect(errors[''] || []).toEqual([
+      'Attribuutin avaimet eivät täsmää: key1, key2',
+    ]);
   });
 });
 
@@ -307,12 +311,12 @@ describe('defaultSchemaForAttributes', () => {
     const errors = doValidate(schema, data);
 
     expect(errors).toEqual({
-      'key2[0].id': ['attribute.required'],
-      'key2[0].key': ['attribute.required'],
-      'key2[0].value': ['attribute.required'],
-      'key2[0].startDate': ['attribute.required'],
-      'key2[0].isNew': ['attribute.required'],
-      'key2[0].deleted': ['attribute.required'],
+      'key2[0].id': ['Pakollinen tieto'],
+      'key2[0].key': ['Pakollinen tieto'],
+      'key2[0].value': ['Pakollinen tieto'],
+      'key2[0].startDate': ['Pakollinen tieto'],
+      'key2[0].isNew': ['Pakollinen tieto'],
+      'key2[0].deleted': ['Pakollinen tieto'],
     });
   });
 });

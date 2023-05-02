@@ -5,6 +5,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 // Import your own reducer
 import rootReducer from '../src/reducers/index';
+import { MemoryRouter } from 'react-router-dom';
 
 function render(
   ui,
@@ -15,7 +16,11 @@ function render(
   } = {}
 ) {
   function Wrapper({ children }) {
-    return <Provider store={store}>{children}</Provider>;
+    return (
+      <Provider store={store}>
+        <MemoryRouter>{children}</MemoryRouter>
+      </Provider>
+    );
   }
   return {
     ...rtlRender(ui, { wrapper: Wrapper, ...renderOptions }),

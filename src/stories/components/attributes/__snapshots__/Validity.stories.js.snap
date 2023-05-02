@@ -27,7 +27,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "1.1.2022 from_date_react",
+      "name": "1.1.2022 alkaen",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -47,7 +47,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "not_specified",
+      "name": "Voimassaoloa ei määritetty",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -67,7 +67,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "31.12.2022 until_date_react",
+      "name": "31.12.2022 asti",
       "pressed": undefined,
       "role": "text",
       "value": undefined,

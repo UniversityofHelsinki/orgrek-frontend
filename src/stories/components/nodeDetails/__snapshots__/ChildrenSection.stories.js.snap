@@ -8,7 +8,7 @@ Object {
       "checked": undefined,
       "children": undefined,
       "expanded": true,
-      "name": "subunits",
+      "name": "Alayksiköt",
       "pressed": undefined,
       "role": "button",
       "value": undefined,
@@ -16,7 +16,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "unit",
+      "name": "Yksikkö",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -24,7 +24,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "hierarchies",
+      "name": "Hierarkiat",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -32,7 +32,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "hierarchy_valid",
+      "name": "Voimassaolo",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -48,7 +48,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "tutkimus",
+      "name": "Tutkimusyksiköt",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -56,7 +56,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "1.1.1970 from_date_react",
+      "name": "1.1.1970 alkaen",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -64,7 +64,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "henkilosto",
+      "name": "Henkilöstöyksiköt",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -72,7 +72,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "1.1.1970 from_date_react",
+      "name": "1.1.1970 alkaen",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -80,7 +80,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "toiminnanohjaus",
+      "name": "Viralliset yksiköt",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -88,7 +88,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "1.1.1970 from_date_react",
+      "name": "1.1.1970 alkaen",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -96,7 +96,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "opetus",
+      "name": "Opetusyksiköt",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -104,7 +104,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "1.1.1970 from_date_react",
+      "name": "1.1.1970 alkaen",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -120,7 +120,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "1.1.1970 from_date_react",
+      "name": "1.1.1970 alkaen",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -128,7 +128,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "talous",
+      "name": "Talousyksiköt",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -136,7 +136,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "1.1.1970 from_date_react",
+      "name": "1.1.1970 alkaen",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -152,7 +152,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "tutkimus",
+      "name": "Tutkimusyksiköt",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -160,7 +160,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "not_specified",
+      "name": "Voimassaoloa ei määritetty",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -168,7 +168,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "henkilosto",
+      "name": "Henkilöstöyksiköt",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -176,7 +176,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "not_specified",
+      "name": "Voimassaoloa ei määritetty",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -184,7 +184,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "toiminnanohjaus",
+      "name": "Viralliset yksiköt",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -192,7 +192,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "not_specified",
+      "name": "Voimassaoloa ei määritetty",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -200,7 +200,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "opetus",
+      "name": "Opetusyksiköt",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -208,7 +208,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "not_specified",
+      "name": "Voimassaoloa ei määritetty",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -224,7 +224,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "not_specified",
+      "name": "Voimassaoloa ei määritetty",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -232,7 +232,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "talous",
+      "name": "Talousyksiköt",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -240,7 +240,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "not_specified",
+      "name": "Voimassaoloa ei määritetty",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -256,7 +256,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "tutkimus",
+      "name": "Tutkimusyksiköt",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -264,7 +264,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "not_specified",
+      "name": "Voimassaoloa ei määritetty",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -272,7 +272,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "henkilosto",
+      "name": "Henkilöstöyksiköt",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -280,7 +280,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "not_specified",
+      "name": "Voimassaoloa ei määritetty",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -288,7 +288,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "toiminnanohjaus",
+      "name": "Viralliset yksiköt",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -296,7 +296,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "not_specified",
+      "name": "Voimassaoloa ei määritetty",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -304,7 +304,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "opetus",
+      "name": "Opetusyksiköt",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -312,7 +312,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "not_specified",
+      "name": "Voimassaoloa ei määritetty",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -328,7 +328,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "not_specified",
+      "name": "Voimassaoloa ei määritetty",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -336,7 +336,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "talous",
+      "name": "Talousyksiköt",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -344,7 +344,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "not_specified",
+      "name": "Voimassaoloa ei määritetty",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -365,7 +365,7 @@ Object {
       "checked": undefined,
       "children": undefined,
       "expanded": true,
-      "name": "subunits",
+      "name": "Alayksiköt",
       "pressed": undefined,
       "role": "button",
       "value": undefined,
@@ -373,7 +373,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "subunits.empty",
+      "name": "Ei alayksiköitä",
       "pressed": undefined,
       "role": "text",
       "value": undefined,

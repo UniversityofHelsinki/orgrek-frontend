@@ -38,7 +38,7 @@ Object {
       "children": undefined,
       "disabled": true,
       "expanded": true,
-      "name": "Titleaccordion.modifiedSaveBeforeClosing",
+      "name": "TitleMuokattu, tallenna muutokset ennen sulkemista",
       "pressed": undefined,
       "role": "button",
       "value": undefined,
