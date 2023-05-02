@@ -130,7 +130,7 @@ export const api = createApi({
     getNodeValidity: builder.query({
       providesTags: (result, error, id) => [{ type: 'NodeValidity', id }],
       query: (id) => ({
-        url: `/${id}`,
+        url: `/node/${id}`,
         method: 'GET',
       }),
     }),
@@ -143,7 +143,7 @@ export const api = createApi({
       },
       query: ({ data, id }) => {
         return {
-          url: `/${id}/update`,
+          url: `/node/${id}/update`,
           method: 'PUT',
           body: data,
         };

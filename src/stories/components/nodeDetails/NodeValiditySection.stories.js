@@ -1,4 +1,8 @@
-import { mockGetNodeValidity, mockSaveNodeValidity } from '../../../mockStore';
+import {
+  mockGetNodeValidity,
+  mockSaveNodeValidity,
+  withMockStore,
+} from '../../../mockStore';
 import NodeValiditySection from '../../../components/nodeDetails/NodeValiditySection';
 import { userEvent, waitFor, within } from '@storybook/testing-library';
 import { expect } from '@storybook/jest';
@@ -10,34 +14,37 @@ export default {
   component: NodeValiditySection,
   parameters: {
     systemTime: now,
+    reactRouter: {
+      searchParams: {
+        uid: nodeId,
+      },
+    },
   },
 };
 
 export const Default = {
+  decorators: [withMockStore()],
   parameters: {
     msw: {
       handlers: [
-        mockGetNodeValidity(nodeId, [
-          {
-            startDate: '2000-01-01',
-            endDate: null,
-          },
-        ]),
+        mockGetNodeValidity(nodeId, {
+          startDate: '2000-01-01',
+          endDate: null,
+        }),
         mockSaveNodeValidity(nodeId),
       ],
     },
   },
 };
 export const Empty = {
+  ...Default,
   parameters: {
     msw: {
       handlers: [
-        mockGetNodeValidity(nodeId, [
-          {
-            startDate: null,
-            endDate: null,
-          },
-        ]),
+        mockGetNodeValidity(nodeId, {
+          startDate: null,
+          endDate: null,
+        }),
         mockSaveNodeValidity(nodeId),
       ],
     },
