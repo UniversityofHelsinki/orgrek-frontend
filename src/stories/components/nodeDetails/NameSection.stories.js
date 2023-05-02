@@ -156,10 +156,14 @@ export const EditMode = {
     const canvas = within(canvasElement);
 
     await waitFor(async () => {
-      await expect(canvas.getByTestId('editButton')).toBeInTheDocument();
+      await expect(canvas.getByText('Muokkaa')).toBeInTheDocument();
     });
 
-    await userEvent.click(canvas.getByTestId('editButton'));
+    await userEvent.click(canvas.getByText('Muokkaa'));
+
+    await waitFor(async () => {
+      await expect(canvas.getByText('Tallenna')).toBeDisabled();
+    });
   },
 };
 
@@ -171,5 +175,11 @@ export const Modified = {
     const canvas = within(context.canvasElement);
 
     await userEvent.type(canvas.getAllByRole('textbox')[2], '31.12.2023');
+
+    await expect(canvas.getByText('Tallenna')).toBeEnabled();
+
+    await waitFor(async () => {
+      await expect(canvas.getByText('Tallenna')).toHaveStyle('color: #ffffff');
+    });
   },
 };

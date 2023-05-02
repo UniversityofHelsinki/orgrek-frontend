@@ -31,17 +31,6 @@ Object {
 }
 `;
 
-exports[`stories/components/inputs/HelperText Empty smoke-test 2`] = `
-Object {
-  "checked": undefined,
-  "children": undefined,
-  "name": "stories-components-inputs-helpertext--empty",
-  "pressed": undefined,
-  "role": "WebArea",
-  "value": undefined,
-}
-`;
-
 exports[`stories/components/inputs/HelperText Error smoke-test 1`] = `
 Object {
   "checked": undefined,

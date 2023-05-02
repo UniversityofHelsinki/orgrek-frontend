@@ -7,7 +7,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "type_three_char_to_start_search",
+      "name": "Anna kolme merkkiä aloittaaksesi haun",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -17,7 +17,7 @@ Object {
       "checked": undefined,
       "children": undefined,
       "haspopup": "listbox",
-      "name": "type_three_char_to_start_search",
+      "name": "Anna kolme merkkiä aloittaaksesi haun",
       "pressed": undefined,
       "role": "combobox",
       "value": undefined,

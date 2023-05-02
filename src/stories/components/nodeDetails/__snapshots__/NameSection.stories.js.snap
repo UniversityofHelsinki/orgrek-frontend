@@ -8,7 +8,7 @@ Object {
       "checked": undefined,
       "children": undefined,
       "expanded": true,
-      "name": "name_info",
+      "name": "Nimitiedot",
       "pressed": undefined,
       "role": "button",
       "value": undefined,
@@ -16,7 +16,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "edit_mode_edit_button",
+      "name": "Muokkaa",
       "pressed": undefined,
       "role": "button",
       "value": undefined,
@@ -24,7 +24,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "text_language_header",
+      "name": "Kieli",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -32,7 +32,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "name",
+      "name": "Nimi",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -40,7 +40,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "valid_dates",
+      "name": "Voimassaolo",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -48,7 +48,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "name_fi",
+      "name": "Suomeksi",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -64,7 +64,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "1.1.2023 from_date_react",
+      "name": "1.1.2023 alkaen",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -72,7 +72,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "name_sv",
+      "name": "Ruotsiksi",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -88,7 +88,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "1.1.1970 from_date_react",
+      "name": "1.1.1970 alkaen",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -96,7 +96,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "name_en",
+      "name": "Englanniksi",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -112,7 +112,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "1.1.2023 from_date_react",
+      "name": "1.1.2023 alkaen",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -133,7 +133,7 @@ Object {
       "checked": undefined,
       "children": undefined,
       "expanded": true,
-      "name": "name_info",
+      "name": "Nimitiedot",
       "pressed": undefined,
       "role": "button",
       "value": undefined,
@@ -141,7 +141,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "name_fi",
+      "name": "Suomeksi",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -149,7 +149,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute_value",
+      "name": "Arvo",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -157,7 +157,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute_value",
+      "name": "Arvo",
       "pressed": undefined,
       "required": true,
       "role": "textbox",
@@ -166,7 +166,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute.validFrom",
+      "name": "Voimassaolo alkaa",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -174,7 +174,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute.validFrom",
+      "name": "Voimassaolo alkaa",
       "pressed": undefined,
       "required": true,
       "role": "textbox",
@@ -191,7 +191,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute.validUntil",
+      "name": "Voimassaolo päättyy",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -199,7 +199,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute.validUntil",
+      "name": "Voimassaolo päättyy",
       "pressed": undefined,
       "role": "textbox",
       "value": undefined,
@@ -215,7 +215,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute.actions Tietotekniikkaratkaisut 3, 1.1.2023 from_date_react",
+      "name": "Toiminnot Tietotekniikkaratkaisut 3, 1.1.2023 alkaen",
       "pressed": undefined,
       "role": "button",
       "value": undefined,
@@ -223,7 +223,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute_value",
+      "name": "Arvo",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -231,7 +231,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute_value",
+      "name": "Arvo",
       "pressed": undefined,
       "required": true,
       "role": "textbox",
@@ -240,7 +240,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute.validFrom",
+      "name": "Voimassaolo alkaa",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -248,7 +248,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute.validFrom",
+      "name": "Voimassaolo alkaa",
       "pressed": undefined,
       "required": true,
       "role": "textbox",
@@ -265,7 +265,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute.validUntil",
+      "name": "Voimassaolo päättyy",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -273,7 +273,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute.validUntil",
+      "name": "Voimassaolo päättyy",
       "pressed": undefined,
       "role": "textbox",
       "value": "31.12.2022",
@@ -289,7 +289,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute.actions Tietotekniikkaratkaisut 2, 1.1.2000 - 31.12.2022",
+      "name": "Toiminnot Tietotekniikkaratkaisut 2, 1.1.2000 - 31.12.2022",
       "pressed": undefined,
       "role": "button",
       "value": undefined,
@@ -297,7 +297,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute_value",
+      "name": "Arvo",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -305,7 +305,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute_value",
+      "name": "Arvo",
       "pressed": undefined,
       "required": true,
       "role": "textbox",
@@ -314,7 +314,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute.validFrom",
+      "name": "Voimassaolo alkaa",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -322,7 +322,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute.validFrom",
+      "name": "Voimassaolo alkaa",
       "pressed": undefined,
       "required": true,
       "role": "textbox",
@@ -339,7 +339,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute.validUntil",
+      "name": "Voimassaolo päättyy",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -347,7 +347,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute.validUntil",
+      "name": "Voimassaolo päättyy",
       "pressed": undefined,
       "role": "textbox",
       "value": "31.12.1999",
@@ -363,7 +363,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute.actions Tietotekniikkaratkaisut 1, 1.1.1970 - 31.12.1999",
+      "name": "Toiminnot Tietotekniikkaratkaisut 1, 1.1.1970 - 31.12.1999",
       "pressed": undefined,
       "role": "button",
       "value": undefined,
@@ -371,7 +371,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "name_sv",
+      "name": "Ruotsiksi",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -379,7 +379,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute_value",
+      "name": "Arvo",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -387,7 +387,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute_value",
+      "name": "Arvo",
       "pressed": undefined,
       "required": true,
       "role": "textbox",
@@ -396,7 +396,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute.validFrom",
+      "name": "Voimassaolo alkaa",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -404,7 +404,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute.validFrom",
+      "name": "Voimassaolo alkaa",
       "pressed": undefined,
       "required": true,
       "role": "textbox",
@@ -421,7 +421,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute.validUntil",
+      "name": "Voimassaolo päättyy",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -429,7 +429,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute.validUntil",
+      "name": "Voimassaolo päättyy",
       "pressed": undefined,
       "role": "textbox",
       "value": undefined,
@@ -445,7 +445,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute.actions Datatekniklösningar, 1.1.1970 from_date_react",
+      "name": "Toiminnot Datatekniklösningar, 1.1.1970 alkaen",
       "pressed": undefined,
       "role": "button",
       "value": undefined,
@@ -453,7 +453,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "name_en",
+      "name": "Englanniksi",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -461,7 +461,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute_value",
+      "name": "Arvo",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -469,7 +469,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute_value",
+      "name": "Arvo",
       "pressed": undefined,
       "required": true,
       "role": "textbox",
@@ -478,7 +478,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute.validFrom",
+      "name": "Voimassaolo alkaa",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -486,7 +486,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute.validFrom",
+      "name": "Voimassaolo alkaa",
       "pressed": undefined,
       "required": true,
       "role": "textbox",
@@ -503,7 +503,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute.validUntil",
+      "name": "Voimassaolo päättyy",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -511,7 +511,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute.validUntil",
+      "name": "Voimassaolo päättyy",
       "pressed": undefined,
       "role": "textbox",
       "value": undefined,
@@ -527,7 +527,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute.actions IT Solutions 3, 1.1.2023 from_date_react",
+      "name": "Toiminnot IT Solutions 3, 1.1.2023 alkaen",
       "pressed": undefined,
       "role": "button",
       "value": undefined,
@@ -535,7 +535,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute_value",
+      "name": "Arvo",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -543,7 +543,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute_value",
+      "name": "Arvo",
       "pressed": undefined,
       "required": true,
       "role": "textbox",
@@ -552,7 +552,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute.validFrom",
+      "name": "Voimassaolo alkaa",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -560,7 +560,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute.validFrom",
+      "name": "Voimassaolo alkaa",
       "pressed": undefined,
       "required": true,
       "role": "textbox",
@@ -577,7 +577,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute.validUntil",
+      "name": "Voimassaolo päättyy",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -585,7 +585,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute.validUntil",
+      "name": "Voimassaolo päättyy",
       "pressed": undefined,
       "role": "textbox",
       "value": "31.12.2022",
@@ -601,7 +601,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute.actions IT Solutions 2, 1.1.2000 - 31.12.2022",
+      "name": "Toiminnot IT Solutions 2, 1.1.2000 - 31.12.2022",
       "pressed": undefined,
       "role": "button",
       "value": undefined,
@@ -609,7 +609,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute_value",
+      "name": "Arvo",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -617,7 +617,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute_value",
+      "name": "Arvo",
       "pressed": undefined,
       "required": true,
       "role": "textbox",
@@ -626,7 +626,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute.validFrom",
+      "name": "Voimassaolo alkaa",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -634,7 +634,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute.validFrom",
+      "name": "Voimassaolo alkaa",
       "pressed": undefined,
       "required": true,
       "role": "textbox",
@@ -651,7 +651,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute.validUntil",
+      "name": "Voimassaolo päättyy",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -659,7 +659,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute.validUntil",
+      "name": "Voimassaolo päättyy",
       "pressed": undefined,
       "role": "textbox",
       "value": "31.12.1999",
@@ -675,7 +675,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute.actions IT Solutions 1, 1.1.1970 - 31.12.1999",
+      "name": "Toiminnot IT Solutions 1, 1.1.1970 - 31.12.1999",
       "pressed": undefined,
       "role": "button",
       "value": undefined,
@@ -683,7 +683,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "cancel_button",
+      "name": "Peruuta",
       "pressed": undefined,
       "role": "button",
       "value": undefined,
@@ -692,7 +692,7 @@ Object {
       "checked": undefined,
       "children": undefined,
       "disabled": true,
-      "name": "edit_mode_save_button",
+      "name": "Tallenna",
       "pressed": undefined,
       "role": "button",
       "value": undefined,
@@ -712,7 +712,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "name_info",
+      "name": "Nimitiedot",
       "pressed": undefined,
       "role": "button",
       "value": undefined,
@@ -734,7 +734,7 @@ Object {
       "children": undefined,
       "disabled": true,
       "expanded": true,
-      "name": "name_infoaccordion.modifiedSaveBeforeClosing",
+      "name": "NimitiedotMuokattu, tallenna muutokset ennen sulkemista",
       "pressed": undefined,
       "role": "button",
       "value": undefined,
@@ -742,7 +742,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "name_fi",
+      "name": "Suomeksi",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -750,7 +750,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute_value",
+      "name": "Arvo",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -758,7 +758,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute_value",
+      "name": "Arvo",
       "pressed": undefined,
       "required": true,
       "role": "textbox",
@@ -767,7 +767,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute.validFrom",
+      "name": "Voimassaolo alkaa",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -775,7 +775,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute.validFrom",
+      "name": "Voimassaolo alkaa",
       "pressed": undefined,
       "required": true,
       "role": "textbox",
@@ -792,7 +792,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute.validUntil",
+      "name": "Voimassaolo päättyy",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -801,7 +801,7 @@ Object {
       "checked": undefined,
       "children": undefined,
       "focused": true,
-      "name": "attribute.validUntil",
+      "name": "Voimassaolo päättyy",
       "pressed": undefined,
       "role": "textbox",
       "value": "31.12.2023",
@@ -817,7 +817,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute.actions Tietotekniikkaratkaisut 3, 1.1.2023 - 31.12.2023",
+      "name": "Toiminnot Tietotekniikkaratkaisut 3, 1.1.2023 - 31.12.2023",
       "pressed": undefined,
       "role": "button",
       "value": undefined,
@@ -825,7 +825,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute_value",
+      "name": "Arvo",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -833,7 +833,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute_value",
+      "name": "Arvo",
       "pressed": undefined,
       "required": true,
       "role": "textbox",
@@ -842,7 +842,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute.validFrom",
+      "name": "Voimassaolo alkaa",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -850,7 +850,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute.validFrom",
+      "name": "Voimassaolo alkaa",
       "pressed": undefined,
       "required": true,
       "role": "textbox",
@@ -867,7 +867,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute.validUntil",
+      "name": "Voimassaolo päättyy",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -875,7 +875,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute.validUntil",
+      "name": "Voimassaolo päättyy",
       "pressed": undefined,
       "role": "textbox",
       "value": "31.12.2022",
@@ -891,7 +891,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute.actions Tietotekniikkaratkaisut 2, 1.1.2000 - 31.12.2022",
+      "name": "Toiminnot Tietotekniikkaratkaisut 2, 1.1.2000 - 31.12.2022",
       "pressed": undefined,
       "role": "button",
       "value": undefined,
@@ -899,7 +899,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute_value",
+      "name": "Arvo",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -907,7 +907,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute_value",
+      "name": "Arvo",
       "pressed": undefined,
       "required": true,
       "role": "textbox",
@@ -916,7 +916,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute.validFrom",
+      "name": "Voimassaolo alkaa",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -924,7 +924,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute.validFrom",
+      "name": "Voimassaolo alkaa",
       "pressed": undefined,
       "required": true,
       "role": "textbox",
@@ -941,7 +941,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute.validUntil",
+      "name": "Voimassaolo päättyy",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -949,7 +949,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute.validUntil",
+      "name": "Voimassaolo päättyy",
       "pressed": undefined,
       "role": "textbox",
       "value": "31.12.1999",
@@ -965,7 +965,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute.actions Tietotekniikkaratkaisut 1, 1.1.1970 - 31.12.1999",
+      "name": "Toiminnot Tietotekniikkaratkaisut 1, 1.1.1970 - 31.12.1999",
       "pressed": undefined,
       "role": "button",
       "value": undefined,
@@ -973,7 +973,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "name_sv",
+      "name": "Ruotsiksi",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -981,7 +981,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute_value",
+      "name": "Arvo",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -989,7 +989,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute_value",
+      "name": "Arvo",
       "pressed": undefined,
       "required": true,
       "role": "textbox",
@@ -998,7 +998,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute.validFrom",
+      "name": "Voimassaolo alkaa",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -1006,7 +1006,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute.validFrom",
+      "name": "Voimassaolo alkaa",
       "pressed": undefined,
       "required": true,
       "role": "textbox",
@@ -1023,7 +1023,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute.validUntil",
+      "name": "Voimassaolo päättyy",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -1031,7 +1031,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute.validUntil",
+      "name": "Voimassaolo päättyy",
       "pressed": undefined,
       "role": "textbox",
       "value": undefined,
@@ -1047,7 +1047,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute.actions Datatekniklösningar, 1.1.1970 from_date_react",
+      "name": "Toiminnot Datatekniklösningar, 1.1.1970 alkaen",
       "pressed": undefined,
       "role": "button",
       "value": undefined,
@@ -1055,7 +1055,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "name_en",
+      "name": "Englanniksi",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -1063,7 +1063,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute_value",
+      "name": "Arvo",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -1071,7 +1071,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute_value",
+      "name": "Arvo",
       "pressed": undefined,
       "required": true,
       "role": "textbox",
@@ -1080,7 +1080,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute.validFrom",
+      "name": "Voimassaolo alkaa",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -1088,7 +1088,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute.validFrom",
+      "name": "Voimassaolo alkaa",
       "pressed": undefined,
       "required": true,
       "role": "textbox",
@@ -1105,7 +1105,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute.validUntil",
+      "name": "Voimassaolo päättyy",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -1113,7 +1113,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute.validUntil",
+      "name": "Voimassaolo päättyy",
       "pressed": undefined,
       "role": "textbox",
       "value": undefined,
@@ -1129,7 +1129,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute.actions IT Solutions 3, 1.1.2023 from_date_react",
+      "name": "Toiminnot IT Solutions 3, 1.1.2023 alkaen",
       "pressed": undefined,
       "role": "button",
       "value": undefined,
@@ -1137,7 +1137,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute_value",
+      "name": "Arvo",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -1145,7 +1145,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute_value",
+      "name": "Arvo",
       "pressed": undefined,
       "required": true,
       "role": "textbox",
@@ -1154,7 +1154,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute.validFrom",
+      "name": "Voimassaolo alkaa",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -1162,7 +1162,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute.validFrom",
+      "name": "Voimassaolo alkaa",
       "pressed": undefined,
       "required": true,
       "role": "textbox",
@@ -1179,7 +1179,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute.validUntil",
+      "name": "Voimassaolo päättyy",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -1187,7 +1187,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute.validUntil",
+      "name": "Voimassaolo päättyy",
       "pressed": undefined,
       "role": "textbox",
       "value": "31.12.2022",
@@ -1203,7 +1203,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute.actions IT Solutions 2, 1.1.2000 - 31.12.2022",
+      "name": "Toiminnot IT Solutions 2, 1.1.2000 - 31.12.2022",
       "pressed": undefined,
       "role": "button",
       "value": undefined,
@@ -1211,7 +1211,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute_value",
+      "name": "Arvo",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -1219,7 +1219,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute_value",
+      "name": "Arvo",
       "pressed": undefined,
       "required": true,
       "role": "textbox",
@@ -1228,7 +1228,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute.validFrom",
+      "name": "Voimassaolo alkaa",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -1236,7 +1236,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute.validFrom",
+      "name": "Voimassaolo alkaa",
       "pressed": undefined,
       "required": true,
       "role": "textbox",
@@ -1253,7 +1253,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute.validUntil",
+      "name": "Voimassaolo päättyy",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -1261,7 +1261,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute.validUntil",
+      "name": "Voimassaolo päättyy",
       "pressed": undefined,
       "role": "textbox",
       "value": "31.12.1999",
@@ -1277,7 +1277,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "attribute.actions IT Solutions 1, 1.1.1970 - 31.12.1999",
+      "name": "Toiminnot IT Solutions 1, 1.1.1970 - 31.12.1999",
       "pressed": undefined,
       "role": "button",
       "value": undefined,
@@ -1285,7 +1285,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "cancel_button",
+      "name": "Peruuta",
       "pressed": undefined,
       "role": "button",
       "value": undefined,
@@ -1293,7 +1293,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "edit_mode_save_button",
+      "name": "Tallenna",
       "pressed": undefined,
       "role": "button",
       "value": undefined,
@@ -1314,7 +1314,7 @@ Object {
       "checked": undefined,
       "children": undefined,
       "expanded": true,
-      "name": "name_info",
+      "name": "Nimitiedot",
       "pressed": undefined,
       "role": "button",
       "value": undefined,
@@ -1322,7 +1322,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "edit_mode_edit_button",
+      "name": "Muokkaa",
       "pressed": undefined,
       "role": "button",
       "value": undefined,
@@ -1330,7 +1330,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "text_language_header",
+      "name": "Kieli",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -1338,7 +1338,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "name",
+      "name": "Nimi",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -1346,7 +1346,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "valid_dates",
+      "name": "Voimassaolo",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -1354,7 +1354,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "name_fi",
+      "name": "Suomeksi",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -1370,7 +1370,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "1.1.2023 from_date_react",
+      "name": "1.1.2023 alkaen",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -1378,7 +1378,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "name_fi",
+      "name": "Suomeksi",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -1402,7 +1402,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "name_fi",
+      "name": "Suomeksi",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -1426,7 +1426,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "name_sv",
+      "name": "Ruotsiksi",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -1442,7 +1442,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "1.1.1970 from_date_react",
+      "name": "1.1.1970 alkaen",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -1450,7 +1450,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "name_en",
+      "name": "Englanniksi",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -1466,7 +1466,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "1.1.2023 from_date_react",
+      "name": "1.1.2023 alkaen",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -1474,7 +1474,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "name_en",
+      "name": "Englanniksi",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -1498,7 +1498,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "name_en",
+      "name": "Englanniksi",
       "pressed": undefined,
       "role": "text",
       "value": undefined,

@@ -13,6 +13,7 @@ import {
   addMethod,
 } from 'yup';
 import { formatDate, toDate, toISODateString } from './dateUtils';
+import { flattenAttributes } from './attributeUtils';
 
 // Customize yup validation error messages
 // Message is either a translation key or an object containing the key and
@@ -282,6 +283,20 @@ export const defaultSchemaForAttributes = (keys) =>
       schema[key] = arrayOfAttributeValues;
       return schema;
     }, {})
+  );
+
+const atLeastOneNotEmpty = (input) => {
+  const values = flattenAttributes(input).filter(
+    (attribute) => !attribute.deleted
+  );
+  return values.length > 0;
+};
+
+export const nameAttributeSchema = (keys) =>
+  defaultSchemaForAttributes(keys).test(
+    'some-arrays-not-empty',
+    'all values are empty.',
+    atLeastOneNotEmpty
   );
 
 export const nodeValiditySchema = object({

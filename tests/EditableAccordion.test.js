@@ -35,8 +35,6 @@ describe('modified', () => {
 
   test('modified indicator', () => {
     render(<Modified />);
-    expect(
-      screen.queryByText('accordion.modifiedSaveBeforeClosing')
-    ).toBeVisible();
+    expect(screen.queryByText(/Muokattu/)).toBeVisible();
   });
 });

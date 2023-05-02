@@ -100,7 +100,7 @@ const EditButtons = (props) => {
     //sotkeekohan tää jotain ku joudutaan tallentamaan kaks kertaa, eka virheeseen ja sit menee läpi
   }, [props.edit]);
 
-  useEffect(async () => {
+  useEffect(() => {
     if (
       props.feedback &&
       props.feedback.success &&
@@ -109,7 +109,7 @@ const EditButtons = (props) => {
       toggleEdit(false);
       props.onSwitchComing(false); //switch off coming attributes
       props.onSwitchHistory(false);
-      await props.fetchNodeDetails(
+      props.fetchNodeDetails(
         props.node,
         props.selectedDay,
         props.showHistory,

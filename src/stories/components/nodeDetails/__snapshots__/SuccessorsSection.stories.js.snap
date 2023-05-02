@@ -8,7 +8,7 @@ Object {
       "checked": undefined,
       "children": undefined,
       "expanded": true,
-      "name": "successors",
+      "name": "Seuraavat yksiköt",
       "pressed": undefined,
       "role": "button",
       "value": undefined,
@@ -16,7 +16,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "name",
+      "name": "Nimi",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -24,7 +24,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "valid_dates",
+      "name": "Voimassaolo",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -32,7 +32,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "successor_edge_valid",
+      "name": "Yhteyden päivämäärä",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -72,7 +72,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "1.1.1970 from_date_react",
+      "name": "1.1.1970 alkaen",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -80,7 +80,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "not_specified",
+      "name": "Voimassaoloa ei määritetty",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -101,7 +101,7 @@ Object {
       "checked": undefined,
       "children": undefined,
       "expanded": true,
-      "name": "successors",
+      "name": "Seuraavat yksiköt",
       "pressed": undefined,
       "role": "button",
       "value": undefined,
@@ -109,7 +109,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "successors.empty",
+      "name": "Ei seuraavia yksiköitä",
       "pressed": undefined,
       "role": "text",
       "value": undefined,

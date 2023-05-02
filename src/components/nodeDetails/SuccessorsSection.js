@@ -36,7 +36,7 @@ const SuccessorsSection = () => {
     `${item.fullName}-${item.startDate}-${item.endDate}-${item.edgeStartDate}-${item.edgeEndDate}`;
 
   const data = successors[contentLanguage] || [];
-  const title = t('successors');
+  const title = t('successors.title');
   const empty = data.length === 0;
 
   return (

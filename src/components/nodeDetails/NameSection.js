@@ -14,7 +14,10 @@ import {
 } from '../../store';
 import useSortAttributesByDate from '../../hooks/useSortAttributesByDate';
 import useFilterAttributesByDate from '../../hooks/useFilterAttributesByDate';
-import { defaultSchemaForAttributes } from '../../utils/validations';
+import {
+  defaultSchemaForAttributes,
+  nameAttributeSchema,
+} from '../../utils/validations';
 import { authActions } from '../../auth';
 import { flattenAttributes, toFormValues } from '../../utils/attributeUtils';
 
@@ -36,7 +39,7 @@ const NameSection = () => {
 
   // Validates form values every time when the values change
   // Submit button is disabled when validation fails
-  const validationSchema = defaultSchemaForAttributes(keys);
+  const validationSchema = nameAttributeSchema(keys);
 
   const handleSubmit = (input) => {
     const attributes = flattenAttributes(input);

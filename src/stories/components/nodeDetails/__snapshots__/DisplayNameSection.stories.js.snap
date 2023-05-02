@@ -8,7 +8,7 @@ Object {
       "checked": undefined,
       "children": undefined,
       "expanded": true,
-      "name": "display_name_info",
+      "name": "Koko nimi",
       "pressed": undefined,
       "role": "button",
       "value": undefined,
@@ -16,7 +16,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "text_language_header",
+      "name": "Kieli",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -24,7 +24,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "name",
+      "name": "Nimi",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -32,7 +32,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "valid_dates",
+      "name": "Voimassaolo",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -40,7 +40,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "name_fi",
+      "name": "Suomeksi",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -56,7 +56,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "not_specified",
+      "name": "Voimassaoloa ei määritetty",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -64,7 +64,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "name_sv",
+      "name": "Ruotsiksi",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -80,7 +80,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "not_specified",
+      "name": "Voimassaoloa ei määritetty",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -88,7 +88,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "name_en",
+      "name": "Englanniksi",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -104,7 +104,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "not_specified",
+      "name": "Voimassaoloa ei määritetty",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -125,7 +125,7 @@ Object {
       "checked": undefined,
       "children": undefined,
       "expanded": true,
-      "name": "display_name_info",
+      "name": "Koko nimi",
       "pressed": undefined,
       "role": "button",
       "value": undefined,
@@ -133,7 +133,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "displayName.empty",
+      "name": "Koko nimi puuttuu",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -154,7 +154,7 @@ Object {
       "checked": undefined,
       "children": undefined,
       "expanded": true,
-      "name": "display_name_info",
+      "name": "Koko nimi",
       "pressed": undefined,
       "role": "button",
       "value": undefined,
@@ -162,7 +162,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "text_language_header",
+      "name": "Kieli",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -170,7 +170,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "name",
+      "name": "Nimi",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -178,7 +178,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "valid_dates",
+      "name": "Voimassaolo",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -186,7 +186,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "name_fi",
+      "name": "Suomeksi",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -202,7 +202,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "17.2.1919 from_date_react",
+      "name": "17.2.1919 alkaen",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -210,7 +210,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "name_fi",
+      "name": "Suomeksi",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -234,7 +234,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "name_fi",
+      "name": "Suomeksi",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -258,7 +258,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "name_sv",
+      "name": "Ruotsiksi",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -274,7 +274,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "not_specified",
+      "name": "Voimassaoloa ei määritetty",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -282,7 +282,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "name_en",
+      "name": "Englanniksi",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -298,7 +298,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "not_specified",
+      "name": "Voimassaoloa ei määritetty",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
