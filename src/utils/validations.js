@@ -283,3 +283,16 @@ export const defaultSchemaForAttributes = (keys) =>
       return schema;
     }, {})
   );
+
+export const nodeValiditySchema = object({
+  startDate: string()
+    .date()
+    .nullable()
+    .minDate('1600-01-01')
+    .beforeEndDate({ days: 2 }),
+  endDate: string()
+    .date()
+    .nullable()
+    .minDate('1600-01-01')
+    .afterStartDate({ days: 2 }),
+});
