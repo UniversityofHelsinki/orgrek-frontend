@@ -34,8 +34,7 @@ const NodeValidityEditor = () => {
       <Grid xs={12} sm={6} md={3}>
         <DateField
           label={t('attribute.validUntil')}
-          minDate={getMin(validationSchema, 'endDate')}
-          maxDate={getMinEndDate(validationSchema, 'endDate', values)}
+          minDate={getMinEndDate(validationSchema, 'endDate', values)}
           fullWidth
           error={endDateErrors.length > 0}
           helperText={<HelperText errors={endDateErrors} />}

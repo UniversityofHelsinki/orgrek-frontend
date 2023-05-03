@@ -147,17 +147,21 @@ addMethod(
    *
    * @param minDuration date-fns duration object specifying minimum duration
    * (e.g. days) between the start and the end dates
+   * @param min minimum date if start date is null
    */
-  function (minDuration) {
+  function (minDuration, min) {
     return this.test({
       name: 'afterStartDate',
       params: {
         minDuration,
+        min,
       },
       test: (value, context) => {
         const startDate = toDate(context.parent.startDate || null);
         const minDate = isValid(startDate)
           ? add(startDate, minDuration)
+          : min
+          ? toDate(min)
           : undefined;
 
         if (minDate && isBefore(toDate(value), minDate)) {
@@ -305,9 +309,5 @@ export const nodeValiditySchema = object({
     .nullable()
     .minDate('1600-01-01')
     .beforeEndDate({ days: 2 }),
-  endDate: string()
-    .date()
-    .nullable()
-    .minDate('1600-01-01')
-    .afterStartDate({ days: 2 }),
+  endDate: string().date().nullable().afterStartDate({ days: 2 }, '1600-01-01'),
 });
