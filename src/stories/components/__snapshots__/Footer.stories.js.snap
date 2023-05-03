@@ -15,7 +15,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "university_of_helsinki",
+      "name": "Helsingin yliopisto",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -23,7 +23,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "hy_address_part1",
+      "name": "PL 4 (Yliopistonkatu 3)",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -40,7 +40,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "hy_address_part2",
+      "name": "00014 Helsingin yliopisto",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -48,7 +48,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "hy_switchboard",
+      "name": "Puhelinvaihde: 02941 911",
       "pressed": undefined,
       "role": "text",
       "value": undefined,

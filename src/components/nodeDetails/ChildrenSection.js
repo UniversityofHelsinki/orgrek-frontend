@@ -12,7 +12,7 @@ const ChildrenSection = () => {
   const contentLanguage = useContentLanguage();
 
   const data = children[contentLanguage] || [];
-  const title = t('subunits');
+  const title = t('subunits.title');
   const empty = data.length === 0;
 
   return (

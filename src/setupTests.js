@@ -10,6 +10,9 @@ import { MemoryRouter } from 'react-router-dom';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { fi } from 'date-fns/locale';
 import { LocalizationProvider } from '@mui/x-date-pickers';
+import { initI18n } from './i18n';
+
+initI18n(false);
 
 global.fetch = jest.fn();
 
@@ -32,5 +35,3 @@ setGlobalConfig({
 beforeEach(() => {
   document.body.innerHTML = '';
 });
-
-jest.mock('./i18n');

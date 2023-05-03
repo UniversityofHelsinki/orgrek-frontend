@@ -7,7 +7,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "units",
+      "name": "Organisaatiorakenteet",
       "pressed": undefined,
       "role": "text",
       "value": undefined,
@@ -15,7 +15,7 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "talous",
+      "name": "Talousyksiköt",
       "pressed": undefined,
       "role": "button",
       "value": undefined,
@@ -25,7 +25,7 @@ Object {
       "checked": undefined,
       "children": undefined,
       "haspopup": "listbox",
-      "name": "units",
+      "name": "Organisaatiorakenteet",
       "pressed": undefined,
       "role": "combobox",
       "value": undefined,

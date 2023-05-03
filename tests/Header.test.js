@@ -8,11 +8,11 @@ const { AdminRole, ReaderRole } = composeStories(stories);
 describe('navigation', () => {
   test('expect texts navigation to be visible for admin role', () => {
     render(<AdminRole />);
-    expect(screen.queryByText('texts')).toBeInTheDocument();
+    expect(screen.queryByText('Tekstit')).toBeInTheDocument();
   });
 
   test('expect texts navigation to not be visible for reader role', () => {
     render(<ReaderRole />);
-    expect(screen.queryByText('texts')).not.toBeInTheDocument();
+    expect(screen.queryByText('Tekstit')).not.toBeInTheDocument();
   });
 });
