@@ -39,9 +39,6 @@ const UnitTypeSection = () => {
   // In view mode filter history and future depending on selection
   const sortedAndFilteredData = useFilterAttributesByDate(sortedData);
 
-  const title = t('unit_type');
-  const empty = sortedAndFilteredData.length === 0;
-
   const toFormValues = (data) => {
     const foundTypes = [];
     fillSelectableUnits(
@@ -72,6 +69,9 @@ const UnitTypeSection = () => {
     const valuesArray = ObjetToArray(values.type);
     return saveTypeAttributes({ valuesArray, nodeId }).unwrap();
   };
+
+  const title = t('unit_type');
+  const empty = type.length === 0;
 
   return (
     <EditableAccordion
