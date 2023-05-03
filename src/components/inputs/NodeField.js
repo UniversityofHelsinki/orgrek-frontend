@@ -11,7 +11,7 @@ import useContentLanguage from '../../hooks/useContentLanguage';
  *
  * See MUI Autocomplete for all supported props.
  */
-const NodeField = (props) => {
+const NodeField = ({ label, placeholder, ...props }) => {
   const { t } = useTranslation();
   const { tree } = useTree();
 
@@ -53,13 +53,23 @@ const NodeField = (props) => {
         return [];
       }}
       renderInput={(params) => (
-        <TextField {...params} label={t('type_three_char_to_start_search')} />
+        <TextField
+          {...params}
+          label={label}
+          placeholder={placeholder || t('type_three_char_to_start_search')}
+        />
       )}
     />
   );
 };
 
 NodeField.propTypes = {
+  /** Field label */
+  label: PropTypes.string,
+
+  /** Hint text displayed in the input before the user enters a value. */
+  placeholder: PropTypes.string,
+
   /**
    * If true, allows only selecting a value from the suggestions menu,
    * and the field is cleared on blur if nothing was selected.
