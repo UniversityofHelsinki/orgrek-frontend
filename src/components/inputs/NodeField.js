@@ -5,13 +5,22 @@ import Autocomplete from '@mui/material/Autocomplete';
 import { useTranslation } from 'react-i18next';
 import useTree from '../../hooks/useTree';
 import useContentLanguage from '../../hooks/useContentLanguage';
+import InputAdornment from '@mui/material/InputAdornment';
+import SearchIcon from '../icons/Search';
 
 /**
  * Autocomplete field for searching and selecting a node from the tree.
  *
  * See MUI Autocomplete for all supported props.
  */
-const NodeField = ({ label, placeholder, ...props }) => {
+const NodeField = ({
+  label,
+  placeholder,
+  helperText,
+  variant,
+  disabled,
+  ...props
+}) => {
   const { t } = useTranslation();
   const { tree } = useTree();
 
@@ -32,6 +41,15 @@ const NodeField = ({ label, placeholder, ...props }) => {
     return uniqueId.toString() === text.toLowerCase();
   };
 
+  let inputAdornment;
+  if (variant === 'search') {
+    inputAdornment = (
+      <InputAdornment position="end">
+        <SearchIcon color={disabled ? 'disabled' : 'primary'} />
+      </InputAdornment>
+    );
+  }
+
   return (
     <Autocomplete
       clearText={t('nodeField.clearText')}
@@ -39,6 +57,8 @@ const NodeField = ({ label, placeholder, ...props }) => {
       closeText={t('nodeField.closeText')}
       noOptionsText={t('nodeField.noOptionsText')}
       {...props}
+      disabled={disabled}
+      freeSolo={variant === 'search'}
       options={uniqueOptions}
       getOptionLabel={(option) => option.name || ''}
       renderOption={(props, option) => (
@@ -56,11 +76,15 @@ const NodeField = ({ label, placeholder, ...props }) => {
         }
         return [];
       }}
-      renderInput={(params) => (
+      renderInput={({ InputProps, ...params }) => (
         <TextField
-          {...params}
+          InputProps={{
+            ...InputProps,
+            endAdornment: InputProps.endAdornment || inputAdornment,
+          }}
           label={label}
           placeholder={placeholder || t('type_three_char_to_start_search')}
+          {...params}
         />
       )}
     />
@@ -75,13 +99,14 @@ NodeField.propTypes = {
   placeholder: PropTypes.string,
 
   /**
-   * If true, allows only selecting a value from the suggestions menu,
+   * Variant 'combobox' allows only selecting a value from the suggestion menu,
    * and the field is cleared on blur if nothing was selected.
    *
-   * If false, the typed text remains in the field on blur even if it is not
-   * a valid selection.
-   * */
-  freeSolo: PropTypes.bool,
+   * Variant 'search' keeps the typed text in the field on blur even if it is
+   * not a valid selection.
+   * In addition, displays a search icon as input adornment.
+   */
+  variant: PropTypes.oneOf(['combobox', 'search']),
 
   /**
    * Called when a value is selected or the field is cleared.

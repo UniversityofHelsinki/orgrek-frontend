@@ -1,5 +1,7 @@
-import NodeFieldComponent from '../../../components/inputs/NodeField';
+import { expect } from '@storybook/jest';
+import NodeField from '../../../components/inputs/NodeField';
 import { mockGetTree, withMockStore, tree } from '../../../mockStore';
+import { userEvent, within, waitFor } from '@storybook/testing-library';
 
 // Use a fixed date to ensure that tests always have a consistent result
 const now = new Date('2023-03-22T14:28:00+0200');
@@ -7,17 +9,18 @@ const now = new Date('2023-03-22T14:28:00+0200');
 const selectedHierarchy = 'talous';
 
 export default {
-  component: NodeFieldComponent,
+  component: NodeField,
   parameters: {
     systemTime: now,
   },
 };
 
-export const NodeField = {
+export const Combobox = {
   args: {
-    freeSolo: false,
+    variant: 'combobox',
     label: 'Yksikkö',
     placeholder: '',
+    disabled: false,
   },
   parameters: {
     msw: {
@@ -36,4 +39,28 @@ export const NodeField = {
       },
     }),
   ],
+};
+
+export const Search = {
+  ...Combobox,
+  args: {
+    ...Combobox.args,
+    label: 'Hae yksikköä',
+    variant: 'search',
+  },
+};
+
+export const Selected = {
+  ...Combobox,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement.parentElement);
+
+    await userEvent.type(canvas.getByLabelText('Yksikkö'), 'kie');
+
+    await waitFor(async () => {
+      await expect(canvas.getByText(/HY, Kielikeskus/)).toBeInTheDocument();
+    });
+
+    await userEvent.click(canvas.getByText(/HY, Kielikeskus/));
+  },
 };

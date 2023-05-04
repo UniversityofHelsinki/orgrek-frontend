@@ -11,7 +11,9 @@ const TreeSearch = () => {
     }
   };
 
-  return <NodeField id="tree-search" freeSolo onChange={handleChange} />;
+  return (
+    <NodeField id="tree-search" variant="search" onChange={handleChange} />
+  );
 };
 
 export default TreeSearch;
