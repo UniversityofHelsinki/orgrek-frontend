@@ -1,6 +1,6 @@
 import React from 'react';
 import { CssBaseline, ThemeProvider } from '@mui/material';
-import { DocsContainer } from '@storybook/addon-docs';
+import { withThemeFromJSXProvider } from '@storybook/addon-styling';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { fi } from 'date-fns/locale';
@@ -42,16 +42,6 @@ initialize({
   },
 });
 
-// Use the same decorators for both stories and docs pages
-const CommonDecorators = ({ children }) => (
-  <ThemeProvider theme={theme}>
-    <CssBaseline />
-    <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={fi}>
-      {children}
-    </LocalizationProvider>
-  </ThemeProvider>
-);
-
 /** @type { import('@storybook/react').Preview } */
 const preview = {
   parameters: {
@@ -62,13 +52,6 @@ const preview = {
         date: /Date$/,
       },
     },
-    docs: {
-      container: (props) => (
-        <CommonDecorators>
-          <DocsContainer {...props} />
-        </CommonDecorators>
-      ),
-    },
     a11y: {
       options: {
         // See: https://www.deque.com/axe/core-documentation/api-documentation/#axe-core-tags
@@ -78,10 +61,18 @@ const preview = {
   },
   decorators: [
     (Story) => (
-      <CommonDecorators>
+      <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={fi}>
         <Story />
-      </CommonDecorators>
+      </LocalizationProvider>
     ),
+    withThemeFromJSXProvider({
+      themes: {
+        orgrek: theme,
+      },
+      defaultTheme: 'orgrek',
+      Provider: ThemeProvider,
+      GlobalStyles: CssBaseline,
+    }),
     withRouter,
     mswDecorator,
     withMockDate,
