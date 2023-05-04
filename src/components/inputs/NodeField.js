@@ -8,6 +8,17 @@ import useContentLanguage from '../../hooks/useContentLanguage';
 import InputAdornment from '@mui/material/InputAdornment';
 import SearchIcon from '../icons/Search';
 
+const flatten = (current) =>
+  current.reduce((a, c) => [...a, c, ...flatten(c.children)], []);
+
+const nameMatches = (name, text) => {
+  return name.toLowerCase().indexOf(text.toLowerCase()) !== -1;
+};
+
+const uniqueIdMatches = (uniqueId, text) => {
+  return uniqueId.toString() === text.toLowerCase();
+};
+
 /**
  * Autocomplete field for searching and selecting a node from the tree.
  *
@@ -27,23 +38,14 @@ const NodeField = ({
 }) => {
   const { t } = useTranslation();
   const { tree } = useTree();
-
-  const flatten = (current) =>
-    current.reduce((a, c) => [...a, c, ...flatten(c.children)], []);
   const language = useContentLanguage();
+
   const options =
     tree && tree[language] ? flatten(tree[language].children) : [];
 
-  let uniqueOptions = [
+  const uniqueOptions = [
     ...new Map(options.map((item) => [item['uniqueId'], item])).values(),
   ];
-
-  const nameMatches = (name, text) => {
-    return name.toLowerCase().indexOf(text.toLowerCase()) !== -1;
-  };
-  const uniqueIdMatches = (uniqueId, text) => {
-    return uniqueId.toString() === text.toLowerCase();
-  };
 
   const handleChange = (event, newValue, reason) => {
     onChange(
