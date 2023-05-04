@@ -52,36 +52,40 @@ const CommonDecorators = ({ children }) => (
   </ThemeProvider>
 );
 
-export const parameters = {
-  actions: { argTypesRegex: '^on[A-Z].*' },
-  controls: {
-    matchers: {
-      color: /(background|color)$/i,
-      date: /Date$/,
+/** @type { import('@storybook/react').Preview } */
+const preview = {
+  parameters: {
+    actions: { argTypesRegex: '^on[A-Z].*' },
+    controls: {
+      matchers: {
+        color: /(background|color)$/i,
+        date: /Date$/,
+      },
+    },
+    docs: {
+      container: (props) => (
+        <CommonDecorators>
+          <DocsContainer {...props} />
+        </CommonDecorators>
+      ),
+    },
+    a11y: {
+      options: {
+        // See: https://www.deque.com/axe/core-documentation/api-documentation/#axe-core-tags
+        runOnly: ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'best-practice'],
+      },
     },
   },
-  docs: {
-    container: (props) => (
+  decorators: [
+    (Story) => (
       <CommonDecorators>
-        <DocsContainer {...props} />
+        <Story />
       </CommonDecorators>
     ),
-  },
-  a11y: {
-    options: {
-      // See: https://www.deque.com/axe/core-documentation/api-documentation/#axe-core-tags
-      runOnly: ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'best-practice'],
-    },
-  },
+    withRouter,
+    mswDecorator,
+    withMockDate,
+  ],
 };
 
-export const decorators = [
-  (Story) => (
-    <CommonDecorators>
-      <Story />
-    </CommonDecorators>
-  ),
-  withRouter,
-  mswDecorator,
-  withMockDate,
-];
+export default preview;
