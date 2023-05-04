@@ -7,7 +7,7 @@ const TreeSearch = () => {
 
   const handleChange = (event, node) => {
     if (node) {
-      navigate({ node: node.uniqueId });
+      navigate({ node: node.id });
     }
   };
 
