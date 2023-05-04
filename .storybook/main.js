@@ -21,13 +21,9 @@ const config = {
       },
     },
   ],
-
   framework: {
     name: '@storybook/react-webpack5',
     options: {},
-  },
-  features: {
-    interactionsDebugger: true,
   },
   docs: {
     autodocs: true,
