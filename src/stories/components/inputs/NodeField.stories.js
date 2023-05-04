@@ -16,7 +16,7 @@ export default {
 export const NodeField = {
   args: {
     freeSolo: false,
-    label: 'Label',
+    label: 'Yksikkö',
     placeholder: '',
   },
   parameters: {

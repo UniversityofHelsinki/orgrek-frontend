@@ -255,6 +255,12 @@
   "nodeDetailsSection": {
     "noAttributes": "No attributes"
   },
+  "nodeField": {
+    "clearText": "Clear",
+    "closeText": "Close",
+    "noOptionsText": "No results",
+    "openText": "Open"
+  },
   "node_excel": "Yksikkötaulukko",
   "normal_view_button": "Back to read view",
   "not_specified": "Validity not specified",

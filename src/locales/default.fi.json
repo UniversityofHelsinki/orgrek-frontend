@@ -277,6 +277,12 @@
   "nodeDetailsSection": {
     "noAttributes": "Ei attribuutteja"
   },
+  "nodeField": {
+    "clearText": "Tyhjennä",
+    "closeText": "Sulje",
+    "noOptionsText": "Ei hakutuloksia",
+    "openText": "Avaa"
+  },
   "node_attr_key": "Attribuutin nimi*",
   "node_attr_value": "Attribuutin arvo*",
   "node_excel": "Yksikkötaulukko",

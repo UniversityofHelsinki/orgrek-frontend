@@ -34,6 +34,10 @@ const NodeField = ({ label, placeholder, ...props }) => {
 
   return (
     <Autocomplete
+      clearText={t('nodeField.clearText')}
+      openText={t('nodeField.openText')}
+      closeText={t('nodeField.closeText')}
+      noOptionsText={t('nodeField.noOptionsText')}
       {...props}
       options={uniqueOptions}
       getOptionLabel={(option) => option.name || ''}

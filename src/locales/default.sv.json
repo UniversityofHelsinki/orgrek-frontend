@@ -232,6 +232,12 @@
   "nodeDetailsSection": {
     "noAttributes": "nodeDetailsSection.noAttributes"
   },
+  "nodeField": {
+    "clearText": "clearText",
+    "closeText": "closeText",
+    "noOptionsText": "noOptionsText",
+    "openText": "openText"
+  },
   "node_excel": "Yksikkötaulukko",
   "normal_view_button": "Tillbaka till läsutsikt",
   "not_specified": "Giltigheten inte bestämt",
