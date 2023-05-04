@@ -3,6 +3,7 @@ import EditableAccordion from '../../components/EditableAccordion';
 
 export default {
   component: EditableAccordion,
+  tags: ['autodocs'],
   argTypes: {
     onChange: { action: true, control: 'none' },
   },

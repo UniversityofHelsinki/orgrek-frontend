@@ -8,6 +8,7 @@ import Stack from '@mui/material/Stack';
 
 export default {
   component: NotificationComponent,
+  tags: ['autodocs'],
 };
 
 export const Notification = {

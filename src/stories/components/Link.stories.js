@@ -3,6 +3,7 @@ import Link from '../../components/Link';
 
 export default {
   component: Link,
+  tags: ['autodocs'],
 };
 
 export const NodeLink = {

@@ -12,6 +12,7 @@ import '../../../utils/validations'; // Register custom validators
 
 export default {
   component: AttributeEditor,
+  tags: ['autodocs'],
   argTypes: {
     onChange: { action: true },
   },
