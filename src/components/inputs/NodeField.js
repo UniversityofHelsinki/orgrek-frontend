@@ -19,6 +19,8 @@ const NodeField = ({
   helperText,
   variant,
   disabled,
+  error,
+  required,
   ...props
 }) => {
   const { t } = useTranslation();
@@ -84,6 +86,9 @@ const NodeField = ({
           }}
           label={label}
           placeholder={placeholder || t('type_three_char_to_start_search')}
+          helperText={helperText}
+          required={required}
+          error={error}
           {...params}
         />
       )}
@@ -112,6 +117,22 @@ NodeField.propTypes = {
    * Called when a value is selected or the field is cleared.
    */
   onChange: PropTypes.func.isRequired,
+
+  /**
+   * Helper text displayed below the field.
+   *
+   * HelperText component can be used with this prop to display errors.
+   */
+  helperText: PropTypes.string,
+
+  /** If true, the component is disabled. */
+  disabled: PropTypes.bool,
+
+  /** If true, the field is displayed in an error state. */
+  error: PropTypes.bool,
+
+  /** If true, the label is displayed as required and the input value is required. */
+  required: PropTypes.bool,
 };
 
 export default NodeField;

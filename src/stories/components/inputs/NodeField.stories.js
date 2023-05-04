@@ -19,8 +19,11 @@ export const Combobox = {
   args: {
     variant: 'combobox',
     label: 'Yksikkö',
+    helperText: '',
     placeholder: '',
+    required: false,
     disabled: false,
+    error: false,
   },
   parameters: {
     msw: {
