@@ -1,5 +1,6 @@
 import {
   hierarchyFilters,
+  mockGetSectionTypeAttributes,
   mockGetTypeAttributes,
   mockGetValidHierarchyFilters,
   mockPutTypeAttributes,
@@ -24,6 +25,14 @@ export default {
   },
 };
 
+const sectionTypeData = [
+  {
+    id: 17,
+    section: 'types',
+    attr: 'type',
+  },
+];
+
 export const Default = {
   parameters: {
     msw: {
@@ -40,6 +49,7 @@ export const Default = {
         ]),
         mockPutTypeAttributes(nodeId),
         mockGetValidHierarchyFilters(now, hierarchyFilters),
+        mockGetSectionTypeAttributes('types', sectionTypeData),
       ],
     },
   },
@@ -54,6 +64,7 @@ export const Empty = {
         mockGetTypeAttributes(nodeId, []),
         mockPutTypeAttributes(nodeId),
         mockGetValidHierarchyFilters(now, hierarchyFilters),
+        mockGetSectionTypeAttributes('types', sectionTypeData),
       ],
     },
   },
