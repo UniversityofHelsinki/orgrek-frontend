@@ -21,6 +21,8 @@ const NodeField = ({
   disabled,
   error,
   required,
+  value,
+  onChange,
   ...props
 }) => {
   const { t } = useTranslation();
@@ -43,6 +45,14 @@ const NodeField = ({
     return uniqueId.toString() === text.toLowerCase();
   };
 
+  const handleChange = (event, newValue, reason) => {
+    onChange(
+      event,
+      newValue === null ? null : { id: newValue.uniqueId, name: newValue.name },
+      reason
+    );
+  };
+
   let inputAdornment;
   if (variant === 'search') {
     inputAdornment = (
@@ -61,6 +71,8 @@ const NodeField = ({
       {...props}
       disabled={disabled}
       freeSolo={variant === 'search'}
+      onChange={handleChange}
+      value={value}
       options={uniqueOptions}
       getOptionLabel={(option) => option.name || ''}
       renderOption={(props, option) => (
@@ -133,6 +145,12 @@ NodeField.propTypes = {
 
   /** If true, the label is displayed as required and the input value is required. */
   required: PropTypes.bool,
+
+  /** Field value as object containing node unique id and name */
+  value: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
+  }),
 };
 
 export default NodeField;

@@ -1,5 +1,45 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`stories/components/inputs/NodeField Cleared play-test 1`] = `
+Object {
+  "checked": undefined,
+  "children": Array [
+    Object {
+      "checked": undefined,
+      "children": undefined,
+      "name": "Yksikkö",
+      "pressed": undefined,
+      "role": "text",
+      "value": undefined,
+    },
+    Object {
+      "autocomplete": "list",
+      "checked": undefined,
+      "children": undefined,
+      "focused": true,
+      "haspopup": "listbox",
+      "name": "Yksikkö",
+      "pressed": undefined,
+      "role": "combobox",
+      "value": undefined,
+    },
+    Object {
+      "checked": undefined,
+      "children": undefined,
+      "description": "Avaa",
+      "name": "Avaa",
+      "pressed": undefined,
+      "role": "button",
+      "value": undefined,
+    },
+  ],
+  "name": "stories-components-inputs-nodefield--cleared",
+  "pressed": undefined,
+  "role": "WebArea",
+  "value": undefined,
+}
+`;
+
 exports[`stories/components/inputs/NodeField Combobox smoke-test 1`] = `
 Object {
   "checked": undefined,
@@ -33,6 +73,45 @@ Object {
     },
   ],
   "name": "stories-components-inputs-nodefield--combobox",
+  "pressed": undefined,
+  "role": "WebArea",
+  "value": undefined,
+}
+`;
+
+exports[`stories/components/inputs/NodeField ExistingValue play-test 1`] = `
+Object {
+  "checked": undefined,
+  "children": Array [
+    Object {
+      "checked": undefined,
+      "children": undefined,
+      "name": "Yksikkö",
+      "pressed": undefined,
+      "role": "text",
+      "value": undefined,
+    },
+    Object {
+      "autocomplete": "list",
+      "checked": undefined,
+      "children": undefined,
+      "haspopup": "listbox",
+      "name": "Yksikkö",
+      "pressed": undefined,
+      "role": "combobox",
+      "value": "TIKE, Tietotekniikkaratkaisut (TIRA)",
+    },
+    Object {
+      "checked": undefined,
+      "children": undefined,
+      "description": "Avaa",
+      "name": "Avaa",
+      "pressed": undefined,
+      "role": "button",
+      "value": undefined,
+    },
+  ],
+  "name": "stories-components-inputs-nodefield--existing-value",
   "pressed": undefined,
   "role": "WebArea",
   "value": undefined,
