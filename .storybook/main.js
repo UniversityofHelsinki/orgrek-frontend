@@ -20,11 +20,15 @@ module.exports = {
       },
     },
   ],
-  framework: '@storybook/react',
-  core: {
-    builder: '@storybook/builder-webpack5',
+
+  framework: {
+    name: '@storybook/react-webpack5',
+    options: {},
   },
   features: {
     interactionsDebugger: true,
+  },
+  docs: {
+    autodocs: true,
   },
 };
