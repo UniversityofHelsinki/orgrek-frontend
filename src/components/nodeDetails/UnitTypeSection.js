@@ -23,7 +23,8 @@ const UnitTypeSection = () => {
   const { t } = useTranslation();
   const nodeId = useNodeId();
   const { data, isFetching } = useGetTypeAttributesQuery(nodeId);
-  const { data: keysData } = useGetAttributeKeysBySectionQuery('types');
+  const { data: keysData, isFetching: isFetchingKeys } =
+    useGetAttributeKeysBySectionQuery('types');
   const { data: hierarchies } = useGetValidHierarchyFiltersQuery();
   const selectedHierarchies = useSelector(
     (state) => state.tree.selectedHierarchy
@@ -76,7 +77,7 @@ const UnitTypeSection = () => {
   return (
     <EditableAccordion
       title={title}
-      loading={isFetching}
+      loading={isFetching || isFetchingKeys}
       defaultExpanded={!empty}
     >
       <EditableContent
