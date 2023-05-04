@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import AttributeEditor from '../../../components/attributes/AttributeEditor';
-import AttributeEditorRow from '../../../components/attributes/AttributeEditorRow';
 import MenuItem from '@mui/material/MenuItem';
 import TextField from '@mui/material/TextField';
 import { within, userEvent, waitFor } from '@storybook/testing-library';
@@ -8,20 +7,11 @@ import { object, array, string } from 'yup';
 import { expect } from '@storybook/jest';
 import { FormContextProvider } from '../../../contexts/FormContext';
 import useForm from '../../../hooks/useForm';
-import ValueField from '../../../components/attributes/ValueField';
-import StartDateField from '../../../components/attributes/StartDateField';
-import EndDateField from '../../../components/attributes/EndDateField';
 import { toDate } from '../../../utils/dateUtils';
 import '../../../utils/validations'; // Register custom validators
 
 export default {
   component: AttributeEditor,
-  subcomponents: {
-    AttributeEditorRow,
-    ValueField,
-    StartDateField,
-    EndDateField,
-  },
   argTypes: {
     onChange: { action: true },
   },
