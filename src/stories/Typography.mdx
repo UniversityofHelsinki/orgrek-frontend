@@ -1,0 +1,14 @@
+import { Meta, Canvas } from '@storybook/addon-docs';
+import * as TypographyStories from './Typography.stories';
+
+<Meta title="Typography" of={TypographyStories} />
+
+# Typography
+
+Fonts and styles for MUI [Typography](https://mui.com/material-ui/react-typography/) component adapted from
+[HY Design System](https://wiki.helsinki.fi/pages/viewpage.action?pageId=334495865) specs.
+
+Note that `Typography` supports defining the semantic component separately from the style so that the heading
+hierarchy can be organized correctly (see [Accessibility](https://mui.com/material-ui/react-typography/#accessibility)).
+
+<Canvas of={TypographyStories.Primary} />
