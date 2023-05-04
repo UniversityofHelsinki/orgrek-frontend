@@ -102,10 +102,10 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "cypress:open": "cypress open",
-    "storybook": "storybook dev -p 6006 -s public",
+    "storybook": "storybook dev -p 6006",
     "storybook:test": "test-storybook --coverage",
     "storybook:test:ci": "concurrently -k -s first -n \"storybook,test\" -c \"magenta,blue\" \"npx http-server storybook-static -a localhost --port 6006 --silent\" \"wait-on tcp:6006 && npm run storybook:test --maxWorkers=2\"",
-    "storybook:build": "storybook build -s public",
+    "storybook:build": "storybook build",
     "i18n": "i18next-scanner --config i18next-scanner.config.js",
     "prepare": "husky install"
   },
