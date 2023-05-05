@@ -232,6 +232,10 @@
   "nodeDetailsSection": {
     "noAttributes": "nodeDetailsSection.noAttributes"
   },
+  "nodeValidity": {
+    "saveError": "saveError",
+    "saveSuccess": "saveSuccess"
+  },
   "node_excel": "Yksikkötaulukko",
   "normal_view_button": "Tillbaka till läsutsikt",
   "not_specified": "Giltigheten inte bestämt",

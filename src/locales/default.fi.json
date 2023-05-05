@@ -277,6 +277,10 @@
   "nodeDetailsSection": {
     "noAttributes": "Ei attribuutteja"
   },
+  "nodeValidity": {
+    "saveError": "Voimassaolon tallennus epäonnistui",
+    "saveSuccess": "Voimassaolo tallennettu"
+  },
   "node_attr_key": "Attribuutin nimi*",
   "node_attr_value": "Attribuutin arvo*",
   "node_excel": "Yksikkötaulukko",
