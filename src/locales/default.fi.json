@@ -277,6 +277,12 @@
   "nodeDetailsSection": {
     "noAttributes": "Ei attribuutteja"
   },
+  "nodeField": {
+    "clearText": "Tyhjennä",
+    "closeText": "Sulje",
+    "noOptionsText": "Ei hakutuloksia",
+    "openText": "Avaa"
+  },
   "nodeValidity": {
     "saveError": "Voimassaolon tallennus epäonnistui",
     "saveSuccess": "Voimassaolo tallennettu"
