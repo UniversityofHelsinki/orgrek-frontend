@@ -232,6 +232,12 @@
   "nodeDetailsSection": {
     "noAttributes": "nodeDetailsSection.noAttributes"
   },
+  "nodeField": {
+    "clearText": "clearText",
+    "closeText": "closeText",
+    "noOptionsText": "noOptionsText",
+    "openText": "openText"
+  },
   "nodeValidity": {
     "saveError": "saveError",
     "saveSuccess": "saveSuccess"

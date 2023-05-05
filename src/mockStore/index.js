@@ -5,3 +5,4 @@ export * from './mockNode';
 export * from './mockStore';
 export * from './mockUser';
 export * from './mockDate';
+export * from './mockTree';
