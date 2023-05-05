@@ -486,6 +486,14 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
+      "name": "Muokkaa",
+      "pressed": undefined,
+      "role": "button",
+      "value": undefined,
+    },
+    Object {
+      "checked": undefined,
+      "children": undefined,
       "name": "Ei yläyksiköitä",
       "pressed": undefined,
       "role": "text",
