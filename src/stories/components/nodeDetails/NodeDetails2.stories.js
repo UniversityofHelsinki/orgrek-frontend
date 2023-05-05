@@ -77,6 +77,13 @@ export const AdminRole = {
             attr: 'name_en',
           },
         ]),
+        mockGetSectionTypeAttributes('types', [
+          {
+            id: 17,
+            section: 'types',
+            attr: 'type',
+          },
+        ]),
         mockGetNameAttributes(nodeId, [
           {
             id: 4899999926,
@@ -148,6 +155,13 @@ export const AdminRole = {
             sections: ['codes'],
           },
           ['emo_lyhenne', 'lyhenne', 'talous_tunnus']
+        ),
+        mockGetAttributeKeys(
+          {
+            selectedHierarchies: selectedHierarchy,
+            sections: ['types'],
+          },
+          ['type']
         ),
         mockGetValidHierarchyFilters(now, hierarchyFilters),
         mockGetFullNames(nodeId, now, {
