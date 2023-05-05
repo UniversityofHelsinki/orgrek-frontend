@@ -64,18 +64,9 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "expanded": true,
       "name": "Voimassaolo",
       "pressed": undefined,
       "role": "button",
-      "value": undefined,
-    },
-    Object {
-      "checked": undefined,
-      "children": undefined,
-      "name": "Voimassaoloa ei määritetty",
-      "pressed": undefined,
-      "role": "text",
       "value": undefined,
     },
     Object {
@@ -623,18 +614,9 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "expanded": true,
       "name": "Voimassaolo",
       "pressed": undefined,
       "role": "button",
-      "value": undefined,
-    },
-    Object {
-      "checked": undefined,
-      "children": undefined,
-      "name": "Voimassaoloa ei määritetty",
-      "pressed": undefined,
-      "role": "text",
       "value": undefined,
     },
     Object {

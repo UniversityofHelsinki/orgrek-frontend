@@ -1,4 +1,4 @@
-import { string } from 'yup';
+import { boolean, number, object, string } from 'yup';
 import { convertYupErrors } from '../../src/utils/validationUtils';
 import {
   arrayOfAttributeValues,
@@ -200,7 +200,17 @@ describe('beforeEndDate', () => {
 });
 
 describe('afterStartDate', () => {
-  const schema = attributeSchema;
+  const schema = object({
+    startDate: string()
+      .date()
+      .nullable()
+      .minDate('1600-01-01')
+      .beforeEndDate({ days: 2 }),
+    endDate: string()
+      .date()
+      .nullable()
+      .afterStartDate({ days: 2 }, '1600-01-01'),
+  });
 
   test.each([
     [
@@ -230,6 +240,13 @@ describe('afterStartDate', () => {
         endDate: '2023-01-03',
       },
       [],
+    ],
+    [
+      {
+        startDate: null,
+        endDate: '1500-01-01',
+      },
+      ['Päivämäärä voi olla aikaisintaan 1.1.1600'],
     ],
   ])('%p results in validation errors %s', (values, expectedErrors) => {
     const data = {

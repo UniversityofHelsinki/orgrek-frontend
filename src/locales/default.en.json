@@ -255,6 +255,10 @@
   "nodeDetailsSection": {
     "noAttributes": "No attributes"
   },
+  "nodeValidity": {
+    "saveError": "saveError",
+    "saveSuccess": "saveSuccess"
+  },
   "node_excel": "Yksikkötaulukko",
   "normal_view_button": "Back to read view",
   "not_specified": "Validity not specified",
