@@ -8,32 +8,26 @@ import UnitTypeEditor from './UnitTypeEditor';
 import {
   useGetAttributeKeysBySectionQuery,
   useGetTypeAttributesQuery,
-  useGetValidHierarchyFiltersQuery,
   useSaveTypeAttributesMutation,
 } from '../../store';
 import { useNodeId } from '../../hooks/useNodeId';
 import useSortAttributesByDate from '../../hooks/useSortAttributesByDate';
-import { useSelector } from 'react-redux';
-import fillSelectableUnits from '../../hooks/filterSelectableUnits';
 import { authActions } from '../../auth';
 import { defaultSchemaForAttributes } from '../../utils/validations';
 import useFilterAttributesByDate from '../../hooks/useFilterAttributesByDate';
+import useUnitTypeOptions from '../../hooks/useUnitTypeOptions';
 
 const UnitTypeSection = () => {
   const { t } = useTranslation();
   const nodeId = useNodeId();
-  const { data, isFetching } = useGetTypeAttributesQuery(nodeId);
   const { data: keysData, isFetching: isFetchingKeys } =
     useGetAttributeKeysBySectionQuery('types');
-  const { data: hierarchies, isFetching: isFetchingHierarchies } =
-    useGetValidHierarchyFiltersQuery();
-  const selectedHierarchies = useSelector(
-    (state) => state.tree.selectedHierarchy
-  );
+  const { unitTypeOptions, isFetching: isFetchingSelectable } =
+    useUnitTypeOptions();
+  const { data, isFetching } = useGetTypeAttributesQuery(nodeId);
   const [saveTypeAttributes] = useSaveTypeAttributesMutation();
-  const selectableUnits = [];
-  const loading = isFetching || isFetchingKeys || isFetchingHierarchies;
 
+  const loading = isFetching || isFetchingKeys || isFetchingSelectable;
   const keys = (keysData || []).map((key) => key.attr);
 
   // In edit mode data includes also history and future
@@ -44,14 +38,8 @@ const UnitTypeSection = () => {
 
   const toFormValues = (data) => {
     const foundTypes = [];
-    fillSelectableUnits(
-      selectableUnits,
-      hierarchies,
-      selectedHierarchies,
-      keys
-    );
     data.forEach((value) => {
-      selectableUnits.forEach((o) => {
+      unitTypeOptions.forEach((o) => {
         if (o.value === value.value) {
           foundTypes.push(value);
         }
