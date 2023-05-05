@@ -27,6 +27,9 @@ export const authActions = {
   hierarchyFilters: {
     edit: { allowRoles: [roleAdmin] },
   },
+  nodeValidity: {
+    edit: { allowRoles: allWriterRoles },
+  },
 };
 
 /**
