@@ -4,11 +4,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import useForm from '../../hooks/useForm';
 import { codeAttributes } from '../../constants/variables';
-import TextField from '../inputs/TextField';
-import Grid from '@mui/material/Unstable_Grid2';
 import { Typography, Box } from '@mui/material';
-import DateField from '../inputs/DateField';
-import { t } from 'i18next';
 
 const attributeEntryComparator = (a, b) => {
   const aIdx = codeAttributes.indexOf(a[0]);
@@ -22,7 +18,7 @@ const ReadOnlyCodeBox = ({ label, value }) => {
       <Typography component="p" variant="h6" mb={2}>
         {label}
       </Typography>
-      <Typography variant="ingress" ml={1.5}>
+      <Typography variant="body1" ml={1.5}>
         {value}
       </Typography>
     </Box>
