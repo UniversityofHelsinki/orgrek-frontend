@@ -3,7 +3,29 @@ import {
   useGetAttributeKeysBySectionQuery,
   useGetValidHierarchyFiltersQuery,
 } from '../store';
-import fillSelectableUnits from './filterSelectableUnits';
+
+const sortHierarchies = (list) => {
+  return list.sort((a, b) => (a.hierarchy > b.hierarchy ? 1 : -1));
+};
+
+const concatValues = (data, hierarchyValues) => {
+  let hierarchyValuesStr = '';
+  data.map((obj) => {
+    if (hierarchyValues.includes(obj.hierarchy)) {
+      hierarchyValuesStr = hierarchyValuesStr.concat(obj.value).concat(',');
+    }
+  });
+  let uniqueValues = [];
+  if (hierarchyValuesStr !== '') {
+    let hierarchyValuesArray = hierarchyValuesStr.split(',');
+    hierarchyValuesArray.forEach(function (el) {
+      if (!uniqueValues.includes(el)) {
+        uniqueValues.push(el);
+      }
+    });
+  }
+  return uniqueValues.toString().replace(/,\s*$/, ''); //removes last comma and space (if there is a one)
+};
 
 /**
  * Returns all available unit type options for the currently selected
@@ -20,7 +42,21 @@ const useUnitTypeOptions = () => {
   const keys = (keysData || []).map((key) => key.attr);
 
   const unitTypeOptions = [];
-  fillSelectableUnits(unitTypeOptions, hierarchies, selectedHierarchies, keys);
+
+  if (hierarchies && keys && keys.length > 0) {
+    const hierarchiesWhereKeyValueIsType = Object.values(hierarchies).filter(
+      (item) => item.key === keys[0]
+    );
+    const sortedHierarchies = sortHierarchies(hierarchiesWhereKeyValueIsType);
+    const units = concatValues(sortedHierarchies, selectedHierarchies);
+    const selectableUnitArrayList = units.split(',');
+    selectableUnitArrayList.forEach((value) => {
+      unitTypeOptions.push({
+        value: value,
+        label: value,
+      });
+    });
+  }
 
   return {
     unitTypeOptions,
