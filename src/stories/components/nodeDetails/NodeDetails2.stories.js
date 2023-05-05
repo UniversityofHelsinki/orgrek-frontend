@@ -23,6 +23,8 @@ import {
   mockPutNameAttributes,
   mockPutTypeAttributes,
   mockSaveCodeAttributes,
+  mockGetNodeValidity,
+  mockSaveNodeValidity,
   withMockStore,
 } from '../../../mockStore';
 import { waitFor, within } from '@storybook/testing-library';
@@ -229,6 +231,12 @@ export const AdminRole = {
             endDate: null,
           },
         ]),
+        mockGetNodeValidity(nodeId, {
+          nodeId: '4820',
+          startDate: null,
+          endDate: null,
+        }),
+        mockSaveNodeValidity(nodeId),
       ],
     },
   },
