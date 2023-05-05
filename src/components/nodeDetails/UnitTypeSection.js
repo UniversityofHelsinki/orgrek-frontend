@@ -8,29 +8,26 @@ import UnitTypeEditor from './UnitTypeEditor';
 import {
   useGetAttributeKeysBySectionQuery,
   useGetTypeAttributesQuery,
-  useGetValidHierarchyFiltersQuery,
   useSaveTypeAttributesMutation,
 } from '../../store';
 import { useNodeId } from '../../hooks/useNodeId';
 import useSortAttributesByDate from '../../hooks/useSortAttributesByDate';
-import { useSelector } from 'react-redux';
-import fillSelectableUnits from '../../hooks/filterSelectableUnits';
 import { authActions } from '../../auth';
 import { defaultSchemaForAttributes } from '../../utils/validations';
 import useFilterAttributesByDate from '../../hooks/useFilterAttributesByDate';
+import useUnitTypeOptions from '../../hooks/useUnitTypeOptions';
 
 const UnitTypeSection = () => {
   const { t } = useTranslation();
   const nodeId = useNodeId();
+  const { data: keysData, isFetching: isFetchingKeys } =
+    useGetAttributeKeysBySectionQuery('types');
+  const { unitTypeOptions, isFetching: isFetchingSelectable } =
+    useUnitTypeOptions();
   const { data, isFetching } = useGetTypeAttributesQuery(nodeId);
-  const { data: keysData } = useGetAttributeKeysBySectionQuery('types');
-  const { data: hierarchies } = useGetValidHierarchyFiltersQuery();
-  const selectedHierarchies = useSelector(
-    (state) => state.tree.selectedHierarchy
-  );
   const [saveTypeAttributes] = useSaveTypeAttributesMutation();
-  const selectableUnits = [];
 
+  const loading = isFetching || isFetchingKeys || isFetchingSelectable;
   const keys = (keysData || []).map((key) => key.attr);
 
   // In edit mode data includes also history and future
@@ -39,19 +36,10 @@ const UnitTypeSection = () => {
   // In view mode filter history and future depending on selection
   const sortedAndFilteredData = useFilterAttributesByDate(sortedData);
 
-  const title = t('unit_type');
-  const empty = sortedAndFilteredData.length === 0;
-
   const toFormValues = (data) => {
     const foundTypes = [];
-    fillSelectableUnits(
-      selectableUnits,
-      hierarchies,
-      selectedHierarchies,
-      keys
-    );
     data.forEach((value) => {
-      selectableUnits.forEach((o) => {
+      unitTypeOptions.forEach((o) => {
         if (o.value === value.value) {
           foundTypes.push(value);
         }
@@ -73,12 +61,11 @@ const UnitTypeSection = () => {
     return saveTypeAttributes({ valuesArray, nodeId }).unwrap();
   };
 
+  const title = t('unit_type');
+  const empty = type.length === 0;
+
   return (
-    <EditableAccordion
-      title={title}
-      loading={isFetching}
-      defaultExpanded={!empty}
-    >
+    <EditableAccordion title={title} loading={loading} defaultExpanded={!empty}>
       <EditableContent
         editorComponent={<UnitTypeEditor keys={keys} />}
         validationSchema={validationSchema}

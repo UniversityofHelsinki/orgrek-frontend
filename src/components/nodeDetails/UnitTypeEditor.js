@@ -5,24 +5,16 @@ import { useTranslation } from 'react-i18next';
 import useForm from '../../hooks/useForm';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
-import { useGetValidHierarchyFiltersQuery } from '../../store';
-import { useSelector } from 'react-redux';
-import fillSelectableUnits from '../../hooks/filterSelectableUnits';
-const selectableUnits = [];
+import useUnitTypeOptions from '../../hooks/useUnitTypeOptions';
 
 const UnitTypeEditor = ({ keys }) => {
   const { t } = useTranslation();
-  const { data } = useGetValidHierarchyFiltersQuery();
-  const selectedHierarchies = useSelector(
-    (state) => state.tree.selectedHierarchy
-  );
+  const { unitTypeOptions } = useUnitTypeOptions();
   const { values, setValues } = useForm();
-
-  fillSelectableUnits(selectableUnits, data, selectedHierarchies, keys);
 
   const renderValueField = (valueFieldProps) => (
     <TextField select {...valueFieldProps}>
-      {selectableUnits.map((option) => (
+      {unitTypeOptions.map((option) => (
         <MenuItem key={option.value} value={option.value}>
           {t(option.label)}
         </MenuItem>
@@ -31,7 +23,7 @@ const UnitTypeEditor = ({ keys }) => {
   );
 
   const getDisplayText = (value) =>
-    t(selectableUnits.find((option) => option.value === value.value)?.label);
+    t(unitTypeOptions.find((option) => option.value === value.value)?.label);
 
   return (
     <Stack spacing={2}>
