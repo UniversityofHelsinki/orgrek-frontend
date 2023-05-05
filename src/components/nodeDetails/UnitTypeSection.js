@@ -25,12 +25,14 @@ const UnitTypeSection = () => {
   const { data, isFetching } = useGetTypeAttributesQuery(nodeId);
   const { data: keysData, isFetching: isFetchingKeys } =
     useGetAttributeKeysBySectionQuery('types');
-  const { data: hierarchies } = useGetValidHierarchyFiltersQuery();
+  const { data: hierarchies, isFetching: isFetchingHierarchies } =
+    useGetValidHierarchyFiltersQuery();
   const selectedHierarchies = useSelector(
     (state) => state.tree.selectedHierarchy
   );
   const [saveTypeAttributes] = useSaveTypeAttributesMutation();
   const selectableUnits = [];
+  const loading = isFetching || isFetchingKeys || isFetchingHierarchies;
 
   const keys = (keysData || []).map((key) => key.attr);
 
@@ -75,11 +77,7 @@ const UnitTypeSection = () => {
   const empty = type.length === 0;
 
   return (
-    <EditableAccordion
-      title={title}
-      loading={isFetching || isFetchingKeys}
-      defaultExpanded={!empty}
-    >
+    <EditableAccordion title={title} loading={loading} defaultExpanded={!empty}>
       <EditableContent
         editorComponent={<UnitTypeEditor keys={keys} />}
         validationSchema={validationSchema}
