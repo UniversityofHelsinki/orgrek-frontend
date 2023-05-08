@@ -21,7 +21,6 @@ const ParentsSection = () => {
   const data = parents[contentLanguage] || [];
   const title = t('upper_units');
   const empty = data.length === 0;
-  let parentUniqueId = -1;
   const [saveParents] = useSaveParentsMutation();
 
   const filteredByDateParents = useFilterParentsByDate(data);
@@ -37,7 +36,6 @@ const ParentsSection = () => {
   });
 
   const asFormValues = data.reduce((a, c) => {
-    parentUniqueId = c.uniqueId;
     a[c.uniqueId] = c.hierarchies.map(asAttribute(c.id));
     return a;
   }, {});
@@ -46,7 +44,7 @@ const ParentsSection = () => {
     id: parent.id,
     hierarchy: parent.value,
     childUniqueId: currentNodeId,
-    parentNodeId: parent.nodeId,
+    parentUniqueId: '',
     startDate: parent.startDate,
     endDate: parent.endDate,
     isNew: parent.isNew,
@@ -54,11 +52,9 @@ const ParentsSection = () => {
   });
 
   const handleSubmit = (parents) => {
-    //const all = Object.values(parents).flat();
-    //const edges = all.map(asEdge);
     const edges = Object.entries(parents)
       .map(([key, values]) =>
-        values.map((value) => ({ ...asEdge(value), parentNodeId: key }))
+        values.map((value) => ({ ...asEdge(value), parentUniqueId: key }))
       )
       .flat();
     return saveParents({ edges, nodeId: currentNodeId }).unwrap();
