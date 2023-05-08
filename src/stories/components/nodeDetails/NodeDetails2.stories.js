@@ -23,6 +23,8 @@ import {
   mockPutNameAttributes,
   mockPutTypeAttributes,
   mockSaveCodeAttributes,
+  mockGetNodeValidity,
+  mockSaveNodeValidity,
   withMockStore,
 } from '../../../mockStore';
 import { waitFor, within } from '@storybook/testing-library';
@@ -73,6 +75,13 @@ export const AdminRole = {
             id: 16,
             section: 'names',
             attr: 'name_en',
+          },
+        ]),
+        mockGetSectionTypeAttributes('types', [
+          {
+            id: 17,
+            section: 'types',
+            attr: 'type',
           },
         ]),
         mockGetNameAttributes(nodeId, [
@@ -146,6 +155,13 @@ export const AdminRole = {
             sections: ['codes'],
           },
           ['emo_lyhenne', 'lyhenne', 'talous_tunnus']
+        ),
+        mockGetAttributeKeys(
+          {
+            selectedHierarchies: selectedHierarchy,
+            sections: ['types'],
+          },
+          ['type']
         ),
         mockGetValidHierarchyFilters(now, hierarchyFilters),
         mockGetFullNames(nodeId, now, {
@@ -229,6 +245,12 @@ export const AdminRole = {
             endDate: null,
           },
         ]),
+        mockGetNodeValidity(nodeId, {
+          nodeId: '4820',
+          startDate: null,
+          endDate: null,
+        }),
+        mockSaveNodeValidity(nodeId),
       ],
     },
   },

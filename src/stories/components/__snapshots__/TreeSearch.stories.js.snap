@@ -5,14 +5,6 @@ Object {
   "checked": undefined,
   "children": Array [
     Object {
-      "checked": undefined,
-      "children": undefined,
-      "name": "Anna kolme merkkiä aloittaaksesi haun",
-      "pressed": undefined,
-      "role": "text",
-      "value": undefined,
-    },
-    Object {
       "autocomplete": "list",
       "checked": undefined,
       "children": undefined,

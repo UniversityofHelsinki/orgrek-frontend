@@ -103,6 +103,7 @@ const EditableContent = ({
   authActions,
   successMessage = null,
   errorMessage = null,
+  containerProps,
 }) => {
   const { t } = useTranslation();
   const { editMode, edit, close } = useEditMode();
@@ -170,9 +171,9 @@ const EditableContent = ({
     : defaultActions;
 
   return (
-    <Stack spacing={2}>
+    <Stack spacing={2} {...containerProps}>
       {renderedActions}
-      <div>{children}</div>
+      {children}
     </Stack>
   );
 };
@@ -241,6 +242,11 @@ EditableContent.propTypes = {
    * Custom notification message displayed when saving content fails
    */
   errorMessage: PropTypes.string,
+
+  /**
+   * Override Stack props to customize actions layout
+   */
+  containerProps: PropTypes.object,
 };
 
 export default EditableContent;

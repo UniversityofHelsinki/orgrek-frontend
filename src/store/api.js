@@ -16,11 +16,12 @@ export const api = createApi({
     'TypeAttributes',
     'HierarchyFilters',
     'CodeAttributes',
+    'NodeValidity',
     'Parents',
   ],
   endpoints: (builder) => ({
     getTree: builder.query({
-      providesTags: (result, error) => [{ type: 'Tree' }],
+      providesTags: () => [{ type: 'Tree' }],
       query: ({ hierarchies, selectedDay }) => {
         const dateString = selectedDay
           ? selectedDay.toLocaleDateString('FI-fi')
@@ -83,7 +84,7 @@ export const api = createApi({
       },
     }),
     getValidHierarchyFilters: builder.query({
-      providesTags: (result, error, nodeId) => [{ type: 'HierarchyFilters' }],
+      providesTags: () => [{ type: 'HierarchyFilters' }],
       query: () => {
         const dateString = new Date().toLocaleDateString('FI-fi');
         return {
@@ -160,6 +161,28 @@ export const api = createApi({
         };
       },
     }),
+    getNodeValidity: builder.query({
+      providesTags: (result, error, id) => [{ type: 'NodeValidity', id }],
+      query: (id) => ({
+        url: `/node/${id}`,
+        method: 'GET',
+      }),
+    }),
+    saveNodeValidity: builder.mutation({
+      invalidatesTags: (result, error, { id }) => {
+        if (error) {
+          return [];
+        }
+        return [{ type: 'NodeValidity', id }, { type: 'Tree' }];
+      },
+      query: ({ data, id }) => {
+        return {
+          url: `/node/${id}/update`,
+          method: 'PUT',
+          body: data,
+        };
+      },
+    }),
   }),
 });
 
@@ -174,6 +197,8 @@ export const {
   useGetValidHierarchyFiltersQuery,
   useSaveTypeAttributesMutation,
   useGetAttributeKeysBySectionQuery,
+  useGetNodeValidityQuery,
+  useSaveNodeValidityMutation,
   useSaveParentsMutation,
   useGetParentsQuery,
 } = api;

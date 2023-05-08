@@ -16,6 +16,14 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
+      "name": "Muokkaa",
+      "pressed": undefined,
+      "role": "button",
+      "value": undefined,
+    },
+    Object {
+      "checked": undefined,
+      "children": undefined,
       "name": "1.1.2000 alkaen",
       "pressed": undefined,
       "role": "text",
@@ -29,7 +37,7 @@ Object {
 }
 `;
 
-exports[`stories/components/nodeDetails/NodeValiditySection Empty smoke-test 1`] = `
+exports[`stories/components/nodeDetails/NodeValiditySection EditMode play-test 1`] = `
 Object {
   "checked": undefined,
   "children": Array [
@@ -45,9 +53,86 @@ Object {
     Object {
       "checked": undefined,
       "children": undefined,
-      "name": "Voimassaoloa ei määritetty",
+      "name": "Voimassaolo alkaa",
       "pressed": undefined,
       "role": "text",
+      "value": undefined,
+    },
+    Object {
+      "checked": undefined,
+      "children": undefined,
+      "name": "Voimassaolo alkaa",
+      "pressed": undefined,
+      "role": "textbox",
+      "value": "1.1.2000",
+    },
+    Object {
+      "checked": undefined,
+      "children": undefined,
+      "name": "Choose date, selected date is 1. tammi 2000",
+      "pressed": undefined,
+      "role": "button",
+      "value": undefined,
+    },
+    Object {
+      "checked": undefined,
+      "children": undefined,
+      "name": "Voimassaolo päättyy",
+      "pressed": undefined,
+      "role": "text",
+      "value": undefined,
+    },
+    Object {
+      "checked": undefined,
+      "children": undefined,
+      "name": "Voimassaolo päättyy",
+      "pressed": undefined,
+      "role": "textbox",
+      "value": undefined,
+    },
+    Object {
+      "checked": undefined,
+      "children": undefined,
+      "name": "Choose date",
+      "pressed": undefined,
+      "role": "button",
+      "value": undefined,
+    },
+    Object {
+      "checked": undefined,
+      "children": undefined,
+      "name": "Peruuta",
+      "pressed": undefined,
+      "role": "button",
+      "value": undefined,
+    },
+    Object {
+      "checked": undefined,
+      "children": undefined,
+      "disabled": true,
+      "name": "Tallenna",
+      "pressed": undefined,
+      "role": "button",
+      "value": undefined,
+    },
+  ],
+  "name": "stories-components-nodedetails-nodevaliditysection--edit-mode",
+  "pressed": undefined,
+  "role": "WebArea",
+  "value": undefined,
+}
+`;
+
+exports[`stories/components/nodeDetails/NodeValiditySection Empty smoke-test 1`] = `
+Object {
+  "checked": undefined,
+  "children": Array [
+    Object {
+      "checked": undefined,
+      "children": undefined,
+      "name": "Voimassaolo",
+      "pressed": undefined,
+      "role": "button",
       "value": undefined,
     },
   ],
