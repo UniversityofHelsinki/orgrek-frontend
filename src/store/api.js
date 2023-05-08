@@ -1,8 +1,4 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import {
-  api401FailureCall,
-  apiGetParentsSuccessCall,
-} from '../actions/hierarchyAction';
 
 export const api = createApi({
   reducerPath: 'api',
