@@ -1,6 +1,27 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`stories/components/EditableAccordion Default smoke-test 1`] = `
+exports[`stories/components/EditableAccordion Collapsed play-test 1`] = `
+Object {
+  "checked": undefined,
+  "children": Array [
+    Object {
+      "checked": undefined,
+      "children": undefined,
+      "focused": true,
+      "name": "Title",
+      "pressed": undefined,
+      "role": "button",
+      "value": undefined,
+    },
+  ],
+  "name": "stories-components-editableaccordion--collapsed",
+  "pressed": undefined,
+  "role": "WebArea",
+  "value": undefined,
+}
+`;
+
+exports[`stories/components/EditableAccordion Default play-test 1`] = `
 Object {
   "checked": undefined,
   "children": Array [
@@ -29,7 +50,7 @@ Object {
 }
 `;
 
-exports[`stories/components/EditableAccordion Modified smoke-test 1`] = `
+exports[`stories/components/EditableAccordion Modified play-test 1`] = `
 Object {
   "checked": undefined,
   "children": Array [

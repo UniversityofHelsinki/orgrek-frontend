@@ -43,6 +43,7 @@ const contentDataKeyValue = [
 
 const contentDataNodeHierarchy = [
   {
+    id: '1',
     node: {
       id: '1',
       name: 'HY, Keskushallinto uusi nimi (UU99)',
@@ -54,6 +55,7 @@ const contentDataNodeHierarchy = [
     hierarchies: ['henkilosto'],
   },
   {
+    id: '2',
     node: {
       id: '3319',
       name: 'Helsingin taloustieteellinen tutkimuskeskus (HECER)',
@@ -65,6 +67,7 @@ const contentDataNodeHierarchy = [
     hierarchies: ['talous'],
   },
   {
+    id: '3',
     node: {
       id: '6777',
       name: 'HY, Muut yksiköt (MUUT)',
@@ -85,26 +88,22 @@ const contentDataNodeHierarchy = [
 
 const contentDataNameValidity = [
   {
-    nodeEdgeHistoryWrapper: {
-      edgeEndDate: null,
-      edgeStartDate: null,
-      endDate: '2016-12-30T22:00:00.000+00:00',
-      id: '3471',
-      name: 'HY, Helsingin yliopiston koulutus- ja kehittämispalvelut (HYKKE)',
-      startDate: null,
-      uniqueId: 21682135,
-    },
+    edgeEndDate: null,
+    edgeStartDate: null,
+    endDate: '2016-12-30T22:00:00.000+00:00',
+    id: '3471',
+    name: 'HY, Helsingin yliopiston koulutus- ja kehittämispalvelut (HYKKE)',
+    startDate: null,
+    uniqueId: 21682135,
   },
   {
-    nodeEdgeHistoryWrapper: {
-      edgeEndDate: null,
-      edgeStartDate: null,
-      endDate: '2013-12-30T22:00:00.000+00:00',
-      id: '3337',
-      name: 'IPR University Center',
-      startDate: null,
-      uniqueId: 75908005,
-    },
+    edgeEndDate: null,
+    edgeStartDate: null,
+    endDate: '2013-12-30T22:00:00.000+00:00',
+    id: '3337',
+    name: 'IPR University Center',
+    startDate: null,
+    uniqueId: 75908005,
   },
 ];
 

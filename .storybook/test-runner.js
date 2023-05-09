@@ -7,7 +7,7 @@ module.exports = {
   async postRender(page) {
     await checkA11y(
       page,
-      '#root',
+      '#storybook-root',
       {
         detailedReport: true,
       },

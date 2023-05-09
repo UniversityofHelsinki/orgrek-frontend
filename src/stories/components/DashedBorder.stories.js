@@ -4,6 +4,7 @@ import Box from '@mui/material/Box';
 
 export default {
   component: DashedBorderComponent,
+  tags: ['autodocs'],
 };
 
 export const DashedBorder = {

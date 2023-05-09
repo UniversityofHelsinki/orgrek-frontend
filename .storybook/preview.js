@@ -1,6 +1,6 @@
 import React from 'react';
 import { CssBaseline, ThemeProvider } from '@mui/material';
-import { DocsContainer } from '@storybook/addon-docs';
+import { withThemeFromJSXProvider } from '@storybook/addon-styling';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { fi } from 'date-fns/locale';
@@ -42,46 +42,41 @@ initialize({
   },
 });
 
-// Use the same decorators for both stories and docs pages
-const CommonDecorators = ({ children }) => (
-  <ThemeProvider theme={theme}>
-    <CssBaseline />
-    <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={fi}>
-      {children}
-    </LocalizationProvider>
-  </ThemeProvider>
-);
-
-export const parameters = {
-  actions: { argTypesRegex: '^on[A-Z].*' },
-  controls: {
-    matchers: {
-      color: /(background|color)$/i,
-      date: /Date$/,
+/** @type { import('@storybook/react').Preview } */
+const preview = {
+  parameters: {
+    actions: { argTypesRegex: '^on[A-Z].*' },
+    controls: {
+      matchers: {
+        color: /(background|color)$/i,
+        date: /Date$/,
+      },
+    },
+    a11y: {
+      options: {
+        // See: https://www.deque.com/axe/core-documentation/api-documentation/#axe-core-tags
+        runOnly: ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'best-practice'],
+      },
     },
   },
-  docs: {
-    container: (props) => (
-      <CommonDecorators>
-        <DocsContainer {...props} />
-      </CommonDecorators>
+  decorators: [
+    (Story) => (
+      <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={fi}>
+        <Story />
+      </LocalizationProvider>
     ),
-  },
-  a11y: {
-    options: {
-      // See: https://www.deque.com/axe/core-documentation/api-documentation/#axe-core-tags
-      runOnly: ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'best-practice'],
-    },
-  },
+    withThemeFromJSXProvider({
+      themes: {
+        orgrek: theme,
+      },
+      defaultTheme: 'orgrek',
+      Provider: ThemeProvider,
+      GlobalStyles: CssBaseline,
+    }),
+    withRouter,
+    mswDecorator,
+    withMockDate,
+  ],
 };
 
-export const decorators = [
-  (Story) => (
-    <CommonDecorators>
-      <Story />
-    </CommonDecorators>
-  ),
-  withRouter,
-  mswDecorator,
-  withMockDate,
-];
+export default preview;
