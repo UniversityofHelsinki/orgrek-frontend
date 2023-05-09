@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`stories/components/nodeDetails/UnitTypeSection Default smoke-test 1`] = `
+exports[`stories/components/nodeDetails/UnitTypeSection Default play-test 1`] = `
 Object {
   "checked": undefined,
   "children": Array [
@@ -77,7 +77,7 @@ Object {
 }
 `;
 
-exports[`stories/components/nodeDetails/UnitTypeSection Empty smoke-test 1`] = `
+exports[`stories/components/nodeDetails/UnitTypeSection Empty play-test 1`] = `
 Object {
   "checked": undefined,
   "children": Array [
