@@ -10,11 +10,17 @@ import useForm from '../../../hooks/useForm';
 import { toDate } from '../../../utils/dateUtils';
 import '../../../utils/validations'; // Register custom validators
 
+// Use a fixed date to ensure that tests always have a consistent result
+const now = new Date('2023-03-22T14:28:00+0200');
+
 export default {
   component: AttributeEditor,
   tags: ['autodocs'],
   argTypes: {
     onChange: { action: true },
+  },
+  parameters: {
+    systemTime: now,
   },
 };
 
@@ -22,6 +28,7 @@ export const Default = {
   args: {
     attributeKey: 'data',
     attributeLabel: 'Attribuutti',
+    overlap: false,
     path: 'data',
     data: [
       {
@@ -83,6 +90,63 @@ export const ActionMenuOpen = {
     const canvas = within(canvasElement);
 
     await userEvent.click(canvas.getAllByTestId('attributeRowMenuButton')[0]);
+  },
+};
+
+export const InsertBefore = {
+  ...Default,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement.parentElement);
+
+    await userEvent.click(canvas.getAllByTestId('attributeRowMenuButton')[0]);
+
+    await waitFor(async () => {
+      await userEvent.click(canvas.getByText('Lisää rivi yläpuolelle'));
+    });
+
+    // The existing row should be updated as ending today
+    await waitFor(() => {
+      expect(canvas.getAllByLabelText('Voimassaolo päättyy')[1]).toHaveValue(
+        '22.3.2023'
+      );
+    });
+
+    // The new row should have start date tomorrow
+    await expect(canvas.getAllByLabelText('Voimassaolo alkaa')[0]).toHaveValue(
+      '23.3.2023'
+    );
+
+    // Wait for animations before a11y tests
+    await new Promise((resolve) => setTimeout(resolve, 200));
+  },
+};
+
+export const Overlapping = {
+  ...Default,
+  args: {
+    ...Default.args,
+    overlap: true,
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement.parentElement);
+
+    await userEvent.click(canvas.getAllByTestId('attributeRowMenuButton')[0]);
+
+    await waitFor(async () => {
+      await userEvent.click(canvas.getByText('Lisää rivi yläpuolelle'));
+    });
+
+    // The existing row should not be changed
+    await waitFor(() => {
+      expect(canvas.getAllByLabelText('Voimassaolo päättyy')[1]).toHaveValue(
+        ''
+      );
+    });
+
+    // The new row should have empty start date
+    await expect(canvas.getAllByLabelText('Voimassaolo alkaa')[0]).toHaveValue(
+      ''
+    );
   },
 };
 
@@ -211,6 +275,13 @@ export const DeletedRow = {
       },
     ],
   },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement.parentElement);
+
+    expect(
+      canvas.getByText('Poistettu: value2, voimassa 1.1.2022 - 31.12.2022')
+    ).toBeInTheDocument();
+  },
 };
 
 export const DropdownEditor = {
@@ -269,11 +340,15 @@ export const DeletedRowDisplayText = {
     await userEvent.click(canvas.getAllByTestId('attributeRowMenuButton')[1]);
 
     await waitFor(async () => {
-      await userEvent.click(canvas.getByTestId('deleteRowMenuItem'));
+      await userEvent.click(canvas.getByText('Poista rivi'));
     });
 
     await waitFor(() => {
-      expect(canvas.getByTestId('deletedAttributeRow')).toBeInTheDocument();
+      expect(
+        canvas.getByText(
+          'Poistettu: interdum lectus, voimassa 1.1.2022 - 31.12.2022'
+        )
+      ).toBeInTheDocument();
     });
   },
 };
