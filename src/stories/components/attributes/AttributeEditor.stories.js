@@ -147,6 +147,9 @@ export const Overlapping = {
     await expect(canvas.getAllByLabelText('Voimassaolo alkaa')[0]).toHaveValue(
       ''
     );
+
+    // Wait for animations before a11y tests
+    await new Promise((resolve) => setTimeout(resolve, 200));
   },
 };
 
