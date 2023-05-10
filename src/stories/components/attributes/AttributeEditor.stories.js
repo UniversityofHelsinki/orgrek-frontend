@@ -8,7 +8,8 @@ import { expect } from '@storybook/jest';
 import { FormContextProvider } from '../../../contexts/FormContext';
 import useForm from '../../../hooks/useForm';
 import { toDate } from '../../../utils/dateUtils';
-import '../../../utils/validations'; // Register custom validators
+import '../../../utils/validations';
+import { waitForAnimations } from '../../storyUtils'; // Register custom validators
 
 export default {
   component: AttributeEditor,
@@ -73,7 +74,7 @@ export const Empty = {
   play: async () => {
     // Empty row appears with an animation, so wait for it before running
     // a11y tests
-    await new Promise((resolve) => setTimeout(resolve, 200));
+    await waitForAnimations();
   },
 };
 
