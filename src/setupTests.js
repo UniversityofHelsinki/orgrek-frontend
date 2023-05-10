@@ -5,7 +5,7 @@
 import '@testing-library/jest-dom';
 
 import React from 'react';
-import { setProjectAnnotations } from '@storybook/testing-react';
+import { setProjectAnnotations } from '@storybook/react';
 import { MemoryRouter } from 'react-router-dom';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { fi } from 'date-fns/locale';

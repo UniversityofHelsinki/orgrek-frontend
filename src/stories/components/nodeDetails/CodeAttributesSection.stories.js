@@ -1,3 +1,4 @@
+import { expect } from '@storybook/jest';
 import {
   mockGetAttributeKeys,
   mockGetCodeAttributes,
@@ -5,6 +6,7 @@ import {
   withMockStore,
 } from '../../../mockStore';
 import CodeAttributesSection from '../../../components/nodeDetails/CodeAttributesSection';
+import { waitFor, within } from '@storybook/testing-library';
 
 // Use a fixed date to ensure that tests always have a consistent result
 const now = new Date('2023-03-22T14:28:00+0200');
@@ -131,6 +133,17 @@ export const Default = {
       tree: { selectedHierarchy },
     }),
   ],
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    await waitFor(async () => {
+      await expect(canvas.getByText('Yksilöivä tunniste')).toBeInTheDocument();
+    });
+
+    expect(canvas.getByText('Lyhenne')).toBeInTheDocument();
+    expect(canvas.getByText('Yläyksikön lyhenne')).toBeInTheDocument();
+    expect(canvas.getByText('Taloustunnus')).toBeInTheDocument();
+  },
 };
 
 export const Empty = {
@@ -154,4 +167,11 @@ export const Empty = {
       tree: { selectedHierarchy },
     }),
   ],
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    await waitFor(async () => {
+      await expect(canvas.getByText('Yksilöivä tunniste')).toBeInTheDocument();
+    });
+  },
 };

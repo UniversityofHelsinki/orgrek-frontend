@@ -6,7 +6,7 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { fi } from 'date-fns/locale';
 import theme from '../src/theme';
 import { withRouter } from 'storybook-addon-react-router-v6';
-import { initialize, mswDecorator } from 'msw-storybook-addon';
+import { initialize, mswLoader } from 'msw-storybook-addon';
 import { withMockDate } from '../src/mockStore';
 import { initI18n } from '../src/i18n';
 
@@ -59,6 +59,7 @@ const preview = {
       },
     },
   },
+  loaders: [mswLoader],
   decorators: [
     (Story) => (
       <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={fi}>
@@ -74,7 +75,6 @@ const preview = {
       GlobalStyles: CssBaseline,
     }),
     withRouter,
-    mswDecorator,
     withMockDate,
   ],
 };

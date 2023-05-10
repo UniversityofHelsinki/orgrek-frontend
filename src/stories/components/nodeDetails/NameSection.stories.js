@@ -116,6 +116,15 @@ export const Default = {
     },
   },
   decorators: [withMockStore()],
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    await waitFor(async () => {
+      await expect(
+        canvas.getByText('Tietotekniikkaratkaisut 3')
+      ).toBeInTheDocument();
+    });
+  },
 };
 
 export const Empty = {
@@ -129,6 +138,18 @@ export const Empty = {
     },
   },
   decorators: [withMockStore()],
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    await waitFor(async () => {
+      await expect(canvas.getByText('Nimitiedot')).toBeInTheDocument();
+    });
+
+    await expect(canvas.getByRole('button')).toHaveAttribute(
+      'aria-expanded',
+      'false'
+    );
+  },
 };
 
 export const ShowHistory = {
@@ -148,6 +169,21 @@ export const ShowHistory = {
       },
     }),
   ],
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    await waitFor(async () => {
+      await expect(
+        canvas.getByText('Tietotekniikkaratkaisut 3')
+      ).toBeInTheDocument();
+    });
+    await expect(
+      canvas.getByText('Tietotekniikkaratkaisut 2')
+    ).toBeInTheDocument();
+    await expect(
+      canvas.getByText('Tietotekniikkaratkaisut 1')
+    ).toBeInTheDocument();
+  },
 };
 
 export const EditMode = {
