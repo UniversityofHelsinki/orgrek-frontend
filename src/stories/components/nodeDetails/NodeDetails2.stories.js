@@ -222,8 +222,16 @@ export const AdminRole = {
             },
           ],
         }),
-        mockGetParents(nodeId, now, { fi: [], sv: [], en: [] }),
-        mockGetChildren(nodeId, now, { fi: [], sv: [], en: [] }),
+        mockGetParents(nodeId, now, selectedHierarchy, {
+          fi: [],
+          sv: [],
+          en: [],
+        }),
+        mockGetChildren(nodeId, now, selectedHierarchy, {
+          fi: [],
+          sv: [],
+          en: [],
+        }),
         mockGetPredecessors(nodeId, now, {
           sv: [],
           fi: [],
@@ -268,7 +276,42 @@ export const AdminRole = {
     const canvas = within(canvasElement);
 
     await waitFor(async () => {
-      expect(canvas.getAllByTestId('attributesTable')).toHaveLength(5);
+      expect(canvas.getByText('Nimitiedot')).toBeInTheDocument();
+    });
+    expect(canvas.getByText('Tietotekniikkaratkaisut 1')).toBeInTheDocument();
+
+    await waitFor(async () => {
+      expect(canvas.getByText('Koko nimi')).toBeInTheDocument();
+    });
+    expect(canvas.getByText('TIKE, IT Solutions (TIRA)')).toBeInTheDocument();
+
+    await waitFor(async () => {
+      expect(canvas.getByText('Koodisto')).toBeInTheDocument();
+    });
+    expect(canvas.getByText('H9073')).toBeInTheDocument();
+
+    await waitFor(async () => {
+      expect(canvas.getByText('Tulosyksikkö')).toBeInTheDocument();
+    });
+
+    await waitFor(async () => {
+      expect(canvas.getByText('Yläyksiköt')).toBeInTheDocument();
+    });
+
+    await waitFor(async () => {
+      expect(canvas.getByText('Alayksiköt')).toBeInTheDocument();
+    });
+
+    await waitFor(async () => {
+      expect(canvas.getByText('Edeltävät yksiköt')).toBeInTheDocument();
+    });
+
+    await waitFor(async () => {
+      expect(canvas.getByText('Seuraavat yksiköt')).toBeInTheDocument();
+    });
+
+    await waitFor(async () => {
+      expect(canvas.getByText('Muut attribuutit')).toBeInTheDocument();
     });
   },
 };
@@ -285,11 +328,11 @@ export const ReaderRole = {
       ur: { user: createReader() },
     }),
   ],
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
+  play: async (context) => {
+    AdminRole.play(context);
 
-    await waitFor(async () => {
-      expect(canvas.getAllByTestId('attributesTable')).toHaveLength(5);
-    });
+    const canvas = within(context.canvasElement);
+
+    expect(canvas.queryAllByText('Muokkaa')).toHaveLength(0);
   },
 };
