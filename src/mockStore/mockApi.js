@@ -66,8 +66,15 @@ export const mockGetFavorableFullNames = (nodeId, date, body) =>
 
 export const mockGetParents = (nodeId, date, hierarchies, body) =>
   rest.get(
-    `${baseUrl}/node/parents/${nodeId}/${formatApiDate(date)}/${hierarchies}`,
+    `${baseUrl}/node/all/parents/${nodeId}/${formatApiDate(
+      date
+    )}/${hierarchies}`,
     (req, res, ctx) => res(ctx.json(body))
+  );
+
+export const mockSaveParents = () =>
+  rest.put(`${baseUrl}/node/parents/update`, (req, res, ctx) =>
+    res(ctx.delay(2000), ctx.json(req.json()))
   );
 
 export const mockGetChildren = (nodeId, date, hierarchies, body) =>
@@ -116,5 +123,14 @@ export const mockGetAttributes = (nodeId, date, hierarchies, body) =>
     `${baseUrl}/node/${nodeId}/${formatApiDate(
       date
     )}/${hierarchies}/attributes`,
+    (req, res, ctx) => res(ctx.json(body))
+  );
+
+/**
+ * @deprecated not needed after everything has been migrated to RTK Query
+ */
+export const mockGetParentsDeprecated = (nodeId, date, hierarchies, body) =>
+  rest.get(
+    `${baseUrl}/node/parents/${nodeId}/${formatApiDate(date)}/${hierarchies}`,
     (req, res, ctx) => res(ctx.json(body))
   );

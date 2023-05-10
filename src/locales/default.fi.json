@@ -312,6 +312,10 @@
   "outside_units": "Ulkopuoliset yksiköt",
   "paa-aine": "Tutkinto-ohjelma / pääaine",
   "palveluyksikko": "Palveluyksikkö",
+  "parentInfo": {
+    "saveError": "Yläyksiköiden tallennus epäonnistui",
+    "saveSuccess": "Yläyksiköt tallennettu"
+  },
   "parent_abbr": "Yläyksikön lyhenne",
   "parent_unit": "Yläyksikkö",
   "parent_unit_id_header": "Yläyksikön tunnus",

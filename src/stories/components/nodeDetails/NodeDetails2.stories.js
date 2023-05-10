@@ -26,6 +26,8 @@ import {
   mockGetNodeValidity,
   mockSaveNodeValidity,
   withMockStore,
+  mockSaveParents,
+  mockGetParentsDeprecated,
 } from '../../../mockStore';
 import { waitFor, within } from '@storybook/testing-library';
 
@@ -223,10 +225,44 @@ export const AdminRole = {
           ],
         }),
         mockGetParents(nodeId, now, selectedHierarchy, {
-          fi: [],
-          sv: [],
-          en: [],
+          fi: [
+            {
+              id: '1000',
+              edgeId: 20001,
+              uniqueId: 1000000,
+              startDate: '2009-01-01',
+              endDate: null,
+              hierarchies: [
+                {
+                  hierarchy: 'talous',
+                  startDate: '2000-01-01',
+                  endDate: null,
+                  edgeId: 20003,
+                },
+              ],
+              fullName: 'Parent node 1',
+              language: 'fi',
+            },
+            {
+              id: '1001',
+              edgeId: 20002,
+              uniqueId: 1000001,
+              startDate: null,
+              endDate: null,
+              hierarchies: [
+                {
+                  hierarchy: 'talous',
+                  startDate: '2000-01-01',
+                  endDate: null,
+                  edgeId: 20004,
+                },
+              ],
+              fullName: 'Parent node 2',
+              language: 'fi',
+            },
+          ],
         }),
+        mockSaveParents(),
         mockGetChildren(nodeId, now, selectedHierarchy, {
           fi: [],
           sv: [],
@@ -259,6 +295,7 @@ export const AdminRole = {
           endDate: null,
         }),
         mockSaveNodeValidity(nodeId),
+        mockGetParentsDeprecated(nodeId, now, selectedHierarchy, {}),
       ],
     },
   },
