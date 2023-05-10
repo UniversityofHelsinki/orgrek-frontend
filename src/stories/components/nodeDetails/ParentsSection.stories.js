@@ -6,6 +6,7 @@ import {
 } from '../../../mockStore';
 import { userEvent, waitFor, within } from '@storybook/testing-library';
 import { expect } from '@storybook/jest';
+import { waitForAnimations } from '../../storyUtils';
 
 // Use a fixed date to ensure that tests always have a consistent result
 const now = new Date('2023-03-22T14:28:00+0200');
@@ -200,5 +201,9 @@ export const DeletedRow = {
         'Poistettu: Viralliset yksiköt, voimassa 1.1.2000 alkaen'
       )
     ).toBeInTheDocument();
+
+    // Deleted row appears with an animation, so wait for it before running
+    // a11y tests
+    await waitForAnimations();
   },
 };
