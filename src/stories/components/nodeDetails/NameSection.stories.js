@@ -169,6 +169,21 @@ export const ShowHistory = {
       },
     }),
   ],
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    await waitFor(async () => {
+      await expect(
+        canvas.getByText('Tietotekniikkaratkaisut 3')
+      ).toBeInTheDocument();
+    });
+    await expect(
+      canvas.getByText('Tietotekniikkaratkaisut 2')
+    ).toBeInTheDocument();
+    await expect(
+      canvas.getByText('Tietotekniikkaratkaisut 1')
+    ).toBeInTheDocument();
+  },
 };
 
 export const EditMode = {
