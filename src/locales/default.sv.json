@@ -263,6 +263,10 @@
   "osasto": "Avdelning",
   "other_attributes": "Andra attributer",
   "palveluyksikko": "Serviceenheten",
+  "parentInfo": {
+    "saveError": "saveError",
+    "saveSuccess": "saveSuccess"
+  },
   "parent_unit_id_header": "parent unit id",
   "parent_unit_name_header": "parent unit name",
   "password": "Lösenord",

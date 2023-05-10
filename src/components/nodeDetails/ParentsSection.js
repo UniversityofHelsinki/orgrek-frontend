@@ -2,24 +2,96 @@ import React from 'react';
 import EditableAccordion from '../EditableAccordion';
 import { useTranslation } from 'react-i18next';
 import HierarchyTable from '../attributes/HierarchyTable';
-import useHierarchy from '../../hooks/useHierarchy';
 import useContentLanguage from '../../hooks/useContentLanguage';
 import Placeholder from '../Placeholder';
+import { authActions } from '../../auth';
+import { useNodeId } from '../../hooks/useNodeId';
+import EditableContent from '../EditableContent';
+import ParentEditor from './ParentEditor';
+import { useSaveParentsMutation } from '../../store';
+import { useParents } from '../../hooks/useParents';
+import useFilterParentsByDate from '../../hooks/useFilterParentsByDate';
+import { defaultSchemaForAttributes } from '../../utils/validations';
 
 const ParentsSection = () => {
   const { t } = useTranslation();
-  const { parents } = useHierarchy();
+  const { parents, isFetching } = useParents();
+  const [saveParents] = useSaveParentsMutation();
+  const currentNodeId = useNodeId();
   const contentLanguage = useContentLanguage();
 
   const data = parents[contentLanguage] || [];
   const title = t('upper_units');
-  const empty = data.length === 0;
+  const filteredByDateParents = useFilterParentsByDate(data);
+  const empty = filteredByDateParents.length === 0;
+
+  if (isFetching) {
+    return <EditableAccordion title={title} loading />;
+  }
+
+  const asAttribute = (nodeId, uniqueId) => (hierarchy) => ({
+    id: hierarchy.edgeId,
+    key: uniqueId,
+    nodeId: nodeId,
+    value: hierarchy.hierarchy,
+    startDate: hierarchy.startDate,
+    endDate: hierarchy.endDate,
+    isNew: Boolean(hierarchy.isNew),
+    deleted: Boolean(hierarchy.deleted),
+  });
+
+  const asFormValues = data.reduce((a, c) => {
+    // we add an arbitrary character as yup seems to crash (does not find the schema path) if the string could be cast to integer.
+    a[`s${c.uniqueId}`] = c.hierarchies.map(
+      asAttribute(c.id, `s${c.uniqueId}`)
+    );
+    return a;
+  }, {});
+
+  // Validates form values every time when the values change
+  // Submit button is disabled when validation fails
+  const validationSchema = defaultSchemaForAttributes(
+    Object.keys(asFormValues)
+  );
+
+  const asEdge = (parent) => ({
+    id: parent.id,
+    hierarchy: parent.value,
+    childUniqueId: currentNodeId,
+    parentUniqueId: '',
+    startDate: parent.startDate,
+    endDate: parent.endDate,
+    isNew: parent.isNew,
+    deleted: parent.deleted,
+  });
+
+  const handleSubmit = (parents) => {
+    const edges = Object.entries(parents)
+      .map(([key, values]) =>
+        values.map((value) => ({
+          ...asEdge(value),
+          parentUniqueId: key.substring(1),
+        }))
+      )
+      .flat();
+    return saveParents({ edges, id: currentNodeId }).unwrap();
+  };
 
   return (
-    <EditableAccordion title={title}>
-      <Placeholder empty={empty} placeholder={t('upperUnits.empty')}>
-        <HierarchyTable data={data} summary={title} />
-      </Placeholder>
+    <EditableAccordion title={title} defaultExpanded={!empty}>
+      <EditableContent
+        editorComponent={<ParentEditor />}
+        validationSchema={validationSchema}
+        initialValues={asFormValues}
+        onSubmit={handleSubmit}
+        successMessage={t('parentInfo.saveSuccess')}
+        errorMessage={t('parentInfo.saveError')}
+        authActions={authActions.parents}
+      >
+        <Placeholder empty={empty} placeholder={t('upperUnits.empty')}>
+          <HierarchyTable data={filteredByDateParents} summary={title} />
+        </Placeholder>
+      </EditableContent>
     </EditableAccordion>
   );
 };
