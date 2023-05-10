@@ -107,7 +107,25 @@ export const Empty = {
     msw: {
       handlers: [
         mockGetParents(nodeId, now, selectedHierarchy, {
-          fi: [],
+          fi: [
+            {
+              id: '1000',
+              edgeId: 20001,
+              uniqueId: 1000000,
+              startDate: '2009-01-01',
+              endDate: null,
+              hierarchies: [
+                {
+                  hierarchy: 'talous',
+                  startDate: '2000-01-01',
+                  endDate: '2009-12-31',
+                  edgeId: 20003,
+                },
+              ],
+              fullName: 'Parent node 1',
+              language: 'fi',
+            },
+          ],
         }),
         mockSaveParents(),
       ],
@@ -119,6 +137,8 @@ export const Empty = {
     await waitFor(async () => {
       await expect(canvas.getByText('Yläyksiköt')).toBeInTheDocument();
     });
+
+    await expect(canvas.queryByText('Muokkaa')).not.toBeVisible();
 
     await expect(canvas.getByRole('button')).toHaveAttribute(
       'aria-expanded',

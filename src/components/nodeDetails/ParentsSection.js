@@ -16,15 +16,14 @@ import { defaultSchemaForAttributes } from '../../utils/validations';
 const ParentsSection = () => {
   const { t } = useTranslation();
   const { parents, isFetching } = useParents();
+  const [saveParents] = useSaveParentsMutation();
   const currentNodeId = useNodeId();
   const contentLanguage = useContentLanguage();
 
   const data = parents[contentLanguage] || [];
   const title = t('upper_units');
-  const empty = data.length === 0;
-  const [saveParents] = useSaveParentsMutation();
-
   const filteredByDateParents = useFilterParentsByDate(data);
+  const empty = filteredByDateParents.length === 0;
 
   if (isFetching) {
     return <EditableAccordion title={title} loading />;
@@ -79,7 +78,7 @@ const ParentsSection = () => {
   };
 
   return (
-    <EditableAccordion title={title}>
+    <EditableAccordion title={title} defaultExpanded={!empty}>
       <EditableContent
         editorComponent={<ParentEditor />}
         validationSchema={validationSchema}
