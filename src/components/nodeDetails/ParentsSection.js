@@ -26,8 +26,13 @@ const ParentsSection = () => {
 
   const filteredByDateParents = useFilterParentsByDate(data);
 
-  const asAttribute = (nodeId) => (hierarchy) => ({
+  if (isFetching) {
+    return <EditableAccordion title={title} loading />;
+  }
+
+  const asAttribute = (nodeId, uniqueId) => (hierarchy) => ({
     id: hierarchy.edgeId,
+    key: uniqueId,
     nodeId: nodeId,
     value: hierarchy.hierarchy,
     startDate: hierarchy.startDate,
@@ -37,7 +42,10 @@ const ParentsSection = () => {
   });
 
   const asFormValues = data.reduce((a, c) => {
-    a[c.uniqueId] = c.hierarchies.map(asAttribute(c.id));
+    // we add an arbitrary character as yup seems to crash (does not find the schema path) if the string could be cast to integer.
+    a[`s${c.uniqueId}`] = c.hierarchies.map(
+      asAttribute(c.id, `s${c.uniqueId}`)
+    );
     return a;
   }, {});
 
@@ -61,15 +69,14 @@ const ParentsSection = () => {
   const handleSubmit = (parents) => {
     const edges = Object.entries(parents)
       .map(([key, values]) =>
-        values.map((value) => ({ ...asEdge(value), parentUniqueId: key }))
+        values.map((value) => ({
+          ...asEdge(value),
+          parentUniqueId: key.substring(1),
+        }))
       )
       .flat();
-    return saveParents({ edges, nodeId: currentNodeId }).unwrap();
+    return saveParents({ edges, id: currentNodeId }).unwrap();
   };
-
-  if (isFetching) {
-    return <EditableAccordion title={title} loading />;
-  }
 
   return (
     <EditableAccordion title={title}>

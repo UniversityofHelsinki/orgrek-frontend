@@ -14,7 +14,7 @@ const ParentEditor = (props) => {
   const contentLanguage = useContentLanguage();
   const data = parents[contentLanguage] || [];
   const getParentName = (id) => {
-    return data.find((parent) => String(parent.uniqueId) === id).fullName;
+    return data.find((parent) => `s${parent.uniqueId}` === id).fullName;
   };
   const removeHistory = (hierarchieswithHistory) => {
     return hierarchieswithHistory.filter((s) => {
