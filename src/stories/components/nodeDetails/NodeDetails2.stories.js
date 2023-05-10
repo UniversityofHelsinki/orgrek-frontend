@@ -329,7 +329,7 @@ export const ReaderRole = {
     }),
   ],
   play: async (context) => {
-    AdminRole.play(context);
+    await AdminRole.play(context);
 
     const canvas = within(context.canvasElement);
 
