@@ -1,5 +1,7 @@
 import { withNode } from '../../../mockStore';
 import PredecessorsSection from '../../../components/nodeDetails/PredecessorsSection';
+import { waitFor, within } from '@storybook/testing-library';
+import { expect } from '@storybook/jest';
 
 export default {
   component: PredecessorsSection,
@@ -25,8 +27,27 @@ export const Default = {
       },
     }),
   ],
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    await waitFor(async () => {
+      await expect(canvas.getByText('Edeltävät yksiköt')).toBeInTheDocument();
+    });
+    await expect(
+      canvas.getByText('Rehtorin kanslia (H01A)')
+    ).toBeInTheDocument();
+  },
 };
 
 export const Empty = {
   decorators: [withNode()],
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    await waitFor(async () => {
+      await expect(
+        canvas.getByText('Ei edeltäviä yksiköitä')
+      ).toBeInTheDocument();
+    });
+  },
 };

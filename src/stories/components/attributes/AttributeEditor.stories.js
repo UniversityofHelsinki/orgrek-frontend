@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import AttributeEditor from '../../../components/attributes/AttributeEditor';
-import AttributeEditorRow from '../../../components/attributes/AttributeEditorRow';
 import MenuItem from '@mui/material/MenuItem';
 import TextField from '@mui/material/TextField';
 import { within, userEvent, waitFor } from '@storybook/testing-library';
@@ -8,20 +7,13 @@ import { object, array, string } from 'yup';
 import { expect } from '@storybook/jest';
 import { FormContextProvider } from '../../../contexts/FormContext';
 import useForm from '../../../hooks/useForm';
-import ValueField from '../../../components/attributes/ValueField';
-import StartDateField from '../../../components/attributes/StartDateField';
-import EndDateField from '../../../components/attributes/EndDateField';
 import { toDate } from '../../../utils/dateUtils';
-import '../../../utils/validations'; // Register custom validators
+import '../../../utils/validations';
+import { waitForAnimations } from '../../storyUtils'; // Register custom validators
 
 export default {
   component: AttributeEditor,
-  subcomponents: {
-    AttributeEditorRow,
-    ValueField,
-    StartDateField,
-    EndDateField,
-  },
+  tags: ['autodocs'],
   argTypes: {
     onChange: { action: true },
   },
@@ -82,7 +74,7 @@ export const Empty = {
   play: async () => {
     // Empty row appears with an animation, so wait for it before running
     // a11y tests
-    await new Promise((resolve) => setTimeout(resolve, 200));
+    await waitForAnimations();
   },
 };
 

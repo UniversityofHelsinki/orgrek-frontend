@@ -18,6 +18,9 @@ export const authActions = {
   codeAttributes: {
     edit: { allowRoles: allWriterRoles },
   },
+  parents: {
+    edit: { allowRoles: allWriterRoles },
+  },
   unitType: {
     edit: { allowRoles: allWriterRoles },
   },

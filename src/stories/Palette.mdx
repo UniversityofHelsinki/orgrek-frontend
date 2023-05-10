@@ -1,4 +1,4 @@
-import { Meta, Canvas, ColorPalette, ColorItem } from '@storybook/addon-docs';
+import { Meta, ColorPalette, ColorItem } from '@storybook/addon-docs';
 import theme from '../theme';
 import { Box, Typography } from '@mui/material';
 
@@ -14,23 +14,37 @@ See MUI docs for how to access the theme in components by using the
 
 Using colors from the `theme` variable returned by the `useTheme` hook:
 
-<Canvas>
-  <Box
-    sx={{
-      backgroundColor: theme.palette.grey[300],
-      height: theme.spacing(4),
-      width: theme.spacing(4),
-    }}
-  />
-</Canvas>
+<Box
+  sx={{
+    backgroundColor: theme.palette.grey[300],
+    height: theme.spacing(4),
+    width: theme.spacing(4),
+  }}
+/>
+
+```jsx
+const theme = useTheme();
+
+<Box
+  sx={{
+    backgroundColor: theme.palette.grey[300],
+    height: theme.spacing(4),
+    width: theme.spacing(4),
+  }}
+/>;
+```
 
 Note that the hook is not needed when using colors with `Typography`:
 
-<Canvas>
-  <Typography color="primary.main">Primary text</Typography>
-  <Typography color="text.secondary">Secondary text</Typography>
-  <Typography color="error.main">Error text</Typography>
-</Canvas>
+<Typography color="primary.main">Primary text</Typography>
+<Typography color="text.secondary">Secondary text</Typography>
+<Typography color="error.main">Error text</Typography>
+
+```jsx
+<Typography color="primary.main">Primary text</Typography>
+<Typography color="text.secondary">Secondary text</Typography>
+<Typography color="error.main">Error text</Typography>
+```
 
 ## The Palette
 

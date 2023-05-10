@@ -26,6 +26,8 @@ import {
   mockGetNodeValidity,
   mockSaveNodeValidity,
   withMockStore,
+  mockSaveParents,
+  mockGetParentsDeprecated,
 } from '../../../mockStore';
 import { waitFor, within } from '@storybook/testing-library';
 
@@ -222,8 +224,50 @@ export const AdminRole = {
             },
           ],
         }),
-        mockGetParents(nodeId, now, { fi: [], sv: [], en: [] }),
-        mockGetChildren(nodeId, now, { fi: [], sv: [], en: [] }),
+        mockGetParents(nodeId, now, selectedHierarchy, {
+          fi: [
+            {
+              id: '1000',
+              edgeId: 20001,
+              uniqueId: 1000000,
+              startDate: '2009-01-01',
+              endDate: null,
+              hierarchies: [
+                {
+                  hierarchy: 'talous',
+                  startDate: '2000-01-01',
+                  endDate: null,
+                  edgeId: 20003,
+                },
+              ],
+              fullName: 'Parent node 1',
+              language: 'fi',
+            },
+            {
+              id: '1001',
+              edgeId: 20002,
+              uniqueId: 1000001,
+              startDate: null,
+              endDate: null,
+              hierarchies: [
+                {
+                  hierarchy: 'talous',
+                  startDate: '2000-01-01',
+                  endDate: null,
+                  edgeId: 20004,
+                },
+              ],
+              fullName: 'Parent node 2',
+              language: 'fi',
+            },
+          ],
+        }),
+        mockSaveParents(),
+        mockGetChildren(nodeId, now, selectedHierarchy, {
+          fi: [],
+          sv: [],
+          en: [],
+        }),
         mockGetPredecessors(nodeId, now, {
           sv: [],
           fi: [],
@@ -251,6 +295,7 @@ export const AdminRole = {
           endDate: null,
         }),
         mockSaveNodeValidity(nodeId),
+        mockGetParentsDeprecated(nodeId, now, selectedHierarchy, {}),
       ],
     },
   },
@@ -268,7 +313,42 @@ export const AdminRole = {
     const canvas = within(canvasElement);
 
     await waitFor(async () => {
-      expect(canvas.getAllByTestId('attributesTable')).toHaveLength(5);
+      expect(canvas.getByText('Nimitiedot')).toBeInTheDocument();
+    });
+    expect(canvas.getByText('Tietotekniikkaratkaisut 1')).toBeInTheDocument();
+
+    await waitFor(async () => {
+      expect(canvas.getByText('Koko nimi')).toBeInTheDocument();
+    });
+    expect(canvas.getByText('TIKE, IT Solutions (TIRA)')).toBeInTheDocument();
+
+    await waitFor(async () => {
+      expect(canvas.getByText('Koodisto')).toBeInTheDocument();
+    });
+    expect(canvas.getByText('H9073')).toBeInTheDocument();
+
+    await waitFor(async () => {
+      expect(canvas.getByText('Tulosyksikkö')).toBeInTheDocument();
+    });
+
+    await waitFor(async () => {
+      expect(canvas.getByText('Yläyksiköt')).toBeInTheDocument();
+    });
+
+    await waitFor(async () => {
+      expect(canvas.getByText('Alayksiköt')).toBeInTheDocument();
+    });
+
+    await waitFor(async () => {
+      expect(canvas.getByText('Edeltävät yksiköt')).toBeInTheDocument();
+    });
+
+    await waitFor(async () => {
+      expect(canvas.getByText('Seuraavat yksiköt')).toBeInTheDocument();
+    });
+
+    await waitFor(async () => {
+      expect(canvas.getByText('Muut attribuutit')).toBeInTheDocument();
     });
   },
 };
@@ -285,11 +365,11 @@ export const ReaderRole = {
       ur: { user: createReader() },
     }),
   ],
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
+  play: async (context) => {
+    await AdminRole.play(context);
 
-    await waitFor(async () => {
-      expect(canvas.getAllByTestId('attributesTable')).toHaveLength(5);
-    });
+    const canvas = within(context.canvasElement);
+
+    expect(canvas.queryAllByText('Muokkaa')).toHaveLength(0);
   },
 };

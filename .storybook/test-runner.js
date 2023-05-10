@@ -7,15 +7,12 @@ module.exports = {
   async postRender(page) {
     await checkA11y(
       page,
-      '#root',
+      '#storybook-root',
       {
         detailedReport: true,
       },
       false,
       'v2'
     );
-
-    const accessibilityTree = await page.accessibility.snapshot();
-    expect(accessibilityTree).toMatchSnapshot();
   },
 };

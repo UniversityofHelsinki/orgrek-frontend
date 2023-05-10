@@ -1,8 +1,16 @@
 import { createNodeState, withMockStore, withNode } from '../../../mockStore';
 import OtherAttributesSection from '../../../components/nodeDetails/OtherAttributesSection';
+import { waitFor, within } from '@storybook/testing-library';
+import { expect } from '@storybook/jest';
+
+// Use a fixed date to ensure that tests always have a consistent result
+const now = new Date('2023-03-22T14:28:00+0200');
 
 export default {
   component: OtherAttributesSection,
+  parameters: {
+    systemTime: now,
+  },
 };
 
 export const Default = {
@@ -28,10 +36,26 @@ export const Default = {
       ],
     }),
   ],
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    await waitFor(async () => {
+      await expect(canvas.getByText('Muut attribuutit')).toBeInTheDocument();
+    });
+    await expect(canvas.getByText('Julkinen')).toBeInTheDocument();
+    await expect(canvas.getByText('some value')).toBeInTheDocument();
+  },
 };
 
 export const Empty = {
   decorators: [withNode({ nodeAttributes: [] })],
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    await waitFor(async () => {
+      await expect(canvas.getByText('Ei attribuutteja')).toBeInTheDocument();
+    });
+  },
 };
 
 export const ShowHistory = {
@@ -70,6 +94,13 @@ export const ShowHistory = {
       },
     }),
   ],
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    await waitFor(async () => {
+      await expect(canvas.getByText('previous value')).toBeInTheDocument();
+    });
+  },
 };
 
 export const HistoryAndFuture = {
@@ -135,4 +166,13 @@ export const HistoryAndFuture = {
       }),
     }),
   ],
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    await waitFor(async () => {
+      await expect(canvas.getByText('previous value')).toBeInTheDocument();
+    });
+    await expect(canvas.getByText('current value')).toBeInTheDocument();
+    await expect(canvas.getByText('next value')).toBeInTheDocument();
+  },
 };

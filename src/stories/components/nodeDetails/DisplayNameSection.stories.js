@@ -1,5 +1,7 @@
 import { withNode } from '../../../mockStore';
 import DisplayNameSection from '../../../components/nodeDetails/DisplayNameSection';
+import { waitFor, within } from '@storybook/testing-library';
+import { expect } from '@storybook/jest';
 
 export default {
   component: DisplayNameSection,
@@ -7,10 +9,32 @@ export default {
 
 export const Default = {
   decorators: [withNode()],
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    await waitFor(async () => {
+      await expect(
+        canvas.getByText('TIKE, Tietotekniikkaratkaisut (TIRA)')
+      ).toBeInTheDocument();
+    });
+    await expect(
+      canvas.getByText('TIKE, Datatekniklösningar (TIRA)')
+    ).toBeInTheDocument();
+    await expect(
+      canvas.getByText('TIKE, IT Solutions (TIRA)')
+    ).toBeInTheDocument();
+  },
 };
 
 export const Empty = {
   decorators: [withNode({ nodeDisplayNames: {} })],
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    await waitFor(async () => {
+      await expect(canvas.getByText('Koko nimi puuttuu')).toBeInTheDocument();
+    });
+  },
 };
 
 export const ShowHistory = {
@@ -61,4 +85,13 @@ export const ShowHistory = {
       },
     }),
   ],
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    await waitFor(async () => {
+      await expect(
+        canvas.getByText('Kuninkaallinen Turun Akatemia (HY)')
+      ).toBeInTheDocument();
+    });
+  },
 };

@@ -5,7 +5,7 @@
 import '@testing-library/jest-dom';
 
 import React from 'react';
-import { setGlobalConfig } from '@storybook/testing-react';
+import { setProjectAnnotations } from '@storybook/react';
 import { MemoryRouter } from 'react-router-dom';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { fi } from 'date-fns/locale';
@@ -16,7 +16,7 @@ initI18n(false);
 
 global.fetch = jest.fn();
 
-setGlobalConfig({
+setProjectAnnotations({
   decorators: [
     (Story) => (
       <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={fi}>
