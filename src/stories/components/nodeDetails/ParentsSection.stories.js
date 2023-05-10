@@ -1,39 +1,96 @@
 import ParentsSection from '../../../components/nodeDetails/ParentsSection';
-import { createHierarchies, withHierarchy } from '../../../mockStore';
-import { waitFor, within } from '@storybook/testing-library';
+import {
+  mockGetParents,
+  mockSaveParents,
+  withMockStore,
+} from '../../../mockStore';
+import { userEvent, waitFor, within } from '@storybook/testing-library';
 import { expect } from '@storybook/jest';
+
+// Use a fixed date to ensure that tests always have a consistent result
+const now = new Date('2023-03-22T14:28:00+0200');
+
+const nodeId = '1';
+const selectedHierarchy = 'talous,toiminnanohjaus';
 
 export default {
   component: ParentsSection,
-};
-
-export const Default = {
+  parameters: {
+    systemTime: now,
+    reactRouter: {
+      searchParams: {
+        uid: nodeId,
+      },
+    },
+  },
   decorators: [
-    withHierarchy({
-      parents: {
-        fi: [
-          {
-            id: '1000',
-            uniqueId: 1000000,
-            startDate: null,
-            endDate: null,
-            hierarchies: createHierarchies(null, '1970-01-01'),
-            fullName: 'Parent node 1',
-            language: 'fi',
-          },
-          {
-            id: '1001',
-            uniqueId: 1000001,
-            startDate: null,
-            endDate: null,
-            hierarchies: createHierarchies(['tutkimus', 'opetus']),
-            fullName: 'Parent node 2',
-            language: 'fi',
-          },
-        ],
+    withMockStore({
+      tree: {
+        selectedHierarchy,
       },
     }),
   ],
+};
+
+export const Default = {
+  parameters: {
+    msw: {
+      handlers: [
+        mockGetParents(nodeId, now, selectedHierarchy, {
+          fi: [
+            {
+              id: '1000',
+              edgeId: 20001,
+              uniqueId: 1000000,
+              startDate: '2009-01-01',
+              endDate: null,
+              hierarchies: [
+                {
+                  hierarchy: 'talous',
+                  startDate: '2000-01-01',
+                  endDate: null,
+                  edgeId: 20003,
+                },
+                {
+                  hierarchy: 'toiminnanohjaus',
+                  startDate: '2000-01-01',
+                  endDate: null,
+                  edgeId: 20004,
+                },
+              ],
+              fullName: 'Parent node 1',
+              language: 'fi',
+            },
+            {
+              id: '1001',
+              edgeId: 20002,
+              uniqueId: 1000001,
+              startDate: null,
+              endDate: null,
+              hierarchies: [
+                {
+                  hierarchy: 'talous',
+                  startDate: '2000-01-01',
+                  endDate: null,
+                  edgeId: 20004,
+                },
+                {
+                  hierarchy: 'toiminnanohjaus',
+                  startDate: '2000-01-01',
+                  endDate: null,
+                  edgeId: 20005,
+                },
+              ],
+              fullName: 'Parent node 2',
+              language: 'fi',
+            },
+          ],
+        }),
+        mockSaveParents(),
+      ],
+    },
+  },
+  decorators: [],
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
@@ -46,12 +103,65 @@ export const Default = {
 };
 
 export const Empty = {
-  decorators: [withHierarchy({ parents: {} })],
+  parameters: {
+    msw: {
+      handlers: [
+        mockGetParents(nodeId, now, selectedHierarchy, {
+          fi: [],
+        }),
+        mockSaveParents(),
+      ],
+    },
+  },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
     await waitFor(async () => {
-      await expect(canvas.getByText('Ei yläyksiköitä')).toBeInTheDocument();
+      await expect(canvas.getByText('Yläyksiköt')).toBeInTheDocument();
+    });
+
+    await expect(canvas.getByRole('button')).toHaveAttribute(
+      'aria-expanded',
+      'false'
+    );
+  },
+};
+
+export const EditMode = {
+  ...Default,
+  play: async (context) => {
+    await Default.play(context);
+
+    const canvas = within(context.canvasElement);
+
+    await userEvent.click(canvas.getByText('Muokkaa'));
+
+    await waitFor(async () => {
+      await expect(canvas.getByText('Tallenna')).toBeDisabled();
+    });
+
+    await expect(canvas.getByText('Parent node 1')).toBeInTheDocument();
+    await expect(canvas.getByText('Parent node 2')).toBeInTheDocument();
+  },
+};
+
+export const Modified = {
+  ...EditMode,
+  play: async (context) => {
+    await EditMode.play(context);
+
+    const canvas = within(context.canvasElement.parentElement);
+
+    await userEvent.click(canvas.getAllByLabelText(/Arvo/)[0]);
+    await userEvent.click(canvas.getAllByRole('option')[1]);
+    await userEvent.type(
+      canvas.getAllByLabelText('Voimassaolo päättyy')[0],
+      '31.12.2023',
+      { delay: 100 }
+    );
+
+    await waitFor(async () => {
+      await expect(canvas.getByText('Tallenna')).toBeEnabled();
     });
   },
 };
