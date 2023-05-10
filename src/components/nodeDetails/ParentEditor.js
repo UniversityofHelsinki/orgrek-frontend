@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import TextField from '../inputs/TextField';
+import TextField from '@mui/material/TextField';
 import { MenuItem } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import useForm from '../../hooks/useForm';
