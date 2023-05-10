@@ -8,27 +8,17 @@ import AttributeEditor from '../attributes/AttributeEditor';
 import { useParents } from '../../hooks/useParents';
 import useContentLanguage from '../../hooks/useContentLanguage';
 
-const ParentEditor = (props) => {
+const ParentEditor = () => {
   const { t } = useTranslation();
-  const { parents, isFetching } = useParents();
+  const { parents } = useParents();
   const contentLanguage = useContentLanguage();
   const data = parents[contentLanguage] || [];
   const getParentName = (id) => {
     return data.find((parent) => `s${parent.uniqueId}` === id).fullName;
   };
-  const removeHistory = (hierarchieswithHistory) => {
-    return hierarchieswithHistory.filter((s) => {
-      return !s.match('history');
-    });
-  };
-  const removeHierarchies = (hierarchies, excessHierarchies) => {
-    return hierarchies.filter((s) => {
-      return !s.includes(excessHierarchies);
-    });
-  };
+
   const selectableHierarchies = useSelector((s) => {
     return s.tree.selectedHierarchy.split(',');
-    //return removeHierarchies(s.tree.selectedHierarchies, ['history']);
   });
   const { values, setValues } = useForm();
 
