@@ -2,6 +2,7 @@ import HelperText from '../../../components/inputs/HelperText';
 
 export default {
   component: HelperText,
+  tags: ['autodocs'],
 };
 
 export const Default = {

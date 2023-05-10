@@ -5,6 +5,7 @@ import Validity from '../../components/attributes/Validity';
 
 export default {
   component: Placeholder,
+  tags: ['autodocs'],
   argTypes: {
     align: {
       control: 'radio',
