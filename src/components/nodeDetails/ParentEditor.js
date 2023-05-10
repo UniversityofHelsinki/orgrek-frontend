@@ -34,9 +34,12 @@ const ParentEditor = () => {
     );
   };
 
+  const getDisplayText = (value) => t(value.value);
+
   return Object.entries(values).map(([parentId, hierarchies], i) => (
     <AttributeEditor
       renderValueField={renderValueField}
+      getDisplayText={getDisplayText}
       key={`${parentId}-${i}`}
       path={`${parentId}`}
       attributeLabel={getParentName(parentId)}

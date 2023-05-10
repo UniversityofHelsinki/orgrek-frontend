@@ -185,3 +185,20 @@ export const Modified = {
     });
   },
 };
+
+export const DeletedRow = {
+  ...EditMode,
+  play: async (context) => {
+    await EditMode.play(context);
+
+    const canvas = within(context.canvasElement.parentElement);
+
+    await userEvent.click(canvas.getAllByLabelText(/Toiminnot/)[1]);
+    await userEvent.click(canvas.getByText('Poista rivi'));
+    await expect(
+      canvas.getByText(
+        'Poistettu: Viralliset yksiköt, voimassa 1.1.2000 alkaen'
+      )
+    ).toBeInTheDocument();
+  },
+};
