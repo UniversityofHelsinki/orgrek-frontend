@@ -21,8 +21,14 @@ const ParentEditor = (props) => {
       return !s.match('history');
     });
   };
+  const removeHierarchies = (hierarchies, excessHierarchies) => {
+    return hierarchies.filter((s) => {
+      return !s.includes(excessHierarchies);
+    });
+  };
   const selectableHierarchies = useSelector((s) => {
-    return removeHistory(s.tree.selectableHierarchies);
+    return s.tree.selectedHierarchy.split(',');
+    //return removeHierarchies(s.tree.selectedHierarchies, ['history']);
   });
   const { values, setValues } = useForm();
 
@@ -42,6 +48,7 @@ const ParentEditor = (props) => {
     <AttributeEditor
       renderValueField={renderValueField}
       key={`${parentId}-${i}`}
+      path={`${parentId}`}
       attributeLabel={getParentName(parentId)}
       attributeKey={parentId}
       data={hierarchies}
@@ -51,7 +58,6 @@ const ParentEditor = (props) => {
           [parentId]: newData,
         });
       }}
-      path="parents"
     />
   ));
 };

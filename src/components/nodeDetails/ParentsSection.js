@@ -11,6 +11,7 @@ import ParentEditor from './ParentEditor';
 import { useSaveParentsMutation } from '../../store';
 import { useParents } from '../../hooks/useParents';
 import useFilterParentsByDate from '../../hooks/useFilterParentsByDate';
+import { defaultSchemaForAttributes } from '../../utils/validations';
 
 const ParentsSection = () => {
   const { t } = useTranslation();
@@ -40,6 +41,12 @@ const ParentsSection = () => {
     return a;
   }, {});
 
+  // Validates form values every time when the values change
+  // Submit button is disabled when validation fails
+  const validationSchema = defaultSchemaForAttributes(
+    Object.keys(asFormValues)
+  );
+
   const asEdge = (parent) => ({
     id: parent.id,
     hierarchy: parent.value,
@@ -68,6 +75,7 @@ const ParentsSection = () => {
     <EditableAccordion title={title}>
       <EditableContent
         editorComponent={<ParentEditor />}
+        validationSchema={validationSchema}
         initialValues={asFormValues}
         onSubmit={handleSubmit}
         successMessage={t('parentInfo.saveSuccess')}
