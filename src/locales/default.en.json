@@ -287,6 +287,10 @@
   "other_attributes": "Other attributes",
   "paa-aine": "Training Programme",
   "palveluyksikko": "Service unit",
+  "parentInfo": {
+    "saveError": "saveError",
+    "saveSuccess": "saveSuccess"
+  },
   "parent_abbr": "Abbreviation of Upper Unit",
   "parent_unit_id_header": "Parent unit Id",
   "parent_unit_name_header": "Parent Unit Name",
