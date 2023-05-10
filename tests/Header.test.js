@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import * as stories from '../src/stories/components/Header.stories';
-import { composeStories } from '@storybook/testing-react';
+import { composeStories } from '@storybook/react';
 
 const { AdminRole, ReaderRole } = composeStories(stories);
 

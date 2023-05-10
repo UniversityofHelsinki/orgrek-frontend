@@ -64,15 +64,15 @@ export const mockGetFavorableFullNames = (nodeId, date, body) =>
     (req, res, ctx) => res(ctx.json(body))
   );
 
-export const mockGetParents = (nodeId, date, body) =>
+export const mockGetParents = (nodeId, date, hierarchies, body) =>
   rest.get(
-    `${baseUrl}/node/parents/${nodeId}/${formatApiDate(date)}`,
+    `${baseUrl}/node/parents/${nodeId}/${formatApiDate(date)}/${hierarchies}`,
     (req, res, ctx) => res(ctx.json(body))
   );
 
-export const mockGetChildren = (nodeId, date, body) =>
+export const mockGetChildren = (nodeId, date, hierarchies, body) =>
   rest.get(
-    `${baseUrl}/node/children/${nodeId}/${formatApiDate(date)}`,
+    `${baseUrl}/node/children/${nodeId}/${formatApiDate(date)}/${hierarchies}`,
     (req, res, ctx) => res(ctx.json(body))
   );
 
