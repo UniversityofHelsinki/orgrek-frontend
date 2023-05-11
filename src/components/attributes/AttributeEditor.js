@@ -23,8 +23,9 @@ const AttributeEditor = ({
   onChange,
   renderValueField,
   getDisplayText,
-  sx,
   attributeKey,
+  overlap,
+  sx,
 }) => {
   const createRow = () => ({
     // Also new rows must have some unique id before they are stored to database
@@ -49,6 +50,10 @@ const AttributeEditor = ({
   };
 
   const updateDates = (oldrow, row, days) => {
+    if (overlap) {
+      return null;
+    }
+
     if (oldrow.endDate === null || !oldrow.endDate) {
       const date = new Date();
       const startDate = addDays(date, days);
@@ -159,6 +164,13 @@ AttributeEditor.propTypes = {
    *
    */
   attributeKey: PropTypes.string.isRequired,
+
+  /**
+   * If true, the attribute may have multiple values with overlapping validity
+   * date ranges. In that case, existing value's validity should not be changed
+   * when inserting a new row above or below.
+   */
+  overlap: PropTypes.bool,
 };
 
 export default AttributeEditor;
