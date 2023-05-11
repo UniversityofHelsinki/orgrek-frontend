@@ -38,6 +38,7 @@ const ParentEditor = () => {
 
   return Object.entries(values).map(([parentId, hierarchies], i) => (
     <AttributeEditor
+      overlap
       renderValueField={renderValueField}
       getDisplayText={getDisplayText}
       key={`${parentId}-${i}`}
