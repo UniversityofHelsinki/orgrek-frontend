@@ -13,6 +13,7 @@ export const api = createApi({
     'HierarchyFilters',
     'CodeAttributes',
     'NodeValidity',
+    'Parents',
   ],
   endpoints: (builder) => ({
     getTree: builder.query({
@@ -127,6 +128,35 @@ export const api = createApi({
         method: 'GET',
       }),
     }),
+    getParents: builder.query({
+      providesTags: (result, error, { nodeId }) => [
+        { type: 'Parents', id: nodeId },
+      ],
+      query: ({ nodeId, selectedDay, selectedHierarchies }) => {
+        const dateString = selectedDay
+          ? selectedDay.toLocaleDateString('FI-fi')
+          : new Date().toLocaleDateString('FI-fi');
+        return {
+          url: `/node/all/parents/${nodeId}/${dateString}/${selectedHierarchies}`,
+          method: 'GET',
+        };
+      },
+    }),
+    saveParents: builder.mutation({
+      invalidatesTags: (result, error, { nodeId }) => {
+        if (error) {
+          return [];
+        }
+        return [{ type: 'Parents', id: nodeId }, { type: 'Tree' }];
+      },
+      query: ({ edges }) => {
+        return {
+          url: `/node/parents/update`,
+          method: 'PUT',
+          body: edges,
+        };
+      },
+    }),
     getNodeValidity: builder.query({
       providesTags: (result, error, id) => [{ type: 'NodeValidity', id }],
       query: (id) => ({
@@ -165,4 +195,6 @@ export const {
   useGetAttributeKeysBySectionQuery,
   useGetNodeValidityQuery,
   useSaveNodeValidityMutation,
+  useSaveParentsMutation,
+  useGetParentsQuery,
 } = api;

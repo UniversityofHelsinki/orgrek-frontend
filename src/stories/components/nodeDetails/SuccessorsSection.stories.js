@@ -1,5 +1,7 @@
 import { withNode } from '../../../mockStore';
 import SuccessorsSection from '../../../components/nodeDetails/SuccessorsSection';
+import { waitFor, within } from '@storybook/testing-library';
+import { expect } from '@storybook/jest';
 
 export default {
   component: SuccessorsSection,
@@ -36,8 +38,25 @@ export const Default = {
       },
     }),
   ],
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    await waitFor(async () => {
+      await expect(canvas.getByText('Successor 1')).toBeInTheDocument();
+    });
+    await expect(canvas.getByText('Successor 2')).toBeInTheDocument();
+  },
 };
 
 export const Empty = {
   decorators: [withNode()],
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    await waitFor(async () => {
+      await expect(
+        canvas.getByText('Ei seuraavia yksiköitä')
+      ).toBeInTheDocument();
+    });
+  },
 };

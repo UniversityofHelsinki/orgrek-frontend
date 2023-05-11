@@ -35,6 +35,13 @@ export const Default = {
       ],
     },
   },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    await waitFor(async () => {
+      await expect(canvas.getByText('1.1.2000 alkaen')).toBeInTheDocument();
+    });
+  },
 };
 export const Empty = {
   ...Default,
@@ -48,6 +55,18 @@ export const Empty = {
         mockSaveNodeValidity(nodeId),
       ],
     },
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    await waitFor(async () => {
+      await expect(canvas.getByText('Voimassaolo')).toBeInTheDocument();
+    });
+
+    await expect(canvas.getByRole('button')).toHaveAttribute(
+      'aria-expanded',
+      'false'
+    );
   },
 };
 
