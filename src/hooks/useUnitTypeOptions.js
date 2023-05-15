@@ -11,7 +11,10 @@ const sortHierarchies = (list) => {
 const concatValues = (data, hierarchyValues) => {
   let hierarchyValuesStr = '';
   data.map((obj) => {
-    if (hierarchyValues.includes(obj.hierarchy)) {
+    let matchingHierarchy = hierarchyValues
+      .split(',')
+      .filter((s) => s === obj.hierarchy);
+    if (matchingHierarchy.length > 0) {
       hierarchyValuesStr = hierarchyValuesStr.concat(obj.value).concat(',');
     }
   });
