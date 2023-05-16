@@ -2,6 +2,7 @@ import * as React from 'react';
 import Autocomplete from '@mui/material/Autocomplete';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
+import CloseIcon from '@mui/icons-material/Close';
 import TextField from '@mui/material/TextField';
 import { connect, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -59,6 +60,7 @@ const HierarchySelection = (props) => {
         getOptionLabel={(option) => option.label}
         value={selectedHierarchies.map((v) => ({ value: v, label: t(v) }))}
         onChange={changeSelected}
+        ChipProps={{ deleteIcon: <CloseIcon /> }}
         renderOption={(props, option, { selected }) => (
           <li {...props}>
             <Checkbox
