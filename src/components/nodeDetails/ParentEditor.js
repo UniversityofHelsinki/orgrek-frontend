@@ -10,9 +10,11 @@ import useContentLanguage from '../../hooks/useContentLanguage';
 import NodeField from '../inputs/NodeField';
 import Stack from '@mui/material/Stack';
 import { Typography, Box } from '@mui/material';
+import { useNodeId } from '../../hooks/useNodeId';
 
 const ParentEditor = ({ parents, onParentChange }) => {
   const { t } = useTranslation();
+  const currentNodeId = useNodeId();
   const [parentNames, setParentNames] = useState(parents);
   const getParentName = (id) => {
     return parentNames.find((parent) => `s${parent.uniqueId}` === id)?.fullName;
@@ -42,7 +44,11 @@ const ParentEditor = ({ parents, onParentChange }) => {
   };
 
   const addParent = (event, node, reason) => {
-    if (!node || nodeIsAlreadyParent(node)) {
+    if (
+      !node ||
+      nodeIsAlreadyParent(node) ||
+      String(node.id) === currentNodeId
+    ) {
       return;
     }
     const newValues = {

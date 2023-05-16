@@ -40,8 +40,7 @@ const NodeField = ({
   const { tree } = useTree();
   const language = useContentLanguage();
 
-  const options =
-    tree && tree[language] ? flatten(tree[language].children) : [];
+  const options = tree && tree[language] ? flatten([tree[language]]) : [];
 
   const uniqueOptions = [
     ...new Map(options.map((item) => [item['uniqueId'], item])).values(),
