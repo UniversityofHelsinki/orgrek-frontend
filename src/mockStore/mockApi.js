@@ -89,10 +89,14 @@ export const mockGetPredecessors = (nodeId, date, body) =>
     (req, res, ctx) => res(ctx.json(body))
   );
 
-export const mockGetSuccessors = (nodeId, date, body) =>
-  rest.get(
-    `${baseUrl}/node/successors/${nodeId}/${formatApiDate(date)}`,
-    (req, res, ctx) => res(ctx.json(body))
+export const mockGetSuccessors = (nodeId, body) =>
+  rest.get(`${baseUrl}/node/${nodeId}/successors`, (req, res, ctx) =>
+    res(ctx.json(body))
+  );
+
+export const mockSaveSuccessors = (nodeId) =>
+  rest.put(`${baseUrl}/node/${nodeId}/successors`, (req, res, ctx) =>
+    res(ctx.delay(2000), ctx.json(req.json()))
   );
 
 export const mockGetSectionTypeAttributes = (sectionType, body) =>

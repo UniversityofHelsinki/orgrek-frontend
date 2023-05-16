@@ -33,6 +33,9 @@ export const authActions = {
   nodeValidity: {
     edit: { allowRoles: allWriterRoles },
   },
+  successors: {
+    edit: { allowRoles: allWriterRoles },
+  },
 };
 
 /**

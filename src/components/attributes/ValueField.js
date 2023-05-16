@@ -71,7 +71,7 @@ ValueField.propTypes = {
     id: PropTypes.number.isRequired,
 
     /** Attribute value */
-    value: PropTypes.string,
+    value: PropTypes.any,
 
     /** Validity start date, ISO 8601 date string without time component */
     startDate: PropTypes.string,
