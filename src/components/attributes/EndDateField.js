@@ -16,7 +16,7 @@ import PropTypes from 'prop-types';
  *
  * A subcomponent of AttributeEditor.
  */
-const EndDateField = ({ path, value, onChange }) => {
+const EndDateField = ({ path, value, onChange, label }) => {
   const { t } = useTranslation();
   const { errors, validationSchema } = useForm();
 
@@ -33,7 +33,7 @@ const EndDateField = ({ path, value, onChange }) => {
   return (
     <DateField
       required={isRequired(validationSchema, endDatePath)}
-      label={t('attribute.validUntil')}
+      label={label || t('attribute.validUntil')}
       fullWidth
       value={value.endDate}
       onChange={handleChange}
@@ -72,6 +72,9 @@ EndDateField.propTypes = {
 
   /** Called when the value changes, taking the new value as the first argument */
   onChange: PropTypes.func.isRequired,
+
+  /** Label of the date field */
+  label: PropTypes.string,
 };
 
 export default EndDateField;
