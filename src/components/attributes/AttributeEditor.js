@@ -21,6 +21,7 @@ const AttributeEditor = ({
   path,
   data,
   onChange,
+  fields,
   renderValueField,
   getDisplayText,
   attributeKey,
@@ -96,6 +97,7 @@ const AttributeEditor = ({
       onChange={(newValue) => handleChange(index, newValue)}
       onInsertBefore={() => handleInsertBefore(index)}
       onInsertAfter={() => handleInsertAfter(index)}
+      fields={fields}
       renderValueField={renderValueField}
       getDisplayText={getDisplayText}
     />
@@ -126,7 +128,11 @@ AttributeEditor.propTypes = {
   /** Fieldset legend displayed above the values */
   attributeLabel: PropTypes.string,
 
-  /** Label of value text field */
+  /**
+   * Label of the value text field.
+   *
+   * @deprecated use fields prop instead
+   */
   valueLabel: PropTypes.string,
 
   /** The path in form values where to look for validation schema and errors */
@@ -140,7 +146,7 @@ AttributeEditor.propTypes = {
    * Called when the data changes.
    *
    * The first argument of the function contains the modified data.
-   * */
+   */
   onChange: PropTypes.func.isRequired,
 
   /**
@@ -148,8 +154,13 @@ AttributeEditor.propTypes = {
    *
    * The first argument of this function contains default props that should be
    * passed to TextField
+   *
+   * @deprecated use fields prop instead
    */
   renderValueField: PropTypes.func,
+
+  /** Allows customizing how the row is rendered. */
+  fields: AttributeEditorRow.propTypes.fields,
 
   /**
    * Specifies how the value should be displayed in view mode and a11y

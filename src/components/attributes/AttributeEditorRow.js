@@ -25,6 +25,7 @@ const AttributeEditorRow = ({
   onChange,
   onInsertBefore,
   onInsertAfter,
+  fields,
   renderValueField,
   getDisplayText,
 }) => {
@@ -71,25 +72,72 @@ const AttributeEditorRow = ({
       />
     );
   } else {
-    renderedRow = (
-      <>
-        <Grid xs={12} sm={12} md={6}>
-          <ValueField
-            label={valueLabel}
-            path={path}
-            value={value}
-            onChange={onChange}
-            renderValueField={renderValueField}
-          />
+    const defaultFields = [
+      {
+        name: 'value',
+        label: valueLabel,
+        gridProps: { xs: 12, sm: 12, md: 6 },
+        render: (props) => (
+          <ValueField {...props} renderValueField={renderValueField} />
+        ),
+      },
+      {
+        name: 'startDate',
+        gridProps: { xs: 12, sm: 6, md: 3 },
+        render: (props) => <StartDateField {...props} />,
+      },
+      {
+        name: 'endDate',
+        gridProps: { xs: 12, sm: 6, md: 3 },
+        render: (props) => <EndDateField {...props} />,
+      },
+    ];
+
+    const getDefaultFieldByName = (name) =>
+      defaultFields.find((f) => f.name === name);
+
+    const getFieldConfig = (field) => {
+      if (typeof field === 'string') {
+        const defaultField = getDefaultFieldByName(field);
+
+        if (!defaultField) {
+          throw new Error(`Unknown field name '${name}'`);
+        }
+
+        return defaultField;
+      } else if (field.name) {
+        return { ...getDefaultFieldByName(field.name), ...field };
+      } else {
+        return field;
+      }
+    };
+
+    const renderField = (field, index) => {
+      if (!field.name) {
+        throw new Error(`Field ${index} must have a name`);
+      }
+
+      if (typeof field.render !== 'function') {
+        throw new Error(`Field ${field.name} must have a render function`);
+      }
+
+      const props = {
+        label: field.label,
+        path,
+        value,
+        onChange,
+      };
+
+      return (
+        <Grid key={field.name} {...field.gridProps}>
+          {field.render(props)}
         </Grid>
-        <Grid xs={12} sm={6} md={3}>
-          <StartDateField path={path} value={value} onChange={onChange} />
-        </Grid>
-        <Grid xs={12} sm={6} md={3}>
-          <EndDateField path={path} value={value} onChange={onChange} />
-        </Grid>
-      </>
-    );
+      );
+    };
+
+    renderedRow = (fields || defaultFields)
+      .map(getFieldConfig)
+      .map(renderField);
 
     renderedActions = (
       <AttributeEditorRowActions
@@ -119,7 +167,13 @@ const AttributeEditorRow = ({
     >
       <Stack direction="row" spacing={1}>
         <Grow in appear={value.isNew || touched} key={value.deleted}>
-          <Grid flex="auto" container xs={11} rowSpacing={2} columnSpacing={2}>
+          <Grid
+            flex="auto"
+            container
+            xs="auto"
+            rowSpacing={2}
+            columnSpacing={2}
+          >
             {renderedRow}
           </Grid>
         </Grow>
@@ -130,7 +184,11 @@ const AttributeEditorRow = ({
 };
 
 AttributeEditorRow.propTypes = {
-  /** Label of the value text field */
+  /**
+   * Label of the value text field.
+   *
+   * @deprecated use fields prop instead
+   */
   valueLabel: PropTypes.string,
 
   /** The path in form values where to look for validation schema and errors */
@@ -166,11 +224,26 @@ AttributeEditorRow.propTypes = {
   /** Called when 'insert row after' action is clicked */
   onInsertAfter: PropTypes.func.isRequired,
 
+  /** Allows customizing how the row is rendered. */
+  fields: PropTypes.arrayOf(
+    PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        label: PropTypes.string,
+        gridProps: PropTypes.object,
+        render: PropTypes.func,
+      }),
+    ])
+  ),
+
   /**
    * Allows customizing how the value field is rendered.
    *
    * The first argument of this function contains default props that should be
    * passed to TextField
+   *
+   * @deprecated use fields prop instead
    */
   renderValueField: PropTypes.func,
 

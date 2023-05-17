@@ -1,15 +1,21 @@
+/* eslint-disable max-lines */
 import React, { useState } from 'react';
 import AttributeEditor from '../../../components/attributes/AttributeEditor';
 import MenuItem from '@mui/material/MenuItem';
-import TextField from '@mui/material/TextField';
+import TextField from '../../../components/inputs/TextField';
 import { within, userEvent, waitFor } from '@storybook/testing-library';
 import { object, array, string } from 'yup';
 import { expect } from '@storybook/jest';
 import { FormContextProvider } from '../../../contexts/FormContext';
 import useForm from '../../../hooks/useForm';
 import { toDate } from '../../../utils/dateUtils';
-import '../../../utils/validations';
-import { waitForAnimations } from '../../storyUtils'; // Register custom validators
+import '../../../utils/validations'; // Register custom validators
+import { waitForAnimations } from '../../storyUtils';
+import ValueField from '../../../components/attributes/ValueField';
+import Checkbox from '@mui/material/Checkbox';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import { getErrors, getMax, isRequired } from '../../../utils/validationUtils';
+import HelperText from '../../../components/inputs/HelperText';
 
 // Use a fixed date to ensure that tests always have a consistent result
 const now = new Date('2023-03-22T14:28:00+0200');
@@ -151,25 +157,6 @@ export const Overlapping = {
 
     // Wait for animations before a11y tests
     await new Promise((resolve) => setTimeout(resolve, 200));
-  },
-};
-
-export const ValueRequired = {
-  ...Default,
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-
-    await userEvent.clear(canvas.getAllByRole('textbox')[0]);
-  },
-};
-
-export const InvalidDate = {
-  ...Default,
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-
-    await userEvent.clear(canvas.getAllByRole('textbox')[1]);
-    await userEvent.type(canvas.getAllByRole('textbox')[1], '1.1.');
   },
 };
 
@@ -334,6 +321,15 @@ export const DropdownEditor = {
       />
     );
   },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement.parentElement);
+
+    await userEvent.click(canvas.getByText('praesent dictum'));
+
+    await waitFor(() => {
+      expect(canvas.getByRole('listbox')).toBeVisible();
+    });
+  },
 };
 
 export const DeletedRowDisplayText = {
@@ -354,5 +350,198 @@ export const DeletedRowDisplayText = {
         )
       ).toBeInTheDocument();
     });
+  },
+};
+
+export const CustomFields = {
+  ...Default,
+  args: {
+    ...Default.args,
+    attributeLabel: 'Attribute with custom fields',
+    data: [
+      {
+        id: 1001,
+        value: 'value3',
+        additionalValue: 'ipsum',
+        startDate: '2023-01-01',
+        checked: false,
+        isNew: false,
+        deleted: false,
+      },
+      {
+        id: 1002,
+        value: 'value2',
+        additionalValue: '',
+        startDate: '2022-01-01',
+        checked: true,
+        isNew: false,
+        deleted: false,
+      },
+      {
+        id: 1003,
+        value: 'value1',
+        additionalValue: '',
+        startDate: null,
+        checked: false,
+        isNew: false,
+        deleted: false,
+      },
+    ],
+  },
+  decorators: [
+    (Story) => {
+      const validationSchema = object({
+        data: array().of(
+          object({
+            value: string().min(3).max(32).required(),
+            additionalValue: string().max(11).required(),
+            startDate: string().date().required().minDate(toDate('1600-01-01')),
+            endDate: string().date().nullable(),
+          })
+        ),
+      });
+
+      return (
+        <FormContextProvider
+          validationSchema={validationSchema}
+          onSubmit={async () => {}}
+        >
+          <Story />
+        </FormContextProvider>
+      );
+    },
+  ],
+  render: (args) => {
+    const [data, setData] = useState(args.data);
+    const { setValues, errors, validationSchema } = useForm();
+
+    const handleChange = (newData) => {
+      setData(newData);
+      setValues && setValues({ data: newData });
+      args.onChange && args.onChange(newData);
+    };
+
+    const fields3 = [
+      {
+        name: 'value',
+        label: 'Custom label',
+        gridProps: { xs: 12, sm: 3, md: 4 },
+        render: (props) => <ValueField {...props} />,
+      },
+      {
+        name: 'additionalValue',
+        gridProps: { xs: 12, sm: 3, md: 3 },
+        render: ({ path, value, onChange }) => {
+          const fieldPath = `${path}.additionalValue`;
+          const additionalValueErrors = getErrors(errors, fieldPath);
+
+          return (
+            <TextField
+              fullWidth
+              required={isRequired(validationSchema, fieldPath)}
+              label="Additional value"
+              value={value.additionalValue || ''}
+              error={additionalValueErrors.length > 0}
+              helperText={<HelperText errors={additionalValueErrors} />}
+              inputProps={{ maxLength: getMax(validationSchema, fieldPath) }}
+              onChange={(event) =>
+                onChange({
+                  ...value,
+                  additionalValue: event.target.value,
+                })
+              }
+            />
+          );
+        },
+      },
+      {
+        name: 'startDate',
+        gridProps: { xs: 12, sm: 3, md: 3 },
+      },
+      {
+        name: 'checked',
+        gridProps: { xs: 12, sm: 3, md: 2 },
+        render: ({ value, onChange }) => (
+          <FormControlLabel
+            label="Checkbox"
+            control={
+              <Checkbox
+                checked={value.checked}
+                onChange={(event) =>
+                  onChange({
+                    ...value,
+                    checked: event.target.checked,
+                  })
+                }
+              />
+            }
+            sx={{ mt: { xs: -2, sm: 1 } }}
+          />
+        ),
+      },
+      {
+        name: 'additionalText',
+        gridProps: { xs: 12 },
+        render: ({ value }) => {
+          return (
+            value.id === 1002 && (
+              <p>
+                Additional content below <code>{value.value}</code>. Nunc
+                ultrices risus eget felis venenatis facilisis. Class aptent
+                taciti sociosqu ad litora torquent per conubia nostra, per
+                inceptos himenaeos.
+              </p>
+            )
+          );
+        },
+      },
+    ];
+
+    return (
+      <AttributeEditor
+        {...args}
+        fields={fields3}
+        data={data}
+        onChange={handleChange}
+      />
+    );
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement.parentElement);
+
+    expect(canvas.getAllByLabelText(/Custom label/)).toHaveLength(3);
+
+    // Initial value
+    expect(canvas.getAllByLabelText(/Additional value/)[0]).toHaveValue(
+      'ipsum'
+    );
+
+    // Initially empty
+    expect(canvas.getAllByLabelText(/Additional value/)[1]).toHaveValue('');
+    await userEvent.type(
+      canvas.getAllByLabelText(/Additional value/)[1],
+      'hipsun ipsum',
+      { delay: 100 }
+    );
+    // Max length 11
+    expect(canvas.getAllByLabelText(/Additional value/)[1]).toHaveValue(
+      'hipsun ipsu'
+    );
+
+    // Initially unchecked
+    expect(canvas.getAllByLabelText('Checkbox')[0]).not.toBeChecked();
+    await userEvent.click(canvas.getAllByLabelText('Checkbox')[0]);
+    expect(canvas.getAllByLabelText('Checkbox')[0]).toBeChecked();
+
+    // Initially checked
+    expect(canvas.getAllByLabelText('Checkbox')[1]).toBeChecked();
+    expect(canvas.getByText(/Additional content below/)).toBeVisible();
+
+    expect(
+      canvas.getAllByLabelText(/Additional value/)[2]
+    ).toHaveAccessibleDescription('Pakollinen tieto');
+    expect(
+      canvas.getAllByLabelText(/Voimassaolo alkaa/)[2]
+    ).toHaveAccessibleDescription('Pakollinen tieto');
   },
 };
