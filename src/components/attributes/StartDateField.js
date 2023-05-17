@@ -16,7 +16,7 @@ import PropTypes from 'prop-types';
  *
  * A subcomponent of AttributeEditor.
  */
-const StartDateField = ({ path, value, onChange }) => {
+const StartDateField = ({ path, value, onChange, label }) => {
   const { t } = useTranslation();
   const { errors, validationSchema } = useForm();
 
@@ -33,7 +33,7 @@ const StartDateField = ({ path, value, onChange }) => {
   return (
     <DateField
       required={isRequired(validationSchema, startDatePath)}
-      label={t('attribute.validFrom')}
+      label={label || t('attribute.validFrom')}
       value={value.startDate}
       onChange={handleChange}
       minDate={getMin(validationSchema, startDatePath)}
@@ -72,6 +72,9 @@ StartDateField.propTypes = {
 
   /** Called when the value changes, taking the new value as the first argument */
   onChange: PropTypes.func.isRequired,
+
+  /** Label of the date field */
+  label: PropTypes.string,
 };
 
 export default StartDateField;
