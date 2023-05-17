@@ -308,7 +308,7 @@ const theme = createTheme({
           marginX: 8,
           marginY: 6,
         },
-        deleteIcon: { color: palette.grey[700] },
+        deleteIcon: { color: palette.grey[700], fontSize: 18 },
       },
     },
   },
