@@ -11,6 +11,8 @@ import AttributeEditorRowActions from './AttributeEditorRowActions';
 import ValueField from './ValueField';
 import StartDateField from './StartDateField';
 import EndDateField from './EndDateField';
+import useForm from '../../hooks/useForm';
+import get from 'lodash/get';
 
 /**
  * Edits a single attribute value with a start date and an end date.
@@ -20,7 +22,6 @@ import EndDateField from './EndDateField';
  */
 const AttributeEditorRow = ({
   valueLabel,
-  value,
   path,
   onChange,
   onInsertBefore,
@@ -31,6 +32,13 @@ const AttributeEditorRow = ({
 }) => {
   // True after user has interacted with the row
   const [touched, setTouched] = useState(false);
+  const { values, errors } = useForm();
+
+  const value = get(values, path);
+
+  if (!value) {
+    throw new Error(`Value at path ${path} not found`);
+  }
 
   const handleDelete = () => {
     setTouched(true);
@@ -125,6 +133,7 @@ const AttributeEditorRow = ({
         label: field.label,
         path,
         value,
+        errors,
         onChange,
       };
 
@@ -193,27 +202,6 @@ AttributeEditorRow.propTypes = {
 
   /** The path in form values where to look for validation schema and errors */
   path: PropTypes.string.isRequired,
-
-  /** Attribute value with start and end dates */
-  value: PropTypes.shape({
-    /** Must be unique on every row */
-    id: PropTypes.number.isRequired,
-
-    /** Attribute value */
-    value: PropTypes.string,
-
-    /** Validity start date, ISO 8601 date string without time component */
-    startDate: PropTypes.string,
-
-    /** Validity end date, ISO 8601 date string without time component */
-    endDate: PropTypes.string,
-
-    /* True if the row has not yet been saved to database */
-    isNew: PropTypes.bool,
-
-    /** Soft deletion marker so that it can be reverted */
-    deleted: PropTypes.bool,
-  }).isRequired,
 
   /** Called when the value changes, taking the new value as the first argument */
   onChange: PropTypes.func.isRequired,

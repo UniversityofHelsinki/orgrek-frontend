@@ -7,7 +7,6 @@ import { within, userEvent, waitFor } from '@storybook/testing-library';
 import { object, array, string } from 'yup';
 import { expect } from '@storybook/jest';
 import { FormContextProvider } from '../../../contexts/FormContext';
-import useForm from '../../../hooks/useForm';
 import { toDate } from '../../../utils/dateUtils';
 import '../../../utils/validations'; // Register custom validators
 import { waitForAnimations } from '../../storyUtils';
@@ -65,16 +64,14 @@ export const Default = {
     ],
   },
   render: (args) => {
-    const [data, setData] = useState(args.data);
-    const { setValues } = useForm();
-
-    const handleChange = (newData) => {
-      setData(newData);
-      setValues && setValues({ data: newData });
-      args.onChange && args.onChange(newData);
-    };
-
-    return <AttributeEditor {...args} data={data} onChange={handleChange} />;
+    return (
+      <FormContextProvider
+        initialValues={{ data: args.data }}
+        onSubmit={async () => {}}
+      >
+        <AttributeEditor {...args} />
+      </FormContextProvider>
+    );
   },
 };
 
@@ -162,37 +159,39 @@ export const Overlapping = {
 
 export const ValidationErrors = {
   ...Default,
-  decorators: [
-    (Story) => {
-      const validate = (values) => {
-        const errors = {};
+  render: (args) => {
+    const validate = (values) => {
+      const errors = {};
 
-        // Simple example to test path including index
-        values.data.forEach((item, index) => {
-          const value = item.value || '';
+      // Simple example to test path including index
+      values.data.forEach((item, index) => {
+        const value = item.value || '';
 
-          if (value.length < 3) {
-            errors[`data[${index}].value`] = ['Minimipituus 3 merkkiä'];
-          }
-        });
+        if (value.length < 3) {
+          errors[`data[${index}].value`] = ['Minimipituus 3 merkkiä'];
+        }
+      });
 
-        // Some hard-coded errors just for an example
-        errors['data[0].startDate'] = [
-          'Päivä voi olla aikaisintaan 3.1.2023',
-          'Päivämäärä vinksin vonksin tai ainakin heikun keikun',
-        ];
-        errors['data[1].endDate'] = ['Valitse jokin muu päivä'];
+      // Some hard-coded errors just for an example
+      errors['data[0].startDate'] = [
+        'Päivä voi olla aikaisintaan 3.1.2023',
+        'Päivämäärä vinksin vonksin tai ainakin heikun keikun',
+      ];
+      errors['data[1].endDate'] = ['Valitse jokin muu päivä'];
 
-        return errors;
-      };
+      return errors;
+    };
 
-      return (
-        <FormContextProvider validate={validate} onSubmit={async () => {}}>
-          <Story />
-        </FormContextProvider>
-      );
-    },
-  ],
+    return (
+      <FormContextProvider
+        initialValues={{ data: args.data }}
+        validate={validate}
+        onSubmit={async () => {}}
+      >
+        <AttributeEditor {...args} />
+      </FormContextProvider>
+    );
+  },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
@@ -202,28 +201,27 @@ export const ValidationErrors = {
 
 export const ValidationSchema = {
   ...Default,
-  decorators: [
-    (Story) => {
-      const validationSchema = object({
-        data: array().of(
-          object({
-            value: string().min(3).max(32).required(),
-            startDate: string().date().required().minDate(toDate('1600-01-01')),
-            endDate: string().date().nullable(),
-          })
-        ),
-      });
+  render: (args) => {
+    const validationSchema = object({
+      data: array().of(
+        object({
+          value: string().min(3).max(32).required(),
+          startDate: string().date().required().minDate(toDate('1600-01-01')),
+          endDate: string().date().nullable(),
+        })
+      ),
+    });
 
-      return (
-        <FormContextProvider
-          validationSchema={validationSchema}
-          onSubmit={async () => {}}
-        >
-          <Story />
-        </FormContextProvider>
-      );
-    },
-  ],
+    return (
+      <FormContextProvider
+        initialValues={{ data: args.data }}
+        validationSchema={validationSchema}
+        onSubmit={async () => {}}
+      >
+        <AttributeEditor {...args} />
+      </FormContextProvider>
+    );
+  },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
@@ -285,13 +283,6 @@ export const DropdownEditor = {
     },
   },
   render: (args) => {
-    const [data, setData] = useState(args.data);
-
-    const handleChange = (newData) => {
-      setData(newData);
-      args.onChange && args.onChange(newData);
-    };
-
     const options = [
       { value: 'value1', label: 'praesent dictum' },
       { value: 'value2', label: 'interdum lectus' },
@@ -312,13 +303,16 @@ export const DropdownEditor = {
       options.find((option) => option.value === value.value)?.label;
 
     return (
-      <AttributeEditor
-        {...args}
-        data={data}
-        onChange={handleChange}
-        renderValueField={renderValueField}
-        getDisplayText={getDisplayText}
-      />
+      <FormContextProvider
+        initialValues={{ data: args.data }}
+        onSubmit={async () => {}}
+      >
+        <AttributeEditor
+          {...args}
+          renderValueField={renderValueField}
+          getDisplayText={getDisplayText}
+        />
+      </FormContextProvider>
     );
   },
   play: async ({ canvasElement }) => {
@@ -388,40 +382,19 @@ export const CustomFields = {
       },
     ],
   },
-  decorators: [
-    (Story) => {
-      const validationSchema = object({
-        data: array().of(
-          object({
-            value: string().min(3).max(32).required(),
-            additionalValue: string().max(11).required(),
-            startDate: string().date().required().minDate(toDate('1600-01-01')),
-            endDate: string().date().nullable(),
-          })
-        ),
-      });
-
-      return (
-        <FormContextProvider
-          validationSchema={validationSchema}
-          onSubmit={async () => {}}
-        >
-          <Story />
-        </FormContextProvider>
-      );
-    },
-  ],
   render: (args) => {
-    const [data, setData] = useState(args.data);
-    const { setValues, errors, validationSchema } = useForm();
+    const validationSchema = object({
+      data: array().of(
+        object({
+          value: string().min(3).max(32).required(),
+          additionalValue: string().max(11).required(),
+          startDate: string().date().required().minDate(toDate('1600-01-01')),
+          endDate: string().date().nullable(),
+        })
+      ),
+    });
 
-    const handleChange = (newData) => {
-      setData(newData);
-      setValues && setValues({ data: newData });
-      args.onChange && args.onChange(newData);
-    };
-
-    const fields3 = [
+    const fields = [
       {
         name: 'value',
         label: 'Custom label',
@@ -431,7 +404,7 @@ export const CustomFields = {
       {
         name: 'additionalValue',
         gridProps: { xs: 12, sm: 3, md: 3 },
-        render: ({ path, value, onChange }) => {
+        render: ({ path, value, onChange, errors }) => {
           const fieldPath = `${path}.additionalValue`;
           const additionalValueErrors = getErrors(errors, fieldPath);
 
@@ -498,12 +471,13 @@ export const CustomFields = {
     ];
 
     return (
-      <AttributeEditor
-        {...args}
-        fields={fields3}
-        data={data}
-        onChange={handleChange}
-      />
+      <FormContextProvider
+        initialValues={{ data: args.data }}
+        validationSchema={validationSchema}
+        onSubmit={async () => {}}
+      >
+        <AttributeEditor {...args} fields={fields} />
+      </FormContextProvider>
     );
   },
   play: async ({ canvasElement }) => {
