@@ -1,5 +1,5 @@
 /* eslint-disable max-lines */
-import React, { useState } from 'react';
+import React from 'react';
 import AttributeEditor from '../../../components/attributes/AttributeEditor';
 import MenuItem from '@mui/material/MenuItem';
 import TextField from '../../../components/inputs/TextField';
@@ -13,8 +13,9 @@ import { waitForAnimations } from '../../storyUtils';
 import ValueField from '../../../components/attributes/ValueField';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import { getErrors, getMax, isRequired } from '../../../utils/validationUtils';
 import HelperText from '../../../components/inputs/HelperText';
+import useTextField from '../../../hooks/useTextField';
+import useFormField from '../../../hooks/useFormField';
 
 // Use a fixed date to ensure that tests always have a consistent result
 const now = new Date('2023-03-22T14:28:00+0200');
@@ -273,6 +274,31 @@ export const DeletedRow = {
   },
 };
 
+const dropdownFieldOptions = [
+  { value: 'value1', label: 'praesent dictum' },
+  { value: 'value2', label: 'interdum lectus' },
+  { value: 'value3', label: 'pretium metus in pellentesque' },
+];
+
+const CustomDropdownField = ({ path, onChange }) => {
+  const { props, errors } = useFormField({ path, name: 'value', onChange });
+
+  return (
+    <TextField
+      {...props}
+      select
+      fullWidth
+      helperText={<HelperText errors={errors} />}
+    >
+      {dropdownFieldOptions.map((option) => (
+        <MenuItem key={option.value} value={option.value}>
+          {option.label}
+        </MenuItem>
+      ))}
+    </TextField>
+  );
+};
+
 export const DropdownEditor = {
   ...Default,
   parameters: {
@@ -283,24 +309,18 @@ export const DropdownEditor = {
     },
   },
   render: (args) => {
-    const options = [
-      { value: 'value1', label: 'praesent dictum' },
-      { value: 'value2', label: 'interdum lectus' },
-      { value: 'value3', label: 'pretium metus in pellentesque' },
+    const fields = [
+      {
+        name: 'value',
+        render: (props) => <CustomDropdownField {...props} />,
+      },
+      'startDate',
+      'endDate',
     ];
 
-    const renderValueField = (valueFieldProps) => (
-      <TextField select {...valueFieldProps}>
-        {options.map((option) => (
-          <MenuItem key={option.value} value={option.value}>
-            {option.label}
-          </MenuItem>
-        ))}
-      </TextField>
-    );
-
     const getDisplayText = (value) =>
-      options.find((option) => option.value === value.value)?.label;
+      dropdownFieldOptions.find((option) => option.value === value.value)
+        ?.label;
 
     return (
       <FormContextProvider
@@ -309,7 +329,7 @@ export const DropdownEditor = {
       >
         <AttributeEditor
           {...args}
-          renderValueField={renderValueField}
+          fields={fields}
           getDisplayText={getDisplayText}
         />
       </FormContextProvider>
@@ -345,6 +365,24 @@ export const DeletedRowDisplayText = {
       ).toBeInTheDocument();
     });
   },
+};
+
+// Example: How to create a custom field. Compare this to ValueField.
+const AdditionalValueField = ({ path, onChange }) => {
+  const { errors, props } = useTextField({
+    path,
+    name: 'additionalValue',
+    onChange,
+  });
+
+  const customProps = {
+    ...props,
+    label: 'Additional value',
+    helperText: <HelperText errors={errors} />,
+    fullWidth: true,
+  };
+
+  return <TextField {...customProps} />;
 };
 
 export const CustomFields = {
@@ -395,6 +433,7 @@ export const CustomFields = {
     });
 
     const fields = [
+      // Example: How to customize value field
       {
         name: 'value',
         label: 'Custom label',
@@ -402,36 +441,24 @@ export const CustomFields = {
         gridProps: { xs: 12, sm: 3, md: 4 },
         render: (props) => <ValueField {...props} />,
       },
+      // Example: How to add completely new custom field
       {
         name: 'additionalValue',
         gridProps: { xs: 12, sm: 3, md: 3 },
-        render: ({ path, value, onChange, errors }) => {
-          const fieldPath = `${path}.additionalValue`;
-          const additionalValueErrors = getErrors(errors, fieldPath);
-
-          return (
-            <TextField
-              fullWidth
-              required={isRequired(validationSchema, fieldPath)}
-              label="Additional value"
-              value={value.additionalValue || ''}
-              error={additionalValueErrors.length > 0}
-              helperText={<HelperText errors={additionalValueErrors} />}
-              inputProps={{ maxLength: getMax(validationSchema, fieldPath) }}
-              onChange={(event) =>
-                onChange({
-                  ...value,
-                  additionalValue: event.target.value,
-                })
-              }
-            />
-          );
+        render: (props) => {
+          // See AdditionalValueField component definition above
+          return <AdditionalValueField {...props} />;
         },
       },
+      // Example: How to customize only grid props of the existing fields
+      // This works for all the existing names 'value', 'startStart' and 'endDate'
       {
         name: 'startDate',
         gridProps: { xs: 12, sm: 3, md: 3 },
       },
+      // Example: How to add a custom checkbox field
+      // Simply, works also inline like in this example, however, a separate
+      // component like in the AdditionalValueField example above might be clearer.
       {
         name: 'checked',
         gridProps: { xs: 12, sm: 3, md: 2 },
@@ -453,10 +480,13 @@ export const CustomFields = {
           />
         ),
       },
+      // Example: How to add any arbitrary content
       {
         name: 'additionalText',
-        gridProps: { xs: 12 },
+        gridProps: { xs: 12 }, // width 12 always puts content on a new line
         render: ({ value }) => {
+          // Doing just something with value.id to demonstrate it is possible
+          // (id 1002 refers to the second row in the test data of this story)
           return (
             value.id === 1002 && (
               <p>
