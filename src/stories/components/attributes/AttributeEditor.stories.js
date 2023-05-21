@@ -398,6 +398,7 @@ export const CustomFields = {
       {
         name: 'value',
         label: 'Custom label',
+        helperText: 'Custom helper text',
         gridProps: { xs: 12, sm: 3, md: 4 },
         render: (props) => <ValueField {...props} />,
       },
@@ -484,6 +485,7 @@ export const CustomFields = {
     const canvas = within(canvasElement.parentElement);
 
     expect(canvas.getAllByLabelText(/Custom label/)).toHaveLength(3);
+    expect(canvas.getAllByText(/Custom helper text/)).toHaveLength(3);
 
     // Initial value
     expect(canvas.getAllByLabelText(/Additional value/)[0]).toHaveValue(

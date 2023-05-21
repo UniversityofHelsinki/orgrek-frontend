@@ -131,6 +131,7 @@ const AttributeEditorRow = ({
 
       const props = {
         label: field.label,
+        helperText: field.helperText,
         path,
         value,
         errors,
