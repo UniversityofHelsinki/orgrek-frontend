@@ -12,7 +12,7 @@ import useFormField from '../../hooks/useFormField';
  *
  * A subcomponent of AttributeEditor.
  */
-const StartDateField = ({ path, onChange, label, helperText }) => {
+const StartDateField = ({ path, value, onChange, label, helperText }) => {
   const { t } = useTranslation();
   const { validationSchema } = useForm();
   const { fieldPath, errors, props } = useFormField({
@@ -27,7 +27,7 @@ const StartDateField = ({ path, onChange, label, helperText }) => {
     helperText: <HelperText helperText={helperText} errors={errors} />,
     fullWidth: true,
     minDate: getMin(validationSchema, fieldPath),
-    maxDate: getMaxStartDate(validationSchema, fieldPath, props.value),
+    maxDate: getMaxStartDate(validationSchema, fieldPath, value),
   };
 
   return <DateField {...startDateFieldProps} />;
@@ -36,6 +36,9 @@ const StartDateField = ({ path, onChange, label, helperText }) => {
 StartDateField.propTypes = {
   /** The path in form values where to look for validation schema and errors */
   path: PropTypes.string.isRequired,
+
+  /** Object containing attribute value, start date and end date */
+  value: PropTypes.object.isRequired,
 
   /** Called when the value changes, taking the new value as the first argument */
   onChange: PropTypes.func.isRequired,

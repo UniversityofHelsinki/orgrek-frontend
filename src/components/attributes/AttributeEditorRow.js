@@ -220,6 +220,7 @@ AttributeEditorRow.propTypes = {
       PropTypes.shape({
         name: PropTypes.string.isRequired,
         label: PropTypes.string,
+        helperText: PropTypes.string,
         gridProps: PropTypes.object,
         render: PropTypes.func,
       }),

@@ -312,10 +312,6 @@
   "outside_units": "Ulkopuoliset yksiköt",
   "paa-aine": "Tutkinto-ohjelma / pääaine",
   "palveluyksikko": "Palveluyksikkö",
-  "parentInfo": {
-    "saveError": "Yläyksiköiden tallennus epäonnistui",
-    "saveSuccess": "Yläyksiköt tallennettu"
-  },
   "parent_abbr": "Yläyksikön lyhenne",
   "parent_unit": "Yläyksikkö",
   "parent_unit_id_header": "Yläyksikön tunnus",
@@ -472,7 +468,10 @@
   "upload_org_info": "Organisaatiotietojen päivitys",
   "upload_success": "Tiedot päivitetty onnistuneesti",
   "upperUnits": {
-    "empty": "Ei yläyksiköitä"
+    "empty": "Ei yläyksiköitä",
+    "hierarchy": "Hierarkia",
+    "saveError": "Yläyksiköiden tallennus epäonnistui",
+    "saveSuccess": "Yläyksiköt tallennettu"
   },
   "upper_units": "Yläyksiköt",
   "user_name": "Käyttäjätunnus",

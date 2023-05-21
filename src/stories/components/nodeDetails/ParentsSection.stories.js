@@ -173,7 +173,7 @@ export const Modified = {
 
     const canvas = within(context.canvasElement.parentElement);
 
-    await userEvent.click(canvas.getAllByLabelText(/Arvo/)[0]);
+    await userEvent.click(canvas.getAllByLabelText(/Hierarkia/)[0]);
     await userEvent.click(canvas.getAllByRole('option')[1]);
     await userEvent.type(
       canvas.getAllByLabelText('Voimassaolo päättyy')[0],

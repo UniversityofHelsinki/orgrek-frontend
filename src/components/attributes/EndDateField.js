@@ -37,6 +37,9 @@ EndDateField.propTypes = {
   /** The path in form values where to look for validation schema and errors */
   path: PropTypes.string.isRequired,
 
+  /** Object containing attribute value, start date and end date */
+  value: PropTypes.object.isRequired,
+
   /** Called when the value changes, taking the new value as the first argument */
   onChange: PropTypes.func.isRequired,
 

@@ -263,10 +263,6 @@
   "osasto": "Avdelning",
   "other_attributes": "Andra attributer",
   "palveluyksikko": "Serviceenheten",
-  "parentInfo": {
-    "saveError": "saveError",
-    "saveSuccess": "saveSuccess"
-  },
   "parent_unit_id_header": "parent unit id",
   "parent_unit_name_header": "parent unit name",
   "password": "Lösenord",
@@ -395,7 +391,10 @@
   "upload_org_info": "upload_org_info",
   "upload_success": "Tiedot päivitetty onnistuneesti",
   "upperUnits": {
-    "empty": "upperUnits.empty"
+    "empty": "upperUnits.empty",
+    "hierarchy": "hierarchy",
+    "saveError": "saveError",
+    "saveSuccess": "saveSuccess"
   },
   "upper_units": "upper_units",
   "user_name": "Användarnamn",

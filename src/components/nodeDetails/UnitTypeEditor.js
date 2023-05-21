@@ -2,18 +2,25 @@ import AttributeEditor from '../attributes/AttributeEditor';
 import Stack from '@mui/material/Stack';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import useForm from '../../hooks/useForm';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
 import useUnitTypeOptions from '../../hooks/useUnitTypeOptions';
+import useFormField from '../../hooks/useFormField';
+import HelperText from '../inputs/HelperText';
 
-const UnitTypeEditor = ({ keys }) => {
+const UnitTypeField = ({ path, onChange }) => {
   const { t } = useTranslation();
   const { unitTypeOptions } = useUnitTypeOptions();
-  const { values, setValues } = useForm();
+  const { props, errors } = useFormField({ path, name: 'value', onChange });
 
-  const renderValueField = (valueFieldProps) => (
-    <TextField select {...valueFieldProps}>
+  return (
+    <TextField
+      {...props}
+      select
+      fullWidth
+      label={t('value')}
+      helperText={<HelperText errors={errors} />}
+    >
       {unitTypeOptions.map((option) => (
         <MenuItem key={option.value} value={option.value}>
           {t(option.label)}
@@ -21,21 +28,32 @@ const UnitTypeEditor = ({ keys }) => {
       ))}
     </TextField>
   );
+};
+
+const UnitTypeEditor = ({ keys }) => {
+  const { t } = useTranslation();
+  const { unitTypeOptions } = useUnitTypeOptions();
 
   const getDisplayText = (value) =>
     t(unitTypeOptions.find((option) => option.value === value.value)?.label);
 
+  const fields = [
+    {
+      name: 'value',
+      render: (props) => <UnitTypeField {...props} />,
+    },
+    'startDate',
+    'endDate',
+  ];
+
   return (
     <Stack spacing={2}>
       <AttributeEditor
+        path="type"
         attributeLabel={t(keys[0])}
         attributeKey={keys[0]}
-        valueLabel={t('value')}
-        path="type"
-        data={values.type}
-        renderValueField={renderValueField}
-        onChange={(newData) => setValues({ ...values.type, type: newData })}
         getDisplayText={getDisplayText}
+        fields={fields}
       />
     </Stack>
   );

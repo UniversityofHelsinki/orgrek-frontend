@@ -7,6 +7,32 @@ import useForm from '../../hooks/useForm';
 import AttributeEditor from '../attributes/AttributeEditor';
 import { useParents } from '../../hooks/useParents';
 import useContentLanguage from '../../hooks/useContentLanguage';
+import useFormField from '../../hooks/useFormField';
+import HelperText from '../inputs/HelperText';
+
+const HierarchyField = ({ path, onChange }) => {
+  const { t } = useTranslation();
+  const { props, errors } = useFormField({ path, name: 'value', onChange });
+  const selectableHierarchies = useSelector((s) => {
+    return s.tree.selectedHierarchy.split(',');
+  });
+
+  return (
+    <TextField
+      {...props}
+      label={t('upperUnits.hierarchy')}
+      select
+      fullWidth
+      helperText={<HelperText errors={errors} />}
+    >
+      {selectableHierarchies.map((hierarchy) => (
+        <MenuItem key={hierarchy} value={hierarchy}>
+          {t(hierarchy)}
+        </MenuItem>
+      ))}
+    </TextField>
+  );
+};
 
 const ParentEditor = () => {
   const { t } = useTranslation();
@@ -17,41 +43,25 @@ const ParentEditor = () => {
     return data.find((parent) => `s${parent.uniqueId}` === id).fullName;
   };
 
-  const selectableHierarchies = useSelector((s) => {
-    return s.tree.selectedHierarchy.split(',');
-  });
-  const { values, setValues } = useForm();
-
-  const renderValueField = (valueFieldProps) => {
-    return (
-      <TextField select {...valueFieldProps}>
-        {selectableHierarchies.map((hierarchy) => (
-          <MenuItem key={hierarchy} value={hierarchy}>
-            {t(hierarchy)}
-          </MenuItem>
-        ))}
-      </TextField>
-    );
-  };
+  const { values } = useForm();
 
   const getDisplayText = (value) => t(value.value);
+
+  const fields = [
+    { name: 'value', render: (props) => <HierarchyField {...props} /> },
+    'startDate',
+    'endDate',
+  ];
 
   return Object.entries(values).map(([parentId, hierarchies], i) => (
     <AttributeEditor
       overlap
-      renderValueField={renderValueField}
       getDisplayText={getDisplayText}
       key={`${parentId}-${i}`}
-      path={`${parentId}`}
+      path={parentId}
       attributeLabel={getParentName(parentId)}
       attributeKey={parentId}
-      data={hierarchies}
-      onChange={(newData) => {
-        setValues({
-          ...values,
-          [parentId]: newData,
-        });
-      }}
+      fields={fields}
     />
   ));
 };

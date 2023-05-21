@@ -84,8 +84,8 @@ const ParentsSection = () => {
         validationSchema={validationSchema}
         initialValues={asFormValues}
         onSubmit={handleSubmit}
-        successMessage={t('parentInfo.saveSuccess')}
-        errorMessage={t('parentInfo.saveError')}
+        successMessage={t('upperUnits.saveSuccess')}
+        errorMessage={t('upperUnits.saveError')}
         authActions={authActions.parents}
       >
         <Placeholder empty={empty} placeholder={t('upperUnits.empty')}>

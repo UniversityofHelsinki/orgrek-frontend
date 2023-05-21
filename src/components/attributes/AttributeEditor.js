@@ -50,7 +50,7 @@ const AttributeEditor = ({
 
   const setFormValues = (newValues) => {
     setValues({ ...formValues, [path]: newValues });
-    onChange(newValues);
+    onChange && onChange(newValues);
   };
 
   const handleChange = (index, newValue) => {
