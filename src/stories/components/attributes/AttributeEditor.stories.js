@@ -6,7 +6,7 @@ import TextField from '../../../components/inputs/TextField';
 import { within, userEvent, waitFor } from '@storybook/testing-library';
 import { object, array, string } from 'yup';
 import { expect } from '@storybook/jest';
-import { FormContextProvider } from '../../../contexts/FormContext';
+import { Form } from '../../../contexts/FormContext';
 import { toDate } from '../../../utils/dateUtils';
 import '../../../utils/validations'; // Register custom validators
 import { waitForAnimations } from '../../storyUtils';
@@ -66,12 +66,9 @@ export const Default = {
   },
   render: (args) => {
     return (
-      <FormContextProvider
-        initialValues={{ data: args.data }}
-        onSubmit={async () => {}}
-      >
+      <Form initialValues={{ data: args.data }} onSubmit={async () => {}}>
         <AttributeEditor {...args} />
-      </FormContextProvider>
+      </Form>
     );
   },
 };
@@ -184,13 +181,13 @@ export const ValidationErrors = {
     };
 
     return (
-      <FormContextProvider
+      <Form
         initialValues={{ data: args.data }}
         validate={validate}
         onSubmit={async () => {}}
       >
         <AttributeEditor {...args} />
-      </FormContextProvider>
+      </Form>
     );
   },
   play: async ({ canvasElement }) => {
@@ -214,13 +211,13 @@ export const ValidationSchema = {
     });
 
     return (
-      <FormContextProvider
+      <Form
         initialValues={{ data: args.data }}
         validationSchema={validationSchema}
         onSubmit={async () => {}}
       >
         <AttributeEditor {...args} />
-      </FormContextProvider>
+      </Form>
     );
   },
   play: async ({ canvasElement }) => {
@@ -323,16 +320,13 @@ export const DropdownEditor = {
         ?.label;
 
     return (
-      <FormContextProvider
-        initialValues={{ data: args.data }}
-        onSubmit={async () => {}}
-      >
+      <Form initialValues={{ data: args.data }} onSubmit={async () => {}}>
         <AttributeEditor
           {...args}
           fields={fields}
           getDisplayText={getDisplayText}
         />
-      </FormContextProvider>
+      </Form>
     );
   },
   play: async ({ canvasElement }) => {
@@ -502,13 +496,13 @@ export const CustomFields = {
     ];
 
     return (
-      <FormContextProvider
+      <Form
         initialValues={{ data: args.data }}
         validationSchema={validationSchema}
         onSubmit={async () => {}}
       >
         <AttributeEditor {...args} fields={fields} />
-      </FormContextProvider>
+      </Form>
     );
   },
   play: async ({ canvasElement }) => {

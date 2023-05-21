@@ -5,7 +5,7 @@ import { validateAndMergeResults } from '../utils/validationUtils';
 
 const FormContext = createContext();
 
-export const FormContextProvider = ({
+export const Form = ({
   initialValues = {},
   onSubmit,
   validationSchema,
@@ -70,12 +70,21 @@ export const FormContextProvider = ({
     validationSchema,
   };
 
+  const handleFormSubmit = (event) => {
+    event.preventDefault();
+    submit();
+  };
+
   return (
-    <FormContext.Provider value={context}>{children}</FormContext.Provider>
+    <FormContext.Provider value={context}>
+      <form onSubmit={handleFormSubmit} onReset={reset}>
+        {children}
+      </form>
+    </FormContext.Provider>
   );
 };
 
-FormContextProvider.propTypes = {
+Form.propTypes = {
   /** Initial form values */
   initialValues: PropTypes.object,
 
