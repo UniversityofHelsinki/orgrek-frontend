@@ -17,10 +17,13 @@ import useFormField from './useFormField';
  */
 const useTextField = ({ path, name, onChange }) => {
   const { values, validationSchema } = useForm();
-  const { path: fieldPath, errors, props } = useFormField({ path, name });
+  const { fieldPath, errors, props } = useFormField({ path, name });
 
   const value = get(values, path, {});
 
+  // TODO: Consider calling setValues from useForm hook directly instead.
+  // Possibly could use `set` from lodash for that but we cannot mutate
+  // `values`, so would have to make a deep copy of values first.
   const handleChange = (event) => {
     const newValue = event.target.value;
 
