@@ -45,10 +45,11 @@ StartDateField.propTypes = {
 
   /**
    * Helper text displayed below the field.
-   *
-   * HelperText component can be used with this prop to display errors.
    */
-  helperText: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
+  helperText: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.arrayOf(PropTypes.string),
+  ]),
 };
 
 export default StartDateField;
