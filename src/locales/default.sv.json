@@ -393,6 +393,7 @@
   "upperUnits": {
     "empty": "upperUnits.empty",
     "hierarchy": "hierarchy",
+    "newUpperUnit": "newUpperUnit",
     "saveError": "saveError",
     "saveSuccess": "saveSuccess"
   },

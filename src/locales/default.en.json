@@ -426,6 +426,7 @@
   "upperUnits": {
     "empty": "No upper units",
     "hierarchy": "Hierarchy",
+    "newUpperUnit": "newUpperUnit",
     "saveError": "saveError",
     "saveSuccess": "saveSuccess"
   },

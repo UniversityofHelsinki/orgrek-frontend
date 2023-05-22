@@ -470,6 +470,7 @@
   "upperUnits": {
     "empty": "Ei yläyksiköitä",
     "hierarchy": "Hierarkia",
+    "newUpperUnit": "Uusi yläyksikkö",
     "saveError": "Yläyksiköiden tallennus epäonnistui",
     "saveSuccess": "Yläyksiköt tallennettu"
   },
