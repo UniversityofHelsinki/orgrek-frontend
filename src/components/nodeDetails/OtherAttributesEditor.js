@@ -10,20 +10,58 @@ const OtherAttributesEditor = () => {
   const { t } = useTranslation();
   const { values, setValues } = useForm();
 
-  const renderValueField = (attributes) => (valueFieldProps) => {
-    return attributes.map((option) =>
-      option.type === 'options' ? (
-        <TextField select {...valueFieldProps}>
-          {option.optionValues.map((option) => (
-            <MenuItem key={option} value={option}>
-              {t(option)}
-            </MenuItem>
-          ))}
-        </TextField>
-      ) : (
-        <TextField {...valueFieldProps} value={option.value} />
-      )
-    );
+  const renderValueField = (attributes) => {
+    const valueField = (valueFieldProps) => {
+      const type = attributes.some((a) => a.type === 'options')
+        ? 'options'
+        : 'text';
+      if (type === 'options') {
+        return (
+          <TextField select {...valueFieldProps}>
+            {attributes[0].optionValues.map(
+              (
+                option //only one attributerow is "used" = attributes[0]
+              ) => (
+                <MenuItem key={option} value={option}>
+                  {t(option)}
+                </MenuItem>
+              )
+            )}
+          </TextField>
+        );
+      }
+      return <TextField {...valueFieldProps} value={valueFieldProps.value} />;
+    };
+    return valueField; //returns function to be passed to AttributeEditor
+  };
+
+  /**
+   * Called when customCreateRow used
+   *
+   * @param key
+   * @param attributes
+   * @returns {function(): {deleted: boolean, endDate: null, id: number, isNew: boolean, type: string, value: null, key: *, startDate: null}}
+   */
+  const createRow = (key, attributes) => {
+    return () => {
+      const base = {
+        id: Math.floor(Math.random() * -1000000),
+        key: key,
+        value: null,
+        startDate: null,
+        endDate: null,
+        new: true,
+        deleted: false,
+      };
+      const rest = {
+        type: 'text',
+      };
+      if (attributes.some((a) => a.type === 'options')) {
+        rest.type = 'options';
+        rest.optionValues = ['ei', 'kyllä'];
+      }
+      return { ...base, ...rest };
+    };
   };
 
   return (
@@ -44,6 +82,7 @@ const OtherAttributesEditor = () => {
                 [key]: newData,
               })
             }
+            customCreateRow={createRow(key, attributes)}
           />
         )),
       ]}

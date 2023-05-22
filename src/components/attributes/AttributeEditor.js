@@ -26,17 +26,20 @@ const AttributeEditor = ({
   attributeKey,
   overlap,
   sx,
+  customCreateRow,
 }) => {
-  const createRow = () => ({
-    // Also new rows must have some unique id before they are stored to database
-    id: Math.floor(Math.random() * -1000000),
-    key: attributeKey,
-    value: null,
-    startDate: null,
-    endDate: null,
-    isNew: true,
-    deleted: false,
-  });
+  const createRow =
+    customCreateRow ||
+    (() => ({
+      // Also new rows must have some unique id before they are stored to database
+      id: Math.floor(Math.random() * -1000000),
+      key: attributeKey,
+      value: null,
+      startDate: null,
+      endDate: null,
+      isNew: true,
+      deleted: false,
+    }));
   const values = data;
 
   const handleChange = (index, newValue) => {
@@ -171,6 +174,10 @@ AttributeEditor.propTypes = {
    * when inserting a new row above or below.
    */
   overlap: PropTypes.bool,
+  /**
+   * Returns custom attribute object for new rows.
+   */
+  customCreateRow: PropTypes.func,
 };
 
 export default AttributeEditor;
