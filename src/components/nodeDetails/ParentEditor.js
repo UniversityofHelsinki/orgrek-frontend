@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import TextField from '@mui/material/TextField';
 import { MenuItem } from '@mui/material';
@@ -7,63 +7,88 @@ import useForm from '../../hooks/useForm';
 import AttributeEditor from '../attributes/AttributeEditor';
 import { useParents } from '../../hooks/useParents';
 import useContentLanguage from '../../hooks/useContentLanguage';
-import useFormField from '../../hooks/useFormField';
-import HelperText from '../inputs/HelperText';
+import NodeField from '../inputs/NodeField';
+import Stack from '@mui/material/Stack';
+import { Typography, Box } from '@mui/material';
 
-const HierarchyField = ({ path, onChange }) => {
+const ParentEditor = ({ parents, onParentChange }) => {
   const { t } = useTranslation();
-  const { props, errors } = useFormField({ path, name: 'value', onChange });
+  const [parentNames, setParentNames] = useState(parents);
+  const getParentName = (id) => {
+    return parentNames.find((parent) => `s${parent.uniqueId}` === id)?.fullName;
+  };
+
   const selectableHierarchies = useSelector((s) => {
     return s.tree.selectedHierarchy.split(',');
   });
+  const { values, setValues } = useForm();
 
-  return (
-    <TextField
-      {...props}
-      label={t('upperUnits.hierarchy')}
-      select
-      fullWidth
-      helperText={<HelperText errors={errors} />}
-    >
-      {selectableHierarchies.map((hierarchy) => (
-        <MenuItem key={hierarchy} value={hierarchy}>
-          {t(hierarchy)}
-        </MenuItem>
-      ))}
-    </TextField>
-  );
-};
-
-const ParentEditor = () => {
-  const { t } = useTranslation();
-  const { parents } = useParents();
-  const contentLanguage = useContentLanguage();
-  const data = parents[contentLanguage] || [];
-  const getParentName = (id) => {
-    return data.find((parent) => `s${parent.uniqueId}` === id).fullName;
+  const renderValueField = (valueFieldProps) => {
+    return (
+      <TextField select {...valueFieldProps}>
+        {selectableHierarchies.map((hierarchy) => (
+          <MenuItem key={hierarchy} value={hierarchy}>
+            {t(hierarchy)}
+          </MenuItem>
+        ))}
+      </TextField>
+    );
   };
-
-  const { values } = useForm();
 
   const getDisplayText = (value) => t(value.value);
 
-  const fields = [
-    { name: 'value', render: (props) => <HierarchyField {...props} /> },
-    'startDate',
-    'endDate',
-  ];
+  const nodeIsAlreadyParent = (node) => {
+    return values[`s${node.id}`];
+  };
 
-  return Object.entries(values).map(([parentId, hierarchies], i) => (
-    <AttributeEditor
-      overlap
-      getDisplayText={getDisplayText}
-      key={`${parentId}-${i}`}
-      path={parentId}
-      attributeLabel={getParentName(parentId)}
-      attributeKey={parentId}
-      fields={fields}
-    />
-  ));
+  const addParent = (event, node, reason) => {
+    if (!node || nodeIsAlreadyParent(node)) {
+      return;
+    }
+    const newValues = {
+      ...values,
+      [`s${node.id}`]: [],
+    };
+    setParentNames([
+      ...parentNames,
+      { uniqueId: node.id, fullName: node.name },
+    ]);
+    setValues(newValues);
+    onParentChange(newValues);
+  };
+
+  return (
+    <Stack>
+      <Box mb={2}>
+        <Typography component="p" variant="h6" mb={2}>
+          {t('new_upper_unit')}
+        </Typography>
+        <NodeField
+          style={{ width: '50%' }}
+          variant="search"
+          onChange={addParent}
+        />
+      </Box>
+      {Object.entries(values).map(([parentId, hierarchies], i) => (
+        <AttributeEditor
+          overlap
+          renderValueField={renderValueField}
+          getDisplayText={getDisplayText}
+          key={`${parentId}-${i}`}
+          path={`${parentId}`}
+          attributeLabel={getParentName(parentId) || parentId}
+          attributeKey={parentId}
+          data={hierarchies}
+          onChange={(newData) => {
+            setValues({
+              ...values,
+              [parentId]: newData,
+            });
+          }}
+        />
+      ))}
+    </Stack>
+  );
 };
 
 export default ParentEditor;

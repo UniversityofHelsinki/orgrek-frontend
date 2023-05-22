@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import EditableAccordion from '../EditableAccordion';
 import { useTranslation } from 'react-i18next';
 import HierarchyTable from '../attributes/HierarchyTable';
@@ -13,46 +13,47 @@ import { useParents } from '../../hooks/useParents';
 import useFilterParentsByDate from '../../hooks/useFilterParentsByDate';
 import { defaultSchemaForAttributes } from '../../utils/validations';
 
-const ParentsSection = () => {
-  const { t } = useTranslation();
-  const { parents, isFetching } = useParents();
-  const [saveParents] = useSaveParentsMutation();
-  const currentNodeId = useNodeId();
-  const contentLanguage = useContentLanguage();
+const asAttribute = (nodeId, uniqueId) => (hierarchy) => ({
+  id: hierarchy.edgeId,
+  key: uniqueId,
+  nodeId: nodeId,
+  value: hierarchy.hierarchy,
+  startDate: hierarchy.startDate,
+  endDate: hierarchy.endDate,
+  isNew: Boolean(hierarchy.isNew),
+  deleted: Boolean(hierarchy.deleted),
+});
 
-  const data = parents[contentLanguage] || [];
-  const title = t('upper_units');
-  const filteredByDateParents = useFilterParentsByDate(data);
-  const empty = filteredByDateParents.length === 0;
-
-  if (isFetching) {
-    return <EditableAccordion title={title} loading />;
-  }
-
-  const asAttribute = (nodeId, uniqueId) => (hierarchy) => ({
-    id: hierarchy.edgeId,
-    key: uniqueId,
-    nodeId: nodeId,
-    value: hierarchy.hierarchy,
-    startDate: hierarchy.startDate,
-    endDate: hierarchy.endDate,
-    isNew: Boolean(hierarchy.isNew),
-    deleted: Boolean(hierarchy.deleted),
-  });
-
-  const asFormValues = data.reduce((a, c) => {
+const asFormValues = (parents) => {
+  return parents.reduce((a, c) => {
     // we add an arbitrary character as yup seems to crash (does not find the schema path) if the string could be cast to integer.
     a[`s${c.uniqueId}`] = c.hierarchies.map(
       asAttribute(c.id, `s${c.uniqueId}`)
     );
     return a;
   }, {});
+};
 
-  // Validates form values every time when the values change
-  // Submit button is disabled when validation fails
-  const validationSchema = defaultSchemaForAttributes(
-    Object.keys(asFormValues)
+const ParentsSection = () => {
+  const { t } = useTranslation();
+  const { parents: parentsByLanguage, isFetching } = useParents();
+  const [saveParents] = useSaveParentsMutation();
+  const currentNodeId = useNodeId();
+  const contentLanguage = useContentLanguage();
+
+  const existingParents = parentsByLanguage[contentLanguage] || [];
+  const title = t('upper_units');
+  const filteredByDateParents = useFilterParentsByDate(existingParents);
+  const empty = filteredByDateParents.length === 0;
+  const initialFormValues = asFormValues(existingParents);
+  const initialValidationSchema = defaultSchemaForAttributes(
+    Object.keys(initialFormValues)
   );
+  const [validationSchema, setValidationSchema] = useState();
+
+  if (isFetching) {
+    return <EditableAccordion title={title} loading />;
+  }
 
   const asEdge = (parent) => ({
     id: parent.id,
@@ -77,12 +78,21 @@ const ParentsSection = () => {
     return saveParents({ edges, id: currentNodeId }).unwrap();
   };
 
+  const handleParentChange = (parents) => {
+    setValidationSchema(defaultSchemaForAttributes(Object.keys(parents)));
+  };
+
   return (
     <EditableAccordion title={title} defaultExpanded={!empty}>
       <EditableContent
-        editorComponent={<ParentEditor />}
-        validationSchema={validationSchema}
-        initialValues={asFormValues}
+        editorComponent={
+          <ParentEditor
+            parents={existingParents}
+            onParentChange={handleParentChange}
+          />
+        }
+        validationSchema={validationSchema || initialValidationSchema}
+        initialValues={initialFormValues}
         onSubmit={handleSubmit}
         successMessage={t('upperUnits.saveSuccess')}
         errorMessage={t('upperUnits.saveError')}
