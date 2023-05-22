@@ -4,7 +4,7 @@ import AttributeEditor from '../../../components/attributes/AttributeEditor';
 import MenuItem from '@mui/material/MenuItem';
 import TextField from '../../../components/inputs/TextField';
 import { within, userEvent, waitFor } from '@storybook/testing-library';
-import { object, array, string } from 'yup';
+import { object, array, string, boolean } from 'yup';
 import { expect } from '@storybook/jest';
 import { Form } from '../../../contexts/FormContext';
 import { toDate } from '../../../utils/dateUtils';
@@ -64,9 +64,9 @@ export const Default = {
       },
     ],
   },
-  render: (args) => {
+  render: ({ data, onChange, ...args }) => {
     return (
-      <Form initialValues={{ data: args.data }} onSubmit={async () => {}}>
+      <Form initialValues={{ data }} onChange={onChange}>
         <AttributeEditor {...args} />
       </Form>
     );
@@ -157,7 +157,7 @@ export const Overlapping = {
 
 export const ValidationErrors = {
   ...Default,
-  render: (args) => {
+  render: ({ data, onChange, ...args }) => {
     const validate = (values) => {
       const errors = {};
 
@@ -181,11 +181,7 @@ export const ValidationErrors = {
     };
 
     return (
-      <Form
-        initialValues={{ data: args.data }}
-        validate={validate}
-        onSubmit={async () => {}}
-      >
+      <Form initialValues={{ data }} validate={validate} onChange={onChange}>
         <AttributeEditor {...args} />
       </Form>
     );
@@ -199,7 +195,7 @@ export const ValidationErrors = {
 
 export const ValidationSchema = {
   ...Default,
-  render: (args) => {
+  render: ({ data, onChange, ...args }) => {
     const validationSchema = object({
       data: array().of(
         object({
@@ -212,9 +208,9 @@ export const ValidationSchema = {
 
     return (
       <Form
-        initialValues={{ data: args.data }}
+        initialValues={{ data }}
         validationSchema={validationSchema}
-        onSubmit={async () => {}}
+        onChange={onChange}
       >
         <AttributeEditor {...args} />
       </Form>
@@ -305,7 +301,7 @@ export const DropdownEditor = {
       },
     },
   },
-  render: (args) => {
+  render: ({ data, onChange, ...args }) => {
     const fields = [
       {
         name: 'value',
@@ -320,7 +316,7 @@ export const DropdownEditor = {
         ?.label;
 
     return (
-      <Form initialValues={{ data: args.data }} onSubmit={async () => {}}>
+      <Form initialValues={{ data }} onChange={onChange}>
         <AttributeEditor
           {...args}
           fields={fields}
@@ -362,11 +358,10 @@ export const DeletedRowDisplayText = {
 };
 
 // Example: How to create a custom field. Compare this to ValueField.
-const AdditionalValueField = ({ path, onChange }) => {
+const AdditionalValueField = ({ path }) => {
   const { errors, props } = useTextField({
     path,
     name: 'additionalValue',
-    onChange,
   });
 
   const customProps = {
@@ -377,6 +372,23 @@ const AdditionalValueField = ({ path, onChange }) => {
   };
 
   return <TextField {...customProps} />;
+};
+
+const CustomCheckboxField = ({ path }) => {
+  const { value, setValue } = useFormField({ path, name: 'checked' });
+
+  return (
+    <FormControlLabel
+      label="Checkbox"
+      control={
+        <Checkbox
+          checked={value}
+          onChange={(event) => setValue(event.target.checked)}
+        />
+      }
+      sx={{ mt: { xs: -2, sm: 1 } }}
+    />
+  );
 };
 
 export const CustomFields = {
@@ -414,7 +426,7 @@ export const CustomFields = {
       },
     ],
   },
-  render: (args) => {
+  render: ({ data, onChange, ...args }) => {
     const validationSchema = object({
       data: array().of(
         object({
@@ -422,6 +434,7 @@ export const CustomFields = {
           additionalValue: string().max(11).required(),
           startDate: string().date().required().minDate(toDate('1600-01-01')),
           endDate: string().date().nullable(),
+          checked: boolean(),
         })
       ),
     });
@@ -451,28 +464,10 @@ export const CustomFields = {
         gridProps: { xs: 12, sm: 3, md: 3 },
       },
       // Example: How to add a custom checkbox field
-      // Simply, works also inline like in this example, however, a separate
-      // component like in the AdditionalValueField example above might be clearer.
       {
         name: 'checked',
         gridProps: { xs: 12, sm: 3, md: 2 },
-        render: ({ value, onChange }) => (
-          <FormControlLabel
-            label="Checkbox"
-            control={
-              <Checkbox
-                checked={value.checked}
-                onChange={(event) =>
-                  onChange({
-                    ...value,
-                    checked: event.target.checked,
-                  })
-                }
-              />
-            }
-            sx={{ mt: { xs: -2, sm: 1 } }}
-          />
-        ),
+        render: (props) => <CustomCheckboxField {...props} />,
       },
       // Example: How to add any arbitrary content
       {
@@ -497,9 +492,9 @@ export const CustomFields = {
 
     return (
       <Form
-        initialValues={{ data: args.data }}
+        initialValues={{ data }}
         validationSchema={validationSchema}
-        onSubmit={async () => {}}
+        onChange={onChange}
       >
         <AttributeEditor {...args} fields={fields} />
       </Form>

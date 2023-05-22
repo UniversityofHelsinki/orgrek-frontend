@@ -12,7 +12,6 @@ import ValueField from './ValueField';
 import StartDateField from './StartDateField';
 import EndDateField from './EndDateField';
 import useForm from '../../hooks/useForm';
-import get from 'lodash/get';
 
 /**
  * Edits a single attribute value with a start date and an end date.
@@ -23,7 +22,6 @@ import get from 'lodash/get';
 const AttributeEditorRow = ({
   valueLabel,
   path,
-  onChange,
   onInsertBefore,
   onInsertAfter,
   fields,
@@ -32,9 +30,9 @@ const AttributeEditorRow = ({
 }) => {
   // True after user has interacted with the row
   const [touched, setTouched] = useState(false);
-  const { values, errors } = useForm();
+  const { getValue, setValue, errors } = useForm();
 
-  const value = get(values, path);
+  const value = getValue(path);
 
   if (!value) {
     throw new Error(`Value at path ${path} not found`);
@@ -42,7 +40,7 @@ const AttributeEditorRow = ({
 
   const handleDelete = () => {
     setTouched(true);
-    onChange({
+    setValue(path, {
       ...value,
       deleted: true,
     });
@@ -50,7 +48,7 @@ const AttributeEditorRow = ({
 
   const handleUndoDelete = () => {
     setTouched(true);
-    onChange({
+    setValue(path, {
       ...value,
       deleted: false,
     });
@@ -135,7 +133,6 @@ const AttributeEditorRow = ({
         path,
         value,
         errors,
-        onChange,
       };
 
       return (
@@ -203,9 +200,6 @@ AttributeEditorRow.propTypes = {
 
   /** The path in form values where to look for validation schema and errors */
   path: PropTypes.string.isRequired,
-
-  /** Called when the value changes, taking the new value as the first argument */
-  onChange: PropTypes.func.isRequired,
 
   /** Called when 'insert row before' action is clicked */
   onInsertBefore: PropTypes.func.isRequired,

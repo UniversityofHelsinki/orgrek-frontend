@@ -9,7 +9,6 @@ import { addDays, formatISO } from 'date-fns';
 import Button from '../inputs/Button';
 import { t } from 'i18next';
 import useForm from '../../hooks/useForm';
-import get from 'lodash/get';
 
 /**
  * Edits single attribute having multiple values with different validity date ranges.
@@ -30,9 +29,9 @@ const AttributeEditor = ({
   overlap,
   sx,
 }) => {
-  const { values: formValues, setValues } = useForm();
+  const { getValue, setValue } = useForm();
 
-  const values = get(formValues, path, data);
+  const values = getValue(path) || data;
   if (!Array.isArray(values)) {
     throw new Error(`Form values at ${path} must be an array`);
   }
@@ -49,14 +48,8 @@ const AttributeEditor = ({
   });
 
   const setFormValues = (newValues) => {
-    setValues({ ...formValues, [path]: newValues });
+    setValue(path, newValues);
     onChange && onChange(newValues);
-  };
-
-  const handleChange = (index, newValue) => {
-    const newValues = [...values];
-    newValues[index] = newValue;
-    setFormValues(newValues);
   };
 
   const updateEndDate = (oldrow, date) => {
@@ -107,7 +100,6 @@ const AttributeEditor = ({
       valueLabel={valueLabel}
       value={value}
       path={`${path}[${index}]`}
-      onChange={(newValue) => handleChange(index, newValue)}
       onInsertBefore={() => handleInsertBefore(index)}
       onInsertAfter={() => handleInsertAfter(index)}
       fields={fields}
@@ -162,6 +154,8 @@ AttributeEditor.propTypes = {
    * Called when the data changes.
    *
    * The first argument of the function contains the modified data.
+   *
+   * @deprecated use useForm hook instead
    */
   onChange: PropTypes.func,
 

@@ -1,4 +1,3 @@
-import get from 'lodash/get';
 import { getMax } from '../utils/validationUtils';
 import useForm from './useForm';
 import useFormField from './useFormField';
@@ -11,35 +10,20 @@ import useFormField from './useFormField';
  * @param {string} path points to an object in the form values containing the field,
  * e.g. in AttributeEditor this path points to the row
  * @param {string} name refers to a field inside the object defined by the path
- * @param onChange gets called when the field value changes, receives the object
- * at path as the first argument, e.g. in AttributeEditor the whole row
  * @return field errors and props for the text field
  */
-const useTextField = ({ path, name, onChange }) => {
-  const { values, validationSchema } = useForm();
-  const { fieldPath, errors, props } = useFormField({ path, name });
+const useTextField = ({ path, name }) => {
+  const { validationSchema } = useForm();
+  const { fieldPath, errors, props, setValue } = useFormField({ path, name });
 
-  const value = get(values, path, {});
-
-  // TODO: Consider calling setValues from useForm hook directly instead.
-  // Possibly could use `set` from lodash for that but we cannot mutate
-  // `values`, so would have to make a deep copy of values first.
   const handleChange = (event) => {
-    const newValue = event.target.value;
-
-    onChange({
-      ...value,
-      [name]: newValue,
-    });
+    setValue(event.target.value);
   };
 
   const handleLeavingFocus = (event) => {
     const newValue = event.target.value;
     if (newValue.endsWith(' ') || newValue.startsWith(' ')) {
-      onChange({
-        ...value,
-        [name]: newValue.trim(),
-      });
+      setValue(newValue.trim());
     }
   };
 
