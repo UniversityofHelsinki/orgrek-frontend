@@ -14,6 +14,7 @@ export const api = createApi({
     'CodeAttributes',
     'NodeValidity',
     'Parents',
+    'NodeOtherAttributes',
   ],
   endpoints: (builder) => ({
     getTree: builder.query({
@@ -128,6 +129,18 @@ export const api = createApi({
         method: 'GET',
       }),
     }),
+    getNodeOtherAttributes: builder.query({
+      providesTags: (result, error, { nodeId }) => [
+        { type: 'NodeOtherAttributes', id: nodeId },
+      ],
+      query: ({ nodeId, selectedHierarchies }) => {
+        return {
+          url: `/node/${nodeId}/attributes/others/hierarchies/${selectedHierarchies}`,
+          method: 'GET',
+        };
+      },
+    }),
+
     getParents: builder.query({
       providesTags: (result, error, { nodeId }) => [
         { type: 'Parents', id: nodeId },
