@@ -3,43 +3,43 @@ import useForm from '../../hooks/useForm';
 import Grid from '@mui/material/Unstable_Grid2';
 import DateField from '../inputs/DateField';
 import {
-  getErrors,
   getMaxStartDate,
   getMin,
   getMinEndDate,
 } from '../../utils/validationUtils';
 import HelperText from '../inputs/HelperText';
 import { useTranslation } from 'react-i18next';
+import useFormField from '../../hooks/useFormField';
 
 const NodeValidityEditor = () => {
-  const { values, setValues, validationSchema, errors } = useForm();
+  const { values, validationSchema } = useForm();
   const { t } = useTranslation();
-  const startDateErrors = getErrors(errors, 'startDate');
-  const endDateErrors = getErrors(errors, 'endDate');
+  const { props: startDateProps, errors: startDateErrors } = useFormField({
+    name: 'startDate',
+  });
+  const { props: endDateProps, errors: endDateErrors } = useFormField({
+    name: 'endDate',
+  });
 
   return (
     <Grid container spacing={2} mt={1}>
       <Grid xs={12} sm={6} md={3}>
         <DateField
+          {...startDateProps}
+          fullWidth
           label={t('attribute.validFrom')}
+          helperText={<HelperText errors={startDateErrors} />}
           minDate={getMin(validationSchema, 'startDate')}
           maxDate={getMaxStartDate(validationSchema, 'startDate', values)}
-          fullWidth
-          error={startDateErrors.length > 0}
-          helperText={<HelperText errors={startDateErrors} />}
-          value={values.startDate}
-          onChange={(date) => setValues({ ...values, startDate: date })}
         />
       </Grid>
       <Grid xs={12} sm={6} md={3}>
         <DateField
-          label={t('attribute.validUntil')}
-          minDate={getMinEndDate(validationSchema, 'endDate', values)}
+          {...endDateProps}
           fullWidth
-          error={endDateErrors.length > 0}
+          label={t('attribute.validUntil')}
           helperText={<HelperText errors={endDateErrors} />}
-          value={values.endDate}
-          onChange={(date) => setValues({ ...values, endDate: date })}
+          minDate={getMinEndDate(validationSchema, 'endDate', values)}
         />
       </Grid>
     </Grid>
