@@ -16,10 +16,6 @@ const useTextField = ({ path, name }) => {
   const { validationSchema } = useForm();
   const { fieldPath, errors, props, setValue } = useFormField({ path, name });
 
-  const handleChange = (event) => {
-    setValue(event.target.value);
-  };
-
   const handleLeavingFocus = (event) => {
     const newValue = event.target.value;
     if (newValue.endsWith(' ') || newValue.startsWith(' ')) {
@@ -30,7 +26,6 @@ const useTextField = ({ path, name }) => {
   const textFieldProps = {
     value: props.value || '',
     inputProps: { maxLength: getMax(validationSchema, fieldPath) },
-    onChange: handleChange,
     onBlur: handleLeavingFocus,
   };
 

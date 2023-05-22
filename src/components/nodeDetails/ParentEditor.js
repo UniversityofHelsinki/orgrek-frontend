@@ -11,9 +11,9 @@ import { Typography, Box } from '@mui/material';
 import HelperText from '../inputs/HelperText';
 import useFormField from '../../hooks/useFormField';
 
-const HierarchyField = ({ path, onChange }) => {
+const HierarchyField = ({ path }) => {
   const { t } = useTranslation();
-  const { props, errors } = useFormField({ path, name: 'value', onChange });
+  const { props, errors } = useFormField({ path, name: 'value' });
   const selectableHierarchies = useSelector((s) => {
     return s.tree.selectedHierarchy.split(',');
   });
@@ -21,9 +21,9 @@ const HierarchyField = ({ path, onChange }) => {
   return (
     <TextField
       {...props}
-      label={t('upperUnits.hierarchy')}
       select
       fullWidth
+      label={t('upperUnits.hierarchy')}
       helperText={<HelperText errors={errors} />}
     >
       {selectableHierarchies.map((hierarchy) => (

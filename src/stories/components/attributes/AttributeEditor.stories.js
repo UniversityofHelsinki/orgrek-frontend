@@ -273,8 +273,8 @@ const dropdownFieldOptions = [
   { value: 'value3', label: 'pretium metus in pellentesque' },
 ];
 
-const CustomDropdownField = ({ path, onChange }) => {
-  const { props, errors } = useFormField({ path, name: 'value', onChange });
+const CustomDropdownField = ({ path }) => {
+  const { props, errors } = useFormField({ path, name: 'value' });
 
   return (
     <TextField

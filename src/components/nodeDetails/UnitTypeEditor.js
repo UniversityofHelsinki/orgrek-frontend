@@ -8,10 +8,10 @@ import useUnitTypeOptions from '../../hooks/useUnitTypeOptions';
 import useFormField from '../../hooks/useFormField';
 import HelperText from '../inputs/HelperText';
 
-const UnitTypeField = ({ path, onChange }) => {
+const UnitTypeField = ({ path }) => {
   const { t } = useTranslation();
   const { unitTypeOptions } = useUnitTypeOptions();
-  const { props, errors } = useFormField({ path, name: 'value', onChange });
+  const { props, errors } = useFormField({ path, name: 'value' });
 
   return (
     <TextField

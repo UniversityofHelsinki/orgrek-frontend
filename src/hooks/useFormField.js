@@ -1,6 +1,14 @@
 import useForm from './useForm';
 import { getErrors, isRequired } from '../utils/validationUtils';
 
+const isEvent = (value) =>
+  Boolean(
+    value &&
+      typeof value === 'object' &&
+      value.target &&
+      (value instanceof Event || value.nativeEvent)
+  );
+
 /**
  * Provides errors and common props for form fields.
  *
@@ -20,7 +28,11 @@ const useFormField = ({ path, name }) => {
   const fieldErrors = getErrors(errors, fieldPath);
 
   const setFieldValue = (newValue) => {
-    setValue(fieldPath, newValue);
+    if (isEvent(newValue)) {
+      setValue(fieldPath, newValue.target.value);
+    } else {
+      setValue(fieldPath, newValue);
+    }
   };
 
   const props = {
