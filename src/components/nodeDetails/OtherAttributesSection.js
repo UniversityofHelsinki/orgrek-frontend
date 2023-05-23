@@ -11,6 +11,7 @@ import { useOtherAttributes } from '../../hooks/useOtherAttributes';
 import useFilterAttributesByDate from '../../hooks/useFilterAttributesByDate';
 import { useNodeId } from '../../hooks/useNodeId';
 import { useSaveNodeOtherAttributesMutation } from '../../store';
+import { defaultSchemaForAttributes } from '../../utils/validations';
 
 const OtherAttributesSection = () => {
   const { t } = useTranslation();
@@ -29,6 +30,12 @@ const OtherAttributesSection = () => {
     return <EditableAccordion title={title} loading />;
   }
 
+  // Validates form values every time when the values change
+  // Submit button is disabled when validation fails
+  const validationSchema = defaultSchemaForAttributes(
+    Object.keys(initialValues)
+  );
+
   const asAttribute = (nodeId) => (otherAttr) => ({
     id: otherAttr.id,
     key: otherAttr.key,
@@ -36,7 +43,7 @@ const OtherAttributesSection = () => {
     value: otherAttr.value,
     startDate: otherAttr.startDate,
     endDate: otherAttr.endDate,
-    isNew: Boolean(otherAttr.new),
+    isNew: Boolean(otherAttr.isNew),
     deleted: Boolean(otherAttr.deleted),
   });
 
@@ -54,6 +61,7 @@ const OtherAttributesSection = () => {
       <EditableContent
         editorComponent={<OtherAttributesEditor />}
         initialValues={initialValues}
+        validationSchema={validationSchema}
         onSubmit={handleSubmit}
         successMessage={t('typeInfo.saveSuccess')}
         errorMessage={t('typeInfo.saveError')}

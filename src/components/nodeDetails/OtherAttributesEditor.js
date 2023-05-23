@@ -8,8 +8,8 @@ import MenuItem from '@mui/material/MenuItem';
 
 const OtherAttributesEditor = () => {
   const { t } = useTranslation();
-  const { values, setValues } = useForm();
-
+  const { values, setValues, valid, invalid, errors } = useForm();
+  //console.log('XXX ', valid, invalid, errors, values);
   const renderValueField = (attributes) => {
     const valueField = (valueFieldProps) => {
       const type = attributes.some((a) => a.type === 'options')
