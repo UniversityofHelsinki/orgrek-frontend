@@ -50,7 +50,7 @@ const OtherAttributesEditor = () => {
         value: null,
         startDate: null,
         endDate: null,
-        new: true,
+        isNew: true,
         deleted: false,
       };
       const rest = {
