@@ -27,7 +27,13 @@ const ReadOnlyCodeBox = ({ label, value }) => {
 
 const CodeAttributesEditor = ({ readOnlyFields }) => {
   const { t } = useTranslation();
-  const { values, setValues } = useForm();
+  const { values } = useForm();
+
+  const fields = [
+    { name: 'value', label: t('attribute_value') },
+    'startDate',
+    'endDate',
+  ];
 
   return (
     <Stack spacing={2}>
@@ -48,15 +54,8 @@ const CodeAttributesEditor = ({ readOnlyFields }) => {
               key={`${key}-${i}`}
               attributeLabel={t(key)}
               attributeKey={`${key}`}
-              valueLabel={t('attribute_value')}
+              fields={fields}
               path={key}
-              data={attributes}
-              onChange={(newData) =>
-                setValues({
-                  ...values,
-                  [key]: newData,
-                })
-              }
             />
           )),
       ]}

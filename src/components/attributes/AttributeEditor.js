@@ -8,6 +8,7 @@ import parseISO from 'date-fns/parseISO';
 import { addDays, formatISO } from 'date-fns';
 import Button from '../inputs/Button';
 import { t } from 'i18next';
+import useForm from '../../hooks/useForm';
 
 /**
  * Edits single attribute having multiple values with different validity date ranges.
@@ -21,6 +22,7 @@ const AttributeEditor = ({
   path,
   data,
   onChange,
+  fields,
   renderValueField,
   getDisplayText,
   attributeKey,
@@ -28,6 +30,13 @@ const AttributeEditor = ({
   sx,
   customCreateRow,
 }) => {
+  const { getValue, setValue } = useForm();
+
+  const values = getValue(path) || data;
+  if (!Array.isArray(values)) {
+    throw new Error(`Form values at ${path} must be an array`);
+  }
+
   const createRow =
     customCreateRow ||
     (() => ({
@@ -40,12 +49,10 @@ const AttributeEditor = ({
       isNew: true,
       deleted: false,
     }));
-  const values = data;
 
-  const handleChange = (index, newValue) => {
-    const newData = [...data];
-    newData[index] = newValue;
-    onChange(newData);
+  const setFormValues = (newValues) => {
+    setValue(path, newValues);
+    onChange && onChange(newValues);
   };
 
   const updateEndDate = (oldrow, date) => {
@@ -74,20 +81,20 @@ const AttributeEditor = ({
     let newRow = createRow();
     const oldRow = values[index];
     const endDate = updateDates(oldRow, newRow, 1);
-    const newData = data.length !== 0 ? [...data] : [{ ...oldRow }];
+    const newValues = values.length !== 0 ? [...values] : [{ ...oldRow }];
     if (endDate !== null) {
-      newData[index] = updateEndDate(newData[index], endDate);
+      newValues[index] = updateEndDate(newValues[index], endDate);
     }
-    newData.splice(index, 0, newRow);
-    onChange(newData);
+    newValues.splice(index, 0, newRow);
+    setFormValues(newValues);
   };
 
   const handleInsertAfter = (index) => {
     let newRow = createRow();
     const oldRow = values[index];
-    const newData = data.length !== 0 ? [...data] : [{ ...oldRow }];
-    newData.splice(index + 1, 0, newRow);
-    onChange(newData);
+    const newValues = values.length !== 0 ? [...values] : [{ ...oldRow }];
+    newValues.splice(index + 1, 0, newRow);
+    setFormValues(newValues);
   };
 
   const renderedRows = values.map((value, index) => (
@@ -96,16 +103,16 @@ const AttributeEditor = ({
       valueLabel={valueLabel}
       value={value}
       path={`${path}[${index}]`}
-      onChange={(newValue) => handleChange(index, newValue)}
       onInsertBefore={() => handleInsertBefore(index)}
       onInsertAfter={() => handleInsertAfter(index)}
+      fields={fields}
       renderValueField={renderValueField}
       getDisplayText={getDisplayText}
     />
   ));
 
   const addFirstRow = () => {
-    onChange([createRow()]);
+    setFormValues([createRow()]);
   };
 
   const addRowButton = (
@@ -129,30 +136,44 @@ AttributeEditor.propTypes = {
   /** Fieldset legend displayed above the values */
   attributeLabel: PropTypes.string,
 
-  /** Label of value text field */
+  /**
+   * Label of the value text field.
+   *
+   * @deprecated use fields prop instead
+   */
   valueLabel: PropTypes.string,
 
   /** The path in form values where to look for validation schema and errors */
   path: PropTypes.string.isRequired,
 
-  /** Array of attribute values and dates */
-  data: PropTypes.arrayOf(PropTypes.shape(AttributeEditorRow.propTypes.value))
-    .isRequired,
+  /**
+   * Array of attribute values and dates.
+   *
+   * @deprecated pass data through form context instead
+   */
+  data: PropTypes.arrayOf(PropTypes.shape(AttributeEditorRow.propTypes.value)),
 
   /**
    * Called when the data changes.
    *
    * The first argument of the function contains the modified data.
-   * */
-  onChange: PropTypes.func.isRequired,
+   *
+   * @deprecated use useForm hook instead
+   */
+  onChange: PropTypes.func,
 
   /**
    * Allows customizing how the value field is rendered.
    *
    * The first argument of this function contains default props that should be
    * passed to TextField
+   *
+   * @deprecated use fields prop instead
    */
   renderValueField: PropTypes.func,
+
+  /** Allows customizing how the row is rendered. */
+  fields: AttributeEditorRow.propTypes.fields,
 
   /**
    * Specifies how the value should be displayed in view mode and a11y

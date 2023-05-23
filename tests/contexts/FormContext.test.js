@@ -1,7 +1,7 @@
 import React from 'react';
 import { object, string } from 'yup';
 import { render, screen, waitFor } from '../testUtils';
-import { FormContextProvider } from '../../src/contexts/FormContext';
+import { Form } from '../../src/contexts/FormContext';
 import useForm from '../../src/hooks/useForm';
 
 const TestForm = () => {
@@ -41,9 +41,9 @@ const renderTestForm = (props) => {
   };
 
   return render(
-    <FormContextProvider {...defaultProps} {...props}>
+    <Form {...defaultProps} {...props}>
       <TestForm />
-    </FormContextProvider>
+    </Form>
   );
 };
 
