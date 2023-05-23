@@ -1,12 +1,11 @@
 import React, { useEffect } from 'react';
 import useEditMode from '../hooks/useEditMode';
-import Form from './Form';
 import Stack from '@mui/material/Stack';
 import Button from './inputs/Button';
 import ActionBar from './nodeDetails/ActionBar';
 import { useTranslation } from 'react-i18next';
 import useForm from '../hooks/useForm';
-import { FormContextProvider } from '../contexts/FormContext';
+import { Form } from '../contexts/FormContext';
 import PropTypes from 'prop-types';
 import Typography from '@mui/material/Typography';
 import { showNotification } from '../store';
@@ -18,7 +17,7 @@ import HelperText from './inputs/HelperText';
  * Renders form validation error message.
  *
  * Errors are rendered in this subcomponent because useForm hook cannot be used
- * directly in EditableContent, as it must be called inside FormContextProvider.
+ * directly in EditableContent, as it must be called inside form context.
  */
 const ValidationResult = () => {
   const { errors } = useForm();
@@ -48,7 +47,7 @@ const ValidationResult = () => {
  * Renders submit and cancel buttons.
  *
  * Buttons are rendered in this subcomponent because useForm hook cannot be used
- * directly in EditableContent, as it must be called inside FormContextProvider.
+ * directly in EditableContent, as it must be called inside form context.
  */
 const FormActions = () => {
   const { t } = useTranslation();
@@ -138,20 +137,18 @@ const EditableContent = ({
 
   if (editMode) {
     return (
-      <FormContextProvider
+      <Form
         initialValues={initialValues}
         validationSchema={validationSchema}
         validate={validate}
         onSubmit={handleSubmit}
       >
-        <Form>
-          <Stack spacing={2}>
-            {editorComponent}
-            <ValidationResult />
-            <FormActions />
-          </Stack>
-        </Form>
-      </FormContextProvider>
+        <Stack spacing={2}>
+          {editorComponent}
+          <ValidationResult />
+          <FormActions />
+        </Stack>
+      </Form>
     );
   }
 
