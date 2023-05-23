@@ -301,6 +301,16 @@ const theme = createTheme({
         maxWidth: 'xl',
       },
     },
+    MuiChip: {
+      styleOverrides: {
+        root: {
+          borderRadius: 0,
+          marginX: 8,
+          marginY: 6,
+        },
+        deleteIcon: { color: palette.grey[700], fontSize: 18 },
+      },
+    },
   },
   breakpoints: {
     values: {
