@@ -2,11 +2,14 @@ import React, { useState } from 'react';
 import { createContext } from 'react';
 import PropTypes from 'prop-types';
 import { validateAndMergeResults } from '../utils/validationUtils';
+import { withValue } from '../utils/withValue';
+import { get } from 'lodash';
 
 const FormContext = createContext();
 
-export const FormContextProvider = ({
+export const Form = ({
   initialValues = {},
+  onChange,
   onSubmit,
   validationSchema,
   validate,
@@ -20,6 +23,7 @@ export const FormContextProvider = ({
   const setValues = (newValues) => {
     setDirty(true);
     setValuesState(newValues);
+    onChange && onChange(newValues);
 
     const options = {
       abortEarly: false,
@@ -33,7 +37,19 @@ export const FormContextProvider = ({
     ).then((result) => setErrors(result));
   };
 
+  const getValue = (path) => {
+    return get(values, path);
+  };
+
+  const setValue = (path, newValue) => {
+    setValues(withValue(values, path, newValue));
+  };
+
   const submit = async () => {
+    if (!onSubmit) {
+      return;
+    }
+
     setSubmitting(true);
     const submitValues = validationSchema
       ? validationSchema.cast(values)
@@ -60,6 +76,8 @@ export const FormContextProvider = ({
   const context = {
     values,
     setValues,
+    getValue,
+    setValue,
     submit,
     reset,
     dirty,
@@ -70,17 +88,29 @@ export const FormContextProvider = ({
     validationSchema,
   };
 
+  const handleFormSubmit = (event) => {
+    event.preventDefault();
+    submit();
+  };
+
   return (
-    <FormContext.Provider value={context}>{children}</FormContext.Provider>
+    <FormContext.Provider value={context}>
+      <form onSubmit={handleFormSubmit} onReset={reset}>
+        {children}
+      </form>
+    </FormContext.Provider>
   );
 };
 
-FormContextProvider.propTypes = {
+Form.propTypes = {
   /** Initial form values */
   initialValues: PropTypes.object,
 
+  /** Called when form values change. Takes form values as the first arg. */
+  onChange: PropTypes.func,
+
   /** Called when the form is submitted. Takes form values as the first arg. */
-  onSubmit: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func,
 
   /**
    * Yup validation schema.

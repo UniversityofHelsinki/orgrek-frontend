@@ -3,75 +3,51 @@ import useForm from '../../hooks/useForm';
 import DateField from '../inputs/DateField';
 import HelperText from '../inputs/HelperText';
 import { useTranslation } from 'react-i18next';
-import {
-  getErrors,
-  getMaxStartDate,
-  getMin,
-  isRequired,
-} from '../../utils/validationUtils';
+import { getMaxStartDate, getMin } from '../../utils/validationUtils';
 import PropTypes from 'prop-types';
+import useFormField from '../../hooks/useFormField';
 
 /**
  * Renders a date field for editing attribute start date.
  *
  * A subcomponent of AttributeEditor.
  */
-const StartDateField = ({ path, value, onChange }) => {
+const StartDateField = ({ path, label, helperText }) => {
   const { t } = useTranslation();
-  const { errors, validationSchema } = useForm();
+  const { validationSchema, getValue } = useForm();
+  const { fieldPath, errors, props } = useFormField({
+    path,
+    name: 'startDate',
+  });
 
-  const startDatePath = `${path}.startDate`;
-  const startDateErrors = getErrors(errors, startDatePath);
+  const attributeValue = getValue(path);
 
-  const handleChange = (date) => {
-    onChange({
-      ...value,
-      startDate: date,
-    });
+  const startDateFieldProps = {
+    ...props,
+    label: label || t('attribute.validFrom'),
+    helperText: <HelperText helperText={helperText} errors={errors} />,
+    fullWidth: true,
+    minDate: getMin(validationSchema, fieldPath),
+    maxDate: getMaxStartDate(validationSchema, fieldPath, attributeValue),
   };
 
-  return (
-    <DateField
-      required={isRequired(validationSchema, startDatePath)}
-      label={t('attribute.validFrom')}
-      value={value.startDate}
-      onChange={handleChange}
-      minDate={getMin(validationSchema, startDatePath)}
-      maxDate={getMaxStartDate(validationSchema, startDatePath, value)}
-      fullWidth
-      error={startDateErrors.length > 0}
-      helperText={<HelperText errors={startDateErrors} />}
-    />
-  );
+  return <DateField {...startDateFieldProps} />;
 };
 
 StartDateField.propTypes = {
   /** The path in form values where to look for validation schema and errors */
   path: PropTypes.string.isRequired,
 
-  /** Attribute value with start and end dates */
-  value: PropTypes.shape({
-    /** Must be unique on every row */
-    id: PropTypes.number.isRequired,
+  /** Label of the date field */
+  label: PropTypes.string,
 
-    /** Attribute value */
-    value: PropTypes.any,
-
-    /** Validity start date, ISO 8601 date string without time component */
-    startDate: PropTypes.string,
-
-    /** Validity end date, ISO 8601 date string without time component */
-    endDate: PropTypes.string,
-
-    /* True if the row has not yet been saved to database */
-    isNew: PropTypes.bool,
-
-    /** Soft deletion marker so that it can be reverted */
-    deleted: PropTypes.bool,
-  }).isRequired,
-
-  /** Called when the value changes, taking the new value as the first argument */
-  onChange: PropTypes.func.isRequired,
+  /**
+   * Helper text displayed below the field.
+   */
+  helperText: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.arrayOf(PropTypes.string),
+  ]),
 };
 
 export default StartDateField;
