@@ -8,6 +8,7 @@ import AttributeEditor from '../attributes/AttributeEditor';
 import NodeField from '../inputs/NodeField';
 import Stack from '@mui/material/Stack';
 import { Typography, Box } from '@mui/material';
+import { useNodeId } from '../../hooks/useNodeId';
 import HelperText from '../inputs/HelperText';
 import useFormField from '../../hooks/useFormField';
 
@@ -37,11 +38,27 @@ const HierarchyField = ({ path }) => {
 
 const ParentEditor = ({ parents, onParentChange }) => {
   const { t } = useTranslation();
+  const currentNodeId = useNodeId();
   const [parentNames, setParentNames] = useState(parents);
-  const { values, setValues } = useForm();
-
   const getParentName = (id) => {
     return parentNames.find((parent) => `s${parent.uniqueId}` === id)?.fullName;
+  };
+
+  const selectableHierarchies = useSelector((s) => {
+    return s.tree.selectedHierarchy.split(',');
+  });
+  const { values, setValues } = useForm();
+
+  const renderValueField = (valueFieldProps) => {
+    return (
+      <TextField select {...valueFieldProps}>
+        {selectableHierarchies.map((hierarchy) => (
+          <MenuItem key={hierarchy} value={hierarchy}>
+            {t(hierarchy)}
+          </MenuItem>
+        ))}
+      </TextField>
+    );
   };
 
   const getDisplayText = (value) => t(value.value);
@@ -50,8 +67,12 @@ const ParentEditor = ({ parents, onParentChange }) => {
     return values[`s${node.id}`];
   };
 
-  const addParent = (event, node) => {
-    if (!node || nodeIsAlreadyParent(node)) {
+  const addParent = (event, node, reason) => {
+    if (
+      !node ||
+      nodeIsAlreadyParent(node) ||
+      String(node.id) === currentNodeId
+    ) {
       return;
     }
     const newValues = {
@@ -93,6 +114,13 @@ const ParentEditor = ({ parents, onParentChange }) => {
           attributeLabel={getParentName(parentId) || parentId}
           attributeKey={parentId}
           fields={fields}
+          data={hierarchies}
+          onChange={(newData) => {
+            setValues({
+              ...values,
+              [parentId]: newData,
+            });
+          }}
         />
       ))}
     </Stack>
