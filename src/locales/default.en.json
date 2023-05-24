@@ -287,10 +287,6 @@
   "other_attributes": "Other attributes",
   "paa-aine": "Training Programme",
   "palveluyksikko": "Service unit",
-  "parentInfo": {
-    "saveError": "saveError",
-    "saveSuccess": "saveSuccess"
-  },
   "parent_abbr": "Abbreviation of Upper Unit",
   "parent_unit_id_header": "Parent unit Id",
   "parent_unit_name_header": "Parent Unit Name",
@@ -428,7 +424,11 @@
   "upload_org_info": "Update Organisation Data",
   "upload_success": "Update succeeded",
   "upperUnits": {
-    "empty": "No upper units"
+    "empty": "No upper units",
+    "hierarchy": "Hierarchy",
+    "newUpperUnit": "newUpperUnit",
+    "saveError": "saveError",
+    "saveSuccess": "saveSuccess"
   },
   "upper_units": "Upper Units",
   "user_name": "User Name",
