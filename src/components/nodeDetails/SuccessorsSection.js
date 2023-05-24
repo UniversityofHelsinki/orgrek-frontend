@@ -12,6 +12,7 @@ import Validity from '../attributes/Validity';
 import AttributesTable from '../attributes/AttributesTable';
 import useContentLanguage from '../../hooks/useContentLanguage';
 import Link from '../Link';
+import { successorHierarchy } from '../../Constants';
 
 const SuccessorsSection = () => {
   const { t } = useTranslation();
@@ -27,10 +28,10 @@ const SuccessorsSection = () => {
   const validationSchema = nameAttributeSchema([key]);
 
   const handleSubmit = (values) => {
-    const successors = values[key].map((value) => asSuccessor(value));
+    const successors = values[key].map((value) => asEdge(value));
     console.log(values, successors);
-    return Promise.resolve();
-    // return saveSuccessors({ successors, nodeId }).unwrap();
+    // return Promise.resolve();
+    return saveSuccessors({ successors, nodeId }).unwrap();
   };
 
   const asAttribute = (successor) => ({
@@ -45,16 +46,15 @@ const SuccessorsSection = () => {
     deleted: Boolean(successor.deleted),
   });
 
-  const asSuccessor = (value) => ({
-    edgeId: String(value.id),
-    uniqueId: value.value.id,
-    fullName: value.value.name,
-    startDate: value.nodeStartDate,
-    endDate: value.nodeEndDate,
-    edgeStartDate: value.startDate,
-    edgeEndDate: null,
+  const asEdge = (value) => ({
+    id: String(value.id),
+    parentUniqueId: value.value.id,
+    childUniqueId: nodeId,
+    startDate: value.startDate,
+    endDate: null,
     isNew: value.isNew,
     deleted: value.deleted,
+    hierarchy: successorHierarchy,
   });
   const columns = [
     {
