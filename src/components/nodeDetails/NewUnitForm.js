@@ -127,7 +127,7 @@ const NewUnitForm = ({ open, onClose, handleSubmit }) => {
 
   const today = new Date();
   const emptyNode = {
-    hierachies: selectedHierarchies,
+    hierarchies: selectedHierarchies,
     startDate: today,
     endDate: null,
     nameFi: '',
