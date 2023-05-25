@@ -10,9 +10,15 @@ import useTextField from '../../hooks/useTextField';
  *
  * A subcomponent of AttributeEditor.
  */
-const ValueField = ({ label, path, helperText, renderValueField }) => {
+const ValueField = ({
+  label,
+  path,
+  name = 'value',
+  helperText,
+  renderValueField,
+}) => {
   const { t } = useTranslation();
-  const { errors, props } = useTextField({ path, name: 'value' });
+  const { errors, props } = useTextField({ path, name });
 
   const valueFieldProps = {
     ...props,
@@ -42,6 +48,9 @@ ValueField.propTypes = {
 
   /** The path in form values where to look for validation schema and errors */
   path: PropTypes.string.isRequired,
+
+  /** name of the property inside the object defined by the path, defaults to 'value' */
+  name: PropTypes.string,
 
   /**
    * Allows customizing how the value field is rendered.
