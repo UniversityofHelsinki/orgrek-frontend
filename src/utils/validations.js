@@ -311,3 +311,10 @@ export const nodeValiditySchema = object({
     .beforeEndDate({ days: 2 }),
   endDate: string().date().nullable().afterStartDate({ days: 2 }, '1600-01-01'),
 });
+
+export const newNodeValiditySchema = object({
+  startDate: string().date().minDate('1600-01-01'),
+  nameFi: string().required(),
+  nameEn: string().required(),
+  nameSv: string().required(),
+});
