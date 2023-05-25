@@ -43,6 +43,7 @@ const ChildrenSection = () => {
 
   const handleSubmit = (child) => {
     return saveChild({ data: child, id: nodeId })
+      .unwrap()
       .then((response) => {
         dispatch(
           showNotification({
