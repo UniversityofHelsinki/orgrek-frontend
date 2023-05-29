@@ -207,6 +207,21 @@ export const api = createApi({
         };
       },
     }),
+    saveChild: builder.mutation({
+      invalidatesTags: (result, error, { id }) => {
+        if (error) {
+          return [];
+        }
+        return [{ type: 'Tree' }];
+      },
+      query: ({ data, id }) => {
+        return {
+          url: `/node/${id}/insert`,
+          method: 'POST',
+          body: data,
+        };
+      },
+    }),
   }),
 });
 
@@ -227,4 +242,5 @@ export const {
   useGetParentsQuery,
   useGetNodeOtherAttributesQuery,
   useSaveNodeOtherAttributesMutation,
+  useSaveChildMutation,
 } = api;
