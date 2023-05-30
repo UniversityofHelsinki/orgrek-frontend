@@ -339,8 +339,8 @@
   "successor_valid": "Valid",
   "successors": {
     "empty": "No successors",
-    "nodeValidity": "nodeValidity",
-    "nodeValidityNotSpecified": "nodeValidityNotSpecified",
+    "nodeValidity": "{{validity}}",
+    "nodeValidityNotSpecified": "Unit validity not specified",
     "title": "Successors",
     "valueLabel": "Value"
   },
