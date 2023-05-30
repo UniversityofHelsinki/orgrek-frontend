@@ -7,7 +7,7 @@ import { useGetSuccessorsQuery, useSaveSuccessorsMutation } from '../../store';
 import { useNodeId } from '../../hooks/useNodeId';
 import { authActions } from '../../auth';
 import SuccessorEditor from './SuccessorEditor';
-import { nameAttributeSchema } from '../../utils/validations';
+import { successorsSchema } from '../../utils/validations';
 import Validity from '../attributes/Validity';
 import AttributesTable from '../attributes/AttributesTable';
 import useContentLanguage from '../../hooks/useContentLanguage';
@@ -23,14 +23,8 @@ const SuccessorsSection = () => {
 
   const key = 'successors';
 
-  // Validates form values every time when the values change
-  // Submit button is disabled when validation fails
-  const validationSchema = nameAttributeSchema([key]);
-
   const handleSubmit = (values) => {
     const successors = values[key].map((value) => asEdge(value));
-    console.log(values, successors);
-    // return Promise.resolve();
     return saveSuccessors({ successors, nodeId }).unwrap();
   };
 
@@ -98,6 +92,7 @@ const SuccessorsSection = () => {
         successMessage={t('successorInfo.saveSuccess')}
         errorMessage={t('successorInfo.saveError')}
         authActions={authActions.successors}
+        validationSchema={successorsSchema}
       >
         <Placeholder empty={empty} placeholder={t('successors.empty')}>
           {renderedContent}

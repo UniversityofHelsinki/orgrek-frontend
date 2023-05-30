@@ -273,7 +273,7 @@ export const AdminRole = {
           fi: [],
           en: [],
         }),
-        mockGetSuccessors(nodeId, now, {
+        mockGetSuccessors(nodeId, {
           sv: [],
           fi: [],
           en: [],

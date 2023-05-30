@@ -311,3 +311,23 @@ export const nodeValiditySchema = object({
     .beforeEndDate({ days: 2 }),
   endDate: string().date().nullable().afterStartDate({ days: 2 }, '1600-01-01'),
 });
+
+export const successorSchema = object({
+  id: number().required(),
+  key: string().required(),
+  value: object({
+    id: number().required(),
+    name: string().required(),
+  }).required(),
+  startDate: string().date().required().minDate('1600-01-01'),
+  isNew: boolean().required(),
+  deleted: boolean().required(),
+});
+
+export const successorsSchema = object({
+  successors: array()
+    .of(successorSchema)
+    .required()
+    .filterDeletedNew()
+    .sameKey(),
+});

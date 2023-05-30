@@ -308,6 +308,8 @@
   "successor_name": "Namn",
   "successors": {
     "empty": "empty",
+    "nodeValidity": "nodeValidity",
+    "nodeValidityNotSpecified": "nodeValidityNotSpecified",
     "title": "title",
     "valueLabel": "valueLabel"
   },

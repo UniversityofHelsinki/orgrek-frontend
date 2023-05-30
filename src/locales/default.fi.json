@@ -378,6 +378,8 @@
   "successor_valid": "Voimassaolo",
   "successors": {
     "empty": "Ei seuraavia yksiköitä",
+    "nodeValidity": "Yksikön voimassaolo {{validity}}",
+    "nodeValidityNotSpecified": "Yksikön voimassaoloa ei määritetty",
     "title": "Seuraavat yksiköt",
     "valueLabel": "Arvo"
   },
