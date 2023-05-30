@@ -89,6 +89,9 @@ const Header = () => {
           <IfAuthorized action={authActions.hierarchyFilters.edit}>
             <NavLink text={t('hierarchy_filters')} to={'/hierarchyfilters'} />
           </IfAuthorized>
+          <IfAuthorized action={authActions.sections.edit}>
+            <NavLink text={t('sections')} to={'/sections'} />
+          </IfAuthorized>
         </Container>
       </Box>
     </Box>

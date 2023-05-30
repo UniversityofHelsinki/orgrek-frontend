@@ -27,7 +27,13 @@ export const authActions = {
   texts: {
     edit: { allowRoles: [roleAdmin] },
   },
+  children: {
+    edit: { allowRoles: [roleAdmin] },
+  },
   hierarchyFilters: {
+    edit: { allowRoles: [roleAdmin] },
+  },
+  sections: {
     edit: { allowRoles: [roleAdmin] },
   },
   nodeValidity: {
