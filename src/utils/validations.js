@@ -331,3 +331,10 @@ export const successorsSchema = object({
     .filterDeletedNew()
     .sameKey(),
 });
+
+export const newNodeValiditySchema = object({
+  startDate: string().date().minDate('1600-01-01'),
+  nameFi: string().required(),
+  nameEn: string().required(),
+  nameSv: string().required(),
+});

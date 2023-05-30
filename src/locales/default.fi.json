@@ -366,7 +366,18 @@
   "study_header": "Opetus",
   "subunits": {
     "empty": "Ei alayksiköitä",
-    "title": "Alayksiköt"
+    "title": "Alayksiköt",
+    "newChildButton": "Uusi alayksikkö",
+    "createChild": "Luo uusi yksikkö",
+    "parent": "Yläyksikkö",
+    "hierarchies": "Organisaatiorakenteet",
+    "validFrom": "Voimassaolo",
+    "names": "Nimi",
+    "nameFi": "Suomeksi",
+    "nameSv": "Ruotsiksi",
+    "nameEn": "Englanniksi",
+    "createSuccess": "Yksikkö luotu.",
+    "createError": "Virhe."
   },
   "successorInfo": {
     "saveError": "Seuraajayksikön tallennus epäonnistui",
