@@ -186,7 +186,7 @@ export const api = createApi({
       ],
       query: (nodeId) => {
         return {
-          url: `/node/${nodeId}/successors`,
+          url: `/node/${nodeId}/successor`,
           method: 'GET',
         };
       },
@@ -200,7 +200,7 @@ export const api = createApi({
       },
       query: ({ nodeId, successors }) => {
         return {
-          url: `/node/${nodeId}/successors`,
+          url: `/node/${nodeId}/successor`,
           method: 'PUT',
           body: successors,
         };

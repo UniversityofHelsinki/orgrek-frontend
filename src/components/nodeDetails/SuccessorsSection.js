@@ -29,7 +29,7 @@ const SuccessorsSection = () => {
   };
 
   const asAttribute = (successor) => ({
-    id: parseInt(successor.edgeId),
+    id: successor.edgeId,
     key: key,
     value: { id: successor.uniqueId, name: successor.fullName },
     nodeStartDate: successor.startDate,
