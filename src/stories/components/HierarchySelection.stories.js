@@ -1,11 +1,20 @@
-import HierarchySelectionComponent from '../../components/HierarchySelection';
+import HierarchySelection from '../../components/HierarchySelection';
 import { withMockStore } from '../../mockStore';
 
 export default {
-  component: HierarchySelectionComponent,
+  component: HierarchySelection,
+  argTypes: {
+    size: {
+      control: 'radio',
+      options: ['small', 'medium'],
+    },
+  },
 };
 
-export const HierarchySelection = {
+export const Default = {
+  args: {
+    size: 'medium',
+  },
   decorators: [
     withMockStore({
       tree: {
@@ -21,4 +30,12 @@ export const HierarchySelection = {
       },
     }),
   ],
+};
+
+export const Small = {
+  ...Default,
+  args: {
+    ...Default.args,
+    size: 'small',
+  },
 };

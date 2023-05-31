@@ -53,6 +53,8 @@ const HierarchySelection = (props) => {
     return (
       <Autocomplete
         multiple
+        size={props.size}
+        limitTags={props.limitTags}
         id="hierarchy-selection"
         disableCloseOnSelect
         options={selectableHierarchiesList}
