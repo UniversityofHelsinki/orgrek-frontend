@@ -61,6 +61,7 @@ const StickyHeader = React.forwardRef(function StickyHeader(props, ref) {
         <DateField
           size="small"
           label={t('display_date')}
+          // TODO: Consider moving this actionBar customization inside DateField so that the today button appears in all date pickers
           componentsProps={{
             actionBar: { actions: ['today'] },
           }}
