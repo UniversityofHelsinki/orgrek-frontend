@@ -31,11 +31,8 @@ export const getValueDescription = ({ value, displayText, withValidity }) => {
   return valueDescriptions.join(', ');
 };
 
-export const toFormValues = (attributes, keys = []) => {
-  const byKey = keys.reduce((a, key) => {
-    a[key] = [];
-    return a;
-  }, {});
+export const toFormValues = (attributes) => {
+  const byKey = {};
   attributes.forEach((attribute) => {
     if (!byKey[attribute.key]) {
       byKey[attribute.key] = [];
