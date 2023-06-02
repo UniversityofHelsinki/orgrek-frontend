@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 import NodePage from './NodePage';
 import TextsPage from './TextsPage';
 import HierarchyFiltersPage from './HierarchyFiltersPage';
+import SectionsPage from './SectionsPage';
 import useCurrentUser from '../hooks/useCurrentUser';
 import useSelectedHierarchies from '../hooks/useSelectedHierarchies';
 import { authActions, isAuthorized } from '../auth';
@@ -23,6 +24,9 @@ const AppRoutes = () => {
         )}
         {isAuthorized(user, authActions.hierarchyFilters.edit) && (
           <Route path="hierarchyfilters" element={<HierarchyFiltersPage />} />
+        )}
+        {isAuthorized(user, authActions.sections.edit) && (
+          <Route path="sections" element={<SectionsPage />} />
         )}
       </Route>
     </Routes>
