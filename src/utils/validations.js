@@ -306,7 +306,7 @@ export const nameAttributeSchema = (keys) =>
 export const nodeValiditySchema = object({
   startDate: string()
     .date()
-    .nullable()
+    .required()
     .minDate('1600-01-01')
     .beforeEndDate({ days: 2 }),
   endDate: string().date().nullable().afterStartDate({ days: 2 }, '1600-01-01'),
