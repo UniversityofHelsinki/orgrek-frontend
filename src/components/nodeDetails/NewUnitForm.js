@@ -77,7 +77,7 @@ const Hierarchies = ({ hierarchies }) => {
   return (
     <Box>
       <ContentHeader value={t('subunits.hierarchies')} />
-      <Stack direction="row" useFlexGap rowGap="10px" flexWrap="wrap">
+      <Stack direction="row" rowGap="10px" flexWrap="wrap">
         {hierarchies.map((hierarchy) => (
           <Chip
             key={hierarchy}
