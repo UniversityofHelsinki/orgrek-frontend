@@ -10,16 +10,41 @@ import { toFormValues } from '../../utils/attributeUtils';
 import { useOtherAttributes } from '../../hooks/useOtherAttributes';
 import useFilterAttributesByDate from '../../hooks/useFilterAttributesByDate';
 import { useNodeId } from '../../hooks/useNodeId';
-import { useSaveNodeOtherAttributesMutation } from '../../store';
+import {
+  useGetAttributeKeysQuery,
+  useSaveNodeOtherAttributesMutation,
+} from '../../store';
 import { defaultSchemaForAttributes } from '../../utils/validations';
+import { useSelector } from 'react-redux';
+
+const includeMissing = (attributes, allKeys) => {
+  const missingKeys = allKeys.filter((key) => !attributes[key]);
+  const missingIncluded = { ...attributes };
+  missingKeys.forEach((key) => {
+    missingIncluded[key] = [];
+  });
+  return missingIncluded;
+};
+
+const filterExcess = (attributes, allKeys) => {
+  return attributes.filter((attribute) => {
+    return allKeys.includes(attribute.key) || attribute.key === 'unique_id';
+  });
+};
 
 const OtherAttributesSection = () => {
   const { t } = useTranslation();
   const nodeId = useNodeId();
   const { nodeOtherAttributes, isFetching } = useOtherAttributes();
-  const initialValues = toFormValues(nodeOtherAttributes);
   const [saveOtherAttributes] = useSaveNodeOtherAttributesMutation();
-
+  const selectedHierarchies = useSelector(
+    (s) => s.tree.selectedHierarchy || s.tree.defaultHierarchy
+  );
+  const { data: attributeKeys, isFetching: isFetchingKeys } =
+    useGetAttributeKeysQuery({
+      selectedHierarchies,
+      sections: ['other_attributes'],
+    });
   // In view mode filter history and future depending on selection
   const sortedAndFilteredData = useFilterAttributesByDate(nodeOtherAttributes);
 
@@ -29,6 +54,11 @@ const OtherAttributesSection = () => {
   if (isFetching) {
     return <EditableAccordion title={title} loading />;
   }
+
+  const initialValues = includeMissing(
+    toFormValues(filterExcess(nodeOtherAttributes, attributeKeys)),
+    attributeKeys
+  );
 
   // Validates form values every time when the values change
   // Submit button is disabled when validation fails
