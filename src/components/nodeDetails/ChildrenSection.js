@@ -29,8 +29,10 @@ const EditAction = ({ newChild, edit }) => {
   );
 };
 
-const newSearchParams = (current, newNodeId) => {
-  const newParams = new URLSearchParams(Array.from(current.entries()));
+const newSearchParams = (currentSearchParams, newNodeId) => {
+  const newParams = new URLSearchParams(
+    Array.from(currentSearchParams.entries())
+  );
   newParams.set('uid', newNodeId);
   return newParams;
 };
@@ -42,7 +44,7 @@ const ChildrenSection = () => {
   const contentLanguage = useContentLanguage();
   const [showForm, setShowForm] = useState(false);
   const dispatch = useDispatch();
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [currentSearchParams, setSearchParams] = useSearchParams();
   const [saveChild] = useSaveChildMutation();
 
   const data = children[contentLanguage] || [];
@@ -62,7 +64,7 @@ const ChildrenSection = () => {
         setShowForm(false);
         if (response.childUniqueId) {
           const newNodeId = response.childUniqueId;
-          setSearchParams(newSearchParams(searchParams, newNodeId));
+          setSearchParams(newSearchParams(currentSearchParams, newNodeId));
         }
       })
       .catch((error) => {
