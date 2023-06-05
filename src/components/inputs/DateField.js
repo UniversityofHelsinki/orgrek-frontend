@@ -9,6 +9,7 @@ const DateField = ({
   error,
   fullWidth,
   onChange,
+  variant,
   ...props
 }) => (
   <DatePicker
@@ -27,6 +28,12 @@ const DateField = ({
         required={required}
         error={error}
         fullWidth={fullWidth}
+        variant={variant}
+        sx={{
+          '& .MuiInputAdornment-root .MuiButtonBase-root': {
+            marginRight: variant === 'standard' ? -1 : -1.5,
+          },
+        }}
       />
     )}
   />

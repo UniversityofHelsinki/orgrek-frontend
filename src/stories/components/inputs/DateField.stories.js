@@ -14,6 +14,10 @@ export default {
   },
   argTypes: {
     onChange: { action: true },
+    variant: {
+      control: 'radio',
+      options: ['filled', 'outlined', 'standard'],
+    },
   },
 };
 
@@ -25,6 +29,7 @@ export const Basic = {
     required: false,
     disabled: false,
     error: false,
+    variant: 'outlined',
   },
   render: ({ onChange, ...args }) => {
     const [value, setValue] = useState(args.value || null);
