@@ -1,4 +1,5 @@
 import { createTheme } from '@mui/material';
+import { fiFI } from '@mui/x-data-grid';
 
 /**
  * HY Design System colors
@@ -250,77 +251,80 @@ const typography = {
   },
 };
 
-const theme = createTheme({
-  palette,
-  typography,
-  shape: {
-    borderRadius: 0,
-  },
-  components: {
-    MuiButton: {
-      styleOverrides: {
-        outlined: {
-          borderWidth: 3,
-          borderColor: hyPalette.brand.light,
-          ':hover': {
+const theme = createTheme(
+  {
+    palette,
+    typography,
+    shape: {
+      borderRadius: 0,
+    },
+    components: {
+      MuiButton: {
+        styleOverrides: {
+          outlined: {
             borderWidth: 3,
-            borderColor: hyPalette.brand.mediumDark,
-            color: hyPalette.brand.mediumDark,
+            borderColor: hyPalette.brand.light,
+            ':hover': {
+              borderWidth: 3,
+              borderColor: hyPalette.brand.mediumDark,
+              color: hyPalette.brand.mediumDark,
+            },
+            ':disabled': {
+              borderWidth: 3,
+            },
           },
-          ':disabled': {
-            borderWidth: 3,
+        },
+      },
+      MuiTooltip: {
+        styleOverrides: {
+          tooltip: {
+            ...typography.caption,
           },
         },
       },
-    },
-    MuiTooltip: {
-      styleOverrides: {
-        tooltip: {
-          ...typography.caption,
+      MuiTableCell: {
+        styleOverrides: {
+          root: {
+            borderWidth: 1,
+            borderStyle: 'solid',
+            borderColor: palette.divider,
+          },
+          head: {
+            backgroundColor: palette.grey[50],
+            ...typography.tableHead,
+          },
+          body: {
+            ...typography.tableBody,
+          },
+        },
+      },
+      MuiContainer: {
+        defaultProps: {
+          maxWidth: 'xl',
+        },
+      },
+      MuiChip: {
+        styleOverrides: {
+          root: {
+            borderRadius: 0,
+            marginX: 8,
+            marginY: 6,
+          },
+          deleteIcon: { color: palette.grey[700], fontSize: 18 },
         },
       },
     },
-    MuiTableCell: {
-      styleOverrides: {
-        root: {
-          borderWidth: 1,
-          borderStyle: 'solid',
-          borderColor: palette.divider,
-        },
-        head: {
-          backgroundColor: palette.grey[50],
-          ...typography.tableHead,
-        },
-        body: {
-          ...typography.tableBody,
-        },
-      },
-    },
-    MuiContainer: {
-      defaultProps: {
-        maxWidth: 'xl',
-      },
-    },
-    MuiChip: {
-      styleOverrides: {
-        root: {
-          borderRadius: 0,
-          marginX: 8,
-          marginY: 6,
-        },
-        deleteIcon: { color: palette.grey[700], fontSize: 18 },
+    breakpoints: {
+      values: {
+        xs: 0,
+        sm: 600,
+        md: 900,
+        lg: 1200,
+        xl: 1700,
       },
     },
   },
-  breakpoints: {
-    values: {
-      xs: 0,
-      sm: 600,
-      md: 900,
-      lg: 1200,
-      xl: 1700,
-    },
-  },
-});
+  fiFI // Provides translations for DataGrid
+);
 
 export default theme;
