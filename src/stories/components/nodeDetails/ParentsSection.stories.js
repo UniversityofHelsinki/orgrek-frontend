@@ -29,6 +29,9 @@ export default {
       tree: {
         selectedHierarchy,
       },
+      dr: {
+        selectedDay: now,
+      },
     }),
   ],
 };
