@@ -14,6 +14,7 @@ import IfAuthorized from '../../auth/IfAuthorized';
 import ActionBar from './ActionBar';
 import Button from '../inputs/Button';
 import NewUnitForm from './NewUnitForm';
+import { useSearchParams } from 'react-router-dom';
 
 const EditAction = ({ newChild, edit }) => {
   const { t } = useTranslation();
@@ -28,6 +29,14 @@ const EditAction = ({ newChild, edit }) => {
   );
 };
 
+const newSearchParams = (currentSearchParams, newNodeId) => {
+  const newParams = new URLSearchParams(
+    Array.from(currentSearchParams.entries())
+  );
+  newParams.set('uid', newNodeId);
+  return newParams;
+};
+
 const ChildrenSection = () => {
   const { t } = useTranslation();
   const { children } = useHierarchy();
@@ -35,6 +44,7 @@ const ChildrenSection = () => {
   const contentLanguage = useContentLanguage();
   const [showForm, setShowForm] = useState(false);
   const dispatch = useDispatch();
+  const [currentSearchParams, setSearchParams] = useSearchParams();
   const [saveChild] = useSaveChildMutation();
 
   const data = children[contentLanguage] || [];
@@ -52,6 +62,10 @@ const ChildrenSection = () => {
           })
         );
         setShowForm(false);
+        if (response.childUniqueId) {
+          const newNodeId = response.childUniqueId;
+          setSearchParams(newSearchParams(currentSearchParams, newNodeId));
+        }
       })
       .catch((error) => {
         dispatch(
