@@ -19,29 +19,31 @@ const OtherAttributesEditor = () => {
     useGetHierarchiesBySectionQuery({
       selectedHierarchies,
       sections: ['other_attributes'],
-      attributes: ['publicity'],
+      attributes: Object.keys(values), //['publicity','iam-henkilostoryhma','iam-johtoryhma'],
     });
 
-  const getPublicityAttributes = () => {
-    if (otherattributes) {
-      let otherattributesString = '';
-      otherattributes.filter((p) => {
-        if (p.attr.match('publicity')) {
-          otherattributesString = otherattributesString + p.value.concat(',');
-        }
-      });
-      const otherattributesStr = otherattributesString.substring(
-        0,
-        otherattributesString.length - 1
-      );
-      const pubArr = otherattributesStr.split(',');
-      let public_attributes = {
-        key: 'publicity',
+  const generateAttr = (attribute) => {
+    if (attribute[0].value) {
+      let attr = {
+        key: attribute[0].attr,
         type: 'options',
-        optionValues: [],
+        optionValues: attribute[0].value.split(),
       };
-      let publicity_attributes = { ...public_attributes, optionValues: pubArr };
-      return publicity_attributes;
+      return attr;
+    } else {
+      let attr = {
+        key: attribute[0].attr,
+        type: 'text',
+        value: null,
+      };
+      return attr;
+    }
+  };
+
+  const getAttributeByKey = (key) => {
+    if (otherattributes) {
+      let attribute = otherattributes.filter((one) => one.attr === key);
+      return generateAttr(attribute);
     }
   };
 
@@ -74,11 +76,10 @@ const OtherAttributesEditor = () => {
    * Called when customCreateRow used
    *
    * @param key
-   * @param attributes
    * @returns {function(): {deleted: boolean, endDate: null, id: number, isNew: boolean, type: string, value: null, key: *, startDate: null}}
    */
-  const createRow = (key, attributes) => {
-    const publicity_attributes = getPublicityAttributes();
+  const createRow = (key) => {
+    const attribute = getAttributeByKey(key);
     return () => {
       const base = {
         id: Math.floor(Math.random() * -1000000),
@@ -92,13 +93,9 @@ const OtherAttributesEditor = () => {
       const rest = {
         type: 'text',
       };
-      //const mock_attributes = [{key: 'publicity', type: 'options', optionValues: ['moikka', 'huikka']}];
-      if (
-        publicity_attributes.key === key &&
-        publicity_attributes.type === 'options'
-      ) {
+      if (attribute.key === key && attribute.type === 'options') {
         rest.type = 'options';
-        rest.optionValues = publicity_attributes.optionValues;
+        rest.optionValues = attribute.optionValues;
       }
       return { ...base, ...rest };
     };
@@ -122,7 +119,7 @@ const OtherAttributesEditor = () => {
                 [key]: newData,
               })
             }
-            customCreateRow={createRow(key, otherattributes)}
+            customCreateRow={createRow(key)}
           />
         )),
       ]}
