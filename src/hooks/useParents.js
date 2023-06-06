@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 export const useParents = () => {
   const nodeId = useNodeId();
   const selectedDay = useSelector((state) => {
-    return state.selectedDay;
+    return state.dr.selectedDay;
   });
   const selectedHierarchies = useSelector((state) => {
     return state.tree.selectedHierarchy || state.tree.defaultHierarchy;
