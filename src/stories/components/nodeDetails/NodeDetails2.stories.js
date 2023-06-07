@@ -7,7 +7,6 @@ import {
   createReader,
   hierarchyFilters,
   mockGetAttributeKeys,
-  mockGetAttributes,
   mockGetChildren,
   mockGetCodeAttributes,
   mockGetFavorableFullNames,
@@ -28,6 +27,8 @@ import {
   withMockStore,
   mockSaveParents,
   mockGetParentsDeprecated,
+  mockGetOtherAttributes,
+  mockSaveOtherAttributes,
 } from '../../../mockStore';
 import { waitFor, within } from '@storybook/testing-library';
 
@@ -278,8 +279,7 @@ export const AdminRole = {
           fi: [],
           en: [],
         }),
-        // Remove after all sections have been migrated to RTK Query
-        mockGetAttributes(nodeId, now, selectedHierarchy, [
+        mockGetOtherAttributes(nodeId, selectedHierarchy, [
           {
             id: 27788,
             nodeId: '4820',
@@ -289,6 +289,14 @@ export const AdminRole = {
             endDate: null,
           },
         ]),
+        mockSaveOtherAttributes(nodeId),
+        mockGetAttributeKeys(
+          {
+            selectedHierarchies: selectedHierarchy,
+            sections: ['other_attributes'],
+          },
+          ["'publicity'"]
+        ),
         mockGetNodeValidity(nodeId, {
           nodeId: '4820',
           startDate: null,

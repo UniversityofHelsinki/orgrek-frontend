@@ -51,7 +51,7 @@ const OtherAttributesSection = () => {
   const title = t('other_attributes');
   const empty = nodeOtherAttributes.length === 0;
 
-  if (isFetching) {
+  if (isFetching || isFetchingKeys) {
     return <EditableAccordion title={title} loading />;
   }
 
