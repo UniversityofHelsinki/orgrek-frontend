@@ -262,6 +262,11 @@
   "organisational_registry": "organisational_registry",
   "osasto": "Avdelning",
   "other_attributes": "Andra attributer",
+  "otherAttributeInfo": {
+    "empty": "otherAttributeInfo.empty",
+    "saveError": "otherAttributeInfo.saveError",
+    "saveSuccess": "otherAttributeInfo.saveSuccess"
+  },
   "palveluyksikko": "Serviceenheten",
   "parent_unit_id_header": "parent unit id",
   "parent_unit_name_header": "parent unit name",
