@@ -13,6 +13,7 @@ import AttributesTable from '../attributes/AttributesTable';
 import useContentLanguage from '../../hooks/useContentLanguage';
 import Link from '../Link';
 import { successorHierarchy } from '../../Constants';
+import { toFormValues } from '../../utils/attributeUtils';
 
 const SuccessorsSection = () => {
   const { t } = useTranslation();
@@ -21,16 +22,16 @@ const SuccessorsSection = () => {
   const [saveSuccessors] = useSaveSuccessorsMutation();
   const contentLanguage = useContentLanguage();
 
-  const key = 'successors';
-
   const handleSubmit = (values) => {
-    const successors = values[key].map((value) => asEdge(value));
+    const successors = Object.values(values)
+      .flat()
+      .map((value) => asEdge(value));
     return saveSuccessors({ successors, nodeId }).unwrap();
   };
 
   const asAttribute = (successor) => ({
     id: successor.edgeId,
-    key: key,
+    key: successor.fullName,
     value: { id: successor.uniqueId, name: successor.fullName },
     nodeStartDate: successor.startDate,
     nodeEndDate: successor.endDate,
@@ -41,7 +42,7 @@ const SuccessorsSection = () => {
   });
 
   const asEdge = (value) => ({
-    id: String(value.id),
+    id: value.id,
     parentUniqueId: value.value.id,
     childUniqueId: nodeId,
     startDate: value.startDate,
@@ -77,6 +78,9 @@ const SuccessorsSection = () => {
     <AttributesTable columns={columns} data={successorsData} summary={title} />
   );
 
+  const initialValues = toFormValues(
+    successorsData.map((successor) => asAttribute(successor))
+  );
   return (
     <EditableAccordion
       title={title}
@@ -85,14 +89,12 @@ const SuccessorsSection = () => {
     >
       <EditableContent
         editorComponent={<SuccessorEditor />}
-        initialValues={{
-          [key]: successorsData.map((successor) => asAttribute(successor)),
-        }}
+        initialValues={initialValues}
         onSubmit={handleSubmit}
         successMessage={t('successorInfo.saveSuccess')}
         errorMessage={t('successorInfo.saveError')}
         authActions={authActions.successors}
-        validationSchema={successorsSchema}
+        validationSchema={successorsSchema(Object.keys(initialValues))}
       >
         <Placeholder empty={empty} placeholder={t('successors.empty')}>
           {renderedContent}

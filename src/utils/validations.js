@@ -324,14 +324,18 @@ export const successorSchema = object({
   deleted: boolean().required(),
 });
 
-export const successorsSchema = object({
-  successors: array()
-    .of(successorSchema)
+export const successorsSchema = (keys) => {
+  const arrayOfSuccessors = array()
+    .of(attributeSchema)
     .required()
-    .filterDeletedNew()
-    .sameKey(),
-});
-
+    .filterDeletedNew();
+  object(
+    keys.reduce((schema, key) => {
+      schema[key] = arrayOfSuccessors;
+      return schema;
+    }, {})
+  );
+};
 export const newNodeValiditySchema = object({
   startDate: string().date().minDate('1600-01-01'),
   nameFi: string().required(),

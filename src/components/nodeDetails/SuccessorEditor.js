@@ -6,6 +6,7 @@ import HelperText from '../inputs/HelperText';
 import NodeField from '../inputs/NodeField';
 import { showValidity } from '../../utils/showValidity';
 import { useGetNodeValidityQuery } from '../../store';
+import useForm from '../../hooks/useForm';
 
 const SuccessorTypeField = ({ path, value }) => {
   const { t } = useTranslation();
@@ -45,7 +46,7 @@ const getDisplayText = (value) => {
 };
 
 const SuccessorEditor = () => {
-  const key = 'successors';
+  const { values, setValues } = useForm();
 
   const fields = [
     {
@@ -56,16 +57,16 @@ const SuccessorEditor = () => {
     { name: 'startDate', gridProps: { xs: 12, sm: 6, lg: 4 } },
   ];
 
-  return (
+  return Object.entries(values).map(([name], i) => (
     <AttributeEditor
-      key={key}
-      path={key}
+      key={name}
+      path={name}
       fields={fields}
-      attributeKey={key}
+      attributeKey={name}
       overlap
       getDisplayText={getDisplayText}
     />
-  );
+  ));
 };
 
 export default SuccessorEditor;
