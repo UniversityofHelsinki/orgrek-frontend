@@ -117,7 +117,9 @@ export const Empty = {
     const canvas = within(canvasElement);
 
     await waitFor(async () => {
-      await expect(canvas.getByText('Ei attribuutteja')).toBeInTheDocument();
+      await expect(
+        canvas.getByText('Ei muita attribuutteja')
+      ).toBeInTheDocument();
     });
   },
 };
