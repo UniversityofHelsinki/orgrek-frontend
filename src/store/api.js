@@ -186,7 +186,7 @@ export const api = createApi({
       ],
       query: (nodeId) => {
         return {
-          url: `/node/${nodeId}/successor`,
+          url: `/node/successors/${nodeId}`,
           method: 'GET',
         };
       },
