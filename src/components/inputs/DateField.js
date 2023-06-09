@@ -7,6 +7,7 @@ const DateField = ({
   helperText,
   required,
   error,
+  size,
   fullWidth,
   onChange,
   ...props
@@ -24,6 +25,7 @@ const DateField = ({
       <TextField
         {...textFieldProps}
         helperText={helperText}
+        size={size}
         required={required}
         error={error}
         fullWidth={fullWidth}
