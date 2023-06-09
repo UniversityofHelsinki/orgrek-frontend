@@ -28,6 +28,7 @@ const AttributeEditor = ({
   attributeKey,
   overlap,
   sx,
+  customCreateRow,
 }) => {
   const { getValue, setValue } = useForm();
 
@@ -36,16 +37,18 @@ const AttributeEditor = ({
     throw new Error(`Form values at ${path} must be an array`);
   }
 
-  const createRow = () => ({
-    // Also new rows must have some unique id before they are stored to database
-    id: Math.floor(Math.random() * -1000000),
-    key: attributeKey,
-    value: null,
-    startDate: null,
-    endDate: null,
-    isNew: true,
-    deleted: false,
-  });
+  const createRow =
+    customCreateRow ||
+    (() => ({
+      // Also new rows must have some unique id before they are stored to database
+      id: Math.floor(Math.random() * -1000000),
+      key: attributeKey,
+      value: null,
+      startDate: null,
+      endDate: null,
+      isNew: true,
+      deleted: false,
+    }));
 
   const setFormValues = (newValues) => {
     setValue(path, newValues);
@@ -192,6 +195,10 @@ AttributeEditor.propTypes = {
    * when inserting a new row above or below.
    */
   overlap: PropTypes.bool,
+  /**
+   * Returns custom attribute object for new rows.
+   */
+  customCreateRow: PropTypes.func,
 };
 
 export default AttributeEditor;

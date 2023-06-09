@@ -285,6 +285,11 @@
   "organisational_registry": "organisational_registry",
   "osasto": "osasto",
   "other_attributes": "Other attributes",
+  "otherAttributeInfo": {
+    "empty": "No other attributes",
+    "saveError": "Saving other attributes failed",
+    "saveSuccess": "Other attributes saved"
+  },
   "paa-aine": "Training Programme",
   "palveluyksikko": "Service unit",
   "parent_abbr": "Abbreviation of Upper Unit",
