@@ -54,18 +54,18 @@ const SuccessorsSection = () => {
   const columns = [
     {
       label: t('name'),
-      render: (item) => <Link node={item.uniqueId}>{item.fullName}</Link>,
+      render: (item) => <Link node={item.value.id}>{item.key}</Link>,
     },
     {
       label: t('valid_dates'),
       render: (item) => (
-        <Validity startDate={item.startDate} endDate={item.endDate} />
+        <Validity startDate={item.nodeStartDate} endDate={item.nodeEndDate} />
       ),
     },
     {
       label: t('successor_edge_valid'),
       render: (item) => (
-        <Validity startDate={item.edgeStartDate} endDate={item.edgeEndDate} />
+        <Validity startDate={item.startDate} endDate={item.endDate} />
       ),
     },
   ];
@@ -74,13 +74,18 @@ const SuccessorsSection = () => {
   const title = t('successors.title');
   const empty = successorsData.length === 0;
 
-  const renderedContent = (
-    <AttributesTable columns={columns} data={successorsData} summary={title} />
+  const asAttributes = successorsData.map((successor) =>
+    asAttribute(successor)
   );
 
-  const initialValues = toFormValues(
-    successorsData.map((successor) => asAttribute(successor))
+  const renderedContent = (
+    <AttributesTable columns={columns} data={asAttributes} summary={title} />
   );
+
+  const emptyInitialValues = { new_successor: [] };
+
+  const initialValues =
+    successorsData.length > 0 ? toFormValues(asAttributes) : emptyInitialValues;
   return (
     <EditableAccordion
       title={title}

@@ -198,9 +198,9 @@ export const api = createApi({
         }
         return [{ type: 'Successors', id: nodeId }, { type: 'Tree' }];
       },
-      query: ({ nodeId, successors }) => {
+      query: ({ successors }) => {
         return {
-          url: `/node/${nodeId}/successor`,
+          url: `/node/successor`,
           method: 'PUT',
           body: successors,
         };

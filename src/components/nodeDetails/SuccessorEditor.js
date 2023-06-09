@@ -46,7 +46,7 @@ const getDisplayText = (value) => {
 };
 
 const SuccessorEditor = () => {
-  const { values, setValues } = useForm();
+  const { values } = useForm();
 
   const fields = [
     {
@@ -59,7 +59,7 @@ const SuccessorEditor = () => {
 
   return Object.entries(values).map(([name], i) => (
     <AttributeEditor
-      key={name}
+      key={`${name}-${i}`}
       path={name}
       fields={fields}
       attributeKey={name}
