@@ -74,8 +74,8 @@ const OtherAttributesSection = () => {
         initialValues={initialValues}
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
-        successMessage={t('typeInfo.saveSuccess')}
-        errorMessage={t('typeInfo.saveError')}
+        successMessage={t('otherAttributeInfo.saveSuccess')}
+        errorMessage={t('otherAttributeInfo.saveError')}
         authActions={authActions.otherAttributes}
       >
         <Placeholder
