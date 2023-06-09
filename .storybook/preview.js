@@ -8,7 +8,9 @@ import theme from '../src/theme';
 import { withRouter } from 'storybook-addon-react-router-v6';
 import { initialize, mswLoader } from 'msw-storybook-addon';
 import { withMockDate } from '../src/mockStore';
-import { initI18n } from '../src/i18n';
+import i18n, { initI18n } from '../src/i18n';
+
+const { t } = i18n;
 
 initI18n(false);
 
@@ -62,7 +64,13 @@ const preview = {
   loaders: [mswLoader],
   decorators: [
     (Story) => (
-      <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={fi}>
+      <LocalizationProvider
+        dateAdapter={AdapterDateFns}
+        adapterLocale={fi}
+        localeText={{
+          todayButtonLabel: t('return_to_today'),
+        }}
+      >
         <Story />
       </LocalizationProvider>
     ),

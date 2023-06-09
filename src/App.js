@@ -15,7 +15,7 @@ import { getDateFnsLocale } from './utils/dateUtils';
 const SHIBBOLETH_LOGIN = process.env.REACT_APP_ORGREK_LOGIN;
 
 const App = () => {
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -27,6 +27,9 @@ const App = () => {
       <LocalizationProvider
         dateAdapter={AdapterDateFns}
         adapterLocale={getDateFnsLocale(i18n.language)}
+        localeText={{
+          todayButtonLabel: t('return_to_today'),
+        }}
       >
         <LoginRedirect loginUrl={SHIBBOLETH_LOGIN} />
         <BrowserRouter>
