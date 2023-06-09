@@ -90,7 +90,7 @@ export const mockGetPredecessors = (nodeId, date, body) =>
   );
 
 export const mockGetSuccessors = (nodeId, body) =>
-  rest.get(`${baseUrl}/node/${nodeId}/successors`, (req, res, ctx) =>
+  rest.get(`${baseUrl}/node/successors/${nodeId}`, (req, res, ctx) =>
     res(ctx.json(body))
   );
 
