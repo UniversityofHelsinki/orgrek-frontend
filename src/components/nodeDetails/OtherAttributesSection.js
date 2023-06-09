@@ -17,21 +17,6 @@ import {
 import { defaultSchemaForAttributes } from '../../utils/validations';
 import { useSelector } from 'react-redux';
 
-const includeMissing = (attributes, allKeys) => {
-  const missingKeys = allKeys.filter((key) => !attributes[key]);
-  const missingIncluded = { ...attributes };
-  missingKeys.forEach((key) => {
-    missingIncluded[key] = [];
-  });
-  return missingIncluded;
-};
-
-const filterExcess = (attributes, allKeys) => {
-  return attributes.filter((attribute) => {
-    return allKeys.includes(attribute.key) || attribute.key === 'unique_id';
-  });
-};
-
 const OtherAttributesSection = () => {
   const { t } = useTranslation();
   const nodeId = useNodeId();
@@ -40,25 +25,21 @@ const OtherAttributesSection = () => {
   const selectedHierarchies = useSelector(
     (s) => s.tree.selectedHierarchy || s.tree.defaultHierarchy
   );
-  const { data: attributeKeys, isFetching: isFetchingKeys } =
-    useGetAttributeKeysQuery({
-      selectedHierarchies,
-      sections: ['other_attributes'],
-    });
+
   // In view mode filter history and future depending on selection
   const sortedAndFilteredData = useFilterAttributesByDate(nodeOtherAttributes);
+  const filtered = sortedAndFilteredData.filter(
+    (attribute) => !attribute.isNew
+  );
 
   const title = t('other_attributes');
-  const empty = nodeOtherAttributes.length === 0;
+  const empty = filtered.length === 0;
 
   if (isFetching) {
     return <EditableAccordion title={title} loading />;
   }
 
-  const initialValues = includeMissing(
-    toFormValues(filterExcess(nodeOtherAttributes, attributeKeys)),
-    attributeKeys
-  );
+  const initialValues = toFormValues(nodeOtherAttributes);
 
   // Validates form values every time when the values change
   // Submit button is disabled when validation fails
@@ -101,7 +82,7 @@ const OtherAttributesSection = () => {
           empty={empty}
           placeholder={t('nodeDetailsSection.noAttributes')}
         >
-          <AttributesTable data={sortedAndFilteredData} summary={title} />
+          <AttributesTable data={filtered} summary={title} />
         </Placeholder>
       </EditableContent>
     </EditableAccordion>

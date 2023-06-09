@@ -15,37 +15,6 @@ const OtherAttributesEditor = () => {
   const selectedHierarchies = useSelector(
     (s) => s.tree.selectedHierarchy || s.tree.defaultHierarchy
   );
-  const { data: otherattributes, isFetching: isFetchingKeys } =
-    useGetHierarchiesBySectionQuery({
-      selectedHierarchies,
-      sections: ['other_attributes'],
-      attributes: Object.keys(values), //['publicity','iam-henkilostoryhma','iam-johtoryhma'],
-    });
-
-  const generateAttr = (attribute) => {
-    if (attribute[0].value) {
-      let attr = {
-        key: attribute[0].attr,
-        type: 'options',
-        optionValues: attribute[0].value.split(),
-      };
-      return attr;
-    } else {
-      let attr = {
-        key: attribute[0].attr,
-        type: 'text',
-        value: null,
-      };
-      return attr;
-    }
-  };
-
-  const getAttributeByKey = (key) => {
-    if (otherattributes) {
-      let attribute = otherattributes.filter((one) => one.attr === key);
-      return generateAttr(attribute);
-    }
-  };
 
   const renderValueField = (attributes) => {
     const valueField = (valueFieldProps) => {
@@ -78,8 +47,8 @@ const OtherAttributesEditor = () => {
    * @param key
    * @returns {function(): {deleted: boolean, endDate: null, id: number, isNew: boolean, type: string, value: null, key: *, startDate: null}}
    */
-  const createRow = (key) => {
-    const attribute = getAttributeByKey(key);
+  const createRow = (attributes, key) => {
+    const attribute = attributes[0];
     return () => {
       const base = {
         id: Math.floor(Math.random() * -1000000),
@@ -119,7 +88,7 @@ const OtherAttributesEditor = () => {
                 [key]: newData,
               })
             }
-            customCreateRow={createRow(key)}
+            customCreateRow={createRow(attributes, key)}
           />
         )),
       ]}
