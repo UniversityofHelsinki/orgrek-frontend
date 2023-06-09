@@ -5,7 +5,6 @@ import { useTranslation } from 'react-i18next';
 import useForm from '../../hooks/useForm';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
-import { useGetHierarchiesBySectionQuery } from '../../store';
 import { useSelector } from 'react-redux';
 
 const OtherAttributesEditor = () => {

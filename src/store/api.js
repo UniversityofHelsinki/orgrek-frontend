@@ -124,12 +124,6 @@ export const api = createApi({
         method: 'GET',
       }),
     }),
-    getHierarchiesBySection: builder.query({
-      query: ({ selectedHierarchies, sections, attributes }) => ({
-        url: `/hierarchyFilters/${selectedHierarchies}/${sections}/${attributes}/attributes/keys`,
-        method: 'GET',
-      }),
-    }),
     getAttributeKeysBySection: builder.query({
       query: (sectionType) => ({
         url: `/node/section/${sectionType}/attributes`,
@@ -241,7 +235,6 @@ export const {
   useGetTypeAttributesQuery,
   useGetValidHierarchyFiltersQuery,
   useSaveTypeAttributesMutation,
-  useGetHierarchiesBySectionQuery,
   useGetAttributeKeysBySectionQuery,
   useGetNodeValidityQuery,
   useSaveNodeValidityMutation,

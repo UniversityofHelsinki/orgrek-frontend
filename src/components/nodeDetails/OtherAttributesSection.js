@@ -78,10 +78,7 @@ const OtherAttributesSection = () => {
         errorMessage={t('otherAttributeInfo.saveError')}
         authActions={authActions.otherAttributes}
       >
-        <Placeholder
-          empty={empty}
-          placeholder={t('nodeDetailsSection.noAttributes')}
-        >
+        <Placeholder empty={empty} placeholder={t('otherAttributeInfo.empty')}>
           <AttributesTable data={filtered} summary={title} />
         </Placeholder>
       </EditableContent>
