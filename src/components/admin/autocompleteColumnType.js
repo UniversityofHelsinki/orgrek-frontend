@@ -1,7 +1,7 @@
 import React from 'react';
 import { useGridApiContext } from '@mui/x-data-grid';
 import Autocomplete from '@mui/material/Autocomplete';
-import InputBase from '@mui/material/InputBase';
+import GridInput from './GridInput';
 
 const GridAutocompleteEditCell = ({ id, field, value, colDef, row }) => {
   const apiRef = useGridApiContext();
@@ -65,16 +65,7 @@ const GridAutocompleteEditCell = ({ id, field, value, colDef, row }) => {
       isOptionEqualToValue={(option, value) => option.value === value}
       onChange={handleChange}
       renderInput={({ InputLabelProps, InputProps, ...other }) => {
-        return (
-          <InputBase
-            {...InputProps}
-            {...other}
-            sx={{
-              fontSize: 'inherit',
-              padding: '0 9px',
-            }}
-          />
-        );
+        return <GridInput {...InputProps} {...other} />;
       }}
     />
   );
