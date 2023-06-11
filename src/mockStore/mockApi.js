@@ -44,6 +44,17 @@ export const mockSaveCodeAttributes = (nodeId) =>
     res(ctx.delay(2000), ctx.json(req.json()))
   );
 
+export const mockGetOtherAttributes = (nodeId, selectedHierarchies, body) =>
+  rest.get(
+    `${baseUrl}/node/${nodeId}/attributes/others/hierarchies/${selectedHierarchies}`,
+    (req, res, ctx) => res(ctx.json(body))
+  );
+
+export const mockSaveOtherAttributes = (nodeId) =>
+  rest.put(`${baseUrl}/node/${nodeId}/attributes/others`, (req, res, ctx) =>
+    res(ctx.delay(2000), ctx.json(req.json()))
+  );
+
 export const mockGetAttributeKeys = ({ selectedHierarchies, sections }, body) =>
   rest.get(
     `${baseUrl}/hierarchyFilters/${selectedHierarchies}/${
@@ -113,17 +124,6 @@ export const mockGetNodeValidity = (id, body) =>
 export const mockSaveNodeValidity = (id) =>
   rest.put(`${baseUrl}/node/${id}/update`, (req, res, ctx) =>
     res(ctx.delay(2000), ctx.json(req.json()))
-  );
-
-/**
- * @deprecated not needed after everything has been migrated to RTK Query
- */
-export const mockGetAttributes = (nodeId, date, hierarchies, body) =>
-  rest.get(
-    `${baseUrl}/node/${nodeId}/${formatApiDate(
-      date
-    )}/${hierarchies}/attributes`,
-    (req, res, ctx) => res(ctx.json(body))
   );
 
 /**

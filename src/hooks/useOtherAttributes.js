@@ -1,24 +1,20 @@
-import { useGetParentsQuery } from '../store';
+import { useGetNodeOtherAttributesQuery } from '../store';
 import { useNodeId } from './useNodeId';
 import { useSelector } from 'react-redux';
 
-export const useParents = () => {
+export const useOtherAttributes = () => {
   const nodeId = useNodeId();
-  const selectedDay = useSelector((state) => {
-    return state.dr.selectedDay;
-  });
   const selectedHierarchies = useSelector((state) => {
     return state.tree.selectedHierarchy || state.tree.defaultHierarchy;
   });
 
-  const { data, error, isFetching } = useGetParentsQuery({
+  const { data, error, isFetching } = useGetNodeOtherAttributesQuery({
     nodeId,
-    selectedDay,
     selectedHierarchies,
   });
 
   return {
-    parents: data || [],
+    nodeOtherAttributes: data || [],
     error,
     isFetching,
   };

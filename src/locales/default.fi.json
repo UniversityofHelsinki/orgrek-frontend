@@ -309,6 +309,11 @@
   "organisational_registry": "Organisaatiorekisteri",
   "osasto": "Osasto",
   "other_attributes": "Muut attribuutit",
+  "otherAttributeInfo": {
+    "empty": "Ei muita attribuutteja",
+    "saveError": "Muiden attribuuttien tallennus epäonnistui",
+    "saveSuccess": "Muut attribuutit tallennettu"
+  },
   "outside_units": "Ulkopuoliset yksiköt",
   "paa-aine": "Tutkinto-ohjelma / pääaine",
   "palveluyksikko": "Palveluyksikkö",

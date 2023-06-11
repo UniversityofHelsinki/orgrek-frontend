@@ -81,7 +81,7 @@ const NameSection = () => {
       <EditableContent
         editorComponent={<NameEditor keys={keys} />}
         validationSchema={validationSchema}
-        initialValues={toFormValues(sortedData)}
+        initialValues={toFormValues(sortedData, keys)}
         onSubmit={handleSubmit}
         successMessage={t('nameInfo.saveSuccess')}
         errorMessage={t('nameInfo.saveError')}
