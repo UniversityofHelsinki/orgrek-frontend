@@ -1,5 +1,8 @@
 import { createTheme } from '@mui/material';
 import { fiFI } from '@mui/x-data-grid';
+import EyeSlashIcon from './components/icons/EyeSlash';
+import SlimHamburgerMenuIcon from './components/icons/SlimHamburgerMenu';
+import SearchIcon from './components/icons/Search';
 
 /**
  * HY Design System colors
@@ -311,6 +314,33 @@ const theme = createTheme(
             marginY: 6,
           },
           deleteIcon: { color: palette.grey[700], fontSize: 18 },
+        },
+      },
+      MuiDataGrid: {
+        defaultProps: {
+          slots: {
+            columnMenuHideIcon: EyeSlashIcon,
+            columnMenuIcon: SlimHamburgerMenuIcon,
+            moreActionsIcon: SlimHamburgerMenuIcon,
+            quickFilterIcon: SearchIcon,
+          },
+          hideFooterSelectedRowCount: true,
+        },
+        styleOverrides: {
+          columnHeaders: {
+            borderTopStyle: 'solid',
+            borderTopWidth: 1,
+            borderTopColor: palette.divider,
+          },
+          columnHeader: {
+            backgroundColor: palette.grey[50],
+          },
+          columnHeaderTitle: {
+            ...typography.tableHead,
+          },
+          cellContent: {
+            ...typography.tableBody,
+          },
         },
       },
     },
