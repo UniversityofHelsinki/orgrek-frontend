@@ -1,18 +1,8 @@
 import React from 'react';
-import { styled } from '@mui/material/styles';
-import { InputBase } from '@mui/material';
 import { GRID_DATE_COL_DEF, useGridApiContext } from '@mui/x-data-grid';
 import DateField from '../inputs/DateField';
 import { formatDate } from '../../utils/dateUtils';
-
-const GridEditDateInput = styled(InputBase)({
-  fontSize: 'inherit',
-  padding: '0 9px',
-});
-
-const WrappedGridEditDateInput = ({ InputProps, ...other }) => {
-  return <GridEditDateInput fullWidth {...InputProps} {...other} />;
-};
+import GridInput from './GridInput';
 
 const GridEditDateCell = ({ id, field, value }) => {
   const apiRef = useGridApiContext();
@@ -27,12 +17,14 @@ const GridEditDateCell = ({ id, field, value }) => {
       autoFocus
       fullWidth
       onChange={handleChange}
-      slots={{ textField: WrappedGridEditDateInput }}
+      renderInput={({ InputProps, ...other }) => {
+        return <GridInput fullWidth {...InputProps} {...other} />;
+      }}
     />
   );
 };
 
-const GridFilterDateInput = ({ item, showTime, applyValue, apiRef }) => {
+const GridFilterDateInput = ({ item, applyValue, apiRef }) => {
   const handleFilterChange = (newValue) => {
     applyValue({ ...item, value: newValue });
   };
