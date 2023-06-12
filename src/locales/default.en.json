@@ -285,6 +285,11 @@
   "organisational_registry": "organisational_registry",
   "osasto": "osasto",
   "other_attributes": "Other attributes",
+  "otherAttributeInfo": {
+    "empty": "No other attributes",
+    "saveError": "Saving other attributes failed",
+    "saveSuccess": "Other attributes saved"
+  },
   "paa-aine": "Training Programme",
   "palveluyksikko": "Service unit",
   "parent_abbr": "Abbreviation of Upper Unit",
@@ -314,6 +319,7 @@
   "save_was_successful": "Save succeeded",
   "search_by_name_or_code": "Search by name or code",
   "search_place_holder": "Search with keyword..",
+  "sections": "Sections",
   "select_all_none": "Valitse / poista valinnat",
   "show_coming": "Show coming",
   "show_history": "Show history",

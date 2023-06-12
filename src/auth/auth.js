@@ -33,7 +33,13 @@ export const authActions = {
   hierarchyFilters: {
     edit: { allowRoles: [roleAdmin] },
   },
+  sections: {
+    edit: { allowRoles: [roleAdmin] },
+  },
   nodeValidity: {
+    edit: { allowRoles: allWriterRoles },
+  },
+  otherAttributes: {
     edit: { allowRoles: allWriterRoles },
   },
   successors: {

@@ -262,6 +262,11 @@
   "organisational_registry": "organisational_registry",
   "osasto": "Avdelning",
   "other_attributes": "Andra attributer",
+  "otherAttributeInfo": {
+    "empty": "otherAttributeInfo.empty",
+    "saveError": "otherAttributeInfo.saveError",
+    "saveSuccess": "otherAttributeInfo.saveSuccess"
+  },
   "palveluyksikko": "Serviceenheten",
   "parent_unit_id_header": "parent unit id",
   "parent_unit_name_header": "parent unit name",
@@ -285,6 +290,7 @@
   "save_button": "Spara",
   "search_by_name_or_code": "search_by_name_or_code",
   "search_place_holder": "Sök med ordet...",
+  "sections": "Sektioner",
   "select_all_none": "Valitse / poista valinnat",
   "show_coming": "show_coming",
   "show_history": "show_history",

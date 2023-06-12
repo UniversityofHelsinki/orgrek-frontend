@@ -289,24 +289,23 @@ export const defaultSchemaForAttributes = (keys) =>
     }, {})
   );
 
-const atLeastOneNotEmpty = (input) => {
-  const values = flattenAttributes(input).filter(
-    (attribute) => !attribute.deleted
+const atLeastOneNotDeleted = (input) => {
+  return Object.getOwnPropertyNames(input).every((name) =>
+    input[name].some((name) => !name.deleted)
   );
-  return values.length > 0;
 };
 
 export const nameAttributeSchema = (keys) =>
   defaultSchemaForAttributes(keys).test(
-    'some-arrays-not-empty',
+    'arrays-not-empty',
     'all values are empty.',
-    atLeastOneNotEmpty
+    atLeastOneNotDeleted
   );
 
 export const nodeValiditySchema = object({
   startDate: string()
     .date()
-    .nullable()
+    .required()
     .minDate('1600-01-01')
     .beforeEndDate({ days: 2 }),
   endDate: string().date().nullable().afterStartDate({ days: 2 }, '1600-01-01'),

@@ -309,6 +309,11 @@
   "organisational_registry": "Organisaatiorekisteri",
   "osasto": "Osasto",
   "other_attributes": "Muut attribuutit",
+  "otherAttributeInfo": {
+    "empty": "Ei muita attribuutteja",
+    "saveError": "Muiden attribuuttien tallennus epäonnistui",
+    "saveSuccess": "Muut attribuutit tallennettu"
+  },
   "outside_units": "Ulkopuoliset yksiköt",
   "paa-aine": "Tutkinto-ohjelma / pääaine",
   "palveluyksikko": "Palveluyksikkö",
@@ -348,6 +353,7 @@
   "search_by_name": "Hae nimellä",
   "search_by_name_or_code": "Etsi nimellä tai tunnuksella",
   "search_place_holder": "Etsi hakusanalla..",
+  "sections": "Lohkot",
   "select_all_none": "Valitse / poista valinnat",
   "show": "Näytä",
   "show_coming": "Näytä tulevat",

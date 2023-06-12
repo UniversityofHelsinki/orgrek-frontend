@@ -14,6 +14,10 @@ export default {
   },
   argTypes: {
     onChange: { action: true },
+    size: {
+      control: 'radio',
+      options: ['small', 'medium'],
+    },
   },
 };
 
@@ -25,6 +29,7 @@ export const Basic = {
     required: false,
     disabled: false,
     error: false,
+    size: 'medium',
   },
   render: ({ onChange, ...args }) => {
     const [value, setValue] = useState(args.value || null);
@@ -60,5 +65,13 @@ export const Validation = {
     helperText: 'Validation error message',
     required: true,
     error: true,
+  },
+};
+
+export const Small = {
+  ...Basic,
+  args: {
+    ...Basic.args,
+    size: 'small',
   },
 };
