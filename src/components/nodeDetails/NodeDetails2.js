@@ -32,34 +32,30 @@ const NodeDetails = () => {
   }
 
   return (
-    <div>
-      <IfAdmin>
-        <EditButtons />
-      </IfAdmin>
-      <Box
-        key={nodeId}
-        component="main"
-        sx={{
-          pl: { xs: 1, md: 4 },
-          pr: { xs: 1, md: 4 },
-          pb: 8,
-        }}
-      >
-        <Typography variant="h1" component="h2" mt={5} mb={5}>
-          {title}
-        </Typography>
-        <NodeValiditySection />
-        <NameSection />
-        <DisplayNameSection />
-        <CodeAttributesSection />
-        <UnitTypeSection />
-        <ParentsSection />
-        <ChildrenSection />
-        <PredecessorsSection />
-        <SuccessorsSection />
-        <OtherAttributesSection />
-      </Box>
-    </div>
+    <Box
+      key={nodeId}
+      component="main"
+      sx={{
+        pl: 4,
+        pr: 4,
+        pb: 8,
+        flex: 1,
+      }}
+    >
+      <Typography variant="h1" component="h2" mt={5} mb={5}>
+        {title}
+      </Typography>
+      <NodeValiditySection />
+      <NameSection />
+      <DisplayNameSection />
+      <CodeAttributesSection />
+      <UnitTypeSection />
+      <ParentsSection />
+      <ChildrenSection />
+      <PredecessorsSection />
+      <SuccessorsSection />
+      <OtherAttributesSection />
+    </Box>
   );
 };
 

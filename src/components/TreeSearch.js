@@ -12,7 +12,13 @@ const TreeSearch = () => {
   };
 
   return (
-    <NodeField id="tree-search" variant="search" onChange={handleChange} />
+    <NodeField
+      size="small"
+      sx={{ width: 350 }}
+      id="tree-search"
+      variant="search"
+      onChange={handleChange}
+    />
   );
 };
 
