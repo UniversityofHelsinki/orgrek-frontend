@@ -14,6 +14,8 @@ export const api = createApi({
     'CodeAttributes',
     'NodeValidity',
     'Parents',
+    'NodeOtherAttributes',
+    'SaveNodeOtherAttributes',
   ],
   endpoints: (builder) => ({
     getTree: builder.query({
@@ -128,6 +130,32 @@ export const api = createApi({
         method: 'GET',
       }),
     }),
+    getNodeOtherAttributes: builder.query({
+      providesTags: (result, error, { nodeId }) => [
+        { type: 'NodeOtherAttributes', id: nodeId },
+      ],
+      query: ({ nodeId, selectedHierarchies }) => {
+        return {
+          url: `/node/${nodeId}/attributes/others/hierarchies/${selectedHierarchies}`,
+          method: 'GET',
+        };
+      },
+    }),
+    saveNodeOtherAttributes: builder.mutation({
+      invalidatesTags: (result, error, { nodeId }) => {
+        if (error) {
+          return [];
+        }
+        return [{ type: 'NodeOtherAttributes', id: nodeId }, { type: 'Tree' }];
+      },
+      query: ({ valuesArray, nodeId }) => {
+        return {
+          url: `/node/${nodeId}/attributes/others`,
+          method: 'PUT',
+          body: valuesArray,
+        };
+      },
+    }),
     getParents: builder.query({
       providesTags: (result, error, { nodeId }) => [
         { type: 'Parents', id: nodeId },
@@ -212,5 +240,7 @@ export const {
   useSaveNodeValidityMutation,
   useSaveParentsMutation,
   useGetParentsQuery,
+  useGetNodeOtherAttributesQuery,
+  useSaveNodeOtherAttributesMutation,
   useSaveChildMutation,
 } = api;
