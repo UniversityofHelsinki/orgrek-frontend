@@ -42,6 +42,9 @@ export const authActions = {
   otherAttributes: {
     edit: { allowRoles: allWriterRoles },
   },
+  successors: {
+    edit: { allowRoles: allWriterRoles },
+  },
 };
 
 /**

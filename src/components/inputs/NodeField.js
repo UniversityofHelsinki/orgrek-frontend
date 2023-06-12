@@ -74,6 +74,9 @@ const NodeField = ({
       freeSolo={variant === 'search'}
       onChange={handleChange}
       value={value}
+      isOptionEqualToValue={(option, value) => {
+        return option.uniqueId === value.id;
+      }}
       options={uniqueOptions}
       getOptionLabel={(option) => option.name || ''}
       renderOption={(props, option) => (
@@ -136,7 +139,7 @@ NodeField.propTypes = {
    *
    * HelperText component can be used with this prop to display errors.
    */
-  helperText: PropTypes.string,
+  helperText: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
 
   /** If true, the component is disabled. */
   disabled: PropTypes.bool,

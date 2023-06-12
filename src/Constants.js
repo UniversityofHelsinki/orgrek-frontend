@@ -12,6 +12,7 @@ export const profitCenterId = 'talous_tunnus';
 export const disciplineId = 'oppiaine_tunnus';
 export const billingId = 'laskutus_tunnus';
 export const mainariId = 'mainari_tunnus';
+export const successorHierarchy = 'history';
 
 export const notOtherAttributes = [
   nameFi,
@@ -39,4 +40,5 @@ export const codeAttributes = [
   disciplineId,
   profitCenterId,
   researchId,
+  successorHierarchy,
 ];

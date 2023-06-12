@@ -1,54 +1,110 @@
 import React from 'react';
 import EditableAccordion from '../EditableAccordion';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
+import Placeholder from '../Placeholder';
+import EditableContent from '../EditableContent';
+import { useGetSuccessorsQuery, useSaveSuccessorsMutation } from '../../store';
+import { useNodeId } from '../../hooks/useNodeId';
+import { authActions } from '../../auth';
+import SuccessorEditor from './SuccessorEditor';
+import { successorsSchema } from '../../utils/validations';
 import Validity from '../attributes/Validity';
 import AttributesTable from '../attributes/AttributesTable';
 import useContentLanguage from '../../hooks/useContentLanguage';
 import Link from '../Link';
-import Placeholder from '../Placeholder';
+import { successorHierarchy } from '../../Constants';
+import { toFormValues } from '../../utils/attributeUtils';
 
 const SuccessorsSection = () => {
   const { t } = useTranslation();
-  const successors = useSelector((state) => state.nrd.nodeSuccessors);
+  const nodeId = useNodeId();
+  const { data, isFetching } = useGetSuccessorsQuery(nodeId);
+  const [saveSuccessors] = useSaveSuccessorsMutation();
   const contentLanguage = useContentLanguage();
 
+  const handleSubmit = (values) => {
+    const successors = Object.values(values)
+      .flat()
+      .map((value) => asEdge(value));
+    return saveSuccessors({ successors, nodeId }).unwrap();
+  };
+
+  const asAttribute = (successor) => ({
+    id: successor.edgeId,
+    key: successor.fullName,
+    value: { id: successor.uniqueId, name: successor.fullName },
+    nodeStartDate: successor.startDate,
+    nodeEndDate: successor.endDate,
+    startDate: successor.edgeStartDate,
+    endDate: null,
+    isNew: Boolean(successor.isNew),
+    deleted: Boolean(successor.deleted),
+  });
+
+  const asEdge = (value) => ({
+    id: value.id,
+    parentUniqueId: value.value.id,
+    childUniqueId: nodeId,
+    startDate: value.startDate,
+    endDate: null,
+    isNew: value.isNew,
+    deleted: value.deleted,
+    hierarchy: successorHierarchy,
+  });
   const columns = [
     {
       label: t('name'),
-      render: (item) => <Link node={item.uniqueId}>{item.fullName}</Link>,
+      render: (item) => <Link node={item.value.id}>{item.key}</Link>,
     },
     {
       label: t('valid_dates'),
       render: (item) => (
-        <Validity startDate={item.startDate} endDate={item.endDate} />
+        <Validity startDate={item.nodeStartDate} endDate={item.nodeEndDate} />
       ),
     },
     {
       label: t('successor_edge_valid'),
       render: (item) => (
-        <Validity startDate={item.edgeStartDate} endDate={item.edgeEndDate} />
+        <Validity startDate={item.startDate} endDate={item.endDate} />
       ),
     },
   ];
 
-  const keyFn = (item) =>
-    `${item.fullName}-${item.startDate}-${item.endDate}-${item.edgeStartDate}-${item.edgeEndDate}`;
-
-  const data = successors[contentLanguage] || [];
+  const successorsData = (data && data[contentLanguage]) || [];
   const title = t('successors.title');
-  const empty = data.length === 0;
+  const empty = successorsData.length === 0;
 
+  const asAttributes = successorsData.map((successor) =>
+    asAttribute(successor)
+  );
+
+  const renderedContent = (
+    <AttributesTable columns={columns} data={asAttributes} summary={title} />
+  );
+
+  const emptyInitialValues = { new_successor: [] };
+
+  const initialValues =
+    successorsData.length > 0 ? toFormValues(asAttributes) : emptyInitialValues;
   return (
-    <EditableAccordion title={title}>
-      <Placeholder empty={empty} placeholder={t('successors.empty')}>
-        <AttributesTable
-          columns={columns}
-          keyFn={keyFn}
-          data={data}
-          summary={title}
-        />
-      </Placeholder>
+    <EditableAccordion
+      title={title}
+      loading={isFetching}
+      defaultExpanded={!empty}
+    >
+      <EditableContent
+        editorComponent={<SuccessorEditor />}
+        initialValues={initialValues}
+        onSubmit={handleSubmit}
+        successMessage={t('successorInfo.saveSuccess')}
+        errorMessage={t('successorInfo.saveError')}
+        authActions={authActions.successors}
+        validationSchema={successorsSchema(Object.keys(initialValues))}
+      >
+        <Placeholder empty={empty} placeholder={t('successors.empty')}>
+          {renderedContent}
+        </Placeholder>
+      </EditableContent>
     </EditableAccordion>
   );
 };
