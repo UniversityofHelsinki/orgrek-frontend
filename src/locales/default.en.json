@@ -335,13 +335,20 @@
     "empty": "No sub units",
     "title": "Sub Units"
   },
+  "successorInfo": {
+    "saveError": "Saving successor failed",
+    "saveSuccess": "Successor saved"
+  },
   "successor_edge_valid": "Date of the edge",
   "successor_name": "Name",
   "successor_units": "Successors",
   "successor_valid": "Valid",
   "successors": {
     "empty": "No successors",
-    "title": "Successors"
+    "nodeValidity": "{{validity}}",
+    "nodeValidityNotSpecified": "Unit validity not specified",
+    "title": "Successors",
+    "valueLabel": "Value"
   },
   "suomi": "suomi",
   "sv": "sv",

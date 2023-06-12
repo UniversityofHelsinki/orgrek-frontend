@@ -385,13 +385,20 @@
     "createSuccess": "Yksikkö luotu.",
     "createError": "Virhe."
   },
+  "successorInfo": {
+    "saveError": "Seuraajayksikön tallennus epäonnistui",
+    "saveSuccess": "Seuraajayksikkö tallennettu"
+  },
   "successor_edge_valid": "Yhteyden päivämäärä",
   "successor_name": "Nimi",
   "successor_units": "Seuraavat yksiköt",
   "successor_valid": "Voimassaolo",
   "successors": {
     "empty": "Ei seuraavia yksiköitä",
-    "title": "Seuraavat yksiköt"
+    "nodeValidity": "Yksikön voimassaolo {{validity}}",
+    "nodeValidityNotSpecified": "Yksikön voimassaoloa ei määritetty",
+    "title": "Seuraavat yksiköt",
+    "valueLabel": "Arvo"
   },
   "suomi": "Nimi (suomi)",
   "sv": "sv",

@@ -197,14 +197,11 @@ export const apiGetNodePredecessorsSuccessCall = (data) => {
   };
 };
 
-export const fetchNodeSuccessors = (uniqueId, selectedDay) => {
+export const fetchNodeSuccessors = (uniqueId) => {
   const ORGREK_BACKEND_SERVER =
     process.env.REACT_APP_ORGREK_BACKEND_SERVER || '';
   const PATH = '/api/node/successors/';
-  const date = selectedDay
-    ? selectedDay.toLocaleDateString('fi-FI')
-    : new Date().toLocaleDateString('fi-FI');
-  const PARAMS = `${uniqueId}/${date}`;
+  const PARAMS = `${uniqueId}`;
   return async (dispatch) => {
     let response = await fetch(`${ORGREK_BACKEND_SERVER}${PATH}${PARAMS}`, {
       headers: { 'Content-Type': 'application/json' },
@@ -265,7 +262,7 @@ export const fetchNodeFullNamesFuture = (uniqueId, selectedDay) => {
   };
 };
 
-export const fetchNodeFullNamesAll = (uniqueId, selectedDay) => {
+export const fetchNodeFullNamesAll = (uniqueId) => {
   const ORGREK_BACKEND_SERVER =
     process.env.REACT_APP_ORGREK_BACKEND_SERVER || '';
   const PATH = `/api/node/fullname/all/${uniqueId}`;

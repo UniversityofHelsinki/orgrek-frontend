@@ -58,7 +58,7 @@ DeletedAttributeRow.propTypes = {
   /** Attribute value with start and end dates */
   value: PropTypes.shape({
     /** Attribute value */
-    value: PropTypes.string,
+    value: PropTypes.any,
 
     /** Validity start date, ISO 8601 date string without time component */
     startDate: PropTypes.string,
