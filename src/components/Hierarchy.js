@@ -1,48 +1,58 @@
 import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
-import Tree from './Tree';
+import { connect, useSelector } from 'react-redux';
 import TreeSearch from './TreeSearch';
 import ReviewDate from './ReviewDate';
 import { fetchSelectableHierarchies } from '../actions/treeAction';
-import { Col, Container, Row } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import HierarchySelection from './HierarchySelection';
-import Box from '@mui/material/Box';
+import { Stack, Paper, useTheme } from '@mui/material';
+import useFetchNode from '../hooks/useFetchNode';
+import NodeViewControl from './NodeViewControl';
+import IfAdmin from '../auth/IfAdmin';
 
 const Hierarchy = (props) => {
   useEffect(() => {
     props.fetchSelectableHierarchies();
   }, []);
+  const node = useFetchNode();
+  const hierarchies = useSelector(
+    (state) => state.tree.selectedHierarchy || state.tree.defaultHierarchy
+  );
+  const selectedDay = useSelector((state) => state.dr.selectedDay);
 
+  const theme = useTheme();
   const { t } = useTranslation();
   return (
-    <Box sx={{ pl: 1, pr: 1 }}>
-      <Container>
-        <Row>
-          <h3 id={'main-content'}>
-            <label htmlFor="hierarchy-selection" id="hierarchy-selection-label">
-              {t('units')}
-            </label>
-          </h3>
-          <Col>
-            <HierarchySelection />
-          </Col>
-        </Row>
-        <Row>
-          <h4>{t('display_date')}</h4>
-          <Col>
-            <ReviewDate />
-          </Col>
-        </Row>
-        <Row>
-          <h4>{t('search_by_name_or_code')}</h4>
+    <Paper
+      elevation={0}
+      sx={{
+        top: 0,
+        position: 'sticky',
+        pt: 2,
+        pb: 2,
+        zIndex: theme.zIndex.appBar,
+      }}
+    >
+      <Stack
+        direction="row"
+        alignItems="center"
+        justifyContent="space-between"
+        spacing={2}
+      >
+        <Stack direction="row" spacing={2} id="main-content">
+          <ReviewDate />
+          <HierarchySelection size="small" limitTags={2} />
           <TreeSearch />
-        </Row>
-        <Row>
-          <Tree sx={{ mt: 2 }} />
-        </Row>
-      </Container>
-    </Box>
+        </Stack>
+        <IfAdmin>
+          <NodeViewControl
+            node={node}
+            selectedDay={selectedDay}
+            selectedHierarchies={hierarchies}
+          />
+        </IfAdmin>
+      </Stack>
+    </Paper>
   );
 };
 

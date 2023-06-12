@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Form, Row, Col } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { switchHistory, switchComing } from '../actions/nodeViewAction';
 import {
@@ -27,6 +26,7 @@ import {
   fetchNodeChildrenAll,
   fetchNodeParentsAll,
 } from '../actions/hierarchyAction';
+import { FormControlLabel, Stack, Switch } from '@mui/material';
 
 const NodeViewControl = (props) => {
   const { t, i18n } = useTranslation();
@@ -45,37 +45,32 @@ const NodeViewControl = (props) => {
     props.node,
     props.selectedHierarchy,
   ]);
+
   return (
-    <Form>
-      <Row className="align-items-center">
-        <Col sm="auto">
-          <Form.Check
-            inline
+    <Stack direction="row">
+      <FormControlLabel
+        label={t('show_history')}
+        labelPlacement="start"
+        control={
+          <Switch
             checked={props.showHistory}
-            type="switch"
             id="show_history_switch"
-            label={t('show_history')}
             onChange={() => props.onSwitchHistory(!props.showHistory)}
           />
-        </Col>
-        <Col sm="auto">
-          <label>
-            {t('display_date')}{' '}
-            {new Date(props.selectedDay).toLocaleDateString('fi-FI')}
-          </label>
-        </Col>
-        <Col sm="auto">
-          <Form.Check
-            inline
+        }
+      ></FormControlLabel>
+      <FormControlLabel
+        label={t('show_coming')}
+        labelPlacement="start"
+        control={
+          <Switch
             checked={props.showComing}
-            type="switch"
             id="show_coming_switch"
-            label={t('show_coming')}
             onChange={() => props.onSwitchComing(!props.showComing)}
           />
-        </Col>
-      </Row>
-    </Form>
+        }
+      ></FormControlLabel>
+    </Stack>
   );
 };
 
