@@ -325,10 +325,10 @@ export const successorSchema = object({
 
 export const successorsSchema = (keys) => {
   const arrayOfSuccessors = array()
-    .of(attributeSchema)
+    .of(successorSchema)
     .required()
     .filterDeletedNew();
-  object(
+  return object(
     keys.reduce((schema, key) => {
       schema[key] = arrayOfSuccessors;
       return schema;
