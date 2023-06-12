@@ -311,6 +311,30 @@ export const nodeValiditySchema = object({
   endDate: string().date().nullable().afterStartDate({ days: 2 }, '1600-01-01'),
 });
 
+export const successorSchema = object({
+  id: number().required(),
+  key: string().required(),
+  value: object({
+    id: number().required(),
+    name: string().required(),
+  }).required(),
+  startDate: string().date().required().minDate('1600-01-01'),
+  isNew: boolean().required(),
+  deleted: boolean().required(),
+});
+
+export const successorsSchema = (keys) => {
+  const arrayOfSuccessors = array()
+    .of(successorSchema)
+    .required()
+    .filterDeletedNew();
+  return object(
+    keys.reduce((schema, key) => {
+      schema[key] = arrayOfSuccessors;
+      return schema;
+    }, {})
+  );
+};
 export const newNodeValiditySchema = object({
   startDate: string().date().minDate('1600-01-01'),
   nameFi: string().required(),
