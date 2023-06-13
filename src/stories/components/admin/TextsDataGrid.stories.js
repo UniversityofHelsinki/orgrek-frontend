@@ -7,6 +7,7 @@ import React from 'react';
 import defaultFi from '../../../locales/default.fi.json';
 import defaultSv from '../../../locales/default.sv.json';
 import defaultEn from '../../../locales/default.en.json';
+import { createAdmin, createWriter, withUser } from '../../../mockStore';
 
 const defaultTexts = [
   ...textsToRows(defaultFi, 'fi'),
@@ -34,6 +35,14 @@ export default {
   argTypes: {
     onDeleteRows: { action: true },
   },
+  decorators: [
+    // Use same width for the container as in Sketch so that screenshots fit nicely
+    (Story) => (
+      <Container sx={{ pt: 6, pb: 6, maxWidth: 1440 }}>
+        <Story />
+      </Container>
+    ),
+  ],
 };
 
 export const Default = {
@@ -110,14 +119,7 @@ export const Default = {
       },
     ],
   },
-  decorators: [
-    // Use same width for the container as in Sketch so that screenshots fit nicely
-    (Story) => (
-      <Container sx={{ pt: 6, pb: 6, maxWidth: 1440 }}>
-        <Story />
-      </Container>
-    ),
-  ],
+  decorators: [withUser(createAdmin())],
 };
 
 export const Empty = {
@@ -132,4 +134,9 @@ export const AllTexts = {
   args: {
     initialRows: data,
   },
+};
+
+export const ReadOnly = {
+  ...Default,
+  decorators: [withUser(createWriter())],
 };

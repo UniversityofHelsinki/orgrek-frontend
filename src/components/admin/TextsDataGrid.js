@@ -5,6 +5,8 @@ import GridToolbar from './GridToolbar';
 import Typography from '@mui/material/Typography';
 import timestampColumnType from './timestampColumnType';
 import PropTypes from 'prop-types';
+import useCurrentUser from '../../hooks/useCurrentUser';
+import { authActions, isAuthorized } from '../../auth';
 
 const getRowId = (row) => `${row.language}.${row.key}`;
 
@@ -57,6 +59,7 @@ export const mergeTexts = (first, second) => {
  */
 const TextsDataGrid = ({ initialRows, onDeleteRows }) => {
   const { t } = useTranslation();
+  const user = useCurrentUser();
   const [rows, setRows] = React.useState(initialRows);
 
   // TODO: Needed for add row dialog
@@ -97,7 +100,7 @@ const TextsDataGrid = ({ initialRows, onDeleteRows }) => {
       field: 'value',
       headerName: t('texts_value'),
       flex: 1,
-      editable: true,
+      editable: isAuthorized(user, authActions.texts.edit),
       valueGetter: (params) => params.row.value || params.row.defaultValue,
       renderCell: (params) => (
         <Typography
@@ -134,7 +137,10 @@ const TextsDataGrid = ({ initialRows, onDeleteRows }) => {
       headerName: t('texts_timestamp'),
       width: 200,
     },
-    {
+  ];
+
+  if (isAuthorized(user, authActions.texts.edit)) {
+    columns.push({
       field: t('dataGrid.actionsHeader'),
       type: 'actions',
       hideable: false,
@@ -144,12 +150,12 @@ const TextsDataGrid = ({ initialRows, onDeleteRows }) => {
 
         const actions = [];
 
-        const handleDeleteRow = (event, a, b) => {
+        const handleDeleteRow = () => {
           const rowsToDelete = [params.row];
           onDeleteRows(rowsToDelete);
         };
 
-        const handleDeleteAllLanguages = (event, a, b) => {
+        const handleDeleteAllLanguages = () => {
           const rowsToDelete = rows.filter((r) => r.key === params.row.key);
           onDeleteRows(rowsToDelete);
         };
@@ -196,8 +202,8 @@ const TextsDataGrid = ({ initialRows, onDeleteRows }) => {
 
         return actions;
       },
-    },
-  ];
+    });
+  }
 
   const handleAdd = () => {
     // TODO: Open dialog
@@ -237,6 +243,7 @@ const TextsDataGrid = ({ initialRows, onDeleteRows }) => {
       slotProps={{
         toolbar: {
           onAddRow: handleAdd,
+          authActions: authActions.texts,
         },
       }}
     />

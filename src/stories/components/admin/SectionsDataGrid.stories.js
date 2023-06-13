@@ -1,6 +1,7 @@
 import React from 'react';
 import SectionsDataGrid from '../../../components/admin/SectionsDataGrid';
 import Container from '@mui/material/Container';
+import { createAdmin, createWriter, withUser } from '../../../mockStore';
 
 const data = [
   {
@@ -131,13 +132,6 @@ export default {
   parameters: {
     layout: 'fullscreen',
   },
-};
-
-export const Default = {
-  args: {
-    initialRows: data,
-    attributeKeys,
-  },
   decorators: [
     // Use same width for the container as in Sketch so that screenshots fit nicely
     (Story) => (
@@ -148,9 +142,23 @@ export const Default = {
   ],
 };
 
+export const Default = {
+  args: {
+    initialRows: data,
+    attributeKeys,
+  },
+  decorators: [withUser(createAdmin())],
+};
+
 export const Empty = {
+  ...Default,
   args: {
     initialRows: [],
     attributeKeys,
   },
+};
+
+export const ReadOnly = {
+  ...Default,
+  decorators: [withUser(createWriter())],
 };

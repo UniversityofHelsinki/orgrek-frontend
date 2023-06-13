@@ -2,7 +2,7 @@
 import HierarchyFiltersDataGrid from '../../../components/admin/HierarchyFiltersDataGrid';
 import Container from '@mui/material/Container';
 import React from 'react';
-import { withMockStore } from '../../../mockStore';
+import { createAdmin, createWriter, withUser } from '../../../mockStore';
 
 const data = [
   {
@@ -740,13 +740,6 @@ export default {
   parameters: {
     layout: 'fullscreen',
   },
-  decorators: [withMockStore()],
-};
-
-export const Default = {
-  args: {
-    initialRows: data,
-  },
   decorators: [
     // Use same width for the container as in Sketch so that screenshots fit nicely
     (Story) => (
@@ -757,8 +750,21 @@ export const Default = {
   ],
 };
 
+export const Default = {
+  args: {
+    initialRows: data,
+  },
+  decorators: [withUser(createAdmin())],
+};
+
 export const Empty = {
+  ...Default,
   args: {
     initialRows: [],
   },
+};
+
+export const ReadOnly = {
+  ...Default,
+  decorators: [withUser(createWriter())],
 };

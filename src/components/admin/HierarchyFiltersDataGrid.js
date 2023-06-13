@@ -6,10 +6,14 @@ import { DataGrid, GridActionsCellItem } from '@mui/x-data-grid';
 import GridToolbar from './GridToolbar';
 import PropTypes from 'prop-types';
 import autocompleteColumnType from './autocompleteColumnType';
+import { authActions, isAuthorized } from '../../auth';
+import useCurrentUser from '../../hooks/useCurrentUser';
 
 const HierarchyFiltersDataGrid = ({ initialRows }) => {
   const { t } = useTranslation();
+  const user = useCurrentUser();
   const [rows, setRows] = React.useState(initialRows);
+  const editable = isAuthorized(user, authActions.hierarchyFilters.edit);
 
   const hierarchyOptions = useMemo(
     () =>
@@ -60,7 +64,7 @@ const HierarchyFiltersDataGrid = ({ initialRows }) => {
       ...autocompleteColumnType,
       headerName: t('hierarchy_filters_hierarchy'),
       flex: 1,
-      editable: true,
+      editable,
       valueOptions: hierarchyOptions,
       getCreateNewLabel: (value) =>
         t('hierarchyFiltersDataGrid.newHierarchyLabel', { value }),
@@ -71,7 +75,7 @@ const HierarchyFiltersDataGrid = ({ initialRows }) => {
       ...autocompleteColumnType,
       headerName: t('hierarchy_filters_key'),
       flex: 1,
-      editable: true,
+      editable,
       valueOptions: keyOptions,
       getCreateNewLabel: (value) =>
         t('hierarchyFiltersDataGrid.newAttributeLabel', { value }),
@@ -82,7 +86,7 @@ const HierarchyFiltersDataGrid = ({ initialRows }) => {
       ...autocompleteColumnType,
       headerName: t('hierarchy_filters_value'),
       flex: 1,
-      editable: true,
+      editable,
       valueOptions: valueOptions,
       filterOptions: (options, row) =>
         options.filter((option) => option.key === row.key),
@@ -96,7 +100,7 @@ const HierarchyFiltersDataGrid = ({ initialRows }) => {
       headerName: t('hierarchy_filters_start_date'),
       valueGetter: (params) => toDate(params.row.startDate),
       flex: 1,
-      editable: true,
+      editable,
     },
     {
       field: 'endDate',
@@ -104,9 +108,12 @@ const HierarchyFiltersDataGrid = ({ initialRows }) => {
       headerName: t('hierarchy_filters_end_date'),
       valueGetter: (params) => toDate(params.row.endDate),
       flex: 1,
-      editable: true,
+      editable,
     },
-    {
+  ];
+
+  if (editable) {
+    columns.push({
       field: t('dataGrid.actionsHeader'),
       type: 'actions',
       hideable: false,
@@ -119,8 +126,8 @@ const HierarchyFiltersDataGrid = ({ initialRows }) => {
           showInMenu
         />,
       ],
-    },
-  ];
+    });
+  }
 
   const handleAdd = () => {
     const id = Math.floor(Math.random() * -1000000);
@@ -149,6 +156,7 @@ const HierarchyFiltersDataGrid = ({ initialRows }) => {
       slotProps={{
         toolbar: {
           onAddRow: handleAdd,
+          authActions: authActions.hierarchyFilters,
         },
       }}
     />

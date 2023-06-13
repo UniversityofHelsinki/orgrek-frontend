@@ -5,10 +5,14 @@ import PropTypes from 'prop-types';
 import { toDate } from '../../utils/dateUtils';
 import dateColumnType from './dateColumnType';
 import GridToolbar from './GridToolbar';
+import { authActions, isAuthorized } from '../../auth';
+import useCurrentUser from '../../hooks/useCurrentUser';
 
 const SectionsDataGrid = ({ initialRows, attributeKeys }) => {
   const { t } = useTranslation();
+  const user = useCurrentUser();
   const [rows, setRows] = React.useState(initialRows);
+  const editable = isAuthorized(user, authActions.sections.edit);
 
   const sectionOptions = [
     { value: 'names', label: t('name_info') },
@@ -35,7 +39,7 @@ const SectionsDataGrid = ({ initialRows, attributeKeys }) => {
       type: 'singleSelect',
       headerName: t('sectionsDataGrid.sectionColumnHeader'),
       flex: 1,
-      editable: true,
+      editable,
       valueOptions: sectionOptions,
     },
     {
@@ -46,14 +50,14 @@ const SectionsDataGrid = ({ initialRows, attributeKeys }) => {
       valueGetter: (params) => (params.row.id > 0 ? params.row.id * 100 : ''), // id * 100 is here just for demonstration
       valueFormatter: (params) => params.value,
       width: 100,
-      editable: true,
+      editable,
     },
     {
       field: 'attr',
       type: 'singleSelect',
       headerName: t('sectionsDataGrid.attributeColumnHeader'),
       flex: 1,
-      editable: true,
+      editable,
       valueOptions: attributeOptions,
     },
     {
@@ -62,9 +66,20 @@ const SectionsDataGrid = ({ initialRows, attributeKeys }) => {
       headerName: t('sectionsDataGrid.startDateColumnHeader'),
       valueGetter: (params) => toDate(params.row.startDate),
       flex: 1,
-      editable: true,
+      editable,
     },
     {
+      field: 'endDate',
+      ...dateColumnType,
+      headerName: t('sectionsDataGrid.endDateColumnHeader'),
+      valueGetter: (params) => toDate(params.row.endDate),
+      flex: 1,
+      editable,
+    },
+  ];
+
+  if (editable) {
+    columns.push({
       field: t('dataGrid.actionsHeader'),
       type: 'actions',
       hideable: false,
@@ -77,8 +92,8 @@ const SectionsDataGrid = ({ initialRows, attributeKeys }) => {
           showInMenu
         />,
       ],
-    },
-  ];
+    });
+  }
 
   const handleAdd = () => {
     const id = Math.floor(Math.random() * -1000000);
@@ -104,6 +119,7 @@ const SectionsDataGrid = ({ initialRows, attributeKeys }) => {
         columns: {
           columnVisibilityModel: {
             startDate: false,
+            endDate: false,
             order: false, // TODO: Hidden for now because this field does not yet exist, see OR-1052
           },
         },
@@ -114,6 +130,7 @@ const SectionsDataGrid = ({ initialRows, attributeKeys }) => {
       slotProps={{
         toolbar: {
           onAddRow: handleAdd,
+          authActions: authActions.sections,
         },
       }}
     />
