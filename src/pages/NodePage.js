@@ -12,36 +12,87 @@ const NodePage = () => {
   // Temporary solution until the old NodeDetails component is removed
   const editMode = useSelector((state) => state.editModeReducer.edit);
 
+  const [dragOptions, setDragOptions] = useState({
+    dragging: false,
+    width: 400,
+    // difference between the object on the right side of the divider and the divider itself.
+    // calculated every time the mouse is over the divider.
+    difference: null,
+  });
+
+  const isDragging = dragOptions.dragging;
+  const width = dragOptions.width;
+
   return (
     <Container sx={{ pb: 3 }}>
       <Hierarchy />
       <Box
         sx={{
           display: 'flex',
-          justifyContent: 'space-between',
+          justifyContent: 'start',
+          cursor: isDragging ? 'col-resize' : 'default',
+          userSelect: isDragging ? 'none' : 'auto',
         }}
+        onMouseMove={(e) => {
+          if (isDragging) {
+            setDragOptions({
+              ...dragOptions,
+              width: Math.max(0, e.clientX - dragOptions.difference),
+            });
+          }
+        }}
+        onMouseUp={(e) =>
+          setDragOptions({
+            ...dragOptions,
+            dragging: false,
+          })
+        }
+        onMouseLeave={(e) =>
+          setDragOptions({
+            ...dragOptions,
+            dragging: false,
+          })
+        }
       >
         <Box
           component="aside"
           sx={{
-            width: 400,
+            width: width,
             position: 'sticky',
             top: 80,
             alignSelf: 'flex-start',
+            overflowY: 'auto',
+            maxHeight: `90vh`,
+            pb: 3,
           }}
         >
-          <Box
-            sx={{
-              overflowY: 'auto',
-              maxHeight: `calc(100vh - ${80}px)`,
-              pb: 3,
-            }}
-          >
-            {/* TODO: Move this border style override to the Tree component */}
-            <Tree sx={{ borderStyle: 'none' }} />
-          </Box>
+          <Tree sx={{ borderStyle: 'none' }} />
         </Box>
-        <Divider orientation="vertical" flexItem component="div" />
+        <Divider
+          sx={{
+            ':hover': {
+              backgroundColor: 'primary.main',
+            },
+            cursor: 'col-resize',
+            backgroundColor: isDragging ? 'primary.main' : '',
+            padding: '2px',
+          }}
+          orientation="vertical"
+          flexItem
+          component="div"
+          onMouseOver={(e) =>
+            setDragOptions({
+              ...dragOptions,
+              difference: Math.abs(width - e.clientX),
+            })
+          }
+          onMouseDown={(e) =>
+            setDragOptions({
+              ...dragOptions,
+              dragging: true,
+            })
+          }
+        />
         {!editMode && <NodeDetails2 />}
         {editMode && <NodeDetails />}
       </Box>
