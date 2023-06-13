@@ -69,7 +69,7 @@ const NodePage = () => {
             },
             cursor: 'col-resize',
             backgroundColor: isDragging ? 'primary.main' : '',
-            padding: '3px',
+            padding: '2px',
           }}
           orientation="vertical"
           flexItem
