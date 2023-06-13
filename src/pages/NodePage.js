@@ -37,11 +37,17 @@ const NodePage = () => {
           if (isDragging) {
             setDragOptions({
               ...dragOptions,
-              width: e.clientX - dragOptions.difference,
+              width: Math.max(0, e.clientX - dragOptions.difference),
             });
           }
         }}
         onMouseUp={(e) =>
+          setDragOptions({
+            ...dragOptions,
+            dragging: false,
+          })
+        }
+        onMouseLeave={(e) =>
           setDragOptions({
             ...dragOptions,
             dragging: false,
