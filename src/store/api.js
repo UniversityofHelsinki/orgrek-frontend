@@ -16,6 +16,7 @@ export const api = createApi({
     'Parents',
     'NodeOtherAttributes',
     'SaveNodeOtherAttributes',
+    'Successors',
   ],
   endpoints: (builder) => ({
     getTree: builder.query({
@@ -207,6 +208,32 @@ export const api = createApi({
         };
       },
     }),
+    getSuccessors: builder.query({
+      providesTags: (result, error, nodeId) => [
+        { type: 'Successors', id: nodeId },
+      ],
+      query: (nodeId) => {
+        return {
+          url: `/node/successors/${nodeId}`,
+          method: 'GET',
+        };
+      },
+    }),
+    saveSuccessors: builder.mutation({
+      invalidatesTags: (result, error, { nodeId }) => {
+        if (error) {
+          return [];
+        }
+        return [{ type: 'Successors', id: nodeId }, { type: 'Tree' }];
+      },
+      query: ({ successors }) => {
+        return {
+          url: `/node/successor`,
+          method: 'PUT',
+          body: successors,
+        };
+      },
+    }),
     saveChild: builder.mutation({
       invalidatesTags: (result, error, { id }) => {
         if (error) {
@@ -242,5 +269,7 @@ export const {
   useGetParentsQuery,
   useGetNodeOtherAttributesQuery,
   useSaveNodeOtherAttributesMutation,
+  useGetSuccessorsQuery,
+  useSaveSuccessorsMutation,
   useSaveChildMutation,
 } = api;

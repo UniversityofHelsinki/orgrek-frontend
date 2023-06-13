@@ -306,11 +306,18 @@
     "empty": "empty",
     "title": "Nedre enheter"
   },
+  "successorInfo": {
+    "saveError": "saveError",
+    "saveSuccess": "saveSuccess"
+  },
   "successor_edge_valid": "successor_edge_valid",
   "successor_name": "Namn",
   "successors": {
     "empty": "empty",
-    "title": "title"
+    "nodeValidity": "nodeValidity",
+    "nodeValidityNotSpecified": "nodeValidityNotSpecified",
+    "title": "title",
+    "valueLabel": "valueLabel"
   },
   "suomi": "suomi",
   "sv": "sv",
