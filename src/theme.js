@@ -3,6 +3,7 @@ import { fiFI } from '@mui/x-data-grid';
 import EyeSlashIcon from './components/icons/EyeSlash';
 import SlimHamburgerMenuIcon from './components/icons/SlimHamburgerMenu';
 import SearchIcon from './components/icons/Search';
+import LoadingOverlay from './components/LoadingOverlay';
 
 /**
  * HY Design System colors
@@ -323,6 +324,7 @@ const theme = createTheme(
             columnMenuIcon: SlimHamburgerMenuIcon,
             moreActionsIcon: SlimHamburgerMenuIcon,
             quickFilterIcon: SearchIcon,
+            loadingOverlay: LoadingOverlay,
           },
           hideFooterSelectedRowCount: true,
         },
