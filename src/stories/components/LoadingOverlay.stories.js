@@ -24,11 +24,13 @@ export const LoadingOverlay = {
           fermentum vestibulum. Aenean non bibendum neque. Aliquam venenatis
           dolor quis laoreet varius. Nulla sit amet felis justo.
         </Typography>
-        <Box
-          sx={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }}
-        >
-          {loading && <LoadingOverlayComponent />}
-        </Box>
+        {loading && (
+          <Box
+            sx={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }}
+          >
+            <LoadingOverlayComponent />
+          </Box>
+        )}
       </Box>
     );
   },
