@@ -1,5 +1,4 @@
 import React from 'react';
-import EditButtons from '../EditButtons';
 import NodeValiditySection from './NodeValiditySection';
 import NameSection from './NameSection';
 import DisplayNameSection from './DisplayNameSection';
