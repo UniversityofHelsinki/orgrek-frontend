@@ -46,6 +46,10 @@ const NodeViewControl = (props) => {
     props.selectedHierarchy,
   ]);
 
+  if (!props.node) {
+    return <></>;
+  }
+
   return (
     <Stack direction="row">
       <FormControlLabel
