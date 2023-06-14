@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useEffect } from 'react';
 import { DataGrid, GridActionsCellItem } from '@mui/x-data-grid';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
@@ -8,11 +8,24 @@ import GridToolbar from './GridToolbar';
 import { authActions, isAuthorized } from '../../auth';
 import useCurrentUser from '../../hooks/useCurrentUser';
 
-const SectionsDataGrid = ({ initialRows, attributeKeys }) => {
+const SectionsDataGrid = ({
+  initialRows,
+  attributeKeys,
+  loading,
+  onAddRow,
+  onRowChange,
+  onDeleteRow,
+}) => {
   const { t } = useTranslation();
   const user = useCurrentUser();
-  const [rows, setRows] = React.useState(initialRows);
+  const [rows, setRows] = React.useState(initialRows || []);
   const editable = isAuthorized(user, authActions.sections.edit);
+
+  useEffect(() => {
+    if (!loading) {
+      setRows(initialRows);
+    }
+  }, [loading]);
 
   const sectionOptions = [
     { value: 'names', label: t('name_info') },
@@ -32,6 +45,33 @@ const SectionsDataGrid = ({ initialRows, attributeKeys }) => {
       })),
     [attributeKeys]
   );
+
+  const handleAddRow = () => {
+    const id = Math.floor(Math.random() * -1000000);
+    setRows((oldRows) => [
+      ...oldRows,
+      {
+        id,
+        section: null,
+        attr: null,
+        startDate: null,
+        endDate: null,
+        isNew: true,
+      },
+    ]);
+  };
+
+  const handleCellEditStop = (params) => {
+    if (params.row.isNew) {
+      onAddRow(params.row);
+    } else {
+      onRowChange(params.row);
+    }
+  };
+
+  const handleDeleteRow = (row) => {
+    onDeleteRow(row);
+  };
 
   const columns = [
     {
@@ -83,11 +123,11 @@ const SectionsDataGrid = ({ initialRows, attributeKeys }) => {
       field: t('dataGrid.actionsHeader'),
       type: 'actions',
       hideable: false,
-      getActions: () => [
+      getActions: (params) => [
         // eslint-disable-next-line react/jsx-key
         <GridActionsCellItem
           icon={null}
-          onClick={() => {}}
+          onClick={() => handleDeleteRow(params.row)}
           label={t('dataGrid.deleteRow')}
           showInMenu
         />,
@@ -95,26 +135,13 @@ const SectionsDataGrid = ({ initialRows, attributeKeys }) => {
     });
   }
 
-  const handleAdd = () => {
-    const id = Math.floor(Math.random() * -1000000);
-    setRows((oldRows) => [
-      ...oldRows,
-      {
-        id,
-        section: null,
-        attr: null,
-        startDate: null,
-        endDate: null,
-        isNew: true,
-      },
-    ]);
-  };
-
   return (
     <DataGrid
       autoHeight
       columns={columns}
       rows={rows}
+      loading={loading}
+      onCellEditStop={handleCellEditStop}
       initialState={{
         columns: {
           columnVisibilityModel: {
@@ -123,13 +150,16 @@ const SectionsDataGrid = ({ initialRows, attributeKeys }) => {
             order: false, // TODO: Hidden for now because this field does not yet exist, see OR-1052
           },
         },
+        sorting: {
+          sortModel: [{ field: 'section', sort: 'asc' }],
+        },
       }}
       slots={{
         toolbar: GridToolbar,
       }}
       slotProps={{
         toolbar: {
-          onAddRow: handleAdd,
+          onAddRow: handleAddRow,
           authActions: authActions.sections,
         },
       }}
@@ -138,7 +168,9 @@ const SectionsDataGrid = ({ initialRows, attributeKeys }) => {
 };
 
 SectionsDataGrid.propTypes = {
-  initialRows: PropTypes.array.isRequired,
+  initialRows: PropTypes.array,
+  attributeKeys: PropTypes.array,
+  loading: PropTypes.bool,
 };
 
 export default SectionsDataGrid;

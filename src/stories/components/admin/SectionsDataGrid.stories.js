@@ -132,6 +132,11 @@ export default {
   parameters: {
     layout: 'fullscreen',
   },
+  argTypes: {
+    onAddRow: { action: true },
+    onRowChange: { action: true },
+    onDeleteRow: { action: true },
+  },
   decorators: [
     // Use same width for the container as in Sketch so that screenshots fit nicely
     (Story) => (
@@ -146,6 +151,7 @@ export const Default = {
   args: {
     initialRows: data,
     attributeKeys,
+    loading: false,
   },
   decorators: [withUser(createAdmin())],
 };
@@ -153,8 +159,8 @@ export const Default = {
 export const Empty = {
   ...Default,
   args: {
+    ...Default.args,
     initialRows: [],
-    attributeKeys,
   },
 };
 

@@ -25,7 +25,7 @@ const AppRoutes = () => {
         {isAuthorized(user, authActions.hierarchyFilters.edit) && (
           <Route path="hierarchyfilters" element={<HierarchyFiltersPage />} />
         )}
-        {isAuthorized(user, authActions.sections.edit) && (
+        {isAuthorized(user, authActions.sections.view) && (
           <Route path="sections" element={<SectionsPage />} />
         )}
       </Route>
