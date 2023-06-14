@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import Container from '@mui/material/Container';
 import { Box, Divider } from '@mui/material';
 import Tree from '../components/Tree';
+import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 
 const NodePage = () => {
   // Temporary solution until the old NodeDetails component is removed
@@ -68,12 +69,16 @@ const NodePage = () => {
         </Box>
         <Divider
           sx={{
-            ':hover': {
-              backgroundColor: 'primary.main',
+            ':hover::before': {
+              borderColor: 'primary.main',
+              borderWidth: '3px',
+            },
+            ':hover::after': {
+              borderColor: 'primary.main',
+              borderWidth: '3px',
             },
             cursor: 'col-resize',
-            backgroundColor: isDragging ? 'primary.main' : '',
-            padding: '2px',
+            borderColor: isDragging ? 'primary.main' : '',
           }}
           orientation="vertical"
           flexItem
@@ -90,7 +95,9 @@ const NodePage = () => {
               dragging: true,
             })
           }
-        />
+        >
+          <DragIndicatorIcon sx={{ color: 'action.active' }} />
+        </Divider>
         {!editMode && <NodeDetails />}
       </Box>
     </Container>
