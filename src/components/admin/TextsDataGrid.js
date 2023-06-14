@@ -7,6 +7,7 @@ import timestampColumnType from './timestampColumnType';
 import PropTypes from 'prop-types';
 import useCurrentUser from '../../hooks/useCurrentUser';
 import { authActions, isAuthorized } from '../../auth';
+import labelComparator from './labelComparator';
 
 const getRowId = (row) => `${row.language}.${row.key}`;
 
@@ -94,6 +95,7 @@ const TextsDataGrid = ({ initialRows, onDeleteRows }) => {
       headerName: t('texts_language'),
       type: 'singleSelect',
       valueOptions: languageOptions,
+      sortComparator: labelComparator(languageOptions),
       width: 50,
     },
     {

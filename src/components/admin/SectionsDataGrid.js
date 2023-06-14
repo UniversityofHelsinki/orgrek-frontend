@@ -7,6 +7,7 @@ import dateColumnType from './dateColumnType';
 import GridToolbar from './GridToolbar';
 import { authActions, isAuthorized } from '../../auth';
 import useCurrentUser from '../../hooks/useCurrentUser';
+import labelComparator from './labelComparator';
 
 const SectionsDataGrid = ({
   initialRows,
@@ -81,6 +82,7 @@ const SectionsDataGrid = ({
       flex: 1,
       editable,
       valueOptions: sectionOptions,
+      sortComparator: labelComparator(sectionOptions),
     },
     {
       field: 'order',
@@ -99,6 +101,7 @@ const SectionsDataGrid = ({
       flex: 1,
       editable,
       valueOptions: attributeOptions,
+      sortComparator: labelComparator(attributeOptions),
     },
     {
       field: 'startDate',
