@@ -1,6 +1,6 @@
 import { expect } from '@storybook/jest';
 import React from 'react';
-import NodeDetails from '../../../components/nodeDetails/NodeDetails2';
+import NodeDetails from '../../../components/nodeDetails/NodeDetails';
 import {
   createAdmin,
   createNodeState,

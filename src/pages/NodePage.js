@@ -1,10 +1,8 @@
 import Hierarchy from '../components/Hierarchy';
-import NodeDetails2 from '../components/nodeDetails/NodeDetails2';
-import NodeDetails from '../components/NodeDetails';
+import NodeDetails from '../components/nodeDetails/NodeDetails';
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import Container from '@mui/material/Container';
-import Grid from '@mui/material/Unstable_Grid2';
 import { Box, Divider } from '@mui/material';
 import Tree from '../components/Tree';
 
@@ -93,8 +91,7 @@ const NodePage = () => {
             })
           }
         />
-        {!editMode && <NodeDetails2 />}
-        {editMode && <NodeDetails />}
+        {!editMode && <NodeDetails />}
       </Box>
     </Container>
   );
