@@ -5,7 +5,7 @@ import ReviewDate from './ReviewDate';
 import { fetchSelectableHierarchies } from '../actions/treeAction';
 import { useTranslation } from 'react-i18next';
 import HierarchySelection from './HierarchySelection';
-import { Stack, Paper, useTheme } from '@mui/material';
+import { Paper, Stack, useTheme } from '@mui/material';
 import useFetchNode from '../hooks/useFetchNode';
 import NodeViewControl from './NodeViewControl';
 
