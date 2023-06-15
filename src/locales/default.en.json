@@ -57,9 +57,9 @@
   "create_new_sub_unit": "Create new sub-unit",
   "create_new_unit": "Create new unit",
   "dataGrid": {
-    "actionsHeader": "actionsHeader",
-    "addRow": "addRow",
-    "deleteRow": "deleteRow"
+    "actionsHeader": "Actions",
+    "addRow": "Add row",
+    "deleteRow": "Delete row"
   },
   "date_after": "Valid after",
   "date_before": "Valid before",
@@ -145,11 +145,9 @@
   "henkilostoyksikko": "Personnel Unit",
   "hierarchies": "Hierarchies",
   "hierarchyFiltersDataGrid": {
-    "actionsHeader": "actionsHeader",
-    "deleteRow": "deleteRow",
-    "newAttributeLabel": "newAttributeLabel",
-    "newAttributeValueLabel": "newAttributeValueLabel",
-    "newHierarchyLabel": "newHierarchyLabel"
+    "newAttributeLabel": "New attribute \"{{value}}\"",
+    "newAttributeValueLabel": "New value \"{{value}}\"",
+    "newHierarchyLabel": "New hierarchy \"{{value}}\""
   },
   "hierarchy_filters": "Filters",
   "hierarchy_filters_cancel_button": "hierarchy_filters_cancel_button",
@@ -333,10 +331,8 @@
   "search_place_holder": "Search with keyword..",
   "sections": "Sections",
   "sectionsDataGrid": {
-    "actionsHeader": "Actions",
     "attributeColumnHeader": "Attribute",
-    "deleteRow": "Delete row",
-    "endDateColumnHeader": "endDateColumnHeader",
+    "endDateColumnHeader": "End date",
     "orderColumnHeader": "Order",
     "sectionColumnHeader": "Section",
     "startDateColumnHeader": "Start date"
@@ -400,13 +396,12 @@
   "text_value_maximum_length": "text_value_maximum_length",
   "texts": "Texts",
   "textsDataGrid": {
-    "actionsHeader": "actionsHeader",
-    "defaultColumnHeader": "defaultColumnHeader",
-    "deleteAllLanguages": "deleteAllLanguages",
-    "newKeyLabel": "newKeyLabel",
-    "resetAllLanguages": "resetAllLanguages",
-    "resetToDefault": "resetToDefault",
-    "translatedColumnHeader": "translatedColumnHeader"
+    "defaultColumnHeader": "Default",
+    "deleteAllLanguages": "Delete all languages",
+    "newKeyLabel": "New key \"{{value}}\"",
+    "resetAllLanguages": "Reset all languages",
+    "resetToDefault": "Reset to default",
+    "translatedColumnHeader": "Translated"
   },
   "texts_cancel_button": "texts_cancel_button",
   "texts_delete_button": "texts_delete_button",

@@ -130,8 +130,6 @@
   "henkilostoyksikko": "Personalenhet",
   "hierarchies": "hierarchies",
   "hierarchyFiltersDataGrid": {
-    "actionsHeader": "actionsHeader",
-    "deleteRow": "deleteRow",
     "newAttributeLabel": "newAttributeLabel",
     "newAttributeValueLabel": "newAttributeValueLabel",
     "newHierarchyLabel": "newHierarchyLabel"
@@ -304,9 +302,7 @@
   "search_place_holder": "Sök med ordet...",
   "sections": "Sektioner",
   "sectionsDataGrid": {
-    "actionsHeader": "actionsHeader",
     "attributeColumnHeader": "attributeColumnHeader",
-    "deleteRow": "deleteRow",
     "endDateColumnHeader": "endDateColumnHeader",
     "orderColumnHeader": "orderColumnHeader",
     "sectionColumnHeader": "sectionColumnHeader",
@@ -369,7 +365,6 @@
   "text_value_maximum_length": "text_value_maximum_length",
   "texts": "Texter",
   "textsDataGrid": {
-    "actionsHeader": "actionsHeader",
     "defaultColumnHeader": "defaultColumnHeader",
     "deleteAllLanguages": "deleteAllLanguages",
     "newKeyLabel": "newKeyLabel",
