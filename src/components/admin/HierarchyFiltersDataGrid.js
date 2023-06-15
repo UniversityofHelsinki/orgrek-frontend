@@ -9,6 +9,7 @@ import autocompleteColumnType from './autocompleteColumnType';
 import { authActions, isAuthorized } from '../../auth';
 import useCurrentUser from '../../hooks/useCurrentUser';
 import actionsColumnType from './actionsColumnType';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const HierarchyFiltersDataGrid = ({ initialRows }) => {
   const { t } = useTranslation();
@@ -120,7 +121,7 @@ const HierarchyFiltersDataGrid = ({ initialRows }) => {
       getActions: () => [
         <GridActionsCellItem
           key="deleteRow"
-          icon={null}
+          icon={<DeleteIcon />}
           onClick={() => {}}
           label={t('dataGrid.deleteRow')}
           showInMenu
