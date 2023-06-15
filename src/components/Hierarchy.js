@@ -8,7 +8,6 @@ import HierarchySelection from './HierarchySelection';
 import { Stack, Paper, useTheme } from '@mui/material';
 import useFetchNode from '../hooks/useFetchNode';
 import NodeViewControl from './NodeViewControl';
-import IfAdmin from '../auth/IfAdmin';
 
 const Hierarchy = (props) => {
   useEffect(() => {
@@ -44,13 +43,11 @@ const Hierarchy = (props) => {
           <HierarchySelection size="small" limitTags={2} />
           <TreeSearch />
         </Stack>
-        <IfAdmin>
-          <NodeViewControl
-            node={node}
-            selectedDay={selectedDay}
-            selectedHierarchies={hierarchies}
-          />
-        </IfAdmin>
+        <NodeViewControl
+          node={node}
+          selectedDay={selectedDay}
+          selectedHierarchies={hierarchies}
+        />
       </Stack>
     </Paper>
   );
