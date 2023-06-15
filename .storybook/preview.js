@@ -14,8 +14,6 @@ const { t } = i18n;
 
 initI18n(false);
 
-// These Bootstrap styles are needed only for legacy components and can be
-// removed after everything has been migrated to Material UI
 import '../src/index.css';
 import '../src/App.css';
 
