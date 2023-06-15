@@ -365,11 +365,13 @@
   "text_value_maximum_length": "text_value_maximum_length",
   "texts": "Texter",
   "textsDataGrid": {
+    "defaultColumnDescription": "defaultColumnDescription",
     "defaultColumnHeader": "defaultColumnHeader",
     "deleteAllLanguages": "deleteAllLanguages",
     "newKeyLabel": "newKeyLabel",
     "resetAllLanguages": "resetAllLanguages",
     "resetToDefault": "resetToDefault",
+    "translatedColumnDescription": "translatedColumnDescription",
     "translatedColumnHeader": "translatedColumnHeader"
   },
   "texts_cancel_button": "texts_cancel_button",

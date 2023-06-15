@@ -125,6 +125,7 @@ const TextsDataGrid = ({
       field: 'default',
       type: 'boolean',
       headerName: t('textsDataGrid.defaultColumnHeader'),
+      description: t('textsDataGrid.defaultColumnDescription'),
       valueGetter: (params) => !params.row.value,
       width: 100,
     },
@@ -132,6 +133,7 @@ const TextsDataGrid = ({
       field: 'translated',
       type: 'boolean',
       headerName: t('textsDataGrid.translatedColumnHeader'),
+      description: t('textsDataGrid.translatedColumnDescription'),
       valueGetter: (params) =>
         (params.row.value || params.row.defaultValue) !== params.row.key,
       width: 100,

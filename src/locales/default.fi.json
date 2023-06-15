@@ -438,11 +438,13 @@
   "text_value_maximum_length": "merkkiä jäljellä",
   "texts": "Tekstit",
   "textsDataGrid": {
+    "defaultColumnDescription": "Onko teksti koodissa määritelty oletusarvo vai tietokantaan tallennettu muokattu teksti",
     "defaultColumnHeader": "Oletus",
     "deleteAllLanguages": "Poista kaikki kielet",
     "newKeyLabel": "Uusi avain \"{{value}}\"",
     "resetAllLanguages": "Palauta kaikki kielet",
     "resetToDefault": "Palauta oletukseksi",
+    "translatedColumnDescription": "Tämän sarakkeen avulla voit suodattaa tekstit, joiden arvo on sama kuin avain koodissa",
     "translatedColumnHeader": "Käännetty"
   },
   "texts_cancel_button": "Peruuta",

@@ -396,11 +396,13 @@
   "text_value_maximum_length": "text_value_maximum_length",
   "texts": "Texts",
   "textsDataGrid": {
+    "defaultColumnDescription": "defaultColumnDescription",
     "defaultColumnHeader": "Default",
     "deleteAllLanguages": "Delete all languages",
     "newKeyLabel": "New key \"{{value}}\"",
     "resetAllLanguages": "Reset all languages",
     "resetToDefault": "Reset to default",
+    "translatedColumnDescription": "translatedColumnDescription",
     "translatedColumnHeader": "Translated"
   },
   "texts_cancel_button": "texts_cancel_button",
