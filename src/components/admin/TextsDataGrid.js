@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { DataGrid, GridActionsCellItem } from '@mui/x-data-grid';
 import GridToolbar from './GridToolbar';
 import timestampColumnType from './timestampColumnType';
@@ -62,10 +62,22 @@ export const mergeTexts = (first, second) => {
 /**
  * Admin view for managing translations.
  */
-const TextsDataGrid = ({ initialRows, onDeleteRows }) => {
+const TextsDataGrid = ({
+  initialRows,
+  loading,
+  onAddRow,
+  onRowChange,
+  onDeleteRows,
+}) => {
   const { t } = useTranslation();
   const user = useCurrentUser();
-  const [rows, setRows] = React.useState(initialRows);
+  const [rows, setRows] = React.useState(initialRows || []);
+
+  useEffect(() => {
+    if (!loading) {
+      setRows(initialRows);
+    }
+  }, [loading]);
 
   // TODO: Needed for add row dialog
   const keyOptions = useMemo(
@@ -202,19 +214,23 @@ const TextsDataGrid = ({ initialRows, onDeleteRows }) => {
     });
   }
 
-  const handleAdd = () => {
-    // TODO: Open dialog
-    setRows((oldRows) => [
-      ...oldRows,
-      {
-        key: null,
-        language: null,
-        value: null,
-        user_name: null,
-        timestamp: null,
-        isNew: true,
-      },
-    ]);
+  const handleAddRow = () => {
+    // TODO: Open dialog and call onAddRow when dialog is submitted
+    const newRow = {
+      key: null,
+      language: null,
+      value: null,
+      user_name: null,
+      timestamp: null,
+      isNew: true,
+    };
+
+    setRows((oldRows) => [...oldRows, newRow]);
+    onAddRow(newRow);
+  };
+
+  const handleCellEditStop = (params) => {
+    onRowChange(params.row);
   };
 
   return (
@@ -233,6 +249,8 @@ const TextsDataGrid = ({ initialRows, onDeleteRows }) => {
       }}
       columns={columns}
       rows={rows}
+      loading={loading}
+      onCellEditStop={handleCellEditStop}
       getRowId={getRowId}
       getRowClassName={(params) => !params.row.value && 'texts-default'}
       slots={{
@@ -240,7 +258,7 @@ const TextsDataGrid = ({ initialRows, onDeleteRows }) => {
       }}
       slotProps={{
         toolbar: {
-          onAddRow: handleAdd,
+          onAddRow: handleAddRow,
           authActions: authActions.texts,
         },
       }}

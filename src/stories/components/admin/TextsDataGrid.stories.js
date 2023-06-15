@@ -45,6 +45,8 @@ export default {
     },
   },
   argTypes: {
+    onAddRow: { action: true },
+    onRowChange: { action: true },
     onDeleteRows: { action: true },
   },
   decorators: [
@@ -59,6 +61,7 @@ export default {
 
 export const Default = {
   args: {
+    loading: false,
     initialRows: [
       {
         key: 'examples.buttonText',
@@ -137,6 +140,7 @@ export const Default = {
 export const Empty = {
   ...Default,
   args: {
+    ...Default.args,
     initialRows: [],
   },
 };
@@ -144,6 +148,7 @@ export const Empty = {
 export const AllTexts = {
   ...Default,
   args: {
+    ...Default.args,
     initialRows: data,
   },
 };
