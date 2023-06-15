@@ -8,6 +8,10 @@ import useCurrentUser from '../../hooks/useCurrentUser';
 import { authActions, isAuthorized } from '../../auth';
 import labelComparator from './labelComparator';
 import actionsColumnType from './actionsColumnType';
+import ReplayIcon from '../icons/Replay';
+import DeleteIcon from '@mui/icons-material/Delete';
+import DeleteSweepIcon from '@mui/icons-material/DeleteSweep';
+import ClearAllIcon from '@mui/icons-material/ClearAll';
 
 const getRowId = (row) => `${row.language}.${row.key}`;
 
@@ -158,14 +162,14 @@ const TextsDataGrid = ({ initialRows, onDeleteRows }) => {
             <GridActionsCellItem
               key="resetRow"
               disabled={!canReset}
-              icon={null}
+              icon={<ReplayIcon />}
               onClick={handleDeleteRow}
               label={t('textsDataGrid.resetToDefault')}
               showInMenu
             />,
             <GridActionsCellItem
               key="resetAllLanguages"
-              icon={null}
+              icon={<ClearAllIcon />}
               onClick={handleDeleteAllLanguages}
               label={t('textsDataGrid.resetAllLanguages')}
               showInMenu
@@ -178,14 +182,14 @@ const TextsDataGrid = ({ initialRows, onDeleteRows }) => {
             <GridActionsCellItem
               key="deleteRow"
               disabled={!canDelete}
-              icon={null}
+              icon={<DeleteIcon />}
               onClick={handleDeleteRow}
               label={t('dataGrid.deleteRow')}
               showInMenu
             />,
             <GridActionsCellItem
               key="deleteAllLanguages"
-              icon={null}
+              icon={<DeleteSweepIcon />}
               onClick={handleDeleteAllLanguages}
               label={t('textsDataGrid.deleteAllLanguages')}
               showInMenu
