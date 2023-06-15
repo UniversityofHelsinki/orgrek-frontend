@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import dateColumnType from './dateColumnType';
 import { toDate } from '../../utils/dateUtils';
 import { DataGrid, GridActionsCellItem } from '@mui/x-data-grid';
@@ -11,11 +11,23 @@ import useCurrentUser from '../../hooks/useCurrentUser';
 import actionsColumnType from './actionsColumnType';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-const HierarchyFiltersDataGrid = ({ initialRows }) => {
+const HierarchyFiltersDataGrid = ({
+  initialRows,
+  loading,
+  onAddRow,
+  onRowChange,
+  onDeleteRow,
+}) => {
   const { t } = useTranslation();
   const user = useCurrentUser();
-  const [rows, setRows] = React.useState(initialRows);
+  const [rows, setRows] = React.useState(initialRows || []);
   const editable = isAuthorized(user, authActions.hierarchyFilters.edit);
+
+  useEffect(() => {
+    if (!loading) {
+      setRows(initialRows);
+    }
+  }, [loading]);
 
   const hierarchyOptions = useMemo(
     () =>
@@ -118,32 +130,45 @@ const HierarchyFiltersDataGrid = ({ initialRows }) => {
     columns.push({
       ...actionsColumnType,
       headerName: t('dataGrid.actionsHeader'),
-      getActions: () => [
-        <GridActionsCellItem
-          key="deleteRow"
-          icon={<DeleteIcon />}
-          onClick={() => {}}
-          label={t('dataGrid.deleteRow')}
-          showInMenu
-        />,
-      ],
+      getActions: (params) => {
+        const handleDeleteRow = () => {
+          onDeleteRow(params.row);
+        };
+
+        return [
+          <GridActionsCellItem
+            key="deleteRow"
+            icon={<DeleteIcon />}
+            onClick={handleDeleteRow}
+            label={t('dataGrid.deleteRow')}
+            showInMenu
+          />,
+        ];
+      },
     });
   }
 
-  const handleAdd = () => {
+  const handleAddRow = () => {
     const id = Math.floor(Math.random() * -1000000);
-    setRows((oldRows) => [
-      ...oldRows,
-      {
-        id,
-        hierarchy: null,
-        key: null,
-        value: null,
-        startDate: null,
-        endDate: null,
-        isNew: true,
-      },
-    ]);
+    const newRow = {
+      id,
+      hierarchy: null,
+      key: null,
+      value: null,
+      startDate: null,
+      endDate: null,
+      isNew: true,
+    };
+    setRows((oldRows) => [...oldRows, newRow]);
+    onAddRow(newRow);
+  };
+
+  const handleCellEditStop = (params) => {
+    if (params.row.isNew) {
+      onAddRow(params.row);
+    } else {
+      onRowChange(params.row);
+    }
   };
 
   return (
@@ -151,12 +176,14 @@ const HierarchyFiltersDataGrid = ({ initialRows }) => {
       autoHeight
       columns={columns}
       rows={rows}
+      loading={loading}
+      onCellEditStop={handleCellEditStop}
       slots={{
         toolbar: GridToolbar,
       }}
       slotProps={{
         toolbar: {
-          onAddRow: handleAdd,
+          onAddRow: handleAddRow,
           authActions: authActions.hierarchyFilters,
         },
       }}

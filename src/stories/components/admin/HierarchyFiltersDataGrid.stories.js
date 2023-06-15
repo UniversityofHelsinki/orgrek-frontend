@@ -752,6 +752,11 @@ export default {
       },
     },
   },
+  argTypes: {
+    onAddRow: { action: true },
+    onRowChange: { action: true },
+    onDeleteRow: { action: true },
+  },
   decorators: [
     // Use same width for the container as in Sketch so that screenshots fit nicely
     (Story) => (
@@ -764,6 +769,7 @@ export default {
 
 export const Default = {
   args: {
+    loading: false,
     initialRows: data,
   },
   decorators: [withUser(createAdmin())],
@@ -772,6 +778,7 @@ export const Default = {
 export const Empty = {
   ...Default,
   args: {
+    ...Default.args,
     initialRows: [],
   },
 };
