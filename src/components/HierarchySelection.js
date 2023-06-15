@@ -34,19 +34,38 @@ const HierarchySelection = (props) => {
         t(a.label).toLowerCase() > t(b.label).toLowerCase() ? 1 : -1
       );
 
+    selectableHierarchiesList.unshift({ value: 'select-all', label: 'kaikki' });
+
     let selectedHierarchies = [props.defaultHierarchy];
     if (props.selectedHierarchy) {
       selectedHierarchies = [...props.selectedHierarchy.split(',')];
     }
 
-    const changeSelected = (event, hierarchies) => {
-      const hierarchyList = hierarchies || props.defaultHierarchy;
-      let selectedHierarchies;
-      if (hierarchies && hierarchies.length > 0) {
-        selectedHierarchies = iterate(hierarchyList);
-      } else {
+    const changeSelected = (event, hierarchies, reason) => {
+      if (
+        event.target.innerText === 'kaikki' &&
+        hierarchies.find((option) => option.value === 'select-all')
+      ) {
+        selectedHierarchies = iterate(selectableHierarchiesList);
+      } else if (
+        event.target.innerText === 'kaikki' &&
+        hierarchies.find((option) => option.value !== 'select-all')
+      ) {
         selectedHierarchies = props.defaultHierarchy;
+      } else {
+        const hierarchyList = hierarchies || props.defaultHierarchy;
+        if (hierarchies && hierarchies.length > 0) {
+          selectedHierarchies = iterate(hierarchyList);
+        } else {
+          selectedHierarchies = props.defaultHierarchy;
+        }
       }
+
+      console.log(selectedHierarchies);
+      let arr = selectedHierarchies
+        .split(',')
+        .filter((el) => el !== 'select-all');
+      console.log(arr);
       dispatch(dropDownSwitchValueCall(selectedHierarchies));
     };
 

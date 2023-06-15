@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect, useSelector } from 'react-redux';
 import TreeSearch from './TreeSearch';
 import ReviewDate from './ReviewDate';
@@ -21,6 +21,7 @@ const Hierarchy = (props) => {
 
   const theme = useTheme();
   const { t } = useTranslation();
+
   return (
     <Paper
       elevation={0}
