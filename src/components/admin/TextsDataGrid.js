@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 import useCurrentUser from '../../hooks/useCurrentUser';
 import { authActions, isAuthorized } from '../../auth';
 import labelComparator from './labelComparator';
+import actionsColumnType from './actionsColumnType';
 
 const getRowId = (row) => `${row.language}.${row.key}`;
 
@@ -143,9 +144,8 @@ const TextsDataGrid = ({ initialRows, onDeleteRows }) => {
 
   if (isAuthorized(user, authActions.texts.edit)) {
     columns.push({
-      field: t('dataGrid.actionsHeader'),
-      type: 'actions',
-      hideable: false,
+      ...actionsColumnType,
+      headerName: t('dataGrid.actionsHeader'),
       getActions: (params) => {
         const canDelete = params.row.value && !params.row.defaultValue;
         const canReset = params.row.value && params.row.defaultValue;

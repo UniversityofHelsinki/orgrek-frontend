@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 import autocompleteColumnType from './autocompleteColumnType';
 import { authActions, isAuthorized } from '../../auth';
 import useCurrentUser from '../../hooks/useCurrentUser';
+import actionsColumnType from './actionsColumnType';
 
 const HierarchyFiltersDataGrid = ({ initialRows }) => {
   const { t } = useTranslation();
@@ -114,9 +115,8 @@ const HierarchyFiltersDataGrid = ({ initialRows }) => {
 
   if (editable) {
     columns.push({
-      field: t('dataGrid.actionsHeader'),
-      type: 'actions',
-      hideable: false,
+      ...actionsColumnType,
+      headerName: t('dataGrid.actionsHeader'),
       getActions: () => [
         <GridActionsCellItem
           key="deleteRow"

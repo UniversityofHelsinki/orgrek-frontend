@@ -8,6 +8,7 @@ import GridToolbar from './GridToolbar';
 import { authActions, isAuthorized } from '../../auth';
 import useCurrentUser from '../../hooks/useCurrentUser';
 import labelComparator from './labelComparator';
+import actionsColumnType from './actionsColumnType';
 
 const SectionsDataGrid = ({
   initialRows,
@@ -123,12 +124,11 @@ const SectionsDataGrid = ({
 
   if (editable) {
     columns.push({
-      field: t('dataGrid.actionsHeader'),
-      type: 'actions',
-      hideable: false,
+      ...actionsColumnType,
+      headerName: t('dataGrid.actionsHeader'),
       getActions: (params) => [
-        // eslint-disable-next-line react/jsx-key
         <GridActionsCellItem
+          key="deleteRow"
           icon={null}
           onClick={() => handleDeleteRow(params.row)}
           label={t('dataGrid.deleteRow')}
