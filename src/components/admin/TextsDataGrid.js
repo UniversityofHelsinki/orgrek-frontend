@@ -2,7 +2,6 @@ import { useTranslation } from 'react-i18next';
 import React, { useMemo } from 'react';
 import { DataGrid, GridActionsCellItem } from '@mui/x-data-grid';
 import GridToolbar from './GridToolbar';
-import Typography from '@mui/material/Typography';
 import timestampColumnType from './timestampColumnType';
 import PropTypes from 'prop-types';
 import useCurrentUser from '../../hooks/useCurrentUser';
@@ -105,14 +104,6 @@ const TextsDataGrid = ({ initialRows, onDeleteRows }) => {
       flex: 1,
       editable: isAuthorized(user, authActions.texts.edit),
       valueGetter: (params) => params.row.value || params.row.defaultValue,
-      renderCell: (params) => (
-        <Typography
-          color={params.row.value ? 'text.primary' : 'text.disabled'}
-          className="texts-value"
-        >
-          {params.value || ''}
-        </Typography>
-      ),
     },
     {
       field: 'default',
@@ -239,6 +230,7 @@ const TextsDataGrid = ({ initialRows, onDeleteRows }) => {
       columns={columns}
       rows={rows}
       getRowId={getRowId}
+      getRowClassName={(params) => !params.row.value && 'texts-default'}
       slots={{
         toolbar: GridToolbar,
       }}
@@ -246,6 +238,11 @@ const TextsDataGrid = ({ initialRows, onDeleteRows }) => {
         toolbar: {
           onAddRow: handleAdd,
           authActions: authActions.texts,
+        },
+      }}
+      sx={{
+        '.texts-default': {
+          backgroundColor: 'grey.50',
         },
       }}
     />
