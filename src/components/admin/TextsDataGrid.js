@@ -127,16 +127,22 @@ const TextsDataGrid = ({
       headerName: t('textsDataGrid.defaultColumnHeader'),
       description: t('textsDataGrid.defaultColumnDescription'),
       valueGetter: (params) => !params.row.value,
-      width: 100,
+      width: 120,
     },
     {
       field: 'translated',
       type: 'boolean',
       headerName: t('textsDataGrid.translatedColumnHeader'),
       description: t('textsDataGrid.translatedColumnDescription'),
-      valueGetter: (params) =>
-        (params.row.value || params.row.defaultValue) !== params.row.key,
-      width: 100,
+      valueGetter: (params) => {
+        const canonicalKey = params.row.key;
+        const keyParts = canonicalKey.split('.');
+        const lastKeyPart = keyParts[keyParts.length - 1];
+        const value = params.row.value || params.row.defaultValue;
+
+        return value !== params.row.key && value !== lastKeyPart;
+      },
+      width: 120,
     },
     {
       field: 'user_name',
