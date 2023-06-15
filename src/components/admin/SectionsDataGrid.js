@@ -9,6 +9,7 @@ import { authActions, isAuthorized } from '../../auth';
 import useCurrentUser from '../../hooks/useCurrentUser';
 import labelComparator from './labelComparator';
 import actionsColumnType from './actionsColumnType';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const SectionsDataGrid = ({
   initialRows,
@@ -129,7 +130,7 @@ const SectionsDataGrid = ({
       getActions: (params) => [
         <GridActionsCellItem
           key="deleteRow"
-          icon={null}
+          icon={<DeleteIcon />}
           onClick={() => handleDeleteRow(params.row)}
           label={t('dataGrid.deleteRow')}
           showInMenu
