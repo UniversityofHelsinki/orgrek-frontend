@@ -7,6 +7,15 @@ export const createReader = (value = {}) => ({
   ...value,
 });
 
+export const createWriter = (value = {}) => ({
+  eppn: 'writer',
+  hyGroupCn: [],
+  preferredLanguage: 'fi',
+  displayName: '',
+  roles: ['ROLE_WRITER'],
+  ...value,
+});
+
 export const createAdmin = (value = {}) => ({
   eppn: 'admin',
   hyGroupCn: ['grp-orgrek-role-admin'],

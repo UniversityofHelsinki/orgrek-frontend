@@ -14,6 +14,10 @@ export default {
   },
   argTypes: {
     onChange: { action: true },
+    variant: {
+      control: 'radio',
+      options: ['filled', 'outlined', 'standard'],
+    },
     size: {
       control: 'radio',
       options: ['small', 'medium'],
@@ -29,6 +33,7 @@ export const Basic = {
     required: false,
     disabled: false,
     error: false,
+    variant: 'outlined',
     size: 'medium',
   },
   render: ({ onChange, ...args }) => {
