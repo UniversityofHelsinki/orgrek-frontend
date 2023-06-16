@@ -18,7 +18,7 @@ const HierarchySelection = (props) => {
   const iterate = (hierarchyList) => {
     let selectedHierarchies = [];
     for (const hierarchy of hierarchyList) {
-      selectedHierarchies.push(hierarchy.value);
+      selectedHierarchies.push(hierarchy.value ? hierarchy.value : hierarchy);
     }
     return selectedHierarchies.join(',');
   };
@@ -56,16 +56,16 @@ const HierarchySelection = (props) => {
         const hierarchyList = hierarchies || props.defaultHierarchy;
         if (hierarchies && hierarchies.length > 0) {
           selectedHierarchies = iterate(hierarchyList);
+          console.log(selectedHierarchies.split(',').length);
+          console.log(selectableHierarchiesList.length);
+          selectedHierarchies = selectedHierarchies
+            .split(',')
+            .filter((item) => item !== 'select-all');
+          selectedHierarchies = iterate(selectedHierarchies);
         } else {
           selectedHierarchies = props.defaultHierarchy;
         }
       }
-
-      console.log(selectedHierarchies);
-      let arr = selectedHierarchies
-        .split(',')
-        .filter((el) => el !== 'select-all');
-      console.log(arr);
       dispatch(dropDownSwitchValueCall(selectedHierarchies));
     };
 
