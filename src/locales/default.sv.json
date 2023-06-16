@@ -370,7 +370,6 @@
     "deleteAllLanguages": "deleteAllLanguages",
     "newKeyLabel": "newKeyLabel",
     "resetAllLanguages": "resetAllLanguages",
-    "resetToDefault": "resetToDefault",
     "translatedColumnDescription": "translatedColumnDescription",
     "translatedColumnHeader": "translatedColumnHeader"
   },

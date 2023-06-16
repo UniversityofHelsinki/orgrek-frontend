@@ -442,8 +442,7 @@
     "defaultColumnHeader": "Oletus",
     "deleteAllLanguages": "Poista kaikki kielet",
     "newKeyLabel": "Uusi avain \"{{value}}\"",
-    "resetAllLanguages": "Palauta kaikki kielet",
-    "resetToDefault": "Palauta oletukseksi",
+    "resetAllLanguages": "Palauta kaikki kielet oletukseksi",
     "translatedColumnDescription": "Tämän sarakkeen avulla voit suodattaa tekstit, joiden arvo on sama kuin avain koodissa",
     "translatedColumnHeader": "Käännetty"
   },
