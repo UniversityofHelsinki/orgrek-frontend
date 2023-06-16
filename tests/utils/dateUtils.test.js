@@ -1,5 +1,6 @@
 import {
   formatDate,
+  formatDateTime,
   toDate,
   toISODateString,
   toISODateStringLocal,
@@ -67,6 +68,38 @@ describe('formatDate', () => {
   test("formats user's local time zone in UTC", () => {
     expect(formatDate(new Date('2023-04-14T00:00:00.000+0200'))).toBe(
       '13.4.2023'
+    );
+  });
+});
+
+describe('formatDateTime', () => {
+  const date = new Date('2023-04-14T14:08:59.343Z');
+
+  test('current language', () => {
+    expect(formatDateTime(date)).toBe('14.4.2023 14.08');
+  });
+
+  test('Finnish', () => {
+    expect(formatDateTime(date, 'fi')).toBe('14.4.2023 14.08');
+  });
+
+  test('Swedish', () => {
+    expect(formatDateTime(date, 'sv')).toBe('2023-04-14 14:08');
+  });
+
+  test('English', () => {
+    expect(formatDateTime(date, 'en')).toBe('14/04/2023, 14:08');
+  });
+
+  test("formats user's local time zone in UTC", () => {
+    expect(formatDateTime(new Date('2023-04-14T00:00:00.000+0300'))).toBe(
+      '13.4.2023 21.00'
+    );
+  });
+
+  test('formats in time zone', () => {
+    expect(formatDateTime(date, 'fi', 'Europe/Helsinki')).toBe(
+      '14.4.2023 17.08'
     );
   });
 });

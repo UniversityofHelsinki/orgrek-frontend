@@ -8,8 +8,12 @@ export default {
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {
     variant: {
-      control: 'select',
+      control: 'radio',
       options: ['text', 'contained', 'outlined'],
+    },
+    size: {
+      control: 'radio',
+      options: ['small', 'medium', 'large'],
     },
   },
 };
@@ -20,6 +24,7 @@ export const Primary = {
     text: 'Button',
     disabled: false,
     loading: false,
+    size: 'medium',
   },
   render: ({ text, ...args }) => <Button {...args}>{text}</Button>,
 };

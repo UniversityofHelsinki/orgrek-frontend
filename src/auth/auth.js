@@ -34,6 +34,7 @@ export const authActions = {
     edit: { allowRoles: [roleAdmin] },
   },
   sections: {
+    view: { allowRoles: allWriterRoles },
     edit: { allowRoles: [roleAdmin] },
   },
   nodeValidity: {
