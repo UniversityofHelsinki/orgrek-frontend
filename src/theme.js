@@ -311,6 +311,60 @@ const theme = createTheme({
         deleteIcon: { color: palette.grey[700], fontSize: 18 },
       },
     },
+    MuiSwitch: {
+      defaultProps: {
+        disableRipple: true,
+      },
+      styleOverrides: {
+        root: {
+          '& .Mui-checked': {
+            '.MuiSwitch-thumb': {
+              transform: 'translateX(-4px)',
+            },
+            '+ .MuiSwitch-track': {
+              backgroundImage: `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="8" width="8" viewBox="0 0 1000 1000"><path fill="${encodeURIComponent(
+                palette.common.white
+              )}" d="M923,165l-75-62-25-19-20,26-468,558-138-168-20-23-25,20-75,58-25,22,19,26,239,287,22,33,26-33,571-680,19-23z"/></svg>')`,
+              opacity: '1 !important',
+              backgroundColor: `${palette.primary.main}`,
+              backgroundRepeat: 'no-repeat',
+              backgroundPosition: '25% 50%',
+              border: `2px solid ${palette.primary.nearlyBlack}`,
+            },
+          },
+          '& .MuiSwitch-switchBase': {
+            ':hover': {
+              backgroundColor: 'initial !important',
+            },
+          },
+          '&:hover': {
+            ' .MuiSwitch-track': {
+              backgroundColor: '#dfdfdf',
+            },
+            ' .Mui-checked + .MuiSwitch-track': {
+              backgroundColor: '#0e719a',
+            },
+          },
+        },
+        thumb: {
+          boxShadow: 'none',
+          width: 12,
+          height: 12,
+          backgroundColor: palette.common.white,
+          border: `2px solid ${palette.primary.main}`,
+          marginLeft: '6px',
+          marginTop: '6px',
+        },
+        track: {
+          opacity: 1,
+          borderRadius: 11,
+          width: 34,
+          height: 18,
+          backgroundColor: '#f8f8f8',
+          border: `2px solid ${palette.primary.main}`,
+        },
+      },
+    },
   },
   breakpoints: {
     values: {
