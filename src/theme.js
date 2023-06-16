@@ -366,6 +366,15 @@ const theme = createTheme(
                 border: `2px solid ${palette.primary.nearlyBlack}`,
               },
             },
+            '& .Mui-disabled': {
+              '+ .MuiSwitch-track': {
+                backgroundColor: '#8a8a8a !important',
+                border: '1px solid #6a6a6a',
+              },
+              '.MuiSwitch-thumb': {
+                border: '1px solid #8a8a8a',
+              },
+            },
             '& .MuiSwitch-switchBase': {
               ':hover': {
                 backgroundColor: 'initial !important',
@@ -378,6 +387,15 @@ const theme = createTheme(
               ' .Mui-checked + .MuiSwitch-track': {
                 backgroundColor: '#0e719a',
               },
+            },
+          },
+          sizeSmall: {
+            padding: 4,
+            '& .MuiSwitch-thumb': {
+              marginTop: 3,
+              transform: 'translateX(-2px)',
+              width: 12,
+              height: 12,
             },
           },
           thumb: {
