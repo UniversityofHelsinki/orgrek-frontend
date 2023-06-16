@@ -93,7 +93,7 @@ const SectionsDataGrid = ({
       // TODO: This field does not yet exist, see OR-1052
       valueGetter: (params) => (params.row.id > 0 ? params.row.id * 100 : ''), // id * 100 is here just for demonstration
       valueFormatter: (params) => params.value,
-      width: 100,
+      width: 150,
       editable,
     },
     {
@@ -110,7 +110,7 @@ const SectionsDataGrid = ({
       ...dateColumnType,
       headerName: t('sectionsDataGrid.startDateColumnHeader'),
       valueGetter: (params) => toDate(params.row.startDate),
-      flex: 1,
+      width: 200,
       editable,
     },
     {
@@ -118,7 +118,7 @@ const SectionsDataGrid = ({
       ...dateColumnType,
       headerName: t('sectionsDataGrid.endDateColumnHeader'),
       valueGetter: (params) => toDate(params.row.endDate),
-      flex: 1,
+      width: 200,
       editable,
     },
   ];
