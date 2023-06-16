@@ -10,6 +10,7 @@ import labelComparator from './labelComparator';
 import actionsColumnType from './actionsColumnType';
 import ReplayIcon from '../icons/Replay';
 import DeleteSweepIcon from '@mui/icons-material/DeleteSweep';
+import ClearAllIcon from '@mui/icons-material/ClearAll';
 
 const getRowId = (row) => `${row.language}.${row.key}`;
 
@@ -163,6 +164,11 @@ const TextsDataGrid = ({
 
         const actions = [];
 
+        const handleDeleteRow = () => {
+          const rowsToDelete = [params.row];
+          onDeleteRows(rowsToDelete);
+        };
+
         const handleDeleteAllLanguages = () => {
           const rowsToDelete = rows.filter((r) => r.key === params.row.key);
           onDeleteRows(rowsToDelete);
@@ -171,8 +177,15 @@ const TextsDataGrid = ({
         if (canReset) {
           actions.push(
             <GridActionsCellItem
-              key="resetAllLanguages"
+              key="resetRow"
               icon={<ReplayIcon />}
+              onClick={handleDeleteRow}
+              label={t('textsDataGrid.resetToDefault')}
+              showInMenu
+            />,
+            <GridActionsCellItem
+              key="resetAllLanguages"
+              icon={<ClearAllIcon />}
               onClick={handleDeleteAllLanguages}
               label={t('textsDataGrid.resetAllLanguages')}
               showInMenu

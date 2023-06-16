@@ -401,6 +401,7 @@
     "deleteAllLanguages": "Delete all languages",
     "newKeyLabel": "New key \"{{value}}\"",
     "resetAllLanguages": "Reset all languages",
+    "resetToDefault": "Reset to default",
     "translatedColumnDescription": "translatedColumnDescription",
     "translatedColumnHeader": "Translated"
   },

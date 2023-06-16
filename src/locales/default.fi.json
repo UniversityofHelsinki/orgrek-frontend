@@ -443,6 +443,7 @@
     "deleteAllLanguages": "Poista kaikki kielet",
     "newKeyLabel": "Uusi avain \"{{value}}\"",
     "resetAllLanguages": "Palauta kaikki kielet oletukseksi",
+    "resetToDefault": "Palauta oletukseksi",
     "translatedColumnDescription": "Tämän sarakkeen avulla voit suodattaa tekstit, joiden arvo on sama kuin avain koodissa",
     "translatedColumnHeader": "Käännetty"
   },
