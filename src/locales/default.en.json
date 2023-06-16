@@ -56,6 +56,11 @@
   "create_line_button": "Create new line",
   "create_new_sub_unit": "Create new sub-unit",
   "create_new_unit": "Create new unit",
+  "dataGrid": {
+    "actionsHeader": "Actions",
+    "addRow": "Add row",
+    "deleteRow": "Delete row"
+  },
   "date_after": "Valid after",
   "date_before": "Valid before",
   "date_filter_info": "Relations will be filtered by exact date. If you want to filter by timespan, the checkbox has to be checked. Filtering can also be done by adding just a single date. Then only the corresponding relations will be shown.",
@@ -139,6 +144,11 @@
   "henkilostoalue": "henkilostoalue",
   "henkilostoyksikko": "Personnel Unit",
   "hierarchies": "Hierarchies",
+  "hierarchyFiltersDataGrid": {
+    "newAttributeLabel": "New attribute \"{{value}}\"",
+    "newAttributeValueLabel": "New value \"{{value}}\"",
+    "newHierarchyLabel": "New hierarchy \"{{value}}\""
+  },
   "hierarchy_filters": "Filters",
   "hierarchy_filters_cancel_button": "hierarchy_filters_cancel_button",
   "hierarchy_filters_delete_button": "hierarchy_filters_delete_button",
@@ -284,12 +294,12 @@
   "organisation_nav": "Organisation",
   "organisational_registry": "organisational_registry",
   "osasto": "osasto",
-  "other_attributes": "Other attributes",
   "otherAttributeInfo": {
     "empty": "No other attributes",
     "saveError": "Saving other attributes failed",
     "saveSuccess": "Other attributes saved"
   },
+  "other_attributes": "Other attributes",
   "paa-aine": "Training Programme",
   "palveluyksikko": "Service unit",
   "parent_abbr": "Abbreviation of Upper Unit",
@@ -320,6 +330,13 @@
   "search_by_name_or_code": "Search by name or code",
   "search_place_holder": "Search with keyword..",
   "sections": "Sections",
+  "sectionsDataGrid": {
+    "attributeColumnHeader": "Attribute",
+    "endDateColumnHeader": "End date",
+    "orderColumnHeader": "Order",
+    "sectionColumnHeader": "Section",
+    "startDateColumnHeader": "Start date"
+  },
   "select_all_none": "Valitse / poista valinnat",
   "show_coming": "Show coming",
   "show_history": "Show history",
@@ -332,8 +349,16 @@
   "status_code": "status_code",
   "study_header": "Study",
   "subunits": {
+    "createChild": "createChild",
+    "createError": "createError",
+    "createSuccess": "createSuccess",
     "empty": "No sub units",
-    "title": "Sub Units"
+    "hierarchies": "hierarchies",
+    "names": "names",
+    "newChildButton": "newChildButton",
+    "parent": "parent",
+    "title": "Sub Units",
+    "validFrom": "validFrom"
   },
   "successorInfo": {
     "saveError": "Saving successor failed",
@@ -370,6 +395,16 @@
   "text_value_header": "Value",
   "text_value_maximum_length": "text_value_maximum_length",
   "texts": "Texts",
+  "textsDataGrid": {
+    "defaultColumnDescription": "defaultColumnDescription",
+    "defaultColumnHeader": "Default",
+    "deleteAllLanguages": "Delete all languages",
+    "newKeyLabel": "New key \"{{value}}\"",
+    "resetAllLanguages": "Reset all languages",
+    "resetToDefault": "Reset to default",
+    "translatedColumnDescription": "translatedColumnDescription",
+    "translatedColumnHeader": "Translated"
+  },
   "texts_cancel_button": "texts_cancel_button",
   "texts_delete_button": "texts_delete_button",
   "texts_delete_confirm": "texts_delete_confirm",

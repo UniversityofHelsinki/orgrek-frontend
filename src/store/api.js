@@ -17,6 +17,7 @@ export const api = createApi({
     'NodeOtherAttributes',
     'SaveNodeOtherAttributes',
     'Successors',
+    'SectionAttributes',
   ],
   endpoints: (builder) => ({
     getTree: builder.query({
@@ -79,6 +80,15 @@ export const api = createApi({
           url: `/node/${nodeId}/attributes/types`,
           method: 'PUT',
           body: valuesArray,
+        };
+      },
+    }),
+    getHierarchyFilters: builder.query({
+      providesTags: () => [{ type: 'HierarchyFilters' }],
+      query: () => {
+        return {
+          url: `hierarchyFilters`,
+          method: 'GET',
         };
       },
     }),
@@ -235,7 +245,7 @@ export const api = createApi({
       },
     }),
     saveChild: builder.mutation({
-      invalidatesTags: (result, error, { id }) => {
+      invalidatesTags: (result, error) => {
         if (error) {
           return [];
         }
@@ -246,6 +256,15 @@ export const api = createApi({
           url: `/node/${id}/insert`,
           method: 'POST',
           body: data,
+        };
+      },
+    }),
+    getSectionAttributes: builder.query({
+      providesTags: () => [{ type: 'SectionAttributes' }],
+      query: () => {
+        return {
+          url: `/section/all`,
+          method: 'GET',
         };
       },
     }),
@@ -260,6 +279,7 @@ export const {
   useGetAttributeKeysQuery,
   useGetTreeQuery,
   useGetTypeAttributesQuery,
+  useGetHierarchyFiltersQuery,
   useGetValidHierarchyFiltersQuery,
   useSaveTypeAttributesMutation,
   useGetAttributeKeysBySectionQuery,
@@ -272,4 +292,5 @@ export const {
   useGetSuccessorsQuery,
   useSaveSuccessorsMutation,
   useSaveChildMutation,
+  useGetSectionAttributesQuery,
 } = api;
