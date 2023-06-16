@@ -56,8 +56,6 @@ const HierarchySelection = (props) => {
         const hierarchyList = hierarchies || props.defaultHierarchy;
         if (hierarchies && hierarchies.length > 0) {
           selectedHierarchies = iterate(hierarchyList);
-          console.log(selectedHierarchies.split(',').length);
-          console.log(selectableHierarchiesList.length);
           selectedHierarchies = selectedHierarchies
             .split(',')
             .filter((item) => item !== 'select-all');
