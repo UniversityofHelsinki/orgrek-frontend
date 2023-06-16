@@ -35,7 +35,6 @@ export const authActions = {
     view: { allowRoles: allWriterRoles },
   },
   sections: {
-    view: { allowRoles: allWriterRoles },
     edit: { allowRoles: [roleAdmin] },
     view: { allowRoles: allWriterRoles },
   },
