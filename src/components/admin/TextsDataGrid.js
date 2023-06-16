@@ -120,12 +120,10 @@ const TextsDataGrid = ({
       valueGetter: (params) => params.row.value || params.row.defaultValue,
     },
     {
-      field: 'default',
-      type: 'boolean',
-      headerName: t('textsDataGrid.defaultColumnHeader'),
-      description: t('textsDataGrid.defaultColumnDescription'),
-      valueGetter: (params) => !params.row.value,
-      width: 120,
+      field: 'defaultValue',
+      headerName: t('textsDataGrid.defaultValueColumnHeader'),
+      description: t('textsDataGrid.defaultValueColumnDescription'),
+      flex: 1,
     },
     {
       field: 'translated',
@@ -224,7 +222,7 @@ const TextsDataGrid = ({
       initialState={{
         columns: {
           columnVisibilityModel: {
-            default: false,
+            defaultValue: false,
             translated: false,
           },
         },
