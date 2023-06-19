@@ -368,8 +368,9 @@ const theme = createTheme(
             },
             '& .Mui-disabled': {
               '+ .MuiSwitch-track': {
-                backgroundColor: '#8a8a8a !important',
+                backgroundColor: '#dfdfdf !important',
                 border: '1px solid #6a6a6a',
+                opacity: '1 !important',
               },
               '.MuiSwitch-thumb': {
                 border: '1px solid #8a8a8a',
@@ -386,6 +387,9 @@ const theme = createTheme(
               },
               ' .Mui-checked + .MuiSwitch-track': {
                 backgroundColor: '#0e719a',
+              },
+              ' .Mui-checked.Mui-disabled + .MuiSwitch-track': {
+                backgroundColor: '#dfdfdf',
               },
             },
           },
