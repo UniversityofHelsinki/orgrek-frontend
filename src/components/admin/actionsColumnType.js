@@ -7,7 +7,6 @@ const actionsColumnType = {
   type: 'actions',
   hideable: false,
   renderHeader: (params) => {
-    console.log(params);
     return <Box sx={visuallyHidden}>{params.colDef.headerName}</Box>;
   },
 };
