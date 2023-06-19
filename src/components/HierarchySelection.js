@@ -43,7 +43,7 @@ const HierarchySelection = (props) => {
       (selectedHierarchies = selectedOptions);
 
     const allSelected =
-      selectedHierarchies.length === props.selectableHierarchies.length - 1;
+      selectedHierarchies.length === selectableHierarchiesList.length;
 
     const handleClearOptions = () =>
       (selectedHierarchies = props.defaultHierarchy);
@@ -111,7 +111,10 @@ const HierarchySelection = (props) => {
         ChipProps={{ deleteIcon: <CloseIcon /> }}
         filterOptions={(options, params) => {
           const filtered = filter(options, params);
-          return [{ value: 'select-all', label: 'kaikki' }, ...filtered];
+          return [
+            { value: 'select-all', label: t('select_all_none') },
+            ...filtered,
+          ];
         }}
         renderOption={optionRenderer}
         renderInput={(params) => (
