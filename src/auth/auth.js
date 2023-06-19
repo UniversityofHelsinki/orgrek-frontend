@@ -25,17 +25,18 @@ export const authActions = {
     edit: { allowRoles: allWriterRoles },
   },
   texts: {
-    edit: { allowRoles: [roleAdmin] },
+    edit: { allowRoles: allWriterRoles },
   },
   children: {
     edit: { allowRoles: [roleAdmin] },
   },
   hierarchyFilters: {
     edit: { allowRoles: [roleAdmin] },
+    view: { allowRoles: allWriterRoles },
   },
   sections: {
-    view: { allowRoles: allWriterRoles },
     edit: { allowRoles: [roleAdmin] },
+    view: { allowRoles: allWriterRoles },
   },
   nodeValidity: {
     edit: { allowRoles: allWriterRoles },
