@@ -396,8 +396,8 @@
   "text_value_maximum_length": "text_value_maximum_length",
   "texts": "Texts",
   "textsDataGrid": {
-    "defaultColumnDescription": "defaultColumnDescription",
-    "defaultColumnHeader": "Default",
+    "defaultValueColumnDescription": "defaultValueColumnDescription",
+    "defaultValueColumnHeader": "Default value",
     "deleteAllLanguages": "Delete all languages",
     "newKeyLabel": "New key \"{{value}}\"",
     "resetAllLanguages": "Reset all languages",
