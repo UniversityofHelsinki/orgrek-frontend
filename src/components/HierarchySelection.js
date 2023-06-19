@@ -46,7 +46,7 @@ const HierarchySelection = (props) => {
       selectedHierarchies.length === props.selectableHierarchies.length - 1;
 
     const handleClearOptions = () =>
-      props.selectedHierarchy(props.defaultHierarchy);
+      (selectedHierarchies = props.defaultHierarchy);
 
     const handleSelectAll = (isSelected) => {
       if (isSelected) {
