@@ -43,7 +43,7 @@ const HierarchySelection = (props) => {
       (selectedHierarchies = selectedOptions);
 
     const allSelected =
-      selectableHierarchiesList.length === props.selectableHierarchies.length;
+      selectedHierarchies.length === props.selectableHierarchies.length - 1;
 
     const handleClearOptions = () =>
       props.selectedHierarchy(props.defaultHierarchy);
@@ -60,7 +60,7 @@ const HierarchySelection = (props) => {
       handleSelectAll && handleSelectAll(!allSelected);
     };
 
-    const changeSelected = (event, hierarchies) => {
+    const changeSelected = (event, hierarchies, reason) => {
       if (hierarchies.find((option) => option.value === 'select-all')) {
         handleToggleSelectAll();
       } else if (hierarchies.find((option) => option.value !== 'select-all')) {
@@ -76,6 +76,7 @@ const HierarchySelection = (props) => {
 
     const optionRenderer = (props, option, { selected }) => {
       console.log(option.value);
+      console.log(allSelected);
       const selectAllProps =
         option.value === 'select-all' // To control the state of 'select-all' checkbox
           ? { checked: allSelected }
