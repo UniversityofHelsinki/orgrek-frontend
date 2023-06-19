@@ -75,8 +75,6 @@ const HierarchySelection = (props) => {
     const filter = createFilterOptions();
 
     const optionRenderer = (props, option, { selected }) => {
-      console.log(option.value);
-      console.log(allSelected);
       const selectAllProps =
         option.value === 'select-all' // To control the state of 'select-all' checkbox
           ? { checked: allSelected }
