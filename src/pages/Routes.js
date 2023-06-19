@@ -22,7 +22,7 @@ const AppRoutes = () => {
         {isAuthorized(user, authActions.texts.edit) && (
           <Route path="texts" element={<TextsPage />} />
         )}
-        {isAuthorized(user, authActions.hierarchyFilters.edit) && (
+        {isAuthorized(user, authActions.hierarchyFilters.view) && (
           <Route path="hierarchyfilters" element={<HierarchyFiltersPage />} />
         )}
         {isAuthorized(user, authActions.sections.view) && (
