@@ -48,12 +48,21 @@ export const toDate = (date) => {
  * @param date Date object
  * @param {'fi'|'sv'|'en'} language if undefined, uses the current language
  * @param timeZone UTC by default
+ * @param pattern date-fns format pattern
  */
-export const formatDate = (date, language = undefined, timeZone = 'UTC') =>
-  format(utcToZonedTime(toDate(date), timeZone), 'P', {
+export const formatDate = (
+  date,
+  language = undefined,
+  timeZone = 'UTC',
+  pattern = 'P'
+) =>
+  format(utcToZonedTime(toDate(date), timeZone), pattern, {
     locale: getDateFnsLocale(language || i18n.language),
     timeZone,
   });
+
+export const formatDateTime = (date, language, timeZone) =>
+  formatDate(date, language, timeZone, 'Pp');
 
 /**
  * Returns ISO date string (in UTC) without the time component.

@@ -1,4 +1,9 @@
 import { createTheme } from '@mui/material';
+import { fiFI } from '@mui/x-data-grid';
+import EyeSlashIcon from './components/icons/EyeSlash';
+import SlimHamburgerMenuIcon from './components/icons/SlimHamburgerMenu';
+import SearchIcon from './components/icons/Search';
+import LoadingOverlay from './components/LoadingOverlay';
 
 /**
  * HY Design System colors
@@ -250,77 +255,184 @@ const typography = {
   },
 };
 
-const theme = createTheme({
-  palette,
-  typography,
-  shape: {
-    borderRadius: 0,
-  },
-  components: {
-    MuiButton: {
-      styleOverrides: {
-        outlined: {
-          borderWidth: 3,
-          borderColor: hyPalette.brand.light,
-          ':hover': {
+const theme = createTheme(
+  {
+    palette,
+    typography,
+    shape: {
+      borderRadius: 0,
+    },
+    components: {
+      MuiButton: {
+        styleOverrides: {
+          outlined: {
             borderWidth: 3,
-            borderColor: hyPalette.brand.mediumDark,
-            color: hyPalette.brand.mediumDark,
+            borderColor: hyPalette.brand.light,
+            ':hover': {
+              borderWidth: 3,
+              borderColor: hyPalette.brand.mediumDark,
+              color: hyPalette.brand.mediumDark,
+            },
+            ':disabled': {
+              borderWidth: 3,
+            },
           },
-          ':disabled': {
-            borderWidth: 3,
+        },
+      },
+      MuiTooltip: {
+        styleOverrides: {
+          tooltip: {
+            ...typography.caption,
+          },
+        },
+      },
+      MuiTableCell: {
+        styleOverrides: {
+          root: {
+            borderWidth: 1,
+            borderStyle: 'solid',
+            borderColor: palette.divider,
+          },
+          head: {
+            backgroundColor: palette.grey[50],
+            ...typography.tableHead,
+          },
+          body: {
+            ...typography.tableBody,
+          },
+        },
+      },
+      MuiContainer: {
+        defaultProps: {
+          maxWidth: 'xl',
+        },
+      },
+      MuiChip: {
+        styleOverrides: {
+          root: {
+            borderRadius: 0,
+            marginX: 8,
+            marginY: 6,
+          },
+          deleteIcon: { color: palette.grey[700], fontSize: 18 },
+        },
+      },
+      MuiDataGrid: {
+        defaultProps: {
+          slots: {
+            columnMenuHideIcon: EyeSlashIcon,
+            columnMenuIcon: SlimHamburgerMenuIcon,
+            moreActionsIcon: SlimHamburgerMenuIcon,
+            quickFilterIcon: SearchIcon,
+            loadingOverlay: LoadingOverlay,
+          },
+          hideFooterSelectedRowCount: true,
+        },
+        styleOverrides: {
+          columnHeaders: {
+            borderTopStyle: 'solid',
+            borderTopWidth: 1,
+            borderTopColor: palette.divider,
+          },
+          columnHeader: {
+            backgroundColor: palette.grey[50],
+          },
+          columnHeaderTitle: {
+            ...typography.tableHead,
+          },
+          cellContent: {
+            ...typography.tableBody,
+          },
+        },
+      },
+      MuiSwitch: {
+        defaultProps: {
+          disableRipple: true,
+        },
+        styleOverrides: {
+          root: {
+            '& .Mui-checked': {
+              '.MuiSwitch-thumb': {
+                transform: 'translateX(-4px)',
+              },
+              '+ .MuiSwitch-track': {
+                backgroundImage: `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="8" width="8" viewBox="0 0 1000 1000"><path fill="${encodeURIComponent(
+                  palette.common.white
+                )}" d="M923,165l-75-62-25-19-20,26-468,558-138-168-20-23-25,20-75,58-25,22,19,26,239,287,22,33,26-33,571-680,19-23z"/></svg>')`,
+                opacity: '1 !important',
+                backgroundColor: `${palette.primary.main}`,
+                backgroundRepeat: 'no-repeat',
+                backgroundPosition: '25% 50%',
+                border: `1px solid ${palette.primary.nearlyBlack}`,
+              },
+            },
+            '& .Mui-disabled': {
+              '+ .MuiSwitch-track': {
+                backgroundColor: '#dfdfdf !important',
+                border: '1px solid #6a6a6a',
+                opacity: '1 !important',
+              },
+              '.MuiSwitch-thumb': {
+                border: '1px solid #8a8a8a',
+              },
+            },
+            '& .MuiSwitch-switchBase': {
+              ':hover': {
+                backgroundColor: 'initial !important',
+              },
+            },
+            '&:hover': {
+              ' .MuiSwitch-track': {
+                backgroundColor: '#dfdfdf',
+              },
+              ' .Mui-checked + .MuiSwitch-track': {
+                backgroundColor: '#0e719a',
+              },
+              ' .Mui-checked.Mui-disabled + .MuiSwitch-track': {
+                backgroundColor: '#dfdfdf',
+              },
+            },
+          },
+          sizeSmall: {
+            padding: 4,
+            '& .MuiSwitch-thumb': {
+              marginTop: 3,
+              transform: 'translateX(-2px)',
+              width: 12,
+              height: 12,
+            },
+          },
+          thumb: {
+            boxShadow: 'none',
+            width: 12,
+            height: 12,
+            backgroundColor: palette.common.white,
+            border: `1px solid ${palette.primary.main}`,
+            marginLeft: '6px',
+            marginTop: '6px',
+          },
+          track: {
+            opacity: 1,
+            borderRadius: 11,
+            width: 34,
+            height: 18,
+            backgroundColor: '#f8f8f8',
+            border: `1px solid ${palette.primary.main}`,
           },
         },
       },
     },
-    MuiTooltip: {
-      styleOverrides: {
-        tooltip: {
-          ...typography.caption,
-        },
-      },
-    },
-    MuiTableCell: {
-      styleOverrides: {
-        root: {
-          borderWidth: 1,
-          borderStyle: 'solid',
-          borderColor: palette.divider,
-        },
-        head: {
-          backgroundColor: palette.grey[50],
-          ...typography.tableHead,
-        },
-        body: {
-          ...typography.tableBody,
-        },
-      },
-    },
-    MuiContainer: {
-      defaultProps: {
-        maxWidth: 'xl',
-      },
-    },
-    MuiChip: {
-      styleOverrides: {
-        root: {
-          borderRadius: 0,
-          marginX: 8,
-          marginY: 6,
-        },
-        deleteIcon: { color: palette.grey[700], fontSize: 18 },
+    breakpoints: {
+      values: {
+        xs: 0,
+        sm: 600,
+        md: 900,
+        lg: 1200,
+        xl: 1700,
       },
     },
   },
-  breakpoints: {
-    values: {
-      xs: 0,
-      sm: 600,
-      md: 900,
-      lg: 1200,
-      xl: 1700,
-    },
-  },
-});
+  fiFI // Provides translations for DataGrid
+);
 
 export default theme;
