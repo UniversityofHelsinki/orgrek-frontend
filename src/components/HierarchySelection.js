@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Autocomplete from '@mui/material/Autocomplete';
+import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import CloseIcon from '@mui/icons-material/Close';
@@ -18,7 +18,7 @@ const HierarchySelection = (props) => {
   const iterate = (hierarchyList) => {
     let selectedHierarchies = [];
     for (const hierarchy of hierarchyList) {
-      selectedHierarchies.push(hierarchy.value);
+      selectedHierarchies.push(hierarchy.value ? hierarchy.value : hierarchy);
     }
     return selectedHierarchies.join(',');
   };
@@ -39,15 +39,58 @@ const HierarchySelection = (props) => {
       selectedHierarchies = [...props.selectedHierarchy.split(',')];
     }
 
-    const changeSelected = (event, hierarchies) => {
-      const hierarchyList = hierarchies || props.defaultHierarchy;
-      let selectedHierarchies;
-      if (hierarchies && hierarchies.length > 0) {
-        selectedHierarchies = iterate(hierarchyList);
+    const handleToggleOption = (selectedOptions) =>
+      (selectedHierarchies = selectedOptions);
+
+    const allSelected =
+      selectedHierarchies.length === selectableHierarchiesList.length;
+
+    const handleClearOptions = () =>
+      (selectedHierarchies = props.defaultHierarchy);
+
+    const handleSelectAll = (isSelected) => {
+      if (isSelected) {
+        selectedHierarchies = iterate(selectableHierarchiesList);
+      } else {
+        handleClearOptions();
+      }
+    };
+
+    const handleToggleSelectAll = () => {
+      handleSelectAll && handleSelectAll(!allSelected);
+    };
+
+    const changeSelected = (event, hierarchies, reason) => {
+      if (hierarchies.find((option) => option.value === 'select-all')) {
+        handleToggleSelectAll();
+      } else if (hierarchies.find((option) => option.value !== 'select-all')) {
+        handleToggleOption && handleToggleOption(hierarchies);
+        selectedHierarchies = iterate(selectedHierarchies);
       } else {
         selectedHierarchies = props.defaultHierarchy;
       }
       dispatch(dropDownSwitchValueCall(selectedHierarchies));
+    };
+
+    const filter = createFilterOptions();
+
+    const optionRenderer = (props, option, { selected }) => {
+      const selectAllProps =
+        option.value === 'select-all' // To control the state of 'select-all' checkbox
+          ? { checked: allSelected }
+          : {};
+      return (
+        <li {...props}>
+          <Checkbox
+            color="primary"
+            icon={<CheckBoxOutlineBlankIcon fontSize="small" />}
+            checkedIcon={<CheckBoxIcon fontSize="small" />}
+            checked={selected}
+            {...selectAllProps}
+          />
+          {option.label}
+        </li>
+      );
     };
 
     return (
@@ -63,17 +106,14 @@ const HierarchySelection = (props) => {
         value={selectedHierarchies.map((v) => ({ value: v, label: t(v) }))}
         onChange={changeSelected}
         ChipProps={{ deleteIcon: <CloseIcon /> }}
-        renderOption={(props, option, { selected }) => (
-          <li {...props}>
-            <Checkbox
-              icon={icon}
-              checkedIcon={checkedIcon}
-              style={{ marginRight: 8 }}
-              checked={selected}
-            />
-            {option.label}
-          </li>
-        )}
+        filterOptions={(options, params) => {
+          const filtered = filter(options, params);
+          return [
+            { value: 'select-all', label: t('select_all_none') },
+            ...filtered,
+          ];
+        }}
+        renderOption={optionRenderer}
         renderInput={(params) => (
           <TextField
             id="search"
