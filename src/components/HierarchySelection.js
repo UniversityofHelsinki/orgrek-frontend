@@ -75,24 +75,23 @@ const HierarchySelection = (props) => {
     const filter = createFilterOptions();
 
     const optionRenderer = (props, option, { selected }) => {
+      console.log(props);
       const selectAllProps =
         option.value === 'select-all' // To control the state of 'select-all' checkbox
           ? { checked: allSelected }
           : {};
       return (
-        <>
-          <li {...props}>
-            <Checkbox
-              color="primary"
-              icon={<CheckBoxOutlineBlankIcon fontSize="small" />}
-              checkedIcon={<CheckBoxIcon fontSize="small" />}
-              style={{ marginRight: 8 }}
-              checked={selected}
-              {...selectAllProps}
-            />
-            {option.label}
-          </li>
-        </>
+        <li {...props}>
+          <Checkbox
+            color="primary"
+            icon={<CheckBoxOutlineBlankIcon fontSize="small" />}
+            checkedIcon={<CheckBoxIcon fontSize="small" />}
+            style={{ marginRight: 8 }}
+            checked={selected}
+            {...selectAllProps}
+          />
+          {option.label}
+        </li>
       );
     };
 
