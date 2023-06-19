@@ -363,7 +363,17 @@ const theme = createTheme(
                 backgroundColor: `${palette.primary.main}`,
                 backgroundRepeat: 'no-repeat',
                 backgroundPosition: '25% 50%',
-                border: `2px solid ${palette.primary.nearlyBlack}`,
+                border: `1px solid ${palette.primary.nearlyBlack}`,
+              },
+            },
+            '& .Mui-disabled': {
+              '+ .MuiSwitch-track': {
+                backgroundColor: '#dfdfdf !important',
+                border: '1px solid #6a6a6a',
+                opacity: '1 !important',
+              },
+              '.MuiSwitch-thumb': {
+                border: '1px solid #8a8a8a',
               },
             },
             '& .MuiSwitch-switchBase': {
@@ -378,6 +388,18 @@ const theme = createTheme(
               ' .Mui-checked + .MuiSwitch-track': {
                 backgroundColor: '#0e719a',
               },
+              ' .Mui-checked.Mui-disabled + .MuiSwitch-track': {
+                backgroundColor: '#dfdfdf',
+              },
+            },
+          },
+          sizeSmall: {
+            padding: 4,
+            '& .MuiSwitch-thumb': {
+              marginTop: 3,
+              transform: 'translateX(-2px)',
+              width: 12,
+              height: 12,
             },
           },
           thumb: {
@@ -385,7 +407,7 @@ const theme = createTheme(
             width: 12,
             height: 12,
             backgroundColor: palette.common.white,
-            border: `2px solid ${palette.primary.main}`,
+            border: `1px solid ${palette.primary.main}`,
             marginLeft: '6px',
             marginTop: '6px',
           },
@@ -395,7 +417,7 @@ const theme = createTheme(
             width: 34,
             height: 18,
             backgroundColor: '#f8f8f8',
-            border: `2px solid ${palette.primary.main}`,
+            border: `1px solid ${palette.primary.main}`,
           },
         },
       },
