@@ -9,7 +9,7 @@ const useSelectedHierarchies = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const dispatch = useDispatch();
 
-  const { selectableHierarchies, selectedHierarchy, defaultHierarchy } =
+  let { selectableHierarchies, selectedHierarchy, defaultHierarchy } =
     useSelector((state) => ({
       selectableHierarchies: state.tree.selectableHierarchies,
       selectedHierarchy: state.tree.selectedHierarchy,
@@ -28,7 +28,6 @@ const useSelectedHierarchies = () => {
 
   useEffect(() => {
     const hierarchies = searchParams.get('hierarchies');
-
     if (hierarchies && selectableHierarchies?.length > 0) {
       const valid = hierarchies
         .split(',')
@@ -46,6 +45,9 @@ const useSelectedHierarchies = () => {
 
   useEffect(() => {
     if (selectedHierarchy) {
+      selectedHierarchy = selectedHierarchy
+        .split(',')
+        .filter((el) => el !== 'select-all');
       const newParams = new URLSearchParams(searchParams.toString());
       newParams.set('hierarchies', selectedHierarchy);
       setSearchParams(newParams);

@@ -28,7 +28,8 @@ export const api = createApi({
           : new Date().toLocaleDateString('FI-fi');
         const selectableHierarchies = hierarchies
           .split(',')
-          .filter((item) => item !== 'history');
+          .filter((item) => item !== 'history')
+          .filter((item) => item !== 'select-all');
         return {
           url: `/tree/${selectableHierarchies}/${dateString}`,
           method: 'GET',

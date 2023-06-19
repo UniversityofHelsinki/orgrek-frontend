@@ -21,6 +21,7 @@ const Hierarchy = (props) => {
 
   const theme = useTheme();
   const { t } = useTranslation();
+
   return (
     <Paper
       elevation={0}
