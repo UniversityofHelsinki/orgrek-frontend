@@ -9,7 +9,6 @@ import { authActions, isAuthorized } from '../../auth';
 import labelComparator from './labelComparator';
 import actionsColumnType from './actionsColumnType';
 import ReplayIcon from '../icons/Replay';
-import DeleteIcon from '@mui/icons-material/Delete';
 import DeleteSweepIcon from '@mui/icons-material/DeleteSweep';
 import ClearAllIcon from '@mui/icons-material/ClearAll';
 
@@ -122,12 +121,10 @@ const TextsDataGrid = ({
       valueGetter: (params) => params.row.value || params.row.defaultValue,
     },
     {
-      field: 'default',
-      type: 'boolean',
-      headerName: t('textsDataGrid.defaultColumnHeader'),
-      description: t('textsDataGrid.defaultColumnDescription'),
-      valueGetter: (params) => !params.row.value,
-      width: 120,
+      field: 'defaultValue',
+      headerName: t('textsDataGrid.defaultValueColumnHeader'),
+      description: t('textsDataGrid.defaultValueColumnDescription'),
+      flex: 1,
     },
     {
       field: 'translated',
@@ -181,7 +178,6 @@ const TextsDataGrid = ({
           actions.push(
             <GridActionsCellItem
               key="resetRow"
-              disabled={!canReset}
               icon={<ReplayIcon />}
               onClick={handleDeleteRow}
               label={t('textsDataGrid.resetToDefault')}
@@ -199,14 +195,6 @@ const TextsDataGrid = ({
 
         if (canDelete) {
           actions.push(
-            <GridActionsCellItem
-              key="deleteRow"
-              disabled={!canDelete}
-              icon={<DeleteIcon />}
-              onClick={handleDeleteRow}
-              label={t('dataGrid.deleteRow')}
-              showInMenu
-            />,
             <GridActionsCellItem
               key="deleteAllLanguages"
               icon={<DeleteSweepIcon />}
@@ -247,7 +235,7 @@ const TextsDataGrid = ({
       initialState={{
         columns: {
           columnVisibilityModel: {
-            default: false,
+            defaultValue: false,
             translated: false,
           },
         },
