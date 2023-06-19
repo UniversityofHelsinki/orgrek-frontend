@@ -85,7 +85,6 @@ const HierarchySelection = (props) => {
             color="primary"
             icon={<CheckBoxOutlineBlankIcon fontSize="small" />}
             checkedIcon={<CheckBoxIcon fontSize="small" />}
-            style={{ marginRight: 8 }}
             checked={selected}
             {...selectAllProps}
           />
