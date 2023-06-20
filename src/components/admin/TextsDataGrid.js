@@ -268,11 +268,8 @@ const TextsDataGrid = ({
 };
 
 TextsDataGrid.propTypes = {
-  /** Rows passed to DataGrid */
-  initialRows: PropTypes.array.isRequired,
-
-  /** Called when one or more rows are deleted. Takes an array of rows as argument. */
-  onDeleteRows: PropTypes.func.isRequired,
+  initialRows: PropTypes.array,
+  loading: PropTypes.bool,
 };
 
 export default TextsDataGrid;
