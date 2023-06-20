@@ -1,14 +1,8 @@
-.App {
-  display: flex;
-  flex-direction: column;
-  color: #333;
-}
-
 .table {
   color: #333 !important;
 }
 
-.table>:not(:first-child) {
+.table > :not(:first-child) {
   border-top: 2px solid lightgray !important;
 }
 
@@ -20,29 +14,19 @@ a:hover {
   text-decoration: underline;
 }
 
-
-#show_history_switch:checked, #show_coming_switch:checked{
+#show_history_switch:checked,
+#show_coming_switch:checked {
   background-color: #0e688b;
   border-color: #0e688b;
 }
 
-h3, h4 {
+h3,
+h4 {
   margin: 10px 10px 10px 0 !important;
-  color : #0e688b;
-}
-
-th {
   color: #0e688b;
 }
 
-.nodeLink {
-  padding-right: 5;
-  margin-left: 5px;
-  color: #337ab7;
-}
-
-.nodeLink:hover {
-  text-decoration: underline;
+th {
   color: #0e688b;
 }
 
@@ -58,23 +42,12 @@ th {
   margin-left: 5px;
 }
 
-.treeHierarchiesSelected {
-
-}
-
 .warningText {
-  color: red
+  color: red;
 }
 
 .successText {
-  color: green
-}
-
-.nodeLinkSelected {
-  font-weight: bold;
-  padding-right: 5px;
-  margin-left: 5px;
-  color: #107eab;
+  color: green;
 }
 
 .skip-nav-link {
@@ -87,7 +60,8 @@ th {
   width: 1px;
 }
 
-.skip-nav-link:focus-visible, .skip-nav-link:active {
+.skip-nav-link:focus-visible,
+.skip-nav-link:active {
   background: #107eab;
   color: white;
   border: 50px;
@@ -100,27 +74,7 @@ th {
   z-index: 1001;
 }
 
-.left-side {
-  overflow-y: scroll;
-  max-height: 100vh;
-}
-
-.right-side {
-  overflow-y: scroll;
-  max-height: 100vh;
-  padding-top:50px;
-  overflow-x: hidden;
-}
-
-.edit-buttons {
-  position: fixed;
-  background-color: white;
-  width: 100%;
-  z-index: 1030;
-}
-
 .navbar {
   flex-flow: column;
   display: grid;
 }
-

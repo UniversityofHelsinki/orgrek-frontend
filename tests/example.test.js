@@ -4,36 +4,30 @@ import userReducer from '../src/reducers/treeReducer';
 import userEvent from '@testing-library/user-event';
 
 test('renders a div with awesome text', () => {
-    render(<div>Awesome text</div>);
+  render(<div>Awesome text</div>);
 
-    const awesomeElement = screen.getByText(/Awesome text/i);
+  const awesomeElement = screen.getByText(/Awesome text/i);
 
-    expect(awesomeElement).toBeInTheDocument;
+  expect(awesomeElement).toBeInTheDocument();
 });
-
 
 test('should return the initial tree state', () => {
-    expect(userReducer(undefined, {})).toEqual(
-        {
-            defaultHierarchy: 'talous',
-            tree : {},
-            selectedHierarchy: undefined,
-            treeWithAllHierarchies: {},
-            selectableHierarchies: [],
-            selectedHierarchies: [],
-        }
-    );
+  expect(userReducer(undefined, {})).toEqual({
+    defaultHierarchy: 'talous',
+    selectedHierarchy: undefined,
+    selectableHierarchies: [],
+  });
 });
 
-test('clicks a button', () => {
-    const clickFunction = jest.fn();
-    render(<button onClick={clickFunction}>Click Me</button>);
-    const button = screen.getByText(/Click Me/i);
+test('clicks a button', async () => {
+  const clickFunction = jest.fn();
+  render(<button onClick={clickFunction}>Click Me</button>);
+  const button = screen.getByText(/Click Me/i);
 
-    expect(button).toBeInTheDocument;
+  expect(button).toBeInTheDocument();
 
-    userEvent.click(button);
-    userEvent.click(button);
+  await userEvent.click(button);
+  await userEvent.click(button);
 
-    expect(clickFunction).toHaveBeenCalledTimes(2);
+  expect(clickFunction).toHaveBeenCalledTimes(2);
 });

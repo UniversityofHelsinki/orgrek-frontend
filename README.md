@@ -5,7 +5,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ## Environment variables
 
 Place environment variables in .env.development.local file (create it if it does not exist)
-Add these environment variables to file : 
+Add these environment variables to file :
 
 REACT_APP_ORGREK_BACKEND_SERVER=
 
@@ -16,7 +16,6 @@ http://localhost:8080
 Value to run the project with local json server backend:
 
 http://localhost:3003
-
 
 REACT_APP_ORGREK_LOGIN=https://organisaatiorekisteri-dev.it.helsinki.fi/Shibboleth.sso/Login
 
@@ -61,17 +60,77 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
+## Code Style
+
+The code is formatted automatically with [Prettier](https://prettier.io/).
+There are several ways to run the formatter:
+
+- automatically on save file by IDE
+- automatically by a pre-commit hook
+- manually from command line by executing `npm run format`
+
+Most text editors have built-in support for Prettier, so refer to the documentation of your favorite tool.
+
+The pre-commit hook runs both ESLint and Prettier on staged files when you do a git commit.
+The hook is installed automatically after running `npm install`.
+
+### Using Prettier in IntelliJ IDEA
+
+In IDEA, two steps are needed:
+
+- [Apply Prettier code style](https://www.jetbrains.com/help/idea/prettier.html#ws_prettier_apply_code_style) from the banner appearing on top of `package.json`
+- [Enable run automatically on save](https://www.jetbrains.com/help/idea/prettier.html#ws_prettier_run_automatically_in_current_project).
+  Check that the file pattern includes all desired files, e.g. `{**/*,*}.{js,jsx,json,css,html,yml,md}`
+
+## Storybook
+
+Storybook is a UI component development tool and also serves as documentation for all custom components and
+the Material UI theme.
+See [Introduction](https://storybook.js.org/docs/react/get-started/introduction) in Storybook docs.
+
+To open Storybook in browser, run:
+
+```bash
+npm install
+npm run storybook
+```
+
+Storybook fetches translations from the local backend using the same configuration as the main app,
+so `orgrek-backend` must also be running, and the required auth headers must be mocked in the browser as with the
+main app.
+
+Storybook is used primarily for component development. Whole pages should still be tested using the main app.
+You can run both the main app and Storybook at the same time,
+and all code changes are reloaded in both automatically.
+
+### Storybook Test Runner
+
+The test runner checks that all components are rendered without errors and
+that [interactions](https://storybook.js.org/docs/react/writing-tests/interaction-testing) pass if the story has any.
+It also runs all [accessibility tests](https://storybook.js.org/blog/automate-accessibility-tests-with-storybook/).
+
+First start Storybook as above, then run in another window:
+
+```bash
+npm run storybook:test
+```
+
+### Updating Storybook dependencies
+
+Storybook has its own migration tool `npx storybook upgrade` which should be used for updating Storybook packages.
+See [Upgrading Storybook](https://storybook.js.org/docs/react/configure/upgrading)
+
 ## JSON server
 
-The JSON server runs mock api using the db.json-file as database. 
+The JSON server runs mock api using the db.json-file as database.
 
-You can make GET, POST, PUT, PATCH and DELETE requests to the mock database. You should include the `Content-Type: application/json` header to your requests to ensure the changes are made to data. 
+You can make GET, POST, PUT, PATCH and DELETE requests to the mock database. You should include the `Content-Type: application/json` header to your requests to ensure the changes are made to data.
 
 ### Adding new endpoints or data
 
 **When creating new mock endpoint or adding data ensure your formatting matches the one coming from the actual database or, in case of yet inexistent endpoint, what have been planned** - switching between mock and actual database should not cause any disturbances on component behavior.
 
-Adding new data is done by adding new JSON objects to the db.json-file. 
+Adding new data is done by adding new JSON objects to the db.json-file.
 
 To create a new endpoint customize one matching your needs to the routes.json-file. Read more from [JSON server custom routes documentation.](https://github.com/typicode/json-serverr#add-custom-routes)
 

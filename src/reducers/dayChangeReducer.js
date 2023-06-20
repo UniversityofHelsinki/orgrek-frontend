@@ -1,18 +1,23 @@
+const midnight = (date) => {
+  const copy = new Date(date);
+  copy.setHours(0, 0, 0, 0);
+  return copy;
+};
 
 const initialState = {
-    selectedDay : new Date()
+  selectedDay: midnight(new Date()),
 };
 
 const dayChangeReducer = (state = initialState, action) => {
-    switch (action.type) {
+  switch (action.type) {
     case 'DAY_CHANGE_SUCCESS':
-        return {
-            ...state,
-            selectedDay: action.payload
-        };
+      return {
+        ...state,
+        selectedDay: midnight(action.payload),
+      };
     default:
-        return state;
-    }
+      return state;
+  }
 };
 
 export default dayChangeReducer;

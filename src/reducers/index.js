@@ -10,15 +10,15 @@ import hierarchyFiltersReducer from './hierarchyFilterReducer';
 import editModeReducer from './editModeReducer';
 
 const rootReducer = combineReducers({
-    tree : treeReducer,
-    hr : hierarchyReducer,
-    nrd : nodeReducer,
-    ur : userReducer,
-    dr: dayChangeReducer,
-    nvrd: nodeDetailsViewReducer,
-    texts: textsReducer,
-    hierarchyFilters: hierarchyFiltersReducer,
-    editModeReducer: editModeReducer
+  tree: treeReducer,
+  hr: hierarchyReducer,
+  nrd: nodeReducer,
+  ur: userReducer,
+  dr: dayChangeReducer,
+  nvrd: nodeDetailsViewReducer,
+  texts: textsReducer,
+  hierarchyFilters: hierarchyFiltersReducer,
+  editModeReducer: editModeReducer,
 });
 
 export default rootReducer;

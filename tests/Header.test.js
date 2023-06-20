@@ -1,14 +1,18 @@
-import * as React from 'react';
-import { render } from './testUtils';
-import Header from '../src/components/Header';
-import { BrowserRouter } from 'react-router-dom';
+import React from 'react';
+import { render, screen } from '@testing-library/react';
+import * as stories from '../src/stories/components/Header.stories';
+import { composeStories } from '@storybook/react';
 
-jest.mock('react-i18next', () => ({
-    useTranslation: () => ( { t: key => key } )
-}));
+const { AdminRole, ReaderRole } = composeStories(stories);
 
-test('Header renders', () => {
-    const { container } = render(<BrowserRouter><Header /></BrowserRouter>);
-    const header = container.getElementsByClassName('navbar');
-    expect(header).toBeDefined();
+describe('navigation', () => {
+  test('expect texts navigation to be visible for admin role', () => {
+    render(<AdminRole />);
+    expect(screen.queryByText('Tekstit')).toBeInTheDocument();
+  });
+
+  test('expect texts navigation to not be visible for reader role', () => {
+    render(<ReaderRole />);
+    expect(screen.queryByText('Tekstit')).not.toBeInTheDocument();
+  });
 });

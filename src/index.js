@@ -1,22 +1,24 @@
 import React, { Suspense } from 'react';
-import ReactDOM from 'react-dom';
-import store from './store';
+import { createRoot } from 'react-dom/client';
+import store from './store/store';
 import { Provider } from 'react-redux';
-import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-datepicker/dist/react-datepicker.css';
-import  'react-multiple-select-dropdown-lite/dist/index.css';
+import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import './i18n';
+import { initI18n } from './i18n';
 
-ReactDOM.render(
-    <Provider store={store}>
-        <Suspense fallback={<div>Loading...</div>}>
-            <App />
-        </Suspense>
-    </Provider>,
-    document.getElementById('root')
+initI18n();
+
+const el = document.getElementById('root');
+const root = createRoot(el);
+root.render(
+  <Provider store={store}>
+    <Suspense fallback={<div>Loading...</div>}>
+      <App />
+    </Suspense>
+  </Provider>
 );
 
 // If you want to start measuring performance in your app, pass a function
