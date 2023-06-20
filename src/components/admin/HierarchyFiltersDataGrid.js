@@ -10,6 +10,7 @@ import { authActions, isAuthorized } from '../../auth';
 import useCurrentUser from '../../hooks/useCurrentUser';
 import actionsColumnType from './actionsColumnType';
 import DeleteIcon from '@mui/icons-material/Delete';
+import labelComparator from './labelComparator';
 
 const HierarchyFiltersDataGrid = ({
   initialRows,
@@ -150,17 +151,18 @@ const HierarchyFiltersDataGrid = ({
 
   const handleAddRow = () => {
     const id = Math.floor(Math.random() * -1000000);
-    const newRow = {
-      id,
-      hierarchy: null,
-      key: null,
-      value: null,
-      startDate: null,
-      endDate: null,
-      isNew: true,
-    };
-    setRows((oldRows) => [...oldRows, newRow]);
-    onAddRow(newRow);
+    setRows((oldRows) => [
+      ...oldRows,
+      {
+        id,
+        hierarchy: null,
+        key: null,
+        value: null,
+        startDate: null,
+        endDate: null,
+        isNew: true,
+      },
+    ]);
   };
 
   const handleCellEditStop = (params) => {
@@ -178,6 +180,11 @@ const HierarchyFiltersDataGrid = ({
       rows={rows}
       loading={loading}
       onCellEditStop={handleCellEditStop}
+      initialState={{
+        sorting: {
+          sortModel: [{ field: 'hierarchy', sort: 'asc' }],
+        },
+      }}
       slots={{
         toolbar: GridToolbar,
       }}
@@ -192,7 +199,7 @@ const HierarchyFiltersDataGrid = ({
 };
 
 HierarchyFiltersDataGrid.propTypes = {
-  initialRows: PropTypes.array.isRequired,
+  initialRows: PropTypes.array,
 };
 
 export default HierarchyFiltersDataGrid;
