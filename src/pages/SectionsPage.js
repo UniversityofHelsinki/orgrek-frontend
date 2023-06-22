@@ -35,8 +35,6 @@ const SectionsPage = () => {
   );
 
   const handleRowChange = (row) => {
-    console.log('handleRowChange', row); // TODO: dispatch saveSectionAttribute mutation
-
     return updateSectionAttribute({ data: row })
       .unwrap()
       .then((response) => {
