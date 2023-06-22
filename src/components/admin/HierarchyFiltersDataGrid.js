@@ -2,7 +2,13 @@ import { useTranslation } from 'react-i18next';
 import React, { useEffect, useMemo } from 'react';
 import dateColumnType from './dateColumnType';
 import { toDate } from '../../utils/dateUtils';
-import { DataGrid, GridActionsCellItem } from '@mui/x-data-grid';
+import {
+  DataGrid,
+  GridActionsCellItem,
+  svSE,
+  fiFI,
+  enUS,
+} from '@mui/x-data-grid';
 import GridToolbar from './GridToolbar';
 import PropTypes from 'prop-types';
 import autocompleteColumnType from './autocompleteColumnType';
@@ -10,7 +16,6 @@ import { authActions, isAuthorized } from '../../auth';
 import useCurrentUser from '../../hooks/useCurrentUser';
 import actionsColumnType from './actionsColumnType';
 import DeleteIcon from '@mui/icons-material/Delete';
-import labelComparator from './labelComparator';
 
 const HierarchyFiltersDataGrid = ({
   initialRows,
@@ -19,7 +24,8 @@ const HierarchyFiltersDataGrid = ({
   onRowChange,
   onDeleteRow,
 }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const language = i18n.language; // 'fi' | 'sv' | 'en'
   const user = useCurrentUser();
   const [rows, setRows] = React.useState(initialRows || []);
   const editable = isAuthorized(user, authActions.hierarchyFilters.edit);
@@ -185,6 +191,13 @@ const HierarchyFiltersDataGrid = ({
           sortModel: [{ field: 'hierarchy', sort: 'asc' }],
         },
       }}
+      localeText={
+        language === 'fi'
+          ? fiFI.components.MuiDataGrid.defaultProps.localeText
+          : language === 'sv'
+          ? svSE.components.MuiDataGrid.defaultProps.localeText
+          : enUS.components.MuiDataGrid.defaultProps.localeText
+      }
       slots={{
         toolbar: GridToolbar,
       }}
