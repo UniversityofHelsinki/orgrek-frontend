@@ -17,13 +17,13 @@ const SectionsPage = () => {
 
   const { data: hierarchyFilters, isFetching: isFetchingHierarchyFilters } =
     useGetHierarchyFiltersQuery();
-  const { data: sectionAttributes, isLoading: isLoadingSectionAttributes } =
+  const { data: sectionAttributes, isFetching: isFetchingSectionAttributes } =
     useGetSectionAttributesQuery();
 
   const [updateSectionAttribute] = useUpdateSectionAttributeMutation();
   const [deleteSectionAttribute] = useDeleteSectionAttributeMutation();
 
-  const loading = isFetchingHierarchyFilters || isLoadingSectionAttributes;
+  const loading = isFetchingHierarchyFilters || isFetchingSectionAttributes;
 
   const attributeKeys = useMemo(
     () =>
