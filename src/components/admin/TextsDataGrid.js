@@ -272,11 +272,6 @@ const TextsDataGrid = ({
           authActions: authActions.texts,
         },
       }}
-      sx={{
-        '.texts-default': {
-          backgroundColor: 'grey.50',
-        },
-      }}
     />
   );
 };
