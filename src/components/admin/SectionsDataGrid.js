@@ -11,6 +11,10 @@ import labelComparator from './labelComparator';
 import actionsColumnType from './actionsColumnType';
 import DeleteIcon from '@mui/icons-material/Delete';
 
+const handleProcessRowUpdateError = () => {
+  // handle error
+};
+
 const SectionsDataGrid = ({
   initialRows,
   attributeKeys,
@@ -64,11 +68,11 @@ const SectionsDataGrid = ({
     ]);
   };
 
-  const handleCellEditStop = (params) => {
-    if (params.row.isNew) {
-      onAddRow(params.row);
+  const handleRowUpdate = (updatedRow) => {
+    if (updatedRow.isNew) {
+      onAddRow(updatedRow);
     } else {
-      onRowChange(params.row);
+      onRowChange(updatedRow);
     }
   };
 
@@ -145,7 +149,8 @@ const SectionsDataGrid = ({
       columns={columns}
       rows={rows}
       loading={loading}
-      onCellEditStop={handleCellEditStop}
+      processRowUpdate={handleRowUpdate}
+      onProcessRowUpdateError={handleProcessRowUpdateError}
       initialState={{
         columns: {
           columnVisibilityModel: {
