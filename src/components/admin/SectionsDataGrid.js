@@ -68,12 +68,13 @@ const SectionsDataGrid = ({
     ]);
   };
 
-  const handleRowUpdate = (updatedRow, originalRow) => {
+  const handleRowUpdate = async (updatedRow, originalRow) => {
     if (updatedRow.isNew) {
-      onAddRow(updatedRow);
+      await onAddRow(updatedRow);
     } else {
-      onRowChange(updatedRow);
+      await onRowChange(updatedRow);
     }
+    return updatedRow;
   };
 
   const handleDeleteRow = (row) => {
