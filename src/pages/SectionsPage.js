@@ -2,12 +2,18 @@ import React, { useMemo } from 'react';
 import SectionsDataGrid from '../components/admin/SectionsDataGrid';
 import Container from '@mui/material/Container';
 import {
+  showNotification,
   useGetHierarchyFiltersQuery,
   useGetSectionAttributesQuery,
   useUpdateSectionAttributeMutation,
 } from '../store';
+import { useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 
 const SectionsPage = () => {
+  const dispatch = useDispatch();
+  const { t } = useTranslation();
+
   const { data: hierarchyFilters, isFetching: isFetchingHierarchyFilters } =
     useGetHierarchyFiltersQuery();
   const { data: sectionAttributes, isFetching: isFetchingSectionAttributes } =
@@ -30,7 +36,25 @@ const SectionsPage = () => {
 
   const handleRowChange = (row) => {
     console.log('handleRowChange', row); // TODO: dispatch saveSectionAttribute mutation
-    return updateSectionAttribute({ data: row }).unwrap();
+
+    return updateSectionAttribute({ data: row })
+      .unwrap()
+      .then((response) => {
+        dispatch(
+          showNotification({
+            message: t('sections.updateSuccess'),
+            severity: 'success',
+          })
+        );
+      })
+      .catch((error) => {
+        dispatch(
+          showNotification({
+            message: t('sections.updateError'),
+            severity: 'error',
+          })
+        );
+      });
   };
 
   const handleAddRow = (row) => {

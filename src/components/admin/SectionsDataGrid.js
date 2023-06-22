@@ -68,7 +68,7 @@ const SectionsDataGrid = ({
     ]);
   };
 
-  const handleRowUpdate = (updatedRow) => {
+  const handleRowUpdate = (updatedRow, originalRow) => {
     if (updatedRow.isNew) {
       onAddRow(updatedRow);
     } else {
