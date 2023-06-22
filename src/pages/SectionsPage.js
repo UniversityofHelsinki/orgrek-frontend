@@ -34,25 +34,23 @@ const SectionsPage = () => {
     [hierarchyFilters]
   );
 
-  const handleRowChange = (row) => {
-    return updateSectionAttribute({ data: row })
-      .unwrap()
-      .then((response) => {
-        dispatch(
-          showNotification({
-            message: t('sections.updateSuccess'),
-            severity: 'success',
-          })
-        );
-      })
-      .catch((error) => {
-        dispatch(
-          showNotification({
-            message: t('sections.updateError'),
-            severity: 'error',
-          })
-        );
-      });
+  const handleRowChange = async (row) => {
+    try {
+      await updateSectionAttribute({ data: row }).unwrap();
+      dispatch(
+        showNotification({
+          message: t('sections.updateSuccess'),
+          severity: 'success',
+        })
+      );
+    } catch (error) {
+      dispatch(
+        showNotification({
+          message: t('sections.updateError'),
+          severity: 'error',
+        })
+      );
+    }
   };
 
   const handleAddRow = (row) => {
