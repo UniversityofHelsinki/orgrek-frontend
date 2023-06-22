@@ -269,6 +269,21 @@ export const api = createApi({
         };
       },
     }),
+    updateSectionAttribute: builder.mutation({
+      invalidatesTags: (result, error) => {
+        if (error) {
+          return [];
+        }
+        return [{ type: 'SectionAttributes' }];
+      },
+      query: ({ data }) => {
+        return {
+          url: `/section/update`,
+          method: 'PUT',
+          body: data,
+        };
+      },
+    }),
   }),
 });
 
@@ -294,4 +309,5 @@ export const {
   useSaveSuccessorsMutation,
   useSaveChildMutation,
   useGetSectionAttributesQuery,
+  useUpdateSectionAttributeMutation,
 } = api;

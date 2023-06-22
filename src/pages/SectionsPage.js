@@ -4,6 +4,7 @@ import Container from '@mui/material/Container';
 import {
   useGetHierarchyFiltersQuery,
   useGetSectionAttributesQuery,
+  useUpdateSectionAttributeMutation,
 } from '../store';
 
 const SectionsPage = () => {
@@ -11,6 +12,8 @@ const SectionsPage = () => {
     useGetHierarchyFiltersQuery();
   const { data: sectionAttributes, isFetching: isFetchingSectionAttributes } =
     useGetSectionAttributesQuery();
+
+  const [updateSectionAttribute] = useUpdateSectionAttributeMutation();
 
   const loading = isFetchingHierarchyFilters || isFetchingSectionAttributes;
 
@@ -27,6 +30,7 @@ const SectionsPage = () => {
 
   const handleRowChange = (row) => {
     console.log('handleRowChange', row); // TODO: dispatch saveSectionAttribute mutation
+    return updateSectionAttribute({ data: row }).unwrap();
   };
 
   const handleAddRow = (row) => {
