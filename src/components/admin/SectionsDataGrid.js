@@ -77,8 +77,8 @@ const SectionsDataGrid = ({
     return updatedRow;
   };
 
-  const handleDeleteRow = (row) => {
-    onDeleteRow(row);
+  const handleDeleteRow = async (row) => {
+    await onDeleteRow(row);
   };
 
   const columns = [

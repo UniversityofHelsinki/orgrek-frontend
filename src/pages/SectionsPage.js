@@ -3,6 +3,7 @@ import SectionsDataGrid from '../components/admin/SectionsDataGrid';
 import Container from '@mui/material/Container';
 import {
   showNotification,
+  useDeleteSectionAttributeMutation,
   useGetHierarchyFiltersQuery,
   useGetSectionAttributesQuery,
   useUpdateSectionAttributeMutation,
@@ -20,6 +21,7 @@ const SectionsPage = () => {
     useGetSectionAttributesQuery();
 
   const [updateSectionAttribute] = useUpdateSectionAttributeMutation();
+  const [deleteSectionAttribute] = useDeleteSectionAttributeMutation();
 
   const loading = isFetchingHierarchyFilters || isLoadingSectionAttributes;
 
@@ -57,8 +59,23 @@ const SectionsPage = () => {
     console.log('handleAddRow', row); // TODO: dispatch addSectionAttribute mutation
   };
 
-  const handleDeleteRow = (row) => {
-    console.log('handleDeleteRow', row); // TODO: dispatch deleteSectionAttribute mutation
+  const handleDeleteRow = async (row) => {
+    try {
+      await deleteSectionAttribute({ id: row.id }).unwrap();
+      dispatch(
+        showNotification({
+          message: t('sections.deleteSuccess'),
+          severity: 'success',
+        })
+      );
+    } catch (error) {
+      dispatch(
+        showNotification({
+          message: t('sections.deleteError'),
+          severity: 'error',
+        })
+      );
+    }
   };
 
   return (

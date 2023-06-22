@@ -284,6 +284,20 @@ export const api = createApi({
         };
       },
     }),
+    deleteSectionAttribute: builder.mutation({
+      invalidatesTags: (result, error) => {
+        if (error) {
+          return [];
+        }
+        return [{ type: 'SectionAttributes' }];
+      },
+      query: ({ id }) => {
+        return {
+          url: `/section/${id}/delete`,
+          method: 'DELETE',
+        };
+      },
+    }),
   }),
 });
 
@@ -310,4 +324,5 @@ export const {
   useSaveChildMutation,
   useGetSectionAttributesQuery,
   useUpdateSectionAttributeMutation,
+  useDeleteSectionAttributeMutation,
 } = api;
