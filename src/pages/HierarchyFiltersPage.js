@@ -1,12 +1,12 @@
 import React, { useMemo } from 'react';
 import Container from '@mui/material/Container';
+import HierarchyFiltersDataGrid from '../components/admin/HierarchyFiltersDataGrid';
 import {
   showNotification,
   useGetHierarchyFiltersQuery,
   useSaveHierarchyFiltersMutation,
   useDeleteHierarchyFiltersMutation,
 } from '../store';
-import HierarchyFiltersDataGrid from '../components/admin/HierarchyFiltersDataGrid';
 import { t } from 'i18next';
 import { useDispatch } from 'react-redux';
 

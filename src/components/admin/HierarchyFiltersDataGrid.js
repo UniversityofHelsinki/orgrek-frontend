@@ -139,6 +139,10 @@ const HierarchyFiltersDataGrid = ({
       ...actionsColumnType,
       headerName: t('dataGrid.actionsHeader'),
       getActions: (params) => {
+        const handleDeleteRow = () => {
+          onDeleteRow(params.row);
+        };
+
         return [
           <GridActionsCellItem
             key="deleteRow"
