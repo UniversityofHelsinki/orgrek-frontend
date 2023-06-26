@@ -1,11 +1,10 @@
 import { useTranslation } from 'react-i18next';
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import dateColumnType from './dateColumnType';
 import { toDate } from '../../utils/dateUtils';
 import {
   DataGrid,
   GridActionsCellItem,
-  GridCellParams,
   svSE,
   fiFI,
   enUS,
@@ -17,6 +16,7 @@ import { authActions, isAuthorized } from '../../auth';
 import useCurrentUser from '../../hooks/useCurrentUser';
 import actionsColumnType from './actionsColumnType';
 import DeleteIcon from '@mui/icons-material/Delete';
+import NewHierarchyFilterForm from '../nodeDetails/NewHierarchyFilterForm';
 
 const HierarchyFiltersDataGrid = ({
   initialRows,
@@ -30,6 +30,7 @@ const HierarchyFiltersDataGrid = ({
   const user = useCurrentUser();
   const [rows, setRows] = React.useState(initialRows || []);
   const editable = isAuthorized(user, authActions.hierarchyFilters.edit);
+  const [showForm, setShowForm] = useState(false);
 
   useEffect(() => {
     if (!loading) {
@@ -139,10 +140,6 @@ const HierarchyFiltersDataGrid = ({
       ...actionsColumnType,
       headerName: t('dataGrid.actionsHeader'),
       getActions: (params) => {
-        const handleDeleteRow = () => {
-          onDeleteRow(params.row);
-        };
-
         return [
           <GridActionsCellItem
             key="deleteRow"
@@ -155,10 +152,14 @@ const HierarchyFiltersDataGrid = ({
       },
     });
   }
+  const initialValues = {
+    hierarchy: null,
+    isNew: true,
+  };
 
   const handleAddRow = () => {
     const id = Math.floor(Math.random() * -1000000);
-    setRows((oldRows) => [
+    /*setRows((oldRows) => [
       ...oldRows,
       {
         id,
@@ -169,7 +170,8 @@ const HierarchyFiltersDataGrid = ({
         endDate: null,
         isNew: true,
       },
-    ]);
+    ]);*/
+    setShowForm(true);
   };
 
   const processRowUpdate = (updatedrow) => {
@@ -183,35 +185,53 @@ const HierarchyFiltersDataGrid = ({
     await onDeleteRow(row);
   };
 
-  return (
-    <DataGrid
-      autoHeight
-      columns={columns}
-      rows={rows}
-      loading={loading}
-      processRowUpdate={processRowUpdate}
-      initialState={{
-        sorting: {
-          sortModel: [{ field: 'hierarchy', sort: 'asc' }],
-        },
-      }}
-      localeText={
-        language === 'fi'
-          ? fiFI.components.MuiDataGrid.defaultProps.localeText
-          : language === 'sv'
-          ? svSE.components.MuiDataGrid.defaultProps.localeText
-          : enUS.components.MuiDataGrid.defaultProps.localeText
-      }
-      slots={{
-        toolbar: GridToolbar,
-      }}
-      slotProps={{
-        toolbar: {
-          onAddRow: handleAddRow,
-          authActions: authActions.hierarchyFilters,
-        },
-      }}
+  const handleSubmit = (row) => {
+    onAddRow(row);
+  };
+
+  const formElement = showForm ? (
+    <NewHierarchyFilterForm
+      open={showForm}
+      onClose={() => setShowForm(false)}
+      handleSubmit={handleSubmit}
+      initialValues={initialValues}
     />
+  ) : (
+    <></>
+  );
+
+  return (
+    <>
+      <DataGrid
+        autoHeight
+        columns={columns}
+        rows={rows}
+        loading={loading}
+        processRowUpdate={processRowUpdate}
+        initialState={{
+          sorting: {
+            sortModel: [{ field: 'hierarchy', sort: 'asc' }],
+          },
+        }}
+        localeText={
+          language === 'fi'
+            ? fiFI.components.MuiDataGrid.defaultProps.localeText
+            : language === 'sv'
+            ? svSE.components.MuiDataGrid.defaultProps.localeText
+            : enUS.components.MuiDataGrid.defaultProps.localeText
+        }
+        slots={{
+          toolbar: GridToolbar,
+        }}
+        slotProps={{
+          toolbar: {
+            onAddRow: handleAddRow,
+            authActions: authActions.hierarchyFilters,
+          },
+        }}
+      />
+      {formElement}
+    </>
   );
 };
 
