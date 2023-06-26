@@ -21,13 +21,20 @@ import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
 import HelperText from '../inputs/HelperText';
 
-const NewSectionDialogForm = ({ open, onClose, handleSubmit, initialRows }) => {
-  const uniqueSectionValues = initialRows.filter(
-    (elem, ix) =>
-      initialRows.findIndex((elem1) => elem1.section === elem.section) === ix
+const NewSectionDialogForm = ({
+  open,
+  onClose,
+  handleSubmit,
+  sectionOptions,
+  attributeOptions,
+}) => {
+  const sectionDropdownFieldOptions = sectionOptions.sort((a, b) =>
+    a.label > b.label ? 1 : -1
   );
 
-  const dropdownFieldOptions = uniqueSectionValues;
+  const attributeDropDownFieldOptions = attributeOptions.sort((a, b) =>
+    a.label > b.label ? 1 : -1
+  );
 
   const { t } = useTranslation();
 
@@ -86,9 +93,28 @@ const NewSectionDialogForm = ({ open, onClose, handleSubmit, initialRows }) => {
         fullWidth
         helperText={<HelperText errors={errors} />}
       >
-        {dropdownFieldOptions.map((option) => (
-          <MenuItem key={option.section} value={option.section}>
-            {t(option.section)}
+        {sectionDropdownFieldOptions.map((option) => (
+          <MenuItem key={option.value} value={option.value}>
+            {option.label}
+          </MenuItem>
+        ))}
+      </TextField>
+    );
+  };
+
+  const AttributeDropdownField = ({ path }) => {
+    const { props, errors } = useFormField({ path, name: 'attr' });
+
+    return (
+      <TextField
+        {...props}
+        select
+        fullWidth
+        helperText={<HelperText errors={errors} />}
+      >
+        {attributeDropDownFieldOptions.map((option) => (
+          <MenuItem key={option.value} value={option.value}>
+            {option.label}
           </MenuItem>
         ))}
       </TextField>
@@ -101,8 +127,8 @@ const NewSectionDialogForm = ({ open, onClose, handleSubmit, initialRows }) => {
         <Box>
           <ContentHeader value={t('sectionsDataGrid.sectionColumnHeader')} />
           <SectionDropdownField path="" />
-          <ContentHeader value={t('attr.header')} />
-          <SectionDropdownField path="" />
+          <ContentHeader value={t('sectionsDataGrid.attributeColumnHeader')} />
+          <AttributeDropdownField path="" />
         </Box>
       </Stack>
     </>

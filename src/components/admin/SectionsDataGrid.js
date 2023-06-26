@@ -144,7 +144,8 @@ const SectionsDataGrid = ({
       open={showForm}
       onClose={() => setShowForm(false)}
       handleSubmit={handleSubmit}
-      initialRows={initialRows}
+      sectionOptions={sectionOptions}
+      attributeOptions={attributeOptions}
     />
   ) : (
     <></>
