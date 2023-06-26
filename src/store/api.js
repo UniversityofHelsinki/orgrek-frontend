@@ -1,5 +1,4 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { updateHierarchyFilter } from '../actions/hierarchyFiltersAction';
 
 export const api = createApi({
   reducerPath: 'api',
@@ -115,6 +114,21 @@ export const api = createApi({
         return {
           url: `/hierarchyFilters`,
           method: 'PUT',
+          body: data,
+        };
+      },
+    }),
+    deleteHierarchyFilters: builder.mutation({
+      invalidatesTags: (result, error) => {
+        if (error) {
+          return [];
+        }
+        return [{ type: 'HierarchyFilters' }];
+      },
+      query: ({ data }) => {
+        return {
+          url: `/hierarchyFilters`,
+          method: 'DELETE',
           body: data,
         };
       },
@@ -299,6 +313,7 @@ export const {
   useGetTypeAttributesQuery,
   useGetHierarchyFiltersQuery,
   useSaveHierarchyFiltersMutation,
+  useDeleteHierarchyFiltersMutation,
   useGetValidHierarchyFiltersQuery,
   useSaveTypeAttributesMutation,
   useGetAttributeKeysBySectionQuery,

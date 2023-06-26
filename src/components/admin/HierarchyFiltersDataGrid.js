@@ -139,15 +139,11 @@ const HierarchyFiltersDataGrid = ({
       ...actionsColumnType,
       headerName: t('dataGrid.actionsHeader'),
       getActions: (params) => {
-        const handleDeleteRow = () => {
-          onDeleteRow(params.row);
-        };
-
         return [
           <GridActionsCellItem
             key="deleteRow"
             icon={<DeleteIcon />}
-            onClick={handleDeleteRow}
+            onClick={() => handleDeleteRow(params.row)}
             label={t('dataGrid.deleteRow')}
             showInMenu
           />,
@@ -177,6 +173,10 @@ const HierarchyFiltersDataGrid = ({
       onRowChange(updatedrow);
     }
     return updatedrow;
+  };
+
+  const handleDeleteRow = async (row) => {
+    await onDeleteRow(row);
   };
 
   return (

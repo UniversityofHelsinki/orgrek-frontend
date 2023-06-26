@@ -4,6 +4,7 @@ import {
   showNotification,
   useGetHierarchyFiltersQuery,
   useSaveHierarchyFiltersMutation,
+  useDeleteHierarchyFiltersMutation,
 } from '../store';
 import HierarchyFiltersDataGrid from '../components/admin/HierarchyFiltersDataGrid';
 import { t } from 'i18next';
@@ -14,6 +15,7 @@ const HierarchyFiltersPage = () => {
   const { data: hierarchyFilters, isFetching: isFetchingHierarchyFilters } =
     useGetHierarchyFiltersQuery();
   const [saveHierarchyFilters] = useSaveHierarchyFiltersMutation();
+  const [deleteHierarchyFilters] = useDeleteHierarchyFiltersMutation();
   const loading = isFetchingHierarchyFilters;
 
   const handleRowChange = async (row) => {
@@ -22,14 +24,14 @@ const HierarchyFiltersPage = () => {
       await saveHierarchyFilters({ data: row }).unwrap();
       dispatch(
         showNotification({
-          message: t('hierarchyFilters.save_success'),
+          message: t('hierarchyFilters.saveSuccess'),
           severity: 'success',
         })
       );
     } catch (error) {
       dispatch(
         showNotification({
-          message: t('hierarchyFilters.save_failed'),
+          message: t('hierarchyFilters.saveError'),
           severity: 'error',
         })
       );
@@ -41,8 +43,24 @@ const HierarchyFiltersPage = () => {
     //console.log('handleAddRow', row); // TODO: dispatch addHierarchyFilters mutation
   };
 
-  const handleDeleteRow = (row) => {
-    console.log('handleDeleteRow', row); // TODO: dispatch deleteHierarchyFilters mutation
+  const handleDeleteRow = async (row) => {
+    //console.log('handleDeleteRow', row); // TODO: dispatch deleteHierarchyFilters mutation
+    try {
+      await deleteHierarchyFilters({ data: row }).unwrap();
+      dispatch(
+        showNotification({
+          message: t('hierarchyFilters.deleteSuccess'),
+          severity: 'success',
+        })
+      );
+    } catch (error) {
+      dispatch(
+        showNotification({
+          message: t('hierarchyFilters.deleteError'),
+          severity: 'error',
+        })
+      );
+    }
   };
 
   return (
