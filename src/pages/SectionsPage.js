@@ -6,6 +6,7 @@ import {
   useDeleteSectionAttributeMutation,
   useGetHierarchyFiltersQuery,
   useGetSectionAttributesQuery,
+  useInsertSectionAttributeMutation,
   useUpdateSectionAttributeMutation,
 } from '../store';
 import { useDispatch } from 'react-redux';
@@ -22,6 +23,7 @@ const SectionsPage = () => {
 
   const [updateSectionAttribute] = useUpdateSectionAttributeMutation();
   const [deleteSectionAttribute] = useDeleteSectionAttributeMutation();
+  const [insertSectionAttribute] = useInsertSectionAttributeMutation();
 
   const loading = isFetchingHierarchyFilters || isFetchingSectionAttributes;
 
@@ -55,8 +57,24 @@ const SectionsPage = () => {
     }
   };
 
-  const handleAddRow = (row) => {
+  const handleAddRow = async (row) => {
     console.log('handleAddRow', row); // TODO: dispatch addSectionAttribute mutation
+    try {
+      await insertSectionAttribute({ data: row }).unwrap();
+      dispatch(
+        showNotification({
+          message: t('sections.insertSuccess'),
+          severity: 'success',
+        })
+      );
+    } catch (error) {
+      dispatch(
+        showNotification({
+          message: t('sections.insertError'),
+          severity: 'error',
+        })
+      );
+    }
   };
 
   const handleDeleteRow = async (row) => {

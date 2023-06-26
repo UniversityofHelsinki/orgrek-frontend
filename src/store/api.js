@@ -284,6 +284,21 @@ export const api = createApi({
         };
       },
     }),
+    insertSectionAttribute: builder.mutation({
+      invalidatesTags: (result, error) => {
+        if (error) {
+          return [];
+        }
+        return [{ type: 'SectionAttributes' }];
+      },
+      query: ({ data }) => {
+        return {
+          url: `/section/insert`,
+          method: 'POST',
+          body: data,
+        };
+      },
+    }),
     deleteSectionAttribute: builder.mutation({
       invalidatesTags: (result, error) => {
         if (error) {
@@ -325,4 +340,5 @@ export const {
   useGetSectionAttributesQuery,
   useUpdateSectionAttributeMutation,
   useDeleteSectionAttributeMutation,
+  useInsertSectionAttributeMutation,
 } = api;

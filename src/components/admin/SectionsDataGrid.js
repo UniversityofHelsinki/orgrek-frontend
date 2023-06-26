@@ -59,16 +59,12 @@ const SectionsDataGrid = ({
     setShowForm(true);
   };
 
-  const handleSubmit = () => {
-    console.log('hit');
+  const handleSubmit = async (data) => {
+    await onAddRow(data);
   };
 
   const handleRowUpdate = async (updatedRow, originalRow) => {
-    if (updatedRow.isNew) {
-      await onAddRow(updatedRow);
-    } else {
-      await onRowChange(updatedRow);
-    }
+    await onRowChange(updatedRow);
     return updatedRow;
   };
 
