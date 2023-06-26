@@ -16,26 +16,24 @@ const HierarchyFiltersPage = () => {
   const [saveHierarchyFilters] = useSaveHierarchyFiltersMutation();
   const loading = isFetchingHierarchyFilters;
 
-  const handleRowChange = (row) => {
+  const handleRowChange = async (row) => {
     //console.log('handleRowChange', row); // TODO: dispatch saveHierarchyFilters mutation
-    return saveHierarchyFilters({ data: row })
-      .unwrap()
-      .then((response) => {
-        dispatch(
-          showNotification({
-            message: t('save_success'),
-            severity: 'success',
-          })
-        );
-      })
-      .catch((error) => {
-        dispatch(
-          showNotification({
-            message: t('save_failed'),
-            severity: 'error',
-          })
-        );
-      });
+    try {
+      await saveHierarchyFilters({ data: row }).unwrap();
+      dispatch(
+        showNotification({
+          message: t('hierarchyFilters.save_success'),
+          severity: 'success',
+        })
+      );
+    } catch (error) {
+      dispatch(
+        showNotification({
+          message: t('hierarchyFilters.save_failed'),
+          severity: 'error',
+        })
+      );
+    }
   };
 
   const handleAddRow = (row) => {
