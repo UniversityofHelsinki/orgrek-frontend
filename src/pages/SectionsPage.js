@@ -58,7 +58,6 @@ const SectionsPage = () => {
   };
 
   const handleAddRow = async (row) => {
-    console.log('handleAddRow', row); // TODO: dispatch addSectionAttribute mutation
     try {
       await insertSectionAttribute({ data: row }).unwrap();
       dispatch(
