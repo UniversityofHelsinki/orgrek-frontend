@@ -18,6 +18,7 @@ export const api = createApi({
     'SaveNodeOtherAttributes',
     'Successors',
     'SectionAttributes',
+    'TextAttributes',
   ],
   endpoints: (builder) => ({
     getTree: builder.query({
@@ -269,6 +270,15 @@ export const api = createApi({
         };
       },
     }),
+    getTextAttributes: builder.query({
+      providesTags: () => [{ type: 'TextAttributes' }],
+      query: () => {
+        return {
+          url: `/texts`,
+          method: 'GET',
+        };
+      },
+    }),
   }),
 });
 
@@ -294,4 +304,5 @@ export const {
   useSaveSuccessorsMutation,
   useSaveChildMutation,
   useGetSectionAttributesQuery,
+  useGetTextAttributesQuery,
 } = api;
