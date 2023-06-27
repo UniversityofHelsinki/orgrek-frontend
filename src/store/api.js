@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-// eslint-disable-next-line max-lines-per-function
+/*eslint max-lines-per-function: ["warn", 2000]*/
 export const api = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({
@@ -19,6 +19,7 @@ export const api = createApi({
     'Successors',
     'SectionAttributes',
     'TextAttributes',
+    'EdgeHierarchies',
   ],
   endpoints: (builder) => ({
     getTree: builder.query({
@@ -220,6 +221,15 @@ export const api = createApi({
         };
       },
     }),
+    getEdges: builder.query({
+      providesTags: () => [{ type: 'EdgeHierarchies' }],
+      query: () => {
+        return {
+          url: `/edge/types`,
+          method: 'GET',
+        };
+      },
+    }),
     saveParents: builder.mutation({
       invalidatesTags: (result, error, { nodeId }) => {
         if (error) {
@@ -345,4 +355,5 @@ export const {
   useSaveChildMutation,
   useGetSectionAttributesQuery,
   useGetTextAttributesQuery,
+  useGetEdgesQuery,
 } = api;

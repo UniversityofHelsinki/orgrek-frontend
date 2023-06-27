@@ -61,6 +61,8 @@ const NewHierarchyFilterForm = ({
   onClose,
   handleSubmit,
   initialRows,
+  selhierarchies,
+  attributeKeys,
 }) => {
   const { t } = useTranslation();
   //const validationSchema = newNodeValiditySchema;
@@ -104,17 +106,18 @@ const NewHierarchyFilterForm = ({
 
   const SectionDropdownField = ({ path }) => {
     const { props, errors } = useFormField({ path, name: 'hierarchy' });
-
+    console.log(selhierarchies);
     return (
       <TextField
         {...props}
         select
         fullWidth
+        label={t('hierarchyDataGrid.sectionColumnHeader')}
         helperText={<HelperText errors={errors} />}
       >
-        {dropdownHierarchyFieldOptions.map((option) => (
-          <MenuItem key={option.hierarchy} value={option.hierarchy}>
-            {option.hierarchy}
+        {selhierarchies.map((option) => (
+          <MenuItem key={option} value={option}>
+            {option}
           </MenuItem>
         ))}
       </TextField>
@@ -129,11 +132,12 @@ const NewHierarchyFilterForm = ({
         {...props}
         select
         fullWidth
+        label={t('hierarchyDataGrid.attributeColumnHeader')}
         helperText={<HelperText errors={errors} />}
       >
-        {dropdownKeyFieldOptions.map((option) => (
-          <MenuItem key={option.key} value={option.key}>
-            {option.key}
+        {attributeKeys.map((option) => (
+          <MenuItem key={option.attr} value={option.attr}>
+            {option.attr}
           </MenuItem>
         ))}
       </TextField>
@@ -148,6 +152,7 @@ const NewHierarchyFilterForm = ({
         {...props}
         select
         fullWidth
+        label={t('hierarchyDataGrid.valueColumnHeader')}
         helperText={<HelperText errors={errors} />}
       >
         {dropdownValueFieldOptions.map((option) => (
@@ -163,11 +168,8 @@ const NewHierarchyFilterForm = ({
     <>
       <Stack spacing={2}>
         <Box>
-          <ContentHeader value={t('hierarchyDataGrid.sectionColumnHeader')} />
           <SectionDropdownField path="" />
-          <ContentHeader value={t('hierarchyDataGrid.attributeColumnHeader')} />
           <AttributeDropdownField path="" />
-          <ContentHeader value={t('hierarchyDataGrid.valueColumnHeader')} />
           <ValueDropdownField path="" />
         </Box>
       </Stack>
