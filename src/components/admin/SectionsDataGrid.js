@@ -1,5 +1,11 @@
-import React, { useMemo, useEffect } from 'react';
-import { DataGrid, GridActionsCellItem } from '@mui/x-data-grid';
+import React, { useEffect, useMemo } from 'react';
+import {
+  DataGrid,
+  enUS,
+  fiFI,
+  GridActionsCellItem,
+  svSE,
+} from '@mui/x-data-grid';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import { toDate } from '../../utils/dateUtils';
@@ -10,6 +16,11 @@ import useCurrentUser from '../../hooks/useCurrentUser';
 import labelComparator from './labelComparator';
 import actionsColumnType from './actionsColumnType';
 import DeleteIcon from '@mui/icons-material/Delete';
+import NewSectionDialogForm from './NewSectionDialogForm';
+
+const handleProcessRowUpdateError = () => {
+  // handle error
+};
 
 const SectionsDataGrid = ({
   initialRows,
@@ -19,10 +30,12 @@ const SectionsDataGrid = ({
   onRowChange,
   onDeleteRow,
 }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const user = useCurrentUser();
   const [rows, setRows] = React.useState(initialRows || []);
   const editable = isAuthorized(user, authActions.sections.edit);
+  const [showForm, setShowForm] = React.useState(false);
+  const language = i18n.language;
 
   useEffect(() => {
     if (!loading) {
@@ -50,30 +63,25 @@ const SectionsDataGrid = ({
   );
 
   const handleAddRow = () => {
-    const id = Math.floor(Math.random() * -1000000);
-    setRows((oldRows) => [
-      ...oldRows,
-      {
-        id,
-        section: null,
-        attr: null,
-        startDate: null,
-        endDate: null,
-        isNew: true,
-      },
-    ]);
+    setShowForm(true);
   };
 
-  const handleCellEditStop = (params) => {
-    if (params.row.isNew) {
-      onAddRow(params.row);
-    } else {
-      onRowChange(params.row);
+  const handleSubmit = async (data) => {
+    try {
+      await onAddRow(data);
+      setShowForm(false);
+    } catch (error) {
+      setShowForm(true);
     }
   };
 
-  const handleDeleteRow = (row) => {
-    onDeleteRow(row);
+  const handleRowUpdate = async (updatedRow, originalRow) => {
+    await onRowChange(updatedRow);
+    return updatedRow;
+  };
+
+  const handleDeleteRow = async (row) => {
+    await onDeleteRow(row);
   };
 
   const columns = [
@@ -139,35 +147,58 @@ const SectionsDataGrid = ({
     });
   }
 
-  return (
-    <DataGrid
-      autoHeight
-      columns={columns}
-      rows={rows}
-      loading={loading}
-      onCellEditStop={handleCellEditStop}
-      initialState={{
-        columns: {
-          columnVisibilityModel: {
-            startDate: false,
-            endDate: false,
-            order: false, // TODO: Hidden for now because this field does not yet exist, see OR-1052
-          },
-        },
-        sorting: {
-          sortModel: [{ field: 'section', sort: 'asc' }],
-        },
-      }}
-      slots={{
-        toolbar: GridToolbar,
-      }}
-      slotProps={{
-        toolbar: {
-          onAddRow: handleAddRow,
-          authActions: authActions.sections,
-        },
-      }}
+  const formElement = showForm ? (
+    <NewSectionDialogForm
+      open={showForm}
+      onClose={() => setShowForm(false)}
+      handleSubmit={handleSubmit}
+      sectionOptions={sectionOptions}
+      attributeOptions={attributeOptions}
     />
+  ) : (
+    <></>
+  );
+
+  return (
+    <>
+      <DataGrid
+        autoHeight
+        columns={columns}
+        rows={rows}
+        loading={loading}
+        processRowUpdate={handleRowUpdate}
+        onProcessRowUpdateError={handleProcessRowUpdateError}
+        initialState={{
+          columns: {
+            columnVisibilityModel: {
+              startDate: false,
+              endDate: false,
+              order: false, // TODO: Hidden for now because this field does not yet exist, see OR-1052
+            },
+          },
+          sorting: {
+            sortModel: [{ field: 'section', sort: 'asc' }],
+          },
+        }}
+        localeText={
+          language === 'fi'
+            ? fiFI.components.MuiDataGrid.defaultProps.localeText
+            : language === 'sv'
+            ? svSE.components.MuiDataGrid.defaultProps.localeText
+            : enUS.components.MuiDataGrid.defaultProps.localeText
+        }
+        slots={{
+          toolbar: GridToolbar,
+        }}
+        slotProps={{
+          toolbar: {
+            onAddRow: handleAddRow,
+            authActions: authActions.sections,
+          },
+        }}
+      />
+      {formElement}
+    </>
   );
 };
 
