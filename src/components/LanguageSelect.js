@@ -13,6 +13,7 @@ const LanguageSelect = () => {
 
   const handleChange = async (event) => {
     await i18n.changeLanguage(event.target.value);
+    document.documentElement.lang = event.target.value;
   };
 
   return (
