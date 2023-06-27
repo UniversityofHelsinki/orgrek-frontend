@@ -43,14 +43,14 @@ const SectionsPage = () => {
       await updateSectionAttribute({ data: row }).unwrap();
       dispatch(
         showNotification({
-          message: t('sections.updateSuccess'),
+          message: t('sectionInfo.updateSuccess'),
           severity: 'success',
         })
       );
     } catch (error) {
       dispatch(
         showNotification({
-          message: t('sections.updateError'),
+          message: t('sectionInfo.updateError'),
           severity: 'error',
         })
       );
@@ -62,14 +62,14 @@ const SectionsPage = () => {
       await insertSectionAttribute({ data: row }).unwrap();
       dispatch(
         showNotification({
-          message: t('sections.insertSuccess'),
+          message: t('sectionInfo.insertSuccess'),
           severity: 'success',
         })
       );
     } catch (error) {
       dispatch(
         showNotification({
-          message: t('sections.insertError'),
+          message: t('sectionInfo.insertError'),
           severity: 'error',
         })
       );
@@ -81,14 +81,14 @@ const SectionsPage = () => {
       await deleteSectionAttribute({ id: row.id }).unwrap();
       dispatch(
         showNotification({
-          message: t('sections.deleteSuccess'),
+          message: t('sectionInfo.deleteSuccess'),
           severity: 'success',
         })
       );
     } catch (error) {
       dispatch(
         showNotification({
-          message: t('sections.deleteError'),
+          message: t('sectionInfo.deleteError'),
           severity: 'error',
         })
       );

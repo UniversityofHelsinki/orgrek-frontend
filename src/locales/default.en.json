@@ -330,6 +330,14 @@
   "search_by_name_or_code": "Search by name or code",
   "search_place_holder": "Search with keyword..",
   "sections": "Sections",
+  "sectionInfo": {
+    "deleteError": "Deleting section failed",
+    "deleteSuccess": "Section deleted",
+    "insertError": "Adding section failed",
+    "insertSuccess": "Section added",
+    "updateError": "Updating section failed",
+    "updateSuccess": "Section updated"
+  },
   "sectionsDataGrid": {
     "attributeColumnHeader": "Attribute",
     "endDateColumnHeader": "End date",
