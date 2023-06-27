@@ -45,7 +45,7 @@ const HierarchyFiltersPage = () => {
     //const id = Math.floor(Math.random() * -1000000);
     //console.log('handleAddRow', row); // TODO: dispatch addHierarchyFilters mutation
     try {
-      await insertHierarchyFilters({ data: row }).unwrap();
+      await insertHierarchyFilters({ data: [row] }).unwrap();
       dispatch(
         showNotification({
           message: t('hierarchyFilters.insertSuccess'),
