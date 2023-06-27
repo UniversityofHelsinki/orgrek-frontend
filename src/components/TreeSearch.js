@@ -2,7 +2,7 @@ import React from 'react';
 import useNavigate from '../hooks/useNavigate';
 import NodeField from './inputs/NodeField';
 
-const TreeSearch = () => {
+const TreeSearch = ({ width }) => {
   const navigate = useNavigate();
 
   const handleChange = (event, node) => {
@@ -14,7 +14,7 @@ const TreeSearch = () => {
   return (
     <NodeField
       size="small"
-      sx={{ width: 350 }}
+      sx={{ width: width || 350 }}
       id="tree-search"
       variant="search"
       onChange={handleChange}
