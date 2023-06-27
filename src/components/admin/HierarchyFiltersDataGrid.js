@@ -185,8 +185,13 @@ const HierarchyFiltersDataGrid = ({
     await onDeleteRow(row);
   };
 
-  const handleSubmit = (row) => {
-    onAddRow(row);
+  const handleSubmit = async (data) => {
+    try {
+      await onAddRow(data);
+      setShowForm(false);
+    } catch (error) {
+      setShowForm(true);
+    }
   };
 
   const formElement = showForm ? (
@@ -194,7 +199,7 @@ const HierarchyFiltersDataGrid = ({
       open={showForm}
       onClose={() => setShowForm(false)}
       handleSubmit={handleSubmit}
-      initialRows={initialRows}
+      initialRows={rows}
     />
   ) : (
     <></>

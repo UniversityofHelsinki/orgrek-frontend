@@ -35,74 +35,6 @@ const ContentHeader = ({ value }) => {
   );
 };
 
-/*const ValidFromField = () => {
-  const { t } = useTranslation();
-  const { values, setValues, errors } = useForm();
-  return (
-    <Box>
-      <ContentHeader value={t('subunits.validFrom')} />
-      <Box>
-        <StartDateField
-          value={values.startDate}
-          label={t('subunits.validFrom')}
-          path=""
-        />
-      </Box>
-    </Box>
-  );
-};*/
-/*const NameFields = () => {
-    const { t } = useTranslation();
-    const { values, setValues } = useForm();
-    const fieldPrefix = 'name';
-    const languages = ['Fi', 'En', 'Sv'];
-    return (
-        <Box>
-            <ContentHeader value={t('subunits.names')} />
-            <Stack spacing={1}>
-                {languages.map((language) => (
-                    <Box key={language} component="fieldset">
-                        <ValueField
-                            label={t(`subunits.${fieldPrefix}${language}`)}
-                            name={`${fieldPrefix}${language}`}
-                            path=""
-                        />
-                    </Box>
-                ))}
-            </Stack>
-        </Box>
-    );
-};*/
-/*const Hierarchies = ({ hierarchies }) => {
-  const { t } = useTranslation();
-  const { values, setValues } = useForm();
-
-  return (
-    <Box>
-      <ContentHeader value={t('subunits.hierarchies')} />
-      <Stack direction="row" rowGap="10px" flexWrap="wrap">
-        {hierarchies.map((hierarchy) => (
-          <Chip
-            key={hierarchy}
-            label={t(hierarchy)}
-            sx={{ marginRight: '10px' }}
-          />
-        ))}
-      </Stack>
-    </Box>
-  );
-};*/
-/*const Node = () => {
-  const currentNode = useFetchNode();
-  const { t } = useTranslation();
-  return (
-    <Box>
-      <ContentHeader value={t('subunits.parent')} />
-      <Typography variant="body1">{currentNode.name}</Typography>
-    </Box>
-  );
-};*/
-
 const Actions = ({ onCancel }) => {
   const { t } = useTranslation();
   const { dirty, invalid, submitting } = useForm();
@@ -134,7 +66,8 @@ const NewHierarchyFilterForm = ({
   //const validationSchema = newNodeValiditySchema;
   const uniqueSectionValues = initialRows.filter(
     (elem, ix) =>
-      initialRows.findIndex((elem1) => elem1.section === elem.section) === ix
+      initialRows.findIndex((elem1) => elem1.hierarchy === elem.hierarchy) ===
+      ix
   );
 
   const dropdownFieldOptions = uniqueSectionValues;
@@ -145,14 +78,6 @@ const NewHierarchyFilterForm = ({
   };
 
   const today = new Date();
-  /*const emptyNode = {
-    hierarchies: selectedHierarchies,
-    key: null,
-    value: null,
-    startDate: today,
-    endDate: null,
-    isNew: true,
-  };*/
 
   const headerRow = (
     <Stack alignItems="center" justifyContent="space-between" direction="row">
@@ -166,7 +91,7 @@ const NewHierarchyFilterForm = ({
   );
 
   const SectionDropdownField = ({ path }) => {
-    const { props, errors } = useFormField({ path, name: 'section' });
+    const { props, errors } = useFormField({ path, name: 'hierarchy' });
 
     return (
       <TextField
@@ -176,8 +101,46 @@ const NewHierarchyFilterForm = ({
         helperText={<HelperText errors={errors} />}
       >
         {dropdownFieldOptions.map((option) => (
-          <MenuItem key={option.section} value={option.section}>
-            {option.section}
+          <MenuItem key={option.hierarchy} value={option.hierarchy}>
+            {option.hierarchy}
+          </MenuItem>
+        ))}
+      </TextField>
+    );
+  };
+
+  const AttributeDropdownField = ({ path }) => {
+    const { props, errors } = useFormField({ path, name: 'key' });
+
+    return (
+      <TextField
+        {...props}
+        select
+        fullWidth
+        helperText={<HelperText errors={errors} />}
+      >
+        {dropdownFieldOptions.map((option) => (
+          <MenuItem key={option.key} value={option.key}>
+            {option.key}
+          </MenuItem>
+        ))}
+      </TextField>
+    );
+  };
+
+  const ValueDropdownField = ({ path }) => {
+    const { props, errors } = useFormField({ path, name: 'value' });
+
+    return (
+      <TextField
+        {...props}
+        select
+        fullWidth
+        helperText={<HelperText errors={errors} />}
+      >
+        {dropdownFieldOptions.map((option) => (
+          <MenuItem key={option.value} value={option.value}>
+            {option.value}
           </MenuItem>
         ))}
       </TextField>
@@ -188,8 +151,12 @@ const NewHierarchyFilterForm = ({
     <>
       <Stack spacing={2}>
         <Box>
-          <p>Aukea per ...</p>
+          <ContentHeader value={t('hierarchyDataGrid.sectionColumnHeader')} />
           <SectionDropdownField path="" />
+          <ContentHeader value={t('hierarchyDataGrid.attributeColumnHeader')} />
+          <AttributeDropdownField path="" />
+          <ContentHeader value={t('hierarchyDataGrid.valueColumnHeader')} />
+          <ValueDropdownField path="" />
         </Box>
       </Stack>
     </>
