@@ -5,6 +5,7 @@ import {
   showNotification,
   useGetHierarchyFiltersQuery,
   useSaveHierarchyFiltersMutation,
+  useInsertHierarchyFiltersMutation,
   useDeleteHierarchyFiltersMutation,
 } from '../store';
 import { t } from 'i18next';
@@ -16,6 +17,8 @@ const HierarchyFiltersPage = () => {
     useGetHierarchyFiltersQuery();
   const [saveHierarchyFilters] = useSaveHierarchyFiltersMutation();
   const [deleteHierarchyFilters] = useDeleteHierarchyFiltersMutation();
+  const [insertHierarchyFilters] = useInsertHierarchyFiltersMutation();
+
   const loading = isFetchingHierarchyFilters;
 
   const handleRowChange = async (row) => {
@@ -38,9 +41,25 @@ const HierarchyFiltersPage = () => {
     }
   };
 
-  const handleAddRow = (row) => {
-    const id = Math.floor(Math.random() * -1000000);
+  const handleAddRow = async (row) => {
+    //const id = Math.floor(Math.random() * -1000000);
     //console.log('handleAddRow', row); // TODO: dispatch addHierarchyFilters mutation
+    try {
+      await insertHierarchyFilters({ data: row }).unwrap();
+      dispatch(
+        showNotification({
+          message: t('hierarchyFilters.insertSuccess'),
+          severity: 'success',
+        })
+      );
+    } catch (error) {
+      dispatch(
+        showNotification({
+          message: t('hierarchyFilters.insertError'),
+          severity: 'error',
+        })
+      );
+    }
   };
 
   const handleDeleteRow = async (row) => {
