@@ -1,6 +1,12 @@
 import { useTranslation } from 'react-i18next';
 import React, { useEffect, useMemo } from 'react';
-import { DataGrid, GridActionsCellItem } from '@mui/x-data-grid';
+import {
+  DataGrid,
+  GridActionsCellItem,
+  svSE,
+  fiFI,
+  enUS,
+} from '@mui/x-data-grid';
 import GridToolbar from './GridToolbar';
 import timestampColumnType from './timestampColumnType';
 import PropTypes from 'prop-types';
@@ -68,7 +74,8 @@ const TextsDataGrid = ({
   onRowChange,
   onDeleteRows,
 }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const language = i18n.language; // 'fi' | 'sv' | 'en'
   const user = useCurrentUser();
   const [rows, setRows] = React.useState(initialRows || []);
 
@@ -249,6 +256,13 @@ const TextsDataGrid = ({
       onCellEditStop={handleCellEditStop}
       getRowId={getRowId}
       getRowClassName={(params) => !params.row.value && 'texts-default'}
+      localeText={
+        language === 'fi'
+          ? fiFI.components.MuiDataGrid.defaultProps.localeText
+          : language === 'sv'
+          ? svSE.components.MuiDataGrid.defaultProps.localeText
+          : enUS.components.MuiDataGrid.defaultProps.localeText
+      }
       slots={{
         toolbar: GridToolbar,
       }}
@@ -258,21 +272,13 @@ const TextsDataGrid = ({
           authActions: authActions.texts,
         },
       }}
-      sx={{
-        '.texts-default': {
-          backgroundColor: 'grey.50',
-        },
-      }}
     />
   );
 };
 
 TextsDataGrid.propTypes = {
-  /** Rows passed to DataGrid */
-  initialRows: PropTypes.array.isRequired,
-
-  /** Called when one or more rows are deleted. Takes an array of rows as argument. */
-  onDeleteRows: PropTypes.func.isRequired,
+  initialRows: PropTypes.array,
+  loading: PropTypes.bool,
 };
 
 export default TextsDataGrid;

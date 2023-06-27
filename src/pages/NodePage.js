@@ -3,13 +3,15 @@ import NodeDetails from '../components/nodeDetails/NodeDetails';
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import Container from '@mui/material/Container';
-import { Box, Divider } from '@mui/material';
+import { Box, Divider, Grid, useTheme } from '@mui/material';
 import Tree from '../components/Tree';
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 
 const NodePage = () => {
   // Temporary solution until the old NodeDetails component is removed
   const editMode = useSelector((state) => state.editModeReducer.edit);
+
+  const theme = useTheme();
 
   const [dragOptions, setDragOptions] = useState({
     dragging: false,
@@ -23,12 +25,11 @@ const NodePage = () => {
   const width = dragOptions.width;
 
   return (
-    <Container sx={{ pb: 3 }}>
-      <Hierarchy />
-      <Box
+    <Container sx={{ paddingLeft: 0, paddingRight: 0 }}>
+      <Grid
+        container
+        paddingBottom={3}
         sx={{
-          display: 'flex',
-          justifyContent: 'start',
           cursor: isDragging ? 'col-resize' : 'default',
           userSelect: isDragging ? 'none' : 'auto',
         }}
@@ -53,53 +54,77 @@ const NodePage = () => {
           })
         }
       >
-        <Box
-          component="aside"
+        <Grid
+          item
           sx={{
-            width: width,
             position: 'sticky',
-            top: 80,
-            alignSelf: 'flex-start',
-            overflowY: 'auto',
-            maxHeight: `90vh`,
-            pb: 3,
+            zIndex: theme.zIndex.appBar,
+            top: 0,
           }}
+          xs
+          sm={12}
+          md={12}
         >
-          <Tree sx={{ borderStyle: 'none' }} />
-        </Box>
-        <Divider
+          <Hierarchy />
+        </Grid>
+        <Grid
+          item
+          md="auto"
+          xs
           sx={{
-            ':hover::before': {
-              borderColor: 'primary.main',
-              borderWidth: '3px',
-            },
-            ':hover::after': {
-              borderColor: 'primary.main',
-              borderWidth: '3px',
-            },
-            cursor: 'col-resize',
-            borderColor: isDragging ? 'primary.main' : '',
+            display: 'flex',
+            justifyContent: 'start',
           }}
-          orientation="vertical"
-          flexItem
-          component="div"
-          onMouseOver={(e) =>
-            setDragOptions({
-              ...dragOptions,
-              difference: Math.abs(width - e.clientX),
-            })
-          }
-          onMouseDown={(e) =>
-            setDragOptions({
-              ...dragOptions,
-              dragging: true,
-            })
-          }
         >
-          <DragIndicatorIcon sx={{ color: 'action.active' }} />
-        </Divider>
-        {!editMode && <NodeDetails />}
-      </Box>
+          <Box
+            sx={{
+              width: width,
+              position: 'sticky',
+              top: 100,
+              alignSelf: 'flex-start',
+              overflowY: 'auto',
+              maxHeight: `90vh`,
+              pb: 3,
+            }}
+          >
+            <Tree sx={{ borderStyle: 'none' }} />
+          </Box>
+          <Divider
+            sx={{
+              ':hover::before': {
+                borderColor: 'primary.main',
+                borderWidth: '3px',
+              },
+              ':hover::after': {
+                borderColor: 'primary.main',
+                borderWidth: '3px',
+              },
+              cursor: 'col-resize',
+              borderColor: isDragging ? 'primary.main' : '',
+            }}
+            orientation="vertical"
+            flexItem
+            component="div"
+            onMouseOver={(e) =>
+              setDragOptions({
+                ...dragOptions,
+                difference: Math.abs(width - e.clientX),
+              })
+            }
+            onMouseDown={(e) =>
+              setDragOptions({
+                ...dragOptions,
+                dragging: true,
+              })
+            }
+          >
+            <DragIndicatorIcon sx={{ color: 'action.active' }} />
+          </Divider>
+        </Grid>
+        <Grid item xs md>
+          {!editMode && <NodeDetails />}
+        </Grid>
+      </Grid>
     </Container>
   );
 };

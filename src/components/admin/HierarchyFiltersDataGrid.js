@@ -2,7 +2,13 @@ import { useTranslation } from 'react-i18next';
 import React, { useEffect, useMemo } from 'react';
 import dateColumnType from './dateColumnType';
 import { toDate } from '../../utils/dateUtils';
-import { DataGrid, GridActionsCellItem } from '@mui/x-data-grid';
+import {
+  DataGrid,
+  GridActionsCellItem,
+  svSE,
+  fiFI,
+  enUS,
+} from '@mui/x-data-grid';
 import GridToolbar from './GridToolbar';
 import PropTypes from 'prop-types';
 import autocompleteColumnType from './autocompleteColumnType';
@@ -18,7 +24,8 @@ const HierarchyFiltersDataGrid = ({
   onRowChange,
   onDeleteRow,
 }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const language = i18n.language; // 'fi' | 'sv' | 'en'
   const user = useCurrentUser();
   const [rows, setRows] = React.useState(initialRows || []);
   const editable = isAuthorized(user, authActions.hierarchyFilters.edit);
@@ -150,17 +157,18 @@ const HierarchyFiltersDataGrid = ({
 
   const handleAddRow = () => {
     const id = Math.floor(Math.random() * -1000000);
-    const newRow = {
-      id,
-      hierarchy: null,
-      key: null,
-      value: null,
-      startDate: null,
-      endDate: null,
-      isNew: true,
-    };
-    setRows((oldRows) => [...oldRows, newRow]);
-    onAddRow(newRow);
+    setRows((oldRows) => [
+      ...oldRows,
+      {
+        id,
+        hierarchy: null,
+        key: null,
+        value: null,
+        startDate: null,
+        endDate: null,
+        isNew: true,
+      },
+    ]);
   };
 
   const handleCellEditStop = (params) => {
@@ -178,6 +186,18 @@ const HierarchyFiltersDataGrid = ({
       rows={rows}
       loading={loading}
       onCellEditStop={handleCellEditStop}
+      initialState={{
+        sorting: {
+          sortModel: [{ field: 'hierarchy', sort: 'asc' }],
+        },
+      }}
+      localeText={
+        language === 'fi'
+          ? fiFI.components.MuiDataGrid.defaultProps.localeText
+          : language === 'sv'
+          ? svSE.components.MuiDataGrid.defaultProps.localeText
+          : enUS.components.MuiDataGrid.defaultProps.localeText
+      }
       slots={{
         toolbar: GridToolbar,
       }}
@@ -192,7 +212,7 @@ const HierarchyFiltersDataGrid = ({
 };
 
 HierarchyFiltersDataGrid.propTypes = {
-  initialRows: PropTypes.array.isRequired,
+  initialRows: PropTypes.array,
 };
 
 export default HierarchyFiltersDataGrid;
