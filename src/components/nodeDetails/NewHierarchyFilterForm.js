@@ -5,7 +5,7 @@ import { Form } from '../../contexts/FormContext';
 import StartDateField from '../attributes/StartDateField';
 import ValueField from '../attributes/ValueField';
 import useForm from '../../hooks/useForm';
-import { newNodeValiditySchema } from '../../utils/validations';
+import { newHierarchyFilterValiditySchema } from '../../utils/validations';
 import { useSelector } from 'react-redux';
 import Button from '../inputs/Button';
 import {
@@ -35,7 +35,7 @@ const ContentHeader = ({ value }) => {
   );
 };
 
-const ValidFromField = () => {
+/*const ValidFromField = () => {
   const { t } = useTranslation();
   const { values, setValues, errors } = useForm();
   return (
@@ -50,8 +50,7 @@ const ValidFromField = () => {
       </Box>
     </Box>
   );
-};
-
+};*/
 /*const NameFields = () => {
     const { t } = useTranslation();
     const { values, setValues } = useForm();
@@ -74,8 +73,7 @@ const ValidFromField = () => {
         </Box>
     );
 };*/
-
-const Hierarchies = ({ hierarchies }) => {
+/*const Hierarchies = ({ hierarchies }) => {
   const { t } = useTranslation();
   const { values, setValues } = useForm();
 
@@ -93,9 +91,8 @@ const Hierarchies = ({ hierarchies }) => {
       </Stack>
     </Box>
   );
-};
-
-const Node = () => {
+};*/
+/*const Node = () => {
   const currentNode = useFetchNode();
   const { t } = useTranslation();
   return (
@@ -104,7 +101,7 @@ const Node = () => {
       <Typography variant="body1">{currentNode.name}</Typography>
     </Box>
   );
-};
+};*/
 
 const Actions = ({ onCancel }) => {
   const { t } = useTranslation();
@@ -131,23 +128,31 @@ const NewHierarchyFilterForm = ({
   open,
   onClose,
   handleSubmit,
-  initialValues,
+  initialRows,
 }) => {
   const { t } = useTranslation();
-  const validationSchema = newNodeValiditySchema;
-  const selectedHierarchies = useSelector(
-    (s) => s.tree.selectedHierarchy || s.tree.defaultHierarchy
-  ).split(',');
+  //const validationSchema = newNodeValiditySchema;
+  const uniqueSectionValues = initialRows.filter(
+    (elem, ix) =>
+      initialRows.findIndex((elem1) => elem1.section === elem.section) === ix
+  );
+
+  const dropdownFieldOptions = uniqueSectionValues;
+
+  const emptySection = {
+    section: '',
+    attr: '',
+  };
 
   const today = new Date();
-  const emptyNode = {
+  /*const emptyNode = {
     hierarchies: selectedHierarchies,
     key: null,
     value: null,
     startDate: today,
     endDate: null,
     isNew: true,
-  };
+  };*/
 
   const headerRow = (
     <Stack alignItems="center" justifyContent="space-between" direction="row">
@@ -158,15 +163,6 @@ const NewHierarchyFilterForm = ({
         <CloseIcon />
       </IconButton>
     </Stack>
-  );
-
-  const content = (
-    <>
-      <Stack spacing={2}>
-        <p>Aukea per ...</p>
-        <Hierarchies></Hierarchies>
-      </Stack>
-    </>
   );
 
   const SectionDropdownField = ({ path }) => {
@@ -188,12 +184,23 @@ const NewHierarchyFilterForm = ({
     );
   };
 
+  const content = (
+    <>
+      <Stack spacing={2}>
+        <Box>
+          <p>Aukea per ...</p>
+          <SectionDropdownField path="" />
+        </Box>
+      </Stack>
+    </>
+  );
+
   return (
     <Dialog open={open} onClose={onClose} fullWidth={true} maxWidth="sm">
       <Form
         onSubmit={handleSubmit}
-        initialValues={emptyNode}
-        validationSchema={validationSchema}
+        initialValues={emptySection}
+        validationSchema={newHierarchyFilterValiditySchema}
       >
         <DialogTitle>{headerRow}</DialogTitle>
         <Divider />

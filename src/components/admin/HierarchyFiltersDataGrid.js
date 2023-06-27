@@ -194,7 +194,7 @@ const HierarchyFiltersDataGrid = ({
       open={showForm}
       onClose={() => setShowForm(false)}
       handleSubmit={handleSubmit}
-      initialValues={initialValues}
+      initialRows={initialRows}
     />
   ) : (
     <></>
