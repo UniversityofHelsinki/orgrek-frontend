@@ -64,13 +64,25 @@ const NewHierarchyFilterForm = ({
 }) => {
   const { t } = useTranslation();
   //const validationSchema = newNodeValiditySchema;
-  const uniqueSectionValues = initialRows.filter(
+  const uniqueHierarchyValues = initialRows.filter(
     (elem, ix) =>
       initialRows.findIndex((elem1) => elem1.hierarchy === elem.hierarchy) ===
       ix
   );
 
-  const dropdownFieldOptions = uniqueSectionValues;
+  const uniqueKeyValues = initialRows.filter(
+    (elem, ix) =>
+      initialRows.findIndex((elem1) => elem1.key === elem.key) === ix
+  );
+
+  const uniqueValues = initialRows.filter(
+    (elem, ix) =>
+      initialRows.findIndex((elem1) => elem1.value === elem.value) === ix
+  );
+
+  const dropdownHierarchyFieldOptions = uniqueHierarchyValues;
+  const dropdownKeyFieldOptions = uniqueKeyValues;
+  const dropdownValueFieldOptions = uniqueValues;
 
   const emptySection = {
     section: '',
@@ -100,7 +112,7 @@ const NewHierarchyFilterForm = ({
         fullWidth
         helperText={<HelperText errors={errors} />}
       >
-        {dropdownFieldOptions.map((option) => (
+        {dropdownHierarchyFieldOptions.map((option) => (
           <MenuItem key={option.hierarchy} value={option.hierarchy}>
             {option.hierarchy}
           </MenuItem>
@@ -119,7 +131,7 @@ const NewHierarchyFilterForm = ({
         fullWidth
         helperText={<HelperText errors={errors} />}
       >
-        {dropdownFieldOptions.map((option) => (
+        {dropdownKeyFieldOptions.map((option) => (
           <MenuItem key={option.key} value={option.key}>
             {option.key}
           </MenuItem>
@@ -138,7 +150,7 @@ const NewHierarchyFilterForm = ({
         fullWidth
         helperText={<HelperText errors={errors} />}
       >
-        {dropdownFieldOptions.map((option) => (
+        {dropdownValueFieldOptions.map((option) => (
           <MenuItem key={option.value} value={option.value}>
             {option.value}
           </MenuItem>
