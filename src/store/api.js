@@ -20,6 +20,7 @@ export const api = createApi({
     'SectionAttributes',
     'TextAttributes',
   ],
+  // eslint-disable-next-line max-lines-per-function
   endpoints: (builder) => ({
     getTree: builder.query({
       providesTags: () => [{ type: 'Tree' }],
