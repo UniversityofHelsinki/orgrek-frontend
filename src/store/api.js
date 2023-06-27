@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-
+// eslint-disable-next-line max-lines-per-function
 export const api = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({
