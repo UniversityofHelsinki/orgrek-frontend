@@ -1,5 +1,11 @@
 import React, { useEffect, useMemo } from 'react';
-import { DataGrid, GridActionsCellItem } from '@mui/x-data-grid';
+import {
+  DataGrid,
+  enUS,
+  fiFI,
+  GridActionsCellItem,
+  svSE,
+} from '@mui/x-data-grid';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import { toDate } from '../../utils/dateUtils';
@@ -24,11 +30,12 @@ const SectionsDataGrid = ({
   onRowChange,
   onDeleteRow,
 }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const user = useCurrentUser();
   const [rows, setRows] = React.useState(initialRows || []);
   const editable = isAuthorized(user, authActions.sections.edit);
   const [showForm, setShowForm] = React.useState(false);
+  const language = i18n.language;
 
   useEffect(() => {
     if (!loading) {
@@ -173,6 +180,13 @@ const SectionsDataGrid = ({
             sortModel: [{ field: 'section', sort: 'asc' }],
           },
         }}
+        localeText={
+          language === 'fi'
+            ? fiFI.components.MuiDataGrid.defaultProps.localeText
+            : language === 'sv'
+            ? svSE.components.MuiDataGrid.defaultProps.localeText
+            : enUS.components.MuiDataGrid.defaultProps.localeText
+        }
         slots={{
           toolbar: GridToolbar,
         }}
