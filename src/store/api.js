@@ -20,6 +20,7 @@ export const api = createApi({
     'SectionAttributes',
     'TextAttributes',
   ],
+  // eslint-disable-next-line max-lines-per-function
   endpoints: (builder) => ({
     getTree: builder.query({
       providesTags: () => [{ type: 'Tree' }],
@@ -301,6 +302,50 @@ export const api = createApi({
         };
       },
     }),
+    updateSectionAttribute: builder.mutation({
+      invalidatesTags: (result, error) => {
+        if (error) {
+          return [];
+        }
+        return [{ type: 'SectionAttributes' }];
+      },
+      query: ({ data }) => {
+        return {
+          url: `/section/update`,
+          method: 'PUT',
+          body: data,
+        };
+      },
+    }),
+    insertSectionAttribute: builder.mutation({
+      invalidatesTags: (result, error) => {
+        if (error) {
+          return [];
+        }
+        return [{ type: 'SectionAttributes' }];
+      },
+      query: ({ data }) => {
+        return {
+          url: `/section/insert`,
+          method: 'POST',
+          body: data,
+        };
+      },
+    }),
+    deleteSectionAttribute: builder.mutation({
+      invalidatesTags: (result, error) => {
+        if (error) {
+          return [];
+        }
+        return [{ type: 'SectionAttributes' }];
+      },
+      query: ({ id }) => {
+        return {
+          url: `/section/${id}/delete`,
+          method: 'DELETE',
+        };
+      },
+    }),
     getTextAttributes: builder.query({
       providesTags: () => [{ type: 'TextAttributes' }],
       query: () => {
@@ -337,5 +382,8 @@ export const {
   useSaveSuccessorsMutation,
   useSaveChildMutation,
   useGetSectionAttributesQuery,
+  useUpdateSectionAttributeMutation,
+  useDeleteSectionAttributeMutation,
+  useInsertSectionAttributeMutation,
   useGetTextAttributesQuery,
 } = api;
