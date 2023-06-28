@@ -7,12 +7,23 @@ import TextField from '@mui/material/TextField';
 import { authActions, isAuthorized } from '../auth';
 import useCurrentUser from '../hooks/useCurrentUser';
 
+export const changeLanguage = async (user, i18n) => {
+  if (user && user.preferredLanguage) {
+    document.documentElement.lang = user.preferredLanguage;
+    await i18n.changeLanguage(user.preferredLanguage);
+  } else {
+    document.documentElement.lang = 'fi';
+    await i18n.changeLanguage('fi');
+  }
+};
+
 const LanguageSelect = () => {
   const { t, i18n } = useTranslation();
   const user = useCurrentUser();
 
   const handleChange = async (event) => {
     await i18n.changeLanguage(event.target.value);
+    document.documentElement.lang = event.target.value;
   };
 
   return (
