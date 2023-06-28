@@ -5,6 +5,7 @@ import { toDate } from '../../utils/dateUtils';
 import {
   DataGrid,
   GridActionsCellItem,
+  GridCellParams,
   svSE,
   fiFI,
   enUS,
@@ -138,15 +139,11 @@ const HierarchyFiltersDataGrid = ({
       ...actionsColumnType,
       headerName: t('dataGrid.actionsHeader'),
       getActions: (params) => {
-        const handleDeleteRow = () => {
-          onDeleteRow(params.row);
-        };
-
         return [
           <GridActionsCellItem
             key="deleteRow"
             icon={<DeleteIcon />}
-            onClick={handleDeleteRow}
+            onClick={() => handleDeleteRow(params.row)}
             label={t('dataGrid.deleteRow')}
             showInMenu
           />,
@@ -171,12 +168,15 @@ const HierarchyFiltersDataGrid = ({
     ]);
   };
 
-  const handleCellEditStop = (params) => {
-    if (params.row.isNew) {
-      onAddRow(params.row);
-    } else {
-      onRowChange(params.row);
+  const processRowUpdate = (updatedrow) => {
+    if (updatedrow) {
+      onRowChange(updatedrow);
     }
+    return updatedrow;
+  };
+
+  const handleDeleteRow = async (row) => {
+    await onDeleteRow(row);
   };
 
   return (
@@ -185,7 +185,7 @@ const HierarchyFiltersDataGrid = ({
       columns={columns}
       rows={rows}
       loading={loading}
-      onCellEditStop={handleCellEditStop}
+      processRowUpdate={processRowUpdate}
       initialState={{
         sorting: {
           sortModel: [{ field: 'hierarchy', sort: 'asc' }],

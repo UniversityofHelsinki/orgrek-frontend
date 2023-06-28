@@ -1,16 +1,41 @@
 import React, { useMemo } from 'react';
 import Container from '@mui/material/Container';
-import { useGetHierarchyFiltersQuery } from '../store';
+import {
+  showNotification,
+  useGetHierarchyFiltersQuery,
+  useSaveHierarchyFiltersMutation,
+  useDeleteHierarchyFiltersMutation,
+} from '../store';
 import HierarchyFiltersDataGrid from '../components/admin/HierarchyFiltersDataGrid';
+import { t } from 'i18next';
+import { useDispatch } from 'react-redux';
 
 const HierarchyFiltersPage = () => {
+  const dispatch = useDispatch();
   const { data: hierarchyFilters, isFetching: isFetchingHierarchyFilters } =
     useGetHierarchyFiltersQuery();
-
+  const [saveHierarchyFilters] = useSaveHierarchyFiltersMutation();
+  const [deleteHierarchyFilters] = useDeleteHierarchyFiltersMutation();
   const loading = isFetchingHierarchyFilters;
 
-  const handleRowChange = (row) => {
-    console.log('handleRowChange', row); // TODO: dispatch saveHierarchyFilters mutation
+  const handleRowChange = async (row) => {
+    //console.log('handleRowChange', row); // TODO: dispatch saveHierarchyFilters mutation
+    try {
+      await saveHierarchyFilters({ data: row }).unwrap();
+      dispatch(
+        showNotification({
+          message: t('hierarchyFilters.saveSuccess'),
+          severity: 'success',
+        })
+      );
+    } catch (error) {
+      dispatch(
+        showNotification({
+          message: t('hierarchyFilters.saveError'),
+          severity: 'error',
+        })
+      );
+    }
   };
 
   const handleAddRow = (row) => {
@@ -18,8 +43,24 @@ const HierarchyFiltersPage = () => {
     //console.log('handleAddRow', row); // TODO: dispatch addHierarchyFilters mutation
   };
 
-  const handleDeleteRow = (row) => {
-    console.log('handleDeleteRow', row); // TODO: dispatch deleteHierarchyFilters mutation
+  const handleDeleteRow = async (row) => {
+    //console.log('handleDeleteRow', row); // TODO: dispatch deleteHierarchyFilters mutation
+    try {
+      await deleteHierarchyFilters({ data: row }).unwrap();
+      dispatch(
+        showNotification({
+          message: t('hierarchyFilters.deleteSuccess'),
+          severity: 'success',
+        })
+      );
+    } catch (error) {
+      dispatch(
+        showNotification({
+          message: t('hierarchyFilters.deleteError'),
+          severity: 'error',
+        })
+      );
+    }
   };
 
   return (

@@ -105,6 +105,37 @@ export const api = createApi({
         };
       },
     }),
+    saveHierarchyFilters: builder.mutation({
+      invalidatesTags: (result, error) => {
+        if (error) {
+          return [];
+        }
+        return [{ type: 'HierarchyFilters' }];
+      },
+      query: ({ data }) => {
+        return {
+          url: `/hierarchyFilters`,
+          method: 'PUT',
+          body: data,
+        };
+      },
+    }),
+    deleteHierarchyFilters: builder.mutation({
+      invalidatesTags: (result, error) => {
+        if (error) {
+          return [];
+        }
+        return [{ type: 'HierarchyFilters' }];
+      },
+      query: ({ data }) => {
+        return {
+          url: `/hierarchyFilters`,
+          method: 'DELETE',
+          body: data,
+        };
+      },
+    }),
+
     getCodeAttributes: builder.query({
       providesTags: (result, error, { nodeId }) => [
         { type: 'CodeAttributes', id: nodeId },
@@ -336,6 +367,8 @@ export const {
   useGetTreeQuery,
   useGetTypeAttributesQuery,
   useGetHierarchyFiltersQuery,
+  useSaveHierarchyFiltersMutation,
+  useDeleteHierarchyFiltersMutation,
   useGetValidHierarchyFiltersQuery,
   useSaveTypeAttributesMutation,
   useGetAttributeKeysBySectionQuery,
