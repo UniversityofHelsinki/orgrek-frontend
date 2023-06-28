@@ -62,6 +62,7 @@ const NewHierarchyFilterForm = ({
   handleSubmit,
   initialRows,
   selhierarchies,
+  edgeHierarchies,
   attributeKeys,
 }) => {
   const { t } = useTranslation();
@@ -155,9 +156,9 @@ const NewHierarchyFilterForm = ({
         label={t('hierarchyDataGrid.valueColumnHeader')}
         helperText={<HelperText errors={errors} />}
       >
-        {dropdownValueFieldOptions.map((option) => (
-          <MenuItem key={option.value} value={option.value}>
-            {option.value}
+        {edgeHierarchies.map((option) => (
+          <MenuItem key={option} value={option}>
+            {option}
           </MenuItem>
         ))}
       </TextField>

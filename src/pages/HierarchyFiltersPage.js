@@ -9,6 +9,7 @@ import {
   useDeleteHierarchyFiltersMutation,
   useGetSectionAttributesQuery,
   useGetEdgesQuery,
+  useGetEdgeHierarchiesQuery,
 } from '../store';
 import { t } from 'i18next';
 import { useDispatch, useSelector } from 'react-redux';
@@ -21,11 +22,14 @@ const HierarchyFiltersPage = () => {
     useGetSectionAttributesQuery();
   const { data: selectableHierarchies, isFetching: isFetchingEdges } =
     useGetEdgesQuery();
+  const { data: edgeHierarchies, isFetching: isFetchingEdgeHierarchies } =
+    useGetEdgeHierarchiesQuery();
   const [saveHierarchyFilters] = useSaveHierarchyFiltersMutation();
   const [deleteHierarchyFilters] = useDeleteHierarchyFiltersMutation();
   const [insertHierarchyFilters] = useInsertHierarchyFiltersMutation();
 
-  const loading = isFetchingHierarchyFilters || isFetchingEdges;
+  const loading =
+    isFetchingHierarchyFilters || isFetchingEdges || isFetchingEdgeHierarchies;
 
   const handleRowChange = async (row) => {
     //console.log('handleRowChange', row); // TODO: dispatch saveHierarchyFilters mutation
@@ -93,6 +97,7 @@ const HierarchyFiltersPage = () => {
       <HierarchyFiltersDataGrid
         initialRows={hierarchyFilters}
         selectableHierarchies={selectableHierarchies}
+        edgeHierarchies={edgeHierarchies}
         attributeKeys={attributeKeys}
         loading={loading}
         onRowChange={handleRowChange}

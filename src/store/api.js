@@ -230,6 +230,15 @@ export const api = createApi({
         };
       },
     }),
+    getEdgeHierarchies: builder.query({
+      providesTags: () => [{ type: 'EdgeHierarchiesNoHistory' }],
+      query: () => {
+        return {
+          url: `/edge/edgehierarchies`,
+          method: 'GET',
+        };
+      },
+    }),
     saveParents: builder.mutation({
       invalidatesTags: (result, error, { nodeId }) => {
         if (error) {
@@ -356,4 +365,5 @@ export const {
   useGetSectionAttributesQuery,
   useGetTextAttributesQuery,
   useGetEdgesQuery,
+  useGetEdgeHierarchiesQuery,
 } = api;

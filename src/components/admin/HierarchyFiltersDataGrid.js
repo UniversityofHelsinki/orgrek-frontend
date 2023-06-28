@@ -21,6 +21,7 @@ import NewHierarchyFilterForm from '../nodeDetails/NewHierarchyFilterForm';
 const HierarchyFiltersDataGrid = ({
   initialRows,
   selectableHierarchies,
+  edgeHierarchies,
   attributeKeys,
   loading,
   onAddRow,
@@ -202,6 +203,7 @@ const HierarchyFiltersDataGrid = ({
       handleSubmit={handleSubmit}
       initialRows={rows}
       selhierarchies={selectableHierarchies}
+      edgeHierarchies={edgeHierarchies}
       attributeKeys={attributeKeys}
     />
   ) : (
