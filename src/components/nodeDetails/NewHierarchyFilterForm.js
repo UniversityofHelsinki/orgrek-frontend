@@ -113,7 +113,7 @@ const NewHierarchyFilterForm = ({
         {...props}
         select
         fullWidth
-        label={t('hierarchyDataGrid.sectionColumnHeader')}
+        label={t('hierarchyFilter.sectionColumnHeader')}
         helperText={<HelperText errors={errors} />}
       >
         {selhierarchies.map((option) => (
@@ -133,7 +133,7 @@ const NewHierarchyFilterForm = ({
         {...props}
         select
         fullWidth
-        label={t('hierarchyDataGrid.attributeColumnHeader')}
+        label={t('hierarchyFilter.attributeColumnHeader')}
         helperText={<HelperText errors={errors} />}
       >
         {attributeKeys.map((option) => (
@@ -153,7 +153,7 @@ const NewHierarchyFilterForm = ({
         {...props}
         select
         fullWidth
-        label={t('hierarchyDataGrid.valueColumnHeader')}
+        label={t('hierarchyFilter.valueColumnHeader')}
         helperText={<HelperText errors={errors} />}
       >
         {edgeHierarchies.map((option) => (
