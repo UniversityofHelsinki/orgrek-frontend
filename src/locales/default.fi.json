@@ -364,6 +364,14 @@
   "search_by_name_or_code": "Etsi nimellä tai tunnuksella",
   "search_place_holder": "Etsi hakusanalla..",
   "sections": "Lohkot",
+  "sectionInfo": {
+    "deleteError": "Lohkon poisto epäonnistui",
+    "deleteSuccess": "Lohko poistettu",
+    "insertError": "Lohkon lisäys epäonnistui",
+    "insertSuccess": "Lohko lisätty",
+    "updateError": "Lohkon päivitys epäonnistui",
+    "updateSuccess": "Lohko päivitetty"
+  },
   "sectionsDataGrid": {
     "attributeColumnHeader": "Attribuutti",
     "endDateColumnHeader": "Voimassaolo päättyy",

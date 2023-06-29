@@ -5,6 +5,7 @@ import { toDate } from '../../utils/dateUtils';
 import {
   DataGrid,
   GridActionsCellItem,
+  GridCellParams,
   svSE,
   fiFI,
   enUS,
@@ -162,18 +163,6 @@ const HierarchyFiltersDataGrid = ({
 
   const handleAddRow = () => {
     const id = Math.floor(Math.random() * -1000000);
-    /*setRows((oldRows) => [
-      ...oldRows,
-      {
-        id,
-        hierarchy: null,
-        key: null,
-        value: null,
-        startDate: null,
-        endDate: null,
-        isNew: true,
-      },
-    ]);*/
     setShowForm(true);
   };
 

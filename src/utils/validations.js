@@ -347,3 +347,8 @@ export const newHierarchyFilterValiditySchema = object({
   hierarchy: string().required(),
   value: string().required(),
 });
+
+export const newSectionValiditySchema = object({
+  section: string().required(),
+  attr: string().required(),
+});
