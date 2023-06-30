@@ -352,3 +352,26 @@ export const newSectionValiditySchema = object({
   section: string().required(),
   attr: string().required(),
 });
+
+const textAlreadyExists = (existingTexts, errorMessage) => {
+  const validate = (text) => {
+    return existingTexts.every((existingText) => {
+      return existingText.key !== text;
+    });
+  };
+  return {
+    name: 'text-does-not-already-exist',
+    test: validate,
+    message: errorMessage,
+  };
+};
+
+export const newTextSchema = (existingTexts, errorMessage) =>
+  object({
+    key: string()
+      .required()
+      .test(textAlreadyExists(existingTexts, errorMessage)),
+    fi: string().required(),
+    en: string().required(),
+    sv: string().required(),
+  });

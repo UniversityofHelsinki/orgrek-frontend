@@ -17,6 +17,9 @@ import actionsColumnType from './actionsColumnType';
 import ReplayIcon from '../icons/Replay';
 import DeleteSweepIcon from '@mui/icons-material/DeleteSweep';
 import ClearAllIcon from '@mui/icons-material/ClearAll';
+import defaultFi from '../../locales/default.fi.json';
+import defaultSv from '../../locales/default.sv.json';
+import defaultEn from '../../locales/default.en.json';
 
 const getRowId = (row) => `${row.language}.${row.key}`;
 
@@ -50,7 +53,7 @@ export const mergeTexts = (first, second) => {
   first.forEach((row) => (result[getRowId(row)] = row));
 
   second.forEach((row) => {
-    const current = result[getRowId(row)];
+    const current = result[getRowId(row)] || row;
     result[getRowId(row)] = {
       key: row.key,
       language: row.language,
@@ -64,6 +67,11 @@ export const mergeTexts = (first, second) => {
   return Object.values(result);
 };
 
+const defaults = {
+  fi: textsToRows(defaultFi, 'fi'),
+  en: textsToRows(defaultEn, 'en'),
+  sv: textsToRows(defaultSv, 'sv'),
+};
 /**
  * Admin view for managing translations.
  */
@@ -76,29 +84,23 @@ const TextsDataGrid = ({
 }) => {
   const { t, i18n } = useTranslation();
   const language = i18n.language; // 'fi' | 'sv' | 'en'
+  const defaultRows = defaults[language];
   const user = useCurrentUser();
-  const [rows, setRows] = React.useState(initialRows || []);
+  const [rows, setRows] = React.useState(
+    mergeTexts(initialRows || [], defaultRows)
+  );
 
   useEffect(() => {
     if (!loading) {
-      setRows(initialRows);
+      setRows(mergeTexts(initialRows, defaultRows));
     }
   }, [loading]);
 
-  // TODO: Needed for add row dialog
-  const keyOptions = useMemo(
-    () =>
-      rows
-        .filter(
-          (row, index, rows) =>
-            index === rows.findIndex((r) => r.key === row.key)
-        )
-        .map((row) => ({
-          value: row.key,
-          label: row.key,
-        })),
-    [rows]
-  );
+  const inInitialRows = (row) => {
+    return (initialRows || []).some(
+      (ir) => ir.key === row.key && ir.language === row.language
+    );
+  };
 
   const languageOptions = [
     { value: 'fi', label: t('fi') },
@@ -218,22 +220,12 @@ const TextsDataGrid = ({
   }
 
   const handleAddRow = () => {
-    // TODO: Open dialog and call onAddRow when dialog is submitted
-    const newRow = {
-      key: null,
-      language: null,
-      value: null,
-      user_name: null,
-      timestamp: null,
-      isNew: true,
-    };
-
-    setRows((oldRows) => [...oldRows, newRow]);
-    onAddRow(newRow);
+    onAddRow();
   };
 
-  const handleCellEditStop = (params) => {
-    onRowChange(params.row);
+  const handleRowChange = (modified) => {
+    onRowChange(modified);
+    return Promise.resolve(modified);
   };
 
   return (
@@ -253,8 +245,11 @@ const TextsDataGrid = ({
       columns={columns}
       rows={rows}
       loading={loading}
-      onCellEditStop={handleCellEditStop}
+      processRowUpdate={handleRowChange}
       getRowId={getRowId}
+      isCellEditable={(params) =>
+        params.field === 'value' && inInitialRows(params.row)
+      }
       getRowClassName={(params) => !params.row.value && 'texts-default'}
       localeText={
         language === 'fi'

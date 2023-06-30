@@ -20,6 +20,7 @@ export const api = createApi({
     'SectionAttributes',
     'TextAttributes',
     'EdgeHierarchies',
+    'Texts',
   ],
   // eslint-disable-next-line max-lines-per-function
   endpoints: (builder) => ({
@@ -143,6 +144,7 @@ export const api = createApi({
         };
       },
     }),
+
     getCodeAttributes: builder.query({
       providesTags: (result, error, { nodeId }) => [
         { type: 'CodeAttributes', id: nodeId },
@@ -371,12 +373,57 @@ export const api = createApi({
         };
       },
     }),
-    getTextAttributes: builder.query({
-      providesTags: () => [{ type: 'TextAttributes' }],
+    getTexts: builder.query({
+      providesTags: () => [{ type: 'Texts' }],
       query: () => {
         return {
           url: `/texts`,
           method: 'GET',
+        };
+      },
+    }),
+    insertTexts: builder.mutation({
+      invalidatesTags: (result, error) => {
+        if (error) {
+          return [];
+        }
+        return [{ type: 'Texts' }];
+      },
+      query: (texts) => {
+        return {
+          url: '/texts',
+          method: 'POST',
+          body: texts,
+        };
+      },
+    }),
+    updateText: builder.mutation({
+      invalidatesTags: (result, error) => {
+        if (error) {
+          return [];
+        }
+        return [{ type: 'Texts' }];
+      },
+      query: (text) => {
+        return {
+          url: '/texts',
+          method: 'PUT',
+          body: text,
+        };
+      },
+    }),
+    deleteText: builder.mutation({
+      invalidatesTags: (result, error) => {
+        if (error) {
+          return [];
+        }
+        return [{ type: 'Texts' }];
+      },
+      query: (text) => {
+        return {
+          url: '/texts',
+          method: 'DELETE',
+          body: text,
         };
       },
     }),
@@ -411,7 +458,10 @@ export const {
   useUpdateSectionAttributeMutation,
   useDeleteSectionAttributeMutation,
   useInsertSectionAttributeMutation,
-  useGetTextAttributesQuery,
   useGetEdgesQuery,
   useGetEdgeHierarchiesQuery,
+  useGetTextsQuery,
+  useInsertTextsMutation,
+  useUpdateTextMutation,
+  useDeleteTextMutation,
 } = api;
