@@ -161,6 +161,12 @@
   "henkilostoalue": "Henkilöstöalue",
   "henkilostoyksikko": "Henkilöstöyksikkö",
   "hierarchies": "Hierarkiat",
+  "hierarchyFilter": {
+    "createFilter": "Uusi rivi",
+    "sectionColumnHeader": "Organisaatiorakenne",
+    "attributeColumnHeader": "Näytettävä attribuutti",
+    "valueColumnHeader": "Organisaatiorakenteeseen kuuluva yksikkötyyppi"
+  },
   "hierarchyFiltersDataGrid": {
     "newAttributeLabel": "Uusi attribuutti \"{{value}}\"",
     "newAttributeValueLabel": "Uusi arvo \"{{value}}\"",
