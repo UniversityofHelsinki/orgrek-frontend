@@ -38,7 +38,7 @@ const TextsPage = () => {
     const response = await updateText(row).unwrap();
     dispatch(
       showNotification({
-        message: t('texts_insert_success'),
+        message: t('texts_update_success'),
         severity: 'success',
       })
     );
@@ -49,7 +49,7 @@ const TextsPage = () => {
     const response = await insertTexts(rows).unwrap();
     dispatch(
       showNotification({
-        message: t('texts_update_success'),
+        message: t('texts_insert_success'),
         severity: 'success',
       })
     );
