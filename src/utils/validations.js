@@ -342,6 +342,12 @@ export const newNodeValiditySchema = object({
   nameSv: string().required(),
 });
 
+export const newHierarchyFilterValiditySchema = object({
+  key: string().required(),
+  hierarchy: string().required(),
+  value: string().required(),
+});
+
 export const newSectionValiditySchema = object({
   section: string().required(),
   attr: string().required(),
