@@ -1,35 +1,89 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import Container from '@mui/material/Container';
-import { useGetTextAttributesQuery } from '../store';
+import {
+  showNotification,
+  useDeleteTextMutation,
+  useGetTextsQuery,
+  useInsertTextsMutation,
+  useUpdateTextMutation,
+} from '../store';
 import TextsDataGrid from '../components/admin/TextsDataGrid';
+import NewTextForm from '../components/admin/NewTextForm';
+import { useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import useCurrentUser from '../hooks/useCurrentUser';
+import { response } from 'msw';
 
 const TextsPage = () => {
-  const { data: textAttributes, isFetching: isFetchingSectionAttributes } =
-    useGetTextAttributesQuery();
+  const { data: texts, isFetching } = useGetTextsQuery();
+  const dispatch = useDispatch();
+  const { t } = useTranslation();
+  const user = useCurrentUser();
+  const [insertTexts] = useInsertTextsMutation();
+  const [updateText] = useUpdateTextMutation();
+  const [deleteText] = useDeleteTextMutation();
 
-  const loading = isFetchingSectionAttributes;
+  const [openNewTextForm, setOpenNewTextForm] = useState(false);
 
-  const handleRowChange = (row) => {
-    console.log('handleRowChange', row); // TODO: dispatch saveTextAttribute mutation
+  const loading = isFetching;
+
+  const handleRowChange = async (row) => {
+    const alreadyExists = texts.some(
+      (t) => t.key === row.key && t.language === row.language
+    );
+    if (!alreadyExists) {
+      await handleAddRow([{ ...row, user_name: user.eppn }]);
+      return;
+    }
+    const response = await updateText(row).unwrap();
+    dispatch(
+      showNotification({
+        message: t('texts_update_success'),
+        severity: 'success',
+      })
+    );
+    return response;
   };
 
-  const handleAddRow = (row) => {
-    console.log('handleAddRow', row); // TODO: dispatch addTextAttribute mutation
+  const handleAddRow = async (rows) => {
+    const response = await insertTexts(rows).unwrap();
+    dispatch(
+      showNotification({
+        message: t('texts_insert_success'),
+        severity: 'success',
+      })
+    );
+    setOpenNewTextForm(false);
+    return response;
   };
 
-  const handleDeleteRow = (row) => {
-    console.log('handleDeleteRow', row); // TODO: dispatch deleteTextAttribute mutation
+  const handleDeleteRows = (rows) => {
+    rows.forEach(async (row) => {
+      await deleteText(row).unwrap();
+    });
   };
+
+  const newTextForm = openNewTextForm ? (
+    <NewTextForm
+      onSubmit={handleAddRow}
+      open={openNewTextForm}
+      onClose={() => setOpenNewTextForm(false)}
+      existingTexts={texts}
+    />
+  ) : (
+    <></>
+  );
 
   return (
     <Container sx={{ pt: 6, pb: 6 }}>
       <TextsDataGrid
-        initialRows={textAttributes}
+        initialRows={texts}
         loading={loading}
         onRowChange={handleRowChange}
-        onAddRow={handleAddRow}
-        onDeleteRow={handleDeleteRow}
+        onAddRow={() => setOpenNewTextForm(true)}
+        onDeleteRows={handleDeleteRows}
       />
+      {newTextForm}
     </Container>
   );
 };
