@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import dateColumnType from './dateColumnType';
 import { toDate } from '../../utils/dateUtils';
 import {
@@ -17,9 +17,13 @@ import { authActions, isAuthorized } from '../../auth';
 import useCurrentUser from '../../hooks/useCurrentUser';
 import actionsColumnType from './actionsColumnType';
 import DeleteIcon from '@mui/icons-material/Delete';
+import NewHierarchyFilterForm from '../nodeDetails/NewHierarchyFilterForm';
 
 const HierarchyFiltersDataGrid = ({
   initialRows,
+  selectableHierarchies,
+  edgeHierarchies,
+  attributeKeys,
   loading,
   onAddRow,
   onRowChange,
@@ -30,6 +34,7 @@ const HierarchyFiltersDataGrid = ({
   const user = useCurrentUser();
   const [rows, setRows] = React.useState(initialRows || []);
   const editable = isAuthorized(user, authActions.hierarchyFilters.edit);
+  const [showForm, setShowForm] = useState(false);
 
   useEffect(() => {
     if (!loading) {
@@ -151,21 +156,14 @@ const HierarchyFiltersDataGrid = ({
       },
     });
   }
+  const initialValues = {
+    hierarchy: null,
+    isNew: true,
+  };
 
   const handleAddRow = () => {
     const id = Math.floor(Math.random() * -1000000);
-    setRows((oldRows) => [
-      ...oldRows,
-      {
-        id,
-        hierarchy: null,
-        key: null,
-        value: null,
-        startDate: null,
-        endDate: null,
-        isNew: true,
-      },
-    ]);
+    setShowForm(true);
   };
 
   const processRowUpdate = (updatedrow) => {
@@ -179,35 +177,60 @@ const HierarchyFiltersDataGrid = ({
     await onDeleteRow(row);
   };
 
-  return (
-    <DataGrid
-      autoHeight
-      columns={columns}
-      rows={rows}
-      loading={loading}
-      processRowUpdate={processRowUpdate}
-      initialState={{
-        sorting: {
-          sortModel: [{ field: 'hierarchy', sort: 'asc' }],
-        },
-      }}
-      localeText={
-        language === 'fi'
-          ? fiFI.components.MuiDataGrid.defaultProps.localeText
-          : language === 'sv'
-          ? svSE.components.MuiDataGrid.defaultProps.localeText
-          : enUS.components.MuiDataGrid.defaultProps.localeText
-      }
-      slots={{
-        toolbar: GridToolbar,
-      }}
-      slotProps={{
-        toolbar: {
-          onAddRow: handleAddRow,
-          authActions: authActions.hierarchyFilters,
-        },
-      }}
+  const handleSubmit = async (data) => {
+    try {
+      await onAddRow(data);
+      setShowForm(false);
+    } catch (error) {
+      setShowForm(true);
+    }
+  };
+  const formElement = showForm ? (
+    <NewHierarchyFilterForm
+      open={showForm}
+      onClose={() => setShowForm(false)}
+      handleSubmit={handleSubmit}
+      initialRows={rows}
+      selhierarchies={selectableHierarchies}
+      edgeHierarchies={edgeHierarchies}
+      attributeKeys={attributeKeys}
     />
+  ) : (
+    <></>
+  );
+
+  return (
+    <>
+      <DataGrid
+        autoHeight
+        columns={columns}
+        rows={rows}
+        loading={loading}
+        processRowUpdate={processRowUpdate}
+        initialState={{
+          sorting: {
+            sortModel: [{ field: 'hierarchy', sort: 'asc' }],
+          },
+        }}
+        localeText={
+          language === 'fi'
+            ? fiFI.components.MuiDataGrid.defaultProps.localeText
+            : language === 'sv'
+            ? svSE.components.MuiDataGrid.defaultProps.localeText
+            : enUS.components.MuiDataGrid.defaultProps.localeText
+        }
+        slots={{
+          toolbar: GridToolbar,
+        }}
+        slotProps={{
+          toolbar: {
+            onAddRow: handleAddRow,
+            authActions: authActions.hierarchyFilters,
+          },
+        }}
+      />
+      {formElement}
+    </>
   );
 };
 

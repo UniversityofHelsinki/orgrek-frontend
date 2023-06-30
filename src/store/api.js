@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-
+/*eslint max-lines-per-function: ["warn", 2000]*/
 export const api = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({
@@ -18,6 +18,8 @@ export const api = createApi({
     'SaveNodeOtherAttributes',
     'Successors',
     'SectionAttributes',
+    'TextAttributes',
+    'EdgeHierarchies',
     'Texts',
   ],
   // eslint-disable-next-line max-lines-per-function
@@ -113,11 +115,18 @@ export const api = createApi({
         return [{ type: 'HierarchyFilters' }];
       },
       query: ({ data }) => {
-        return {
-          url: `/hierarchyFilters`,
-          method: 'PUT',
-          body: data,
-        };
+        return { url: `/hierarchyFilters`, method: 'PUT', body: data };
+      },
+    }),
+    insertHierarchyFilters: builder.mutation({
+      invalidatesTags: (result, error) => {
+        if (error) {
+          return [];
+        }
+        return [{ type: 'HierarchyFilters' }];
+      },
+      query: ({ data }) => {
+        return { url: `/hierarchyFilters`, method: 'POST', body: data };
       },
     }),
     deleteHierarchyFilters: builder.mutation({
@@ -211,6 +220,24 @@ export const api = createApi({
           : new Date().toLocaleDateString('FI-fi');
         return {
           url: `/node/all/parents/${nodeId}/${dateString}/${selectedHierarchies}`,
+          method: 'GET',
+        };
+      },
+    }),
+    getEdges: builder.query({
+      providesTags: () => [{ type: 'EdgeHierarchies' }],
+      query: () => {
+        return {
+          url: `/edge/types`,
+          method: 'GET',
+        };
+      },
+    }),
+    getEdgeHierarchies: builder.query({
+      providesTags: () => [{ type: 'EdgeHierarchiesNoHistory' }],
+      query: () => {
+        return {
+          url: `/edge/edgehierarchies`,
           method: 'GET',
         };
       },
@@ -413,6 +440,7 @@ export const {
   useGetTypeAttributesQuery,
   useGetHierarchyFiltersQuery,
   useSaveHierarchyFiltersMutation,
+  useInsertHierarchyFiltersMutation,
   useDeleteHierarchyFiltersMutation,
   useGetValidHierarchyFiltersQuery,
   useSaveTypeAttributesMutation,
@@ -430,6 +458,8 @@ export const {
   useUpdateSectionAttributeMutation,
   useDeleteSectionAttributeMutation,
   useInsertSectionAttributeMutation,
+  useGetEdgesQuery,
+  useGetEdgeHierarchiesQuery,
   useGetTextsQuery,
   useInsertTextsMutation,
   useUpdateTextMutation,
