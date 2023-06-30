@@ -12,6 +12,7 @@ import NewTextForm from '../components/admin/NewTextForm';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import useCurrentUser from '../hooks/useCurrentUser';
+import { response } from 'msw';
 
 const TextsPage = () => {
   const { data: texts, isFetching } = useGetTextsQuery();
@@ -34,7 +35,14 @@ const TextsPage = () => {
       await handleAddRow([{ ...row, user_name: user.eppn }]);
       return;
     }
-    await updateText(row).unwrap();
+    const response = await updateText(row).unwrap();
+    dispatch(
+      showNotification({
+        message: t('texts_insert_success'),
+        severity: 'success',
+      })
+    );
+    return response;
   };
 
   const handleAddRow = async (rows) => {
