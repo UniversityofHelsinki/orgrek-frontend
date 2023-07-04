@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 const LoginRedirect = (props) => {
   useEffect(() => {
     if (props.redirect401) {
-      //window.location.assign(props.loginUrl);
+      window.location.assign(props.loginUrl);
     }
   }, [props.redirect401]);
   return null;
