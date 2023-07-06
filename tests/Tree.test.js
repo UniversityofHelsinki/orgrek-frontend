@@ -5,7 +5,7 @@ import Tree from '../src/components/Tree';
 
 jest.mock('../src/hooks/useTree', () => () => ({
   isFetching: false,
-  tree: [
+  trees: [
     {
       fi: {
         id: 'a1',

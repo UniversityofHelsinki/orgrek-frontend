@@ -33,13 +33,14 @@ const Tree = ({ sx }) => {
   useEffect(() => {
     if (!openTree) {
       setPathsToTarget(undefined);
-    }
-    const newPathsToTarget = [];
-    for (let i = 0; i < (trees || []).length; i++) {
-      const tree = trees[i];
-      if (tree && tree[language] && node?.uniqueId && openTree) {
-        const foundInTree = traverseTree(tree[language], node.uniqueId);
-        newPathsToTarget.push(foundInTree);
+    } else {
+      const newPathsToTarget = [];
+      for (let i = 0; i < (trees || []).length; i++) {
+        const tree = trees[i];
+        if (tree && tree[language] && node?.uniqueId && openTree) {
+          const foundInTree = traverseTree(tree[language], node.uniqueId);
+          newPathsToTarget.push(foundInTree);
+        }
       }
       setPathsToTarget(newPathsToTarget);
     }
