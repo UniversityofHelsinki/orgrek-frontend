@@ -5,37 +5,39 @@ import Tree from '../src/components/Tree';
 
 jest.mock('../src/hooks/useTree', () => () => ({
   isFetching: false,
-  tree: {
-    fi: {
-      id: 'a1',
-      name: 'Helsingin yliopisto (HY)',
-      uniqueId: 42785051,
-      hierarchies: ['talous'],
-      children: [
-        {
-          id: 123,
-          name: 'KOULOHJ HY, Koulutusohjelmat (KOULOHJ)',
-          uniqueId: 33539259,
-          hierarchies: ['talous'],
-          children: [
-            {
-              id: 1234,
-              name: 'H92 HY, Tohtoriohjelmat (TRI)',
-              uniqueId: 54806742,
-              hierarchies: ['talous'],
-              children: [
-                {
-                  id: 12345,
-                  name: 'H920 HY-TRI, Humanistis-yhteiskuntatieteellinen tutkijakoulu (HYMY)',
-                  uniqueId: 61974091,
-                },
-              ],
-            },
-          ],
-        },
-      ],
+  tree: [
+    {
+      fi: {
+        id: 'a1',
+        name: 'Helsingin yliopisto (HY)',
+        uniqueId: 42785051,
+        hierarchies: ['talous'],
+        children: [
+          {
+            id: 123,
+            name: 'KOULOHJ HY, Koulutusohjelmat (KOULOHJ)',
+            uniqueId: 33539259,
+            hierarchies: ['talous'],
+            children: [
+              {
+                id: 1234,
+                name: 'H92 HY, Tohtoriohjelmat (TRI)',
+                uniqueId: 54806742,
+                hierarchies: ['talous'],
+                children: [
+                  {
+                    id: 12345,
+                    name: 'H920 HY-TRI, Humanistis-yhteiskuntatieteellinen tutkijakoulu (HYMY)',
+                    uniqueId: 61974091,
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
     },
-  },
+  ],
 }));
 
 jest.mock('../src/reducers/treeReducer', () => {
