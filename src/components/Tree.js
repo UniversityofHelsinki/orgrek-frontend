@@ -21,8 +21,8 @@ const traverseTree = (current, target) => {
 };
 
 const Tree = ({ sx }) => {
-  const [pathsToTarget, setPathsToTarget] = useState();
-  const { tree, isFetching } = useTree();
+  const [pathsToTarget, setPathsToTarget] = useState([]);
+  const { trees, isFetching } = useTree();
   const { node, openTree } = useSelector((state) => ({
     node: state.nrd.node,
     openTree: state.nrd.openTree,
@@ -34,13 +34,16 @@ const Tree = ({ sx }) => {
     if (!openTree) {
       setPathsToTarget(undefined);
     }
-    if (tree && tree[language] && node?.uniqueId && openTree) {
-      const foundInTree = traverseTree(tree[language], node.uniqueId);
-      if (foundInTree) {
-        setPathsToTarget(foundInTree);
+    const newPathsToTarget = [];
+    for (let i = 0; i < (trees || []).length; i++) {
+      const tree = trees[i];
+      if (tree && tree[language] && node?.uniqueId && openTree) {
+        const foundInTree = traverseTree(tree[language], node.uniqueId);
+        newPathsToTarget.push(foundInTree);
       }
+      setPathsToTarget(newPathsToTarget);
     }
-  }, [tree, node, openTree]);
+  }, [trees, node, openTree]);
 
   if (isFetching) {
     return <Skeleton variant="rectangular" sx={sx} height={162} />;
@@ -52,13 +55,17 @@ const Tree = ({ sx }) => {
       data-testid="tree"
       sx={[{ padding: 1 }, ...(Array.isArray(sx) ? sx : [sx])]}
     >
-      {tree?.[language] && (
-        <Branch
-          item={tree[language]}
-          openableTree={openTree ? pathsToTarget : undefined}
-          level={0}
-          parent=""
-        />
+      {trees.map(
+        (tree, i) =>
+          tree?.[language] && (
+            <Branch
+              item={tree[language]}
+              openableTree={openTree ? pathsToTarget?.[i] : undefined}
+              level={0}
+              parent=""
+              key={i}
+            />
+          )
       )}
     </Card>
   );
