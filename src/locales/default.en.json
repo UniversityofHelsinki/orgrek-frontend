@@ -144,6 +144,12 @@
   "henkilostoalue": "henkilostoalue",
   "henkilostoyksikko": "Personnel Unit",
   "hierarchies": "Hierarchies",
+  "hierarchyFilter": {
+    "createFilter": "createFilter",
+    "sectionColumnHeader": "sectionColumnHeader",
+    "attributeColumnHeader": "attributeColumnHeader",
+    "valueColumnHeader": "valueColumnHeader"
+  },
   "hierarchyFiltersDataGrid": {
     "newAttributeLabel": "New attribute \"{{value}}\"",
     "newAttributeValueLabel": "New value \"{{value}}\"",
