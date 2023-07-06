@@ -375,3 +375,25 @@ export const newTextSchema = (existingTexts, errorMessage) =>
     en: string().required(),
     sv: string().required(),
   });
+
+const hierarchyAlreadyExists = (existingHierarchies, errorMessage) => {
+  const validate = (hierarchy) =>
+    ![...existingHierarchies, 'history'].includes(hierarchy);
+  return {
+    name: 'hierarchy-already-exists',
+    test: validate,
+    message: errorMessage,
+  };
+};
+
+export const newHierarchySchema = (existingHierarchies, errorMessage) =>
+  object({
+    hierarchy: string()
+      .required()
+      .test(hierarchyAlreadyExists(existingHierarchies, errorMessage)),
+    nameFi: string().required(),
+    nameEn: string().required(),
+    nameSv: string().required(),
+    unit: number().required(),
+    publicity: boolean().required(),
+  });
