@@ -52,7 +52,8 @@ const HierarchyField = () => {
 const RootUnitField = () => {
   const { values, setValues } = useForm();
   const onChange = (event, unit) => {
-    setValues({ ...values, unit: unit.id });
+    const newValue = unit ? unit.id : null;
+    setValues({ ...values, unit: newValue });
   };
   return (
     <Box>

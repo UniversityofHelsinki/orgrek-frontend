@@ -61,11 +61,6 @@ const HierarchyDataGrid = ({ hierarchies }) => {
       },
       valueFormatter: (row) => t(`publicity_${row.value}`),
     },
-    {
-      field: 'startDate',
-      headerName: t(`hierarchy_column_startDate`),
-      flex: 1,
-    },
   ];
 
   // TODO: replace this with real data from db
