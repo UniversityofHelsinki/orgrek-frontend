@@ -199,6 +199,15 @@ const HierarchyFiltersDataGrid = ({
     <></>
   );
 
+  const localeTextOverrides = {
+    // see the keys here if you want to override data grid's inner translations:
+    // https://github.com/mui/mui-x/blob/HEAD/packages/grid/x-data-grid/src/constants/localeTextConstants.ts
+    toolbarColumns: t('datagrid_toolbar_columns'),
+    toolbarFilters: t('datagrid_toolbar_filters'),
+    toolbarDensity: t('datagrid_toolbar_density'),
+    toolbarExport: t('datagrid_toolbar_export'),
+  };
+
   return (
     <>
       <DataGrid
@@ -213,11 +222,23 @@ const HierarchyFiltersDataGrid = ({
           },
         }}
         localeText={
-          language === 'fi'
-            ? fiFI.components.MuiDataGrid.defaultProps.localeText
-            : language === 'sv'
-            ? svSE.components.MuiDataGrid.defaultProps.localeText
-            : enUS.components.MuiDataGrid.defaultProps.localeText
+          {
+            fi: {
+              ...fiFI.components.MuiDataGrid.defaultProps.localeText,
+              ...localeTextOverrides,
+            },
+            sv: {
+              ...svSE.components.MuiDataGrid.defaultProps.localeText,
+              ...localeTextOverrides,
+            },
+            en: {
+              ...enUS.components.MuiDataGrid.defaultProps.localeText,
+              ...localeTextOverrides,
+            },
+            ia: {
+              ...localeTextOverrides,
+            },
+          }[language]
         }
         slots={{
           toolbar: GridToolbar,

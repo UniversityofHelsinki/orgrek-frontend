@@ -1,5 +1,11 @@
 import { MenuItem, Select } from '@mui/material';
-import { DataGrid, useGridApiContext } from '@mui/x-data-grid';
+import {
+  DataGrid,
+  fiFI,
+  svSE,
+  enUS,
+  useGridApiContext,
+} from '@mui/x-data-grid';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { authActions } from '../../auth';
@@ -28,7 +34,8 @@ const EditDropDown = ({ columnName, value, id, field }) => {
 };
 
 const HierarchyDataGrid = ({ hierarchies }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const language = i18n.language;
   const [openForm, setOpenForm] = useState(false);
 
   const columns = [
@@ -36,6 +43,7 @@ const HierarchyDataGrid = ({ hierarchies }) => {
       field: 'name',
       headerName: t(`hierarchy_column_hierarchy`),
       flex: 1,
+      valueFormatter: (row) => t(row.value),
     },
     {
       field: 'publicity',
@@ -51,6 +59,7 @@ const HierarchyDataGrid = ({ hierarchies }) => {
           />
         );
       },
+      valueFormatter: (row) => t(`publicity_${row.value}`),
     },
     {
       field: 'startDate',
@@ -88,6 +97,15 @@ const HierarchyDataGrid = ({ hierarchies }) => {
     console.log(row);
   };
 
+  const localeTextOverrides = {
+    // see the keys here if you want to override data grid's inner translations:
+    // https://github.com/mui/mui-x/blob/HEAD/packages/grid/x-data-grid/src/constants/localeTextConstants.ts
+    toolbarColumns: t('datagrid_toolbar_columns'),
+    toolbarFilters: t('datagrid_toolbar_filters'),
+    toolbarDensity: t('datagrid_toolbar_density'),
+    toolbarExport: t('datagrid_toolbar_export'),
+  };
+
   return (
     <>
       <DataGrid
@@ -105,6 +123,25 @@ const HierarchyDataGrid = ({ hierarchies }) => {
             authActions: authActions.hierarchies,
           },
         }}
+        localeText={
+          {
+            fi: {
+              ...fiFI.components.MuiDataGrid.defaultProps.localeText,
+              ...localeTextOverrides,
+            },
+            sv: {
+              ...svSE.components.MuiDataGrid.defaultProps.localeText,
+              ...localeTextOverrides,
+            },
+            en: {
+              ...enUS.components.MuiDataGrid.defaultProps.localeText,
+              ...localeTextOverrides,
+            },
+            ia: {
+              ...localeTextOverrides,
+            },
+          }[language]
+        }
       />
       {openForm && <HierarchyForm open={openForm} onClose={closeForm} />}
     </>
