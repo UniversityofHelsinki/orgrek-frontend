@@ -161,6 +161,12 @@
   "henkilostoalue": "Henkilöstöalue",
   "henkilostoyksikko": "Henkilöstöyksikkö",
   "hierarchies": "Hierarkiat",
+  "hierarchyFilter": {
+    "createFilter": "Uusi rivi",
+    "sectionColumnHeader": "Organisaatiorakenne",
+    "attributeColumnHeader": "Näytettävä attribuutti",
+    "valueColumnHeader": "Organisaatiorakenteeseen kuuluva yksikkötyyppi"
+  },
   "hierarchyFiltersDataGrid": {
     "newAttributeLabel": "Uusi attribuutti \"{{value}}\"",
     "newAttributeValueLabel": "Uusi arvo \"{{value}}\"",
@@ -364,6 +370,14 @@
   "search_by_name_or_code": "Etsi nimellä tai tunnuksella",
   "search_place_holder": "Etsi hakusanalla..",
   "sections": "Lohkot",
+  "sectionInfo": {
+    "deleteError": "Lohkon poisto epäonnistui",
+    "deleteSuccess": "Lohko poistettu",
+    "insertError": "Lohkon lisäys epäonnistui",
+    "insertSuccess": "Lohko lisätty",
+    "updateError": "Lohkon päivitys epäonnistui",
+    "updateSuccess": "Lohko päivitetty"
+  },
   "sectionsDataGrid": {
     "attributeColumnHeader": "Attribuutti",
     "endDateColumnHeader": "Voimassaolo päättyy",
@@ -468,6 +482,10 @@
   "texts_timestamp": "Muokattu",
   "texts_value": "Teksti käyttöliittymässä",
   "texts_value_characters_left": "merkkiä jäljellä",
+  "texts_fi": "Suomeksi",
+  "texts_en": "Englanniksi",
+  "texts_sv": "Ruotsiksi",
+  "texts_new": "Uusi teksti",
   "tiedekunnan kaltainen": "Tiedekunnan kaltainen",
   "tiedekunta": "Tiedekunta",
   "title_save_successful": "Tallennus onnistui",

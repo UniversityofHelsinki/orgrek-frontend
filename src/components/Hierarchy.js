@@ -5,7 +5,7 @@ import ReviewDate from './ReviewDate';
 import { fetchSelectableHierarchies } from '../actions/treeAction';
 import { useTranslation } from 'react-i18next';
 import HierarchySelection from './HierarchySelection';
-import { Paper, Stack, useTheme } from '@mui/material';
+import { Grid, Paper, Stack, useTheme } from '@mui/material';
 import useFetchNode from '../hooks/useFetchNode';
 import NodeViewControl from './NodeViewControl';
 
@@ -26,30 +26,37 @@ const Hierarchy = (props) => {
     <Paper
       elevation={0}
       sx={{
-        top: 0,
-        position: 'sticky',
         pt: 2,
         pb: 2,
-        zIndex: theme.zIndex.appBar,
       }}
     >
-      <Stack
+      <Grid
+        container
+        id="main-content"
         direction="row"
-        alignItems="center"
         justifyContent="space-between"
+        alignItems="center"
         spacing={2}
       >
-        <Stack direction="row" spacing={2} id="main-content">
-          <ReviewDate />
-          <HierarchySelection size="small" limitTags={2} />
-          <TreeSearch />
-        </Stack>
-        <NodeViewControl
-          node={node}
-          selectedDay={selectedDay}
-          selectedHierarchies={hierarchies}
-        />
-      </Stack>
+        <Grid container item xs={12} md={8} spacing={1}>
+          <Grid item xs={12} sm={3} md={3}>
+            <ReviewDate />
+          </Grid>
+          <Grid item xs={12} sm={4} md={4}>
+            <HierarchySelection size="small" limitTags={2} />
+          </Grid>
+          <Grid item xs={12} sm={4} md={4}>
+            <TreeSearch width="auto" />
+          </Grid>
+        </Grid>
+        <Grid item xs={12} md="auto">
+          <NodeViewControl
+            node={node}
+            selectedDay={selectedDay}
+            selectedHierarchies={hierarchies}
+          />
+        </Grid>
+      </Grid>
     </Paper>
   );
 };

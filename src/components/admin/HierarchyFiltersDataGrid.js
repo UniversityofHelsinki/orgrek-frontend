@@ -1,8 +1,15 @@
 import { useTranslation } from 'react-i18next';
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import dateColumnType from './dateColumnType';
 import { toDate } from '../../utils/dateUtils';
-import { DataGrid, GridActionsCellItem } from '@mui/x-data-grid';
+import {
+  DataGrid,
+  GridActionsCellItem,
+  GridCellParams,
+  svSE,
+  fiFI,
+  enUS,
+} from '@mui/x-data-grid';
 import GridToolbar from './GridToolbar';
 import PropTypes from 'prop-types';
 import autocompleteColumnType from './autocompleteColumnType';
@@ -10,18 +17,24 @@ import { authActions, isAuthorized } from '../../auth';
 import useCurrentUser from '../../hooks/useCurrentUser';
 import actionsColumnType from './actionsColumnType';
 import DeleteIcon from '@mui/icons-material/Delete';
+import NewHierarchyFilterForm from '../nodeDetails/NewHierarchyFilterForm';
 
 const HierarchyFiltersDataGrid = ({
   initialRows,
+  selectableHierarchies,
+  edgeHierarchies,
+  attributeKeys,
   loading,
   onAddRow,
   onRowChange,
   onDeleteRow,
 }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const language = i18n.language; // 'fi' | 'sv' | 'en'
   const user = useCurrentUser();
   const [rows, setRows] = React.useState(initialRows || []);
   const editable = isAuthorized(user, authActions.hierarchyFilters.edit);
+  const [showForm, setShowForm] = useState(false);
 
   useEffect(() => {
     if (!loading) {
@@ -131,15 +144,11 @@ const HierarchyFiltersDataGrid = ({
       ...actionsColumnType,
       headerName: t('dataGrid.actionsHeader'),
       getActions: (params) => {
-        const handleDeleteRow = () => {
-          onDeleteRow(params.row);
-        };
-
         return [
           <GridActionsCellItem
             key="deleteRow"
             icon={<DeleteIcon />}
-            onClick={handleDeleteRow}
+            onClick={() => handleDeleteRow(params.row)}
             label={t('dataGrid.deleteRow')}
             showInMenu
           />,
@@ -147,52 +156,86 @@ const HierarchyFiltersDataGrid = ({
       },
     });
   }
+  const initialValues = {
+    hierarchy: null,
+    isNew: true,
+  };
 
   const handleAddRow = () => {
     const id = Math.floor(Math.random() * -1000000);
-    const newRow = {
-      id,
-      hierarchy: null,
-      key: null,
-      value: null,
-      startDate: null,
-      endDate: null,
-      isNew: true,
-    };
-    setRows((oldRows) => [...oldRows, newRow]);
-    onAddRow(newRow);
+    setShowForm(true);
   };
 
-  const handleCellEditStop = (params) => {
-    if (params.row.isNew) {
-      onAddRow(params.row);
-    } else {
-      onRowChange(params.row);
+  const processRowUpdate = (updatedrow) => {
+    if (updatedrow) {
+      onRowChange(updatedrow);
+    }
+    return updatedrow;
+  };
+
+  const handleDeleteRow = async (row) => {
+    await onDeleteRow(row);
+  };
+
+  const handleSubmit = async (data) => {
+    try {
+      await onAddRow(data);
+      setShowForm(false);
+    } catch (error) {
+      setShowForm(true);
     }
   };
+  const formElement = showForm ? (
+    <NewHierarchyFilterForm
+      open={showForm}
+      onClose={() => setShowForm(false)}
+      handleSubmit={handleSubmit}
+      initialRows={rows}
+      selhierarchies={selectableHierarchies}
+      edgeHierarchies={edgeHierarchies}
+      attributeKeys={attributeKeys}
+    />
+  ) : (
+    <></>
+  );
 
   return (
-    <DataGrid
-      autoHeight
-      columns={columns}
-      rows={rows}
-      loading={loading}
-      onCellEditStop={handleCellEditStop}
-      slots={{
-        toolbar: GridToolbar,
-      }}
-      slotProps={{
-        toolbar: {
-          onAddRow: handleAddRow,
-          authActions: authActions.hierarchyFilters,
-        },
-      }}
-    />
+    <>
+      <DataGrid
+        autoHeight
+        columns={columns}
+        rows={rows}
+        loading={loading}
+        processRowUpdate={processRowUpdate}
+        initialState={{
+          sorting: {
+            sortModel: [{ field: 'hierarchy', sort: 'asc' }],
+          },
+        }}
+        localeText={
+          language === 'fi'
+            ? fiFI.components.MuiDataGrid.defaultProps.localeText
+            : language === 'sv'
+            ? svSE.components.MuiDataGrid.defaultProps.localeText
+            : enUS.components.MuiDataGrid.defaultProps.localeText
+        }
+        slots={{
+          toolbar: GridToolbar,
+        }}
+        slotProps={{
+          toolbar: {
+            onAddRow: handleAddRow,
+            authActions: authActions.hierarchyFilters,
+          },
+        }}
+      />
+      {formElement}
+    </>
   );
 };
 
 HierarchyFiltersDataGrid.propTypes = {
-  initialRows: PropTypes.array.isRequired,
+  initialRows: PropTypes.array,
 };
 
 export default HierarchyFiltersDataGrid;

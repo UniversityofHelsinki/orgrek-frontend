@@ -301,6 +301,14 @@
   "search_by_name_or_code": "search_by_name_or_code",
   "search_place_holder": "Sök med ordet...",
   "sections": "Sektioner",
+  "sectionInfo": {
+    "deleteError": "sectionInfo.deleteError",
+    "deleteSuccess": "sectionInfo.deleteSuccess",
+    "insertError": "sectionInfo.insertError",
+    "insertSuccess": "sectionInfo.insertSuccess",
+    "updateError": "sectionInfo.updateError",
+    "updateSuccess": "sectionInfo.updateSuccess"
+  },
   "sectionsDataGrid": {
     "attributeColumnHeader": "attributeColumnHeader",
     "endDateColumnHeader": "endDateColumnHeader",
