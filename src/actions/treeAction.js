@@ -6,7 +6,7 @@ export const api401FailureCall = (failureTime) => ({
 });
 
 export const fetchSelectableHierarchies = () => {
-  const PATH = '/api/edge/';
+  const PATH = '/api/hierarchy/';
   const PARAMS = 'types';
   return async (dispatch) => {
     let response = await fetch(`${ORGREK_BACKEND_SERVER}${PATH}${PARAMS}`, {
