@@ -158,6 +158,8 @@ NodeField.propTypes = {
     id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
   }),
+  /** Function for filtering the results as in [].filter(fn) */
+  filter: PropTypes.func,
 };
 
 export default NodeField;
