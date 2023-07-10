@@ -25,7 +25,6 @@ const HierarchySelection = (props) => {
 
   if (props.selectableHierarchies?.length > 0) {
     const selectableHierarchiesList = props.selectableHierarchies
-      .filter((item) => item !== 'history')
       .map((v) => ({
         value: v,
         label: t(v),
