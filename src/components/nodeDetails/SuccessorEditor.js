@@ -7,6 +7,7 @@ import NodeField from '../inputs/NodeField';
 import { showValidity } from '../../utils/showValidity';
 import { useGetNodeValidityQuery } from '../../store';
 import useForm from '../../hooks/useForm';
+import { useNodeId } from '../../hooks/useNodeId';
 
 const SuccessorTypeField = ({ path, value }) => {
   const { t } = useTranslation();
@@ -14,6 +15,10 @@ const SuccessorTypeField = ({ path, value }) => {
   const { data, isFetching } = useGetNodeValidityQuery(value.value?.id, {
     skip: value.value === null,
   });
+  const nodeId = useNodeId();
+
+  const optionsFilter = (option) =>
+    console.log(option) || `${option.uniqueId}` !== nodeId;
 
   let helperText = '';
 
@@ -30,6 +35,7 @@ const SuccessorTypeField = ({ path, value }) => {
   return (
     <NodeField
       {...props}
+      filter={optionsFilter}
       fullWidth
       label={t('unit')}
       helperText={<HelperText errors={errors} helperText={helperText} />}

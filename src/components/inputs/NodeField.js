@@ -34,6 +34,7 @@ const NodeField = ({
   required,
   value,
   onChange,
+  filter = () => true,
   ...props
 }) => {
   const { t } = useTranslation();
@@ -45,6 +46,8 @@ const NodeField = ({
   const uniqueOptions = [
     ...new Map(options.map((item) => [item['uniqueId'], item])).values(),
   ];
+
+  const filtered = uniqueOptions.filter(filter);
 
   const handleChange = (event, newValue, reason) => {
     onChange(
@@ -77,7 +80,7 @@ const NodeField = ({
       isOptionEqualToValue={(option, value) => {
         return option.uniqueId === value.id;
       }}
-      options={uniqueOptions}
+      options={filtered}
       getOptionLabel={(option) => option.name || ''}
       renderOption={(props, option) => (
         <li {...props} key={`${option.name}`}>
