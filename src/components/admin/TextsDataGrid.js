@@ -112,7 +112,6 @@ const TextsDataGrid = ({
     {
       field: 'key',
       headerName: t('texts_key'),
-      width: 250,
       flex: 1,
     },
     {
