@@ -17,8 +17,7 @@ const SuccessorTypeField = ({ path, value }) => {
   });
   const nodeId = useNodeId();
 
-  const optionsFilter = (option) =>
-    console.log(option) || `${option.uniqueId}` !== nodeId;
+  const optionsFilter = (option) => `${option.uniqueId}` !== nodeId;
 
   let helperText = '';
 
