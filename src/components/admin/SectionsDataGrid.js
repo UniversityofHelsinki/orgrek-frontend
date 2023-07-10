@@ -92,6 +92,7 @@ const SectionsDataGrid = ({
       flex: 1,
       editable,
       valueOptions: sectionOptions,
+      valueFormatter: (row) => t(row.value),
       sortComparator: labelComparator(sectionOptions),
     },
     {
@@ -111,6 +112,7 @@ const SectionsDataGrid = ({
       flex: 1,
       editable,
       valueOptions: attributeOptions,
+      valueFormatter: (row) => t(row.value),
       sortComparator: labelComparator(attributeOptions),
     },
     {
