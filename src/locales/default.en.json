@@ -153,6 +153,12 @@
   "hierarchy_column_publicity": "Publicity",
   "hierarchy_column_startDate": "Start date",
   "hierarchies": "Hierarchies",
+  "hierarchyFilter": {
+    "createFilter": "createFilter",
+    "sectionColumnHeader": "sectionColumnHeader",
+    "attributeColumnHeader": "attributeColumnHeader",
+    "valueColumnHeader": "valueColumnHeader"
+  },
   "hierarchyFiltersDataGrid": {
     "newAttributeLabel": "New attribute \"{{value}}\"",
     "newAttributeValueLabel": "New value \"{{value}}\"",

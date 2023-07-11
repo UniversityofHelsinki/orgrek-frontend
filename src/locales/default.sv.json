@@ -138,6 +138,12 @@
   "hierarchy_column_publicity": "Publicitet",
   "hierarchy_column_startDate": "Börjär datum",
   "hierarchies": "hierarchies",
+  "hierarchyFilter": {
+    "createFilter": "createFilter",
+    "sectionColumnHeader": "sectionColumnHeader",
+    "attributeColumnHeader": "attributeColumnHeader",
+    "valueColumnHeader": "valueColumnHeader"
+  },
   "hierarchyFiltersDataGrid": {
     "newAttributeLabel": "newAttributeLabel",
     "newAttributeValueLabel": "newAttributeValueLabel",

@@ -78,6 +78,8 @@ const ParentEditor = ({ parents, onParentChange }) => {
     'endDate',
   ];
 
+  const optionFilter = (option) => `${option.uniqueId}` !== currentNodeId;
+
   return (
     <Stack>
       <Box mb={2}>
@@ -88,6 +90,8 @@ const ParentEditor = ({ parents, onParentChange }) => {
           style={{ width: '50%' }}
           variant="search"
           onChange={addParent}
+          filter={optionFilter}
+          clearOnSelect={true}
         />
       </Box>
       {Object.entries(values).map(([parentId, hierarchies], i) => (
