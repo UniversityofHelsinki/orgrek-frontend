@@ -195,6 +195,15 @@ export const api = createApi({
         };
       },
     }),
+    getDistinctNodeAttributes: builder.query({
+      providesTags: () => [{ type: 'DistinctNodeAttributes' }],
+      query: () => {
+        return {
+          url: `/node/attributes/distinctattributes`,
+          method: 'GET',
+        };
+      },
+    }),
     saveNodeOtherAttributes: builder.mutation({
       invalidatesTags: (result, error, { nodeId }) => {
         if (error) {
@@ -329,6 +338,15 @@ export const api = createApi({
         };
       },
     }),
+    getDistinctSectionAttributes: builder.query({
+      providesTags: () => [{ type: 'DistinctSectionAttributes' }],
+      query: () => {
+        return {
+          url: `/node/section/alldistinct`,
+          method: 'GET',
+        };
+      },
+    }),
     updateSectionAttribute: builder.mutation({
       invalidatesTags: (result, error) => {
         if (error) {
@@ -449,6 +467,8 @@ export const {
   useSaveNodeValidityMutation,
   useSaveParentsMutation,
   useGetParentsQuery,
+  useGetDistinctNodeAttributesQuery,
+  useGetDistinctSectionAttributesQuery,
   useGetNodeOtherAttributesQuery,
   useSaveNodeOtherAttributesMutation,
   useGetSuccessorsQuery,

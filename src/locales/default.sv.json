@@ -129,6 +129,12 @@
   "henkilostoalue": "henkilostoalue",
   "henkilostoyksikko": "Personalenhet",
   "hierarchies": "hierarchies",
+  "hierarchyFilter": {
+    "createFilter": "createFilter",
+    "sectionColumnHeader": "sectionColumnHeader",
+    "attributeColumnHeader": "attributeColumnHeader",
+    "valueColumnHeader": "valueColumnHeader"
+  },
   "hierarchyFiltersDataGrid": {
     "newAttributeLabel": "newAttributeLabel",
     "newAttributeValueLabel": "newAttributeValueLabel",
