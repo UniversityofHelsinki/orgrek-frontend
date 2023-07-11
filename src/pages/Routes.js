@@ -9,6 +9,7 @@ import useSelectedHierarchies from '../hooks/useSelectedHierarchies';
 import { authActions, isAuthorized } from '../auth';
 import Layout from '../components/Layout';
 import useScrollToTop from '../hooks/useScrollToTop';
+import HierarchyPage from './HierarchyPage';
 
 const AppRoutes = () => {
   useScrollToTop();
@@ -27,6 +28,9 @@ const AppRoutes = () => {
         )}
         {isAuthorized(user, authActions.sections.view) && (
           <Route path="sections" element={<SectionsPage />} />
+        )}
+        {isAuthorized(user, authActions.hierarchies.view) && (
+          <Route path="hierarchies" element={<HierarchyPage />} />
         )}
       </Route>
     </Routes>
