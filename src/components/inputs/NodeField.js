@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
@@ -34,12 +34,14 @@ const NodeField = ({
   required,
   value,
   onChange,
+  clearOnSelect = false,
   filter = () => true,
   ...props
 }) => {
   const { t } = useTranslation();
   const { tree } = useTree();
   const language = useContentLanguage();
+  const [inputValue, setInputValue] = useState('');
 
   const options = tree && tree[language] ? flatten([tree[language]]) : [];
 
@@ -55,6 +57,9 @@ const NodeField = ({
       newValue === null ? null : { id: newValue.uniqueId, name: newValue.name },
       reason
     );
+    if (clearOnSelect) {
+      setTimeout(() => setInputValue(''));
+    }
   };
 
   let inputAdornment;
@@ -81,6 +86,8 @@ const NodeField = ({
         return option.uniqueId === value.id;
       }}
       options={filtered}
+      inputValue={inputValue}
+      onInputChange={(event, value) => setInputValue(value)}
       getOptionLabel={(option) => option.name || ''}
       renderOption={(props, option) => (
         <li {...props} key={`${option.name}`}>

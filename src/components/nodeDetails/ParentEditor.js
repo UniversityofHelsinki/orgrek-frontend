@@ -91,6 +91,7 @@ const ParentEditor = ({ parents, onParentChange }) => {
           variant="search"
           onChange={addParent}
           filter={optionFilter}
+          clearOnSelect={true}
         />
       </Box>
       {Object.entries(values).map(([parentId, hierarchies], i) => (

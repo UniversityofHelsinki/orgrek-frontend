@@ -100,28 +100,28 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
       fetchNodeParentsAll(
         ownProps.node.uniqueId,
         ownProps.selectedDay,
-        ownProps.selectedHierarchy
+        ownProps.selectedHierarchies
       )
     );
     dispatch(
       fetchNodeChildrenAll(
         ownProps.node.uniqueId,
         ownProps.selectedDay,
-        ownProps.selectedHierarchy
+        ownProps.selectedHierarchies
       )
     );
     dispatch(
       fetchNodeAttributesHistory(
         ownProps.node.uniqueId,
         ownProps.selectedDay,
-        ownProps.selectedHierarchy
+        ownProps.selectedHierarchies
       )
     );
     dispatch(
       fetchNodeAttributesFuture(
         ownProps.node.uniqueId,
         ownProps.selectedDay,
-        ownProps.selectedHierarchy
+        ownProps.selectedHierarchies
       )
     );
   },
@@ -135,7 +135,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
       fetchNodeParentsAll(
         ownProps.node.uniqueId,
         ownProps.selectedDay,
-        ownProps.selectedHierarchy
+        ownProps.selectedHierarchies
       )
     );
   },
@@ -145,7 +145,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
       fetchNodeChildrenAll(
         ownProps.node.uniqueId,
         ownProps.selectedDay,
-        ownProps.selectedHierarchy
+        ownProps.selectedHierarchies
       )
     );
   },
@@ -158,21 +158,21 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
       fetchNodeParentsHistory(
         ownProps.node.uniqueId,
         ownProps.selectedDay,
-        ownProps.selectedHierarchy
+        ownProps.selectedHierarchies
       )
     );
     dispatch(
       fetchNodeChildrenHistory(
         ownProps.node.uniqueId,
         ownProps.selectedDay,
-        ownProps.selectedHierarchy
+        ownProps.selectedHierarchies
       )
     );
     dispatch(
       fetchNodeAttributesHistory(
         ownProps.node.uniqueId,
         ownProps.selectedDay,
-        ownProps.selectedHierarchy
+        ownProps.selectedHierarchies
       )
     );
     if (!showComing) {
@@ -193,21 +193,21 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
       fetchNodeParentsFuture(
         ownProps.node.uniqueId,
         ownProps.selectedDay,
-        ownProps.selectedHierarchy
+        ownProps.selectedHierarchies
       )
     );
     dispatch(
       fetchNodeChildrenFuture(
         ownProps.node.uniqueId,
         ownProps.selectedDay,
-        ownProps.selectedHierarchy
+        ownProps.selectedHierarchies
       )
     );
     dispatch(
       fetchNodeAttributesFuture(
         ownProps.node.uniqueId,
         ownProps.selectedDay,
-        ownProps.selectedHierarchy
+        ownProps.selectedHierarchies
       )
     );
     if (!showHistory) {

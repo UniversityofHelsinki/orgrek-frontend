@@ -81,6 +81,7 @@ const TextsDataGrid = ({
   onAddRow,
   onRowChange,
   onDeleteRows,
+  saveRow,
 }) => {
   const { t, i18n } = useTranslation();
   const language = i18n.language; // 'fi' | 'sv' | 'en'
@@ -224,7 +225,11 @@ const TextsDataGrid = ({
   };
 
   const handleRowChange = (modified) => {
-    onRowChange(modified);
+    if (!inInitialRows(modified)) {
+      return saveRow([modified]);
+    } else {
+      onRowChange(modified);
+    }
     return Promise.resolve(modified);
   };
 
@@ -247,8 +252,8 @@ const TextsDataGrid = ({
       loading={loading}
       processRowUpdate={handleRowChange}
       getRowId={getRowId}
-      isCellEditable={(params) =>
-        params.field === 'value' && inInitialRows(params.row)
+      isCellEditable={
+        (params) => params.field === 'value' // && inInitialRows(params.row)
       }
       getRowClassName={(params) => !params.row.value && 'texts-default'}
       localeText={
