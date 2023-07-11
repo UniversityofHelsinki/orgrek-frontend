@@ -165,7 +165,7 @@
     "createFilter": "Uusi rivi",
     "sectionColumnHeader": "Organisaatiorakenne",
     "attributeColumnHeader": "Näytettävä attribuutti",
-    "valueColumnHeader": "Organisaatiorakenteeseen kuuluva yksikkötyyppi"
+    "valueColumnHeader": "Näytettävä arvo"
   },
   "hierarchyFiltersDataGrid": {
     "newAttributeLabel": "Uusi attribuutti \"{{value}}\"",
@@ -189,7 +189,7 @@
   "hierarchy_filters_save_new_rows_in_progress": "hierarchy_filters_save_new_rows_in_progress",
   "hierarchy_filters_search_placeholder": "Etsi hakusanalla..",
   "hierarchy_filters_start_date": "Alkupäivämäärä",
-  "hierarchy_filters_value": "Organisaatiorakenteeseen kuuluva yksikkötyyppi",
+  "hierarchy_filters_value": "Näytettävä arvo",
   "hierarchy_valid": "Voimassaolo",
   "hr-koodi": "Hr-tunnus",
   "hr_lyhenne": "Hr-lyhenne",

@@ -88,6 +88,7 @@ const ParentEditor = ({ parents, onParentChange }) => {
           style={{ width: '50%' }}
           variant="search"
           onChange={addParent}
+          clearOnSelect={true}
         />
       </Box>
       {Object.entries(values).map(([parentId, hierarchies], i) => (
