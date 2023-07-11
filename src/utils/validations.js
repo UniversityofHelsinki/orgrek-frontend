@@ -368,9 +368,7 @@ const textAlreadyExists = (existingTexts, errorMessage) => {
 
 export const newTextSchema = (existingTexts, errorMessage) =>
   object({
-    key: string()
-      .required()
-      .test(textAlreadyExists(existingTexts, errorMessage)),
+    key: string().required(),
     fi: string().required(),
     en: string().required(),
     sv: string().required(),
