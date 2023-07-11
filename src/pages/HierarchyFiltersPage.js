@@ -7,9 +7,10 @@ import {
   useSaveHierarchyFiltersMutation,
   useInsertHierarchyFiltersMutation,
   useDeleteHierarchyFiltersMutation,
-  useGetSectionAttributesQuery,
-  useGetEdgesQuery,
   useGetEdgeHierarchiesQuery,
+  useGetDistinctNodeAttributesQuery,
+  useGetDistinctSectionAttributesQuery,
+  useGetHierarchyTypesQuery,
 } from '../store';
 import { t } from 'i18next';
 import { useDispatch, useSelector } from 'react-redux';
@@ -19,17 +20,22 @@ const HierarchyFiltersPage = () => {
   const { data: hierarchyFilters, isFetching: isFetchingHierarchyFilters } =
     useGetHierarchyFiltersQuery();
   const { data: attributeKeys, isFetching: isFetchingKeys } =
-    useGetSectionAttributesQuery();
+    useGetDistinctSectionAttributesQuery();
   const { data: selectableHierarchies, isFetching: isFetchingEdges } =
-    useGetEdgesQuery();
+    useGetHierarchyTypesQuery();
   const { data: edgeHierarchies, isFetching: isFetchingEdgeHierarchies } =
     useGetEdgeHierarchiesQuery();
+  const { data: distinctNodeAttrs, isFetching: isFetchingDistinctAttr } =
+    useGetDistinctNodeAttributesQuery();
   const [saveHierarchyFilters] = useSaveHierarchyFiltersMutation();
   const [deleteHierarchyFilters] = useDeleteHierarchyFiltersMutation();
   const [insertHierarchyFilters] = useInsertHierarchyFiltersMutation();
 
   const loading =
-    isFetchingHierarchyFilters || isFetchingEdges || isFetchingEdgeHierarchies;
+    isFetchingHierarchyFilters ||
+    isFetchingEdges ||
+    isFetchingEdgeHierarchies ||
+    isFetchingDistinctAttr;
 
   const handleRowChange = async (row) => {
     //console.log('handleRowChange', row); // TODO: dispatch saveHierarchyFilters mutation
@@ -97,7 +103,7 @@ const HierarchyFiltersPage = () => {
       <HierarchyFiltersDataGrid
         initialRows={hierarchyFilters}
         selectableHierarchies={selectableHierarchies}
-        edgeHierarchies={edgeHierarchies}
+        distinctNodeAttrs={distinctNodeAttrs}
         attributeKeys={attributeKeys}
         loading={loading}
         onRowChange={handleRowChange}
