@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect } from 'react';
 import {
   DataGrid,
   GridActionsCellItem,

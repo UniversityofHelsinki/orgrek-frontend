@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import dateColumnType from './dateColumnType';
 import { toDate } from '../../utils/dateUtils';
 import {
@@ -42,48 +42,35 @@ const HierarchyFiltersDataGrid = ({
     }
   }, [loading]);
 
-  const hierarchyOptions = useMemo(
-    () =>
-      rows
-        .filter(
-          (row, index, rows) =>
-            index === rows.findIndex((r) => r.hierarchy === row.hierarchy)
-        )
-        .map((row) => ({
-          value: row.hierarchy,
-          label: t(row.hierarchy),
-        })),
-    [rows]
-  );
+  const hierarchyOptions = rows
+    .filter(
+      (row, index, rows) =>
+        index === rows.findIndex((r) => r.hierarchy === row.hierarchy)
+    )
+    .map((row) => ({
+      value: row.hierarchy,
+      label: t(row.hierarchy),
+    }));
 
-  const keyOptions = useMemo(
-    () =>
-      rows
-        .filter(
-          (row, index, rows) =>
-            index === rows.findIndex((r) => r.key === row.key)
-        )
-        .map((row) => ({
-          value: row.key,
-          label: t(row.key),
-        })),
-    [rows]
-  );
+  const keyOptions = rows
+    .filter(
+      (row, index, rows) => index === rows.findIndex((r) => r.key === row.key)
+    )
+    .map((row) => ({
+      value: row.key,
+      label: t(row.key),
+    }));
 
-  const valueOptions = useMemo(
-    () =>
-      rows
-        .filter(
-          (row, index, rows) =>
-            index === rows.findIndex((r) => r.value === row.value)
-        )
-        .map((row) => ({
-          value: row.value,
-          label: t(row.value),
-          key: row.key,
-        })),
-    [rows]
-  );
+  const valueOptions = rows
+    .filter(
+      (row, index, rows) =>
+        index === rows.findIndex((r) => r.value === row.value)
+    )
+    .map((row) => ({
+      value: row.value,
+      label: t(row.value),
+      key: row.key,
+    }));
 
   const columns = [
     {
