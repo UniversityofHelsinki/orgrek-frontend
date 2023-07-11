@@ -33,14 +33,19 @@ const EditDropDown = ({ columnName, value, id, field }) => {
   );
 };
 
-const HierarchyDataGrid = ({ hierarchies }) => {
+const HierarchyDataGrid = ({
+  hierarchies = [],
+  loading,
+  handleSubmit,
+  handleUpdate,
+}) => {
   const { t, i18n } = useTranslation();
   const language = i18n.language;
   const [openForm, setOpenForm] = useState(false);
 
   const columns = [
     {
-      field: 'name',
+      field: 'hierarchy',
       headerName: t(`hierarchy_column_hierarchy`),
       flex: 1,
       valueFormatter: (row) => t(row.value),
@@ -63,22 +68,6 @@ const HierarchyDataGrid = ({ hierarchies }) => {
     },
   ];
 
-  // TODO: replace this with real data from db
-  const rows = [
-    {
-      id: 'talous',
-      name: 'talous',
-      publicity: true,
-      startDate: null,
-    },
-    {
-      id: 2,
-      name: 'johtoryhmat',
-      publicity: false,
-      startDate: '2.3.2023',
-    },
-  ];
-
   const openDialog = () => {
     setOpenForm(true);
   };
@@ -87,9 +76,14 @@ const HierarchyDataGrid = ({ hierarchies }) => {
     setOpenForm(false);
   };
 
-  const submitRow = (row) => {
-    // TODO: submit row here
-    console.log(row);
+  const updateRow = async (row) => {
+    await handleUpdate(row);
+    return row;
+  };
+
+  const insertRow = async (row) => {
+    await handleSubmit(row);
+    closeForm();
   };
 
   const localeTextOverrides = {
@@ -101,14 +95,19 @@ const HierarchyDataGrid = ({ hierarchies }) => {
     toolbarExport: t('datagrid_toolbar_export'),
   };
 
+  const hierarchyIdentifiers = hierarchies.map(
+    (hierarchy) => hierarchy.hierarchy
+  );
+
   return (
     <>
       <DataGrid
         autoHeight
         columns={columns}
-        rows={rows}
-        loading={!rows}
-        onCellEditStop={(params) => submitRow(params.row)}
+        rows={hierarchies}
+        loading={loading}
+        processRowUpdate={(params) => updateRow(params)}
+        onProcessRowUpdateError={console.log}
         slots={{
           toolbar: GridToolbar,
         }}
@@ -138,7 +137,14 @@ const HierarchyDataGrid = ({ hierarchies }) => {
           }[language]
         }
       />
-      {openForm && <HierarchyForm open={openForm} onClose={closeForm} />}
+      {openForm && (
+        <HierarchyForm
+          hierarchies={hierarchyIdentifiers}
+          open={openForm}
+          onClose={closeForm}
+          handleSubmit={insertRow}
+        />
+      )}
     </>
   );
 };

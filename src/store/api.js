@@ -1,5 +1,5 @@
+/* eslint-disable max-lines */
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-/*eslint max-lines-per-function: ["warn", 2000]*/
 export const api = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({
@@ -21,6 +21,7 @@ export const api = createApi({
     'TextAttributes',
     'EdgeHierarchies',
     'Texts',
+    'HierarchyPublicities',
   ],
   // eslint-disable-next-line max-lines-per-function
   endpoints: (builder) => ({
@@ -427,6 +428,45 @@ export const api = createApi({
         };
       },
     }),
+    getHierarchyPublicities: builder.query({
+      providesTags: () => [{ type: 'HierarchyPublicities' }],
+      query: () => {
+        return {
+          url: '/hierarchy/publicityList',
+          method: 'GET',
+        };
+      },
+    }),
+    updateHierarchyPublicity: builder.mutation({
+      invalidatesTags: (result, error) => {
+        if (error) {
+          return [];
+        }
+        return [{ type: 'HierarchyPublicities' }];
+      },
+      query: (hierarchyPublicity) => {
+        return {
+          url: '/hierarchy/updatePublicity',
+          method: 'PUT',
+          body: hierarchyPublicity,
+        };
+      },
+    }),
+    insertHierarchyPublicity: builder.mutation({
+      invalidatesTags: (result, error) => {
+        if (error) {
+          return [];
+        }
+        return [{ type: 'HierarchyPublicities' }];
+      },
+      query: (hierarchyPublicity) => {
+        return {
+          url: '/hierarchy/insertPublicity',
+          method: 'POST',
+          body: hierarchyPublicity,
+        };
+      },
+    }),
   }),
 });
 
@@ -464,4 +504,7 @@ export const {
   useInsertTextsMutation,
   useUpdateTextMutation,
   useDeleteTextMutation,
+  useGetHierarchyPublicitiesQuery,
+  useInsertHierarchyPublicityMutation,
+  useUpdateHierarchyPublicityMutation,
 } = api;

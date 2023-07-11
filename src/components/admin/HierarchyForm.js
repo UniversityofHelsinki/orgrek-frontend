@@ -136,11 +136,10 @@ const Actions = ({ onCancel }) => {
   return actions;
 };
 
-const HierarchyForm = ({ open, onClose }) => {
+const HierarchyForm = ({ open, onClose, handleSubmit, hierarchies = [] }) => {
   const { t } = useTranslation();
-  // TODO: replace ["talous"] with already existing hierarchies
   const validationSchema = newHierarchySchema(
-    ['talous'],
+    hierarchies,
     t('hierarchy_already_exists')
   );
 
@@ -166,16 +165,15 @@ const HierarchyForm = ({ open, onClose }) => {
 
   const onSubmit = (values) => {
     const hierarchy = {
-      hierarchy: values.hierarchy,
+      childId: values.unit,
       publicity: values.publicity,
+      hierarchy: values.hierarchy,
+      names: ['Fi', 'En', 'Sv'].map((lang) => ({
+        name: values[`name${lang}`],
+        language: lang.toLowerCase(),
+      })),
     };
-    const texts = ['Fi', 'En', 'Sv'].map((language) => ({
-      key: values.hierarchy,
-      value: values[`name${language}`],
-    }));
-    // saveHierarchy here, disptach notification on success and error
-    // saveTexts here, dispatch notification on success and error
-    return Promise.resolve({});
+    handleSubmit(hierarchy);
   };
 
   return (
