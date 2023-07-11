@@ -53,14 +53,10 @@ const SectionsDataGrid = ({
     },
   ];
 
-  const attributeOptions = useMemo(
-    () =>
-      attributeKeys.map((key) => ({
-        value: key,
-        label: t(key),
-      })),
-    [attributeKeys]
-  );
+  const attributeOptions = attributeKeys.map((key) => ({
+    value: key,
+    label: t(key),
+  }));
 
   const handleAddRow = () => {
     setShowForm(true);
@@ -161,6 +157,15 @@ const SectionsDataGrid = ({
     <></>
   );
 
+  const localeTextOverrides = {
+    // see the keys here if you want to override data grid's inner translations:
+    // https://github.com/mui/mui-x/blob/HEAD/packages/grid/x-data-grid/src/constants/localeTextConstants.ts
+    toolbarColumns: t('datagrid_toolbar_columns'),
+    toolbarFilters: t('datagrid_toolbar_filters'),
+    toolbarDensity: t('datagrid_toolbar_density'),
+    toolbarExport: t('datagrid_toolbar_export'),
+  };
+
   return (
     <>
       <DataGrid
@@ -183,11 +188,23 @@ const SectionsDataGrid = ({
           },
         }}
         localeText={
-          language === 'fi'
-            ? fiFI.components.MuiDataGrid.defaultProps.localeText
-            : language === 'sv'
-            ? svSE.components.MuiDataGrid.defaultProps.localeText
-            : enUS.components.MuiDataGrid.defaultProps.localeText
+          {
+            fi: {
+              ...fiFI.components.MuiDataGrid.defaultProps.localeText,
+              ...localeTextOverrides,
+            },
+            sv: {
+              ...svSE.components.MuiDataGrid.defaultProps.localeText,
+              ...localeTextOverrides,
+            },
+            en: {
+              ...enUS.components.MuiDataGrid.defaultProps.localeText,
+              ...localeTextOverrides,
+            },
+            ia: {
+              ...localeTextOverrides,
+            },
+          }[language]
         }
         slots={{
           toolbar: GridToolbar,

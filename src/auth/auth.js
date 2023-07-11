@@ -47,6 +47,10 @@ export const authActions = {
   successors: {
     edit: { allowRoles: allWriterRoles },
   },
+  hierarchies: {
+    edit: { allowRoles: [roleAdmin] },
+    view: { allowRoles: allWriterRoles },
+  },
 };
 
 /**
