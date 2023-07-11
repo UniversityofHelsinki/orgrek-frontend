@@ -53,14 +53,10 @@ const SectionsDataGrid = ({
     },
   ];
 
-  const attributeOptions = useMemo(
-    () =>
-      attributeKeys.map((key) => ({
-        value: key,
-        label: t(key),
-      })),
-    [attributeKeys]
-  );
+  const attributeOptions = attributeKeys.map((key) => ({
+    value: key,
+    label: t(key),
+  }));
 
   const handleAddRow = () => {
     setShowForm(true);
