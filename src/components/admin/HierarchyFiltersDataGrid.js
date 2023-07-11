@@ -95,7 +95,7 @@ const HierarchyFiltersDataGrid = ({
       valueOptions: hierarchyOptions,
       getCreateNewLabel: (value) =>
         t('hierarchyFiltersDataGrid.newHierarchyLabel', { value }),
-      valueGetter: (params) => t(params.value),
+      valueFormatter: (row) => t(row.value),
     },
     {
       field: 'key',
@@ -106,7 +106,7 @@ const HierarchyFiltersDataGrid = ({
       valueOptions: keyOptions,
       getCreateNewLabel: (value) =>
         t('hierarchyFiltersDataGrid.newAttributeLabel', { value }),
-      valueGetter: (params) => t(params.value),
+      valueFormatter: (row) => t(row.value),
     },
     {
       field: 'value',
@@ -119,7 +119,7 @@ const HierarchyFiltersDataGrid = ({
         options.filter((option) => option.key === row.key),
       getCreateNewLabel: (value) =>
         t('hierarchyFiltersDataGrid.newAttributeValueLabel', { value }),
-      valueGetter: (params) => t(params.value),
+      valueFormatter: (row) => t(row.value),
     },
     {
       field: 'startDate',

@@ -7,10 +7,10 @@ import {
   useSaveHierarchyFiltersMutation,
   useInsertHierarchyFiltersMutation,
   useDeleteHierarchyFiltersMutation,
-  useGetEdgesQuery,
   useGetEdgeHierarchiesQuery,
   useGetDistinctNodeAttributesQuery,
   useGetDistinctSectionAttributesQuery,
+  useGetHierarchyTypesQuery,
 } from '../store';
 import { t } from 'i18next';
 import { useDispatch, useSelector } from 'react-redux';
@@ -22,7 +22,7 @@ const HierarchyFiltersPage = () => {
   const { data: attributeKeys, isFetching: isFetchingKeys } =
     useGetDistinctSectionAttributesQuery();
   const { data: selectableHierarchies, isFetching: isFetchingEdges } =
-    useGetEdgesQuery();
+    useGetHierarchyTypesQuery();
   const { data: edgeHierarchies, isFetching: isFetchingEdgeHierarchies } =
     useGetEdgeHierarchiesQuery();
   const { data: distinctNodeAttrs, isFetching: isFetchingDistinctAttr } =

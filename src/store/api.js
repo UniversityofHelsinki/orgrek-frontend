@@ -233,11 +233,11 @@ export const api = createApi({
         };
       },
     }),
-    getEdges: builder.query({
-      providesTags: () => [{ type: 'EdgeHierarchies' }],
+    getHierarchyTypes: builder.query({
+      providesTags: () => [{ type: 'HierarchyTypes' }],
       query: () => {
         return {
-          url: `/edge/types`,
+          url: `/hierarchy/types`,
           method: 'GET',
         };
       },
@@ -478,7 +478,7 @@ export const {
   useUpdateSectionAttributeMutation,
   useDeleteSectionAttributeMutation,
   useInsertSectionAttributeMutation,
-  useGetEdgesQuery,
+  useGetHierarchyTypesQuery,
   useGetEdgeHierarchiesQuery,
   useGetTextsQuery,
   useInsertTextsMutation,
