@@ -160,12 +160,21 @@
   "henkilosto_header": "Henkilöstö",
   "henkilostoalue": "Henkilöstöalue",
   "henkilostoyksikko": "Henkilöstöyksikkö",
+  "hierarchy_already_exists": "Hierarkia on jo olemassa.",
+  "hierarchy_identifier": "Tunniste",
+  "hierarchy_new": "Uusi hierarkia",
+  "hierarchy_names": "Nimi",
+  "hierarchy_unit": "Yksikkö",
+  "hierarchy_publicity": "Julkisuus",
+  "hierarchy_column_hierarchy": "Hierarkia",
+  "hierarchy_column_publicity": "Julkisuus",
+  "hierarchy_column_startDate": "Alkupäivämäärä",
   "hierarchies": "Hierarkiat",
   "hierarchyFilter": {
     "createFilter": "Uusi rivi",
     "sectionColumnHeader": "Organisaatiorakenne",
     "attributeColumnHeader": "Näytettävä attribuutti",
-    "valueColumnHeader": "Organisaatiorakenteeseen kuuluva yksikkötyyppi"
+    "valueColumnHeader": "Näytettävä arvo"
   },
   "hierarchyFiltersDataGrid": {
     "newAttributeLabel": "Uusi attribuutti \"{{value}}\"",
@@ -189,7 +198,7 @@
   "hierarchy_filters_save_new_rows_in_progress": "hierarchy_filters_save_new_rows_in_progress",
   "hierarchy_filters_search_placeholder": "Etsi hakusanalla..",
   "hierarchy_filters_start_date": "Alkupäivämäärä",
-  "hierarchy_filters_value": "Organisaatiorakenteeseen kuuluva yksikkötyyppi",
+  "hierarchy_filters_value": "Näytettävä arvo",
   "hierarchy_valid": "Voimassaolo",
   "hr-koodi": "Hr-tunnus",
   "hr_lyhenne": "Hr-lyhenne",
@@ -348,6 +357,8 @@
     "title": "Edeltävät yksiköt"
   },
   "publicity": "Julkisuus",
+  "publicity_true": "Kyllä",
+  "publicity_false": "Ei",
   "relations_nav": "Yhteydet",
   "remove_filters": "Poista suodattimet",
   "research_header": "Tutkimus",

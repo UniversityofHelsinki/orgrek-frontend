@@ -1,5 +1,5 @@
+/* eslint-disable max-lines */
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-/*eslint max-lines-per-function: ["warn", 2000]*/
 export const api = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({
@@ -21,6 +21,7 @@ export const api = createApi({
     'TextAttributes',
     'EdgeHierarchies',
     'Texts',
+    'HierarchyPublicities',
   ],
   // eslint-disable-next-line max-lines-per-function
   endpoints: (builder) => ({
@@ -195,6 +196,15 @@ export const api = createApi({
         };
       },
     }),
+    getDistinctNodeAttributes: builder.query({
+      providesTags: () => [{ type: 'DistinctNodeAttributes' }],
+      query: () => {
+        return {
+          url: `/node/attributes/distinctattributes`,
+          method: 'GET',
+        };
+      },
+    }),
     saveNodeOtherAttributes: builder.mutation({
       invalidatesTags: (result, error, { nodeId }) => {
         if (error) {
@@ -329,6 +339,15 @@ export const api = createApi({
         };
       },
     }),
+    getDistinctSectionAttributes: builder.query({
+      providesTags: () => [{ type: 'DistinctSectionAttributes' }],
+      query: () => {
+        return {
+          url: `/node/section/alldistinct`,
+          method: 'GET',
+        };
+      },
+    }),
     updateSectionAttribute: builder.mutation({
       invalidatesTags: (result, error) => {
         if (error) {
@@ -427,6 +446,45 @@ export const api = createApi({
         };
       },
     }),
+    getHierarchyPublicities: builder.query({
+      providesTags: () => [{ type: 'HierarchyPublicities' }],
+      query: () => {
+        return {
+          url: '/hierarchy/publicityList',
+          method: 'GET',
+        };
+      },
+    }),
+    updateHierarchyPublicity: builder.mutation({
+      invalidatesTags: (result, error) => {
+        if (error) {
+          return [];
+        }
+        return [{ type: 'HierarchyPublicities' }];
+      },
+      query: (hierarchyPublicity) => {
+        return {
+          url: '/hierarchy/updatePublicity',
+          method: 'PUT',
+          body: hierarchyPublicity,
+        };
+      },
+    }),
+    insertHierarchyPublicity: builder.mutation({
+      invalidatesTags: (result, error) => {
+        if (error) {
+          return [];
+        }
+        return [{ type: 'HierarchyPublicities' }];
+      },
+      query: (hierarchyPublicity) => {
+        return {
+          url: '/hierarchy/insertPublicity',
+          method: 'POST',
+          body: hierarchyPublicity,
+        };
+      },
+    }),
   }),
 });
 
@@ -449,6 +507,8 @@ export const {
   useSaveNodeValidityMutation,
   useSaveParentsMutation,
   useGetParentsQuery,
+  useGetDistinctNodeAttributesQuery,
+  useGetDistinctSectionAttributesQuery,
   useGetNodeOtherAttributesQuery,
   useSaveNodeOtherAttributesMutation,
   useGetSuccessorsQuery,
@@ -464,4 +524,7 @@ export const {
   useInsertTextsMutation,
   useUpdateTextMutation,
   useDeleteTextMutation,
+  useGetHierarchyPublicitiesQuery,
+  useInsertHierarchyPublicityMutation,
+  useUpdateHierarchyPublicityMutation,
 } = api;

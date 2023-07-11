@@ -71,6 +71,7 @@ const defaults = {
   fi: textsToRows(defaultFi, 'fi'),
   en: textsToRows(defaultEn, 'en'),
   sv: textsToRows(defaultSv, 'sv'),
+  ia: [],
 };
 /**
  * Admin view for managing translations.
@@ -81,6 +82,7 @@ const TextsDataGrid = ({
   onAddRow,
   onRowChange,
   onDeleteRows,
+  saveRow,
 }) => {
   const { t, i18n } = useTranslation();
   const language = i18n.language; // 'fi' | 'sv' | 'en'
@@ -224,8 +226,21 @@ const TextsDataGrid = ({
   };
 
   const handleRowChange = (modified) => {
-    onRowChange(modified);
+    if (!inInitialRows(modified)) {
+      return saveRow([modified]);
+    } else {
+      onRowChange(modified);
+    }
     return Promise.resolve(modified);
+  };
+
+  // see the keys here if you want to override data grid's inner translations:
+  // https://github.com/mui/mui-x/blob/HEAD/packages/grid/x-data-grid/src/constants/localeTextConstants.ts
+  const localeTextOverrides = {
+    toolbarColumns: t('datagrid_toolbar_columns'),
+    toolbarFilters: t('datagrid_toolbar_filters'),
+    toolbarDensity: t('datagrid_toolbar_density'),
+    toolbarExport: t('datagrid_toolbar_export'),
   };
 
   return (
@@ -247,16 +262,28 @@ const TextsDataGrid = ({
       loading={loading}
       processRowUpdate={handleRowChange}
       getRowId={getRowId}
-      isCellEditable={(params) =>
-        params.field === 'value' && inInitialRows(params.row)
+      isCellEditable={
+        (params) => params.field === 'value' // && inInitialRows(params.row)
       }
       getRowClassName={(params) => !params.row.value && 'texts-default'}
       localeText={
-        language === 'fi'
-          ? fiFI.components.MuiDataGrid.defaultProps.localeText
-          : language === 'sv'
-          ? svSE.components.MuiDataGrid.defaultProps.localeText
-          : enUS.components.MuiDataGrid.defaultProps.localeText
+        {
+          fi: {
+            ...fiFI.components.MuiDataGrid.defaultProps.localeText,
+            ...localeTextOverrides,
+          },
+          sv: {
+            ...svSE.components.MuiDataGrid.defaultProps.localeText,
+            ...localeTextOverrides,
+          },
+          en: {
+            ...enUS.components.MuiDataGrid.defaultProps.localeText,
+            ...localeTextOverrides,
+          },
+          ia: {
+            ...localeTextOverrides,
+          },
+        }[language]
       }
       slots={{
         toolbar: GridToolbar,

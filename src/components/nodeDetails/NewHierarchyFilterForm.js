@@ -62,11 +62,10 @@ const NewHierarchyFilterForm = ({
   handleSubmit,
   initialRows,
   selhierarchies,
-  edgeHierarchies,
+  distinctNodeAttrs,
   attributeKeys,
 }) => {
   const { t } = useTranslation();
-  //const validationSchema = newNodeValiditySchema;
   const uniqueHierarchyValues = initialRows.filter(
     (elem, ix) =>
       initialRows.findIndex((elem1) => elem1.hierarchy === elem.hierarchy) ===
@@ -87,9 +86,10 @@ const NewHierarchyFilterForm = ({
   const dropdownKeyFieldOptions = uniqueKeyValues;
   const dropdownValueFieldOptions = uniqueValues;
 
-  const emptySection = {
-    section: '',
-    attr: '',
+  const emptyHierarchyFilter = {
+    key: '',
+    value: '',
+    hierarchy: '',
   };
 
   const today = new Date();
@@ -137,26 +137,6 @@ const NewHierarchyFilterForm = ({
         helperText={<HelperText errors={errors} />}
       >
         {attributeKeys.map((option) => (
-          <MenuItem key={option.attr} value={option.attr}>
-            {option.attr}
-          </MenuItem>
-        ))}
-      </TextField>
-    );
-  };
-
-  const ValueDropdownField = ({ path }) => {
-    const { props, errors } = useFormField({ path, name: 'value' });
-
-    return (
-      <TextField
-        {...props}
-        select
-        fullWidth
-        label={t('hierarchyFilter.valueColumnHeader')}
-        helperText={<HelperText errors={errors} />}
-      >
-        {edgeHierarchies.map((option) => (
           <MenuItem key={option} value={option}>
             {option}
           </MenuItem>
@@ -165,6 +145,27 @@ const NewHierarchyFilterForm = ({
     );
   };
 
+  const ValueDropdownField = ({ path }) => {
+    const { props, errors } = useFormField({ path, name: 'value' });
+    const { values } = useForm();
+    const key = values.key;
+    const attributeValues = key ? distinctNodeAttrs[key] : [];
+    return (
+      <TextField
+        {...props}
+        select
+        fullWidth
+        label={t('hierarchyFilter.valueColumnHeader')}
+        helperText={<HelperText errors={errors} />}
+      >
+        {attributeValues.map((option) => (
+          <MenuItem key={option} value={option}>
+            {option}
+          </MenuItem>
+        ))}
+      </TextField>
+    );
+  };
   const content = (
     <>
       <Stack spacing={2}>
@@ -181,7 +182,7 @@ const NewHierarchyFilterForm = ({
     <Dialog open={open} onClose={onClose} fullWidth={true} maxWidth="sm">
       <Form
         onSubmit={handleSubmit}
-        initialValues={emptySection}
+        initialValues={emptyHierarchyFilter}
         validationSchema={newHierarchyFilterValiditySchema}
       >
         <DialogTitle>{headerRow}</DialogTitle>
