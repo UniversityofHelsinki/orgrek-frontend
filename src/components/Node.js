@@ -16,7 +16,7 @@ const Node = (props) => {
     }
   }, [props.item]);
 
-  const selected = props.node?.uniqueId === props.item.uniqueId;
+  const selected = String(props.node?.uniqueId) === props.item.uniqueId;
 
   return (
     <div

@@ -39,11 +39,12 @@ const NodeField = ({
   ...props
 }) => {
   const { t } = useTranslation();
-  const { tree } = useTree();
+  const { trees } = useTree();
   const language = useContentLanguage();
+  const options = trees
+    ? trees[language].map((tree) => (tree ? flatten([tree]) : [])).flat()
+    : [];
   const [inputValue, setInputValue] = useState('');
-
-  const options = tree && tree[language] ? flatten([tree[language]]) : [];
 
   const uniqueOptions = [
     ...new Map(options.map((item) => [item['uniqueId'], item])).values(),

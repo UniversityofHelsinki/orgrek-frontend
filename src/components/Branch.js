@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Node from './Node';
 
 const Branch = ({ item, level, openableTree }) => {
-  const [selected, setSelected] = useState(level >= 1 ? false : true); // open tree on load
+  const [selected, setSelected] = useState(level < 1); // open tree on load
   const hasChildren = item.children && item.children.length !== 0;
 
   const nextInSomePath = openableTree?.filter(
