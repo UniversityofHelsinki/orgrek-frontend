@@ -178,7 +178,7 @@ const ChildrenSection = () => {
         errorMessage={t('subunits.saveError')}
         authActions={authActions.children}
       >
-        <Placeholder empty={empty} placeholder={t('upperUnits.empty')}>
+        <Placeholder empty={empty} placeholder={t('subunits.empty')}>
           <HierarchyTable data={filteredByDateChildren} summary={title} />
         </Placeholder>
         {formElement}
