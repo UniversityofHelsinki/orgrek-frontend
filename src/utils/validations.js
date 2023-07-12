@@ -341,3 +341,57 @@ export const newNodeValiditySchema = object({
   nameEn: string().required(),
   nameSv: string().required(),
 });
+
+export const newHierarchyFilterValiditySchema = object({
+  key: string().optional(),
+  hierarchy: string().required(),
+  value: string().optional(),
+});
+
+export const newSectionValiditySchema = object({
+  section: string().required(),
+  attr: string().required(),
+});
+
+const textAlreadyExists = (existingTexts, errorMessage) => {
+  const validate = (text) => {
+    return existingTexts.every((existingText) => {
+      return existingText.key !== text;
+    });
+  };
+  return {
+    name: 'text-does-not-already-exist',
+    test: validate,
+    message: errorMessage,
+  };
+};
+
+export const newTextSchema = (existingTexts, errorMessage) =>
+  object({
+    key: string().required(),
+    fi: string().required(),
+    en: string().required(),
+    sv: string().required(),
+  });
+
+const hierarchyAlreadyExists = (existingHierarchies, errorMessage) => {
+  const validate = (hierarchy) =>
+    ![...existingHierarchies, 'history'].includes(hierarchy);
+  return {
+    name: 'hierarchy-already-exists',
+    test: validate,
+    message: errorMessage,
+  };
+};
+
+export const newHierarchySchema = (existingHierarchies, errorMessage) =>
+  object({
+    hierarchy: string()
+      .required()
+      .test(hierarchyAlreadyExists(existingHierarchies, errorMessage)),
+    nameFi: string().required(),
+    nameEn: string().required(),
+    nameSv: string().required(),
+    unit: number().required(),
+    publicity: boolean().required(),
+  });

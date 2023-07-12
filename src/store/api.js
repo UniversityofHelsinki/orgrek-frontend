@@ -1,5 +1,5 @@
+/* eslint-disable max-lines */
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-
 export const api = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({
@@ -19,7 +19,11 @@ export const api = createApi({
     'Successors',
     'SectionAttributes',
     'TextAttributes',
+    'EdgeHierarchies',
+    'Texts',
+    'HierarchyPublicities',
   ],
+  // eslint-disable-next-line max-lines-per-function
   endpoints: (builder) => ({
     getTree: builder.query({
       providesTags: () => [{ type: 'Tree' }],
@@ -104,6 +108,44 @@ export const api = createApi({
         };
       },
     }),
+    saveHierarchyFilters: builder.mutation({
+      invalidatesTags: (result, error) => {
+        if (error) {
+          return [];
+        }
+        return [{ type: 'HierarchyFilters' }];
+      },
+      query: ({ data }) => {
+        return { url: `/hierarchyFilters`, method: 'PUT', body: data };
+      },
+    }),
+    insertHierarchyFilters: builder.mutation({
+      invalidatesTags: (result, error) => {
+        if (error) {
+          return [];
+        }
+        return [{ type: 'HierarchyFilters' }];
+      },
+      query: ({ data }) => {
+        return { url: `/hierarchyFilters`, method: 'POST', body: data };
+      },
+    }),
+    deleteHierarchyFilters: builder.mutation({
+      invalidatesTags: (result, error) => {
+        if (error) {
+          return [];
+        }
+        return [{ type: 'HierarchyFilters' }];
+      },
+      query: ({ data }) => {
+        return {
+          url: `/hierarchyFilters`,
+          method: 'DELETE',
+          body: data,
+        };
+      },
+    }),
+
     getCodeAttributes: builder.query({
       providesTags: (result, error, { nodeId }) => [
         { type: 'CodeAttributes', id: nodeId },
@@ -154,6 +196,15 @@ export const api = createApi({
         };
       },
     }),
+    getDistinctNodeAttributes: builder.query({
+      providesTags: () => [{ type: 'DistinctNodeAttributes' }],
+      query: () => {
+        return {
+          url: `/node/attributes/distinctattributes`,
+          method: 'GET',
+        };
+      },
+    }),
     saveNodeOtherAttributes: builder.mutation({
       invalidatesTags: (result, error, { nodeId }) => {
         if (error) {
@@ -179,6 +230,24 @@ export const api = createApi({
           : new Date().toLocaleDateString('FI-fi');
         return {
           url: `/node/all/parents/${nodeId}/${dateString}/${selectedHierarchies}`,
+          method: 'GET',
+        };
+      },
+    }),
+    getHierarchyTypes: builder.query({
+      providesTags: () => [{ type: 'HierarchyTypes' }],
+      query: () => {
+        return {
+          url: `/hierarchy/types`,
+          method: 'GET',
+        };
+      },
+    }),
+    getEdgeHierarchies: builder.query({
+      providesTags: () => [{ type: 'EdgeHierarchiesNoHistory' }],
+      query: () => {
+        return {
+          url: `/edge/edgehierarchies`,
           method: 'GET',
         };
       },
@@ -270,12 +339,149 @@ export const api = createApi({
         };
       },
     }),
-    getTextAttributes: builder.query({
-      providesTags: () => [{ type: 'TextAttributes' }],
+    getDistinctSectionAttributes: builder.query({
+      providesTags: () => [{ type: 'DistinctSectionAttributes' }],
+      query: () => {
+        return {
+          url: `/node/section/alldistinct`,
+          method: 'GET',
+        };
+      },
+    }),
+    updateSectionAttribute: builder.mutation({
+      invalidatesTags: (result, error) => {
+        if (error) {
+          return [];
+        }
+        return [{ type: 'SectionAttributes' }];
+      },
+      query: ({ data }) => {
+        return {
+          url: `/section/update`,
+          method: 'PUT',
+          body: data,
+        };
+      },
+    }),
+    insertSectionAttribute: builder.mutation({
+      invalidatesTags: (result, error) => {
+        if (error) {
+          return [];
+        }
+        return [{ type: 'SectionAttributes' }];
+      },
+      query: ({ data }) => {
+        return {
+          url: `/section/insert`,
+          method: 'POST',
+          body: data,
+        };
+      },
+    }),
+    deleteSectionAttribute: builder.mutation({
+      invalidatesTags: (result, error) => {
+        if (error) {
+          return [];
+        }
+        return [{ type: 'SectionAttributes' }];
+      },
+      query: ({ id }) => {
+        return {
+          url: `/section/${id}/delete`,
+          method: 'DELETE',
+        };
+      },
+    }),
+    getTexts: builder.query({
+      providesTags: () => [{ type: 'Texts' }],
       query: () => {
         return {
           url: `/texts`,
           method: 'GET',
+        };
+      },
+    }),
+    insertTexts: builder.mutation({
+      invalidatesTags: (result, error) => {
+        if (error) {
+          return [];
+        }
+        return [{ type: 'Texts' }];
+      },
+      query: (texts) => {
+        return {
+          url: '/texts',
+          method: 'POST',
+          body: texts,
+        };
+      },
+    }),
+    updateText: builder.mutation({
+      invalidatesTags: (result, error) => {
+        if (error) {
+          return [];
+        }
+        return [{ type: 'Texts' }];
+      },
+      query: (text) => {
+        return {
+          url: '/texts',
+          method: 'PUT',
+          body: text,
+        };
+      },
+    }),
+    deleteText: builder.mutation({
+      invalidatesTags: (result, error) => {
+        if (error) {
+          return [];
+        }
+        return [{ type: 'Texts' }];
+      },
+      query: (text) => {
+        return {
+          url: '/texts',
+          method: 'DELETE',
+          body: text,
+        };
+      },
+    }),
+    getHierarchyPublicities: builder.query({
+      providesTags: () => [{ type: 'HierarchyPublicities' }],
+      query: () => {
+        return {
+          url: '/hierarchy/publicityList',
+          method: 'GET',
+        };
+      },
+    }),
+    updateHierarchyPublicity: builder.mutation({
+      invalidatesTags: (result, error) => {
+        if (error) {
+          return [];
+        }
+        return [{ type: 'HierarchyPublicities' }];
+      },
+      query: (hierarchyPublicity) => {
+        return {
+          url: '/hierarchy/updatePublicity',
+          method: 'PUT',
+          body: hierarchyPublicity,
+        };
+      },
+    }),
+    insertHierarchyPublicity: builder.mutation({
+      invalidatesTags: (result, error) => {
+        if (error) {
+          return [];
+        }
+        return [{ type: 'HierarchyPublicities' }];
+      },
+      query: (hierarchyPublicity) => {
+        return {
+          url: '/hierarchy/insertPublicity',
+          method: 'POST',
+          body: hierarchyPublicity,
         };
       },
     }),
@@ -291,6 +497,9 @@ export const {
   useGetTreeQuery,
   useGetTypeAttributesQuery,
   useGetHierarchyFiltersQuery,
+  useSaveHierarchyFiltersMutation,
+  useInsertHierarchyFiltersMutation,
+  useDeleteHierarchyFiltersMutation,
   useGetValidHierarchyFiltersQuery,
   useSaveTypeAttributesMutation,
   useGetAttributeKeysBySectionQuery,
@@ -298,11 +507,24 @@ export const {
   useSaveNodeValidityMutation,
   useSaveParentsMutation,
   useGetParentsQuery,
+  useGetDistinctNodeAttributesQuery,
+  useGetDistinctSectionAttributesQuery,
   useGetNodeOtherAttributesQuery,
   useSaveNodeOtherAttributesMutation,
   useGetSuccessorsQuery,
   useSaveSuccessorsMutation,
   useSaveChildMutation,
   useGetSectionAttributesQuery,
-  useGetTextAttributesQuery,
+  useUpdateSectionAttributeMutation,
+  useDeleteSectionAttributeMutation,
+  useInsertSectionAttributeMutation,
+  useGetHierarchyTypesQuery,
+  useGetEdgeHierarchiesQuery,
+  useGetTextsQuery,
+  useInsertTextsMutation,
+  useUpdateTextMutation,
+  useDeleteTextMutation,
+  useGetHierarchyPublicitiesQuery,
+  useInsertHierarchyPublicityMutation,
+  useUpdateHierarchyPublicityMutation,
 } = api;

@@ -128,7 +128,22 @@
   "henkilosto_header": "HR",
   "henkilostoalue": "henkilostoalue",
   "henkilostoyksikko": "Personalenhet",
+  "hierarchy_already_exists": "Hierarkia on jo olemassa.",
+  "hierarchy_key": "Identifierna",
+  "hierarchy_new": "Nu hierarkie",
+  "hierarchy_names": "Namn",
+  "hierarchy_unit": "Unit",
+  "hierarchy_publicity": "Publicitet",
+  "hierarchy_column_hierarchy": "Hierarkie",
+  "hierarchy_column_publicity": "Publicitet",
+  "hierarchy_column_startDate": "Börjär datum",
   "hierarchies": "hierarchies",
+  "hierarchyFilter": {
+    "createFilter": "createFilter",
+    "sectionColumnHeader": "sectionColumnHeader",
+    "attributeColumnHeader": "attributeColumnHeader",
+    "valueColumnHeader": "valueColumnHeader"
+  },
   "hierarchyFiltersDataGrid": {
     "newAttributeLabel": "newAttributeLabel",
     "newAttributeValueLabel": "newAttributeValueLabel",
@@ -290,6 +305,8 @@
   },
   "predecessors.empty": "predecessors.empty",
   "publicity": "Publicitet",
+  "publicity_true": "Ja",
+  "publicity_false": "Nej",
   "relations_nav": "Förbindelser",
   "remove_filters": "Avställ filtrar",
   "research_header": "research",
@@ -301,6 +318,14 @@
   "search_by_name_or_code": "search_by_name_or_code",
   "search_place_holder": "Sök med ordet...",
   "sections": "Sektioner",
+  "sectionInfo": {
+    "deleteError": "sectionInfo.deleteError",
+    "deleteSuccess": "sectionInfo.deleteSuccess",
+    "insertError": "sectionInfo.insertError",
+    "insertSuccess": "sectionInfo.insertSuccess",
+    "updateError": "sectionInfo.updateError",
+    "updateSuccess": "sectionInfo.updateSuccess"
+  },
   "sectionsDataGrid": {
     "attributeColumnHeader": "attributeColumnHeader",
     "endDateColumnHeader": "endDateColumnHeader",

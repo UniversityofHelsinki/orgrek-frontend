@@ -143,7 +143,22 @@
   "henkilosto_header": "HR",
   "henkilostoalue": "henkilostoalue",
   "henkilostoyksikko": "Personnel Unit",
+  "hierarchy_already_exists": "Hierarkia on jo olemassa.",
+  "hierarchy_identifier": "Identifier",
+  "hierarchy_new": "New hierarchy",
+  "hierarchy_names": "Name",
+  "hierarchy_unit": "Unit",
+  "hierarchy_publicity": "Publicity",
+  "hierarchy_column_hierarchy": "Hierarchy",
+  "hierarchy_column_publicity": "Publicity",
+  "hierarchy_column_startDate": "Start date",
   "hierarchies": "Hierarchies",
+  "hierarchyFilter": {
+    "createFilter": "createFilter",
+    "sectionColumnHeader": "sectionColumnHeader",
+    "attributeColumnHeader": "attributeColumnHeader",
+    "valueColumnHeader": "valueColumnHeader"
+  },
   "hierarchyFiltersDataGrid": {
     "newAttributeLabel": "New attribute \"{{value}}\"",
     "newAttributeValueLabel": "New value \"{{value}}\"",
@@ -314,6 +329,8 @@
     "title": "Predecessors"
   },
   "publicity": "Publicity",
+  "publicity_true": "Kyllä",
+  "publicity_false": "Ei",
   "relations_nav": "Relations",
   "remove_filters": "Remove filters",
   "research_header": "Research",
@@ -330,6 +347,14 @@
   "search_by_name_or_code": "Search by name or code",
   "search_place_holder": "Search with keyword..",
   "sections": "Sections",
+  "sectionInfo": {
+    "deleteError": "Deleting section failed",
+    "deleteSuccess": "Section deleted",
+    "insertError": "Adding section failed",
+    "insertSuccess": "Section added",
+    "updateError": "Updating section failed",
+    "updateSuccess": "Section updated"
+  },
   "sectionsDataGrid": {
     "attributeColumnHeader": "Attribute",
     "endDateColumnHeader": "End date",

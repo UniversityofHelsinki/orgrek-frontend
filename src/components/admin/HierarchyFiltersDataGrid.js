@@ -1,10 +1,11 @@
 import { useTranslation } from 'react-i18next';
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useState } from 'react';
 import dateColumnType from './dateColumnType';
 import { toDate } from '../../utils/dateUtils';
 import {
   DataGrid,
   GridActionsCellItem,
+  GridCellParams,
   svSE,
   fiFI,
   enUS,
@@ -16,9 +17,13 @@ import { authActions, isAuthorized } from '../../auth';
 import useCurrentUser from '../../hooks/useCurrentUser';
 import actionsColumnType from './actionsColumnType';
 import DeleteIcon from '@mui/icons-material/Delete';
+import NewHierarchyFilterForm from '../nodeDetails/NewHierarchyFilterForm';
 
 const HierarchyFiltersDataGrid = ({
   initialRows,
+  selectableHierarchies,
+  distinctNodeAttrs,
+  attributeKeys,
   loading,
   onAddRow,
   onRowChange,
@@ -29,6 +34,7 @@ const HierarchyFiltersDataGrid = ({
   const user = useCurrentUser();
   const [rows, setRows] = React.useState(initialRows || []);
   const editable = isAuthorized(user, authActions.hierarchyFilters.edit);
+  const [showForm, setShowForm] = useState(false);
 
   useEffect(() => {
     if (!loading) {
@@ -36,48 +42,35 @@ const HierarchyFiltersDataGrid = ({
     }
   }, [loading]);
 
-  const hierarchyOptions = useMemo(
-    () =>
-      rows
-        .filter(
-          (row, index, rows) =>
-            index === rows.findIndex((r) => r.hierarchy === row.hierarchy)
-        )
-        .map((row) => ({
-          value: row.hierarchy,
-          label: t(row.hierarchy),
-        })),
-    [rows]
-  );
+  const hierarchyOptions = rows
+    .filter(
+      (row, index, rows) =>
+        index === rows.findIndex((r) => r.hierarchy === row.hierarchy)
+    )
+    .map((row) => ({
+      value: row.hierarchy,
+      label: t(row.hierarchy),
+    }));
 
-  const keyOptions = useMemo(
-    () =>
-      rows
-        .filter(
-          (row, index, rows) =>
-            index === rows.findIndex((r) => r.key === row.key)
-        )
-        .map((row) => ({
-          value: row.key,
-          label: t(row.key),
-        })),
-    [rows]
-  );
+  const keyOptions = rows
+    .filter(
+      (row, index, rows) => index === rows.findIndex((r) => r.key === row.key)
+    )
+    .map((row) => ({
+      value: row.key,
+      label: t(row.key),
+    }));
 
-  const valueOptions = useMemo(
-    () =>
-      rows
-        .filter(
-          (row, index, rows) =>
-            index === rows.findIndex((r) => r.value === row.value)
-        )
-        .map((row) => ({
-          value: row.value,
-          label: t(row.value),
-          key: row.key,
-        })),
-    [rows]
-  );
+  const valueOptions = rows
+    .filter(
+      (row, index, rows) =>
+        index === rows.findIndex((r) => r.value === row.value)
+    )
+    .map((row) => ({
+      value: row.value,
+      label: t(row.value),
+      key: row.key,
+    }));
 
   const columns = [
     {
@@ -89,7 +82,7 @@ const HierarchyFiltersDataGrid = ({
       valueOptions: hierarchyOptions,
       getCreateNewLabel: (value) =>
         t('hierarchyFiltersDataGrid.newHierarchyLabel', { value }),
-      valueGetter: (params) => t(params.value),
+      valueFormatter: (row) => t(row.value),
     },
     {
       field: 'key',
@@ -100,7 +93,7 @@ const HierarchyFiltersDataGrid = ({
       valueOptions: keyOptions,
       getCreateNewLabel: (value) =>
         t('hierarchyFiltersDataGrid.newAttributeLabel', { value }),
-      valueGetter: (params) => t(params.value),
+      valueFormatter: (row) => t(row.value),
     },
     {
       field: 'value',
@@ -113,7 +106,7 @@ const HierarchyFiltersDataGrid = ({
         options.filter((option) => option.key === row.key),
       getCreateNewLabel: (value) =>
         t('hierarchyFiltersDataGrid.newAttributeValueLabel', { value }),
-      valueGetter: (params) => t(params.value),
+      valueFormatter: (row) => t(row.value),
     },
     {
       field: 'startDate',
@@ -138,15 +131,11 @@ const HierarchyFiltersDataGrid = ({
       ...actionsColumnType,
       headerName: t('dataGrid.actionsHeader'),
       getActions: (params) => {
-        const handleDeleteRow = () => {
-          onDeleteRow(params.row);
-        };
-
         return [
           <GridActionsCellItem
             key="deleteRow"
             icon={<DeleteIcon />}
-            onClick={handleDeleteRow}
+            onClick={() => handleDeleteRow(params.row)}
             label={t('dataGrid.deleteRow')}
             showInMenu
           />,
@@ -154,60 +143,103 @@ const HierarchyFiltersDataGrid = ({
       },
     });
   }
+  const initialValues = {
+    hierarchy: null,
+    isNew: true,
+  };
 
   const handleAddRow = () => {
     const id = Math.floor(Math.random() * -1000000);
-    setRows((oldRows) => [
-      ...oldRows,
-      {
-        id,
-        hierarchy: null,
-        key: null,
-        value: null,
-        startDate: null,
-        endDate: null,
-        isNew: true,
-      },
-    ]);
+    setShowForm(true);
   };
 
-  const handleCellEditStop = (params) => {
-    if (params.row.isNew) {
-      onAddRow(params.row);
-    } else {
-      onRowChange(params.row);
+  const processRowUpdate = (updatedrow) => {
+    if (updatedrow) {
+      onRowChange(updatedrow);
     }
+    return updatedrow;
+  };
+
+  const handleDeleteRow = async (row) => {
+    await onDeleteRow(row);
+  };
+
+  const handleSubmit = async (data) => {
+    console.log(data);
+    try {
+      await onAddRow(data);
+      setShowForm(false);
+    } catch (error) {
+      setShowForm(true);
+    }
+  };
+  const formElement = showForm ? (
+    <NewHierarchyFilterForm
+      open={showForm}
+      onClose={() => setShowForm(false)}
+      handleSubmit={handleSubmit}
+      initialRows={rows}
+      selhierarchies={selectableHierarchies}
+      distinctNodeAttrs={distinctNodeAttrs}
+      attributeKeys={attributeKeys}
+    />
+  ) : (
+    <></>
+  );
+
+  const localeTextOverrides = {
+    // see the keys here if you want to override data grid's inner translations:
+    // https://github.com/mui/mui-x/blob/HEAD/packages/grid/x-data-grid/src/constants/localeTextConstants.ts
+    toolbarColumns: t('datagrid_toolbar_columns'),
+    toolbarFilters: t('datagrid_toolbar_filters'),
+    toolbarDensity: t('datagrid_toolbar_density'),
+    toolbarExport: t('datagrid_toolbar_export'),
   };
 
   return (
-    <DataGrid
-      autoHeight
-      columns={columns}
-      rows={rows}
-      loading={loading}
-      onCellEditStop={handleCellEditStop}
-      initialState={{
-        sorting: {
-          sortModel: [{ field: 'hierarchy', sort: 'asc' }],
-        },
-      }}
-      localeText={
-        language === 'fi'
-          ? fiFI.components.MuiDataGrid.defaultProps.localeText
-          : language === 'sv'
-          ? svSE.components.MuiDataGrid.defaultProps.localeText
-          : enUS.components.MuiDataGrid.defaultProps.localeText
-      }
-      slots={{
-        toolbar: GridToolbar,
-      }}
-      slotProps={{
-        toolbar: {
-          onAddRow: handleAddRow,
-          authActions: authActions.hierarchyFilters,
-        },
-      }}
-    />
+    <>
+      <DataGrid
+        autoHeight
+        columns={columns}
+        rows={rows}
+        loading={loading}
+        processRowUpdate={processRowUpdate}
+        initialState={{
+          sorting: {
+            sortModel: [{ field: 'hierarchy', sort: 'asc' }],
+          },
+        }}
+        localeText={
+          {
+            fi: {
+              ...fiFI.components.MuiDataGrid.defaultProps.localeText,
+              ...localeTextOverrides,
+            },
+            sv: {
+              ...svSE.components.MuiDataGrid.defaultProps.localeText,
+              ...localeTextOverrides,
+            },
+            en: {
+              ...enUS.components.MuiDataGrid.defaultProps.localeText,
+              ...localeTextOverrides,
+            },
+            ia: {
+              ...localeTextOverrides,
+            },
+          }[language]
+        }
+        slots={{
+          toolbar: GridToolbar,
+        }}
+        slotProps={{
+          toolbar: {
+            onAddRow: handleAddRow,
+            authActions: authActions.hierarchyFilters,
+          },
+        }}
+      />
+      {formElement}
+    </>
   );
 };
 
