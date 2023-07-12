@@ -14,6 +14,7 @@ export const api = createApi({
     'CodeAttributes',
     'NodeValidity',
     'Parents',
+    'Children',
     'NodeOtherAttributes',
     'SaveNodeOtherAttributes',
     'Successors',
@@ -267,6 +268,35 @@ export const api = createApi({
         };
       },
     }),
+    getChildren: builder.query({
+      providesTags: (result, error, { nodeId }) => [
+        { type: 'Children', id: nodeId },
+      ],
+      query: ({ nodeId, selectedDay, selectedHierarchies }) => {
+        const dateString = selectedDay
+          ? selectedDay.toLocaleDateString('FI-fi')
+          : new Date().toLocaleDateString('FI-fi');
+        return {
+          url: `/node/all/children/${nodeId}/${dateString}/${selectedHierarchies}`,
+          method: 'GET',
+        };
+      },
+    }),
+    saveChildren: builder.mutation({
+      invalidatesTags: (result, error, { nodeId }) => {
+        if (error) {
+          return [];
+        }
+        return [{ type: 'Children', id: nodeId }, { type: 'Tree' }];
+      },
+      query: ({ edges }) => {
+        return {
+          url: `/node/children/update`,
+          method: 'PUT',
+          body: edges,
+        };
+      },
+    }),
     getNodeValidity: builder.query({
       providesTags: (result, error, id) => [{ type: 'NodeValidity', id }],
       query: (id) => ({
@@ -514,6 +544,8 @@ export const {
   useGetSuccessorsQuery,
   useSaveSuccessorsMutation,
   useSaveChildMutation,
+  useSaveChildrenMutation,
+  useGetChildrenQuery,
   useGetSectionAttributesQuery,
   useUpdateSectionAttributeMutation,
   useDeleteSectionAttributeMutation,
