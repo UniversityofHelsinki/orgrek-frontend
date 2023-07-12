@@ -42,9 +42,7 @@ const NodeField = ({
   const { trees } = useTree();
   const language = useContentLanguage();
   const options = trees
-    ? trees
-        .map((tree) => (tree[language] ? flatten([tree[language]]) : []))
-        .flat()
+    ? trees[language].map((tree) => (tree ? flatten([tree]) : [])).flat()
     : [];
   const [inputValue, setInputValue] = useState('');
 

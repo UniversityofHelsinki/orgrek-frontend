@@ -1,7 +1,7 @@
 /* eslint-disable max-lines */
-export const tree = [
-  {
-    fi: {
+export const tree = {
+  fi: [
+    {
       id: 'a1',
       uniqueId: 42785051,
       name: 'Helsingin yliopisto (HY)',
@@ -2208,19 +2208,23 @@ export const tree = [
         },
       ],
     },
-    sv: {
+  ],
+  sv: [
+    {
       id: 'a1',
       uniqueId: 42785051,
       name: 'Helsingfors universitet (HY)',
       hierarchies: ['talous'],
       children: [],
     },
-    en: {
+  ],
+  en: [
+    {
       id: 'a1',
       uniqueId: 42785051,
       name: 'University of Helsinki (HY)',
       hierarchies: ['talous'],
       children: [],
     },
-  },
-];
+  ],
+};

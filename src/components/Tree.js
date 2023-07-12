@@ -5,6 +5,7 @@ import Card from '@mui/material/Card';
 import useContentLanguage from '../hooks/useContentLanguage';
 import useTree from '../hooks/useTree';
 import { Skeleton } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
 const traverseTree = (current, target) => {
   if (current.uniqueId === target) {
@@ -35,10 +36,10 @@ const Tree = ({ sx }) => {
       setPathsToTarget(undefined);
     } else {
       const newPathsToTarget = [];
-      for (let i = 0; i < (trees || []).length; i++) {
-        const tree = trees[i];
-        if (tree && tree[language] && node?.uniqueId && openTree) {
-          const foundInTree = traverseTree(tree[language], node.uniqueId);
+      for (let i = 0; i < (trees[language] || []).length; i++) {
+        const tree = trees[language][i];
+        if (tree && node?.uniqueId && openTree) {
+          const foundInTree = traverseTree(tree, String(node.uniqueId));
           newPathsToTarget.push(foundInTree);
         }
       }
@@ -56,11 +57,11 @@ const Tree = ({ sx }) => {
       data-testid="tree"
       sx={[{ padding: 1 }, ...(Array.isArray(sx) ? sx : [sx])]}
     >
-      {trees.map(
+      {trees[language].map(
         (tree, i) =>
-          tree?.[language] && (
+          tree && (
             <Branch
-              item={tree[language]}
+              item={tree}
               openableTree={openTree ? pathsToTarget?.[i] : undefined}
               level={0}
               parent=""

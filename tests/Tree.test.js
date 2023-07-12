@@ -5,9 +5,9 @@ import Tree from '../src/components/Tree';
 
 jest.mock('../src/hooks/useTree', () => () => ({
   isFetching: false,
-  trees: [
-    {
-      fi: {
+  trees: {
+    fi: [
+      {
         id: 'a1',
         name: 'Helsingin yliopisto (HY)',
         uniqueId: 42785051,
@@ -36,8 +36,10 @@ jest.mock('../src/hooks/useTree', () => () => ({
           },
         ],
       },
-    },
-  ],
+    ],
+    sv: [],
+    en: [],
+  },
 }));
 
 jest.mock('../src/reducers/treeReducer', () => {

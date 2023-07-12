@@ -15,7 +15,13 @@ const useTree = () => {
     selectedDay,
   });
 
-  return { trees: data || [], error, isFetching };
+  const emptyTrees = {
+    fi: [],
+    sv: [],
+    en: [],
+  };
+
+  return { trees: data || emptyTrees, error, isFetching };
 };
 
 export default useTree;
