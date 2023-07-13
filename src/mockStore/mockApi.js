@@ -90,8 +90,15 @@ export const mockSaveParents = () =>
 
 export const mockGetChildren = (nodeId, date, hierarchies, body) =>
   rest.get(
-    `${baseUrl}/node/children/${nodeId}/${formatApiDate(date)}/${hierarchies}`,
+    `${baseUrl}/node/all/children/${nodeId}/${formatApiDate(
+      date
+    )}/${hierarchies}`,
     (req, res, ctx) => res(ctx.json(body))
+  );
+
+export const mockSaveChildren = () =>
+  rest.put(`${baseUrl}/node/children/update`, (req, res, ctx) =>
+    res(ctx.delay(2000), ctx.json(req.json()))
   );
 
 export const mockGetPredecessors = (nodeId, date, body) =>
