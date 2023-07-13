@@ -9,7 +9,7 @@ import isAfter from 'date-fns/isAfter';
  * History and future is shown only when show history or show coming is
  * selected.
  */
-const useFilterParentsByDate = (data) => {
+const useFilterUnitsByDate = (data) => {
   const { selectedDay, showHistory, showComing } = useSelector((state) => ({
     selectedDay: state.dr.selectedDay,
     showHistory: state.nvrd.showHistory,
@@ -52,4 +52,4 @@ const useFilterParentsByDate = (data) => {
   }, [data, selectedDay, showHistory, showComing]);
 };
 
-export default useFilterParentsByDate;
+export default useFilterUnitsByDate;
