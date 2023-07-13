@@ -12,7 +12,6 @@ import {
 } from '@mui/x-data-grid';
 import GridToolbar from './GridToolbar';
 import PropTypes from 'prop-types';
-import autocompleteColumnType from './autocompleteColumnType';
 import { authActions, isAuthorized } from '../../auth';
 import useCurrentUser from '../../hooks/useCurrentUser';
 import actionsColumnType from './actionsColumnType';
@@ -57,8 +56,8 @@ const HierarchyFiltersDataGrid = ({
       (row, index, rows) => index === rows.findIndex((r) => r.key === row.key)
     )
     .map((row) => ({
-      value: row.key,
-      label: t(row.key),
+      value: row.key || '',
+      label: t(row.key || '<empty>'),
     }));
 
   const valueOptions = rows
@@ -67,18 +66,18 @@ const HierarchyFiltersDataGrid = ({
         index === rows.findIndex((r) => r.value === row.value)
     )
     .map((row) => ({
-      value: row.value,
-      label: t(row.value),
+      value: row.value || '',
+      label: t(row.value || '<empty>'),
       key: row.key,
     }));
 
   const columns = [
     {
       field: 'hierarchy',
-      ...autocompleteColumnType,
       headerName: t('hierarchy_filters_hierarchy'),
       flex: 1,
       editable,
+      type: 'singleSelect',
       valueOptions: hierarchyOptions,
       getCreateNewLabel: (value) =>
         t('hierarchyFiltersDataGrid.newHierarchyLabel', { value }),
@@ -86,27 +85,29 @@ const HierarchyFiltersDataGrid = ({
     },
     {
       field: 'key',
-      ...autocompleteColumnType,
       headerName: t('hierarchy_filters_key'),
       flex: 1,
       editable,
+      type: 'singleSelect',
       valueOptions: keyOptions,
       getCreateNewLabel: (value) =>
         t('hierarchyFiltersDataGrid.newAttributeLabel', { value }),
       valueFormatter: (row) => t(row.value),
+      valueGetter: (params) => params.row.key || '',
     },
     {
       field: 'value',
-      ...autocompleteColumnType,
       headerName: t('hierarchy_filters_value'),
       flex: 1,
       editable,
+      type: 'singleSelect',
       valueOptions: valueOptions,
       filterOptions: (options, row) =>
         options.filter((option) => option.key === row.key),
       getCreateNewLabel: (value) =>
         t('hierarchyFiltersDataGrid.newAttributeValueLabel', { value }),
       valueFormatter: (row) => t(row.value),
+      valueGetter: (params) => params.row.value || '',
     },
     {
       field: 'startDate',
@@ -165,7 +166,6 @@ const HierarchyFiltersDataGrid = ({
   };
 
   const handleSubmit = async (data) => {
-    console.log(data);
     try {
       await onAddRow(data);
       setShowForm(false);
