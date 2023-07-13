@@ -7,7 +7,7 @@ import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
 import { useSelector } from 'react-redux';
 
-const OtherAttributesEditor = () => {
+const OtherAttributesEditor = ({ attributes }) => {
   const { t } = useTranslation();
   const { values, setValues, valid, invalid, errors } = useForm();
   //console.log('XXX ', valid, invalid, errors, values);
@@ -46,8 +46,8 @@ const OtherAttributesEditor = () => {
    * @param key
    * @returns {function(): {deleted: boolean, endDate: null, id: number, isNew: boolean, type: string, value: null, key: *, startDate: null}}
    */
-  const createRow = (attributes, key) => {
-    const attribute = attributes[0];
+  const createRow = (key) => {
+    const attribute = attributes.find((a) => a.key === key);
     return () => {
       const base = {
         id: Math.floor(Math.random() * -1000000),
@@ -87,7 +87,7 @@ const OtherAttributesEditor = () => {
                 [key]: newData,
               })
             }
-            customCreateRow={createRow(attributes, key)}
+            customCreateRow={createRow(key)}
           />
         )),
       ]}
