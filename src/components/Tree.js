@@ -5,6 +5,7 @@ import Card from '@mui/material/Card';
 import useContentLanguage from '../hooks/useContentLanguage';
 import useTree from '../hooks/useTree';
 import { Skeleton } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
 const traverseTree = (current, target) => {
   if (current.uniqueId === target) {
@@ -21,8 +22,8 @@ const traverseTree = (current, target) => {
 };
 
 const Tree = ({ sx }) => {
-  const [pathsToTarget, setPathsToTarget] = useState();
-  const { tree, isFetching } = useTree();
+  const [pathsToTarget, setPathsToTarget] = useState([]);
+  const { trees, isFetching } = useTree();
   const { node, openTree } = useSelector((state) => ({
     node: state.nrd.node,
     openTree: state.nrd.openTree,
@@ -33,14 +34,18 @@ const Tree = ({ sx }) => {
   useEffect(() => {
     if (!openTree) {
       setPathsToTarget(undefined);
-    }
-    if (tree && tree[language] && node?.uniqueId && openTree) {
-      const foundInTree = traverseTree(tree[language], node.uniqueId);
-      if (foundInTree) {
-        setPathsToTarget(foundInTree);
+    } else {
+      const newPathsToTarget = [];
+      for (let i = 0; i < (trees[language] || []).length; i++) {
+        const tree = trees[language][i];
+        if (tree && node?.uniqueId && openTree) {
+          const foundInTree = traverseTree(tree, String(node.uniqueId));
+          newPathsToTarget.push(foundInTree);
+        }
       }
+      setPathsToTarget(newPathsToTarget);
     }
-  }, [tree, node, openTree]);
+  }, [trees, node, openTree]);
 
   if (isFetching) {
     return <Skeleton variant="rectangular" sx={sx} height={162} />;
@@ -52,13 +57,17 @@ const Tree = ({ sx }) => {
       data-testid="tree"
       sx={[{ padding: 1 }, ...(Array.isArray(sx) ? sx : [sx])]}
     >
-      {tree?.[language] && (
-        <Branch
-          item={tree[language]}
-          openableTree={openTree ? pathsToTarget : undefined}
-          level={0}
-          parent=""
-        />
+      {trees[language].map(
+        (tree, i) =>
+          tree && (
+            <Branch
+              item={tree}
+              openableTree={openTree ? pathsToTarget?.[i] : undefined}
+              level={0}
+              parent=""
+              key={i}
+            />
+          )
       )}
     </Card>
   );
