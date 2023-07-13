@@ -36,40 +36,33 @@ const HierarchyField = ({ path }) => {
   );
 };
 
-const ParentEditor = ({ parents, onParentChange }) => {
+const RelationEditor = ({ units, onUnitChange, editortitle }) => {
   const { t } = useTranslation();
   const currentNodeId = useNodeId();
-  const [parentNames, setParentNames] = useState(parents);
-  const getParentName = (id) => {
-    return parentNames.find((parent) => `s${parent.uniqueId}` === id)?.fullName;
+  const [unitNames, setUnitNames] = useState(units);
+  const getUnitName = (id) => {
+    return unitNames.find((unit) => `s${unit.uniqueId}` === id)?.fullName;
   };
 
   const { values, setValues } = useForm();
 
   const getDisplayText = (value) => t(value.value);
 
-  const nodeIsAlreadyParent = (node) => {
+  const nodeIsAlreadyUnit = (node) => {
     return values[`s${node.id}`];
   };
 
-  const addParent = (event, node, reason) => {
-    if (
-      !node ||
-      nodeIsAlreadyParent(node) ||
-      String(node.id) === currentNodeId
-    ) {
+  const addUnit = (event, node, reason) => {
+    if (!node || nodeIsAlreadyUnit(node) || String(node.id) === currentNodeId) {
       return;
     }
     const newValues = {
       ...values,
       [`s${node.id}`]: [],
     };
-    setParentNames([
-      ...parentNames,
-      { uniqueId: node.id, fullName: node.name },
-    ]);
+    setUnitNames([...unitNames, { uniqueId: node.id, fullName: node.name }]);
     setValues(newValues);
-    onParentChange(newValues);
+    onUnitChange(newValues);
   };
 
   const fields = [
@@ -84,12 +77,12 @@ const ParentEditor = ({ parents, onParentChange }) => {
     <Stack>
       <Box mb={2}>
         <Typography component="p" variant="h6" mb={2}>
-          {t('upperUnits.newUpperUnit')}
+          {editortitle}
         </Typography>
         <NodeField
           style={{ width: '50%' }}
           variant="search"
-          onChange={addParent}
+          onChange={addUnit}
           filter={optionFilter}
           clearOnSelect={true}
         />
@@ -100,7 +93,7 @@ const ParentEditor = ({ parents, onParentChange }) => {
           getDisplayText={getDisplayText}
           key={`${parentId}-${i}`}
           path={parentId}
-          attributeLabel={getParentName(parentId) || parentId}
+          attributeLabel={getUnitName(parentId) || parentId}
           attributeKey={parentId}
           fields={fields}
         />
@@ -109,4 +102,4 @@ const ParentEditor = ({ parents, onParentChange }) => {
   );
 };
 
-export default ParentEditor;
+export default RelationEditor;

@@ -1,48 +1,122 @@
 import ChildrenSection from '../../../components/nodeDetails/ChildrenSection';
-import { createHierarchies, withHierarchy } from '../../../mockStore';
-import { waitFor, within } from '@storybook/testing-library';
+import {
+  createHierarchies,
+  mockGetChildren,
+  mockGetParents,
+  mockSaveChildren,
+  mockSaveParents,
+  withHierarchy,
+  withMockStore,
+} from '../../../mockStore';
+import { userEvent, waitFor, within } from '@storybook/testing-library';
 import { expect } from '@storybook/jest';
+import { waitForAnimations } from '../../storyUtils';
+
+const now = new Date('2023-03-22T14:28:00+0200');
+const nodeId = '1';
+const selectedHierarchy = 'talous,toiminnanohjaus';
 
 export default {
   component: ChildrenSection,
-};
-
-export const Default = {
+  parameters: {
+    systemTime: now,
+    reactRouter: {
+      searchParams: {
+        uid: nodeId,
+      },
+    },
+  },
   decorators: [
-    withHierarchy({
-      children: {
-        fi: [
-          {
-            id: '1000',
-            uniqueId: 1000000,
-            startDate: null,
-            endDate: null,
-            hierarchies: createHierarchies(undefined, '1970-01-01'),
-            fullName: 'Child node 1',
-            language: 'fi',
-          },
-          {
-            id: '1001',
-            uniqueId: 1000001,
-            startDate: null,
-            endDate: null,
-            hierarchies: createHierarchies(),
-            fullName: 'Child node 2',
-            language: 'fi',
-          },
-          {
-            id: '1002',
-            uniqueId: 1000002,
-            startDate: null,
-            endDate: null,
-            hierarchies: createHierarchies(),
-            fullName: 'Child node 3',
-            language: 'fi',
-          },
-        ],
+    withMockStore({
+      tree: {
+        selectedHierarchy,
+      },
+      dr: {
+        selectedDay: now,
       },
     }),
   ],
+};
+
+export const Default = {
+  parameters: {
+    msw: {
+      handlers: [
+        mockGetChildren(nodeId, now, selectedHierarchy, {
+          fi: [
+            {
+              id: '1000',
+              uniqueId: 1000000,
+              startDate: null,
+              endDate: null,
+              hierarchies: [
+                {
+                  hierarchy: 'talous',
+                  startDate: '2000-01-01',
+                  endDate: null,
+                  edgeId: 20003,
+                },
+                {
+                  hierarchy: 'toiminnanohjaus',
+                  startDate: '2000-01-01',
+                  endDate: null,
+                  edgeId: 20004,
+                },
+              ],
+              fullName: 'Child node 1',
+              language: 'fi',
+            },
+            {
+              id: '1001',
+              uniqueId: 1000001,
+              startDate: null,
+              endDate: null,
+              hierarchies: [
+                {
+                  hierarchy: 'talous',
+                  startDate: '2000-01-01',
+                  endDate: null,
+                  edgeId: 20004,
+                },
+                {
+                  hierarchy: 'toiminnanohjaus',
+                  startDate: '2000-01-01',
+                  endDate: null,
+                  edgeId: 20005,
+                },
+              ],
+              fullName: 'Child node 2',
+              language: 'fi',
+            },
+            {
+              id: '1002',
+              uniqueId: 1000002,
+              startDate: null,
+              endDate: null,
+              hierarchies: [
+                {
+                  hierarchy: 'talous',
+                  startDate: '2000-01-01',
+                  endDate: null,
+                  edgeId: 20005,
+                },
+                {
+                  hierarchy: 'toiminnanohjaus',
+                  startDate: '2000-01-01',
+                  endDate: null,
+                  edgeId: 20006,
+                },
+              ],
+              fullName: 'Child node 3',
+              language: 'fi',
+            },
+          ],
+        }),
+        mockSaveChildren(),
+      ],
+    },
+  },
+  decorators: [],
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
@@ -56,12 +130,103 @@ export const Default = {
 };
 
 export const Empty = {
-  decorators: [withHierarchy({ children: {} })],
+  parameters: {
+    msw: {
+      handlers: [
+        mockGetChildren(nodeId, now, selectedHierarchy, {
+          fi: [
+            {
+              id: '1000',
+              edgeId: 20001,
+              uniqueId: 1000000,
+              startDate: '2009-01-01',
+              endDate: null,
+              hierarchies: [
+                {
+                  hierarchy: 'talous',
+                  startDate: '2000-01-01',
+                  endDate: '2009-12-31',
+                  edgeId: 20003,
+                },
+              ],
+              fullName: 'Parent node 1',
+              language: 'fi',
+            },
+          ],
+        }),
+        mockSaveChildren(),
+      ],
+    },
+  },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
     await waitFor(async () => {
-      await expect(canvas.getByText('Ei alayksiköitä')).toBeInTheDocument();
+      await expect(canvas.getByText('Alayksiköt')).toBeInTheDocument();
     });
+
+    await expect(canvas.queryByText('Uusi alayksikkö')).toBeVisible();
+    await expect(canvas.queryByText('Muokkaa')).toBeVisible();
+  },
+};
+
+export const EditMode = {
+  ...Default,
+  play: async (context) => {
+    await Default.play(context);
+
+    const canvas = within(context.canvasElement);
+
+    await userEvent.click(canvas.getByText('Muokkaa'));
+
+    await waitFor(async () => {
+      await expect(canvas.getByText('Tallenna')).toBeDisabled();
+    });
+
+    await expect(canvas.getByText('Child node 1')).toBeInTheDocument();
+    await expect(canvas.getByText('Child node 2')).toBeInTheDocument();
+    await expect(canvas.getByText('Child node 3')).toBeInTheDocument();
+  },
+};
+
+export const Modified = {
+  ...EditMode,
+  play: async (context) => {
+    await EditMode.play(context);
+
+    const canvas = within(context.canvasElement.parentElement);
+
+    await userEvent.click(canvas.getAllByLabelText(/Hierarkia/)[0]);
+    await userEvent.click(canvas.getAllByRole('option')[1]);
+    await userEvent.type(
+      canvas.getAllByLabelText('Voimassaolo päättyy')[0],
+      '31.12.2023',
+      { delay: 100 }
+    );
+
+    await waitFor(async () => {
+      await expect(canvas.getByText('Tallenna')).toBeEnabled();
+    });
+  },
+};
+
+export const DeletedRow = {
+  ...EditMode,
+  play: async (context) => {
+    await EditMode.play(context);
+
+    const canvas = within(context.canvasElement.parentElement);
+
+    await userEvent.click(canvas.getAllByLabelText(/Toiminnot/)[1]);
+    await userEvent.click(canvas.getByText('Poista rivi'));
+    await expect(
+      canvas.getByText(
+        'Poistettu: Viralliset yksiköt, voimassa 1.1.2000 alkaen'
+      )
+    ).toBeInTheDocument();
+
+    // Deleted row appears with an animation, so wait for it before running
+    // a11y tests
+    await waitForAnimations();
   },
 };
