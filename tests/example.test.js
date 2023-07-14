@@ -2,6 +2,7 @@ import React from 'react';
 import { screen, render } from './testUtils';
 import userReducer from '../src/reducers/treeReducer';
 import userEvent from '@testing-library/user-event';
+import { defaultHierarchy } from '../src/Constants';
 
 test('renders a div with awesome text', () => {
   render(<div>Awesome text</div>);
@@ -14,7 +15,7 @@ test('renders a div with awesome text', () => {
 test('should return the initial tree state', () => {
   expect(userReducer(undefined, {})).toEqual({
     defaultHierarchy: 'talous',
-    selectedHierarchy: undefined,
+    selectedHierarchy: defaultHierarchy,
     selectableHierarchies: [],
   });
 });
