@@ -144,10 +144,6 @@ const HierarchyFiltersDataGrid = ({
       },
     });
   }
-  const initialValues = {
-    hierarchy: null,
-    isNew: true,
-  };
 
   const handleAddRow = () => {
     const id = Math.floor(Math.random() * -1000000);

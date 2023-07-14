@@ -56,10 +56,17 @@ const NewSectionDialogForm = ({
 
   const Actions = ({ onCancel }) => {
     const { t } = useTranslation();
-    const { dirty, invalid, submitting } = useForm();
+    const { dirty, invalid, submitting, removeBeforeUnloadListener } =
+      useForm();
+
+    const handleCancel = () => {
+      removeBeforeUnloadListener();
+      onCancel();
+    };
+
     const actions = (
       <>
-        <Button variant="outlined" onClick={onCancel} disabled={submitting}>
+        <Button variant="outlined" onClick={handleCancel} disabled={submitting}>
           {t('cancel_button')}
         </Button>
         <Button

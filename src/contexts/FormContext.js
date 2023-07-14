@@ -7,6 +7,10 @@ import { get } from 'lodash';
 
 const FormContext = createContext();
 
+const beforeUnloadConfirmation = (event) => {
+  event.preventDefault();
+};
+
 export const Form = ({
   initialValues = {},
   onChange,
@@ -20,7 +24,19 @@ export const Form = ({
   const [errors, setErrors] = useState({});
   const [submitting, setSubmitting] = useState(false);
 
+  const addBeforeUnloadListener = () => {
+    window.addEventListener('beforeunload', beforeUnloadConfirmation);
+  };
+
+  const removeBeforeUnloadListener = () => {
+    window.removeEventListener('beforeunload', beforeUnloadConfirmation);
+  };
+
   const setValues = (newValues) => {
+    if (!dirty) {
+      addBeforeUnloadListener();
+    }
+
     setDirty(true);
     setValuesState(newValues);
     onChange && onChange(newValues);
@@ -46,6 +62,7 @@ export const Form = ({
   };
 
   const submit = async () => {
+    removeBeforeUnloadListener;
     if (!onSubmit) {
       return;
     }
@@ -63,6 +80,7 @@ export const Form = ({
   };
 
   const reset = () => {
+    removeBeforeUnloadListener();
     setValues(initialValues);
     setDirty(false);
   };
@@ -86,6 +104,8 @@ export const Form = ({
     errors,
     submitting,
     validationSchema,
+    addBeforeUnloadListener,
+    removeBeforeUnloadListener,
   };
 
   const handleFormSubmit = (event) => {
