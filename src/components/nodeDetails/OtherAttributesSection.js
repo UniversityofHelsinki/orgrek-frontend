@@ -39,7 +39,18 @@ const OtherAttributesSection = () => {
     return <EditableAccordion title={title} loading />;
   }
 
-  const initialValues = toFormValues(nodeOtherAttributes);
+  const existingAttributes = toFormValues(
+    nodeOtherAttributes.filter((a) => !a.isNew)
+  );
+  const newAttributes = nodeOtherAttributes
+    .filter((a) => a.isNew)
+    .map((a) => a.key)
+    .reduce((accumulated, current) => ({ ...accumulated, [current]: [] }), {});
+
+  const initialValues = {
+    ...existingAttributes,
+    ...newAttributes,
+  };
 
   // Validates form values every time when the values change
   // Submit button is disabled when validation fails
@@ -70,7 +81,9 @@ const OtherAttributesSection = () => {
       defaultExpanded={!empty}
     >
       <EditableContent
-        editorComponent={<OtherAttributesEditor />}
+        editorComponent={
+          <OtherAttributesEditor attributes={nodeOtherAttributes} />
+        }
         initialValues={initialValues}
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
