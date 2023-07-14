@@ -279,7 +279,7 @@ const data = [
   },
   {
     id: 34245,
-    hierarchy: 'talous',
+    hierarchy: 'virallinen',
     key: 'iam_ryhma',
     value: null,
     startDate: '2023-04-10',
@@ -287,15 +287,15 @@ const data = [
   },
   {
     id: 45,
-    hierarchy: 'talous',
-    key: 'talous_tunnus',
+    hierarchy: 'virallinen',
+    key: 'virallinen_tunnus',
     value: null,
     startDate: null,
     endDate: null,
   },
   {
     id: 16,
-    hierarchy: 'talous',
+    hierarchy: 'virallinen',
     key: 'type',
     value: 'erillinen laitos',
     startDate: null,
@@ -303,7 +303,7 @@ const data = [
   },
   {
     id: 6,
-    hierarchy: 'talous',
+    hierarchy: 'virallinen',
     key: 'type',
     value: 'koontiyksikko',
     startDate: null,
@@ -311,7 +311,7 @@ const data = [
   },
   {
     id: 26,
-    hierarchy: 'talous',
+    hierarchy: 'virallinen',
     key: 'type',
     value: 'laitos',
     startDate: null,
@@ -319,7 +319,7 @@ const data = [
   },
   {
     id: 21,
-    hierarchy: 'talous',
+    hierarchy: 'virallinen',
     key: 'type',
     value: 'osasto',
     startDate: '2018-01-01',
@@ -327,15 +327,15 @@ const data = [
   },
   {
     id: 32688,
-    hierarchy: 'talous',
+    hierarchy: 'virallinen',
     key: 'type',
-    value: 'talousvastuullinen yksikko',
+    value: 'virallinenvastuullinen yksikko',
     startDate: '2023-03-13',
     endDate: null,
   },
   {
     id: 11,
-    hierarchy: 'talous',
+    hierarchy: 'virallinen',
     key: 'type',
     value: 'tiedekunta',
     startDate: null,
@@ -343,7 +343,7 @@ const data = [
   },
   {
     id: 31,
-    hierarchy: 'talous',
+    hierarchy: 'virallinen',
     key: 'type',
     value: 'tulosyksikko',
     startDate: null,
@@ -351,7 +351,7 @@ const data = [
   },
   {
     id: 34,
-    hierarchy: 'talous',
+    hierarchy: 'virallinen',
     key: 'type',
     value: 'tutkijakoulu',
     startDate: null,
@@ -359,7 +359,7 @@ const data = [
   },
   {
     id: 32716,
-    hierarchy: 'talous',
+    hierarchy: 'virallinen',
     key: 'type',
     value: 'yritys_yhteiso',
     startDate: null,
@@ -749,6 +749,11 @@ export default {
             reviewOnFail: true, // Mark as "needs review" instead of failing the test
           },
         ],
+      },
+    },
+    reactRouter: {
+      searchParams: {
+        hierarchies: 'virallinen',
       },
     },
   },
