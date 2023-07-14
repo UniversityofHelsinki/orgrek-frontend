@@ -14,7 +14,6 @@ import useHierarchies from '../hooks/useHierarchies';
 
 const AppRoutes = () => {
   useScrollToTop();
-  useHierarchies();
   const user = useCurrentUser();
 
   return (

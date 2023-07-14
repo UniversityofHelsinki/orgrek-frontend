@@ -13,7 +13,6 @@ const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
 const HierarchySelection = (props) => {
-  const dispatch = useDispatch();
   const { t } = useTranslation();
 
   const [hierarchies, setHierarchies] = useHierarchies();

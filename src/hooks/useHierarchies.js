@@ -4,8 +4,9 @@ import { defaultHierarchy, queryParams } from '../Constants';
 const useHierarchies = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
+  const newParams = new URLSearchParams(Array.from(searchParams.entries()));
+
   const setHierarchies = (hierarchies = [defaultHierarchy]) => {
-    const newParams = new URLSearchParams(Array.from(searchParams.entries()));
     newParams.set(queryParams.hierarchies, hierarchies.join(','));
     setSearchParams(newParams);
     return [hierarchies, setHierarchies];
@@ -16,7 +17,11 @@ const useHierarchies = () => {
     return [hierarchies.split(','), setHierarchies];
   }
 
-  return setHierarchies(defaultHierarchy.split(','));
+  if (!searchParams.get(queryParams.hierarchies)) {
+    newParams.set(queryParams.hierarchies, defaultHierarchy.split(','));
+    setTimeout(() => setSearchParams(newParams));
+  }
+  return [defaultHierarchy.split(','), setHierarchies];
 };
 
 export default useHierarchies;
