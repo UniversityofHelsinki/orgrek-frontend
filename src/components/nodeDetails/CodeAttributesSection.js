@@ -17,6 +17,7 @@ import { useCodeAttributes } from '../../hooks/useCodeAttributes';
 import useFilterAttributesByDate from '../../hooks/useFilterAttributesByDate';
 import { defaultSchemaForAttributes } from '../../utils/validations';
 import { flattenAttributes, toFormValues } from '../../utils/attributeUtils';
+import useHierarchies from '../../hooks/useHierarchies';
 
 const readOnlyFields = (attributes, keys) => {
   const result = {};
@@ -57,9 +58,8 @@ const CodeAttributesSection = () => {
   const { t } = useTranslation();
   const nodeId = useNodeId();
   const { codeAttributes, isFetching } = useCodeAttributes();
-  const selectedHierarchies = useSelector(
-    (s) => s.tree.selectedHierarchy || s.tree.defaultHierarchy
-  );
+  const [hierarchies] = useHierarchies();
+  const selectedHierarchies = hierarchies.join(',');
   const presentCodeAttributes = useFilterAttributesByDate(codeAttributes);
   const { data: attributeKeys, isFetching: isFetchingKeys } =
     useGetAttributeKeysQuery({ selectedHierarchies, sections: ['codes'] });

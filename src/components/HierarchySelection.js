@@ -7,6 +7,7 @@ import TextField from '@mui/material/TextField';
 import { connect, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Checkbox } from '@mui/material';
+import useHierarchies from '../hooks/useHierarchies';
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -14,6 +15,8 @@ const checkedIcon = <CheckBoxIcon fontSize="small" />;
 const HierarchySelection = (props) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
+
+  const [hierarchies, setHierarchies] = useHierarchies();
 
   const iterate = (hierarchyList) => {
     let selectedHierarchies = [];
@@ -33,10 +36,7 @@ const HierarchySelection = (props) => {
         t(a.label).toLowerCase() > t(b.label).toLowerCase() ? 1 : -1
       );
 
-    let selectedHierarchies = [props.defaultHierarchy];
-    if (props.selectedHierarchy) {
-      selectedHierarchies = [...props.selectedHierarchy.split(',')];
-    }
+    let selectedHierarchies = hierarchies;
 
     const handleToggleOption = (selectedOptions) =>
       (selectedHierarchies = selectedOptions);
@@ -68,7 +68,7 @@ const HierarchySelection = (props) => {
       } else {
         selectedHierarchies = props.defaultHierarchy;
       }
-      dispatch(dropDownSwitchValueCall(selectedHierarchies));
+      setHierarchies(selectedHierarchies.split(','));
     };
 
     const filter = createFilterOptions();

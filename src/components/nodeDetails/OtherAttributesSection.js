@@ -22,9 +22,6 @@ const OtherAttributesSection = () => {
   const nodeId = useNodeId();
   const { nodeOtherAttributes, isFetching } = useOtherAttributes();
   const [saveOtherAttributes] = useSaveNodeOtherAttributesMutation();
-  const selectedHierarchies = useSelector(
-    (s) => s.tree.selectedHierarchy || s.tree.defaultHierarchy
-  );
 
   // In view mode filter history and future depending on selection
   const sortedAndFilteredData = useFilterAttributesByDate(nodeOtherAttributes);
