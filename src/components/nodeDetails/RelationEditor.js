@@ -57,8 +57,8 @@ const RelationEditor = ({ units, onUnitChange, editortitle }) => {
       return;
     }
     const newValues = {
-      ...values,
       [`s${node.id}`]: [],
+      ...values,
     };
     setUnitNames([...unitNames, { uniqueId: node.id, fullName: node.name }]);
     setValues(newValues);
@@ -71,11 +71,17 @@ const RelationEditor = ({ units, onUnitChange, editortitle }) => {
     'endDate',
   ];
 
-  const optionFilter = (option) => `${option.uniqueId}` !== currentNodeId;
+  const removeCharacterDueToYupBug = (v) => v.substring(1);
+  const filterList = [
+    currentNodeId,
+    ...Object.keys(values).map(removeCharacterDueToYupBug),
+  ];
+
+  const optionFilter = (option) => !filterList.includes(`${option.uniqueId}`);
 
   return (
     <Stack>
-      <Box mb={2}>
+      <Box mb={2} sx={{ marginBottom: '40px' }}>
         <Typography component="p" variant="h6" mb={2}>
           {editortitle}
         </Typography>

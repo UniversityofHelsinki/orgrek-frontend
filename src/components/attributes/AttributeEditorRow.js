@@ -180,6 +180,7 @@ const AttributeEditorRow = ({
             xs="auto"
             rowSpacing={2}
             columnSpacing={2}
+            sx={{ marginBottom: '10px' }}
           >
             {renderedRow}
           </Grid>

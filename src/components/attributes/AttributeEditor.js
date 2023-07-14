@@ -116,7 +116,11 @@ const AttributeEditor = ({
   };
 
   const addRowButton = (
-    <Button onClick={addFirstRow} variant="outlined">
+    <Button
+      onClick={addFirstRow}
+      variant="outlined"
+      sx={{ marginBottom: '20px' }}
+    >
       {t('add_row')}
     </Button>
   );
