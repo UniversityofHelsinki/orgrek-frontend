@@ -38,7 +38,6 @@ const HierarchyFiltersPage = () => {
     isFetchingDistinctAttr;
 
   const handleRowChange = async (row) => {
-    //console.log('handleRowChange', row); // TODO: dispatch saveHierarchyFilters mutation
     try {
       await saveHierarchyFilters({ data: row }).unwrap();
       dispatch(
@@ -59,7 +58,6 @@ const HierarchyFiltersPage = () => {
 
   const handleAddRow = async (row) => {
     //const id = Math.floor(Math.random() * -1000000);
-    //console.log('handleAddRow', row); // TODO: dispatch addHierarchyFilters mutation
     try {
       await insertHierarchyFilters({ data: [row] }).unwrap();
       dispatch(
@@ -79,7 +77,6 @@ const HierarchyFiltersPage = () => {
   };
 
   const handleDeleteRow = async (row) => {
-    //console.log('handleDeleteRow', row); // TODO: dispatch deleteHierarchyFilters mutation
     try {
       await deleteHierarchyFilters({ data: row }).unwrap();
       dispatch(

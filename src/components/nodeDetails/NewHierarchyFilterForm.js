@@ -1,9 +1,6 @@
 import React from 'react';
 import CloseIcon from '@mui/icons-material/Close';
-import useFetchNode from '../../hooks/useFetchNode';
 import { Form } from '../../contexts/FormContext';
-import StartDateField from '../attributes/StartDateField';
-import ValueField from '../attributes/ValueField';
 import useForm from '../../hooks/useForm';
 import { newHierarchyFilterValiditySchema } from '../../utils/validations';
 import { useSelector } from 'react-redux';
@@ -19,13 +16,13 @@ import {
   Typography,
   Chip,
   Stack,
+  Autocomplete,
 } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import TextField from '@mui/material/TextField';
 import HelperText from '../inputs/HelperText';
 import MenuItem from '@mui/material/MenuItem';
 import useFormField from '../../hooks/useFormField';
-import dropdownFieldOptions from 'lodash';
 
 const ContentHeader = ({ value }) => {
   return (
@@ -66,33 +63,11 @@ const NewHierarchyFilterForm = ({
   attributeKeys,
 }) => {
   const { t } = useTranslation();
-  const uniqueHierarchyValues = initialRows.filter(
-    (elem, ix) =>
-      initialRows.findIndex((elem1) => elem1.hierarchy === elem.hierarchy) ===
-      ix
-  );
-
-  const uniqueKeyValues = initialRows.filter(
-    (elem, ix) =>
-      initialRows.findIndex((elem1) => elem1.key === elem.key) === ix
-  );
-
-  const uniqueValues = initialRows.filter(
-    (elem, ix) =>
-      initialRows.findIndex((elem1) => elem1.value === elem.value) === ix
-  );
-
-  const dropdownHierarchyFieldOptions = uniqueHierarchyValues;
-  const dropdownKeyFieldOptions = uniqueKeyValues;
-  const dropdownValueFieldOptions = uniqueValues;
-
   const emptyHierarchyFilter = {
     key: '',
     value: '',
     hierarchy: '',
   };
-
-  const today = new Date();
 
   const headerRow = (
     <Stack alignItems="center" justifyContent="space-between" direction="row">
@@ -107,7 +82,6 @@ const NewHierarchyFilterForm = ({
 
   const SectionDropdownField = ({ path }) => {
     const { props, errors } = useFormField({ path, name: 'hierarchy' });
-    console.log(selhierarchies);
     return (
       <TextField
         {...props}
@@ -128,20 +102,33 @@ const NewHierarchyFilterForm = ({
   const AttributeDropdownField = ({ path }) => {
     const { props, errors } = useFormField({ path, name: 'key' });
 
+    const autocompleteProps = {
+      ...props,
+      onInputChange: (_, value) => props.onChange(value),
+      onChange: undefined,
+      error: undefined,
+      value: undefined,
+    };
+
+    const getOptionLabel = (option) => {
+      return option;
+    };
+
     return (
-      <TextField
-        {...props}
-        select
-        fullWidth
-        label={t('hierarchyFilter.attributeColumnHeader')}
-        helperText={<HelperText errors={errors} />}
-      >
-        {attributeKeys.map((option) => (
-          <MenuItem key={option} value={option}>
-            {option}
-          </MenuItem>
-        ))}
-      </TextField>
+      <Autocomplete
+        {...autocompleteProps}
+        freeSolo
+        options={attributeKeys}
+        getOptionLabel={getOptionLabel}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            fullWidth
+            label={t('hierarchyFilter.attributeColumnHeader')}
+            helperText={<HelperText errors={errors} />}
+          />
+        )}
+      />
     );
   };
 
@@ -149,21 +136,37 @@ const NewHierarchyFilterForm = ({
     const { props, errors } = useFormField({ path, name: 'value' });
     const { values } = useForm();
     const key = values.key;
-    const attributeValues = key ? distinctNodeAttrs[key] : [];
+    const attributeValues = distinctNodeAttrs[key]
+      ? distinctNodeAttrs[key]
+      : [];
+
+    const autocompleteProps = {
+      ...props,
+      onInputChange: (_, value) => props.onChange(value),
+      onChange: undefined,
+      error: undefined,
+      value: undefined,
+    };
+
+    const getOptionLabel = (option) => {
+      return option;
+    };
+
     return (
-      <TextField
-        {...props}
-        select
-        fullWidth
-        label={t('hierarchyFilter.valueColumnHeader')}
-        helperText={<HelperText errors={errors} />}
-      >
-        {attributeValues.map((option) => (
-          <MenuItem key={option} value={option}>
-            {option}
-          </MenuItem>
-        ))}
-      </TextField>
+      <Autocomplete
+        {...autocompleteProps}
+        freeSolo
+        getOptionLabel={getOptionLabel}
+        options={attributeValues}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            fullWidth
+            label={t('hierarchyFilter.valueColumnHeader')}
+            helperText={<HelperText errors={errors} />}
+          />
+        )}
+      />
     );
   };
   const content = (
