@@ -62,7 +62,7 @@ export const Form = ({
   };
 
   const submit = async () => {
-    removeBeforeUnloadListener;
+    removeBeforeUnloadListener();
     if (!onSubmit) {
       return;
     }
