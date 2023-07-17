@@ -106,18 +106,20 @@ const NodeField = ({
         return [];
       }}
       renderInput={({ InputProps, ...params }) => (
-        <TextField
-          InputProps={{
-            ...InputProps,
-            endAdornment: InputProps.endAdornment || inputAdornment,
-          }}
-          label={label}
-          placeholder={placeholder || t('type_three_char_to_start_search')}
-          helperText={helperText}
-          required={required}
-          error={error}
-          {...params}
-        />
+        <form role="search" onSubmit={(event) => event.preventDefault()}>
+          <TextField
+            InputProps={{
+              ...InputProps,
+              endAdornment: InputProps.endAdornment || inputAdornment,
+            }}
+            label={label}
+            placeholder={placeholder || t('type_three_char_to_start_search')}
+            helperText={helperText}
+            required={required}
+            error={error}
+            {...params}
+          />
+        </form>
       )}
     />
   );
