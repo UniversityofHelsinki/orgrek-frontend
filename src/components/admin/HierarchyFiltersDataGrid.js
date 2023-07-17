@@ -180,7 +180,7 @@ const HierarchyFiltersDataGrid = ({
       handleSubmit={handleSubmit}
       initialRows={rows}
       selhierarchies={selectableHierarchies}
-      distinctNodeAttrs={distinctNodeAttrs}
+      distinctNodeAttrs={distinctNodeAttrs || {}}
       attributeKeys={attributeKeys}
     />
   ) : (
