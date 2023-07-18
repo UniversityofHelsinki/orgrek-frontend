@@ -11,13 +11,12 @@ import { Typography, Box } from '@mui/material';
 import { useNodeId } from '../../hooks/useNodeId';
 import HelperText from '../inputs/HelperText';
 import useFormField from '../../hooks/useFormField';
+import useHierarchies from '../../hooks/useHierarchies';
 
 const HierarchyField = ({ path }) => {
   const { t } = useTranslation();
   const { props, errors } = useFormField({ path, name: 'value' });
-  const selectableHierarchies = useSelector((s) => {
-    return s.tree.selectedHierarchy.split(',');
-  });
+  const [selectableHierarchies] = useHierarchies();
 
   return (
     <TextField

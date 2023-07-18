@@ -12,7 +12,7 @@ import { userEvent, waitFor, within } from '@storybook/testing-library';
 import { expect } from '@storybook/jest';
 
 const now = new Date('2023-03-22T14:28:00+0200');
-const selectedHierarchy = 'talous';
+const selectedHierarchy = 'virallinen';
 
 const nodeId = '1';
 

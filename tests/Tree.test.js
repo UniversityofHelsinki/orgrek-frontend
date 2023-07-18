@@ -11,19 +11,19 @@ jest.mock('../src/hooks/useTree', () => () => ({
         id: 'a1',
         name: 'Helsingin yliopisto (HY)',
         uniqueId: 42785051,
-        hierarchies: ['talous'],
+        hierarchies: ['virallinen'],
         children: [
           {
             id: 123,
             name: 'KOULOHJ HY, Koulutusohjelmat (KOULOHJ)',
             uniqueId: 33539259,
-            hierarchies: ['talous'],
+            hierarchies: ['virallinen'],
             children: [
               {
                 id: 1234,
                 name: 'H92 HY, Tohtoriohjelmat (TRI)',
                 uniqueId: 54806742,
-                hierarchies: ['talous'],
+                hierarchies: ['virallinen'],
                 children: [
                   {
                     id: 12345,
@@ -50,8 +50,8 @@ jest.mock('../src/reducers/treeReducer', () => {
     default: jest.fn(
       (
         state = {
-          selectedHierarchy: 'talous',
-          defaultHierarchy: 'talous',
+          selectedHierarchy: 'virallinen',
+          defaultHierarchy: 'virallinen',
           selectableHierarchies: [],
         },
         action

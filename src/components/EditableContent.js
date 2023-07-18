@@ -52,18 +52,23 @@ const ValidationResult = () => {
 const FormActions = () => {
   const { t } = useTranslation();
   const { close, setModified } = useEditMode();
-  const { dirty, valid, submitting } = useForm();
+  const { dirty, valid, submitting, removeBeforeUnloadListener } = useForm();
 
   // Update modified state for EditableAccordion when form values become modified
   useEffect(() => {
     setModified(dirty);
   }, [dirty]);
 
+  const handleCancel = () => {
+    removeBeforeUnloadListener();
+    close();
+  };
+
   const canSubmit = dirty && valid;
 
   return (
     <ActionBar>
-      <Button variant="outlined" onClick={close} disabled={submitting}>
+      <Button variant="outlined" onClick={handleCancel} disabled={submitting}>
         {t('cancel_button')}
       </Button>
       <Button

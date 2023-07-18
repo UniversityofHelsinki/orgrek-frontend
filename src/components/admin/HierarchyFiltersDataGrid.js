@@ -144,10 +144,6 @@ const HierarchyFiltersDataGrid = ({
       },
     });
   }
-  const initialValues = {
-    hierarchy: null,
-    isNew: true,
-  };
 
   const handleAddRow = () => {
     const id = Math.floor(Math.random() * -1000000);
@@ -180,7 +176,7 @@ const HierarchyFiltersDataGrid = ({
       handleSubmit={handleSubmit}
       initialRows={rows}
       selhierarchies={selectableHierarchies}
-      distinctNodeAttrs={distinctNodeAttrs}
+      distinctNodeAttrs={distinctNodeAttrs || {}}
       attributeKeys={attributeKeys}
     />
   ) : (

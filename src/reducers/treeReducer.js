@@ -1,6 +1,7 @@
+import { defaultHierarchy } from '../Constants';
 const initialState = {
   selectedHierarchy: undefined,
-  defaultHierarchy: 'talous',
+  defaultHierarchy,
   selectableHierarchies: [],
 };
 

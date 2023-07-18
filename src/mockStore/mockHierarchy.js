@@ -5,6 +5,7 @@ const defaultHierarchies = [
   'opetus',
   'history',
   'talous',
+  'virallinen',
 ];
 
 export const createHierarchies = (
