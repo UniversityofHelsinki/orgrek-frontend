@@ -28,6 +28,7 @@ const Tree = ({ sx }) => {
     node: state.nrd.node,
     openTree: state.nrd.openTree,
   }));
+  const { t } = useTranslation();
 
   const language = useContentLanguage();
 
@@ -56,6 +57,9 @@ const Tree = ({ sx }) => {
       variant="outlined"
       data-testid="tree"
       sx={[{ padding: 1 }, ...(Array.isArray(sx) ? sx : [sx])]}
+      role="region"
+      aria-label={t('hierarchy_tree_label')}
+      aria-roledescription={t('hierarchy_tree_description')}
     >
       {trees[language].map(
         (tree, i) =>
