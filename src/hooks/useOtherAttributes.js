@@ -1,16 +1,14 @@
 import { useGetNodeOtherAttributesQuery } from '../store';
+import useHierarchies from './useHierarchies';
 import { useNodeId } from './useNodeId';
-import { useSelector } from 'react-redux';
 
 export const useOtherAttributes = () => {
   const nodeId = useNodeId();
-  const selectedHierarchies = useSelector((state) => {
-    return state.tree.selectedHierarchy || state.tree.defaultHierarchy;
-  });
+  const [selectedHierarchies] = useHierarchies();
 
   const { data, error, isFetching } = useGetNodeOtherAttributesQuery({
     nodeId,
-    selectedHierarchies,
+    selectedHierarchies: selectedHierarchies.join(','),
   });
 
   return {

@@ -22,6 +22,7 @@ export default {
     reactRouter: {
       searchParams: {
         uid: nodeId,
+        hierarchies: 'opetus',
       },
     },
   },

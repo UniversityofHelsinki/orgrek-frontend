@@ -21,6 +21,7 @@ import {
   Stack,
 } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import useHierarchies from '../../hooks/useHierarchies';
 
 const ContentHeader = ({ value }) => {
   return (
@@ -131,9 +132,7 @@ const Actions = ({ onCancel }) => {
 const NewUnitForm = ({ open, onClose, handleSubmit }) => {
   const { t } = useTranslation();
   const validationSchema = newNodeValiditySchema;
-  const selectedHierarchies = useSelector(
-    (s) => s.tree.selectedHierarchy || s.tree.defaultHierarchy
-  ).split(',');
+  const [selectedHierarchies] = useHierarchies();
 
   const today = new Date();
   const emptyNode = {

@@ -3,16 +3,16 @@ import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { containsAll } from '../actions/utilAction';
 import Link from './Link';
+import useHierarchies from '../hooks/useHierarchies';
 
 const Node = (props) => {
   const [showHierarchies, setShowHierarchies] = useState(false);
   const { t } = useTranslation();
+  const [hierarchies] = useHierarchies();
 
   useEffect(() => {
     if (props.item?.hierarchies) {
-      setShowHierarchies(
-        !containsAll(props.item.hierarchies, props.selectedHierarchy.split(','))
-      );
+      setShowHierarchies(!containsAll(props.item.hierarchies, hierarchies));
     }
   }, [props.item]);
 

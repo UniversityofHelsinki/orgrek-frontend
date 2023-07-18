@@ -12,7 +12,7 @@ import { expect } from '@storybook/jest';
 const now = new Date('2023-03-22T14:28:00+0200');
 
 const nodeId = '12345678';
-const selectedHierarchy = 'talous';
+const selectedHierarchy = 'virallinen';
 const keys = ['publicity', 'attribute2'];
 
 export default {

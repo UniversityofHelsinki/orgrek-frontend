@@ -36,7 +36,7 @@ import { waitFor, within } from '@storybook/testing-library';
 const now = new Date('2023-03-22T14:28:00+0200');
 
 const nodeId = '1';
-const selectedHierarchy = 'talous';
+const selectedHierarchy = 'virallinen';
 
 export default {
   component: NodeDetails,
@@ -118,7 +118,7 @@ export const AdminRole = {
           {
             id: 4824,
             nodeId: '4820',
-            key: 'talous_tunnus',
+            key: 'virallinen_tunnus',
             value: 'H9073',
             startDate: null,
             endDate: null,
@@ -157,7 +157,7 @@ export const AdminRole = {
             selectedHierarchies: selectedHierarchy,
             sections: ['codes'],
           },
-          ['emo_lyhenne', 'lyhenne', 'talous_tunnus']
+          ['emo_lyhenne', 'lyhenne', 'virallinen_tunnus']
         ),
         mockGetAttributeKeys(
           {
@@ -235,7 +235,7 @@ export const AdminRole = {
               endDate: null,
               hierarchies: [
                 {
-                  hierarchy: 'talous',
+                  hierarchy: 'virallinen',
                   startDate: '2000-01-01',
                   endDate: null,
                   edgeId: 20003,
@@ -252,7 +252,7 @@ export const AdminRole = {
               endDate: null,
               hierarchies: [
                 {
-                  hierarchy: 'talous',
+                  hierarchy: 'virallinen',
                   startDate: '2000-01-01',
                   endDate: null,
                   edgeId: 20004,

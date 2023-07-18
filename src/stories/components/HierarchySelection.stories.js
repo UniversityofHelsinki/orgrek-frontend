@@ -18,7 +18,7 @@ export const Default = {
   decorators: [
     withMockStore({
       tree: {
-        selectedHierarchy: 'talous',
+        selectedHierarchy: 'virallinen',
         selectableHierarchies: [
           'tutkimus',
           'henkilosto',
@@ -26,6 +26,7 @@ export const Default = {
           'opetus',
           'history',
           'talous',
+          'virallinen',
         ],
       },
     }),

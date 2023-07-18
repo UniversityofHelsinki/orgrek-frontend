@@ -1,9 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 import legacyReducer from '../reducers/treeReducer';
+import { defaultHierarchy } from '../Constants';
 
 const initialState = {
   selectedHierarchy: undefined,
-  defaultHierarchy: 'talous',
+  defaultHierarchy,
   selectableHierarchies: [],
 };
 

@@ -33,7 +33,6 @@ export const api = createApi({
           ? selectedDay.toLocaleDateString('FI-fi')
           : new Date().toLocaleDateString('FI-fi');
         const selectableHierarchies = hierarchies
-          .split(',')
           .filter((item) => item !== 'history')
           .filter((item) => item !== 'select-all');
         return {
