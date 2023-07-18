@@ -17,7 +17,7 @@ export const useChildren = () => {
   });
 
   return {
-    children: data || [],
+    children: data || {},
     error,
     isFetching,
   };
