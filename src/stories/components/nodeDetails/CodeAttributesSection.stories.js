@@ -12,7 +12,7 @@ import { waitFor, within } from '@storybook/testing-library';
 const now = new Date('2023-03-22T14:28:00+0200');
 
 const nodeId = '12345678';
-const selectedHierarchy = 'talous';
+const selectedHierarchy = 'virallinen';
 
 export default {
   component: CodeAttributesSection,
@@ -21,6 +21,7 @@ export default {
     reactRouter: {
       searchParams: {
         uid: nodeId,
+        hierarchies: selectedHierarchy,
       },
     },
   },
@@ -152,7 +153,7 @@ export const Empty = {
       handlers: [
         mockGetAttributeKeys(
           {
-            selectedHierarchies: 'talous',
+            selectedHierarchies: 'virallinen',
             sections: ['codes'],
           },
           ['emo_lyhenne', 'lyhenne', 'talous_tunnus']

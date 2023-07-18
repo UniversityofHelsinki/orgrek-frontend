@@ -10,10 +10,10 @@ import { authActions, isAuthorized } from '../auth';
 import Layout from '../components/Layout';
 import useScrollToTop from '../hooks/useScrollToTop';
 import HierarchyPage from './HierarchyPage';
+import useHierarchies from '../hooks/useHierarchies';
 
 const AppRoutes = () => {
   useScrollToTop();
-  useSelectedHierarchies();
   const user = useCurrentUser();
 
   return (

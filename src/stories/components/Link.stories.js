@@ -21,7 +21,7 @@ export const HierarchiesLink = {
   args: {
     to: '',
     node: '',
-    hierarchies: 'talous,opetus',
+    hierarchies: 'virallinen,opetus',
     text: 'Hierarchy link',
   },
 };

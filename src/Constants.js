@@ -14,6 +14,13 @@ export const billingId = 'laskutus_tunnus';
 export const mainariId = 'mainari_tunnus';
 export const successorHierarchy = 'history';
 
+export const defaultHierarchy = 'virallinen';
+
+export const queryParams = {
+  hierarchies: 'hierarchies',
+  uniqueId: 'uid',
+};
+
 export const notOtherAttributes = [
   nameFi,
   nameSv,

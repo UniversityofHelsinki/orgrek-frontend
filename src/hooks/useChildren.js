@@ -1,4 +1,5 @@
 import { useGetChildrenQuery } from '../store/api';
+import useHierarchies from './useHierarchies';
 import { useNodeId } from './useNodeId';
 import { useSelector } from 'react-redux';
 
@@ -7,14 +8,12 @@ export const useChildren = () => {
   const selectedDay = useSelector((state) => {
     return state.tree.selectedDay;
   });
-  const selectedHierarchies = useSelector((state) => {
-    return state.tree.selectedHierarchy || state.tree.defaultHierarchy;
-  });
+  const [selectedHierarchies] = useHierarchies();
 
   const { data, error, isFetching } = useGetChildrenQuery({
     nodeId,
     selectedDay,
-    selectedHierarchies,
+    selectedHierarchies: selectedHierarchies.join(','),
   });
 
   return {

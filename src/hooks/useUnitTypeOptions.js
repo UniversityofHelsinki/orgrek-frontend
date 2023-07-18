@@ -3,8 +3,9 @@ import {
   useGetAttributeKeysBySectionQuery,
   useGetValidHierarchyFiltersQuery,
 } from '../store';
+import useHierarchies from './useHierarchies';
 
-const sortHierarchies = (list) => {
+const sortHierarchyFilters = (list) => {
   return list.sort((a, b) => (a.hierarchy > b.hierarchy ? 1 : -1));
 };
 
@@ -35,10 +36,9 @@ const concatValues = (data, hierarchyValues) => {
  * hierarchies.
  */
 const useUnitTypeOptions = () => {
-  const selectedHierarchies = useSelector(
-    (state) => state.tree.selectedHierarchy
-  );
-  const { data: hierarchies, isFetching: isFetchingHierarchies } =
+  const [hierarchies] = useHierarchies();
+  const selectedHierarchies = hierarchies.join(',');
+  const { data: hierarchyFilters, isFetching: isFetchingHierarchyFilters } =
     useGetValidHierarchyFiltersQuery();
   const { data: keysData, isFetching: isFetchingKeys } =
     useGetAttributeKeysBySectionQuery('types');
@@ -46,12 +46,14 @@ const useUnitTypeOptions = () => {
 
   const unitTypeOptions = [];
 
-  if (hierarchies && keys && keys.length > 0) {
-    const hierarchiesWhereKeyValueIsType = Object.values(hierarchies).filter(
-      (item) => item.key === keys[0]
+  if (hierarchyFilters && keys && keys.length > 0) {
+    const hierarchyFiltersWhereKeyValueIsType = Object.values(
+      hierarchyFilters
+    ).filter((item) => item.key === keys[0]);
+    const sortedHierarchyFilters = sortHierarchyFilters(
+      hierarchyFiltersWhereKeyValueIsType
     );
-    const sortedHierarchies = sortHierarchies(hierarchiesWhereKeyValueIsType);
-    const units = concatValues(sortedHierarchies, selectedHierarchies);
+    const units = concatValues(sortedHierarchyFilters, selectedHierarchies);
     const selectableUnitArrayList = units.split(',');
     selectableUnitArrayList.forEach((value) => {
       unitTypeOptions.push({
@@ -63,7 +65,7 @@ const useUnitTypeOptions = () => {
 
   return {
     unitTypeOptions,
-    isFetching: isFetchingHierarchies || isFetchingKeys,
+    isFetching: isFetchingHierarchyFilters || isFetchingKeys,
   };
 };
 
