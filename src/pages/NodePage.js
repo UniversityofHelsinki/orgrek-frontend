@@ -4,12 +4,20 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import Container from '@mui/material/Container';
 import { Box, Divider, Grid, useTheme } from '@mui/material';
-import Tree from '../components/Tree';
+import Tree from '../components/tree/Tree';
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
+import useTree from '../hooks/useTree';
+import useContentLanguage from '../hooks/useContentLanguage';
+import TreeItem from '../components/tree/TreeItem';
+import { useNodeId } from '../hooks/useNodeId';
 
 const NodePage = () => {
   // Temporary solution until the old NodeDetails component is removed
   const editMode = useSelector((state) => state.editModeReducer.edit);
+
+  const language = useContentLanguage();
+  const { trees: treesByLanguage, isFetching } = useTree();
+  const selectedNodeId = useNodeId();
 
   const theme = useTheme();
 
@@ -47,12 +55,14 @@ const NodePage = () => {
             dragging: false,
           })
         }
-        onMouseLeave={(e) =>
-          setDragOptions({
-            ...dragOptions,
-            dragging: false,
-          })
-        }
+        onMouseLeave={(e) => {
+          if (isDragging) {
+            setDragOptions({
+              ...dragOptions,
+              dragging: false,
+            });
+          }
+        }}
       >
         <Grid
           item
@@ -87,7 +97,11 @@ const NodePage = () => {
               pb: 3,
             }}
           >
-            <Tree sx={{ borderStyle: 'none' }} />
+            <Tree
+              trees={treesByLanguage[language]}
+              loading={isFetching}
+              targetNodeIdentifier={selectedNodeId}
+            />
           </Box>
           <Divider
             sx={{
