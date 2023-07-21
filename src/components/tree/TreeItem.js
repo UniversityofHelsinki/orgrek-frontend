@@ -195,7 +195,7 @@ TreeItem.propTypes = {
    * node objects is required. It can be empty.
    * */
   root: PropTypes.shape({
-    id: PropTypes.array.isRequired,
+    id: PropTypes.string.isRequired,
     hierarchies: PropTypes.array.isRequired,
     children: PropTypes.array.isRequired,
   }).isRequired,
