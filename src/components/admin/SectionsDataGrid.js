@@ -92,12 +92,10 @@ const SectionsDataGrid = ({
       sortComparator: labelComparator(sectionOptions),
     },
     {
-      field: 'order',
+      field: 'orderNro',
       type: 'number',
       headerName: t('sectionsDataGrid.orderColumnHeader'),
-      // TODO: This field does not yet exist, see OR-1052
-      valueGetter: (params) => (params.row.id > 0 ? params.row.id * 100 : ''), // id * 100 is here just for demonstration
-      valueFormatter: (params) => params.value,
+      valueFormatter: (row) => row.value,
       width: 150,
       editable,
     },
@@ -180,7 +178,6 @@ const SectionsDataGrid = ({
             columnVisibilityModel: {
               startDate: false,
               endDate: false,
-              order: false, // TODO: Hidden for now because this field does not yet exist, see OR-1052
             },
           },
           sorting: {
