@@ -41,7 +41,24 @@ const NodeDetails = () => {
         flex: 1,
       }}
     >
-      <Typography variant="h1" component="h2" mt={5} mb={5}>
+      <Typography
+        variant="h2"
+        component="h2"
+        mt={5}
+        mb={5}
+        sx={{
+          position: 'sticky',
+          bgcolor: 'white',
+          top: 70,
+          alignSelf: 'flex-start',
+          overflowY: 'auto',
+          maxHeight: `90vh`,
+          pb: 3,
+          zIndex: 30,
+          marginTop: 0,
+          marginBottom: 0,
+        }}
+      >
         {title}
       </Typography>
       <NodeValiditySection />
