@@ -16,10 +16,16 @@ import useFetchNodeDetails from '../../hooks/useFetchNodeDetails';
 import Box from '@mui/material/Box';
 import useFetchNode from '../../hooks/useFetchNode';
 import { useNodeId } from '../../hooks/useNodeId';
+import { useMediaQuery, useTheme } from '@mui/material';
 
 const NodeDetails = () => {
   const nodeId = useNodeId();
   const title = useFavorableName();
+
+  const theme = useTheme();
+  const isDesktop = useMediaQuery(theme.breakpoints.up('md'));
+
+  console.log(isDesktop);
 
   // These legacy fetch hooks can be removed after everything has been migrated
   // to use RTK Query
@@ -49,7 +55,7 @@ const NodeDetails = () => {
         sx={{
           position: 'sticky',
           bgcolor: 'white',
-          top: 70,
+          top: isDesktop ? 70 : 120,
           alignSelf: 'flex-start',
           overflowY: 'auto',
           maxHeight: `90vh`,
