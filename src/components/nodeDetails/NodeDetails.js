@@ -25,8 +25,6 @@ const NodeDetails = () => {
   const theme = useTheme();
   const isDesktop = useMediaQuery(theme.breakpoints.up('md'));
 
-  console.log(isDesktop);
-
   // These legacy fetch hooks can be removed after everything has been migrated
   // to use RTK Query
   useFetchNode();
