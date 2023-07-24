@@ -148,7 +148,7 @@ Tree.propTypes = {
    * If found, then the parents of the target are expanded
    * automatically on load.
    * */
-  targetNodeIdentifier: PropTypes.any.isRequired,
+  targetNodeIdentifier: PropTypes.any,
 };
 
 export default Tree;
