@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { memo, useEffect, useRef, useState } from 'react';
 import TreeItem from './TreeItem';
 import { Card, Skeleton } from '@mui/material';
 import PropTypes from 'prop-types';
@@ -19,12 +19,12 @@ const calculateNodesInPathTarget = (node, isTarget, results = new Map()) => {
   }
 };
 
-const Tree = ({
+const Tree = memo(function Tree({
   trees,
   loading,
   targetNodeIdentifier,
   getNodeIdentifier = defaultGetNodeIdentifier,
-}) => {
+}) {
   const containerRef = useRef();
   const [selectedItem, setSelectedItem] = useState();
   const isTarget = (node) => getNodeIdentifier(node) === targetNodeIdentifier;
@@ -128,7 +128,7 @@ const Tree = ({
       {trees.map(asTree)}
     </Card>
   );
-};
+});
 
 Tree.propTypes = {
   /**
