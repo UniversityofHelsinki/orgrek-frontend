@@ -1,10 +1,23 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import TreeItem from './TreeItem';
 import { Card, Skeleton } from '@mui/material';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 
 const defaultGetNodeIdentifier = (node) => node.uniqueId;
+
+const calculateNodesInPathTarget = (node, isTarget, results = new Map()) => {
+  if (isTarget(node)) {
+    results.set(node, true);
+    return;
+  }
+  for (const child of node.children) {
+    calculateNodesInPathTarget(child, isTarget, results);
+    if (results.has(child)) {
+      results.set(node, true);
+    }
+  }
+};
 
 const Tree = ({
   trees,
@@ -14,6 +27,16 @@ const Tree = ({
 }) => {
   const containerRef = useRef();
   const [selectedItem, setSelectedItem] = useState();
+  const isTarget = (node) => getNodeIdentifier(node) === targetNodeIdentifier;
+  const [paths, setPaths] = useState(new Map());
+
+  useEffect(() => {
+    const newPaths = new Map();
+    for (const rootNode of trees) {
+      calculateNodesInPathTarget(rootNode, isTarget, newPaths);
+    }
+    setPaths(newPaths);
+  }, [trees, targetNodeIdentifier]);
 
   const { t } = useTranslation();
 
@@ -89,6 +112,7 @@ const Tree = ({
           targetNodeIdentifier={targetNodeIdentifier}
           getNodeIdentifier={getNodeIdentifier}
           expandOnLoad={true}
+          paths={paths}
         />
       </ul>
     );

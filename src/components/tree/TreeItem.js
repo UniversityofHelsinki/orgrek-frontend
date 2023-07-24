@@ -10,19 +10,6 @@ const caretDown = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14
 const caretRight = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 1000 1000"><path fill="#107eab" d="M291,35L181,158l394,345L181,842l110,123l532-462L291,35z" stroke="#107eab" stroke-width="50" /></svg>`;
 const noCaret = '';
 
-const isNodePathToTarget = (node, isTarget) => {
-  if (isTarget(node)) {
-    return true;
-  }
-  for (const child of node.children) {
-    const childIsPathToTarget = isNodePathToTarget(child, isTarget);
-    if (childIsPathToTarget) {
-      return true;
-    }
-  }
-  return false;
-};
-
 const TreeItem = ({
   root,
   containerProps = {
@@ -38,25 +25,26 @@ const TreeItem = ({
   targetNodeIdentifier,
   getNodeIdentifier,
   expandOnLoad = false,
+  paths = new Map(),
 }) => {
   const domRef = useRef();
   const [labelId] = useState(
     `label-${root.id}-${Math.floor(Math.random() * 1000000)}`
   );
+  const isTarget = (node) => getNodeIdentifier(node) === targetNodeIdentifier;
   const [expanded, setExpanded] = useState(expandOnLoad);
   const [nodeIsTarget, setNodeIsTarget] = useState(false);
-  const isTarget = (node) => getNodeIdentifier(node) === targetNodeIdentifier;
 
   useEffect(() => {
     const result = isTarget(root);
     setNodeIsTarget(result);
     if (!result) {
-      const hasPathToTarget = isNodePathToTarget(root, isTarget);
+      const hasPathToTarget = paths.has(root);
       if (!expanded) {
         setExpanded(hasPathToTarget);
       }
     }
-  }, [targetNodeIdentifier]);
+  }, [paths]);
 
   const asTreeItems = (node) => {
     return (
@@ -76,6 +64,7 @@ const TreeItem = ({
         targetNodeIdentifier={targetNodeIdentifier}
         getNodeIdentifier={getNodeIdentifier}
         expandOnLoad={false}
+        paths={paths}
       />
     );
   };
@@ -265,6 +254,12 @@ TreeItem.propTypes = {
    * Always false except on root nodes.
    * */
   expandOnLoad: PropTypes.bool,
+  /**
+   * A map having keys of objects and values of boolean.
+   * This map should tell whether or not the node is in
+   * path towards target.
+   */
+  path: PropTypes.object,
 };
 
 export default TreeItem;
