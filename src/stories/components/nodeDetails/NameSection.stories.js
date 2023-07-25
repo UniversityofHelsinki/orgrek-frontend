@@ -153,6 +153,7 @@ export const Empty = {
 };
 
 export const ShowHistory = {
+  decorators: [withMockStore()],
   parameters: {
     msw: {
       handlers: [
@@ -162,13 +163,9 @@ export const ShowHistory = {
       ],
     },
   },
-  decorators: [
-    withMockStore({
-      nvrd: {
-        showHistory: true,
-      },
-    }),
-  ],
+  args: {
+    showHistory: true,
+  },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 

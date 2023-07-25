@@ -69,6 +69,11 @@ export const mockGetFullNames = (nodeId, date, body) =>
     (req, res, ctx) => res(ctx.json(body))
   );
 
+export const mockGetAllFullNames = (nodeId, body) =>
+  rest.get(`${baseUrl}/node/fullname/all/${nodeId}`, (req, res, ctx) =>
+    res(ctx.json(body))
+  );
+
 export const mockGetFavorableFullNames = (nodeId, date, body) =>
   rest.get(
     `${baseUrl}/node/fullname/favorable/${nodeId}/${formatApiDate(date)}`,

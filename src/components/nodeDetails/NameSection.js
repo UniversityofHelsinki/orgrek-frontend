@@ -21,7 +21,7 @@ import {
 import { authActions } from '../../auth';
 import { flattenAttributes, toFormValues } from '../../utils/attributeUtils';
 
-const NameSection = () => {
+const NameSection = ({ showHistory, showFuture }) => {
   const { t } = useTranslation();
   const nodeId = useNodeId();
   const { data, isFetching } = useGetNameAttributesQuery(nodeId);
@@ -35,7 +35,11 @@ const NameSection = () => {
   const sortedData = useSortAttributesByDate(data);
 
   // In view mode filter history and future depending on selection
-  const sortedAndFilteredData = useFilterAttributesByDate(sortedData);
+  const sortedAndFilteredData = useFilterAttributesByDate(
+    sortedData,
+    showHistory,
+    showFuture
+  );
 
   // Validates form values every time when the values change
   // Submit button is disabled when validation fails

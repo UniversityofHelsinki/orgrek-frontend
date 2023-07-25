@@ -54,13 +54,17 @@ const withoutReadOnlyFields = (attributes, readOnlyFieldKeys) => {
   });
 };
 
-const CodeAttributesSection = () => {
+const CodeAttributesSection = ({ showHistory, showFuture }) => {
   const { t } = useTranslation();
   const nodeId = useNodeId();
   const { codeAttributes, isFetching } = useCodeAttributes();
   const [hierarchies] = useHierarchies();
   const selectedHierarchies = hierarchies.join(',');
-  const presentCodeAttributes = useFilterAttributesByDate(codeAttributes);
+  const presentCodeAttributes = useFilterAttributesByDate(
+    codeAttributes,
+    showHistory,
+    showFuture
+  );
   const { data: attributeKeys, isFetching: isFetchingKeys } =
     useGetAttributeKeysQuery({ selectedHierarchies, sections: ['codes'] });
   const [saveCodeAttributes] = useSaveCodeAttributesMutation();

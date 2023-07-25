@@ -18,17 +18,12 @@ import useFetchNode from '../../hooks/useFetchNode';
 import { useNodeId } from '../../hooks/useNodeId';
 import { useMediaQuery, useTheme } from '@mui/material';
 
-const NodeDetails = () => {
+const NodeDetails = ({ showHistory, showFuture }) => {
   const nodeId = useNodeId();
-  const title = useFavorableName();
+  const title = useFavorableName(nodeId);
 
   const theme = useTheme();
   const isDesktop = useMediaQuery(theme.breakpoints.up('md'));
-
-  // These legacy fetch hooks can be removed after everything has been migrated
-  // to use RTK Query
-  useFetchNode();
-  useFetchNodeDetails();
 
   if (!nodeId) {
     return null;
@@ -66,15 +61,21 @@ const NodeDetails = () => {
         {title}
       </Typography>
       <NodeValiditySection />
-      <NameSection />
-      <DisplayNameSection />
-      <CodeAttributesSection />
-      <UnitTypeSection />
-      <ParentsSection />
-      <ChildrenSection />
+      <NameSection showHistory={showHistory} showFuture={showFuture} />
+      <DisplayNameSection showHistory={showHistory} showFuture={showFuture} />
+      <CodeAttributesSection
+        showHistory={showHistory}
+        showFuture={showFuture}
+      />
+      <UnitTypeSection showHistory={showHistory} showFuture={showFuture} />
+      <ParentsSection showHistory={showHistory} showFuture={showFuture} />
+      <ChildrenSection showHistory={showHistory} showFuture={showFuture} />
       <PredecessorsSection />
       <SuccessorsSection />
-      <OtherAttributesSection />
+      <OtherAttributesSection
+        showHistory={showHistory}
+        showFuture={showFuture}
+      />
     </Box>
   );
 };

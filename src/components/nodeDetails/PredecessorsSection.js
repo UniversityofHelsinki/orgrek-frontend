@@ -7,10 +7,17 @@ import AttributesTable from '../attributes/AttributesTable';
 import useContentLanguage from '../../hooks/useContentLanguage';
 import Link from '../Link';
 import Placeholder from '../Placeholder';
+import { useGetPredecessorsQuery } from '../../store';
+import { useNodeId } from '../../hooks/useNodeId';
 
 const PredecessorsSection = () => {
   const { t } = useTranslation();
-  const predecessors = useSelector((state) => state.nrd.nodePredecessors);
+  const nodeId = useNodeId();
+  const selectedDay = useSelector((state) => state.dr.selectedDay);
+  const { data: predecessors } = useGetPredecessorsQuery({
+    nodeId,
+    date: selectedDay,
+  });
   const contentLanguage = useContentLanguage();
 
   const columns = [
@@ -35,7 +42,7 @@ const PredecessorsSection = () => {
   const keyFn = (item) =>
     `${item.fullName}-${item.startDate}-${item.endDate}-${item.edgeStartDate}-${item.edgeEndDate}`;
 
-  const data = predecessors[contentLanguage] || [];
+  const data = predecessors ? predecessors[contentLanguage] : [];
   const title = t('predecessors.title');
   const empty = data.length === 0;
 

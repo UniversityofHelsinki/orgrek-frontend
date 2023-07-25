@@ -10,21 +10,21 @@ import { toFormValues } from '../../utils/attributeUtils';
 import { useOtherAttributes } from '../../hooks/useOtherAttributes';
 import useFilterAttributesByDate from '../../hooks/useFilterAttributesByDate';
 import { useNodeId } from '../../hooks/useNodeId';
-import {
-  useGetAttributeKeysQuery,
-  useSaveNodeOtherAttributesMutation,
-} from '../../store';
+import { useSaveNodeOtherAttributesMutation } from '../../store';
 import { defaultSchemaForAttributes } from '../../utils/validations';
-import { useSelector } from 'react-redux';
 
-const OtherAttributesSection = () => {
+const OtherAttributesSection = ({ showHistory, showFuture }) => {
   const { t } = useTranslation();
   const nodeId = useNodeId();
   const { nodeOtherAttributes, isFetching } = useOtherAttributes();
   const [saveOtherAttributes] = useSaveNodeOtherAttributesMutation();
 
   // In view mode filter history and future depending on selection
-  const sortedAndFilteredData = useFilterAttributesByDate(nodeOtherAttributes);
+  const sortedAndFilteredData = useFilterAttributesByDate(
+    nodeOtherAttributes,
+    showHistory,
+    showFuture
+  );
   const filtered = sortedAndFilteredData.filter(
     (attribute) => !attribute.isNew
   );
