@@ -10,9 +10,9 @@ import useFetchNode from '../hooks/useFetchNode';
 import NodeViewControl from './NodeViewControl';
 import useHierarchies from '../hooks/useHierarchies';
 
-const Hierarchy = (props) => {
+const Hierarchy = ({ fetchSelectableHierarchies, switchHandlers }) => {
   useEffect(() => {
-    props.fetchSelectableHierarchies();
+    fetchSelectableHierarchies();
   }, []);
   const node = useFetchNode();
   const [hierarchies, setHierarchies] = useHierarchies();
@@ -51,8 +51,8 @@ const Hierarchy = (props) => {
         <Grid item xs={12} md="auto">
           <NodeViewControl
             node={node}
-            selectedDay={selectedDay}
-            selectedHierarchies={hierarchies}
+            onSwitchHistory={switchHandlers.onSwitchHistory}
+            onSwitchFuture={switchHandlers.onSwitchFuture}
           />
         </Grid>
       </Grid>

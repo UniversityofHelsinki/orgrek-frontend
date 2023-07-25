@@ -34,7 +34,7 @@ const asFormValues = (parents) => {
   }, {});
 };
 
-const ParentsSection = () => {
+const ParentsSection = ({ showHistory, showFuture }) => {
   const { t } = useTranslation();
   const { parents: parentsByLanguage, isFetching } = useParents();
   const [saveParents] = useSaveParentsMutation();
@@ -43,7 +43,11 @@ const ParentsSection = () => {
 
   const existingParents = parentsByLanguage[contentLanguage] || [];
   const title = t('upper_units');
-  const filteredByDateParents = useFilterUnitsByDate(existingParents);
+  const filteredByDateParents = useFilterUnitsByDate(
+    existingParents,
+    showHistory,
+    showFuture
+  );
   const empty = filteredByDateParents.length === 0;
   const initialFormValues = asFormValues(existingParents);
   const initialValidationSchema = defaultSchemaForAttributes(

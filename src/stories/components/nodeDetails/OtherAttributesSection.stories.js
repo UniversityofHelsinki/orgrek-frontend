@@ -136,6 +136,9 @@ export const ShowHistory = {
       },
     }),
   ],
+  args: {
+    showHistory: true,
+  },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
@@ -158,6 +161,10 @@ export const HistoryAndFuture = {
       },
     }),
   ],
+  args: {
+    showHistory: true,
+    showFuture: true,
+  },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
