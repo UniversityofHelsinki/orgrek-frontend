@@ -19,8 +19,6 @@ const OtherAttributesSection = ({ showHistory, showFuture }) => {
   const { nodeOtherAttributes, isFetching } = useOtherAttributes();
   const [saveOtherAttributes] = useSaveNodeOtherAttributesMutation();
 
-  console.log(nodeOtherAttributes);
-
   // In view mode filter history and future depending on selection
   const sortedAndFilteredData = useFilterAttributesByDate(
     nodeOtherAttributes,
