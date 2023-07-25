@@ -20,6 +20,7 @@ import {
 } from '../../utils/validations';
 import { authActions } from '../../auth';
 import { flattenAttributes, toFormValues } from '../../utils/attributeUtils';
+import { attributeLangCodes } from '../../Constants';
 
 const NameSection = ({ showHistory, showFuture }) => {
   const { t } = useTranslation();
@@ -52,7 +53,12 @@ const NameSection = ({ showHistory, showFuture }) => {
 
   const columns = [
     { label: t('text_language_header'), render: (item) => t(item.key) },
-    { label: t('name'), render: (item) => item.value },
+    {
+      label: t('name'),
+      render: (item) => (
+        <span lang={attributeLangCodes[item.key]}>{item.value}</span>
+      ),
+    },
     {
       label: t('valid_dates'),
       render: (item) => (
