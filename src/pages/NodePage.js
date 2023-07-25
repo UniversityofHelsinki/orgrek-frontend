@@ -106,7 +106,7 @@ const NodePage = () => {
             }}
           >
             <Tree
-              trees={treesByLanguage[language]}
+              trees={treesByLanguage[language] || []}
               loading={isFetching}
               targetNodeIdentifier={selectedNodeId}
             />
