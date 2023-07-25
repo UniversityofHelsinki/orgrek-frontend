@@ -17,12 +17,15 @@ export const api = createApi({
     'Children',
     'NodeOtherAttributes',
     'SaveNodeOtherAttributes',
+    'Predecessors',
     'Successors',
     'SectionAttributes',
     'TextAttributes',
     'EdgeHierarchies',
     'Texts',
     'HierarchyPublicities',
+    'FullNames',
+    'FavorableFullNames',
   ],
   // eslint-disable-next-line max-lines-per-function
   endpoints: (builder) => ({
@@ -37,6 +40,28 @@ export const api = createApi({
           .filter((item) => item !== 'select-all');
         return {
           url: `/tree/${selectableHierarchies}/${dateString}`,
+          method: 'GET',
+        };
+      },
+    }),
+    getFullNames: builder.query({
+      providesTags: (result, error, nodeId) => [
+        { type: 'FullNames', id: nodeId },
+      ],
+      query: (nodeId) => ({
+        url: `/node/fullname/all/${nodeId}`,
+        method: 'GET',
+      }),
+    }),
+    getFavorableFullNames: builder.query({
+      providesTags: (result, error, nodeId) => [
+        { type: 'FavorableFullNames', id: nodeId },
+      ],
+      query: ({ nodeId, date }) => {
+        return {
+          url: `/node/fullname/favorable/${nodeId}/${date.toLocaleDateString(
+            'fi-FI'
+          )}`,
           method: 'GET',
         };
       },
@@ -318,6 +343,19 @@ export const api = createApi({
         };
       },
     }),
+    getPredecessors: builder.query({
+      providesTags: (result, error, nodeId) => [
+        { type: 'Predecessors', id: nodeId },
+      ],
+      query: ({ nodeId, date }) => {
+        return {
+          url: `/node/predecessors/${nodeId}/${date.toLocaleDateString(
+            'fi-FI'
+          )}`,
+          method: 'GET',
+        };
+      },
+    }),
     getSuccessors: builder.query({
       providesTags: (result, error, nodeId) => [
         { type: 'Successors', id: nodeId },
@@ -519,6 +557,8 @@ export const api = createApi({
 
 export const {
   useGetNameAttributesQuery,
+  useGetFavorableFullNamesQuery,
+  useGetFullNamesQuery,
   useSaveNameAttributesMutation,
   useGetCodeAttributesQuery,
   useSaveCodeAttributesMutation,
@@ -540,6 +580,7 @@ export const {
   useGetDistinctSectionAttributesQuery,
   useGetNodeOtherAttributesQuery,
   useSaveNodeOtherAttributesMutation,
+  useGetPredecessorsQuery,
   useGetSuccessorsQuery,
   useSaveSuccessorsMutation,
   useSaveChildMutation,

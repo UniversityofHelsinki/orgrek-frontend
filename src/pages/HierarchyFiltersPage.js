@@ -13,7 +13,7 @@ import {
   useGetHierarchyTypesQuery,
 } from '../store';
 import { t } from 'i18next';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 const HierarchyFiltersPage = () => {
   const dispatch = useDispatch();
