@@ -26,13 +26,19 @@ const LanguageSelect = () => {
     document.documentElement.lang = event.target.value;
   };
 
+  const languageSelectId = 'language-select';
   return (
     <TextField
       size="small"
       select
-      label={t('language')}
+      id={languageSelectId}
       value={i18n.language}
+      label={t('language')}
+      defaultValue={i18n.language}
       onChange={handleChange}
+      inputProps={{
+        id: languageSelectId,
+      }}
       InputProps={{
         startAdornment: (
           <InputAdornment position="start">
