@@ -65,7 +65,7 @@ const asFormValues = (children) => {
   }, {});
 };
 
-const ChildrenSection = () => {
+const ChildrenSection = ({ showHistory, showFuture }) => {
   const { t } = useTranslation();
   const { children: childrenByLanguage, isFetching } = useChildren();
   const dispatch = useDispatch();
@@ -73,7 +73,11 @@ const ChildrenSection = () => {
   const contentLanguage = useContentLanguage();
   const [showForm, setShowForm] = useState(false);
   const existingChildren = childrenByLanguage[contentLanguage] || [];
-  const filteredByDateChildren = useFilterUnitsByDate(existingChildren);
+  const filteredByDateChildren = useFilterUnitsByDate(
+    existingChildren,
+    showHistory,
+    showFuture
+  );
   const [validationSchema, setValidationSchema] = useState();
   const empty = existingChildren.length === 0;
   const initialFormValues = asFormValues(existingChildren);

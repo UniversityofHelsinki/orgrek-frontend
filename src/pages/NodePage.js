@@ -12,12 +12,20 @@ import TreeItem from '../components/tree/TreeItem';
 import { useNodeId } from '../hooks/useNodeId';
 
 const NodePage = () => {
-  // Temporary solution until the old NodeDetails component is removed
-  const editMode = useSelector((state) => state.editModeReducer.edit);
-
   const language = useContentLanguage();
   const { trees: treesByLanguage, isFetching } = useTree();
   const selectedNodeId = useNodeId();
+
+  const [showHistory, setShowHistory] = useState(false);
+  const [showFuture, setShowFuture] = useState(false);
+
+  const onSwitchHistoryClick = (v) => setShowHistory(v);
+  const onSwitchFutureClick = (v) => setShowFuture(v);
+
+  const switchHandlers = {
+    onSwitchHistory: onSwitchHistoryClick,
+    onSwitchFuture: onSwitchFutureClick,
+  };
 
   const theme = useTheme();
 
@@ -75,7 +83,7 @@ const NodePage = () => {
           sm={12}
           md={12}
         >
-          <Hierarchy />
+          <Hierarchy switchHandlers={switchHandlers} />
         </Grid>
         <Grid
           item
@@ -98,7 +106,7 @@ const NodePage = () => {
             }}
           >
             <Tree
-              trees={treesByLanguage[language]}
+              trees={treesByLanguage[language] || []}
               loading={isFetching}
               targetNodeIdentifier={selectedNodeId}
             />
@@ -136,7 +144,9 @@ const NodePage = () => {
           </Divider>
         </Grid>
         <Grid item xs md>
-          {!editMode && <NodeDetails />}
+          {selectedNodeId && (
+            <NodeDetails showHistory={showHistory} showFuture={showFuture} />
+          )}
         </Grid>
       </Grid>
     </Container>

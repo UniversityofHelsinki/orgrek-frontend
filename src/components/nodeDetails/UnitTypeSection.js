@@ -17,7 +17,7 @@ import { defaultSchemaForAttributes } from '../../utils/validations';
 import useFilterAttributesByDate from '../../hooks/useFilterAttributesByDate';
 import useUnitTypeOptions from '../../hooks/useUnitTypeOptions';
 
-const UnitTypeSection = () => {
+const UnitTypeSection = ({ showHistory, showFuture }) => {
   const { t } = useTranslation();
   const nodeId = useNodeId();
   const { data: keysData, isFetching: isFetchingKeys } =
@@ -31,10 +31,14 @@ const UnitTypeSection = () => {
   const keys = (keysData || []).map((key) => key.attr);
 
   // In edit mode data includes also history and future
-  const sortedData = useSortAttributesByDate(data);
+  const sortedData = data ? data : [];
 
   // In view mode filter history and future depending on selection
-  const sortedAndFilteredData = useFilterAttributesByDate(sortedData);
+  const sortedAndFilteredData = useFilterAttributesByDate(
+    sortedData,
+    showHistory,
+    showFuture
+  );
 
   const toFormValues = (data) => {
     const foundTypes = [];

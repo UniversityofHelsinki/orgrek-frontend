@@ -2,14 +2,18 @@ import { Link as RouterLink, useLocation } from 'react-router-dom';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import React from 'react';
+import { useSearchParams } from 'react-router-dom';
 
-const NavLink = ({ to, text, sx }) => {
-  const { pathname } = useLocation();
+const NavLink = ({ to, text, sx, keepSearchParams = true }) => {
+  const { pathname, search } = useLocation();
+  const [searchParams] = useSearchParams();
   const active = pathname === to;
+
+  const destination = keepSearchParams ? `${to}${search}` : pathname;
   return (
     <Box
       component={RouterLink}
-      to={to}
+      to={destination}
       sx={{
         height: '100%',
         color: 'divider',

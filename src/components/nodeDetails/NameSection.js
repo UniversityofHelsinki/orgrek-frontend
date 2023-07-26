@@ -12,7 +12,6 @@ import {
   useSaveNameAttributesMutation,
   useGetAttributeKeysBySectionQuery,
 } from '../../store';
-import useSortAttributesByDate from '../../hooks/useSortAttributesByDate';
 import useFilterAttributesByDate from '../../hooks/useFilterAttributesByDate';
 import {
   defaultSchemaForAttributes,
@@ -21,7 +20,7 @@ import {
 import { authActions } from '../../auth';
 import { flattenAttributes, toFormValues } from '../../utils/attributeUtils';
 
-const NameSection = () => {
+const NameSection = ({ showHistory, showFuture }) => {
   const { t } = useTranslation();
   const nodeId = useNodeId();
   const { data, isFetching } = useGetNameAttributesQuery(nodeId);
@@ -31,11 +30,12 @@ const NameSection = () => {
 
   const keys = (keysData || []).map((key) => key.attr);
 
-  // In edit mode data includes also history and future
-  const sortedData = useSortAttributesByDate(data);
-
   // In view mode filter history and future depending on selection
-  const sortedAndFilteredData = useFilterAttributesByDate(sortedData);
+  const sortedAndFilteredData = useFilterAttributesByDate(
+    data,
+    showHistory,
+    showFuture
+  );
 
   // Validates form values every time when the values change
   // Submit button is disabled when validation fails
@@ -60,14 +60,10 @@ const NameSection = () => {
   const title = t('name_info');
   const empty = sortedAndFilteredData.length === 0;
 
-  const sortedDataByKeys = keys
-    .map((key) => sortedAndFilteredData.filter((value) => value.key === key))
-    .flat();
-
   const renderedContent = (
     <AttributesTable
       columns={columns}
-      data={sortedDataByKeys}
+      data={sortedAndFilteredData}
       summary={title}
     />
   );
@@ -81,7 +77,7 @@ const NameSection = () => {
       <EditableContent
         editorComponent={<NameEditor keys={keys} />}
         validationSchema={validationSchema}
-        initialValues={toFormValues(sortedData, keys)}
+        initialValues={toFormValues(sortedAndFilteredData, keys)}
         onSubmit={handleSubmit}
         successMessage={t('nameInfo.saveSuccess')}
         errorMessage={t('nameInfo.saveError')}
