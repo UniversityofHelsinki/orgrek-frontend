@@ -12,7 +12,6 @@ import {
   useSaveNameAttributesMutation,
   useGetAttributeKeysBySectionQuery,
 } from '../../store';
-import useSortAttributesByDate from '../../hooks/useSortAttributesByDate';
 import useFilterAttributesByDate from '../../hooks/useFilterAttributesByDate';
 import {
   defaultSchemaForAttributes,
@@ -31,12 +30,9 @@ const NameSection = ({ showHistory, showFuture }) => {
 
   const keys = (keysData || []).map((key) => key.attr);
 
-  // In edit mode data includes also history and future
-  const sortedData = useSortAttributesByDate(data);
-
   // In view mode filter history and future depending on selection
   const sortedAndFilteredData = useFilterAttributesByDate(
-    sortedData,
+    data,
     showHistory,
     showFuture
   );
@@ -64,14 +60,10 @@ const NameSection = ({ showHistory, showFuture }) => {
   const title = t('name_info');
   const empty = sortedAndFilteredData.length === 0;
 
-  const sortedDataByKeys = keys
-    .map((key) => sortedAndFilteredData.filter((value) => value.key === key))
-    .flat();
-
   const renderedContent = (
     <AttributesTable
       columns={columns}
-      data={sortedDataByKeys}
+      data={sortedAndFilteredData}
       summary={title}
     />
   );
@@ -85,7 +77,7 @@ const NameSection = ({ showHistory, showFuture }) => {
       <EditableContent
         editorComponent={<NameEditor keys={keys} />}
         validationSchema={validationSchema}
-        initialValues={toFormValues(sortedData, keys)}
+        initialValues={toFormValues(sortedAndFilteredData, keys)}
         onSubmit={handleSubmit}
         successMessage={t('nameInfo.saveSuccess')}
         errorMessage={t('nameInfo.saveError')}
