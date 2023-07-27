@@ -25,6 +25,7 @@ const OtherAttributesSection = ({ showHistory, showFuture }) => {
     showHistory,
     showFuture
   );
+
   const filtered = sortedAndFilteredData.filter(
     (attribute) => !attribute.isNew
   );

@@ -31,7 +31,7 @@ const UnitTypeSection = ({ showHistory, showFuture }) => {
   const keys = (keysData || []).map((key) => key.attr);
 
   // In edit mode data includes also history and future
-  const sortedData = useSortAttributesByDate(data);
+  const sortedData = data ? data : [];
 
   // In view mode filter history and future depending on selection
   const sortedAndFilteredData = useFilterAttributesByDate(

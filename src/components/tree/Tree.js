@@ -44,6 +44,10 @@ const Tree = memo(function Tree({
     return <Skeleton variant="rectangular" height={256} />;
   }
 
+  if (trees.length === 0) {
+    return <span>{t('tree_no_results')}</span>;
+  }
+
   const containerProps = {
     role: 'tree',
     'aria-label': t('tree_container_label'),
