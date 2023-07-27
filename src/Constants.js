@@ -49,3 +49,19 @@ export const codeAttributes = [
   researchId,
   successorHierarchy,
 ];
+
+export const languageCodes = {
+  fi: 'fi',
+  en: 'en',
+  sv: 'sv-FI',
+  ia: 'fi',
+};
+
+export const attributeLangCodes = {
+  name_fi: languageCodes['fi'],
+  name_sv: languageCodes['sv'],
+  name_en: languageCodes['en'],
+  // we default to fi
+  null: languageCodes['fi'],
+  undefined: languageCodes['fi'],
+};
