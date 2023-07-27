@@ -2,9 +2,12 @@ import React from 'react';
 import Link from '../Link';
 import { useTranslation } from 'react-i18next';
 import useHierarchies from '../../hooks/useHierarchies';
+import useContentLanguage from '../../hooks/useContentLanguage';
 
 const NodeLabel = ({ node, labelId, onClick, style }) => {
   const { t } = useTranslation();
+  const language = useContentLanguage();
+  const nameField = language === 'ia' ? 'fi' : language;
   const [hierarchies] = useHierarchies();
 
   const hierarchiesHidden = hierarchies.every((hierarchy) =>
@@ -33,7 +36,7 @@ const NodeLabel = ({ node, labelId, onClick, style }) => {
   return (
     <>
       <Link onClick={onClick} node={node.uniqueId} id={labelId} sx={linkStyle}>
-        {node.name}
+        {node.names[nameField]}
       </Link>
       {node.hierarchies.map(asSpans)}
     </>

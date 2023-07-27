@@ -9,9 +9,11 @@ const OrganisationUnitSearch = ({
   selectedParentOrganisationUnit,
 }) => {
   const { t } = useTranslation();
-  const [singleSelections, setSingleSelections] = useState([]);
-  const { tree } = useTree();
   const language = useContentLanguage();
+  const languageField = language === 'ia' ? 'fi' : language;
+
+  const [singleSelections, setSingleSelections] = useState([]);
+  const { trees } = useTree();
 
   const handleChange = (value) => {
     setSingleSelections(value);
@@ -27,20 +29,11 @@ const OrganisationUnitSearch = ({
   const flatten = (current) =>
     current.reduce((a, c) => [...a, c, ...flatten(c.children)], []);
 
-  const options =
-    tree && tree[language] ? flatten(tree[language].children) : [];
+  const options = trees ? flatten(trees) : [];
   const uniqueOptions = options.filter(
     (elem, index) =>
       options.findIndex((obj) => obj.uniqueId === elem.uniqueId) === index
   );
-  if (tree && tree[language]) {
-    const hy = {
-      id: tree[language].id,
-      name: tree[language].name,
-      uniqueId: tree[language].uniqueId,
-    };
-    uniqueOptions.push(hy);
-  }
 
   const nameMatches = (name, text) => {
     return name.toLowerCase().indexOf(text.toLowerCase()) !== -1;
@@ -54,10 +47,10 @@ const OrganisationUnitSearch = ({
     <Typeahead
       data-testid="ousearch"
       id="ou-code-and-name-search"
-      labelKey={(option) => `${option.name}`}
+      labelKey={(option) => `${option.names[languageField]}`}
       filterBy={(option, props) => {
         return (
-          nameMatches(option.name, props.text) ||
+          nameMatches(option.names[languageField], props.text) ||
           uniqueIdMatches(option.uniqueId, props.text)
         );
       }}
