@@ -31,7 +31,11 @@ export const Combobox = {
     const [value, setValue] = useState(args.value);
 
     const handleChange = (event, newValue, reason) => {
-      setValue(newValue);
+      if (newValue) {
+        setValue({ ...newValue, names: { fi: newValue.name } });
+      } else {
+        setValue(null);
+      }
       if (args.onChange) {
         args.onChange(event, newValue, reason);
       }
@@ -90,7 +94,10 @@ export const ExistingValue = {
   ...Combobox,
   args: {
     ...Combobox.args,
-    value: { id: 38919588, name: 'TIKE, Tietotekniikkaratkaisut (TIRA)' },
+    value: {
+      id: 38919588,
+      names: { fi: 'TIKE, Tietotekniikkaratkaisut (TIRA)' },
+    },
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement.parentElement);

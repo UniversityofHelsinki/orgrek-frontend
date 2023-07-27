@@ -16,18 +16,30 @@ const trees = [
   {
     id: '1',
     uniqueId: '123',
-    name: 'Root unit',
+    names: {
+      fi: 'Root unit',
+      en: 'Root unit',
+      sv: 'Root unit',
+    },
     hierarchies: ['virallinen'],
     children: [
       {
         id: '2',
         uniqueId: '123123',
-        name: 'I have children',
+        names: {
+          fi: 'I have children',
+          en: 'I have children',
+          sv: 'I have children',
+        },
         hierarchies: ['virallinen'],
         children: [
           {
             id: '4',
-            name: "I'm a child",
+            names: {
+              fi: "I'm a child",
+              sv: "I'm a child",
+              en: "I'm a child",
+            },
             uniqueId: '123123123',
             hierarchies: ['virallinen'],
             children: [],
@@ -38,7 +50,11 @@ const trees = [
         hierarchies: ['virallinen'],
         id: '3',
         uniqueId: '321321',
-        name: 'Childless unit',
+        names: {
+          fi: 'Childless unit',
+          sv: 'Childless unit',
+          en: 'Childless unit',
+        },
         children: [],
       },
     ],

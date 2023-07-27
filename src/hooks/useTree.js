@@ -11,18 +11,14 @@ const useTree = () => {
     selectedDay: state.dr.selectedDay,
   }));
 
-  const [hierarchies, setHierarchies] = useHierarchies();
+  const [hierarchies] = useHierarchies();
 
   const { data, error, isFetching } = useGetTreeQuery({
     hierarchies,
     selectedDay,
   });
 
-  const emptyTrees = {
-    fi: [],
-    sv: [],
-    en: [],
-  };
+  const emptyTrees = [];
 
   if (error) {
     return { trees: emptyTrees, error, isFetching };

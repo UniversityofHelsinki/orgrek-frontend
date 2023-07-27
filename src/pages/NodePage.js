@@ -13,7 +13,7 @@ import { useNodeId } from '../hooks/useNodeId';
 
 const NodePage = () => {
   const language = useContentLanguage();
-  const { trees: treesByLanguage, isFetching } = useTree();
+  const { trees, isFetching } = useTree();
   const selectedNodeId = useNodeId();
 
   const [showHistory, setShowHistory] = useState(false);
@@ -106,7 +106,7 @@ const NodePage = () => {
             }}
           >
             <Tree
-              trees={treesByLanguage[language] || []}
+              trees={trees || []}
               loading={isFetching}
               targetNodeIdentifier={selectedNodeId}
             />
