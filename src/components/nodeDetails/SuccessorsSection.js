@@ -18,6 +18,8 @@ import { toFormValues } from '../../utils/attributeUtils';
 const SuccessorsSection = () => {
   const { t } = useTranslation();
   const nodeId = useNodeId();
+  const language = useContentLanguage();
+  const languageField = language === 'ia' ? 'fi' : language;
   const { data, isFetching } = useGetSuccessorsQuery(nodeId);
   const [saveSuccessors] = useSaveSuccessorsMutation();
   const contentLanguage = useContentLanguage();
@@ -32,7 +34,11 @@ const SuccessorsSection = () => {
   const asAttribute = (successor) => ({
     id: successor.edgeId,
     key: successor.fullName,
-    value: { id: successor.uniqueId, name: successor.fullName },
+    value: {
+      id: successor.uniqueId,
+      name: successor.fullName,
+      names: { [languageField]: successor.fullName },
+    },
     nodeStartDate: successor.startDate,
     nodeEndDate: successor.endDate,
     startDate: successor.edgeStartDate,

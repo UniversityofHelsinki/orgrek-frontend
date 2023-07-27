@@ -12,6 +12,7 @@ import { useNodeId } from '../../hooks/useNodeId';
 import HelperText from '../inputs/HelperText';
 import useFormField from '../../hooks/useFormField';
 import useHierarchies from '../../hooks/useHierarchies';
+import useContentLanguage from '../../hooks/useContentLanguage';
 
 const HierarchyField = ({ path }) => {
   const { t } = useTranslation();
@@ -38,6 +39,8 @@ const HierarchyField = ({ path }) => {
 const RelationEditor = ({ units, onUnitChange, editortitle }) => {
   const { t } = useTranslation();
   const currentNodeId = useNodeId();
+  const language = useContentLanguage();
+  const languageField = language === 'ia' ? 'fi' : language;
   const [unitNames, setUnitNames] = useState(units);
   const getUnitName = (id) => {
     return unitNames.find((unit) => `s${unit.uniqueId}` === id)?.fullName;
