@@ -60,6 +60,7 @@ storybook_test:
     - npm run storybook:build
     - npm run storybook:test:ci
   coverage: /All files\s*\|\s*([\d\.]+)/
+
 sonarqube-check:
   stage: test
   tags:
@@ -78,7 +79,7 @@ sonarqube-check:
     - sonar-scanner
   allow_failure: true
   only:
-    - main
+    - master
 
 build_dev:
   stage: build
