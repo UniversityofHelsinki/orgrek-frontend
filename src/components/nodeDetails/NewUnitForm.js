@@ -155,15 +155,18 @@ const NewUnitForm = ({ open, onClose, handleSubmit }) => {
     </Stack>
   );
 
+  const stickyChildren = (
+    <Stack spacing={2}>
+      <Node />
+      <Hierarchies hierarchies={selectedHierarchies} />
+    </Stack>
+  );
+
   const content = (
-    <>
-      <Stack spacing={2}>
-        <Node />
-        <Hierarchies hierarchies={selectedHierarchies} />
-        <ValidFromField />
-        <NameFields />
-      </Stack>
-    </>
+    <Stack spacing={2}>
+      <ValidFromField />
+      <NameFields />
+    </Stack>
   );
 
   return (
@@ -172,9 +175,20 @@ const NewUnitForm = ({ open, onClose, handleSubmit }) => {
         onSubmit={handleSubmit}
         initialValues={emptyNode}
         validationSchema={validationSchema}
+        sx={{ overflowY: 'auto' }}
       >
         <DialogTitle>{headerRow}</DialogTitle>
         <Divider />
+        <DialogContent
+          sx={{
+            backgroundColor: 'white',
+            position: 'sticky',
+            top: 0,
+            zIndex: 30,
+          }}
+        >
+          {stickyChildren}
+        </DialogContent>
         <DialogContent>{content}</DialogContent>
         <Divider />
         <DialogActions>
