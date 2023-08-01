@@ -8,10 +8,14 @@ const baseUrl = `${process.env.REACT_APP_ORGREK_BACKEND_SERVER || ''}/api`;
 export const mockGetNode = (nodeId, body) =>
   rest.get(`${baseUrl}/node/${nodeId}`, (req, res, ctx) => res(ctx.json(body)));
 
-export const mockGetNameAttributes = (nodeId, body) =>
-  rest.get(`${baseUrl}/node/${nodeId}/attributes/names`, (req, res, ctx) =>
-    res(ctx.json(body))
+export const mockGetAttributes = (nodeId, body, date) => {
+  return rest.get(
+    `${baseUrl}/node/${nodeId}/virallinen/${formatApiDate(
+      date || new Date()
+    )}/attributes`,
+    (req, res, ctx) => res(ctx.json(body))
   );
+};
 
 export const mockPutNameAttributes = (nodeId) =>
   rest.put(`${baseUrl}/node/${nodeId}/attributes/names`, (req, res, ctx) =>
@@ -34,7 +38,7 @@ export const mockGetValidHierarchyFilters = (date, body) =>
     (req, res, ctx) => res(ctx.json(body))
   );
 
-export const mockGetCodeAttributes = (nodeId, body) =>
+export const mockGetCodeAttributes = (nodeId, body, date) =>
   rest.get(`${baseUrl}/node/${nodeId}/attributes/codes`, (req, res, ctx) =>
     res(ctx.json(body))
   );
