@@ -6,16 +6,12 @@ export const api = createApi({
     baseUrl: `${process.env.REACT_APP_ORGREK_BACKEND_SERVER || ''}/api`,
   }),
   tagTypes: [
-    'NameAttributes',
+    'Attributes',
     'Tree',
-    'AttributeKeys',
-    'TypeAttributes',
     'HierarchyFilters',
-    'CodeAttributes',
     'NodeValidity',
     'Parents',
     'Children',
-    'NodeOtherAttributes',
     'SaveNodeOtherAttributes',
     'Predecessors',
     'Successors',
@@ -66,12 +62,14 @@ export const api = createApi({
         };
       },
     }),
-    getNameAttributes: builder.query({
-      providesTags: (result, error, nodeId) => [
-        { type: 'NameAttributes', nodeId },
+    getAttributes: builder.query({
+      providesTags: (result, error, { nodeId }) => [
+        { type: 'Attributes', id: nodeId },
       ],
-      query: (nodeId) => ({
-        url: `/node/${nodeId}/attributes/names`,
+      query: ({ nodeId, hierarchies, date }) => ({
+        url: `/node/${nodeId}/${hierarchies}/${date.toLocaleDateString(
+          'fi-FI'
+        )}/attributes`,
         method: 'GET',
       }),
     }),
@@ -80,7 +78,7 @@ export const api = createApi({
         if (error) {
           return [];
         }
-        return [{ type: 'NameAttributes', nodeId }, { type: 'Tree' }];
+        return [{ type: 'Attributes', id: nodeId }, { type: 'Tree' }];
       },
       query: ({ attributes, nodeId }) => {
         return {
@@ -90,21 +88,12 @@ export const api = createApi({
         };
       },
     }),
-    getTypeAttributes: builder.query({
-      providesTags: (result, error, nodeId) => [
-        { type: 'TypeAttributes', nodeId },
-      ],
-      query: (nodeId) => ({
-        url: `node/${nodeId}/attributes/types`,
-        method: 'GET',
-      }),
-    }),
     saveTypeAttributes: builder.mutation({
       invalidatesTags: (result, error, { nodeId }) => {
         if (error) {
           return [];
         }
-        return [{ type: 'TypeAttributes', nodeId }, { type: 'Tree' }];
+        return [{ type: 'Attributes', id: nodeId }, { type: 'Tree' }];
       },
       query: ({ valuesArray, nodeId }) => {
         return {
@@ -170,54 +159,18 @@ export const api = createApi({
         };
       },
     }),
-
-    getCodeAttributes: builder.query({
-      providesTags: (result, error, { nodeId }) => [
-        { type: 'CodeAttributes', id: nodeId },
-      ],
-      query: ({ nodeId }) => ({
-        url: `/node/${nodeId}/attributes/codes`,
-        method: 'GET',
-      }),
-    }),
     saveCodeAttributes: builder.mutation({
       invalidatesTags: (result, error, { nodeId }) => {
         if (error) {
           return [];
         }
-        return [{ type: 'CodeAttributes', id: nodeId }, { type: 'Tree' }];
+        return [{ type: 'Attributes', id: nodeId }, { type: 'Tree' }];
       },
       query: ({ attributes, nodeId }) => {
         return {
           url: `/node/${nodeId}/attributes/codes`,
           method: 'PUT',
           body: attributes,
-        };
-      },
-    }),
-    getAttributeKeys: builder.query({
-      providesTags: (result, error, selectedHierarchies) => [
-        { type: 'AttributeKeys', selectedHierarchies },
-      ],
-      query: ({ selectedHierarchies, sections }) => ({
-        url: `/hierarchyFilters/${selectedHierarchies}/${sections.toString()}/attributes/keys`,
-        method: 'GET',
-      }),
-    }),
-    getAttributeKeysBySection: builder.query({
-      query: (sectionType) => ({
-        url: `/node/section/${sectionType}/attributes`,
-        method: 'GET',
-      }),
-    }),
-    getNodeOtherAttributes: builder.query({
-      providesTags: (result, error, { nodeId }) => [
-        { type: 'NodeOtherAttributes', id: nodeId },
-      ],
-      query: ({ nodeId, selectedHierarchies }) => {
-        return {
-          url: `/node/${nodeId}/attributes/others/hierarchies/${selectedHierarchies}`,
-          method: 'GET',
         };
       },
     }),
@@ -235,7 +188,7 @@ export const api = createApi({
         if (error) {
           return [];
         }
-        return [{ type: 'NodeOtherAttributes', id: nodeId }, { type: 'Tree' }];
+        return [{ type: 'Attributes', id: nodeId }, { type: 'Tree' }];
       },
       query: ({ valuesArray, nodeId }) => {
         return {
@@ -556,29 +509,24 @@ export const api = createApi({
 });
 
 export const {
-  useGetNameAttributesQuery,
+  useGetAttributesQuery,
   useGetFavorableFullNamesQuery,
   useGetFullNamesQuery,
   useSaveNameAttributesMutation,
-  useGetCodeAttributesQuery,
   useSaveCodeAttributesMutation,
-  useGetAttributeKeysQuery,
   useGetTreeQuery,
-  useGetTypeAttributesQuery,
   useGetHierarchyFiltersQuery,
   useSaveHierarchyFiltersMutation,
   useInsertHierarchyFiltersMutation,
   useDeleteHierarchyFiltersMutation,
   useGetValidHierarchyFiltersQuery,
   useSaveTypeAttributesMutation,
-  useGetAttributeKeysBySectionQuery,
   useGetNodeValidityQuery,
   useSaveNodeValidityMutation,
   useSaveParentsMutation,
   useGetParentsQuery,
   useGetDistinctNodeAttributesQuery,
   useGetDistinctSectionAttributesQuery,
-  useGetNodeOtherAttributesQuery,
   useSaveNodeOtherAttributesMutation,
   useGetPredecessorsQuery,
   useGetSuccessorsQuery,
