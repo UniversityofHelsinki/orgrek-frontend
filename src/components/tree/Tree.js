@@ -125,6 +125,7 @@ const Tree = ({
   return (
     <Card
       role="region"
+      aria-label={t('tree_container_label')}
       variant="outlined"
       sx={{ border: '0px' }}
       ref={containerRef}
