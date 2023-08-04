@@ -29,7 +29,8 @@ const useFilterAttributesByDate = (data, showHistory, showFuture) => {
   return useMemo(() => {
     return (data || [])
       .filter((item) => showHistory || !isEndDateBeforeSelectedDay(item))
-      .filter((item) => showFuture || !isStartDateAfterSelectedDay(item));
+      .filter((item) => showFuture || !isStartDateAfterSelectedDay(item))
+      .filter((item) => !item.isNew);
   }, [data, selectedDay, showHistory, showFuture]);
 };
 

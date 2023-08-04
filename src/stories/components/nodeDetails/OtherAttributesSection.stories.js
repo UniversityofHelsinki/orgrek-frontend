@@ -1,5 +1,6 @@
 import {
   mockGetAttributeKeys,
+  mockGetAttributes,
   mockGetOtherAttributes,
   mockSaveOtherAttributes,
   withMockStore,
@@ -22,6 +23,7 @@ export default {
     reactRouter: {
       searchParams: {
         uid: nodeId,
+        hierarhies: selectedHierarchy,
       },
     },
   },
@@ -29,50 +31,46 @@ export default {
 
 export const Default = {
   parameters: {
+    systemTime: now,
     msw: {
       handlers: [
-        mockGetOtherAttributes(nodeId, selectedHierarchy, [
-          {
-            id: 1001,
-            nodeId: '1',
-            key: 'publicity',
-            value: 'julkinen',
-            startDate: null,
-            endDate: null,
-          },
-          {
-            id: 1002,
-            nodeId: '1',
-            key: 'attribute2',
-            value: 'previous value',
-            startDate: '2013-01-01',
-            endDate: '2015-06-30',
-          },
-          {
-            id: 1002,
-            nodeId: '1',
-            key: 'attribute2',
-            value: 'current value',
-            startDate: '2015-07-01',
-            endDate: '2023-12-31',
-          },
-          {
-            id: 1002,
-            nodeId: '1',
-            key: 'attribute2',
-            value: 'next value',
-            startDate: '2024-01-01',
-            endDate: null,
-          },
-        ]),
+        mockGetAttributes(nodeId, {
+          other_attributes: [
+            {
+              id: 1001,
+              nodeId: '1',
+              key: 'publicity',
+              value: 'julkinen',
+              startDate: null,
+              endDate: null,
+            },
+            {
+              id: 1002,
+              nodeId: '1',
+              key: 'attribute2',
+              value: 'previous value',
+              startDate: '2013-01-01',
+              endDate: '2015-06-30',
+            },
+            {
+              id: 1002,
+              nodeId: '1',
+              key: 'attribute2',
+              value: 'current value',
+              startDate: '2015-07-01',
+              endDate: '2023-12-31',
+            },
+            {
+              id: 1002,
+              nodeId: '1',
+              key: 'attribute2',
+              value: 'next value',
+              startDate: '2024-01-01',
+              endDate: null,
+            },
+          ],
+        }),
         mockSaveOtherAttributes(nodeId),
-        mockGetAttributeKeys(
-          {
-            selectedHierarchies: selectedHierarchy,
-            sections: ['other_attributes'],
-          },
-          keys
-        ),
       ],
     },
   },
@@ -101,7 +99,7 @@ export const Empty = {
   parameters: {
     msw: {
       handlers: [
-        mockGetOtherAttributes(nodeId, selectedHierarchy, []),
+        mockGetAttributes(nodeId, { other_attributes: [] }),
         mockSaveOtherAttributes(nodeId),
         mockGetAttributeKeys(
           {

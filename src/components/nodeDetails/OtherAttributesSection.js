@@ -7,68 +7,48 @@ import { authActions } from '../../auth';
 import EditableContent from '../EditableContent';
 import OtherAttributesEditor from './OtherAttributesEditor';
 import { toFormValues } from '../../utils/attributeUtils';
-import { useOtherAttributes } from '../../hooks/useOtherAttributes';
 import useFilterAttributesByDate from '../../hooks/useFilterAttributesByDate';
 import { useNodeId } from '../../hooks/useNodeId';
 import { useSaveNodeOtherAttributesMutation } from '../../store';
 import { defaultSchemaForAttributes } from '../../utils/validations';
+import useAttributes from '../../hooks/useAttributes';
 
 const OtherAttributesSection = ({ showHistory, showFuture }) => {
   const { t } = useTranslation();
   const nodeId = useNodeId();
-  const { nodeOtherAttributes, isFetching } = useOtherAttributes();
+  const { data: nodeOtherAttributes, isFetching } =
+    useAttributes('other_attributes');
   const [saveOtherAttributes] = useSaveNodeOtherAttributesMutation();
 
   // In view mode filter history and future depending on selection
-  const sortedAndFilteredData = useFilterAttributesByDate(
+  const visibleAttributes = useFilterAttributesByDate(
     nodeOtherAttributes,
     showHistory,
     showFuture
   );
 
-  const filtered = sortedAndFilteredData.filter(
-    (attribute) => !attribute.isNew
-  );
-
   const title = t('other_attributes');
-  const empty = filtered.length === 0;
+  const empty = visibleAttributes.length === 0;
 
   if (isFetching) {
     return <EditableAccordion title={title} loading />;
   }
 
-  const existingAttributes = toFormValues(
-    nodeOtherAttributes.filter((a) => !a.isNew)
+  const formValues = toFormValues(
+    nodeOtherAttributes.filter((a) => !a.isNew),
+    nodeOtherAttributes.filter((a) => a.isNew).map((a) => a.key)
   );
-  const newAttributes = nodeOtherAttributes
-    .filter((a) => a.isNew)
-    .map((a) => a.key)
-    .reduce((accumulated, current) => ({ ...accumulated, [current]: [] }), {});
+  const keys = Object.keys(formValues);
 
-  const initialValues = {
-    ...existingAttributes,
-    ...newAttributes,
-  };
+  const validationSchema = defaultSchemaForAttributes(keys);
 
-  // Validates form values every time when the values change
-  // Submit button is disabled when validation fails
-  const validationSchema = defaultSchemaForAttributes(
-    Object.keys(initialValues)
-  );
-
-  const asAttribute = (nodeId) => (otherAttr) => ({
-    id: otherAttr.id,
-    key: otherAttr.key,
-    nodeId: nodeId,
-    value: otherAttr.value,
-    startDate: otherAttr.startDate,
-    endDate: otherAttr.endDate,
-    isNew: Boolean(otherAttr.isNew),
-    deleted: Boolean(otherAttr.deleted),
-  });
+  const metas = nodeOtherAttributes.reduce((accumulated, current) => {
+    accumulated[current.key] = current.meta;
+    return accumulated;
+  }, {});
 
   const handleSubmit = (values) => {
-    const valuesArray = Object.values(values).flat().map(asAttribute(nodeId));
+    const valuesArray = Object.values(values).flat();
     return saveOtherAttributes({ valuesArray, nodeId }).unwrap();
   };
 
@@ -79,10 +59,8 @@ const OtherAttributesSection = ({ showHistory, showFuture }) => {
       defaultExpanded={!empty}
     >
       <EditableContent
-        editorComponent={
-          <OtherAttributesEditor attributes={nodeOtherAttributes} />
-        }
-        initialValues={initialValues}
+        editorComponent={<OtherAttributesEditor metas={metas} />}
+        initialValues={formValues}
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
         successMessage={t('otherAttributeInfo.saveSuccess')}
@@ -90,7 +68,7 @@ const OtherAttributesSection = ({ showHistory, showFuture }) => {
         authActions={authActions.otherAttributes}
       >
         <Placeholder empty={empty} placeholder={t('otherAttributeInfo.empty')}>
-          <AttributesTable data={filtered} summary={title} />
+          <AttributesTable data={visibleAttributes} summary={title} />
         </Placeholder>
       </EditableContent>
     </EditableAccordion>
