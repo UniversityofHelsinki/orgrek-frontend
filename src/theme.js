@@ -392,6 +392,17 @@ const theme = createTheme(
                 backgroundColor: '#dfdfdf',
               },
             },
+            '&:focus-within': {
+              ' .MuiSwitch-track': {
+                backgroundColor: '#dfdfdf',
+              },
+              ' .Mui-checked + .MuiSwitch-track': {
+                backgroundColor: '#0e719a',
+              },
+              ' .Mui-checked.Mui-disabled + .MuiSwitch-track': {
+                backgroundColor: '#dfdfdf',
+              },
+            },
           },
           sizeSmall: {
             padding: 4,
