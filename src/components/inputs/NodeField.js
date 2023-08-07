@@ -41,10 +41,10 @@ const NodeField = ({
   const { t } = useTranslation();
   const { trees } = useTree();
   const language = useContentLanguage();
-  const options =
-    trees && trees[language]
-      ? trees[language].map((tree) => (tree ? flatten([tree]) : [])).flat()
-      : [];
+  const languageField = language === 'ia' ? 'fi' : language;
+  const options = trees
+    ? trees.map((tree) => (tree ? flatten([tree]) : [])).flat()
+    : [];
   const [inputValue, setInputValue] = useState('');
 
   const uniqueOptions = [
@@ -56,7 +56,9 @@ const NodeField = ({
   const handleChange = (event, newValue, reason) => {
     onChange(
       event,
-      newValue === null ? null : { id: newValue.uniqueId, name: newValue.name },
+      newValue === null
+        ? null
+        : { id: newValue.uniqueId, name: newValue.names[languageField] },
       reason
     );
     if (clearOnSelect) {
@@ -90,17 +92,17 @@ const NodeField = ({
       options={filtered}
       inputValue={inputValue}
       onInputChange={(event, value) => setInputValue(value)}
-      getOptionLabel={(option) => option.name || ''}
+      getOptionLabel={(option) => (option && option.names[languageField]) || ''}
       renderOption={(props, option) => (
-        <li {...props} key={`${option.name}`}>
-          {option.name}
+        <li {...props} key={`${option.names[languageField]}`}>
+          {option.names[languageField]}
         </li>
       )}
       filterOptions={(options, state) => {
         if (state.inputValue.length > 2) {
           return options.filter(
             (option) =>
-              nameMatches(option.name, state.inputValue) ||
+              nameMatches(option.names[languageField], state.inputValue) ||
               uniqueIdMatches(option.uniqueId, state.inputValue)
           );
         }

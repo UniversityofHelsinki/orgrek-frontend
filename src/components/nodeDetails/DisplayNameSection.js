@@ -9,6 +9,7 @@ import useSortAttributesByLanguage from '../../hooks/useSortAttributesByLanguage
 import { useGetFullNamesQuery } from '../../store';
 import { useNodeId } from '../../hooks/useNodeId';
 import useFilterAttributesByDate from '../../hooks/useFilterAttributesByDate';
+import { languageCodes } from '../../Constants';
 
 const DisplayNameSection = ({ showHistory, showFuture }) => {
   const { t } = useTranslation();
@@ -33,7 +34,12 @@ const DisplayNameSection = ({ showHistory, showFuture }) => {
 
   const columns = [
     { label: t('text_language_header'), render: (item) => t(item.key) },
-    { label: t('name'), render: (item) => item.value },
+    {
+      label: t('name'),
+      render: (item) => (
+        <span lang={languageCodes[item.language]}>{item.value}</span>
+      ),
+    },
     {
       label: t('valid_dates'),
       render: (item) => (

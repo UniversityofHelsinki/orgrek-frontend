@@ -19,12 +19,12 @@ const calculateNodesInPathTarget = (node, isTarget, results = new Map()) => {
   }
 };
 
-const Tree = memo(function Tree({
+const Tree = ({
   trees,
   loading,
   targetNodeIdentifier,
   getNodeIdentifier = defaultGetNodeIdentifier,
-}) {
+}) => {
   const containerRef = useRef();
   const [selectedItem, setSelectedItem] = useState();
   const isTarget = (node) => getNodeIdentifier(node) === targetNodeIdentifier;
@@ -132,7 +132,7 @@ const Tree = memo(function Tree({
       {trees.map(asTree)}
     </Card>
   );
-});
+};
 
 Tree.propTypes = {
   /**

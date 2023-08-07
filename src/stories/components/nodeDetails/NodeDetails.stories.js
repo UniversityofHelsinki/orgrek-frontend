@@ -8,16 +8,13 @@ import {
   hierarchyFilters,
   mockGetAttributeKeys,
   mockGetChildren,
-  mockGetCodeAttributes,
   mockGetFavorableFullNames,
   mockGetFullNames,
-  mockGetNameAttributes,
   mockGetNode,
   mockGetParents,
   mockGetPredecessors,
   mockGetSectionTypeAttributes,
   mockGetSuccessors,
-  mockGetTypeAttributes,
   mockGetValidHierarchyFilters,
   mockPutNameAttributes,
   mockPutTypeAttributes,
@@ -27,9 +24,9 @@ import {
   withMockStore,
   mockSaveParents,
   mockGetParentsDeprecated,
-  mockGetOtherAttributes,
   mockSaveOtherAttributes,
   mockGetAllFullNames,
+  mockGetAttributes,
 } from '../../../mockStore';
 import { waitFor, within } from '@storybook/testing-library';
 
@@ -54,6 +51,7 @@ export default {
 
 export const AdminRole = {
   parameters: {
+    systemTime: now,
     msw: {
       handlers: [
         mockGetNode(nodeId, {
@@ -88,70 +86,86 @@ export const AdminRole = {
             attr: 'type',
           },
         ]),
-        mockGetNameAttributes(nodeId, [
+        mockGetAttributes(
+          nodeId,
           {
-            id: 4899999926,
-            nodeId: '4820',
-            key: 'name_fi',
-            value: 'Tietotekniikkaratkaisut 1',
-            startDate: '1999-12-31',
-            endDate: null,
+            names: [
+              {
+                id: 4899999926,
+                nodeId: '4820',
+                key: 'name_fi',
+                value: 'Tietotekniikkaratkaisut 1',
+                startDate: '1999-12-31',
+                endDate: null,
+              },
+              {
+                id: 48111122,
+                nodeId: '4820',
+                key: 'name_sv',
+                value: 'Datatekniklösningar',
+                startDate: '1999-12-31',
+                endDate: null,
+              },
+              {
+                id: 480021,
+                nodeId: '4820',
+                key: 'name_en',
+                value: 'IT Solutions 1',
+                startDate: '1999-12-31',
+                endDate: null,
+              },
+            ],
+            codes: [
+              {
+                id: 4824,
+                nodeId: '4820',
+                key: 'virallinen_tunnus',
+                value: 'H9073',
+                startDate: null,
+                endDate: null,
+              },
+              {
+                id: 4823,
+                nodeId: '4820',
+                key: 'lyhenne',
+                value: 'TIRA',
+                startDate: null,
+                endDate: null,
+              },
+              {
+                id: 14528,
+                nodeId: '4820',
+                key: 'emo_lyhenne',
+                value: 'TIKE',
+                startDate: null,
+                endDate: null,
+              },
+            ],
+            types: [
+              {
+                id: 1,
+                nodeId: '1',
+                key: 'type',
+                value: 'tulosyksikko',
+                startDate: null,
+                endDate: null,
+              },
+            ],
+            other_attributes: [
+              {
+                id: 27788,
+                nodeId: '4820',
+                key: 'publicity',
+                value: 'julkinen',
+                startDate: null,
+                endDate: null,
+              },
+            ],
           },
-          {
-            id: 48111122,
-            nodeId: '4820',
-            key: 'name_sv',
-            value: 'Datatekniklösningar',
-            startDate: '1999-12-31',
-            endDate: null,
-          },
-          {
-            id: 480021,
-            nodeId: '4820',
-            key: 'name_en',
-            value: 'IT Solutions 1',
-            startDate: '1999-12-31',
-            endDate: null,
-          },
-        ]),
+          now
+        ),
         mockPutNameAttributes(nodeId),
-        mockGetCodeAttributes(nodeId, [
-          {
-            id: 4824,
-            nodeId: '4820',
-            key: 'virallinen_tunnus',
-            value: 'H9073',
-            startDate: null,
-            endDate: null,
-          },
-          {
-            id: 4823,
-            nodeId: '4820',
-            key: 'lyhenne',
-            value: 'TIRA',
-            startDate: null,
-            endDate: null,
-          },
-          {
-            id: 14528,
-            nodeId: '4820',
-            key: 'emo_lyhenne',
-            value: 'TIKE',
-            startDate: null,
-            endDate: null,
-          },
-        ]),
         mockSaveCodeAttributes(nodeId),
-        mockGetTypeAttributes(nodeId, [
-          {
-            id: 1,
-            nodeId: '1',
-            key: 'type',
-            value: 'tulosyksikko',
-            startDate: null,
-            endDate: null,
-          },
-        ]),
         mockPutTypeAttributes(nodeId),
         mockGetAttributeKeys(
           {
@@ -309,16 +323,6 @@ export const AdminRole = {
           fi: [],
           en: [],
         }),
-        mockGetOtherAttributes(nodeId, selectedHierarchy, [
-          {
-            id: 27788,
-            nodeId: '4820',
-            key: 'publicity',
-            value: 'julkinen',
-            startDate: null,
-            endDate: null,
-          },
-        ]),
         mockSaveOtherAttributes(nodeId),
         mockGetAttributeKeys(
           {

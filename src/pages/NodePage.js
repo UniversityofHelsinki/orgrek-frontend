@@ -1,6 +1,6 @@
 import Hierarchy from '../components/Hierarchy';
 import NodeDetails from '../components/nodeDetails/NodeDetails';
-import React, { useState } from 'react';
+import React, { memo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import Container from '@mui/material/Container';
 import { Box, Divider, Grid, useTheme } from '@mui/material';
@@ -8,12 +8,19 @@ import Tree from '../components/tree/Tree';
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 import useTree from '../hooks/useTree';
 import useContentLanguage from '../hooks/useContentLanguage';
-import TreeItem from '../components/tree/TreeItem';
 import { useNodeId } from '../hooks/useNodeId';
+
+const MemoedNodeDetails = memo(function MemoedNodeDetails(props) {
+  return <NodeDetails {...props} />;
+});
+
+const MemoedTree = memo(function MemoedTree(props) {
+  return <Tree {...props} />;
+});
 
 const NodePage = () => {
   const language = useContentLanguage();
-  const { trees: treesByLanguage, isFetching } = useTree();
+  const { trees, isFetching } = useTree();
   const selectedNodeId = useNodeId();
 
   const [showHistory, setShowHistory] = useState(false);
@@ -105,8 +112,8 @@ const NodePage = () => {
               pb: 3,
             }}
           >
-            <Tree
-              trees={treesByLanguage[language] || []}
+            <MemoedTree
+              trees={trees || []}
               loading={isFetching}
               targetNodeIdentifier={selectedNodeId}
             />
@@ -145,7 +152,10 @@ const NodePage = () => {
         </Grid>
         <Grid item xs md>
           {selectedNodeId && (
-            <NodeDetails showHistory={showHistory} showFuture={showFuture} />
+            <MemoedNodeDetails
+              showHistory={showHistory}
+              showFuture={showFuture}
+            />
           )}
         </Grid>
       </Grid>

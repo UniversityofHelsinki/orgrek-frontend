@@ -5,92 +5,71 @@ import { useTranslation } from 'react-i18next';
 import useForm from '../../hooks/useForm';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
-import { useSelector } from 'react-redux';
+import useFormField from '../../hooks/useFormField';
+import HelperText from '../inputs/HelperText';
 
-const OtherAttributesEditor = ({ attributes }) => {
+const OtherAttributeValueField = ({ path, value: attribute }) => {
   const { t } = useTranslation();
-  const { values, setValues, valid, invalid, errors } = useForm();
-  //console.log('XXX ', valid, invalid, errors, values);
-  const selectedHierarchies = useSelector(
-    (s) => s.tree.selectedHierarchy || s.tree.defaultHierarchy
+  const { props, errors } = useFormField({ path, name: 'value' });
+
+  const meta = attribute.meta;
+  const acceptedValues = meta.acceptedValues;
+
+  return (
+    <TextField
+      {...props}
+      select
+      fullWidth
+      label={t('value')}
+      helperText={<HelperText errors={errors} />}
+    >
+      {acceptedValues.map((option) => (
+        <MenuItem key={option} value={option}>
+          {t(option)}
+        </MenuItem>
+      ))}
+    </TextField>
   );
+};
 
-  const renderValueField = (attributes) => {
-    const valueField = (valueFieldProps) => {
-      const type = attributes.some((a) => a.type === 'options')
-        ? 'options'
-        : 'text';
-      if (type === 'options') {
-        return (
-          <TextField select {...valueFieldProps}>
-            {attributes[0].optionValues.map(
-              (
-                option //only one attributerow is "used" = attributes[0]
-              ) => (
-                <MenuItem key={option} value={option}>
-                  {t(option)}
-                </MenuItem>
-              )
-            )}
-          </TextField>
-        );
-      }
-      return <TextField {...valueFieldProps} value={valueFieldProps.value} />;
-    };
-    return valueField; //returns function to be passed to AttributeEditor
-  };
+const OtherAttributesEditor = ({ metas }) => {
+  const { t } = useTranslation();
+  const { values } = useForm();
 
-  /**
-   * Called when customCreateRow used
-   *
-   * @param key
-   * @returns {function(): {deleted: boolean, endDate: null, id: number, isNew: boolean, type: string, value: null, key: *, startDate: null}}
-   */
   const createRow = (key) => {
-    const attribute = attributes.find((a) => a.key === key);
-    return () => {
-      const base = {
-        id: Math.floor(Math.random() * -1000000),
-        key: key,
-        value: null,
-        startDate: null,
-        endDate: null,
-        isNew: true,
-        deleted: false,
-      };
-      const rest = {
-        type: 'text',
-      };
-      if (attribute.key === key && attribute.type === 'options') {
-        rest.type = 'options';
-        rest.optionValues = attribute.optionValues;
-      }
-      return { ...base, ...rest };
-    };
+    return () => ({
+      key,
+      meta: metas[key],
+      id: -Math.floor(Math.random() * 100000),
+      value: '',
+      startDate: null,
+      endDate: null,
+      isNew: true,
+      deleted: false,
+    });
   };
+
+  const fields = [
+    {
+      name: 'value',
+      render: (props) => <OtherAttributeValueField {...props} />,
+    },
+    'startDate',
+    'endDate',
+  ];
 
   return (
     <Stack spacing={2}>
-      {[
-        ...Object.entries(values).map(([key, attributes], i) => (
-          <AttributeEditor
-            key={`${key}-${i}`}
-            attributeLabel={t(key)}
-            attributeKey={`${key}`}
-            valueLabel={t('attribute_value')}
-            path={key}
-            data={attributes}
-            renderValueField={renderValueField(attributes)}
-            onChange={(newData) =>
-              setValues({
-                ...values,
-                [key]: newData,
-              })
-            }
-            customCreateRow={createRow(key)}
-          />
-        )),
-      ]}
+      {Object.entries(values).map(([key, attributes], i) => (
+        <AttributeEditor
+          key={`${key}-${i}`}
+          attributeLabel={t(key)}
+          attributeKey={`${key}`}
+          path={key}
+          fields={fields}
+          customCreateRow={createRow(key)}
+        />
+      ))}
     </Stack>
   );
 };

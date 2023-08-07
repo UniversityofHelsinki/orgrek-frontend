@@ -8,9 +8,13 @@ import { showValidity } from '../../utils/showValidity';
 import { useGetNodeValidityQuery } from '../../store';
 import useForm from '../../hooks/useForm';
 import { useNodeId } from '../../hooks/useNodeId';
+import useContentLanguage from '../../hooks/useContentLanguage';
+import { node } from 'prop-types';
 
 const SuccessorTypeField = ({ path, value }) => {
   const { t } = useTranslation();
+  const language = useContentLanguage();
+  const languageField = language === 'ia' ? 'fi' : language;
   const { props, errors, setValue } = useFormField({ path, name: 'value' });
   const { data, isFetching } = useGetNodeValidityQuery(value.value?.id, {
     skip: value.value === null,
@@ -38,7 +42,9 @@ const SuccessorTypeField = ({ path, value }) => {
       fullWidth
       label={t('unit')}
       helperText={<HelperText errors={errors} helperText={helperText} />}
-      onChange={(event, newValue) => setValue(newValue)}
+      onChange={(event, newValue) =>
+        setValue({ ...newValue, names: { [languageField]: newValue.name } })
+      }
     ></NodeField>
   );
 };
