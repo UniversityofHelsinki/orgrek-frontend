@@ -53,7 +53,7 @@ const PredecessorsSection = () => {
           columns={columns}
           keyFn={keyFn}
           data={data}
-          summary={title}
+          caption={title}
         />
       </Placeholder>
     </EditableAccordion>

@@ -183,7 +183,7 @@ const ChildrenSection = ({ showHistory, showFuture }) => {
         authActions={authActions.children}
       >
         <Placeholder empty={empty} placeholder={t('subunits.empty')}>
-          <HierarchyTable data={filteredByDateChildren} summary={title} />
+          <HierarchyTable data={filteredByDateChildren} caption={title} />
         </Placeholder>
         {formElement}
       </EditableContent>

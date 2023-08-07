@@ -103,7 +103,7 @@ const ParentsSection = ({ showHistory, showFuture }) => {
         authActions={authActions.parents}
       >
         <Placeholder empty={empty} placeholder={t('upperUnits.empty')}>
-          <HierarchyTable data={filteredByDateParents} summary={title} />
+          <HierarchyTable data={filteredByDateParents} caption={title} />
         </Placeholder>
       </EditableContent>
     </EditableAccordion>

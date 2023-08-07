@@ -85,7 +85,7 @@ const SuccessorsSection = () => {
   );
 
   const renderedContent = (
-    <AttributesTable columns={columns} data={asAttributes} summary={title} />
+    <AttributesTable columns={columns} data={asAttributes} caption={title} />
   );
 
   const emptyInitialValues = { new_successor: [] };
