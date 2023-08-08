@@ -20,6 +20,7 @@ const DeletedAttributeRowActions = ({ onUndoDelete, valueDescription, sx }) => {
           data-testid="attributeRowUndoDeleteButton"
           onClick={onUndoDelete}
           aria-label={`${t('attribute.undoDelete')} ${valueDescription}`}
+          autoFocus={true}
         >
           <ReplayIcon />
         </IconButton>

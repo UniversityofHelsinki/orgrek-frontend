@@ -27,6 +27,7 @@ const AttributeEditorRow = ({
   fields,
   renderValueField,
   getDisplayText,
+  focusRef,
 }) => {
   // True after user has interacted with the row
   const [touched, setTouched] = useState(false);
@@ -84,7 +85,11 @@ const AttributeEditorRow = ({
         label: valueLabel,
         gridProps: { xs: 12, sm: 12, md: 6 },
         render: (props) => (
-          <ValueField {...props} renderValueField={renderValueField} />
+          <ValueField
+            {...props}
+            renderValueField={renderValueField}
+            focusRef={focusRef}
+          />
         ),
       },
       {

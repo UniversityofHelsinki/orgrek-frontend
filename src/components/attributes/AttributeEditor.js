@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -31,6 +31,17 @@ const AttributeEditor = ({
   customCreateRow,
 }) => {
   const { getValue, setValue } = useForm();
+  const focusRef = useRef();
+
+  useEffect(() => {
+    if (focusRef.current) {
+      const inputContainer = focusRef.current;
+      const inputField = inputContainer.querySelector('input');
+      if (inputField) {
+        inputField.focus();
+      }
+    }
+  }, [focusRef.current]);
 
   const values = getValue(path) || data;
   if (!Array.isArray(values)) {
@@ -48,6 +59,7 @@ const AttributeEditor = ({
       endDate: null,
       isNew: true,
       deleted: false,
+      focus: true,
     }));
 
   const setFormValues = (newValues) => {
@@ -108,6 +120,7 @@ const AttributeEditor = ({
       fields={fields}
       renderValueField={renderValueField}
       getDisplayText={getDisplayText}
+      focusRef={value.focus ? focusRef : undefined}
     />
   ));
 
