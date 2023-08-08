@@ -1,4 +1,5 @@
 import { fi, sv, enIE } from 'date-fns/locale';
+import svFI from '../../src/locales/sv-FI/index.js';
 import format from 'date-fns-tz/format';
 import utcToZonedTime from 'date-fns-tz/utcToZonedTime';
 import i18n from '../../src/i18n';
@@ -8,17 +9,17 @@ import { isValid } from 'date-fns';
  * Returns date-fns locale for the given language.
  *
  * @param {'fi'|'sv'|'en'} language
- * @return {Locale|fi|enIE|sv}
+ * @return {Locale|fi|enIE|svFI}
  */
 export const getDateFnsLocale = (language) => {
   switch (language) {
     case 'fi':
       return fi;
     case 'sv':
-      // Should use sv-FI instead of sv-SE but date-fns does not provide it out of the box
+      // Date-fns does not provide sv-FI out of the box, custom locale has been created
       // Affects date format used in the date picker and other localized dates
-      // Change this return value if a custom sv-FI locale is created later
-      return sv;
+      // Change this return value back to sv if not working as expected
+      return svFI;
     default:
       return enIE;
   }
