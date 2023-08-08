@@ -7,10 +7,10 @@ var dateFormats = {
   short: 'd.M.y',
 };
 var timeFormats = {
-  full: "'kl'. HH:mm:ss zzzz",
-  long: 'HH:mm:ss z',
-  medium: 'HH:mm:ss',
-  short: 'HH:mm',
+  full: "'kl'. HH.mm.ss zzzz",
+  long: 'HH.mm.ss z',
+  medium: 'HH.mm.ss',
+  short: 'HH.mm',
 };
 var dateTimeFormats = {
   full: "{{date}} 'kl.' {{time}}",
