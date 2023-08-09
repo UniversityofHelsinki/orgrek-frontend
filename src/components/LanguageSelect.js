@@ -30,8 +30,8 @@ const LanguageSelect = () => {
     <TextField
       size="small"
       select
-      label={t('language')}
       value={i18n.language}
+      label={t('language')}
       onChange={handleChange}
       InputProps={{
         startAdornment: (
