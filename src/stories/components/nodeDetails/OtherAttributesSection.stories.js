@@ -1,5 +1,6 @@
 import {
   mockGetAttributeKeys,
+  mockGetAttributes,
   mockGetOtherAttributes,
   mockSaveOtherAttributes,
   withMockStore,
@@ -12,7 +13,7 @@ import { expect } from '@storybook/jest';
 const now = new Date('2023-03-22T14:28:00+0200');
 
 const nodeId = '12345678';
-const selectedHierarchy = 'talous';
+const selectedHierarchy = 'virallinen';
 const keys = ['publicity', 'attribute2'];
 
 export default {
@@ -22,6 +23,7 @@ export default {
     reactRouter: {
       searchParams: {
         uid: nodeId,
+        hierarhies: selectedHierarchy,
       },
     },
   },
@@ -29,50 +31,46 @@ export default {
 
 export const Default = {
   parameters: {
+    systemTime: now,
     msw: {
       handlers: [
-        mockGetOtherAttributes(nodeId, selectedHierarchy, [
-          {
-            id: 1001,
-            nodeId: '1',
-            key: 'publicity',
-            value: 'julkinen',
-            startDate: null,
-            endDate: null,
-          },
-          {
-            id: 1002,
-            nodeId: '1',
-            key: 'attribute2',
-            value: 'previous value',
-            startDate: '2013-01-01',
-            endDate: '2015-06-30',
-          },
-          {
-            id: 1002,
-            nodeId: '1',
-            key: 'attribute2',
-            value: 'current value',
-            startDate: '2015-07-01',
-            endDate: '2023-12-31',
-          },
-          {
-            id: 1002,
-            nodeId: '1',
-            key: 'attribute2',
-            value: 'next value',
-            startDate: '2024-01-01',
-            endDate: null,
-          },
-        ]),
+        mockGetAttributes(nodeId, {
+          other_attributes: [
+            {
+              id: 1001,
+              nodeId: '1',
+              key: 'publicity',
+              value: 'julkinen',
+              startDate: null,
+              endDate: null,
+            },
+            {
+              id: 1002,
+              nodeId: '1',
+              key: 'attribute2',
+              value: 'previous value',
+              startDate: '2013-01-01',
+              endDate: '2015-06-30',
+            },
+            {
+              id: 1002,
+              nodeId: '1',
+              key: 'attribute2',
+              value: 'current value',
+              startDate: '2015-07-01',
+              endDate: '2023-12-31',
+            },
+            {
+              id: 1002,
+              nodeId: '1',
+              key: 'attribute2',
+              value: 'next value',
+              startDate: '2024-01-01',
+              endDate: null,
+            },
+          ],
+        }),
         mockSaveOtherAttributes(nodeId),
-        mockGetAttributeKeys(
-          {
-            selectedHierarchies: selectedHierarchy,
-            sections: ['other_attributes'],
-          },
-          keys
-        ),
       ],
     },
   },
@@ -101,7 +99,7 @@ export const Empty = {
   parameters: {
     msw: {
       handlers: [
-        mockGetOtherAttributes(nodeId, selectedHierarchy, []),
+        mockGetAttributes(nodeId, { other_attributes: [] }),
         mockSaveOtherAttributes(nodeId),
         mockGetAttributeKeys(
           {
@@ -136,6 +134,9 @@ export const ShowHistory = {
       },
     }),
   ],
+  args: {
+    showHistory: true,
+  },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
@@ -158,6 +159,10 @@ export const HistoryAndFuture = {
       },
     }),
   ],
+  args: {
+    showHistory: true,
+    showFuture: true,
+  },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 

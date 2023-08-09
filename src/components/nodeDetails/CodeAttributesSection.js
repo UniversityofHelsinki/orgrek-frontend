@@ -6,17 +6,13 @@ import Validity from '../attributes/Validity';
 import Placeholder from '../Placeholder';
 import EditableContent from '../EditableContent';
 import CodeAttributesEditor from './CodeAttributesEditor';
-import {
-  useGetAttributeKeysQuery,
-  useSaveCodeAttributesMutation,
-} from '../../store';
-import { useSelector } from 'react-redux';
+import { useSaveCodeAttributesMutation } from '../../store';
 import { authActions } from '../../auth';
 import { useNodeId } from '../../hooks/useNodeId';
-import { useCodeAttributes } from '../../hooks/useCodeAttributes';
 import useFilterAttributesByDate from '../../hooks/useFilterAttributesByDate';
 import { defaultSchemaForAttributes } from '../../utils/validations';
 import { flattenAttributes, toFormValues } from '../../utils/attributeUtils';
+import useAttributes from '../../hooks/useAttributes';
 
 const readOnlyFields = (attributes, keys) => {
   const result = {};
@@ -32,40 +28,36 @@ const readOnlyFields = (attributes, keys) => {
   return result;
 };
 
-const includeMissing = (attributes, allKeys) => {
-  const missingKeys = allKeys.filter((key) => !attributes[key]);
-  const missingIncluded = { ...attributes };
-  missingKeys.forEach((key) => {
-    missingIncluded[key] = [];
-  });
-  return missingIncluded;
-};
-
-const filterExcess = (attributes, allKeys) => {
-  return attributes.filter((attribute) => {
-    return allKeys.includes(attribute.key) || attribute.key === 'unique_id';
-  });
-};
-
-const withoutReadOnlyFields = (attributes, readOnlyFieldKeys) => {
-  return attributes.filter((attribute) => {
-    return !readOnlyFieldKeys.includes(attribute.key);
-  });
-};
-
-const CodeAttributesSection = () => {
+const CodeAttributesSection = ({ showHistory, showFuture }) => {
   const { t } = useTranslation();
   const nodeId = useNodeId();
-  const { codeAttributes, isFetching } = useCodeAttributes();
-  const selectedHierarchies = useSelector(
-    (s) => s.tree.selectedHierarchy || s.tree.defaultHierarchy
+  const { data, isFetching } = useAttributes('codes');
+
+  const uniqueId = {
+    id: Math.floor(Math.random() * -100000),
+    key: 'unique_id',
+    value: nodeId,
+    startDate: null,
+    endDate: null,
+  };
+  const codeAttributes = [uniqueId, ...data];
+
+  const visibleAttributes = useFilterAttributesByDate(
+    codeAttributes,
+    showHistory,
+    showFuture
   );
-  const presentCodeAttributes = useFilterAttributesByDate(codeAttributes);
-  const { data: attributeKeys, isFetching: isFetchingKeys } =
-    useGetAttributeKeysQuery({ selectedHierarchies, sections: ['codes'] });
   const [saveCodeAttributes] = useSaveCodeAttributesMutation();
 
   const readOnlyFieldKeys = ['unique_id'];
+
+  const formValues = toFormValues(
+    codeAttributes
+      .filter((ca) => !ca.isNew)
+      .filter((ca) => !readOnlyFieldKeys.includes(ca.key)),
+    codeAttributes.filter((ca) => ca.isNew).map((ca) => ca.key)
+  );
+  const keys = Object.keys(formValues);
 
   const columns = [
     { label: t('code_namespace'), render: (item) => t(item.key) },
@@ -78,27 +70,15 @@ const CodeAttributesSection = () => {
     },
   ];
   const title = t('codes');
-  const empty = codeAttributes.length === 0;
+  const empty = codeAttributes.filter((ca) => !ca.isNew).length === 0;
 
-  if (isFetching || isFetchingKeys) {
+  if (isFetching) {
     return <EditableAccordion title={title} loading />;
   }
 
-  const initialValues = includeMissing(
-    toFormValues(
-      withoutReadOnlyFields(
-        filterExcess(codeAttributes, attributeKeys),
-        readOnlyFieldKeys
-      )
-    ),
-    attributeKeys
-  );
-
   // Validates form values every time when the values change
   // Submit button is disabled when validation fails
-  const validationSchema = defaultSchemaForAttributes(
-    Object.keys(initialValues)
-  );
+  const validationSchema = defaultSchemaForAttributes(keys);
 
   const handleSubmit = (input) => {
     const attributes = flattenAttributes(input);
@@ -110,10 +90,13 @@ const CodeAttributesSection = () => {
       <EditableContent
         editorComponent={
           <CodeAttributesEditor
-            readOnlyFields={readOnlyFields(codeAttributes, readOnlyFieldKeys)}
+            readOnlyFields={readOnlyFields(
+              visibleAttributes,
+              readOnlyFieldKeys
+            )}
           />
         }
-        initialValues={initialValues}
+        initialValues={formValues}
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
         successMessage={t('codeInfo.saveSuccess')}
@@ -123,7 +106,7 @@ const CodeAttributesSection = () => {
         <Placeholder empty={empty} placeholder={t('codeInfo.empty')}>
           <AttributesTable
             columns={columns}
-            data={filterExcess(presentCodeAttributes, attributeKeys)}
+            data={visibleAttributes}
             summary={title}
           />
         </Placeholder>

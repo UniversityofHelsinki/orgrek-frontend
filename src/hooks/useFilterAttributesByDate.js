@@ -9,11 +9,9 @@ import isAfter from 'date-fns/isAfter';
  * History and future is shown only when show history or show coming is
  * selected.
  */
-const useFilterAttributesByDate = (data) => {
-  const { selectedDay, showHistory, showComing } = useSelector((state) => ({
+const useFilterAttributesByDate = (data, showHistory, showFuture) => {
+  const { selectedDay } = useSelector((state) => ({
     selectedDay: state.dr.selectedDay,
-    showHistory: state.nvrd.showHistory,
-    showComing: state.nvrd.showComing,
   }));
 
   let date;
@@ -31,8 +29,9 @@ const useFilterAttributesByDate = (data) => {
   return useMemo(() => {
     return (data || [])
       .filter((item) => showHistory || !isEndDateBeforeSelectedDay(item))
-      .filter((item) => showComing || !isStartDateAfterSelectedDay(item));
-  }, [data, selectedDay, showHistory, showComing]);
+      .filter((item) => showFuture || !isStartDateAfterSelectedDay(item))
+      .filter((item) => !item.isNew);
+  }, [data, selectedDay, showHistory, showFuture]);
 };
 
 export default useFilterAttributesByDate;

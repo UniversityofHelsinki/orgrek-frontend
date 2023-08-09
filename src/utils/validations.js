@@ -343,9 +343,9 @@ export const newNodeValiditySchema = object({
 });
 
 export const newHierarchyFilterValiditySchema = object({
-  key: string().required(),
+  key: string().optional(),
   hierarchy: string().required(),
-  value: string().required(),
+  value: string().optional(),
 });
 
 export const newSectionValiditySchema = object({
@@ -368,10 +368,30 @@ const textAlreadyExists = (existingTexts, errorMessage) => {
 
 export const newTextSchema = (existingTexts, errorMessage) =>
   object({
-    key: string()
-      .required()
-      .test(textAlreadyExists(existingTexts, errorMessage)),
+    key: string().required(),
     fi: string().required(),
     en: string().required(),
     sv: string().required(),
+  });
+
+const hierarchyAlreadyExists = (existingHierarchies, errorMessage) => {
+  const validate = (hierarchy) =>
+    ![...existingHierarchies, 'history'].includes(hierarchy);
+  return {
+    name: 'hierarchy-already-exists',
+    test: validate,
+    message: errorMessage,
+  };
+};
+
+export const newHierarchySchema = (existingHierarchies, errorMessage) =>
+  object({
+    hierarchy: string()
+      .required()
+      .test(hierarchyAlreadyExists(existingHierarchies, errorMessage)),
+    nameFi: string().required(),
+    nameEn: string().required(),
+    nameSv: string().required(),
+    unit: number().required(),
+    publicity: boolean().required(),
   });

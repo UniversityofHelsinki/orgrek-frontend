@@ -8,15 +8,14 @@ import HierarchySelection from './HierarchySelection';
 import { Grid, Paper, Stack, useTheme } from '@mui/material';
 import useFetchNode from '../hooks/useFetchNode';
 import NodeViewControl from './NodeViewControl';
+import useHierarchies from '../hooks/useHierarchies';
 
-const Hierarchy = (props) => {
+const Hierarchy = ({ fetchSelectableHierarchies, switchHandlers }) => {
   useEffect(() => {
-    props.fetchSelectableHierarchies();
+    fetchSelectableHierarchies();
   }, []);
   const node = useFetchNode();
-  const hierarchies = useSelector(
-    (state) => state.tree.selectedHierarchy || state.tree.defaultHierarchy
-  );
+  const [hierarchies, setHierarchies] = useHierarchies();
   const selectedDay = useSelector((state) => state.dr.selectedDay);
 
   const theme = useTheme();
@@ -52,8 +51,8 @@ const Hierarchy = (props) => {
         <Grid item xs={12} md="auto">
           <NodeViewControl
             node={node}
-            selectedDay={selectedDay}
-            selectedHierarchies={hierarchies}
+            onSwitchHistory={switchHandlers.onSwitchHistory}
+            onSwitchFuture={switchHandlers.onSwitchFuture}
           />
         </Grid>
       </Grid>

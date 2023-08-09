@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import dateColumnType from './dateColumnType';
 import { toDate } from '../../utils/dateUtils';
 import {
@@ -12,7 +12,6 @@ import {
 } from '@mui/x-data-grid';
 import GridToolbar from './GridToolbar';
 import PropTypes from 'prop-types';
-import autocompleteColumnType from './autocompleteColumnType';
 import { authActions, isAuthorized } from '../../auth';
 import useCurrentUser from '../../hooks/useCurrentUser';
 import actionsColumnType from './actionsColumnType';
@@ -22,7 +21,7 @@ import NewHierarchyFilterForm from '../nodeDetails/NewHierarchyFilterForm';
 const HierarchyFiltersDataGrid = ({
   initialRows,
   selectableHierarchies,
-  edgeHierarchies,
+  distinctNodeAttrs,
   attributeKeys,
   loading,
   onAddRow,
@@ -42,84 +41,73 @@ const HierarchyFiltersDataGrid = ({
     }
   }, [loading]);
 
-  const hierarchyOptions = useMemo(
-    () =>
-      rows
-        .filter(
-          (row, index, rows) =>
-            index === rows.findIndex((r) => r.hierarchy === row.hierarchy)
-        )
-        .map((row) => ({
-          value: row.hierarchy,
-          label: t(row.hierarchy),
-        })),
-    [rows]
-  );
+  const hierarchyOptions = rows
+    .filter(
+      (row, index, rows) =>
+        index === rows.findIndex((r) => r.hierarchy === row.hierarchy)
+    )
+    .map((row) => ({
+      value: row.hierarchy,
+      label: t(row.hierarchy),
+    }));
 
-  const keyOptions = useMemo(
-    () =>
-      rows
-        .filter(
-          (row, index, rows) =>
-            index === rows.findIndex((r) => r.key === row.key)
-        )
-        .map((row) => ({
-          value: row.key,
-          label: t(row.key),
-        })),
-    [rows]
-  );
+  const keyOptions = rows
+    .filter(
+      (row, index, rows) => index === rows.findIndex((r) => r.key === row.key)
+    )
+    .map((row) => ({
+      value: row.key || '',
+      label: t(row.key || '<empty>'),
+    }));
 
-  const valueOptions = useMemo(
-    () =>
-      rows
-        .filter(
-          (row, index, rows) =>
-            index === rows.findIndex((r) => r.value === row.value)
-        )
-        .map((row) => ({
-          value: row.value,
-          label: t(row.value),
-          key: row.key,
-        })),
-    [rows]
-  );
+  const valueOptions = rows
+    .filter(
+      (row, index, rows) =>
+        index === rows.findIndex((r) => r.value === row.value)
+    )
+    .map((row) => ({
+      value: row.value || '',
+      label: t(row.value || '<empty>'),
+      key: row.key,
+    }));
 
   const columns = [
     {
       field: 'hierarchy',
-      ...autocompleteColumnType,
       headerName: t('hierarchy_filters_hierarchy'),
       flex: 1,
       editable,
+      type: 'singleSelect',
       valueOptions: hierarchyOptions,
       getCreateNewLabel: (value) =>
         t('hierarchyFiltersDataGrid.newHierarchyLabel', { value }),
-      valueGetter: (params) => t(params.value),
+      valueFormatter: (row) => t(row.value),
     },
     {
       field: 'key',
-      ...autocompleteColumnType,
       headerName: t('hierarchy_filters_key'),
       flex: 1,
       editable,
+      type: 'singleSelect',
       valueOptions: keyOptions,
       getCreateNewLabel: (value) =>
         t('hierarchyFiltersDataGrid.newAttributeLabel', { value }),
-      valueGetter: (params) => t(params.value),
+      valueFormatter: (row) => t(row.value),
+      valueGetter: (params) => params.row.key || '',
     },
     {
       field: 'value',
-      ...autocompleteColumnType,
       headerName: t('hierarchy_filters_value'),
       flex: 1,
       editable,
+      type: 'singleSelect',
       valueOptions: valueOptions,
       filterOptions: (options, row) =>
         options.filter((option) => option.key === row.key),
       getCreateNewLabel: (value) =>
         t('hierarchyFiltersDataGrid.newAttributeValueLabel', { value }),
-      valueGetter: (params) => t(params.value),
+      valueFormatter: (row) => t(row.value),
+      valueGetter: (params) => params.row.value || '',
     },
     {
       field: 'startDate',
@@ -156,10 +144,6 @@ const HierarchyFiltersDataGrid = ({
       },
     });
   }
-  const initialValues = {
-    hierarchy: null,
-    isNew: true,
-  };
 
   const handleAddRow = () => {
     const id = Math.floor(Math.random() * -1000000);
@@ -192,12 +176,21 @@ const HierarchyFiltersDataGrid = ({
       handleSubmit={handleSubmit}
       initialRows={rows}
       selhierarchies={selectableHierarchies}
-      edgeHierarchies={edgeHierarchies}
+      distinctNodeAttrs={distinctNodeAttrs || {}}
       attributeKeys={attributeKeys}
     />
   ) : (
     <></>
   );
+
+  const localeTextOverrides = {
+    // see the keys here if you want to override data grid's inner translations:
+    // https://github.com/mui/mui-x/blob/HEAD/packages/grid/x-data-grid/src/constants/localeTextConstants.ts
+    toolbarColumns: t('datagrid_toolbar_columns'),
+    toolbarFilters: t('datagrid_toolbar_filters'),
+    toolbarDensity: t('datagrid_toolbar_density'),
+    toolbarExport: t('datagrid_toolbar_export'),
+  };
 
   return (
     <>
@@ -213,11 +206,23 @@ const HierarchyFiltersDataGrid = ({
           },
         }}
         localeText={
-          language === 'fi'
-            ? fiFI.components.MuiDataGrid.defaultProps.localeText
-            : language === 'sv'
-            ? svSE.components.MuiDataGrid.defaultProps.localeText
-            : enUS.components.MuiDataGrid.defaultProps.localeText
+          {
+            fi: {
+              ...fiFI.components.MuiDataGrid.defaultProps.localeText,
+              ...localeTextOverrides,
+            },
+            sv: {
+              ...svSE.components.MuiDataGrid.defaultProps.localeText,
+              ...localeTextOverrides,
+            },
+            en: {
+              ...enUS.components.MuiDataGrid.defaultProps.localeText,
+              ...localeTextOverrides,
+            },
+            ia: {
+              ...localeTextOverrides,
+            },
+          }[language]
         }
         slots={{
           toolbar: GridToolbar,

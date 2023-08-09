@@ -1,5 +1,6 @@
 import {
   hierarchyFilters,
+  mockGetAttributes,
   mockGetSectionTypeAttributes,
   mockGetTypeAttributes,
   mockGetValidHierarchyFilters,
@@ -22,6 +23,7 @@ export default {
     reactRouter: {
       searchParams: {
         uid: nodeId,
+        hierarchies: 'virallinen',
       },
     },
   },
@@ -37,25 +39,28 @@ const sectionTypeData = [
 
 export const Default = {
   parameters: {
+    systemTime: now,
     msw: {
       handlers: [
-        mockGetTypeAttributes(nodeId, [
-          {
-            id: 1,
-            nodeId: '1',
-            key: 'type',
-            value: 'tiedekunta',
-            startDate: null,
-            endDate: null,
-          },
-        ]),
+        mockGetAttributes(nodeId, {
+          types: [
+            {
+              id: 1,
+              nodeId: '1',
+              key: 'type',
+              value: 'tiedekunta',
+              startDate: null,
+              endDate: null,
+            },
+          ],
+        }),
         mockPutTypeAttributes(nodeId),
         mockGetValidHierarchyFilters(now, hierarchyFilters),
         mockGetSectionTypeAttributes('types', sectionTypeData),
       ],
     },
   },
-  decorators: [withMockStore({ tree: { selectedHierarchy: 'opetus' } })],
+  decorators: [withMockStore({ tree: { selectedHierarchy: 'virallinen' } })],
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
@@ -70,7 +75,7 @@ export const Empty = {
   parameters: {
     msw: {
       handlers: [
-        mockGetTypeAttributes(nodeId, []),
+        mockGetAttributes(nodeId, { types: [] }),
         mockPutTypeAttributes(nodeId),
         mockGetValidHierarchyFilters(now, hierarchyFilters),
         mockGetSectionTypeAttributes('types', sectionTypeData),

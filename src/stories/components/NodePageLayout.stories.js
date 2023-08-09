@@ -12,13 +12,12 @@ import HierarchySelection from '../../components/HierarchySelection';
 import NodeField from '../../components/inputs/NodeField';
 import Stack from '@mui/material/Stack';
 import { useTranslation } from 'react-i18next';
-import Tree from '../../components/Tree';
 import Divider from '@mui/material/Divider';
 
 // Use a fixed date to ensure that tests always have a consistent result
 const now = new Date('2023-03-22T14:28:00+0200');
 
-const selectedHierarchy = 'talous';
+const selectedHierarchy = 'virallinen';
 
 export default {
   component: Layout,
@@ -107,10 +106,7 @@ const Sidebar = ({ top, width }) => {
           maxHeight: `calc(100vh - ${top}px)`,
           pb: 3,
         }}
-      >
-        {/* TODO: Move this border style override to the Tree component */}
-        <Tree sx={{ borderStyle: 'none' }} />
-      </Box>
+      ></Box>
     </Box>
   );
 };
@@ -292,6 +288,7 @@ export const NodePageLayout = {
           'opetus',
           'history',
           'talous',
+          'virallinen',
         ],
       },
       ur: {

@@ -53,14 +53,10 @@ const SectionsDataGrid = ({
     },
   ];
 
-  const attributeOptions = useMemo(
-    () =>
-      attributeKeys.map((key) => ({
-        value: key,
-        label: t(key),
-      })),
-    [attributeKeys]
-  );
+  const attributeOptions = attributeKeys.map((key) => ({
+    value: key,
+    label: t(key),
+  }));
 
   const handleAddRow = () => {
     setShowForm(true);
@@ -92,15 +88,14 @@ const SectionsDataGrid = ({
       flex: 1,
       editable,
       valueOptions: sectionOptions,
+      valueFormatter: (row) => t(row.value),
       sortComparator: labelComparator(sectionOptions),
     },
     {
-      field: 'order',
+      field: 'orderNro',
       type: 'number',
       headerName: t('sectionsDataGrid.orderColumnHeader'),
-      // TODO: This field does not yet exist, see OR-1052
-      valueGetter: (params) => (params.row.id > 0 ? params.row.id * 100 : ''), // id * 100 is here just for demonstration
-      valueFormatter: (params) => params.value,
+      valueFormatter: (row) => row.value,
       width: 150,
       editable,
     },
@@ -111,6 +106,7 @@ const SectionsDataGrid = ({
       flex: 1,
       editable,
       valueOptions: attributeOptions,
+      valueFormatter: (row) => t(row.value),
       sortComparator: labelComparator(attributeOptions),
     },
     {
@@ -159,6 +155,15 @@ const SectionsDataGrid = ({
     <></>
   );
 
+  const localeTextOverrides = {
+    // see the keys here if you want to override data grid's inner translations:
+    // https://github.com/mui/mui-x/blob/HEAD/packages/grid/x-data-grid/src/constants/localeTextConstants.ts
+    toolbarColumns: t('datagrid_toolbar_columns'),
+    toolbarFilters: t('datagrid_toolbar_filters'),
+    toolbarDensity: t('datagrid_toolbar_density'),
+    toolbarExport: t('datagrid_toolbar_export'),
+  };
+
   return (
     <>
       <DataGrid
@@ -173,7 +178,6 @@ const SectionsDataGrid = ({
             columnVisibilityModel: {
               startDate: false,
               endDate: false,
-              order: false, // TODO: Hidden for now because this field does not yet exist, see OR-1052
             },
           },
           sorting: {
@@ -181,11 +185,23 @@ const SectionsDataGrid = ({
           },
         }}
         localeText={
-          language === 'fi'
-            ? fiFI.components.MuiDataGrid.defaultProps.localeText
-            : language === 'sv'
-            ? svSE.components.MuiDataGrid.defaultProps.localeText
-            : enUS.components.MuiDataGrid.defaultProps.localeText
+          {
+            fi: {
+              ...fiFI.components.MuiDataGrid.defaultProps.localeText,
+              ...localeTextOverrides,
+            },
+            sv: {
+              ...svSE.components.MuiDataGrid.defaultProps.localeText,
+              ...localeTextOverrides,
+            },
+            en: {
+              ...enUS.components.MuiDataGrid.defaultProps.localeText,
+              ...localeTextOverrides,
+            },
+            ia: {
+              ...localeTextOverrides,
+            },
+          }[language]
         }
         slots={{
           toolbar: GridToolbar,

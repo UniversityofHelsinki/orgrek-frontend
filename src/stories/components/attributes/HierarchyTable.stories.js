@@ -15,7 +15,7 @@ export const Default = {
         endDate: null,
         hierarchies: [
           {
-            hierarchy: 'talous',
+            hierarchy: 'virallinen',
             startDate: '2018-12-31',
             endDate: null,
           },
@@ -50,7 +50,7 @@ export const Default = {
         endDate: null,
         hierarchies: [
           {
-            hierarchy: 'talous',
+            hierarchy: 'virallinen',
             startDate: null,
             endDate: null,
           },

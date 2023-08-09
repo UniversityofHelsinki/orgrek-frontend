@@ -16,15 +16,14 @@ import useFetchNodeDetails from '../../hooks/useFetchNodeDetails';
 import Box from '@mui/material/Box';
 import useFetchNode from '../../hooks/useFetchNode';
 import { useNodeId } from '../../hooks/useNodeId';
+import { useMediaQuery, useTheme } from '@mui/material';
 
-const NodeDetails = () => {
+const NodeDetails = ({ showHistory, showFuture }) => {
   const nodeId = useNodeId();
-  const title = useFavorableName();
+  const title = useFavorableName(nodeId);
 
-  // These legacy fetch hooks can be removed after everything has been migrated
-  // to use RTK Query
-  useFetchNode();
-  useFetchNodeDetails();
+  const theme = useTheme();
+  const isDesktop = useMediaQuery(theme.breakpoints.up('md'));
 
   if (!nodeId) {
     return null;
@@ -41,19 +40,42 @@ const NodeDetails = () => {
         flex: 1,
       }}
     >
-      <Typography variant="h1" component="h2" mt={5} mb={5}>
+      <Typography
+        variant="h2"
+        component="h2"
+        mt={5}
+        mb={5}
+        sx={{
+          position: 'sticky',
+          bgcolor: 'white',
+          top: isDesktop ? 70 : 120,
+          alignSelf: 'flex-start',
+          overflowY: 'auto',
+          maxHeight: `90vh`,
+          pb: 3,
+          zIndex: 30,
+          marginTop: 0,
+          marginBottom: 0,
+        }}
+      >
         {title}
       </Typography>
       <NodeValiditySection />
-      <NameSection />
-      <DisplayNameSection />
-      <CodeAttributesSection />
-      <UnitTypeSection />
-      <ParentsSection />
-      <ChildrenSection />
+      <NameSection showHistory={showHistory} showFuture={showFuture} />
+      <DisplayNameSection showHistory={showHistory} showFuture={showFuture} />
+      <CodeAttributesSection
+        showHistory={showHistory}
+        showFuture={showFuture}
+      />
+      <UnitTypeSection showHistory={showHistory} showFuture={showFuture} />
+      <ParentsSection showHistory={showHistory} showFuture={showFuture} />
+      <ChildrenSection showHistory={showHistory} showFuture={showFuture} />
       <PredecessorsSection />
       <SuccessorsSection />
-      <OtherAttributesSection />
+      <OtherAttributesSection
+        showHistory={showHistory}
+        showFuture={showFuture}
+      />
     </Box>
   );
 };

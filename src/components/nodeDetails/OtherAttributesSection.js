@@ -7,59 +7,48 @@ import { authActions } from '../../auth';
 import EditableContent from '../EditableContent';
 import OtherAttributesEditor from './OtherAttributesEditor';
 import { toFormValues } from '../../utils/attributeUtils';
-import { useOtherAttributes } from '../../hooks/useOtherAttributes';
 import useFilterAttributesByDate from '../../hooks/useFilterAttributesByDate';
 import { useNodeId } from '../../hooks/useNodeId';
-import {
-  useGetAttributeKeysQuery,
-  useSaveNodeOtherAttributesMutation,
-} from '../../store';
+import { useSaveNodeOtherAttributesMutation } from '../../store';
 import { defaultSchemaForAttributes } from '../../utils/validations';
-import { useSelector } from 'react-redux';
+import useAttributes from '../../hooks/useAttributes';
 
-const OtherAttributesSection = () => {
+const OtherAttributesSection = ({ showHistory, showFuture }) => {
   const { t } = useTranslation();
   const nodeId = useNodeId();
-  const { nodeOtherAttributes, isFetching } = useOtherAttributes();
+  const { data: nodeOtherAttributes, isFetching } =
+    useAttributes('other_attributes');
   const [saveOtherAttributes] = useSaveNodeOtherAttributesMutation();
-  const selectedHierarchies = useSelector(
-    (s) => s.tree.selectedHierarchy || s.tree.defaultHierarchy
-  );
 
   // In view mode filter history and future depending on selection
-  const sortedAndFilteredData = useFilterAttributesByDate(nodeOtherAttributes);
-  const filtered = sortedAndFilteredData.filter(
-    (attribute) => !attribute.isNew
+  const visibleAttributes = useFilterAttributesByDate(
+    nodeOtherAttributes,
+    showHistory,
+    showFuture
   );
 
   const title = t('other_attributes');
-  const empty = filtered.length === 0;
+  const empty = visibleAttributes.length === 0;
 
   if (isFetching) {
     return <EditableAccordion title={title} loading />;
   }
 
-  const initialValues = toFormValues(nodeOtherAttributes);
-
-  // Validates form values every time when the values change
-  // Submit button is disabled when validation fails
-  const validationSchema = defaultSchemaForAttributes(
-    Object.keys(initialValues)
+  const formValues = toFormValues(
+    nodeOtherAttributes.filter((a) => !a.isNew),
+    nodeOtherAttributes.filter((a) => a.isNew).map((a) => a.key)
   );
+  const keys = Object.keys(formValues);
 
-  const asAttribute = (nodeId) => (otherAttr) => ({
-    id: otherAttr.id,
-    key: otherAttr.key,
-    nodeId: nodeId,
-    value: otherAttr.value,
-    startDate: otherAttr.startDate,
-    endDate: otherAttr.endDate,
-    isNew: Boolean(otherAttr.isNew),
-    deleted: Boolean(otherAttr.deleted),
-  });
+  const validationSchema = defaultSchemaForAttributes(keys);
+
+  const metas = nodeOtherAttributes.reduce((accumulated, current) => {
+    accumulated[current.key] = current.meta;
+    return accumulated;
+  }, {});
 
   const handleSubmit = (values) => {
-    const valuesArray = Object.values(values).flat().map(asAttribute(nodeId));
+    const valuesArray = Object.values(values).flat();
     return saveOtherAttributes({ valuesArray, nodeId }).unwrap();
   };
 
@@ -70,8 +59,8 @@ const OtherAttributesSection = () => {
       defaultExpanded={!empty}
     >
       <EditableContent
-        editorComponent={<OtherAttributesEditor />}
-        initialValues={initialValues}
+        editorComponent={<OtherAttributesEditor metas={metas} />}
+        initialValues={formValues}
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
         successMessage={t('otherAttributeInfo.saveSuccess')}
@@ -79,7 +68,7 @@ const OtherAttributesSection = () => {
         authActions={authActions.otherAttributes}
       >
         <Placeholder empty={empty} placeholder={t('otherAttributeInfo.empty')}>
-          <AttributesTable data={filtered} summary={title} />
+          <AttributesTable data={visibleAttributes} summary={title} />
         </Placeholder>
       </EditableContent>
     </EditableAccordion>

@@ -7,10 +7,10 @@ import Placeholder from '../Placeholder';
 import { authActions } from '../../auth';
 import { useNodeId } from '../../hooks/useNodeId';
 import EditableContent from '../EditableContent';
-import ParentEditor from './ParentEditor';
+import RelationEditor from './RelationEditor';
 import { useSaveParentsMutation } from '../../store';
 import { useParents } from '../../hooks/useParents';
-import useFilterParentsByDate from '../../hooks/useFilterParentsByDate';
+import useFilterUnitsByDate from '../../hooks/useFilterUnitsByDate';
 import { defaultSchemaForAttributes } from '../../utils/validations';
 
 const asAttribute = (nodeId, uniqueId) => (hierarchy) => ({
@@ -34,7 +34,7 @@ const asFormValues = (parents) => {
   }, {});
 };
 
-const ParentsSection = () => {
+const ParentsSection = ({ showHistory, showFuture }) => {
   const { t } = useTranslation();
   const { parents: parentsByLanguage, isFetching } = useParents();
   const [saveParents] = useSaveParentsMutation();
@@ -43,7 +43,11 @@ const ParentsSection = () => {
 
   const existingParents = parentsByLanguage[contentLanguage] || [];
   const title = t('upper_units');
-  const filteredByDateParents = useFilterParentsByDate(existingParents);
+  const filteredByDateParents = useFilterUnitsByDate(
+    existingParents,
+    showHistory,
+    showFuture
+  );
   const empty = filteredByDateParents.length === 0;
   const initialFormValues = asFormValues(existingParents);
   const initialValidationSchema = defaultSchemaForAttributes(
@@ -59,7 +63,6 @@ const ParentsSection = () => {
     id: parent.id,
     hierarchy: parent.value,
     childUniqueId: currentNodeId,
-    parentUniqueId: '',
     startDate: parent.startDate,
     endDate: parent.endDate,
     isNew: parent.isNew,
@@ -86,9 +89,10 @@ const ParentsSection = () => {
     <EditableAccordion title={title} defaultExpanded={!empty}>
       <EditableContent
         editorComponent={
-          <ParentEditor
-            parents={existingParents}
-            onParentChange={handleParentChange}
+          <RelationEditor
+            units={existingParents}
+            onUnitChange={handleParentChange}
+            editortitle={t('upperUnits.newUpperUnit')}
           />
         }
         validationSchema={validationSchema || initialValidationSchema}

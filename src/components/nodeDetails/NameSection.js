@@ -7,35 +7,36 @@ import NameEditor from './NameEditor';
 import EditableContent from '../EditableContent';
 import Placeholder from '../Placeholder';
 import { useNodeId } from '../../hooks/useNodeId';
-import {
-  useGetNameAttributesQuery,
-  useSaveNameAttributesMutation,
-  useGetAttributeKeysBySectionQuery,
-} from '../../store';
-import useSortAttributesByDate from '../../hooks/useSortAttributesByDate';
+import { useSaveNameAttributesMutation } from '../../store';
 import useFilterAttributesByDate from '../../hooks/useFilterAttributesByDate';
-import {
-  defaultSchemaForAttributes,
-  nameAttributeSchema,
-} from '../../utils/validations';
+import { nameAttributeSchema } from '../../utils/validations';
 import { authActions } from '../../auth';
 import { flattenAttributes, toFormValues } from '../../utils/attributeUtils';
+import { attributeLangCodes } from '../../Constants';
+import useAttributes from '../../hooks/useAttributes';
 
-const NameSection = () => {
+const NameSection = ({ showHistory, showFuture }) => {
   const { t } = useTranslation();
   const nodeId = useNodeId();
-  const { data, isFetching } = useGetNameAttributesQuery(nodeId);
-  const { data: keysData, isFetching: isFetchingKeys } =
-    useGetAttributeKeysBySectionQuery('names');
+  const { data: names, isFetching, error } = useAttributes('names');
   const [saveNameAttributes] = useSaveNameAttributesMutation();
 
-  const keys = (keysData || []).map((key) => key.attr);
-
-  // In edit mode data includes also history and future
-  const sortedData = useSortAttributesByDate(data);
-
   // In view mode filter history and future depending on selection
-  const sortedAndFilteredData = useFilterAttributesByDate(sortedData);
+  const visibleNames = useFilterAttributesByDate(
+    names,
+    showHistory,
+    showFuture
+  );
+
+  if (isFetching) {
+    return <></>;
+  }
+
+  const formValues = toFormValues(
+    names.filter((n) => !n.isNew),
+    names.filter((n) => n.isNew).map((n) => n.key)
+  );
+  const keys = Object.keys(formValues);
 
   // Validates form values every time when the values change
   // Submit button is disabled when validation fails
@@ -48,7 +49,12 @@ const NameSection = () => {
 
   const columns = [
     { label: t('text_language_header'), render: (item) => t(item.key) },
-    { label: t('name'), render: (item) => item.value },
+    {
+      label: t('name'),
+      render: (item) => (
+        <span lang={attributeLangCodes[item.key]}>{item.value}</span>
+      ),
+    },
     {
       label: t('valid_dates'),
       render: (item) => (
@@ -58,30 +64,22 @@ const NameSection = () => {
   ];
 
   const title = t('name_info');
-  const empty = sortedAndFilteredData.length === 0;
-
-  const sortedDataByKeys = keys
-    .map((key) => sortedAndFilteredData.filter((value) => value.key === key))
-    .flat();
+  const empty = visibleNames.length === 0;
 
   const renderedContent = (
-    <AttributesTable
-      columns={columns}
-      data={sortedDataByKeys}
-      summary={title}
-    />
+    <AttributesTable columns={columns} data={visibleNames} summary={title} />
   );
 
   return (
     <EditableAccordion
       title={title}
-      loading={isFetching || isFetchingKeys}
+      loading={isFetching}
       defaultExpanded={!empty}
     >
       <EditableContent
         editorComponent={<NameEditor keys={keys} />}
         validationSchema={validationSchema}
-        initialValues={toFormValues(sortedData, keys)}
+        initialValues={formValues}
         onSubmit={handleSubmit}
         successMessage={t('nameInfo.saveSuccess')}
         errorMessage={t('nameInfo.saveError')}

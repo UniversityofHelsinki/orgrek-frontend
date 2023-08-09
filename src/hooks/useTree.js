@@ -1,21 +1,29 @@
+import { defaultHierarchy } from '../Constants';
 import { useGetTreeQuery } from '../store';
 import { useSelector } from 'react-redux';
+import useHierarchies from './useHierarchies';
 
 /**
  * Fetches the tree on the selected day and including selected hierarchies.
  */
 const useTree = () => {
-  const { selectedHierarchy, selectedDay } = useSelector((state) => ({
-    selectedHierarchy: state.tree.selectedHierarchy,
+  const { selectedDay } = useSelector((state) => ({
     selectedDay: state.dr.selectedDay,
   }));
 
+  const [hierarchies] = useHierarchies();
+
   const { data, error, isFetching } = useGetTreeQuery({
-    hierarchies: selectedHierarchy ? selectedHierarchy : 'talous',
+    hierarchies,
     selectedDay,
   });
 
-  return { tree: data, error, isFetching };
+  const emptyTrees = [];
+
+  if (error) {
+    return { trees: emptyTrees, error, isFetching };
+  }
+  return { trees: data || emptyTrees, error, isFetching };
 };
 
 export default useTree;

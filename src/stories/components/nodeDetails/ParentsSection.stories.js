@@ -12,7 +12,7 @@ import { waitForAnimations } from '../../storyUtils';
 const now = new Date('2023-03-22T14:28:00+0200');
 
 const nodeId = '1';
-const selectedHierarchy = 'talous,toiminnanohjaus';
+const selectedHierarchy = 'virallinen,toiminnanohjaus';
 
 export default {
   component: ParentsSection,
@@ -21,6 +21,7 @@ export default {
     reactRouter: {
       searchParams: {
         uid: nodeId,
+        hierarchies: selectedHierarchy,
       },
     },
   },
@@ -50,7 +51,7 @@ export const Default = {
               endDate: null,
               hierarchies: [
                 {
-                  hierarchy: 'talous',
+                  hierarchy: 'virallinen',
                   startDate: '2000-01-01',
                   endDate: null,
                   edgeId: 20003,
@@ -73,7 +74,7 @@ export const Default = {
               endDate: null,
               hierarchies: [
                 {
-                  hierarchy: 'talous',
+                  hierarchy: 'virallinen',
                   startDate: '2000-01-01',
                   endDate: null,
                   edgeId: 20004,
@@ -120,7 +121,7 @@ export const Empty = {
               endDate: null,
               hierarchies: [
                 {
-                  hierarchy: 'talous',
+                  hierarchy: 'virallinen',
                   startDate: '2000-01-01',
                   endDate: '2009-12-31',
                   edgeId: 20003,

@@ -1,7 +1,7 @@
 export const hierarchyFilters = [
   {
     id: 6,
-    hierarchy: 'talous',
+    hierarchy: 'virallinen',
     key: 'type',
     value: 'koontiyksikko',
     startDate: null,
@@ -33,7 +33,7 @@ export const hierarchyFilters = [
   },
   {
     id: 21,
-    hierarchy: 'talous',
+    hierarchy: 'virallinen',
     key: 'type',
     value: 'osasto',
     startDate: '2017-12-31T22:00:00.000+00:00',
@@ -49,7 +49,7 @@ export const hierarchyFilters = [
   },
   {
     id: 31,
-    hierarchy: 'talous',
+    hierarchy: 'virallinen',
     key: 'type',
     value: 'tulosyksikko',
     startDate: null,
@@ -89,8 +89,8 @@ export const hierarchyFilters = [
   },
   {
     id: 45,
-    hierarchy: 'talous',
-    key: 'talous_tunnus',
+    hierarchy: 'virallinen',
+    key: 'virallinen_tunnus',
     value: null,
     startDate: null,
     endDate: null,
@@ -113,9 +113,9 @@ export const hierarchyFilters = [
   },
   {
     id: 32688,
-    hierarchy: 'talous',
+    hierarchy: 'virallinen',
     key: 'type',
-    value: 'talousvastuullinen yksikko',
+    value: 'virallinenvastuullinen yksikko',
     startDate: '2023-03-12T22:00:00.000+00:00',
     endDate: null,
   },
@@ -129,7 +129,7 @@ export const hierarchyFilters = [
   },
   {
     id: 32716,
-    hierarchy: 'talous',
+    hierarchy: 'virallinen',
     key: 'type',
     value: 'yritys_yhteiso',
     startDate: null,
@@ -137,7 +137,7 @@ export const hierarchyFilters = [
   },
   {
     id: 32686,
-    hierarchy: 'talous',
+    hierarchy: 'virallinen',
     key: 'publicity',
     value: null,
     startDate: null,

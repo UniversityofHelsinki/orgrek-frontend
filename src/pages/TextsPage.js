@@ -45,7 +45,7 @@ const TextsPage = () => {
     return response;
   };
 
-  const handleAddRow = async (rows) => {
+  const saveRow = async (rows) => {
     const response = await insertTexts(rows).unwrap();
     dispatch(
       showNotification({
@@ -53,6 +53,11 @@ const TextsPage = () => {
         severity: 'success',
       })
     );
+    return response;
+  };
+
+  const handleAddRow = async (rows) => {
+    const response = await saveRow(rows);
     setOpenNewTextForm(false);
     return response;
   };
@@ -81,6 +86,7 @@ const TextsPage = () => {
         loading={loading}
         onRowChange={handleRowChange}
         onAddRow={() => setOpenNewTextForm(true)}
+        saveRow={saveRow}
         onDeleteRows={handleDeleteRows}
       />
       {newTextForm}

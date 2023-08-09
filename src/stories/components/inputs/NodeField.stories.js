@@ -7,7 +7,7 @@ import React, { useState } from 'react';
 // Use a fixed date to ensure that tests always have a consistent result
 const now = new Date('2023-03-22T14:28:00+0200');
 
-const selectedHierarchy = 'talous';
+const selectedHierarchy = 'virallinen';
 
 export default {
   component: NodeField,
@@ -19,7 +19,7 @@ export default {
 export const Combobox = {
   args: {
     variant: 'combobox',
-    label: 'Yksikkö',
+    label: 'Etsi nimellä tai tunnuksella',
     value: null,
     helperText: '',
     placeholder: '',
@@ -31,7 +31,11 @@ export const Combobox = {
     const [value, setValue] = useState(args.value);
 
     const handleChange = (event, newValue, reason) => {
-      setValue(newValue);
+      if (newValue) {
+        setValue({ ...newValue, names: { fi: newValue.name } });
+      } else {
+        setValue(null);
+      }
       if (args.onChange) {
         args.onChange(event, newValue, reason);
       }
@@ -62,7 +66,7 @@ export const Search = {
   ...Combobox,
   args: {
     ...Combobox.args,
-    label: 'Hae yksikköä',
+    label: 'Etsi nimellä tai tunnuksella',
     variant: 'search',
   },
 };
@@ -72,7 +76,10 @@ export const Selected = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement.parentElement);
 
-    await userEvent.type(canvas.getByLabelText('Yksikkö'), 'kie');
+    await userEvent.type(
+      canvas.getByLabelText('Etsi nimellä tai tunnuksella'),
+      'kie'
+    );
 
     await waitFor(async () => {
       await expect(canvas.getByText(/HY, Kielikeskus/)).toBeInTheDocument();
@@ -80,9 +87,9 @@ export const Selected = {
 
     await userEvent.click(canvas.getByText(/HY, Kielikeskus/));
 
-    await expect(canvas.getByLabelText('Yksikkö')).toHaveValue(
-      'HY, Kielikeskus (KIELIKESKUS)'
-    );
+    await expect(
+      canvas.getByLabelText('Etsi nimellä tai tunnuksella')
+    ).toHaveValue('HY, Kielikeskus (KIELIKESKUS)');
   },
 };
 
@@ -90,15 +97,18 @@ export const ExistingValue = {
   ...Combobox,
   args: {
     ...Combobox.args,
-    value: { id: 38919588, name: 'TIKE, Tietotekniikkaratkaisut (TIRA)' },
+    value: {
+      id: 38919588,
+      names: { fi: 'TIKE, Tietotekniikkaratkaisut (TIRA)' },
+    },
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement.parentElement);
 
     await waitFor(async () => {
-      await expect(canvas.getByLabelText('Yksikkö')).toHaveValue(
-        'TIKE, Tietotekniikkaratkaisut (TIRA)'
-      );
+      await expect(
+        canvas.getByLabelText('Etsi nimellä tai tunnuksella')
+      ).toHaveValue('TIKE, Tietotekniikkaratkaisut (TIRA)');
     });
   },
 };
@@ -111,7 +121,9 @@ export const Cleared = {
     await userEvent.click(canvas.getByTitle('Tyhjennä'));
 
     await waitFor(async () => {
-      await expect(canvas.getByLabelText('Yksikkö')).toHaveValue('');
+      await expect(
+        canvas.getByLabelText('Etsi nimellä tai tunnuksella')
+      ).toHaveValue('');
     });
   },
 };

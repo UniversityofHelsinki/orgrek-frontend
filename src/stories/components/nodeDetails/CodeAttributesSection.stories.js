@@ -1,6 +1,7 @@
 import { expect } from '@storybook/jest';
 import {
   mockGetAttributeKeys,
+  mockGetAttributes,
   mockGetCodeAttributes,
   mockSaveCodeAttributes,
   withMockStore,
@@ -12,7 +13,7 @@ import { waitFor, within } from '@storybook/testing-library';
 const now = new Date('2023-03-22T14:28:00+0200');
 
 const nodeId = '12345678';
-const selectedHierarchy = 'talous';
+const selectedHierarchy = 'virallinen';
 
 export default {
   component: CodeAttributesSection,
@@ -21,6 +22,7 @@ export default {
     reactRouter: {
       searchParams: {
         uid: nodeId,
+        hierarchies: selectedHierarchy,
       },
     },
   },
@@ -28,97 +30,93 @@ export default {
 
 export const Default = {
   parameters: {
+    systemTime: now,
     msw: {
       handlers: [
-        mockGetAttributeKeys(
-          {
-            selectedHierarchies: selectedHierarchy,
-            sections: ['codes'],
-          },
-          ['emo_lyhenne', 'lyhenne', 'talous_tunnus']
-        ),
-        mockGetCodeAttributes(nodeId, [
-          {
-            id: 1001,
-            nodeId: '1',
-            key: 'lyhenne',
-            value: 'LYH',
-            startDate: '1970-01-01',
-            endDate: null,
-          },
-          {
-            id: 1002,
-            nodeId: '1',
-            key: 'emo_lyhenne',
-            value: 'EMO',
-            startDate: null,
-            endDate: null,
-          },
-          {
-            id: 1003,
-            nodeId: '1',
-            key: 'iam_ryhma',
-            value: 'group1',
-            startDate: null,
-            endDate: null,
-          },
-          {
-            id: 1004,
-            nodeId: '1',
-            key: 'talous_tunnus',
-            value: '101',
-            startDate: null,
-            endDate: null,
-          },
-          {
-            id: 1005,
-            nodeId: '1',
-            key: 'hr_lyhenne',
-            value: 'HRLYH',
-            startDate: null,
-            endDate: null,
-          },
-          {
-            id: 1006,
-            nodeId: '1',
-            key: 'hr_tunnus',
-            value: 'HR102',
-            startDate: null,
-            endDate: null,
-          },
-          {
-            id: 1007,
-            nodeId: '1',
-            key: 'tutkimus_tunnus',
-            value: 'TUT102',
-            startDate: null,
-            endDate: null,
-          },
-          {
-            id: 1008,
-            nodeId: '1',
-            key: 'oppiaine_tunnus',
-            value: 'OPP102',
-            startDate: null,
-            endDate: null,
-          },
-          {
-            id: 1009,
-            nodeId: '1',
-            key: 'laskutus_tunnus',
-            value: 'LAS102',
-            startDate: null,
-            endDate: null,
-          },
-          {
-            id: 1010,
-            nodeId: '1',
-            key: 'mainari_tunnus',
-            value: 'MAI102',
-            startDate: null,
-            endDate: null,
-          },
-        ]),
+        mockGetAttributes(nodeId, {
+          codes: [
+            {
+              id: 1001,
+              nodeId: '1',
+              key: 'lyhenne',
+              value: 'LYH',
+              startDate: '1970-01-01',
+              endDate: null,
+            },
+            {
+              id: 1002,
+              nodeId: '1',
+              key: 'emo_lyhenne',
+              value: 'EMO',
+              startDate: null,
+              endDate: null,
+            },
+            {
+              id: 1003,
+              nodeId: '1',
+              key: 'iam_ryhma',
+              value: 'group1',
+              startDate: null,
+              endDate: null,
+            },
+            {
+              id: 1004,
+              nodeId: '1',
+              key: 'talous_tunnus',
+              value: '101',
+              startDate: null,
+              endDate: null,
+            },
+            {
+              id: 1005,
+              nodeId: '1',
+              key: 'hr_lyhenne',
+              value: 'HRLYH',
+              startDate: null,
+              endDate: null,
+            },
+            {
+              id: 1006,
+              nodeId: '1',
+              key: 'hr_tunnus',
+              value: 'HR102',
+              startDate: null,
+              endDate: null,
+            },
+            {
+              id: 1007,
+              nodeId: '1',
+              key: 'tutkimus_tunnus',
+              value: 'TUT102',
+              startDate: null,
+              endDate: null,
+            },
+            {
+              id: 1008,
+              nodeId: '1',
+              key: 'oppiaine_tunnus',
+              value: 'OPP102',
+              startDate: null,
+              endDate: null,
+            },
+            {
+              id: 1009,
+              nodeId: '1',
+              key: 'laskutus_tunnus',
+              value: 'LAS102',
+              startDate: null,
+              endDate: null,
+            },
+            {
+              id: 1010,
+              nodeId: '1',
+              key: 'mainari_tunnus',
+              value: 'MAI102',
+              startDate: null,
+              endDate: null,
+            },
+          ],
+        }),
         mockSaveCodeAttributes(nodeId),
       ],
     },
@@ -148,16 +146,10 @@ export const Default = {
 
 export const Empty = {
   parameters: {
+    systemTime: now,
     msw: {
       handlers: [
-        mockGetAttributeKeys(
-          {
-            selectedHierarchies: 'talous',
-            sections: ['codes'],
-          },
-          ['emo_lyhenne', 'lyhenne', 'talous_tunnus']
-        ),
-        mockGetCodeAttributes(nodeId, []),
+        mockGetAttributes(nodeId, { codes: [] }),
         mockSaveCodeAttributes(nodeId),
       ],
     },

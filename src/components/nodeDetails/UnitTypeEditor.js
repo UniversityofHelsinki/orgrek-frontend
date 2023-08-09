@@ -4,14 +4,16 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
-import useUnitTypeOptions from '../../hooks/useUnitTypeOptions';
 import useFormField from '../../hooks/useFormField';
 import HelperText from '../inputs/HelperText';
+import useForm from '../../hooks/useForm';
 
-const UnitTypeField = ({ path }) => {
+const UnitTypeField = ({ path, value: attribute }) => {
   const { t } = useTranslation();
-  const { unitTypeOptions } = useUnitTypeOptions();
   const { props, errors } = useFormField({ path, name: 'value' });
+
+  const meta = attribute.meta;
+  const acceptedValues = meta.acceptedValues;
 
   return (
     <TextField
@@ -21,21 +23,21 @@ const UnitTypeField = ({ path }) => {
       label={t('value')}
       helperText={<HelperText errors={errors} />}
     >
-      {unitTypeOptions.map((option) => (
-        <MenuItem key={option.value} value={option.value}>
-          {t(option.label)}
+      {acceptedValues.map((option) => (
+        <MenuItem key={option} value={option}>
+          {t(option)}
         </MenuItem>
       ))}
     </TextField>
   );
 };
 
-const UnitTypeEditor = ({ keys }) => {
+const UnitTypeEditor = ({ metas }) => {
   const { t } = useTranslation();
-  const { unitTypeOptions } = useUnitTypeOptions();
 
-  const getDisplayText = (value) =>
-    t(unitTypeOptions.find((option) => option.value === value.value)?.label);
+  const { values } = useForm();
+
+  const getDisplayText = (attribute) => t(attribute.value);
 
   const fields = [
     {
@@ -46,15 +48,32 @@ const UnitTypeEditor = ({ keys }) => {
     'endDate',
   ];
 
+  const createRow = (key) => {
+    return () => ({
+      key,
+      id: Math.floor(Math.random() * -1000000),
+      meta: metas[key],
+      value: null,
+      startDate: null,
+      endDate: null,
+      isNew: true,
+      deleted: false,
+    });
+  };
+
   return (
     <Stack spacing={2}>
-      <AttributeEditor
-        path="type"
-        attributeLabel={t(keys[0])}
-        attributeKey={keys[0]}
-        getDisplayText={getDisplayText}
-        fields={fields}
-      />
+      {Object.entries(values).map(([key, attributes], i) => (
+        <AttributeEditor
+          key={`${key}-${i}`}
+          path="type"
+          attributeLabel={t(key)}
+          attributeKey={key}
+          getDisplayText={getDisplayText}
+          fields={fields}
+          customCreateRow={createRow(key)}
+        />
+      ))}
     </Stack>
   );
 };

@@ -21,6 +21,7 @@ import {
   Stack,
 } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import useHierarchies from '../../hooks/useHierarchies';
 
 const ContentHeader = ({ value }) => {
   return (
@@ -103,10 +104,16 @@ const Node = () => {
 
 const Actions = ({ onCancel }) => {
   const { t } = useTranslation();
-  const { dirty, invalid, submitting } = useForm();
+  const { dirty, invalid, submitting, removeBeforeUnloadListener } = useForm();
+
+  const handleCancel = () => {
+    removeBeforeUnloadListener();
+    onCancel();
+  };
+
   const actions = (
     <>
-      <Button variant="outlined" onClick={onCancel} disabled={submitting}>
+      <Button variant="outlined" onClick={handleCancel} disabled={submitting}>
         {t('cancel_button')}
       </Button>
       <Button
@@ -125,9 +132,7 @@ const Actions = ({ onCancel }) => {
 const NewUnitForm = ({ open, onClose, handleSubmit }) => {
   const { t } = useTranslation();
   const validationSchema = newNodeValiditySchema;
-  const selectedHierarchies = useSelector(
-    (s) => s.tree.selectedHierarchy || s.tree.defaultHierarchy
-  ).split(',');
+  const [selectedHierarchies] = useHierarchies();
 
   const today = new Date();
   const emptyNode = {
@@ -150,15 +155,18 @@ const NewUnitForm = ({ open, onClose, handleSubmit }) => {
     </Stack>
   );
 
+  const stickyChildren = (
+    <Stack spacing={2}>
+      <Node />
+      <Hierarchies hierarchies={selectedHierarchies} />
+    </Stack>
+  );
+
   const content = (
-    <>
-      <Stack spacing={2}>
-        <Node />
-        <Hierarchies hierarchies={selectedHierarchies} />
-        <ValidFromField />
-        <NameFields />
-      </Stack>
-    </>
+    <Stack spacing={2}>
+      <ValidFromField />
+      <NameFields />
+    </Stack>
   );
 
   return (
@@ -167,9 +175,20 @@ const NewUnitForm = ({ open, onClose, handleSubmit }) => {
         onSubmit={handleSubmit}
         initialValues={emptyNode}
         validationSchema={validationSchema}
+        sx={{ overflowY: 'auto' }}
       >
         <DialogTitle>{headerRow}</DialogTitle>
         <Divider />
+        <DialogContent
+          sx={{
+            backgroundColor: 'white',
+            position: 'sticky',
+            top: 0,
+            zIndex: 30,
+          }}
+        >
+          {stickyChildren}
+        </DialogContent>
         <DialogContent>{content}</DialogContent>
         <Divider />
         <DialogActions>

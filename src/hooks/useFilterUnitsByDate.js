@@ -9,11 +9,9 @@ import isAfter from 'date-fns/isAfter';
  * History and future is shown only when show history or show coming is
  * selected.
  */
-const useFilterParentsByDate = (data) => {
-  const { selectedDay, showHistory, showComing } = useSelector((state) => ({
+const useFilterUnitsByDate = (data, showHistory, showFuture) => {
+  const { selectedDay } = useSelector((state) => ({
     selectedDay: state.dr.selectedDay,
-    showHistory: state.nvrd.showHistory,
-    showComing: state.nvrd.showComing,
   }));
 
   let date;
@@ -36,7 +34,7 @@ const useFilterParentsByDate = (data) => {
           (hierarchy) => showHistory || !isEndDateBeforeSelectedDay(hierarchy)
         )
         .filter(
-          (hierarchy) => showComing || !isStartDateAfterSelectedDay(hierarchy)
+          (hierarchy) => showFuture || !isStartDateAfterSelectedDay(hierarchy)
         );
       return {
         ...parent,
@@ -49,7 +47,7 @@ const useFilterParentsByDate = (data) => {
     );
 
     return emptyHierarchiesFiltered;
-  }, [data, selectedDay, showHistory, showComing]);
+  }, [data, selectedDay, showHistory, showFuture]);
 };
 
-export default useFilterParentsByDate;
+export default useFilterUnitsByDate;

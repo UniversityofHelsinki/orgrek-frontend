@@ -14,6 +14,7 @@ import { useEffect } from 'react';
 import parseISO from 'date-fns/parseISO';
 import isAfter from 'date-fns/isAfter';
 import isBefore from 'date-fns/isBefore';
+import useHierarchies from './useHierarchies';
 
 /**
  * Fetches node attributes when the component using this hook is rendered
@@ -21,14 +22,17 @@ import isBefore from 'date-fns/isBefore';
  */
 const useFetchNodeDetails = () => {
   const dispatch = useDispatch();
-  const { node, selectedDay, showHistory, showComing, selectedHierarchy } =
-    useSelector((state) => ({
+  const { node, selectedDay, showHistory, showComing } = useSelector(
+    (state) => ({
       node: state.nrd.node,
       selectedDay: state.dr.selectedDay,
       showHistory: state.nvrd.showHistory,
       showComing: state.nvrd.showComing,
-      selectedHierarchy: state.tree.selectedHierarchy,
-    }));
+    })
+  );
+
+  const [hierarchies] = useHierarchies();
+  const selectedHierarchy = hierarchies.join(',');
 
   const fetchNodeDetails = (
     node,

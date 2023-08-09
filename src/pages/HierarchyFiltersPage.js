@@ -7,32 +7,37 @@ import {
   useSaveHierarchyFiltersMutation,
   useInsertHierarchyFiltersMutation,
   useDeleteHierarchyFiltersMutation,
-  useGetSectionAttributesQuery,
-  useGetEdgesQuery,
   useGetEdgeHierarchiesQuery,
+  useGetDistinctNodeAttributesQuery,
+  useGetDistinctSectionAttributesQuery,
+  useGetHierarchyTypesQuery,
 } from '../store';
 import { t } from 'i18next';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 const HierarchyFiltersPage = () => {
   const dispatch = useDispatch();
   const { data: hierarchyFilters, isFetching: isFetchingHierarchyFilters } =
     useGetHierarchyFiltersQuery();
   const { data: attributeKeys, isFetching: isFetchingKeys } =
-    useGetSectionAttributesQuery();
+    useGetDistinctSectionAttributesQuery();
   const { data: selectableHierarchies, isFetching: isFetchingEdges } =
-    useGetEdgesQuery();
+    useGetHierarchyTypesQuery();
   const { data: edgeHierarchies, isFetching: isFetchingEdgeHierarchies } =
     useGetEdgeHierarchiesQuery();
+  const { data: distinctNodeAttrs, isFetching: isFetchingDistinctAttr } =
+    useGetDistinctNodeAttributesQuery();
   const [saveHierarchyFilters] = useSaveHierarchyFiltersMutation();
   const [deleteHierarchyFilters] = useDeleteHierarchyFiltersMutation();
   const [insertHierarchyFilters] = useInsertHierarchyFiltersMutation();
 
   const loading =
-    isFetchingHierarchyFilters || isFetchingEdges || isFetchingEdgeHierarchies;
+    isFetchingHierarchyFilters ||
+    isFetchingEdges ||
+    isFetchingEdgeHierarchies ||
+    isFetchingDistinctAttr;
 
   const handleRowChange = async (row) => {
-    //console.log('handleRowChange', row); // TODO: dispatch saveHierarchyFilters mutation
     try {
       await saveHierarchyFilters({ data: row }).unwrap();
       dispatch(
@@ -53,7 +58,6 @@ const HierarchyFiltersPage = () => {
 
   const handleAddRow = async (row) => {
     //const id = Math.floor(Math.random() * -1000000);
-    //console.log('handleAddRow', row); // TODO: dispatch addHierarchyFilters mutation
     try {
       await insertHierarchyFilters({ data: [row] }).unwrap();
       dispatch(
@@ -73,7 +77,6 @@ const HierarchyFiltersPage = () => {
   };
 
   const handleDeleteRow = async (row) => {
-    //console.log('handleDeleteRow', row); // TODO: dispatch deleteHierarchyFilters mutation
     try {
       await deleteHierarchyFilters({ data: row }).unwrap();
       dispatch(
@@ -97,7 +100,7 @@ const HierarchyFiltersPage = () => {
       <HierarchyFiltersDataGrid
         initialRows={hierarchyFilters}
         selectableHierarchies={selectableHierarchies}
-        edgeHierarchies={edgeHierarchies}
+        distinctNodeAttrs={distinctNodeAttrs}
         attributeKeys={attributeKeys}
         loading={loading}
         onRowChange={handleRowChange}

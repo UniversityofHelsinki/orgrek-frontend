@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
@@ -34,24 +34,36 @@ const NodeField = ({
   required,
   value,
   onChange,
+  clearOnSelect = false,
+  filter = () => true,
   ...props
 }) => {
   const { t } = useTranslation();
-  const { tree } = useTree();
+  const { trees } = useTree();
   const language = useContentLanguage();
-
-  const options = tree && tree[language] ? flatten([tree[language]]) : [];
+  const languageField = language === 'ia' ? 'fi' : language;
+  const options = trees
+    ? trees.map((tree) => (tree ? flatten([tree]) : [])).flat()
+    : [];
+  const [inputValue, setInputValue] = useState('');
 
   const uniqueOptions = [
     ...new Map(options.map((item) => [item['uniqueId'], item])).values(),
   ];
 
+  const filtered = uniqueOptions.filter(filter);
+
   const handleChange = (event, newValue, reason) => {
     onChange(
       event,
-      newValue === null ? null : { id: newValue.uniqueId, name: newValue.name },
+      newValue === null
+        ? null
+        : { id: newValue.uniqueId, name: newValue.names[languageField] },
       reason
     );
+    if (clearOnSelect) {
+      setTimeout(() => setInputValue(''));
+    }
   };
 
   let inputAdornment;
@@ -77,36 +89,40 @@ const NodeField = ({
       isOptionEqualToValue={(option, value) => {
         return option.uniqueId === value.id;
       }}
-      options={uniqueOptions}
-      getOptionLabel={(option) => option.name || ''}
+      options={filtered}
+      inputValue={inputValue}
+      onInputChange={(event, value) => setInputValue(value)}
+      getOptionLabel={(option) => (option && option.names[languageField]) || ''}
       renderOption={(props, option) => (
-        <li {...props} key={`${option.name}`}>
-          {option.name}
+        <li {...props} key={`${option.names[languageField]}`}>
+          {option.names[languageField]}
         </li>
       )}
       filterOptions={(options, state) => {
         if (state.inputValue.length > 2) {
           return options.filter(
             (option) =>
-              nameMatches(option.name, state.inputValue) ||
+              nameMatches(option.names[languageField], state.inputValue) ||
               uniqueIdMatches(option.uniqueId, state.inputValue)
           );
         }
         return [];
       }}
       renderInput={({ InputProps, ...params }) => (
-        <TextField
-          InputProps={{
-            ...InputProps,
-            endAdornment: InputProps.endAdornment || inputAdornment,
-          }}
-          label={label}
-          placeholder={placeholder || t('type_three_char_to_start_search')}
-          helperText={helperText}
-          required={required}
-          error={error}
-          {...params}
-        />
+        <form role="search" onSubmit={(event) => event.preventDefault()}>
+          <TextField
+            InputProps={{
+              ...InputProps,
+              endAdornment: InputProps.endAdornment || inputAdornment,
+            }}
+            label={t('search_by_name_or_code')}
+            placeholder={placeholder || t('type_three_char_to_start_search')}
+            helperText={helperText}
+            required={required}
+            error={error}
+            {...params}
+          />
+        </form>
       )}
     />
   );
@@ -155,6 +171,8 @@ NodeField.propTypes = {
     id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
   }),
+  /** Function for filtering the results as in [].filter(fn) */
+  filter: PropTypes.func,
 };
 
 export default NodeField;
