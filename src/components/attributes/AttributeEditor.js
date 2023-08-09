@@ -37,8 +37,13 @@ const AttributeEditor = ({
     if (focusRef.current) {
       const inputContainer = focusRef.current;
       const inputField = inputContainer.querySelector('input');
-      if (inputField) {
+      if (!inputField.getAttribute('aria-hidden')) {
         inputField.focus();
+      } else {
+        const fallback = inputContainer.querySelector('div[tabindex]');
+        if (fallback) {
+          fallback.focus();
+        }
       }
     }
   }, [focusRef.current]);

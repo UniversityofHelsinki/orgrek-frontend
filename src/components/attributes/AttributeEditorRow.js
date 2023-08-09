@@ -85,11 +85,7 @@ const AttributeEditorRow = ({
         label: valueLabel,
         gridProps: { xs: 12, sm: 12, md: 6 },
         render: (props) => (
-          <ValueField
-            {...props}
-            renderValueField={renderValueField}
-            focusRef={focusRef}
-          />
+          <ValueField {...props} renderValueField={renderValueField} />
         ),
       },
       {
@@ -138,6 +134,7 @@ const AttributeEditorRow = ({
         path,
         value,
         errors,
+        focusRef,
       };
 
       return (
