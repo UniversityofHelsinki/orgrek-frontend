@@ -5,7 +5,7 @@ import ReviewDate from './ReviewDate';
 import { fetchSelectableHierarchies } from '../actions/treeAction';
 import { useTranslation } from 'react-i18next';
 import HierarchySelection from './HierarchySelection';
-import { Grid, Paper, Stack, useTheme } from '@mui/material';
+import { Grid, Paper, useTheme } from '@mui/material';
 import useFetchNode from '../hooks/useFetchNode';
 import NodeViewControl from './NodeViewControl';
 import useHierarchies from '../hooks/useHierarchies';
@@ -15,11 +15,6 @@ const Hierarchy = ({ fetchSelectableHierarchies, switchHandlers }) => {
     fetchSelectableHierarchies();
   }, []);
   const node = useFetchNode();
-  const [hierarchies, setHierarchies] = useHierarchies();
-  const selectedDay = useSelector((state) => state.dr.selectedDay);
-
-  const theme = useTheme();
-  const { t } = useTranslation();
 
   return (
     <Paper
