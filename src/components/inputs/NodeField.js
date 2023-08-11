@@ -83,7 +83,8 @@ const NodeField = ({
       noOptionsText={t('nodeField.noOptionsText')}
       {...props}
       disabled={disabled}
-      freeSolo={variant === 'search'}
+      freeSolo
+      forcePopupIcon={true}
       onChange={handleChange}
       value={value}
       isOptionEqualToValue={(option, value) => {
