@@ -9,11 +9,19 @@ export const Default = {
     summary: 'Yläyksiköt',
     data: [
       {
-        id: '1001',
-        uniqueId: 10000001,
-        startDate: null,
-        endDate: null,
-        hierarchies: [
+        node: {
+          id: '1001',
+          uniqueId: 10000001,
+          startDate: null,
+          endDate: null,
+          name: 'Alayksikkö 1',
+          names: {
+            fi: 'Alayksikkö 1',
+            en: 'Alayksikkö 1',
+            sv: 'Alayksikkö 1',
+          },
+        },
+        edges: [
           {
             hierarchy: 'virallinen',
             startDate: '2018-12-31',
@@ -40,23 +48,27 @@ export const Default = {
             endDate: null,
           },
         ],
-        fullName: 'Alayksikkö 1',
-        language: 'fi',
       },
       {
-        id: '1002',
-        uniqueId: 10000002,
-        startDate: null,
-        endDate: null,
-        hierarchies: [
+        node: {
+          id: '1002',
+          uniqueId: 10000002,
+          startDate: null,
+          endDate: null,
+          name: 'Alayksikkö 2',
+          names: {
+            fi: 'Alayksikkö 2',
+            en: 'Alayksikkö 2',
+            sv: 'Alayksikkö 2',
+          },
+        },
+        edges: [
           {
             hierarchy: 'virallinen',
             startDate: null,
             endDate: null,
           },
         ],
-        fullName: 'Alayksikkö 2',
-        language: 'fi',
       },
     ],
   },

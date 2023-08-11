@@ -3,6 +3,7 @@ import { useMemo } from 'react';
 import parseISO from 'date-fns/parseISO';
 import isBefore from 'date-fns/isBefore';
 import isAfter from 'date-fns/isAfter';
+import useSelectedDate from './useSelectedDate';
 
 /**
  * By default, returns only current values from the given attributes.
@@ -10,9 +11,7 @@ import isAfter from 'date-fns/isAfter';
  * selected.
  */
 const useFilterUnitsByDate = (data, showHistory, showFuture) => {
-  const { selectedDay } = useSelector((state) => ({
-    selectedDay: state.dr.selectedDay,
-  }));
+  const selectedDay = useSelectedDate();
 
   let date;
   if (typeof selectedDay === 'string') {
@@ -28,7 +27,7 @@ const useFilterUnitsByDate = (data, showHistory, showFuture) => {
 
   return useMemo(() => {
     const filteredByDate = data.map((parent) => {
-      const hierarchies = parent.hierarchies;
+      const hierarchies = parent.edges;
       const results = hierarchies
         .filter(
           (hierarchy) => showHistory || !isEndDateBeforeSelectedDay(hierarchy)
@@ -38,12 +37,12 @@ const useFilterUnitsByDate = (data, showHistory, showFuture) => {
         );
       return {
         ...parent,
-        hierarchies: results,
+        edges: results,
       };
     });
 
     const emptyHierarchiesFiltered = filteredByDate.filter(
-      (parent) => parent.hierarchies.length > 0
+      (parent) => parent.edges.length > 0
     );
 
     return emptyHierarchiesFiltered;

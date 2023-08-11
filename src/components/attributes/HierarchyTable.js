@@ -4,9 +4,12 @@ import Validity from './Validity';
 import { useTranslation } from 'react-i18next';
 import TableCell from '@mui/material/TableCell';
 import Link from '../Link';
+import useContentLanguage from '../../hooks/useContentLanguage';
 
 const HierarchyTable = ({ data, ...props }) => {
   const { t } = useTranslation();
+  const language = useContentLanguage();
+  const languageField = language === 'ia' ? 'fi' : language;
 
   const columns = [
     {
@@ -35,25 +38,20 @@ const HierarchyTable = ({ data, ...props }) => {
   const keyFn = (item, index) =>
     `${index}-${item.uniqueId}-${item.hierarchy}-${item.startDate}-${item.endDate}`;
 
-  const hierarchyData = data
+  const units = data
     .map((item) =>
-      item.hierarchies.map((hierarchy, index) => ({
-        uniqueId: item.uniqueId,
-        unit: item.fullName,
+      item.edges.map((edge, index) => ({
+        uniqueId: item.node.uniqueId,
+        unit: item.node.names[languageField],
         // Unit name cell spans all hierarchies
-        rowSpan: index === 0 && item.hierarchies.length,
-        ...hierarchy,
+        rowSpan: index === 0 && item.edges.length,
+        ...edge,
       }))
     )
     .flat();
 
   return (
-    <AttributesTable
-      columns={columns}
-      keyFn={keyFn}
-      data={hierarchyData}
-      {...props}
-    />
+    <AttributesTable columns={columns} keyFn={keyFn} data={units} {...props} />
   );
 };
 

@@ -202,12 +202,12 @@ export const api = createApi({
       providesTags: (result, error, { nodeId }) => [
         { type: 'Parents', id: nodeId },
       ],
-      query: ({ nodeId, selectedDay, selectedHierarchies }) => {
-        const dateString = selectedDay
-          ? selectedDay.toLocaleDateString('FI-fi')
+      query: ({ nodeId, date, hierarchies }) => {
+        const dateString = date
+          ? date.toLocaleDateString('FI-fi')
           : new Date().toLocaleDateString('FI-fi');
         return {
-          url: `/node/all/parents/${nodeId}/${dateString}/${selectedHierarchies}`,
+          url: `/node/${nodeId}/${dateString}/parents/${hierarchies}`,
           method: 'GET',
         };
       },
@@ -249,12 +249,12 @@ export const api = createApi({
       providesTags: (result, error, { nodeId }) => [
         { type: 'Children', id: nodeId },
       ],
-      query: ({ nodeId, selectedDay, selectedHierarchies }) => {
-        const dateString = selectedDay
-          ? selectedDay.toLocaleDateString('FI-fi')
+      query: ({ nodeId, date, hierarchies }) => {
+        const dateString = date
+          ? date.toLocaleDateString('FI-fi')
           : new Date().toLocaleDateString('FI-fi');
         return {
-          url: `/node/all/children/${nodeId}/${dateString}/${selectedHierarchies}`,
+          url: `/node/${nodeId}/${dateString}/children/${hierarchies}`,
           method: 'GET',
         };
       },
@@ -297,35 +297,43 @@ export const api = createApi({
       },
     }),
     getPredecessors: builder.query({
-      providesTags: (result, error, nodeId) => [
+      providesTags: (result, error, { nodeId }) => [
         { type: 'Predecessors', id: nodeId },
       ],
       query: ({ nodeId, date }) => {
         return {
-          url: `/node/predecessors/${nodeId}/${date.toLocaleDateString(
+          url: `/node/${nodeId}/${date.toLocaleDateString(
             'fi-FI'
-          )}`,
+          )}/predecessors`,
           method: 'GET',
         };
       },
     }),
     getSuccessors: builder.query({
-      providesTags: (result, error, nodeId) => [
+      providesTags: (result, error, { nodeId }) => [
         { type: 'Successors', id: nodeId },
       ],
-      query: (nodeId) => {
+      query: ({ nodeId, date }) => {
         return {
-          url: `/node/successors/${nodeId}`,
+          url: `/node/${nodeId}/${date.toLocaleDateString('fi-FI')}/successors`,
           method: 'GET',
         };
       },
     }),
     saveSuccessors: builder.mutation({
-      invalidatesTags: (result, error, { nodeId }) => {
+      invalidatesTags: (result, error, { successors, nodeId }) => {
         if (error) {
           return [];
         }
-        return [{ type: 'Successors', id: nodeId }, { type: 'Tree' }];
+        const predecessorTags = successors.map((s) => ({
+          type: 'Predecessors',
+          id: s.childUniqueId,
+        }));
+        return [
+          ...predecessorTags,
+          { type: 'Successors', id: nodeId },
+          { type: 'Tree' },
+        ];
       },
       query: ({ successors }) => {
         return {
