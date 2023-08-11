@@ -19,7 +19,7 @@ export default {
 export const Combobox = {
   args: {
     variant: 'combobox',
-    label: 'Yksikkö',
+    label: 'Etsi nimellä tai tunnuksella',
     value: null,
     helperText: '',
     placeholder: '',
@@ -66,7 +66,7 @@ export const Search = {
   ...Combobox,
   args: {
     ...Combobox.args,
-    label: 'Hae yksikköä',
+    label: 'Etsi nimellä tai tunnuksella',
     variant: 'search',
   },
 };
@@ -76,7 +76,10 @@ export const Selected = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement.parentElement);
 
-    await userEvent.type(canvas.getByLabelText('Yksikkö'), 'kie');
+    await userEvent.type(
+      canvas.getByLabelText('Etsi nimellä tai tunnuksella'),
+      'kie'
+    );
 
     await waitFor(async () => {
       await expect(canvas.getByText(/HY, Kielikeskus/)).toBeInTheDocument();
@@ -84,9 +87,9 @@ export const Selected = {
 
     await userEvent.click(canvas.getByText(/HY, Kielikeskus/));
 
-    await expect(canvas.getByLabelText('Yksikkö')).toHaveValue(
-      'HY, Kielikeskus (KIELIKESKUS)'
-    );
+    await expect(
+      canvas.getByLabelText('Etsi nimellä tai tunnuksella')
+    ).toHaveValue('HY, Kielikeskus (KIELIKESKUS)');
   },
 };
 
@@ -103,9 +106,9 @@ export const ExistingValue = {
     const canvas = within(canvasElement.parentElement);
 
     await waitFor(async () => {
-      await expect(canvas.getByLabelText('Yksikkö')).toHaveValue(
-        'TIKE, Tietotekniikkaratkaisut (TIRA)'
-      );
+      await expect(
+        canvas.getByLabelText('Etsi nimellä tai tunnuksella')
+      ).toHaveValue('TIKE, Tietotekniikkaratkaisut (TIRA)');
     });
   },
 };
@@ -118,7 +121,9 @@ export const Cleared = {
     await userEvent.click(canvas.getByTitle('Tyhjennä'));
 
     await waitFor(async () => {
-      await expect(canvas.getByLabelText('Yksikkö')).toHaveValue('');
+      await expect(
+        canvas.getByLabelText('Etsi nimellä tai tunnuksella')
+      ).toHaveValue('');
     });
   },
 };
