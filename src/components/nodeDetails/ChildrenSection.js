@@ -44,22 +44,22 @@ const newSearchParams = (currentSearchParams, newNodeId) => {
   return newParams;
 };
 
-const asAttribute = (nodeId, uniqueId) => (hierarchy) => ({
-  id: hierarchy.edgeId,
+const asAttribute = (nodeId, uniqueId) => (edge) => ({
+  id: edge.id,
   key: uniqueId,
   nodeId: nodeId,
-  value: hierarchy.hierarchy,
-  startDate: hierarchy.startDate,
-  endDate: hierarchy.endDate,
-  isNew: Boolean(hierarchy.isNew),
-  deleted: Boolean(hierarchy.deleted),
+  value: edge.hierarchy,
+  startDate: edge.startDate,
+  endDate: edge.endDate,
+  isNew: Boolean(edge.isNew),
+  deleted: Boolean(edge.deleted),
 });
 
-const asFormValues = (children) => {
-  return children.reduce((a, c) => {
+const asFormValues = (parents) => {
+  return parents.reduce((a, parent) => {
     // we add an arbitrary character as yup seems to crash (does not find the schema path) if the string could be cast to integer.
-    a[`s${c.uniqueId}`] = c.hierarchies.map(
-      asAttribute(c.id, `s${c.uniqueId}`)
+    a[`s${parent.node.uniqueId}`] = parent.edges.map(
+      asAttribute(parent.node.id, `s${parent.node.uniqueId}`)
     );
     return a;
   }, {});
@@ -67,20 +67,19 @@ const asFormValues = (children) => {
 
 const ChildrenSection = ({ showHistory, showFuture }) => {
   const { t } = useTranslation();
-  const { children: childrenByLanguage, isFetching } = useChildren();
+  const { children, isFetching } = useChildren();
   const dispatch = useDispatch();
   const [currentSearchParams, setSearchParams] = useSearchParams();
   const contentLanguage = useContentLanguage();
   const [showForm, setShowForm] = useState(false);
-  const existingChildren = childrenByLanguage[contentLanguage] || [];
-  const filteredByDateChildren = useFilterUnitsByDate(
-    existingChildren,
+  const visibleChildren = useFilterUnitsByDate(
+    children,
     showHistory,
     showFuture
   );
   const [validationSchema, setValidationSchema] = useState();
-  const empty = existingChildren.length === 0;
-  const initialFormValues = asFormValues(existingChildren);
+  const empty = visibleChildren.length === 0;
+  const initialFormValues = asFormValues(children);
   const [saveChildren] = useSaveChildrenMutation();
   const [saveChild] = useSaveChildMutation();
   const title = t('subunits.title');
@@ -160,7 +159,7 @@ const ChildrenSection = ({ showHistory, showFuture }) => {
       <EditableContent
         editorComponent={
           <RelationEditor
-            units={existingChildren}
+            units={children}
             onUnitChange={handleChildChange}
             editortitle={t('subunits.newSubUnit')}
           />
@@ -183,7 +182,7 @@ const ChildrenSection = ({ showHistory, showFuture }) => {
         authActions={authActions.children}
       >
         <Placeholder empty={empty} placeholder={t('subunits.empty')}>
-          <HierarchyTable data={filteredByDateChildren} summary={title} />
+          <HierarchyTable data={visibleChildren} summary={title} />
         </Placeholder>
         {formElement}
       </EditableContent>

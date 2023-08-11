@@ -43,26 +43,37 @@ const RelationEditor = ({ units, onUnitChange, editortitle }) => {
   const languageField = language === 'ia' ? 'fi' : language;
   const [unitNames, setUnitNames] = useState(units);
   const getUnitName = (id) => {
-    return unitNames.find((unit) => `s${unit.uniqueId}` === id)?.fullName;
+    const found = unitNames.find((unit) => `s${unit.node.uniqueId}` === id)
+      ?.node.names[languageField];
+    return found;
   };
 
   const { values, setValues } = useForm();
 
   const getDisplayText = (value) => t(value.value);
 
-  const nodeIsAlreadyUnit = (node) => {
-    return values[`s${node.id}`];
+  const nodeIsAlreadyUnit = (unit) => {
+    return values[`s${unit.id}`];
   };
 
-  const addUnit = (event, node, reason) => {
-    if (!node || nodeIsAlreadyUnit(node) || String(node.id) === currentNodeId) {
+  const addUnit = (event, unit, reason) => {
+    if (!unit || nodeIsAlreadyUnit(unit) || String(unit.id) === currentNodeId) {
       return;
     }
     const newValues = {
-      [`s${node.id}`]: [],
+      [`s${unit.id}`]: [],
       ...values,
     };
-    setUnitNames([...unitNames, { uniqueId: node.id, fullName: node.name }]);
+    setUnitNames([
+      ...unitNames,
+      {
+        node: {
+          uniqueId: unit.id,
+          names: { fi: unit.name, sv: unit.name, en: unit.name },
+        },
+        edges: [],
+      },
+    ]);
     setValues(newValues);
     onUnitChange(newValues);
   };
@@ -81,6 +92,18 @@ const RelationEditor = ({ units, onUnitChange, editortitle }) => {
 
   const optionFilter = (option) => !filterList.includes(`${option.uniqueId}`);
 
+  const createRow = (nodeId) => {
+    return () => ({
+      id: Math.floor(Math.random() * -1000000),
+      key: nodeId,
+      value: '',
+      startDate: null,
+      endDate: null,
+      isNew: true,
+      deleted: false,
+    });
+  };
+
   return (
     <Stack>
       <Box mb={2} sx={{ marginBottom: '40px' }}>
@@ -95,15 +118,16 @@ const RelationEditor = ({ units, onUnitChange, editortitle }) => {
           clearOnSelect={true}
         />
       </Box>
-      {Object.entries(values).map(([parentId, hierarchies], i) => (
+      {Object.entries(values).map(([nodeId, edges], i) => (
         <AttributeEditor
           overlap
           getDisplayText={getDisplayText}
-          key={`${parentId}-${i}`}
-          path={parentId}
-          attributeLabel={getUnitName(parentId) || parentId}
-          attributeKey={parentId}
+          key={`${nodeId}-${i}`}
+          path={nodeId}
+          attributeLabel={getUnitName(nodeId) || nodeId}
+          attributeKey={nodeId}
           fields={fields}
+          customCreateRow={createRow(nodeId)}
         />
       ))}
     </Stack>
