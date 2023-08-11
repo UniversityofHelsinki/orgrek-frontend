@@ -6,14 +6,16 @@ import CloseIcon from '@mui/icons-material/Close';
 import TextField from '@mui/material/TextField';
 import { connect, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { Checkbox } from '@mui/material';
+import { Checkbox, createTheme, ThemeProvider, useTheme } from '@mui/material';
 import useHierarchies from '../hooks/useHierarchies';
+import { fiFI, enUS, svSE } from '@mui/material/locale';
+import { getMUICoreLocale } from '../utils/languageUtils';
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
 const HierarchySelection = (props) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const [hierarchies, setHierarchies] = useHierarchies();
 
@@ -91,36 +93,41 @@ const HierarchySelection = (props) => {
       );
     };
 
+    const theme = useTheme();
+    const themeWithLocale = createTheme(theme, getMUICoreLocale(i18n.language));
+
     return (
-      <Autocomplete
-        multiple
-        size={props.size}
-        limitTags={props.limitTags}
-        id="hierarchy-selection"
-        disableCloseOnSelect
-        options={selectableHierarchiesList}
-        isOptionEqualToValue={(option, value) => option.value === value.value}
-        getOptionLabel={(option) => option.label}
-        value={selectedHierarchies.map((v) => ({ value: v, label: t(v) }))}
-        onChange={changeSelected}
-        ChipProps={{ deleteIcon: <CloseIcon /> }}
-        filterOptions={(options, params) => {
-          const filtered = filter(options, params);
-          return [
-            { value: 'select-all', label: t('select_all_none') },
-            ...filtered,
-          ];
-        }}
-        renderOption={optionRenderer}
-        renderInput={(params) => (
-          <TextField
-            id="search"
-            {...params}
-            label={t('units')}
-            placeholder=""
-          />
-        )}
-      />
+      <ThemeProvider theme={themeWithLocale}>
+        <Autocomplete
+          multiple
+          size={props.size}
+          limitTags={props.limitTags}
+          id="hierarchy-selection"
+          disableCloseOnSelect
+          options={selectableHierarchiesList}
+          isOptionEqualToValue={(option, value) => option.value === value.value}
+          getOptionLabel={(option) => option.label}
+          value={selectedHierarchies.map((v) => ({ value: v, label: t(v) }))}
+          onChange={changeSelected}
+          ChipProps={{ deleteIcon: <CloseIcon /> }}
+          filterOptions={(options, params) => {
+            const filtered = filter(options, params);
+            return [
+              { value: 'select-all', label: t('select_all_none') },
+              ...filtered,
+            ];
+          }}
+          renderOption={optionRenderer}
+          renderInput={(params) => (
+            <TextField
+              id="search"
+              {...params}
+              label={t('units')}
+              placeholder=""
+            />
+          )}
+        />
+      </ThemeProvider>
     );
   }
   return <></>;
