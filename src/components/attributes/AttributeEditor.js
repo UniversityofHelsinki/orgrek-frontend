@@ -97,11 +97,7 @@ const AttributeEditor = ({
   const handleInsertBefore = (index) => {
     let newRow = createRow();
     const oldRow = values[index];
-    const endDate = updateDates(oldRow, newRow, 1);
     const newValues = values.length !== 0 ? [...values] : [{ ...oldRow }];
-    if (endDate !== null) {
-      newValues[index] = updateEndDate(newValues[index], endDate);
-    }
     newValues.splice(index, 0, newRow);
     setFormValues(newValues);
   };
