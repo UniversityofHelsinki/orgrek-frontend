@@ -116,7 +116,7 @@ const NodeField = ({
               ...InputProps,
               endAdornment: InputProps.endAdornment || inputAdornment,
             }}
-            label={label}
+            label={t('search_by_name_or_code')}
             placeholder={placeholder || t('type_three_char_to_start_search')}
             helperText={helperText}
             required={required}
