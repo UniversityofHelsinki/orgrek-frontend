@@ -27,7 +27,6 @@ const DateField = ({
       error={error}
       fullWidth={fullWidth}
       variant={variant}
-      placeholder={'testing'}
       sx={{
         '& .MuiInputAdornment-root .MuiButtonBase-root': {
           marginRight: variant === 'standard' ? -1 : -1.5,

@@ -8,7 +8,6 @@ import { connect, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Checkbox, createTheme, ThemeProvider, useTheme } from '@mui/material';
 import useHierarchies from '../hooks/useHierarchies';
-import { fiFI, enUS, svSE } from '@mui/material/locale';
 import { getMUICoreLocale } from '../utils/languageUtils';
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
