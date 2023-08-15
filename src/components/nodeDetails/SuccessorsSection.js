@@ -14,15 +14,20 @@ import useContentLanguage from '../../hooks/useContentLanguage';
 import Link from '../Link';
 import { successorHierarchy } from '../../Constants';
 import { toFormValues } from '../../utils/attributeUtils';
+import useSuccessors from '../../hooks/useSuccessors';
 
 const SuccessorsSection = () => {
   const { t } = useTranslation();
   const nodeId = useNodeId();
   const language = useContentLanguage();
   const languageField = language === 'ia' ? 'fi' : language;
-  const { data, isFetching } = useGetSuccessorsQuery(nodeId);
+  const { successors, isFetching } = useSuccessors();
   const [saveSuccessors] = useSaveSuccessorsMutation();
   const contentLanguage = useContentLanguage();
+
+  if (isFetching) {
+    return <></>;
+  }
 
   const handleSubmit = (values) => {
     const successors = Object.values(values)
@@ -32,25 +37,25 @@ const SuccessorsSection = () => {
   };
 
   const asAttribute = (successor) => ({
-    id: successor.edgeId,
-    key: successor.fullName,
+    id: successor.edges[0].id,
+    key: successor.node.names[languageField],
     value: {
-      id: successor.uniqueId,
-      name: successor.fullName,
-      names: { [languageField]: successor.fullName },
+      id: successor.node.uniqueId,
+      name: successor.node.name,
+      names: successor.node.names,
     },
-    nodeStartDate: successor.startDate,
-    nodeEndDate: successor.endDate,
-    startDate: successor.edgeStartDate,
-    endDate: null,
+    nodeStartDate: successor.node.startDate,
+    nodeEndDate: successor.node.endDate,
+    startDate: successor.edges[0].startDate,
+    endDate: successor.edges[0].endDate,
     isNew: Boolean(successor.isNew),
     deleted: Boolean(successor.deleted),
   });
 
   const asEdge = (value) => ({
     id: value.id,
-    parentUniqueId: value.value.id,
-    childUniqueId: nodeId,
+    parentUniqueId: nodeId,
+    childUniqueId: value.value.id,
     startDate: value.startDate,
     endDate: null,
     isNew: value.isNew,
@@ -76,13 +81,10 @@ const SuccessorsSection = () => {
     },
   ];
 
-  const successorsData = (data && data[contentLanguage]) || [];
   const title = t('successors.title');
-  const empty = successorsData.length === 0;
+  const empty = successors.length === 0;
 
-  const asAttributes = successorsData.map((successor) =>
-    asAttribute(successor)
-  );
+  const asAttributes = successors.map((successor) => asAttribute(successor));
 
   const renderedContent = (
     <AttributesTable columns={columns} data={asAttributes} caption={title} />
@@ -91,7 +93,7 @@ const SuccessorsSection = () => {
   const emptyInitialValues = { new_successor: [] };
 
   const initialValues =
-    successorsData.length > 0 ? toFormValues(asAttributes) : emptyInitialValues;
+    successors.length > 0 ? toFormValues(asAttributes) : emptyInitialValues;
   return (
     <EditableAccordion
       title={title}
