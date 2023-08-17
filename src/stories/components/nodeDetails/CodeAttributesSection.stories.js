@@ -135,12 +135,12 @@ export const Default = {
     const canvas = within(canvasElement);
 
     await waitFor(async () => {
-      await expect(canvas.getByText('Yksilöivä tunniste')).toBeInTheDocument();
+      await expect(canvas.getByText('unique_id')).toBeInTheDocument();
     });
 
-    expect(canvas.getByText('Lyhenne')).toBeInTheDocument();
-    expect(canvas.getByText('Yläyksikön lyhenne')).toBeInTheDocument();
-    expect(canvas.getByText('Taloustunnus')).toBeInTheDocument();
+    expect(canvas.getByText('lyhenne')).toBeInTheDocument();
+    expect(canvas.getByText('emo_lyhenne')).toBeInTheDocument();
+    expect(canvas.getByText('talous_tunnus')).toBeInTheDocument();
   },
 };
 
@@ -163,7 +163,7 @@ export const Empty = {
     const canvas = within(canvasElement);
 
     await waitFor(async () => {
-      await expect(canvas.getByText('Yksilöivä tunniste')).toBeInTheDocument();
+      await expect(canvas.getByText('unique_id')).toBeInTheDocument();
     });
   },
 };

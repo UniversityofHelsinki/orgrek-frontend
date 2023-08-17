@@ -245,11 +245,7 @@ export const DeletedRow = {
 
     await userEvent.click(canvas.getAllByLabelText(/Toiminnot/)[1]);
     await userEvent.click(canvas.getByText('Poista rivi'));
-    await expect(
-      canvas.getByText(
-        'Poistettu: Viralliset yksiköt, voimassa 1.1.2000 alkaen'
-      )
-    ).toBeInTheDocument();
+    await expect(canvas.getByText('attribute.deleted')).toBeInTheDocument();
 
     // Deleted row appears with an animation, so wait for it before running
     // a11y tests
