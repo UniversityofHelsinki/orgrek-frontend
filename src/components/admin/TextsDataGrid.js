@@ -86,7 +86,7 @@ const TextsDataGrid = ({
 }) => {
   const { t, i18n } = useTranslation();
   const language = i18n.language; // 'fi' | 'sv' | 'en'
-  const defaultRows = defaults[language];
+  const defaultRows = Object.values(defaults).flat();
   const user = useCurrentUser();
   const [rows, setRows] = React.useState(
     mergeTexts(initialRows || [], defaultRows)
