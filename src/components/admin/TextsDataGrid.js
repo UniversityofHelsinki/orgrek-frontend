@@ -225,13 +225,14 @@ const TextsDataGrid = ({
     onAddRow();
   };
 
-  const handleRowChange = (modified) => {
-    if (!inInitialRows(modified)) {
-      return saveRow([modified]);
-    } else {
-      onRowChange(modified);
+  const alreadyInDB = (text) => inInitialRows(text);
+  const isDefaultText = (text) => !alreadyInDB(text);
+  const handleRowChange = async (modified) => {
+    if (isDefaultText(modified)) {
+      const results = await saveRow([modified]);
+      return results.at(0) || modified;
     }
-    return Promise.resolve(modified);
+    return await onRowChange(modified);
   };
 
   // see the keys here if you want to override data grid's inner translations:

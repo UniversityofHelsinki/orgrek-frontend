@@ -71,6 +71,7 @@ const LanguageField = ({ language }) => {
 const NewTextForm = ({ open, onClose, onSubmit, existingTexts }) => {
   const { t } = useTranslation();
   const user = useCurrentUser();
+  console.log('user: ', user);
   const validationSchema = newTextSchema(
     existingTexts,
     t('texts_key_already_exists')

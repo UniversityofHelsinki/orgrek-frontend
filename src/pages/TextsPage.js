@@ -31,11 +31,12 @@ const TextsPage = () => {
     const alreadyExists = texts.some(
       (t) => t.key === row.key && t.language === row.language
     );
+    const completeText = { ...row, user_name: user.eppn };
     if (!alreadyExists) {
-      await handleAddRow([{ ...row, user_name: user.eppn }]);
+      await handleAddRow([completeText]);
       return;
     }
-    const response = await updateText(row).unwrap();
+    const response = await updateText(completeText).unwrap();
     dispatch(
       showNotification({
         message: t('texts_update_success'),
@@ -46,7 +47,8 @@ const TextsPage = () => {
   };
 
   const saveRow = async (rows) => {
-    const response = await insertTexts(rows).unwrap();
+    const withUser = (t) => ({ ...t, user_name: user.eppn });
+    const response = await insertTexts(rows.map(withUser)).unwrap();
     dispatch(
       showNotification({
         message: t('texts_insert_success'),
