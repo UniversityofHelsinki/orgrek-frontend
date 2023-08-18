@@ -8,7 +8,7 @@ import { Grid, Paper, Stack, useTheme } from '@mui/material';
 import useFetchNode from '../hooks/useFetchNode';
 import NodeViewControl from './NodeViewControl';
 
-const Hierarchy = ({ fetchSelectableHierarchies, switchHandlers }) => {
+const AppBar = ({ fetchSelectableHierarchies, switchHandlers }) => {
   useEffect(() => {
     fetchSelectableHierarchies();
   }, []);
@@ -59,4 +59,4 @@ const mapDispatchToProps = (dispatch) => ({
   fetchSelectableHierarchies: () => dispatch(fetchSelectableHierarchies()),
 });
 
-export default connect(null, mapDispatchToProps)(Hierarchy);
+export default connect(null, mapDispatchToProps)(AppBar);
