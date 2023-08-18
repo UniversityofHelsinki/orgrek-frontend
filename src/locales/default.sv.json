@@ -191,7 +191,10 @@
     "saveError": "saveError",
     "saveSuccess": "saveSuccess",
     "title": "Nedre enheter",
-    "validFrom": "validFrom"
+    "validFrom": "validFrom",
+    "nameEn": "nameEn",
+    "nameFi": "nameFi",
+    "nameSv": "nameSv"
   },
   "successorInfo": {
     "saveError": "saveError",
