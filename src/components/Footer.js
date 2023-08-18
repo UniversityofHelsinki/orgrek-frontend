@@ -2,9 +2,12 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import HYLogo from './HYLogo';
 import Grid2 from '@mui/material/Unstable_Grid2';
+import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
+import ExternalLinkIcon from '../components/icons/ExternalLink';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
+import { visuallyHidden } from '@mui/utils';
 
 const Footer = () => {
   const { t } = useTranslation();
@@ -36,7 +39,58 @@ const Footer = () => {
             </Typography>
           </Grid2>
           <Grid2 xs={12} sm={1} md={1} lg={1} pt={2}></Grid2>
-          <Grid2 xs={12} sm={6} md={5} lg={3}></Grid2>
+          <Grid2 xs={12} sm={6} md={5} lg={3}>
+            {/*<Link*/}
+            {/*  href={t('hy_contact_info_link')}*/}
+            {/*  target="_blank"*/}
+            {/*  rel="noreferrer noopener"*/}
+            {/*  variant={'navigationLink'}*/}
+            {/*  color={'common.white'}*/}
+            {/*  sx={{ textDecoration: 'none' }}*/}
+            {/*>*/}
+            {/*  {t('hy_contact_info')}*/}
+            {/*  <Box sx={visuallyHidden}>{t('open_in_new_tab')}</Box>*/}
+            {/*  <ExternalLinkIcon*/}
+            {/*    sx={{ ml: 0.5 }}*/}
+            {/*    color={'inherit'}*/}
+            {/*    fontSize={'inherit'}*/}
+            {/*  />*/}
+            {/*</Link>*/}
+            {/*<br />*/}
+            {/*<Link*/}
+            {/*  href={t('hy_terms_of_use_link')}*/}
+            {/*  target="_blank"*/}
+            {/*  rel="noreferrer noopener"*/}
+            {/*  variant={'navigationLink'}*/}
+            {/*  color={'common.white'}*/}
+            {/*  sx={{ textDecoration: 'none' }}*/}
+            {/*>*/}
+            {/*  {t('hy_terms_of_use')}*/}
+            {/*  <Box sx={visuallyHidden}>{t('open_in_new_tab')}</Box>*/}
+            {/*  <ExternalLinkIcon*/}
+            {/*    sx={{ ml: 0.5 }}*/}
+            {/*    color={'inherit'}*/}
+            {/*    fontSize={'inherit'}*/}
+            {/*  />*/}
+            {/*</Link>*/}
+            {/*<br />*/}
+            {/*<Link*/}
+            {/*  href=""*/}
+            {/*  target="_blank"*/}
+            {/*  rel="noreferrer noopener"*/}
+            {/*  variant={'navigationLink'}*/}
+            {/*  color={'common.white'}*/}
+            {/*  sx={{ textDecoration: 'none' }}*/}
+            {/*>*/}
+            {/*  {t('hy_accessibility_statement')}*/}
+            {/*  <Box sx={visuallyHidden}>{t('open_in_new_tab')}</Box>*/}
+            {/*  <ExternalLinkIcon*/}
+            {/*    sx={{ ml: 0.5 }}*/}
+            {/*    color={'inherit'}*/}
+            {/*    fontSize={'inherit'}*/}
+            {/*  />*/}
+            {/*</Link>*/}
+          </Grid2>
           <Grid2 xs={12} sm={0} md={1} lg={5}></Grid2>
         </Grid2>
       </Container>
