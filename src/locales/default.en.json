@@ -70,6 +70,11 @@
     "newAttributeValueLabel": "New value \"{{value}}\"",
     "newHierarchyLabel": "New hierarchy \"{{value}}\""
   },
+  "hierarchySelection": {
+    "clearText": "Clear",
+    "closeText": "Close",
+    "openText": "Open"
+  },
   "hierarchy_already_exists": "Hierarkia on jo olemassa.",
   "hierarchy_column_hierarchy": "Hierarchy",
   "hierarchy_column_publicity": "Publicity",

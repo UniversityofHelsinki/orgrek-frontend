@@ -6,16 +6,15 @@ import CloseIcon from '@mui/icons-material/Close';
 import TextField from '@mui/material/TextField';
 import { connect, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { Checkbox } from '@mui/material';
+import { Checkbox, Chip } from '@mui/material';
 import useHierarchies from '../hooks/useHierarchies';
-
-const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
-const checkedIcon = <CheckBoxIcon fontSize="small" />;
+import { useState } from 'react';
 
 const HierarchySelection = (props) => {
   const { t } = useTranslation();
 
   const [hierarchies, setHierarchies] = useHierarchies();
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const iterate = (hierarchyList) => {
     let selectedHierarchies = [];
@@ -95,15 +94,16 @@ const HierarchySelection = (props) => {
       <Autocomplete
         multiple
         size={props.size}
-        limitTags={props.limitTags}
         id="hierarchy-selection"
         disableCloseOnSelect
+        openText={t('hierarchySelection.openText')}
+        closeText={t('hierarchySelection.closeText')}
+        clearText={t('hierarchySelection.clearText')}
         options={selectableHierarchiesList}
         isOptionEqualToValue={(option, value) => option.value === value.value}
         getOptionLabel={(option) => option.label}
         value={selectedHierarchies.map((v) => ({ value: v, label: t(v) }))}
         onChange={changeSelected}
-        ChipProps={{ deleteIcon: <CloseIcon /> }}
         filterOptions={(options, params) => {
           const filtered = filter(options, params);
           return [
@@ -111,6 +111,8 @@ const HierarchySelection = (props) => {
             ...filtered,
           ];
         }}
+        onOpen={() => setMenuOpen(true)}
+        onClose={() => setMenuOpen(false)}
         renderOption={optionRenderer}
         renderInput={(params) => (
           <TextField
@@ -120,6 +122,42 @@ const HierarchySelection = (props) => {
             placeholder=""
           />
         )}
+        renderTags={(tags, getTagProps) => {
+          const hiddenCount = Math.max(tags.length - props.limitTags, 0);
+          return (
+            <div
+              style={{
+                display: 'flex',
+                textOverflow: 'ellipsis',
+                flexWrap: menuOpen ? 'wrap' : 'initial',
+                maxWidth: '77%',
+              }}
+            >
+              {tags.map(
+                (option, index) =>
+                  (menuOpen || index + 1 <= props.limitTags) && (
+                    <Chip
+                      title={option.label}
+                      size="small"
+                      key={option.value}
+                      label={option.label}
+                      aria-label={option.label}
+                      deleteIcon={<CloseIcon />}
+                      {...getTagProps({ index })}
+                      sx={{
+                        minWidth: menuOpen ? 'initial' : '0',
+                      }}
+                    />
+                  )
+              )}
+              {!menuOpen && hiddenCount > 0 && (
+                <span style={{ marginLeft: '10px', alignSelf: 'center' }}>
+                  +{hiddenCount}
+                </span>
+              )}
+            </div>
+          );
+        }}
       />
     );
   }

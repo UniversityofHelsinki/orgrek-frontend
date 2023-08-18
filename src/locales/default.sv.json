@@ -70,6 +70,11 @@
     "newAttributeValueLabel": "newAttributeValueLabel",
     "newHierarchyLabel": "newHierarchyLabel"
   },
+  "hierarchySelection": {
+    "clearText": "clearText",
+    "closeText": "closeText",
+    "openText": "openText"
+  },
   "hierarchy_already_exists": "Hierarkia on jo olemassa.",
   "hierarchy_column_hierarchy": "Hierarkie",
   "hierarchy_column_publicity": "Publicitet",
