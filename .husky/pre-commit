@@ -11,6 +11,7 @@ npx i18next-scanner --config i18next-scanner.config.js
 
 # i18next-scanner does not merge the key-value pairs between translation files
 # key is found in one -> should be found in others
+# even though the scanner can't find it in code
 
 cat << 'EOF' | node --input-type=module - && git add src/locales/
 import { open, readFile } from 'node:fs/promises';
