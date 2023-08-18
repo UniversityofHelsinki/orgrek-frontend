@@ -3,12 +3,9 @@ import { connect } from 'react-redux';
 import DatePicker, { registerLocale } from 'react-datepicker';
 import fi from 'date-fns/locale/fi';
 import { Col } from 'react-bootstrap';
-import { useTranslation } from 'react-i18next';
 registerLocale('fi', fi);
 
 const ChooseDate = (props) => {
-  const { t, i18n } = useTranslation();
-
   const emptydate = {
     date: undefined,
   };

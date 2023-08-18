@@ -4,7 +4,7 @@ import TreeSearch from './TreeSearch';
 import ReviewDate from './ReviewDate';
 import { fetchSelectableHierarchies } from '../actions/treeAction';
 import HierarchySelection from './HierarchySelection';
-import { Grid, Paper, Stack, useTheme } from '@mui/material';
+import { Grid, Paper, useTheme } from '@mui/material';
 import useFetchNode from '../hooks/useFetchNode';
 import NodeViewControl from './NodeViewControl';
 
