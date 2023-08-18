@@ -3,26 +3,21 @@ import { connect, useSelector } from 'react-redux';
 import TreeSearch from './TreeSearch';
 import ReviewDate from './ReviewDate';
 import { fetchSelectableHierarchies } from '../actions/treeAction';
-import { useTranslation } from 'react-i18next';
 import HierarchySelection from './HierarchySelection';
-import { Grid, Paper, Stack, useTheme } from '@mui/material';
+import { Grid, Paper, useTheme } from '@mui/material';
 import useFetchNode from '../hooks/useFetchNode';
 import NodeViewControl from './NodeViewControl';
-import useHierarchies from '../hooks/useHierarchies';
 
-const Hierarchy = ({ fetchSelectableHierarchies, switchHandlers }) => {
+const AppBar = ({ fetchSelectableHierarchies, switchHandlers }) => {
   useEffect(() => {
     fetchSelectableHierarchies();
   }, []);
   const node = useFetchNode();
-  const [hierarchies, setHierarchies] = useHierarchies();
   const selectedDay = useSelector((state) => state.dr.selectedDay);
-
-  const theme = useTheme();
-  const { t } = useTranslation();
 
   return (
     <Paper
+      id="orgrek-appbar"
       elevation={0}
       sx={{
         pt: 2,
@@ -64,4 +59,4 @@ const mapDispatchToProps = (dispatch) => ({
   fetchSelectableHierarchies: () => dispatch(fetchSelectableHierarchies()),
 });
 
-export default connect(null, mapDispatchToProps)(Hierarchy);
+export default connect(null, mapDispatchToProps)(AppBar);

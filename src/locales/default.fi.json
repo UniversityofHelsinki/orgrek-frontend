@@ -184,6 +184,11 @@
     "newAttributeValueLabel": "Uusi arvo \"{{value}}\"",
     "newHierarchyLabel": "Uusi rakenne \"{{value}}\""
   },
+  "hierarchySelection": {
+    "clearText": "Poista valinnat",
+    "closeText": "Sulje",
+    "openText": "Avaa"
+  },
   "hierarchy_already_exists": "Hierarkia on jo olemassa.",
   "hierarchy_column_hierarchy": "Hierarkia",
   "hierarchy_column_publicity": "Julkisuus",
@@ -533,8 +538,9 @@
   "toiminnanohjaus": "Viralliset yksiköt",
   "toiminnanohjaus_header": "Viralliset",
   "toimintayksikko": "Toimintayksikkö",
-  "treeallview": "Puunäkymä kaikista",
+  "tree_container_label": "tree_container_label",
   "tree_no_results": "Ei tuloksia",
+  "treeallview": "Puunäkymä kaikista",
   "treeview": "Puunäkymä tdk, laitos",
   "tulosyksikko": "Tulosyksikkö",
   "tutkijakoulu": "Tutkijakoulu",

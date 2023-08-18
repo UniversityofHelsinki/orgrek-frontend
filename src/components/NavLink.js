@@ -6,7 +6,6 @@ import { useSearchParams } from 'react-router-dom';
 
 const NavLink = ({ to, text, sx, keepSearchParams = true }) => {
   const { pathname, search } = useLocation();
-  const [searchParams] = useSearchParams();
   const active = pathname === to;
 
   const destination = keepSearchParams ? `${to}${search}` : pathname;

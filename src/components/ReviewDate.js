@@ -9,11 +9,6 @@ import { toDate } from '../utils/dateUtils';
 
 const ReviewDate = (props) => {
   const { t } = useTranslation();
-  const changeToCurrentDate = () => {
-    const date = new Date();
-    date.setHours(0, 0, 0, 0);
-    props.onDayChange(date);
-  };
 
   return (
     <Stack direction="row" gap={2} alignItems="center">
