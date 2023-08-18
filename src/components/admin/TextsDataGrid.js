@@ -263,9 +263,7 @@ const TextsDataGrid = ({
       loading={loading}
       processRowUpdate={handleRowChange}
       getRowId={getRowId}
-      isCellEditable={
-        (params) => params.field === 'value' // && inInitialRows(params.row)
-      }
+      isCellEditable={(params) => params.field === 'value'}
       getRowClassName={(params) => !params.row.value && 'texts-default'}
       localeText={
         {
