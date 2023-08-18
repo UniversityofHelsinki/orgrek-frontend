@@ -12,7 +12,6 @@ import NewTextForm from '../components/admin/NewTextForm';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import useCurrentUser from '../hooks/useCurrentUser';
-import { response } from 'msw';
 
 const TextsPage = () => {
   const { data: texts, isFetching } = useGetTextsQuery();
