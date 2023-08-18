@@ -167,6 +167,11 @@
     "newAttributeValueLabel": "New value \"{{value}}\"",
     "newHierarchyLabel": "New hierarchy \"{{value}}\""
   },
+  "hierarchySelection": {
+    "clearText": "Clear",
+    "closeText": "Close",
+    "openText": "Open"
+  },
   "hierarchy_already_exists": "Hierarkia on jo olemassa.",
   "hierarchy_column_hierarchy": "Hierarchy",
   "hierarchy_column_publicity": "Publicity",
@@ -486,6 +491,8 @@
   "toimiala": "Field of Operation",
   "toiminnanohjaus": "Official units",
   "toiminnanohjaus_header": "ERP",
+  "tree_container_label": "tree_container_label",
+  "tree_no_results": "No results",
   "tulosyksikko": "Profit unit",
   "tutkijakoulu": "Doctoral School",
   "tutkimus": "Research units",
@@ -493,7 +500,6 @@
   "tutkimus_tunnus": "Research Group Id",
   "tutkimusryhma": "Research Group",
   "tutkimusyhteiso": "Research community",
-  "tree_no_results": "No results",
   "type": "Unit type",
   "typeInfo": {
     "empty": "No unit type",
