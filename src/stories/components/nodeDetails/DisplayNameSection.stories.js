@@ -1,8 +1,4 @@
-import {
-  mockGetAllFullNames,
-  mockGetFullNames,
-  withNode,
-} from '../../../mockStore';
+import { mockGetAllFullNames, withNode } from '../../../mockStore';
 import DisplayNameSection from '../../../components/nodeDetails/DisplayNameSection';
 import { waitFor, within } from '@storybook/testing-library';
 import { expect } from '@storybook/jest';

@@ -1,8 +1,6 @@
 import { expect } from '@storybook/jest';
 import {
-  mockGetAttributeKeys,
   mockGetAttributes,
-  mockGetCodeAttributes,
   mockSaveCodeAttributes,
   withMockStore,
 } from '../../../mockStore';
