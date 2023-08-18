@@ -249,7 +249,9 @@ export const DeletedRow = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement.parentElement);
 
-    expect(canvas.getByText('attribute.deleted')).toBeInTheDocument();
+    expect(
+      canvas.getByText('Poistettu: value2, voimassa 1.1.2022 - 31.12.2022')
+    ).toBeInTheDocument();
   },
 };
 
@@ -334,7 +336,11 @@ export const DeletedRowDisplayText = {
     });
 
     await waitFor(() => {
-      expect(canvas.getByText('attribute.deleted')).toBeInTheDocument();
+      expect(
+        canvas.getByText(
+          'Poistettu: interdum lectus, voimassa 1.1.2022 - 31.12.2022'
+        )
+      ).toBeInTheDocument();
     });
   },
 };

@@ -7,14 +7,14 @@
   "attribute": {
     "actions": "actions",
     "deleteRow": "Ta bort rad",
+    "deleted": "deleted",
     "empty": "empty",
     "insertAfter": "insertAfter",
     "insertBefore": "insertBefore",
     "label": "Attribut",
     "undoDelete": "undoDelete",
     "validFrom": "validFrom",
-    "validUntil": "validUntil",
-    "deleted": "deleted"
+    "validUntil": "validUntil"
   },
   "attribute_value": "Värde",
   "cancel_button": "Avbryt",
