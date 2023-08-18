@@ -8,7 +8,7 @@ import MenuItem from '@mui/material/MenuItem';
 import useFormField from '../../hooks/useFormField';
 import HelperText from '../inputs/HelperText';
 
-const OtherAttributeValueField = ({ path, value: attribute }) => {
+const OtherAttributeValueField = ({ path, value: attribute, focusRef }) => {
   const { t } = useTranslation();
   const { props, errors } = useFormField({ path, name: 'value' });
 
@@ -22,6 +22,7 @@ const OtherAttributeValueField = ({ path, value: attribute }) => {
       fullWidth
       label={t('value')}
       helperText={<HelperText errors={errors} />}
+      ref={focusRef}
     >
       {acceptedValues.map((option) => (
         <MenuItem key={option} value={option}>
@@ -46,6 +47,7 @@ const OtherAttributesEditor = ({ metas }) => {
       endDate: null,
       isNew: true,
       deleted: false,
+      focus: true,
     });
   };
 

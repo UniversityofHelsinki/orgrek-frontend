@@ -8,7 +8,7 @@ import useFormField from '../../hooks/useFormField';
 import HelperText from '../inputs/HelperText';
 import useForm from '../../hooks/useForm';
 
-const UnitTypeField = ({ path, value: attribute }) => {
+const UnitTypeField = ({ path, value: attribute, focusRef }) => {
   const { t } = useTranslation();
   const { props, errors } = useFormField({ path, name: 'value' });
 
@@ -22,6 +22,7 @@ const UnitTypeField = ({ path, value: attribute }) => {
       fullWidth
       label={t('value')}
       helperText={<HelperText errors={errors} />}
+      ref={focusRef}
     >
       {acceptedValues.map((option) => (
         <MenuItem key={option} value={option}>
@@ -53,11 +54,12 @@ const UnitTypeEditor = ({ metas }) => {
       key,
       id: Math.floor(Math.random() * -1000000),
       meta: metas[key],
-      value: null,
+      value: '',
       startDate: null,
       endDate: null,
       isNew: true,
       deleted: false,
+      focus: true,
     });
   };
 
