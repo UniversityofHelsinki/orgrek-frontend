@@ -11,9 +11,9 @@ import {
   boolean,
   setLocale,
   addMethod,
+  lazy,
 } from 'yup';
 import { formatDate, toDate, toISODateString } from './dateUtils';
-import { flattenAttributes } from './attributeUtils';
 
 // Customize yup validation error messages
 // Message is either a translation key or an object containing the key and
@@ -258,12 +258,23 @@ export const attributeSchema = object({
 });
 
 /**
+ * If the attribute isNew and deleted at the same time -> no need for validation.
+ * Filtering these completely out in the validation phase does not work as
+ * the indices in the validation paths are then one less than they should be.
+ */
+const conditionalAttributeSchema = lazy((attribute) => {
+  if (attribute && attribute.isNew && attribute.deleted) {
+    return object({});
+  }
+  return attributeSchema;
+});
+
+/**
  * Validation schema for all values of one attribute (all values having the same key)
  */
 export const arrayOfAttributeValues = array()
-  .of(attributeSchema)
+  .of(conditionalAttributeSchema)
   .required()
-  .filterDeletedNew()
   .sameKey();
 
 /**

@@ -49,7 +49,7 @@ const CodeAttributesEditor = ({ readOnlyFields }) => {
           )),
         ...Object.entries(values)
           .sort(attributeEntryComparator)
-          .map(([key, attributes], i) => (
+          .map(([key], i) => (
             <AttributeEditor
               key={`${key}-${i}`}
               attributeLabel={t(key)}
