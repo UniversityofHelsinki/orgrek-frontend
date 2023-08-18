@@ -140,7 +140,7 @@ const AttributeEditor = ({
   );
 
   return (
-    <Box component="fieldset" sx={sx}>
+    <Box component="fieldset" sx={sx || {}}>
       <Typography component="legend" variant="h6" mb={2}>
         {attributeLabel}
       </Typography>
@@ -217,6 +217,11 @@ AttributeEditor.propTypes = {
    * Returns custom attribute object for new rows.
    */
   customCreateRow: PropTypes.func,
+  /**
+   * sx object that will be passed to the container of this AttributeEditor
+   * instance.
+   */
+  sx: PropTypes.object,
 };
 
 export default AttributeEditor;
