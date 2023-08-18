@@ -13,7 +13,8 @@
     "label": "Attribute",
     "undoDelete": "Undo delete row",
     "validFrom": "Valid from",
-    "validUntil": "Valid until"
+    "validUntil": "Valid until",
+    "deleted": "deleted"
   },
   "attribute_value": "Value",
   "cancel_button": "Cancel",
@@ -184,6 +185,9 @@
     "createSuccess": "createSuccess",
     "empty": "No sub units",
     "hierarchies": "hierarchies",
+    "nameEn": "nameEn",
+    "nameFi": "nameFi",
+    "nameSv": "nameSv",
     "names": "names",
     "newChildButton": "newChildButton",
     "newSubUnit": "newSubUnit",
@@ -191,10 +195,7 @@
     "saveError": "saveError",
     "saveSuccess": "saveSuccess",
     "title": "Sub Units",
-    "validFrom": "validFrom",
-    "nameEn": "nameEn",
-    "nameFi": "nameFi",
-    "nameSv": "nameSv"
+    "validFrom": "validFrom"
   },
   "successorInfo": {
     "saveError": "Saving successor failed",

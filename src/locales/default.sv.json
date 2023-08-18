@@ -13,7 +13,8 @@
     "label": "Attribut",
     "undoDelete": "undoDelete",
     "validFrom": "validFrom",
-    "validUntil": "validUntil"
+    "validUntil": "validUntil",
+    "deleted": "deleted"
   },
   "attribute_value": "Värde",
   "cancel_button": "Avbryt",
@@ -184,6 +185,9 @@
     "createSuccess": "createSuccess",
     "empty": "empty",
     "hierarchies": "hierarchies",
+    "nameEn": "nameEn",
+    "nameFi": "nameFi",
+    "nameSv": "nameSv",
     "names": "names",
     "newChildButton": "newChildButton",
     "newSubUnit": "newSubUnit",
@@ -191,10 +195,7 @@
     "saveError": "saveError",
     "saveSuccess": "saveSuccess",
     "title": "Nedre enheter",
-    "validFrom": "validFrom",
-    "nameEn": "nameEn",
-    "nameFi": "nameFi",
-    "nameSv": "nameSv"
+    "validFrom": "validFrom"
   },
   "successorInfo": {
     "saveError": "saveError",
