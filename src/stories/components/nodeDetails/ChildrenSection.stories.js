@@ -1,11 +1,7 @@
 import ChildrenSection from '../../../components/nodeDetails/ChildrenSection';
 import {
-  createHierarchies,
   mockGetChildren,
-  mockGetParents,
   mockSaveChildren,
-  mockSaveParents,
-  withHierarchy,
   withMockStore,
 } from '../../../mockStore';
 import { userEvent, waitFor, within } from '@storybook/testing-library';

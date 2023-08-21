@@ -3,7 +3,6 @@ import Stack from '@mui/material/Stack';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import useForm from '../../hooks/useForm';
-import { codeAttributes } from '../../constants/variables';
 import { Typography, Box } from '@mui/material';
 
 const attributeEntryComparator = (keys) => (a, b) => {
