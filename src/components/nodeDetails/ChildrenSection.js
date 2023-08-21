@@ -19,6 +19,7 @@ import Button from '../inputs/Button';
 import { showNotification } from '../../store';
 import { useDispatch } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
+import { valueComparator } from '../admin/fieldComparator';
 
 const EditAction = ({ newChild, edit }) => {
   const { t } = useTranslation();
@@ -182,7 +183,12 @@ const ChildrenSection = ({ showHistory, showFuture }) => {
         authActions={authActions.children}
       >
         <Placeholder empty={empty} placeholder={t('subunits.empty')}>
-          <HierarchyTable data={visibleChildren} summary={title} />
+          <HierarchyTable
+            data={visibleChildren.sort(
+              valueComparator((c) => c.node.names[contentLanguage])
+            )}
+            summary={title}
+          />
         </Placeholder>
         {formElement}
       </EditableContent>

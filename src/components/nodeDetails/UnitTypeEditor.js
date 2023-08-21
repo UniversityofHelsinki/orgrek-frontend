@@ -7,6 +7,7 @@ import MenuItem from '@mui/material/MenuItem';
 import useFormField from '../../hooks/useFormField';
 import HelperText from '../inputs/HelperText';
 import useForm from '../../hooks/useForm';
+import { stringComparator } from '../admin/fieldComparator';
 
 const UnitTypeField = ({ path, value: attribute, focusRef }) => {
   const { t } = useTranslation();
@@ -25,7 +26,7 @@ const UnitTypeField = ({ path, value: attribute, focusRef }) => {
       ref={focusRef}
     >
       {[...acceptedValues]
-        .sort((a, b) => a.localeCompare(b))
+        .sort((a, b) => stringComparator(t(a), t(b)))
         .map((option) => (
           <MenuItem key={option} value={option}>
             {t(option)}

@@ -7,6 +7,7 @@ import useTree from '../../hooks/useTree';
 import useContentLanguage from '../../hooks/useContentLanguage';
 import InputAdornment from '@mui/material/InputAdornment';
 import SearchIcon from '../icons/Search';
+import { valueComparator } from '../admin/fieldComparator';
 
 const flatten = (current) =>
   current.reduce((a, c) => [...a, c, ...flatten(c.children)], []);
@@ -49,7 +50,7 @@ const NodeField = ({
 
   const uniqueOptions = [
     ...new Map(options.map((item) => [item['uniqueId'], item])).values(),
-  ];
+  ].sort(valueComparator((value) => value.names[languageField]));
 
   const filtered = uniqueOptions.filter(filter);
 

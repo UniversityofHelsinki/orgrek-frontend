@@ -12,6 +12,7 @@ import { useSaveParentsMutation } from '../../store';
 import { useParents } from '../../hooks/useParents';
 import useFilterUnitsByDate from '../../hooks/useFilterUnitsByDate';
 import { defaultSchemaForAttributes } from '../../utils/validations';
+import { valueComparator } from '../admin/fieldComparator';
 
 const asAttribute = (nodeId, uniqueId) => (edge) => ({
   id: edge.id,
@@ -38,6 +39,7 @@ const ParentsSection = ({ showHistory, showFuture }) => {
   const { t } = useTranslation();
   const { parents, isFetching } = useParents();
   const [saveParents] = useSaveParentsMutation();
+  const contentLanguage = useContentLanguage();
   const currentNodeId = useNodeId();
 
   const title = t('upper_units');
@@ -97,7 +99,12 @@ const ParentsSection = ({ showHistory, showFuture }) => {
         authActions={authActions.parents}
       >
         <Placeholder empty={empty} placeholder={t('upperUnits.empty')}>
-          <HierarchyTable data={visibleParents} summary={title} />
+          <HierarchyTable
+            data={visibleParents.sort(
+              valueComparator((p) => p.node.names[contentLanguage])
+            )}
+            summary={title}
+          />
         </Placeholder>
       </EditableContent>
     </EditableAccordion>

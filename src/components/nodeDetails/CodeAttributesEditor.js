@@ -6,10 +6,10 @@ import useForm from '../../hooks/useForm';
 import { codeAttributes } from '../../constants/variables';
 import { Typography, Box } from '@mui/material';
 
-const attributeEntryComparator = (a, b) => {
-  const aIdx = codeAttributes.indexOf(a[0]);
-  const bIdx = codeAttributes.indexOf(b[0]);
-  return aIdx - bIdx;
+const attributeEntryComparator = (keys) => (a, b) => {
+  const aIdx = keys.indexOf(a[0]);
+  const bIdx = keys.indexOf(b[0]);
+  return bIdx - aIdx;
 };
 
 const ReadOnlyCodeBox = ({ label, value }) => {
@@ -25,7 +25,7 @@ const ReadOnlyCodeBox = ({ label, value }) => {
   );
 };
 
-const CodeAttributesEditor = ({ readOnlyFields }) => {
+const CodeAttributesEditor = ({ readOnlyFields, keys = [] }) => {
   const { t } = useTranslation();
   const { values } = useForm();
 
@@ -47,17 +47,15 @@ const CodeAttributesEditor = ({ readOnlyFields }) => {
               value={attributes[0].value}
             />
           )),
-        ...Object.entries(values)
-          .sort(attributeEntryComparator)
-          .map(([key, attributes], i) => (
-            <AttributeEditor
-              key={`${key}-${i}`}
-              attributeLabel={t(key)}
-              attributeKey={`${key}`}
-              fields={fields}
-              path={key}
-            />
-          )),
+        ...keys.map((key, i) => (
+          <AttributeEditor
+            key={`${key}-${i}`}
+            attributeLabel={t(key)}
+            attributeKey={`${key}`}
+            fields={fields}
+            path={key}
+          />
+        )),
       ]}
     </Stack>
   );
