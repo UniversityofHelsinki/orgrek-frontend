@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
 import DatePicker from 'react-datepicker';
 
 const PickDate = (props) => {
-  const { t } = useTranslation();
-
   const [selectedDate, setSelectedDate] = useState(null);
 
   useEffect(() => {

@@ -152,6 +152,11 @@
     "newAttributeValueLabel": "newAttributeValueLabel",
     "newHierarchyLabel": "newHierarchyLabel"
   },
+  "hierarchySelection": {
+    "clearText": "clearText",
+    "closeText": "closeText",
+    "openText": "openText"
+  },
   "hierarchy_already_exists": "Hierarkia on jo olemassa.",
   "hierarchy_column_hierarchy": "Hierarkie",
   "hierarchy_column_publicity": "Publicitet",
@@ -450,12 +455,13 @@
   "texts_value_characters_left": "texts_value_characters_left",
   "tiedekunnan kaltainen": "Liksom fakulteten",
   "tiedekunta": "Fakultet",
-  "tree_no_results": "Inga resultat",
   "tohtori_johtoryhma": "Tohtoriohjelman johtoryhmä SV",
   "tohtoriohjelma": "Doktorandprogram",
   "tohtoriohjelma-joryt": "Doktorandprogrammens ledningsgrupper",
   "toiminnanohjaus": "Officiella enheter",
   "toiminnanohjaus_header": "ERP",
+  "tree_container_label": "tree_container_label",
+  "tree_no_results": "Inga resultat",
   "tulosyksikko": "Resultatenhet",
   "tutkijakoulu": "Forskarskola",
   "tutkimus": "Forskningsenheter",

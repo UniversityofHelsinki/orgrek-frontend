@@ -50,8 +50,6 @@ const NodeDetails = ({ showHistory, showFuture }) => {
           bgcolor: 'white',
           top: isDesktop ? 70 : 120,
           alignSelf: 'flex-start',
-          overflowY: 'auto',
-          maxHeight: `90vh`,
           pb: 3,
           zIndex: 30,
           marginTop: 0,

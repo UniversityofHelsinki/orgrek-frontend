@@ -261,14 +261,17 @@ describe('afterStartDate', () => {
 });
 
 describe('arrayOfAttributeValues', () => {
-  test('filters new deleted rows', () => {
+  test('does not filter new deleted rows', () => {
     const schema = arrayOfAttributeValues;
-    const data = [
-      validTestValue,
-      { ...validTestValue, id: -1, isNew: true, deleted: true },
-    ];
+    const newAndDeleted = {
+      ...validTestValue,
+      id: -1,
+      isNew: true,
+      deleted: true,
+    };
+    const data = [validTestValue, newAndDeleted];
 
-    expect(schema.cast(data)).toEqual([validTestValue]);
+    expect(schema.cast(data)).toEqual([validTestValue, newAndDeleted]);
   });
 
   test('does not filter new rows', () => {
