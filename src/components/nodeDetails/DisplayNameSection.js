@@ -58,7 +58,7 @@ const DisplayNameSection = ({ showHistory, showFuture }) => {
   return (
     <EditableAccordion title={title}>
       <Placeholder empty={empty} placeholder={t('displayName.empty')}>
-        <AttributesTable columns={columns} data={sortedData} summary={title} />
+        <AttributesTable columns={columns} data={sortedData} caption={title} />
       </Placeholder>
     </EditableAccordion>
   );

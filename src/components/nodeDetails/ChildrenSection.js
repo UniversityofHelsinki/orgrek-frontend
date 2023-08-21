@@ -182,7 +182,7 @@ const ChildrenSection = ({ showHistory, showFuture }) => {
         authActions={authActions.children}
       >
         <Placeholder empty={empty} placeholder={t('subunits.empty')}>
-          <HierarchyTable data={visibleChildren} summary={title} />
+          <HierarchyTable data={visibleChildren} caption={title} />
         </Placeholder>
         {formElement}
       </EditableContent>

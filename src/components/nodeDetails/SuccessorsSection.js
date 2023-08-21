@@ -87,7 +87,7 @@ const SuccessorsSection = () => {
   const asAttributes = successors.map((successor) => asAttribute(successor));
 
   const renderedContent = (
-    <AttributesTable columns={columns} data={asAttributes} summary={title} />
+    <AttributesTable columns={columns} data={asAttributes} caption={title} />
   );
 
   const emptyInitialValues = { new_successor: [] };
