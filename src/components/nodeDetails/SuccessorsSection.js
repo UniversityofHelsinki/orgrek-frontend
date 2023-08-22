@@ -32,6 +32,7 @@ const SuccessorsSection = () => {
   const handleSubmit = (values) => {
     const successors = Object.values(values)
       .flat()
+      .filter((value) => !value.deleted || !value.isNew)
       .map((value) => asEdge(value));
     return saveSuccessors({ successors, nodeId }).unwrap();
   };
@@ -55,7 +56,7 @@ const SuccessorsSection = () => {
   const asEdge = (value) => ({
     id: value.id,
     parentUniqueId: nodeId,
-    childUniqueId: value.value.id,
+    childUniqueId: value.value?.id,
     startDate: value.startDate,
     endDate: null,
     isNew: value.isNew,
