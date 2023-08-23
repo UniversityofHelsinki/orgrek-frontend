@@ -9,6 +9,7 @@ import { useTranslation } from 'react-i18next';
 import { Checkbox, Chip } from '@mui/material';
 import useHierarchies from '../hooks/useHierarchies';
 import { useState } from 'react';
+import fieldComparator from './admin/fieldComparator';
 
 const HierarchySelection = (props) => {
   const { t } = useTranslation();
@@ -99,7 +100,7 @@ const HierarchySelection = (props) => {
         openText={t('hierarchySelection.openText')}
         closeText={t('hierarchySelection.closeText')}
         clearText={t('hierarchySelection.clearText')}
-        options={selectableHierarchiesList}
+        options={selectableHierarchiesList.sort(fieldComparator('label'))}
         isOptionEqualToValue={(option, value) => option.value === value.value}
         getOptionLabel={(option) => option.label}
         value={selectedHierarchies.map((v) => ({ value: v, label: t(v) }))}
