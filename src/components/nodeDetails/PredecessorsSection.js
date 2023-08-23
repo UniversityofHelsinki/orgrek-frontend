@@ -64,7 +64,7 @@ const PredecessorsSection = () => {
           data={predecessors.sort(
             valueComparator((pr) => pr.node.names[languageField])
           )}
-          summary={title}
+          caption={title}
         />
       </Placeholder>
     </EditableAccordion>

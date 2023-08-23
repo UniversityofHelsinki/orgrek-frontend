@@ -187,7 +187,7 @@ const ChildrenSection = ({ showHistory, showFuture }) => {
             data={visibleChildren.sort(
               valueComparator((c) => c.node.names[contentLanguage])
             )}
-            summary={title}
+            caption={title}
           />
         </Placeholder>
         {formElement}

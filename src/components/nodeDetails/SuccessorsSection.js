@@ -93,7 +93,7 @@ const SuccessorsSection = () => {
       data={asAttributes.sort(
         valueComparator((s) => s.value.names[contentLanguage])
       )}
-      summary={title}
+      caption={title}
     />
   );
 

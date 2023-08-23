@@ -67,7 +67,7 @@ const NameSection = ({ showHistory, showFuture }) => {
   const empty = visibleNames.length === 0;
 
   const renderedContent = (
-    <AttributesTable columns={columns} data={visibleNames} summary={title} />
+    <AttributesTable columns={columns} data={visibleNames} caption={title} />
   );
 
   return (

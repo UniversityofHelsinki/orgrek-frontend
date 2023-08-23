@@ -111,7 +111,7 @@ const CodeAttributesSection = ({ showHistory, showFuture }) => {
           <AttributesTable
             columns={columns}
             data={visibleAttributes}
-            summary={title}
+            caption={title}
           />
         </Placeholder>
       </EditableContent>

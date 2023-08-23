@@ -103,7 +103,7 @@ const ParentsSection = ({ showHistory, showFuture }) => {
             data={visibleParents.sort(
               valueComparator((p) => p.node.names[contentLanguage])
             )}
-            summary={title}
+            caption={title}
           />
         </Placeholder>
       </EditableContent>
