@@ -77,7 +77,7 @@ const HierarchySelection = (props) => {
           ? { checked: allSelected }
           : {};
       return (
-        <li {...props}>
+        <li {...props} aria-label={option.label}>
           <Checkbox
             color="primary"
             icon={<CheckBoxOutlineBlankIcon fontSize="small" />}
