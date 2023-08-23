@@ -17,6 +17,7 @@ import useCurrentUser from '../../hooks/useCurrentUser';
 import actionsColumnType from './actionsColumnType';
 import DeleteIcon from '@mui/icons-material/Delete';
 import NewHierarchyFilterForm from '../nodeDetails/NewHierarchyFilterForm';
+import fieldComparator from './fieldComparator';
 
 const HierarchyFiltersDataGrid = ({
   initialRows,
@@ -89,7 +90,7 @@ const HierarchyFiltersDataGrid = ({
       flex: 1,
       editable,
       type: 'singleSelect',
-      valueOptions: keyOptions,
+      valueOptions: keyOptions.sort(fieldComparator('label')),
       getCreateNewLabel: (value) =>
         t('hierarchyFiltersDataGrid.newAttributeLabel', { value }),
       valueFormatter: (row) => t(row.value),
@@ -101,7 +102,7 @@ const HierarchyFiltersDataGrid = ({
       flex: 1,
       editable,
       type: 'singleSelect',
-      valueOptions: valueOptions,
+      valueOptions: valueOptions.sort(fieldComparator('label')),
       filterOptions: (options, row) =>
         options.filter((option) => option.key === row.key),
       getCreateNewLabel: (value) =>

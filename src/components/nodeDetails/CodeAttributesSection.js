@@ -41,6 +41,7 @@ const CodeAttributesSection = ({ showHistory, showFuture }) => {
     endDate: null,
   };
   const codeAttributes = [uniqueId, ...data];
+  const withoutUniqueID = [...data];
 
   const visibleAttributes = useFilterAttributesByDate(
     codeAttributes,
@@ -94,6 +95,9 @@ const CodeAttributesSection = ({ showHistory, showFuture }) => {
               visibleAttributes,
               readOnlyFieldKeys
             )}
+            keys={withoutUniqueID
+              .map((ca) => ca.key)
+              .filter((ca, i, all) => all.indexOf(ca) === i)}
           />
         }
         initialValues={formValues}

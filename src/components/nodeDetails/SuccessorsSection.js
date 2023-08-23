@@ -15,6 +15,7 @@ import Link from '../Link';
 import { successorHierarchy } from '../../Constants';
 import { toFormValues } from '../../utils/attributeUtils';
 import useSuccessors from '../../hooks/useSuccessors';
+import { valueComparator } from '../admin/fieldComparator';
 
 const SuccessorsSection = () => {
   const { t } = useTranslation();
@@ -88,7 +89,13 @@ const SuccessorsSection = () => {
   const asAttributes = successors.map((successor) => asAttribute(successor));
 
   const renderedContent = (
-    <AttributesTable columns={columns} data={asAttributes} caption={title} />
+    <AttributesTable
+      columns={columns}
+      data={asAttributes.sort(
+        valueComparator((s) => s.value.names[contentLanguage])
+      )}
+      caption={title}
+    />
   );
 
   const emptyInitialValues = { new_successor: [] };
