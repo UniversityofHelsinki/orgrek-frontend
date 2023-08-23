@@ -10,6 +10,7 @@ import Placeholder from '../Placeholder';
 import { useGetPredecessorsQuery } from '../../store';
 import { useNodeId } from '../../hooks/useNodeId';
 import usePredecessors from '../../hooks/usePredecessors';
+import { valueComparator } from '../admin/fieldComparator';
 
 const PredecessorsSection = () => {
   const { t } = useTranslation();
@@ -60,7 +61,9 @@ const PredecessorsSection = () => {
         <AttributesTable
           columns={columns}
           keyFn={keyFn}
-          data={predecessors}
+          data={predecessors.sort(
+            valueComparator((pr) => pr.node.names[languageField])
+          )}
           caption={title}
         />
       </Placeholder>
