@@ -7,7 +7,7 @@
   "attribute": {
     "actions": "actions",
     "deleteRow": "Ta bort rad",
-    "deleted": "deleted",
+    "deleted": "Raderad: {{value}}, giltig {{validity}}",
     "empty": "empty",
     "insertAfter": "insertAfter",
     "insertBefore": "insertBefore",

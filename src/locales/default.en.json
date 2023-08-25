@@ -7,7 +7,7 @@
   "attribute": {
     "actions": "Actions",
     "deleteRow": "Delete row",
-    "deleted": "deleted",
+    "deleted": "Deleted: {{value}}, valid {{validity}}",
     "empty": "(empty)",
     "insertAfter": "Insert row below",
     "insertBefore": "Insert row above",
