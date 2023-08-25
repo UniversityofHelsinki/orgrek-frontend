@@ -87,7 +87,7 @@ export const Default = {
     await waitFor(async () => {
       await expect(canvas.getByText('Muut attribuutit')).toBeInTheDocument();
     });
-    await expect(canvas.queryByText('Julkinen')).toBeInTheDocument();
+    await expect(canvas.queryByText('julkinen')).toBeInTheDocument();
     await expect(canvas.queryByText('current value')).toBeInTheDocument();
     await expect(canvas.queryByText('previous value')).not.toBeInTheDocument();
     await expect(canvas.queryByText('next value')).not.toBeInTheDocument();

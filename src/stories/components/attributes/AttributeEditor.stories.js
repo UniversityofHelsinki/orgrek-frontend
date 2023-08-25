@@ -522,9 +522,9 @@ export const CustomFields = {
 
     expect(
       canvas.getAllByLabelText(/Additional value/)[2]
-    ).toHaveAccessibleDescription('Pakollinen tieto');
+    ).toHaveAccessibleDescription('attribute.required');
     expect(
       canvas.getAllByLabelText(/Voimassaolo alkaa/)[2]
-    ).toHaveAccessibleDescription('Pakollinen tieto');
+    ).toHaveAccessibleDescription('attribute.required');
   },
 };

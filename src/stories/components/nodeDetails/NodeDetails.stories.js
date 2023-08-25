@@ -375,7 +375,7 @@ export const AdminRole = {
     expect(canvas.getByText('H9073')).toBeInTheDocument();
 
     await waitFor(async () => {
-      expect(canvas.getByText('Tulosyksikkö')).toBeInTheDocument();
+      expect(canvas.getByText('tulosyksikko')).toBeInTheDocument();
     });
 
     await waitFor(async () => {
