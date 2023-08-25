@@ -41,11 +41,19 @@ const LanguageSelect = () => {
         ),
       }}
     >
-      <MenuItem value={'fi'}>Suomeksi</MenuItem>
-      <MenuItem value={'sv'}>På svenska</MenuItem>
-      <MenuItem value={'en'}>In English</MenuItem>
+      <MenuItem aria-label={t('language_select_label_fi')} value={'fi'}>
+        {t('language_select_label_fi')}
+      </MenuItem>
+      <MenuItem aria-label={t('language_select_label_sv')} value={'sv'}>
+        {t('language_select_label_sv')}
+      </MenuItem>
+      <MenuItem aria-label={t('language_select_label_en')} value={'en'}>
+        {t('language_select_label_en')}
+      </MenuItem>
       {isAuthorized(user, authActions.texts.edit) && (
-        <MenuItem value={'ia'}>{t('text_key')}</MenuItem>
+        <MenuItem aria-label={t('language_select_label_ia')} value={'ia'}>
+          {t('language_select_label_ia')}
+        </MenuItem>
       )}
     </TextField>
   );
