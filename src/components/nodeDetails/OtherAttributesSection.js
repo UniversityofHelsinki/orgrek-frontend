@@ -68,7 +68,7 @@ const OtherAttributesSection = ({ showHistory, showFuture }) => {
         authActions={authActions.otherAttributes}
       >
         <Placeholder empty={empty} placeholder={t('otherAttributeInfo.empty')}>
-          <AttributesTable data={visibleAttributes} summary={title} />
+          <AttributesTable data={visibleAttributes} caption={title} />
         </Placeholder>
       </EditableContent>
     </EditableAccordion>

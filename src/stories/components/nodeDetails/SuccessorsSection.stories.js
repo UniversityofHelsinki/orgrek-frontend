@@ -16,6 +16,71 @@ const selectedHierarchy = 'virallinen';
 
 const nodeId = '1';
 
+const successors = [
+  {
+    node: {
+      uniqueId: 10000001,
+      startDate: '1970-01-01',
+      endDate: '2017-05-05',
+      name: 'Successor 1',
+      names: {
+        fi: 'Successor 1',
+        en: 'Successor 1',
+        sv: 'Successor 1',
+      },
+    },
+    edges: [
+      {
+        id: 1001,
+        startDate: '2017-05-06',
+        endDate: null,
+      },
+    ],
+  },
+  {
+    node: {
+      uniqueId: 10000002,
+      startDate: '1972-01-01',
+      endDate: null,
+      name: 'Successor 2',
+      names: {
+        fi: 'Successor 2',
+        en: 'Successor 2',
+        sv: 'Successor 2',
+      },
+    },
+    edges: [
+      {
+        id: 1002,
+        startDate: null,
+        endDate: null,
+      },
+    ],
+  },
+  {
+    node: {
+      uniqueId: 10000003,
+      startDate: null,
+      endDate: null,
+      name: 'Successor 3',
+      names: {
+        fi: 'Successor 3',
+        en: 'Successor 3',
+        sv: 'Successor 3',
+      },
+    },
+    edges: [
+      {
+        id: 1003,
+        startDate: null,
+        endDate: null,
+      },
+    ],
+  },
+];
+
+const emptySuccessors = [];
+
 export default {
   component: SuccessorsSection,
   parameters: {
@@ -55,40 +120,7 @@ export const Default = {
           startDate: null,
           endDate: null,
         }),
-        mockGetSuccessors(nodeId, {
-          fi: [
-            {
-              id: '1001',
-              uniqueId: 10000001,
-              startDate: '1970-01-01',
-              endDate: '2017-05-05',
-              edgeId: 32225,
-              edgeStartDate: '2017-05-06',
-              fullName: 'Successor 1',
-              language: 'fi',
-            },
-            {
-              id: '1002',
-              uniqueId: 10000002,
-              startDate: '1972-01-01',
-              endDate: null,
-              edgeStartDate: null,
-              edgeId: 32226,
-              fullName: 'Successor 2',
-              language: 'fi',
-            },
-            {
-              id: '1003',
-              uniqueId: 10000003,
-              startDate: null,
-              endDate: null,
-              edgeStartDate: null,
-              edgeId: 32227,
-              fullName: 'Successor 3',
-              language: 'fi',
-            },
-          ],
-        }),
+        mockGetSuccessors(nodeId, now, successors),
         mockSaveSuccessors(nodeId),
       ],
     },
@@ -104,7 +136,20 @@ export const Default = {
 };
 
 export const Empty = {
-  decorators: [withNode()],
+  systemTime: now,
+  parameters: {
+    systemTime: now,
+    msw: {
+      handlers: [mockGetSuccessors(nodeId, now, emptySuccessors)],
+    },
+  },
+  decorators: [
+    withMockStore({
+      dr: {
+        selectedDay: now,
+      },
+    }),
+  ],
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 

@@ -9,6 +9,33 @@ import { expect } from '@storybook/jest';
 
 const today = new Date();
 const nodeId = '1';
+
+const predecessors = [
+  {
+    node: {
+      uniqueId: 1,
+      startDate: null,
+      endDate: '2016-04-29',
+      name: 'Rehtorin kanslia (H01A)',
+      names: {
+        fi: 'Rehtorin kanslia (H01A)',
+        sv: 'Hå',
+        en: 'Ho',
+      },
+    },
+    edges: [
+      {
+        id: '1001',
+        startDate: '2016-04-30',
+        endDate: null,
+        hierarchy: 'history',
+      },
+    ],
+  },
+];
+
+const emptyPredecessors = [];
+
 export default {
   component: PredecessorsSection,
   parameters: {
@@ -18,28 +45,13 @@ export default {
       },
     },
     msw: {
-      handlers: [
-        mockGetPredecessors(nodeId, today, {
-          fi: [
-            {
-              id: '1001',
-              uniqueId: 10000001,
-              startDate: null,
-              endDate: '2016-04-29',
-              hierarchy: null,
-              edgeStartDate: '2016-04-30',
-              edgeEndDate: null,
-              fullName: 'Rehtorin kanslia (H01A)',
-              language: 'fi',
-            },
-          ],
-        }),
-      ],
+      handlers: [mockGetPredecessors(nodeId, today, predecessors)],
     },
   },
 };
 
 export const Default = {
+  systemTime: today,
   decorators: [
     withMockStore({
       dr: {
@@ -65,13 +77,7 @@ export const Empty = {
   decorators: [withNode()],
   parameters: {
     msw: {
-      handlers: [
-        mockGetPredecessors(nodeId, today, {
-          fi: [],
-          sv: [],
-          en: [],
-        }),
-      ],
+      handlers: [mockGetPredecessors(nodeId, today, emptyPredecessors)],
     },
   },
   play: async ({ canvasElement }) => {

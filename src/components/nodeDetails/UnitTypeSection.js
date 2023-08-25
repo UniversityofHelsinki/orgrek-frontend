@@ -70,7 +70,7 @@ const UnitTypeSection = ({ showHistory, showFuture }) => {
         authActions={authActions.unitType}
       >
         <Placeholder empty={empty} placeholder={t('typeInfo.empty')}>
-          <AttributesTable data={visibleTypes} summary={title} />
+          <AttributesTable data={visibleTypes} caption={title} />
         </Placeholder>
       </EditableContent>
     </EditableAccordion>

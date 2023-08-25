@@ -1,4 +1,4 @@
-import Hierarchy from '../components/Hierarchy';
+import AppBar from '../components/AppBar';
 import NodeDetails from '../components/nodeDetails/NodeDetails';
 import React, { memo, useState } from 'react';
 import { useSelector } from 'react-redux';
@@ -90,7 +90,7 @@ const NodePage = () => {
           sm={12}
           md={12}
         >
-          <Hierarchy switchHandlers={switchHandlers} />
+          <AppBar switchHandlers={switchHandlers} />
         </Grid>
         <Grid
           item
