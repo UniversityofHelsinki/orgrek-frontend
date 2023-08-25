@@ -17,62 +17,8 @@ import actionsColumnType from './actionsColumnType';
 import ReplayIcon from '../icons/Replay';
 import DeleteSweepIcon from '@mui/icons-material/DeleteSweep';
 import ClearAllIcon from '@mui/icons-material/ClearAll';
-import defaultFi from '../../locales/default.fi.json';
-import defaultSv from '../../locales/default.sv.json';
-import defaultEn from '../../locales/default.en.json';
+import { getRowId } from '../../pages/TextsPage';
 
-const getRowId = (row) => `${row.language}.${row.key}`;
-
-/**
- * Converts i18next resources to the db format
- */
-export const textsToRows = (data, language, parentKey) =>
-  Object.entries(data)
-    .map(([key, value]) => {
-      const canonicalKey = parentKey ? `${parentKey}.${key}` : key;
-      if (typeof value === 'object') {
-        return textsToRows(value, language, canonicalKey);
-      } else {
-        return [
-          {
-            key: canonicalKey,
-            language,
-            value: null,
-            defaultValue: value,
-            user_name: null,
-            timestamp: null,
-          },
-        ];
-      }
-    })
-    .flat();
-
-export const mergeTexts = (first, second) => {
-  const result = {};
-
-  first.forEach((row) => (result[getRowId(row)] = row));
-
-  second.forEach((row) => {
-    const current = result[getRowId(row)] || row;
-    result[getRowId(row)] = {
-      key: row.key,
-      language: row.language,
-      value: row.value || current.value,
-      defaultValue: row.defaultValue || current.defaultValue,
-      user_name: row.user_name || current.user_name,
-      timestamp: row.timestamp || current.timestamp,
-    };
-  });
-
-  return Object.values(result);
-};
-
-const defaults = {
-  fi: textsToRows(defaultFi, 'fi'),
-  en: textsToRows(defaultEn, 'en'),
-  sv: textsToRows(defaultSv, 'sv'),
-  ia: [],
-};
 /**
  * Admin view for managing translations.
  */
@@ -83,20 +29,11 @@ const TextsDataGrid = ({
   onRowChange,
   onDeleteRows,
   saveRow,
+  rows,
 }) => {
   const { t, i18n } = useTranslation();
   const language = i18n.language; // 'fi' | 'sv' | 'en'
-  const defaultRows = defaults[language];
   const user = useCurrentUser();
-  const [rows, setRows] = React.useState(
-    mergeTexts(initialRows || [], defaultRows)
-  );
-
-  useEffect(() => {
-    if (!loading) {
-      setRows(mergeTexts(initialRows, defaultRows));
-    }
-  }, [loading]);
 
   const inInitialRows = (row) => {
     return (initialRows || []).some(
@@ -225,13 +162,14 @@ const TextsDataGrid = ({
     onAddRow();
   };
 
-  const handleRowChange = (modified) => {
-    if (!inInitialRows(modified)) {
-      return saveRow([modified]);
-    } else {
-      onRowChange(modified);
+  const alreadyInDB = (text) => inInitialRows(text);
+  const isDefaultText = (text) => !alreadyInDB(text);
+  const handleRowChange = async (modified) => {
+    if (isDefaultText(modified)) {
+      const results = await saveRow([modified]);
+      return results.at(0) || modified;
     }
-    return Promise.resolve(modified);
+    return await onRowChange(modified);
   };
 
   // see the keys here if you want to override data grid's inner translations:
@@ -262,9 +200,7 @@ const TextsDataGrid = ({
       loading={loading}
       processRowUpdate={handleRowChange}
       getRowId={getRowId}
-      isCellEditable={
-        (params) => params.field === 'value' // && inInitialRows(params.row)
-      }
+      isCellEditable={(params) => params.field === 'value'}
       getRowClassName={(params) => !params.row.value && 'texts-default'}
       localeText={
         {
