@@ -23,7 +23,8 @@ const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
 const HierarchySelection = (props) => {
   const { t, i18n } = useTranslation();
-
+  const theme = useTheme();
+  const themeWithLocale = createTheme(theme, getMUICoreLocale(i18n.language));
   const [hierarchies, setHierarchies] = useHierarchies();
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -100,9 +101,6 @@ const HierarchySelection = (props) => {
         </li>
       );
     };
-
-    const theme = useTheme();
-    const themeWithLocale = createTheme(theme, getMUICoreLocale(i18n.language));
 
     return (
       <ThemeProvider theme={themeWithLocale}>
