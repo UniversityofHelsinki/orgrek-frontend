@@ -68,7 +68,12 @@ const FormActions = () => {
 
   return (
     <ActionBar>
-      <Button variant="outlined" onClick={handleCancel} disabled={submitting}>
+      <Button
+        variant="outlined"
+        onClick={handleCancel}
+        disabled={submitting}
+        role="button"
+      >
         {t('cancel_button')}
       </Button>
       <Button

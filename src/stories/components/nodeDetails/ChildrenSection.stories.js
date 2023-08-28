@@ -1,11 +1,7 @@
 import ChildrenSection from '../../../components/nodeDetails/ChildrenSection';
 import {
-  createHierarchies,
   mockGetChildren,
-  mockGetParents,
   mockSaveChildren,
-  mockSaveParents,
-  withHierarchy,
   withMockStore,
 } from '../../../mockStore';
 import { userEvent, waitFor, within } from '@storybook/testing-library';
@@ -15,6 +11,118 @@ import { waitForAnimations } from '../../storyUtils';
 const now = new Date('2023-03-22T14:28:00+0200');
 const nodeId = '1';
 const selectedHierarchy = 'virallinen,toiminnanohjaus';
+
+const children = [
+  {
+    node: {
+      id: '1000',
+      uniqueId: 1000000,
+      startDate: null,
+      endDate: null,
+      name: 'Child node 1',
+      names: {
+        fi: 'Child node 1',
+        en: 'Child node 1',
+        sv: 'Child node 1',
+      },
+    },
+    edges: [
+      {
+        hierarchy: 'virallinen',
+        startDate: '2000-01-01',
+        endDate: null,
+        id: 20003,
+      },
+      {
+        hierarchy: 'toiminnanohjaus',
+        startDate: '2000-01-01',
+        endDate: null,
+        id: 20004,
+      },
+    ],
+  },
+  {
+    node: {
+      id: '1001',
+      uniqueId: 1000001,
+      startDate: null,
+      endDate: null,
+      name: 'Child node 2',
+      names: {
+        fi: 'Child node 2',
+        sv: 'Child node 2',
+        en: 'Child node 2',
+      },
+    },
+    edges: [
+      {
+        hierarchy: 'virallinen',
+        startDate: '2000-01-01',
+        endDate: null,
+        id: 20004,
+      },
+      {
+        hierarchy: 'toiminnanohjaus',
+        startDate: '2000-01-01',
+        endDate: null,
+        id: 20005,
+      },
+    ],
+  },
+  {
+    node: {
+      id: '1002',
+      uniqueId: 1000002,
+      startDate: null,
+      endDate: null,
+      name: 'Child node 3',
+      names: {
+        fi: 'Child node 3',
+        sv: 'Child node 3',
+        en: 'Child node 3',
+      },
+    },
+    edges: [
+      {
+        hierarchy: 'virallinen',
+        startDate: '2000-01-01',
+        endDate: null,
+        id: 20005,
+      },
+      {
+        hierarchy: 'toiminnanohjaus',
+        startDate: '2000-01-01',
+        endDate: null,
+        id: 20006,
+      },
+    ],
+  },
+];
+
+const oldChild = [
+  {
+    node: {
+      id: '1000',
+      uniqueId: 1000000,
+      startDate: '2009-01-01',
+      endDate: null,
+      name: 'Child node 1',
+      names: {
+        fi: 'Child node 1',
+        sv: 'Child node 1',
+        en: 'Child node 1',
+      },
+    },
+    edges: [
+      {
+        hierarchy: 'virallinen',
+        startDate: '2000-01-01',
+        endDate: '2009-12-31',
+        id: 20003,
+      },
+    ],
+  },
+];
 
 export default {
   component: ChildrenSection,
@@ -43,76 +151,7 @@ export const Default = {
   parameters: {
     msw: {
       handlers: [
-        mockGetChildren(nodeId, now, selectedHierarchy, {
-          fi: [
-            {
-              id: '1000',
-              uniqueId: 1000000,
-              startDate: null,
-              endDate: null,
-              hierarchies: [
-                {
-                  hierarchy: 'virallinen',
-                  startDate: '2000-01-01',
-                  endDate: null,
-                  edgeId: 20003,
-                },
-                {
-                  hierarchy: 'toiminnanohjaus',
-                  startDate: '2000-01-01',
-                  endDate: null,
-                  edgeId: 20004,
-                },
-              ],
-              fullName: 'Child node 1',
-              language: 'fi',
-            },
-            {
-              id: '1001',
-              uniqueId: 1000001,
-              startDate: null,
-              endDate: null,
-              hierarchies: [
-                {
-                  hierarchy: 'virallinen',
-                  startDate: '2000-01-01',
-                  endDate: null,
-                  edgeId: 20004,
-                },
-                {
-                  hierarchy: 'toiminnanohjaus',
-                  startDate: '2000-01-01',
-                  endDate: null,
-                  edgeId: 20005,
-                },
-              ],
-              fullName: 'Child node 2',
-              language: 'fi',
-            },
-            {
-              id: '1002',
-              uniqueId: 1000002,
-              startDate: null,
-              endDate: null,
-              hierarchies: [
-                {
-                  hierarchy: 'virallinen',
-                  startDate: '2000-01-01',
-                  endDate: null,
-                  edgeId: 20005,
-                },
-                {
-                  hierarchy: 'toiminnanohjaus',
-                  startDate: '2000-01-01',
-                  endDate: null,
-                  edgeId: 20006,
-                },
-              ],
-              fullName: 'Child node 3',
-              language: 'fi',
-            },
-          ],
-        }),
+        mockGetChildren(nodeId, now, selectedHierarchy, children),
         mockSaveChildren(),
       ],
     },
@@ -134,27 +173,7 @@ export const Empty = {
   parameters: {
     msw: {
       handlers: [
-        mockGetChildren(nodeId, now, selectedHierarchy, {
-          fi: [
-            {
-              id: '1000',
-              edgeId: 20001,
-              uniqueId: 1000000,
-              startDate: '2009-01-01',
-              endDate: null,
-              hierarchies: [
-                {
-                  hierarchy: 'virallinen',
-                  startDate: '2000-01-01',
-                  endDate: '2009-12-31',
-                  edgeId: 20003,
-                },
-              ],
-              fullName: 'Parent node 1',
-              language: 'fi',
-            },
-          ],
-        }),
+        mockGetChildren(nodeId, now, selectedHierarchy, oldChild),
         mockSaveChildren(),
       ],
     },
@@ -165,6 +184,8 @@ export const Empty = {
     await waitFor(async () => {
       await expect(canvas.getByText('Alayksiköt')).toBeInTheDocument();
     });
+
+    await userEvent.click(canvas.getByText('Alayksiköt'));
 
     await expect(canvas.queryByText('Uusi alayksikkö')).toBeVisible();
     await expect(canvas.queryByText('Muokkaa')).toBeVisible();
@@ -221,9 +242,7 @@ export const DeletedRow = {
     await userEvent.click(canvas.getAllByLabelText(/Toiminnot/)[1]);
     await userEvent.click(canvas.getByText('Poista rivi'));
     await expect(
-      canvas.getByText(
-        'Poistettu: Viralliset yksiköt, voimassa 1.1.2000 alkaen'
-      )
+      canvas.getByText('Poistettu: toiminnanohjaus, voimassa 1.1.2000 alkaen')
     ).toBeInTheDocument();
 
     // Deleted row appears with an animation, so wait for it before running

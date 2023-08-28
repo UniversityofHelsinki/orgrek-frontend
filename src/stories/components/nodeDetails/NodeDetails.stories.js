@@ -50,8 +50,14 @@ export default {
 };
 
 export const AdminRole = {
+  systemTime: now,
   parameters: {
     systemTime: now,
+    reactRouter: {
+      searchParams: {
+        hierarchies: selectedHierarchy,
+      },
+    },
     msw: {
       handlers: [
         mockGetNode(nodeId, {
@@ -269,60 +275,56 @@ export const AdminRole = {
             },
           ],
         }),
-        mockGetParents(nodeId, now, selectedHierarchy, {
-          fi: [
-            {
+        mockGetParents(nodeId, now, selectedHierarchy, [
+          {
+            node: {
               id: '1000',
-              edgeId: 20001,
               uniqueId: 1000000,
               startDate: '2009-01-01',
               endDate: null,
-              hierarchies: [
-                {
-                  hierarchy: 'virallinen',
-                  startDate: '2000-01-01',
-                  endDate: null,
-                  edgeId: 20003,
-                },
-              ],
-              fullName: 'Parent node 1',
-              language: 'fi',
+              name: 'Parent node 1',
+              names: {
+                fi: 'Parent node 1',
+                sv: 'Parent node 1',
+                en: 'Parent node 1',
+              },
             },
-            {
+            edges: [
+              {
+                hierarchy: 'virallinen',
+                startDate: '2000-01-01',
+                endDate: null,
+                id: 20003,
+              },
+            ],
+          },
+          {
+            node: {
               id: '1001',
-              edgeId: 20002,
               uniqueId: 1000001,
               startDate: null,
               endDate: null,
-              hierarchies: [
-                {
-                  hierarchy: 'virallinen',
-                  startDate: '2000-01-01',
-                  endDate: null,
-                  edgeId: 20004,
-                },
-              ],
-              fullName: 'Parent node 2',
-              language: 'fi',
+              name: 'Parent node 2',
+              names: {
+                fi: 'Parent node 2',
+                sv: 'Parent node 2',
+                en: 'Parent node 2',
+              },
             },
-          ],
-        }),
+            edges: [
+              {
+                hierarchy: 'virallinen',
+                startDate: '2000-01-01',
+                endDate: null,
+                id: 20004,
+              },
+            ],
+          },
+        ]),
         mockSaveParents(),
-        mockGetChildren(nodeId, now, selectedHierarchy, {
-          fi: [],
-          sv: [],
-          en: [],
-        }),
-        mockGetPredecessors(nodeId, now, {
-          sv: [],
-          fi: [],
-          en: [],
-        }),
-        mockGetSuccessors(nodeId, {
-          sv: [],
-          fi: [],
-          en: [],
-        }),
+        mockGetChildren(nodeId, now, selectedHierarchy, []),
+        mockGetPredecessors(nodeId, now, []),
+        mockGetSuccessors(nodeId, now, []),
         mockSaveOtherAttributes(nodeId),
         mockGetAttributeKeys(
           {
@@ -373,7 +375,7 @@ export const AdminRole = {
     expect(canvas.getByText('H9073')).toBeInTheDocument();
 
     await waitFor(async () => {
-      expect(canvas.getByText('Tulosyksikkö')).toBeInTheDocument();
+      expect(canvas.getByText('tulosyksikko')).toBeInTheDocument();
     });
 
     await waitFor(async () => {

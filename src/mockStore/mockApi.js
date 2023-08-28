@@ -86,9 +86,9 @@ export const mockGetFavorableFullNames = (nodeId, date, body) =>
 
 export const mockGetParents = (nodeId, date, hierarchies, body) =>
   rest.get(
-    `${baseUrl}/node/all/parents/${nodeId}/${formatApiDate(
-      date
-    )}/${hierarchies}`,
+    `${baseUrl}/node/${nodeId}/${date.toLocaleDateString(
+      'fi-FI'
+    )}/parents/${hierarchies}`,
     (req, res, ctx) => res(ctx.json(body))
   );
 
@@ -99,9 +99,9 @@ export const mockSaveParents = () =>
 
 export const mockGetChildren = (nodeId, date, hierarchies, body) =>
   rest.get(
-    `${baseUrl}/node/all/children/${nodeId}/${formatApiDate(
-      date
-    )}/${hierarchies}`,
+    `${baseUrl}/node/${nodeId}/${date.toLocaleDateString(
+      'fi-FI'
+    )}/children/${hierarchies}`,
     (req, res, ctx) => res(ctx.json(body))
   );
 
@@ -112,13 +112,16 @@ export const mockSaveChildren = () =>
 
 export const mockGetPredecessors = (nodeId, date, body) =>
   rest.get(
-    `${baseUrl}/node/predecessors/${nodeId}/${formatApiDate(date)}`,
+    `${baseUrl}/node/${nodeId}/${date.toLocaleDateString(
+      'fi-FI'
+    )}/predecessors`,
     (req, res, ctx) => res(ctx.json(body))
   );
 
-export const mockGetSuccessors = (nodeId, body) =>
-  rest.get(`${baseUrl}/node/successors/${nodeId}`, (req, res, ctx) =>
-    res(ctx.json(body))
+export const mockGetSuccessors = (nodeId, date, body) =>
+  rest.get(
+    `${baseUrl}/node/${nodeId}/${date.toLocaleDateString('fi-FI')}/successors`,
+    (req, res, ctx) => res(ctx.json(body))
   );
 
 export const mockSaveSuccessors = (nodeId) =>

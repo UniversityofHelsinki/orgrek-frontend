@@ -7,8 +7,9 @@ import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
 import useFormField from '../../hooks/useFormField';
 import HelperText from '../inputs/HelperText';
+import { stringComparator } from '../admin/fieldComparator';
 
-const OtherAttributeValueField = ({ path, value: attribute }) => {
+const OtherAttributeValueField = ({ path, value: attribute, focusRef }) => {
   const { t } = useTranslation();
   const { props, errors } = useFormField({ path, name: 'value' });
 
@@ -22,12 +23,15 @@ const OtherAttributeValueField = ({ path, value: attribute }) => {
       fullWidth
       label={t('value')}
       helperText={<HelperText errors={errors} />}
+      ref={focusRef}
     >
-      {acceptedValues.map((option) => (
-        <MenuItem key={option} value={option}>
-          {t(option)}
-        </MenuItem>
-      ))}
+      {[...acceptedValues]
+        .sort((a, b) => stringComparator(t(a), t(b)))
+        .map((option) => (
+          <MenuItem key={option} value={option}>
+            {t(option)}
+          </MenuItem>
+        ))}
     </TextField>
   );
 };
@@ -46,6 +50,7 @@ const OtherAttributesEditor = ({ metas }) => {
       endDate: null,
       isNew: true,
       deleted: false,
+      focus: true,
     });
   };
 
