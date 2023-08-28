@@ -161,7 +161,13 @@
   "publicity": "Julkisuus",
   "publicity_false": "Ei",
   "publicity_true": "Kyllä",
+  "relations_nav": "relations_nav",
+  "remove_filters": "remove_filters",
+  "research_header": "research_header",
   "return_to_today": "Tämä päivä",
+  "ruotsi": "ruotsi",
+  "save": "save",
+  "save_all_button": "save_all_button",
   "save_button": "Tallenna",
   "search_by_name_or_code": "Etsi nimellä tai tunnuksella",
   "section": {
@@ -278,11 +284,5 @@
   },
   "upper_units": "Yläyksiköt",
   "valid_dates": "Voimassaolo",
-  "value": "Arvo",
-  "relations_nav": "relations_nav",
-  "remove_filters": "remove_filters",
-  "research_header": "research_header",
-  "ruotsi": "ruotsi",
-  "save": "save",
-  "save_all_button": "save_all_button"
+  "value": "Arvo"
 }
