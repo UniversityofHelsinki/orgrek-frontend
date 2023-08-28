@@ -6,6 +6,8 @@ import InputAdornment from '@mui/material/InputAdornment';
 import TextField from '@mui/material/TextField';
 import { authActions, isAuthorized } from '../auth';
 import useCurrentUser from '../hooks/useCurrentUser';
+import { useRef } from 'react';
+import { useEffect } from 'react';
 
 export const changeLanguage = async (user, i18n) => {
   if (user && user.preferredLanguage) {
@@ -20,6 +22,16 @@ export const changeLanguage = async (user, i18n) => {
 const LanguageSelect = () => {
   const { t, i18n } = useTranslation();
   const user = useCurrentUser();
+  const hiddenInputRef = useRef();
+
+  useEffect(() => {
+    if (hiddenInputRef.current) {
+      const node = hiddenInputRef.current.node;
+      if (node) {
+        node.setAttribute('aria-labelledBy', 'language_field-label');
+      }
+    }
+  }, [hiddenInputRef.current]);
 
   const handleChange = async (event) => {
     await i18n.changeLanguage(event.target.value);
@@ -33,6 +45,9 @@ const LanguageSelect = () => {
       value={i18n.language}
       label={t('language')}
       onChange={handleChange}
+      InputLabelProps={{
+        component: 'span',
+      }}
       InputProps={{
         startAdornment: (
           <InputAdornment position="start">
@@ -40,12 +55,22 @@ const LanguageSelect = () => {
           </InputAdornment>
         ),
       }}
+      id="language_field"
+      inputRef={hiddenInputRef}
     >
-      <MenuItem value={'fi'}>Suomeksi</MenuItem>
-      <MenuItem value={'sv'}>På svenska</MenuItem>
-      <MenuItem value={'en'}>In English</MenuItem>
+      <MenuItem aria-label={t('language_select_label_fi')} value={'fi'}>
+        {t('language_select_label_fi')}
+      </MenuItem>
+      <MenuItem aria-label={t('language_select_label_sv')} value={'sv'}>
+        {t('language_select_label_sv')}
+      </MenuItem>
+      <MenuItem aria-label={t('language_select_label_en')} value={'en'}>
+        {t('language_select_label_en')}
+      </MenuItem>
       {isAuthorized(user, authActions.texts.edit) && (
-        <MenuItem value={'ia'}>{t('text_key')}</MenuItem>
+        <MenuItem aria-label={t('language_select_label_ia')} value={'ia'}>
+          {t('language_select_label_ia')}
+        </MenuItem>
       )}
     </TextField>
   );
