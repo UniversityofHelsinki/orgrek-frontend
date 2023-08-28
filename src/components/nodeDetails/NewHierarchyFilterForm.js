@@ -164,7 +164,7 @@ const NewHierarchyFilterForm = ({
         {...autocompleteProps}
         freeSolo
         getOptionLabel={getOptionLabel}
-        options={attributeValues}
+        options={[...attributeValues].sort(stringComparator)}
         renderInput={(params) => (
           <TextField
             {...params}
