@@ -6,13 +6,23 @@ import CloseIcon from '@mui/icons-material/Close';
 import TextField from '@mui/material/TextField';
 import { connect, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { Checkbox, Chip } from '@mui/material';
+import {
+  Chip,
+  Checkbox,
+  createTheme,
+  ThemeProvider,
+  useTheme,
+} from '@mui/material';
 import useHierarchies from '../hooks/useHierarchies';
 import { useState } from 'react';
 import fieldComparator from './admin/fieldComparator';
+import { getMUICoreLocale } from '../utils/languageUtils';
+
+const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
+const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
 const HierarchySelection = (props) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const [hierarchies, setHierarchies] = useHierarchies();
   const [menuOpen, setMenuOpen] = useState(false);
@@ -91,75 +101,80 @@ const HierarchySelection = (props) => {
       );
     };
 
+    const theme = useTheme();
+    const themeWithLocale = createTheme(theme, getMUICoreLocale(i18n.language));
+
     return (
-      <Autocomplete
-        multiple
-        size={props.size}
-        id="hierarchy-selection"
-        disableCloseOnSelect
-        openText={t('hierarchySelection.openText')}
-        closeText={t('hierarchySelection.closeText')}
-        clearText={t('hierarchySelection.clearText')}
-        options={selectableHierarchiesList.sort(fieldComparator('label'))}
-        isOptionEqualToValue={(option, value) => option.value === value.value}
-        getOptionLabel={(option) => option.label}
-        value={selectedHierarchies.map((v) => ({ value: v, label: t(v) }))}
-        onChange={changeSelected}
-        filterOptions={(options, params) => {
-          const filtered = filter(options, params);
-          return [
-            { value: 'select-all', label: t('select_all_none') },
-            ...filtered,
-          ];
-        }}
-        onOpen={() => setMenuOpen(true)}
-        onClose={() => setMenuOpen(false)}
-        renderOption={optionRenderer}
-        renderInput={(params) => (
-          <TextField
-            id="search"
-            {...params}
-            label={t('units')}
-            placeholder=""
-          />
-        )}
-        renderTags={(tags, getTagProps) => {
-          const hiddenCount = Math.max(tags.length - props.limitTags, 0);
-          return (
-            <div
-              style={{
-                display: 'flex',
-                textOverflow: 'ellipsis',
-                flexWrap: menuOpen ? 'wrap' : 'initial',
-                maxWidth: '77%',
-              }}
-            >
-              {tags.map(
-                (option, index) =>
-                  (menuOpen || index + 1 <= props.limitTags) && (
-                    <Chip
-                      title={option.label}
-                      size="small"
-                      key={option.value}
-                      label={option.label}
-                      aria-label={option.label}
-                      deleteIcon={<CloseIcon />}
-                      {...getTagProps({ index })}
-                      sx={{
-                        minWidth: menuOpen ? 'initial' : '0',
-                      }}
-                    />
-                  )
-              )}
-              {!menuOpen && hiddenCount > 0 && (
-                <span style={{ marginLeft: '10px', alignSelf: 'center' }}>
-                  +{hiddenCount}
-                </span>
-              )}
-            </div>
-          );
-        }}
-      />
+      <ThemeProvider theme={themeWithLocale}>
+        <Autocomplete
+          multiple
+          size={props.size}
+          id="hierarchy-selection"
+          disableCloseOnSelect
+          openText={t('hierarchySelection.openText')}
+          closeText={t('hierarchySelection.closeText')}
+          clearText={t('hierarchySelection.clearText')}
+          options={selectableHierarchiesList.sort(fieldComparator('label'))}
+          isOptionEqualToValue={(option, value) => option.value === value.value}
+          getOptionLabel={(option) => option.label}
+          value={selectedHierarchies.map((v) => ({ value: v, label: t(v) }))}
+          onChange={changeSelected}
+          filterOptions={(options, params) => {
+            const filtered = filter(options, params);
+            return [
+              { value: 'select-all', label: t('select_all_none') },
+              ...filtered,
+            ];
+          }}
+          onOpen={() => setMenuOpen(true)}
+          onClose={() => setMenuOpen(false)}
+          renderOption={optionRenderer}
+          renderInput={(params) => (
+            <TextField
+              id="search"
+              {...params}
+              label={t('units')}
+              placeholder=""
+            />
+          )}
+          renderTags={(tags, getTagProps) => {
+            const hiddenCount = Math.max(tags.length - props.limitTags, 0);
+            return (
+              <div
+                style={{
+                  display: 'flex',
+                  textOverflow: 'ellipsis',
+                  flexWrap: menuOpen ? 'wrap' : 'initial',
+                  maxWidth: '77%',
+                }}
+              >
+                {tags.map(
+                  (option, index) =>
+                    (menuOpen || index + 1 <= props.limitTags) && (
+                      <Chip
+                        title={option.label}
+                        size="small"
+                        key={option.value}
+                        label={option.label}
+                        aria-label={option.label}
+                        deleteIcon={<CloseIcon />}
+                        {...getTagProps({ index })}
+                        sx={{
+                          minWidth: menuOpen ? 'initial' : '0',
+                        }}
+                      />
+                    )
+                )}
+                {!menuOpen && hiddenCount > 0 && (
+                  <span style={{ marginLeft: '10px', alignSelf: 'center' }}>
+                    +{hiddenCount}
+                  </span>
+                )}
+              </div>
+            );
+          }}
+        />
+      </ThemeProvider>
     );
   }
   return <></>;
