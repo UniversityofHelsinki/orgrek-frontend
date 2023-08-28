@@ -278,5 +278,11 @@
   },
   "upper_units": "Yläyksiköt",
   "valid_dates": "Voimassaolo",
-  "value": "Arvo"
+  "value": "Arvo",
+  "relations_nav": "relations_nav",
+  "remove_filters": "remove_filters",
+  "research_header": "research_header",
+  "ruotsi": "ruotsi",
+  "save": "save",
+  "save_all_button": "save_all_button"
 }

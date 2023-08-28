@@ -278,5 +278,11 @@
   },
   "upper_units": "Upper Units",
   "valid_dates": "Valid",
-  "value": "Value"
+  "value": "Value",
+  "relations_nav": "relations_nav",
+  "remove_filters": "remove_filters",
+  "research_header": "research_header",
+  "ruotsi": "ruotsi",
+  "save": "save",
+  "save_all_button": "save_all_button"
 }
