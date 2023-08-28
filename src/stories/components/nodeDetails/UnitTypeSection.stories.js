@@ -65,7 +65,7 @@ export const Default = {
     const canvas = within(canvasElement);
 
     await waitFor(async () => {
-      await expect(canvas.getByText('Tiedekunta')).toBeInTheDocument();
+      await expect(canvas.getByText('tiedekunta')).toBeInTheDocument();
     });
   },
 };

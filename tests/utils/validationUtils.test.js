@@ -106,7 +106,7 @@ describe('convertYupErrors', () => {
       errors = convertYupErrors(yupError);
     }
 
-    expect(errors).toEqual({ '': ['Pakollinen tieto'] });
+    expect(errors).toEqual({ '': ['attribute.required'] });
   });
 
   test('simple object', () => {
@@ -123,7 +123,7 @@ describe('convertYupErrors', () => {
       errors = convertYupErrors(yupError);
     }
 
-    expect(errors).toEqual({ value: ['Pakollinen tieto'] });
+    expect(errors).toEqual({ value: ['attribute.required'] });
   });
 
   test('nested object', () => {
@@ -143,7 +143,7 @@ describe('convertYupErrors', () => {
     }
 
     expect(errors).toEqual({
-      'values[1].value': ['Pakollinen tieto'],
+      'values[1].value': ['attribute.required'],
     });
   });
 
@@ -171,8 +171,8 @@ describe('convertYupErrors', () => {
     }
 
     expect(errors).toEqual({
-      'values[0].id': ['Pakollinen tieto'],
-      'values[0].obj.value': ['Pakollinen tieto'],
+      'values[0].id': ['attribute.required'],
+      'values[0].obj.value': ['attribute.required'],
     });
   });
 
@@ -256,7 +256,7 @@ describe('validateAndMergeResults', () => {
       validationSchema
     );
 
-    expect(result).toEqual({ name: ['Pakollinen tieto'] });
+    expect(result).toEqual({ name: ['attribute.required'] });
   });
 
   test('merges results', async () => {
@@ -273,7 +273,7 @@ describe('validateAndMergeResults', () => {
 
     expect(result).toEqual({
       error: ['invalid form'],
-      name: ['Pakollinen tieto'],
+      name: ['attribute.required'],
     });
   });
 

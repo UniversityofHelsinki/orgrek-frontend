@@ -1,13 +1,17 @@
-import TextsDataGrid, {
-  mergeTexts,
-  textsToRows,
-} from '../../../components/admin/TextsDataGrid';
+import TextsDataGrid from '../../../components/admin/TextsDataGrid';
+import { mergeTexts, textsToRows } from '../../../pages/TextsPage.js';
 import Container from '@mui/material/Container';
 import React from 'react';
 import defaultFi from '../../../locales/default.fi.json';
 import defaultSv from '../../../locales/default.sv.json';
 import defaultEn from '../../../locales/default.en.json';
 import { createAdmin, createWriter, withUser } from '../../../mockStore';
+
+const defaults = {
+  fi: textsToRows(defaultFi, 'fi'),
+  en: textsToRows(defaultEn, 'en'),
+  sv: textsToRows(defaultSv, 'sv'),
+};
 
 const defaultTexts = [
   ...textsToRows(defaultFi, 'fi'),
@@ -133,6 +137,7 @@ export const Default = {
         timestamp: '2023-06-09T06:15:15Z',
       },
     ],
+    rows: data,
   },
   decorators: [withUser(createAdmin())],
 };
@@ -142,6 +147,7 @@ export const Empty = {
   args: {
     ...Default.args,
     initialRows: [],
+    rows: [],
   },
 };
 
@@ -149,7 +155,8 @@ export const AllTexts = {
   ...Default,
   args: {
     ...Default.args,
-    initialRows: data,
+    initialRows: textsInDb,
+    rows: data,
   },
 };
 

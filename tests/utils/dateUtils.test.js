@@ -54,7 +54,7 @@ describe('formatDate', () => {
   });
 
   test('Swedish', () => {
-    expect(formatDate(date, 'sv')).toBe('2023-04-14');
+    expect(formatDate(date, 'sv')).toBe('14.4.2023');
   });
 
   test('English', () => {
@@ -84,7 +84,7 @@ describe('formatDateTime', () => {
   });
 
   test('Swedish', () => {
-    expect(formatDateTime(date, 'sv')).toBe('2023-04-14 14:08');
+    expect(formatDateTime(date, 'sv')).toBe('14.4.2023 14.08');
   });
 
   test('English', () => {
