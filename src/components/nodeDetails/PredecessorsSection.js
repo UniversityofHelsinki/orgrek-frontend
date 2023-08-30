@@ -61,7 +61,7 @@ const PredecessorsSection = () => {
         <AttributesTable
           columns={columns}
           keyFn={keyFn}
-          data={predecessors.sort(
+          data={[...predecessors].sort(
             valueComparator((pr) => pr.node.names[languageField])
           )}
           caption={title}
