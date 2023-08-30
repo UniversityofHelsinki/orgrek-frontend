@@ -5,12 +5,9 @@ import { fetchUser } from './actions/userAction';
 import { BrowserRouter } from 'react-router-dom';
 import theme from './theme';
 import { ThemeProvider } from '@mui/material';
-import { LocalizationProvider } from '@mui/x-date-pickers';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { useTranslation } from 'react-i18next';
 import Routes from './pages/Routes';
 import LoginRedirect from './components/LoginRedirect';
-import { getDateFnsLocale } from './utils/dateUtils';
 import useCurrentUser from './hooks/useCurrentUser';
 import { changeLanguage } from './components/LanguageSelect';
 
@@ -35,18 +32,10 @@ const App = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <LocalizationProvider
-        dateAdapter={AdapterDateFns}
-        adapterLocale={getDateFnsLocale(i18n.language)}
-        localeText={{
-          todayButtonLabel: t('return_to_today'),
-        }}
-      >
-        <LoginRedirect loginUrl={SHIBBOLETH_LOGIN} />
-        <BrowserRouter>
-          <Routes />
-        </BrowserRouter>
-      </LocalizationProvider>
+      <LoginRedirect loginUrl={SHIBBOLETH_LOGIN} />
+      <BrowserRouter>
+        <Routes />
+      </BrowserRouter>
     </ThemeProvider>
   );
 };

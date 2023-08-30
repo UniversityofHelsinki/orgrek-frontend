@@ -23,6 +23,7 @@ import TextField from '@mui/material/TextField';
 import HelperText from '../inputs/HelperText';
 import MenuItem from '@mui/material/MenuItem';
 import useFormField from '../../hooks/useFormField';
+import { stringComparator } from '../admin/fieldComparator';
 
 const ContentHeader = ({ value }) => {
   return (
@@ -96,7 +97,7 @@ const NewHierarchyFilterForm = ({
         label={t('hierarchyFilter.sectionColumnHeader')}
         helperText={<HelperText errors={errors} />}
       >
-        {selhierarchies.map((option) => (
+        {[...selhierarchies].sort(stringComparator).map((option) => (
           <MenuItem key={option} value={option}>
             {option}
           </MenuItem>
@@ -124,7 +125,7 @@ const NewHierarchyFilterForm = ({
       <Autocomplete
         {...autocompleteProps}
         freeSolo
-        options={attributeKeys}
+        options={[...attributeKeys].sort(stringComparator)}
         getOptionLabel={getOptionLabel}
         renderInput={(params) => (
           <TextField
@@ -163,7 +164,7 @@ const NewHierarchyFilterForm = ({
         {...autocompleteProps}
         freeSolo
         getOptionLabel={getOptionLabel}
-        options={attributeValues}
+        options={[...attributeValues].sort(stringComparator)}
         renderInput={(params) => (
           <TextField
             {...params}

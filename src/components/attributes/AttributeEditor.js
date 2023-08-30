@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -31,6 +31,22 @@ const AttributeEditor = ({
   customCreateRow,
 }) => {
   const { getValue, setValue } = useForm();
+  const focusRef = useRef();
+
+  useEffect(() => {
+    if (focusRef.current) {
+      const inputContainer = focusRef.current;
+      const inputField = inputContainer.querySelector('input');
+      if (!inputField.getAttribute('aria-hidden')) {
+        inputField.focus();
+      } else {
+        const fallback = inputContainer.querySelector('div[tabindex]');
+        if (fallback) {
+          fallback.focus();
+        }
+      }
+    }
+  }, [focusRef.current]);
 
   const values = getValue(path) || data;
   if (!Array.isArray(values)) {
@@ -48,6 +64,7 @@ const AttributeEditor = ({
       endDate: null,
       isNew: true,
       deleted: false,
+      focus: true,
     }));
 
   const setFormValues = (newValues) => {
@@ -80,11 +97,7 @@ const AttributeEditor = ({
   const handleInsertBefore = (index) => {
     let newRow = createRow();
     const oldRow = values[index];
-    const endDate = updateDates(oldRow, newRow, 1);
     const newValues = values.length !== 0 ? [...values] : [{ ...oldRow }];
-    if (endDate !== null) {
-      newValues[index] = updateEndDate(newValues[index], endDate);
-    }
     newValues.splice(index, 0, newRow);
     setFormValues(newValues);
   };
@@ -108,6 +121,7 @@ const AttributeEditor = ({
       fields={fields}
       renderValueField={renderValueField}
       getDisplayText={getDisplayText}
+      focusRef={value.focus ? focusRef : undefined}
     />
   ));
 
@@ -126,7 +140,7 @@ const AttributeEditor = ({
   );
 
   return (
-    <Box component="fieldset" sx={sx}>
+    <Box component="fieldset" sx={sx || {}}>
       <Typography component="legend" variant="h6" mb={2}>
         {attributeLabel}
       </Typography>
@@ -203,6 +217,11 @@ AttributeEditor.propTypes = {
    * Returns custom attribute object for new rows.
    */
   customCreateRow: PropTypes.func,
+  /**
+   * sx object that will be passed to the container of this AttributeEditor
+   * instance.
+   */
+  sx: PropTypes.object,
 };
 
 export default AttributeEditor;

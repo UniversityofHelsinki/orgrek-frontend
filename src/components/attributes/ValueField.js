@@ -16,6 +16,7 @@ const ValueField = ({
   name = 'value',
   helperText,
   renderValueField,
+  focusRef,
 }) => {
   const { t } = useTranslation();
   const { errors, props } = useTextField({ path, name });
@@ -31,7 +32,7 @@ const ValueField = ({
     return renderValueField(valueFieldProps);
   }
 
-  return <TextField {...valueFieldProps} />;
+  return <TextField {...valueFieldProps} ref={focusRef} />;
 };
 
 ValueField.propTypes = {

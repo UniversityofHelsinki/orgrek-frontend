@@ -12,23 +12,24 @@ import { useSaveParentsMutation } from '../../store';
 import { useParents } from '../../hooks/useParents';
 import useFilterUnitsByDate from '../../hooks/useFilterUnitsByDate';
 import { defaultSchemaForAttributes } from '../../utils/validations';
+import { valueComparator } from '../admin/fieldComparator';
 
-const asAttribute = (nodeId, uniqueId) => (hierarchy) => ({
-  id: hierarchy.edgeId,
+const asAttribute = (nodeId, uniqueId) => (edge) => ({
+  id: edge.id,
   key: uniqueId,
   nodeId: nodeId,
-  value: hierarchy.hierarchy,
-  startDate: hierarchy.startDate,
-  endDate: hierarchy.endDate,
-  isNew: Boolean(hierarchy.isNew),
-  deleted: Boolean(hierarchy.deleted),
+  value: edge.hierarchy,
+  startDate: edge.startDate,
+  endDate: edge.endDate,
+  isNew: Boolean(edge.isNew),
+  deleted: Boolean(edge.deleted),
 });
 
 const asFormValues = (parents) => {
-  return parents.reduce((a, c) => {
+  return parents.reduce((a, parent) => {
     // we add an arbitrary character as yup seems to crash (does not find the schema path) if the string could be cast to integer.
-    a[`s${c.uniqueId}`] = c.hierarchies.map(
-      asAttribute(c.id, `s${c.uniqueId}`)
+    a[`s${parent.node.uniqueId}`] = parent.edges.map(
+      asAttribute(parent.node.id, `s${parent.node.uniqueId}`)
     );
     return a;
   }, {});
@@ -36,20 +37,15 @@ const asFormValues = (parents) => {
 
 const ParentsSection = ({ showHistory, showFuture }) => {
   const { t } = useTranslation();
-  const { parents: parentsByLanguage, isFetching } = useParents();
+  const { parents, isFetching } = useParents();
   const [saveParents] = useSaveParentsMutation();
-  const currentNodeId = useNodeId();
   const contentLanguage = useContentLanguage();
+  const currentNodeId = useNodeId();
 
-  const existingParents = parentsByLanguage[contentLanguage] || [];
   const title = t('upper_units');
-  const filteredByDateParents = useFilterUnitsByDate(
-    existingParents,
-    showHistory,
-    showFuture
-  );
-  const empty = filteredByDateParents.length === 0;
-  const initialFormValues = asFormValues(existingParents);
+  const visibleParents = useFilterUnitsByDate(parents, showHistory, showFuture);
+  const empty = visibleParents.length === 0;
+  const initialFormValues = asFormValues(parents);
   const initialValidationSchema = defaultSchemaForAttributes(
     Object.keys(initialFormValues)
   );
@@ -90,7 +86,7 @@ const ParentsSection = ({ showHistory, showFuture }) => {
       <EditableContent
         editorComponent={
           <RelationEditor
-            units={existingParents}
+            units={parents}
             onUnitChange={handleParentChange}
             editortitle={t('upperUnits.newUpperUnit')}
           />
@@ -103,7 +99,12 @@ const ParentsSection = ({ showHistory, showFuture }) => {
         authActions={authActions.parents}
       >
         <Placeholder empty={empty} placeholder={t('upperUnits.empty')}>
-          <HierarchyTable data={filteredByDateParents} summary={title} />
+          <HierarchyTable
+            data={visibleParents.sort(
+              valueComparator((p) => p.node.names[contentLanguage])
+            )}
+            caption={title}
+          />
         </Placeholder>
       </EditableContent>
     </EditableAccordion>

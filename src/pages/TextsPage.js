@@ -12,7 +12,61 @@ import NewTextForm from '../components/admin/NewTextForm';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import useCurrentUser from '../hooks/useCurrentUser';
-import { response } from 'msw';
+import defaultFi from '../locales/default.fi.json';
+import defaultSv from '../locales/default.sv.json';
+import defaultEn from '../locales/default.en.json';
+
+export const getRowId = (row) => `${row.language}.${row.key}`;
+/**
+ * Converts i18next resources to the db format
+ */
+export const textsToRows = (data, language, parentKey) =>
+  Object.entries(data)
+    .map(([key, value]) => {
+      const canonicalKey = parentKey ? `${parentKey}.${key}` : key;
+      if (typeof value === 'object') {
+        return textsToRows(value, language, canonicalKey);
+      } else {
+        return [
+          {
+            key: canonicalKey,
+            language,
+            value: null,
+            defaultValue: value,
+            user_name: null,
+            timestamp: null,
+          },
+        ];
+      }
+    })
+    .flat();
+
+export const mergeTexts = (first, second) => {
+  const result = {};
+
+  first.forEach((row) => (result[getRowId(row)] = row));
+
+  second.forEach((row) => {
+    const current = result[getRowId(row)] || row;
+    result[getRowId(row)] = {
+      key: row.key,
+      language: row.language,
+      value: row.value || current.value,
+      defaultValue: row.defaultValue || current.defaultValue,
+      user_name: row.user_name || current.user_name,
+      timestamp: row.timestamp || current.timestamp,
+    };
+  });
+
+  return Object.values(result);
+};
+
+const defaults = {
+  fi: textsToRows(defaultFi, 'fi'),
+  en: textsToRows(defaultEn, 'en'),
+  sv: textsToRows(defaultSv, 'sv'),
+  ia: [],
+};
 
 const TextsPage = () => {
   const { data: texts, isFetching } = useGetTextsQuery();
@@ -31,11 +85,12 @@ const TextsPage = () => {
     const alreadyExists = texts.some(
       (t) => t.key === row.key && t.language === row.language
     );
+    const completeText = { ...row, user_name: user.eppn };
     if (!alreadyExists) {
-      await handleAddRow([{ ...row, user_name: user.eppn }]);
+      await handleAddRow([completeText]);
       return;
     }
-    const response = await updateText(row).unwrap();
+    const response = await updateText(completeText).unwrap();
     dispatch(
       showNotification({
         message: t('texts_update_success'),
@@ -46,7 +101,8 @@ const TextsPage = () => {
   };
 
   const saveRow = async (rows) => {
-    const response = await insertTexts(rows).unwrap();
+    const withUser = (t) => ({ ...t, user_name: user.eppn });
+    const response = await insertTexts(rows.map(withUser)).unwrap();
     dispatch(
       showNotification({
         message: t('texts_insert_success'),
@@ -68,12 +124,14 @@ const TextsPage = () => {
     });
   };
 
+  const defaultRows = Object.values(defaults).flat();
+  const rows = mergeTexts(texts || [], defaultRows);
   const newTextForm = openNewTextForm ? (
     <NewTextForm
       onSubmit={handleAddRow}
       open={openNewTextForm}
       onClose={() => setOpenNewTextForm(false)}
-      existingTexts={texts}
+      existingTexts={rows}
     />
   ) : (
     <></>
@@ -88,6 +146,8 @@ const TextsPage = () => {
         onAddRow={() => setOpenNewTextForm(true)}
         saveRow={saveRow}
         onDeleteRows={handleDeleteRows}
+        defaults={defaults}
+        rows={rows}
       />
       {newTextForm}
     </Container>

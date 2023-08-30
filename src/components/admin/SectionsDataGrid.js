@@ -17,6 +17,7 @@ import labelComparator from './labelComparator';
 import actionsColumnType from './actionsColumnType';
 import DeleteIcon from '@mui/icons-material/Delete';
 import NewSectionDialogForm from './NewSectionDialogForm';
+import fieldComparator from './fieldComparator';
 
 const handleProcessRowUpdateError = () => {
   // handle error
@@ -87,7 +88,7 @@ const SectionsDataGrid = ({
       headerName: t('sectionsDataGrid.sectionColumnHeader'),
       flex: 1,
       editable,
-      valueOptions: sectionOptions,
+      valueOptions: sectionOptions.sort(fieldComparator('label')),
       valueFormatter: (row) => t(row.value),
       sortComparator: labelComparator(sectionOptions),
     },
@@ -105,7 +106,7 @@ const SectionsDataGrid = ({
       headerName: t('sectionsDataGrid.attributeColumnHeader'),
       flex: 1,
       editable,
-      valueOptions: attributeOptions,
+      valueOptions: attributeOptions.sort(fieldComparator('label')),
       valueFormatter: (row) => t(row.value),
       sortComparator: labelComparator(attributeOptions),
     },

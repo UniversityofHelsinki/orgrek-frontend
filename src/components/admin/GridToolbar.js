@@ -42,7 +42,7 @@ const GridToolbar = ({ onAddRow, authActions }) => {
       <GridToolbarQuickFilter
         variant="outlined"
         size="small"
-        debounceMs={100}
+        debounceMs={500}
         InputProps={{
           startAdornment: undefined,
           endAdornment: <SearchIcon fontSize="small" color="primary" />,

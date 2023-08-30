@@ -27,6 +27,7 @@ const AttributeEditorRow = ({
   fields,
   renderValueField,
   getDisplayText,
+  focusRef,
 }) => {
   // True after user has interacted with the row
   const [touched, setTouched] = useState(false);
@@ -133,6 +134,7 @@ const AttributeEditorRow = ({
         path,
         value,
         errors,
+        focusRef,
       };
 
       return (
