@@ -58,11 +58,6 @@ const useTree = () => {
   });
 
   const emptyTrees = [];
-
-  if (error) {
-    return { trees: emptyTrees, error, isFetching };
-  }
-
   const sortedByLocalName = useMemo(() => {
     const trees = data || emptyTrees;
     const copy = [];
@@ -74,6 +69,9 @@ const useTree = () => {
     return copy;
   }, [language, data]);
 
+  if (error) {
+    return { trees: emptyTrees, error, isFetching };
+  }
   return { trees: sortedByLocalName, error, isFetching };
 };
 
