@@ -15,11 +15,14 @@ const OtherAttributeValueField = ({ path, value: attribute, focusRef }) => {
 
   const meta = attribute.meta;
   const acceptedValues = meta.acceptedValues;
+  const anythingIsAccepted = meta.anythingIsAccepted;
+
+  const select = !anythingIsAccepted;
 
   return (
     <TextField
       {...props}
-      select
+      select={select}
       fullWidth
       label={t('value')}
       helperText={<HelperText errors={errors} />}
