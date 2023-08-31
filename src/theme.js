@@ -345,6 +345,13 @@ const theme = createTheme(
           },
         },
       },
+      MuiFormControlLabel: {
+        styleOverrides: {
+          root: {
+            outlineColor: `${palette.primary.main}`,
+          },
+        },
+      },
       MuiSwitch: {
         defaultProps: {
           disableRipple: true,
@@ -386,10 +393,10 @@ const theme = createTheme(
                 backgroundColor: '#dfdfdf',
               },
               ' .Mui-checked + .MuiSwitch-track': {
-                backgroundColor: '#0e719a',
+                backgroundColor: '#48C5F8',
               },
               ' .Mui-checked.Mui-disabled + .MuiSwitch-track': {
-                backgroundColor: '#dfdfdf',
+                backgroundColor: '#48C5F8',
               },
             },
             '&:focus-within': {

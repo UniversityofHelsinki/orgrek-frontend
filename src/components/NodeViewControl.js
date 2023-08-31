@@ -30,8 +30,17 @@ const NodeViewControl = ({ node, onSwitchHistory, onSwitchFuture }) => {
       <FormControlLabel
         label={t('show_history')}
         labelPlacement="start"
+        tabIndex="0"
+        onKeyPress={(e) => {
+          e.preventDefault();
+          setShowHistory(!showHistory);
+          if (onSwitchHistory) {
+            onSwitchHistory(!showHistory);
+          }
+        }}
         control={
           <Switch
+            tabIndex="-1"
             checked={showHistory}
             id="show_history_switch"
             onChange={handleHistorySwitch}
@@ -41,10 +50,19 @@ const NodeViewControl = ({ node, onSwitchHistory, onSwitchFuture }) => {
       <FormControlLabel
         label={t('show_coming')}
         labelPlacement="start"
+        tabIndex="0"
+        onKeyPress={(e) => {
+          e.preventDefault();
+          setShowFuture(!showFuture);
+          if (onSwitchFuture) {
+            onSwitchFuture(!showFuture);
+          }
+        }}
         control={
           <Switch
+            tabIndex="-1"
             checked={showFuture}
-            id="show_coming_switch"
+            id="show_future_switch"
             onChange={handleFutureSwitch}
           />
         }
