@@ -42,6 +42,9 @@ const DateField = ({
     todayButtonLabel: t('return_to_today'),
   };
 
+  console.log(props.label);
+  console.log(i18n.language);
+
   return (
     <LocalizationProvider
       dateAdapter={AdapterDateFns}
