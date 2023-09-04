@@ -66,6 +66,7 @@ const useTree = () => {
       sortTree(rootCopy, nodeComparator(language));
       copy.push(rootCopy);
     }
+    copy.sort(nodeComparator(language));
     return copy;
   }, [language, data]);
 
