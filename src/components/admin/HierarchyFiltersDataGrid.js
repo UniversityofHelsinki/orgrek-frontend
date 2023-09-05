@@ -17,7 +17,7 @@ import useCurrentUser from '../../hooks/useCurrentUser';
 import actionsColumnType from './actionsColumnType';
 import DeleteIcon from '@mui/icons-material/Delete';
 import NewHierarchyFilterForm from '../nodeDetails/NewHierarchyFilterForm';
-import fieldComparator from './fieldComparator';
+import fieldComparator, { stringComparator } from './fieldComparator';
 
 const HierarchyFiltersDataGrid = ({
   initialRows,
@@ -95,6 +95,7 @@ const HierarchyFiltersDataGrid = ({
         t('hierarchyFiltersDataGrid.newAttributeLabel', { value }),
       valueFormatter: (row) => t(row.value),
       valueGetter: (params) => params.row.key || '',
+      sortComparator: (a, b) => stringComparator(t(a), t(b)),
     },
     {
       field: 'value',
@@ -109,6 +110,7 @@ const HierarchyFiltersDataGrid = ({
         t('hierarchyFiltersDataGrid.newAttributeValueLabel', { value }),
       valueFormatter: (row) => t(row.value),
       valueGetter: (params) => params.row.value || '',
+      sortComparator: (a, b) => stringComparator(t(a), t(b)),
     },
     {
       field: 'startDate',
