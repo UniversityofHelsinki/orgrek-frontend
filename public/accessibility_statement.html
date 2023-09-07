@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Accessibility statement – Organisational registry</title>
+    <!-- Kehoitamme muuttamaan tyylejä muuhun sivustoon sopivaksi. -->
+    <style type="text/css">
+      body {
+        font-family: sans-serif;
+      }
+
+      .row {
+        margin: 25px 0;
+      }
+
+      .row .deficiency-section {
+        margin: 15px;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        margin: 10px 0 5px;
+      }
+
+      .statement__section {
+        margin-bottom: 4em;
+      }
+
+      .statement__inaccessible {
+        margin-bottom: 2em;
+      }
+
+      .flaws {
+        padding-left: 0;
+      }
+
+      .flaw {
+        margin-bottom: 1em;
+        list-style: none;
+        background-color: #f0f0f0;
+        padding: 0.5em;
+      }
+
+      .flaw__title {
+      }
+
+      .flaw__subtitle {
+      }
+
+      .flaw p {
+        margin-bottom: 1em;
+      }
+
+      .flaw ul {
+        margin-bottom: 1em;
+      }
+
+      .flaw__wcag li {
+        margin: 0;
+      }
+
+      .screen-reader-text {
+        position: absolute;
+        width: 1px;
+        clip: rect(0 0 0 0);
+        overflow: hidden;
+        white-space: nowrap;
+      }
+    </style>
+  </head>
+
+  <body>
+    <article>
+      <header>
+        <h1>Accessibility statement</h1>
+      </header>
+      <section class="statement__section">
+        <p>
+          This accessibility statement applies to the Organisational registry
+          (https://organisation.it.helsinki.fi) website.
+          <br />
+          This website is governed by the Act on the Provision of Digital
+          Services to provide an accessible website according to WCAG 2.1 A and
+          AA standards.
+          <br />
+          The statement has been updated on 28.08.2023.
+        </p>
+        <p>
+          The accessibility of this website has been audited by the University
+          of Helsinki.
+        </p>
+      </section>
+
+      <section class="statement__section">
+        <h2>Accessibility status of the digital service</h2>
+        <p>Partially meets the WCAG 2.1 A and AA accessibility requirements.</p>
+      </section>
+      <h2>Non-accessible digital service content</h2>
+
+      <section class="statement__section">
+        <section class="statement__inaccessible">
+          <ul class="flaws">
+            <li class="flaw">
+              <h4 class="flaw__title">
+                Perceivable: Insufficient or missing labels in the organisation
+                hierarchies dropdown list
+              </h4>
+              <p>
+                The selected hierarchies in the organisation hierarchies
+                dropdown list are missing labels, or they are not set correctly.
+              </p>
+              <h5>WCAG accessibility criteria not met</h5>
+              <ul class="flaw__wcag">
+                <li>1.3.1 Info and Relationships</li>
+                <li>2.5.3 Label in Name</li>
+              </ul>
+            </li>
+            <li class="flaw">
+              <h4 class="flaw__title">
+                Perceivable: Some content is not visible when page zoom is set
+                to 400 %.
+              </h4>
+              <p>
+                Unit information is blocked by other elements when page zoom is
+                set to 400 %.
+              </p>
+              <h5>WCAG accessibility criteria not met</h5>
+              <ul class="flaw__wcag">
+                <li>1.4.10 Reflow</li>
+              </ul>
+            </li>
+            <li class="flaw">
+              <h4 class="flaw__title">
+                Operable: The on-focus visual contrast of the "show history" and
+                "show coming" switches is insufficient.
+              </h4>
+              <p>
+                When the history and future switches receive focus, the visual
+                contrast is not sufficient to indicate that focus has been
+                received.
+              </p>
+              <h5>WCAG accessibility criteria not met</h5>
+              <ul class="flaw__wcag">
+                <li>2.4.7 Focus Visible</li>
+              </ul>
+            </li>
+            <li class="flaw">
+              <h4 class="flaw__title">
+                Understandable: Screen readers do not announce the date format.
+              </h4>
+              <p>
+                The date fields do not indicate the proper date format for
+                screen readers.
+              </p>
+              <h5>WCAG accessibility criteria not met</h5>
+              <ul class="flaw__wcag">
+                <li>3.3.2 Labels or Instructions</li>
+              </ul>
+            </li>
+          </ul>
+        </section>
+      </section>
+
+      <section class="statement__section">
+        <h2>
+          If you have noticed any accessibility flaws in our service, please
+          contact us.
+        </h2>
+
+        <h3>E-mail contact address:</h3>
+        <p>ypa-help@helsinki.fi</p>
+      </section>
+
+      <section class="statement__section">
+        <h2>Supervisory authority</h2>
+        <p>
+          If you notice any accessibility issues on the website, please provide
+          feedback to us (the site administrator) first. We will reply within 14
+          days.
+          <br />
+          If you are not satisfied with our response or do not receive any
+          response within two weeks, you can file a report with the Regional
+          State Administrative Agency for Southern Finland. The page of the
+          Regional State Administrative Agency for Southern Finland contains a
+          detailed description of how the report can be filed and how the matter
+          will be processed.
+        </p>
+
+        <h2>Contact details of the supervisory authority</h2>
+        <p>
+          Regional State Administrative Agency for Southern Finland,<br />
+          Accessibility Monitoring Unit<br />
+          <a href="https://webaccessibility.fi/" target="_blank">
+            www.webaccessibility.fi
+            <span class="screen-reader-text">Opens in new window</span></a
+          ><br />
+          <a href="mailto:saavutettavuus@avi.fi">saavutettavuus@avi.fi</a><br />
+          telephone (switchboard): <a href="tel:+358295016000"> +358 295 016</a>
+        </p>
+      </section>
+    </article>
+  </body>
+</html>
