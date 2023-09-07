@@ -20,6 +20,7 @@ import useFormField from '../../hooks/useFormField';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
 import HelperText from '../inputs/HelperText';
+import fieldComparator from './fieldComparator';
 
 const NewSectionDialogForm = ({
   open,
@@ -28,12 +29,11 @@ const NewSectionDialogForm = ({
   sectionOptions,
   attributeOptions,
 }) => {
-  const sectionDropdownFieldOptions = sectionOptions.sort((a, b) =>
-    a.label > b.label ? 1 : -1
+  const sectionDropdownFieldOptions = [...sectionOptions].sort(
+    fieldComparator('label')
   );
-
-  const attributeDropDownFieldOptions = attributeOptions.sort((a, b) =>
-    a.label > b.label ? 1 : -1
+  const attributeDropDownFieldOptions = [...attributeOptions].sort(
+    fieldComparator('label')
   );
 
   const { t } = useTranslation();
