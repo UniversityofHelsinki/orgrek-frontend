@@ -345,20 +345,6 @@ const theme = createTheme(
           },
         },
       },
-      MuiFormControlLabel: {
-        styleOverrides: {
-          root: {
-            outlineColor: `${palette.primary.main}`,
-          },
-        },
-      },
-      MuiButtonBase: {
-        styleOverrides: {
-          root: {
-            outlineColor: 'red',
-          },
-        },
-      },
       MuiSwitch: {
         defaultProps: {
           disableRipple: true,
