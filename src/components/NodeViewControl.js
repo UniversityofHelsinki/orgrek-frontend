@@ -25,11 +25,19 @@ const NodeViewControl = ({ node, onSwitchHistory, onSwitchFuture }) => {
     return <></>;
   }
 
+  const focusStyle = {
+    '&:focus-within': {
+      outline: '2px solid #107eab',
+      borderRadius: '3px',
+    },
+  };
+
   return (
     <Stack direction="row">
       <FormControlLabel
         label={t('show_history')}
         labelPlacement="start"
+        sx={focusStyle}
         control={
           <Switch
             checked={showHistory}
@@ -41,10 +49,11 @@ const NodeViewControl = ({ node, onSwitchHistory, onSwitchFuture }) => {
       <FormControlLabel
         label={t('show_coming')}
         labelPlacement="start"
+        sx={focusStyle}
         control={
           <Switch
             checked={showFuture}
-            id="show_coming_switch"
+            id="show_future_switch"
             onChange={handleFutureSwitch}
           />
         }
