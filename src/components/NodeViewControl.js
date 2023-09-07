@@ -27,7 +27,7 @@ const NodeViewControl = ({ node, onSwitchHistory, onSwitchFuture }) => {
 
   const focusStyle = {
     '&:focus-within': {
-      border: '2px solid #107eab',
+      outline: '2px solid #107eab',
       borderRadius: '3px',
     },
   };
