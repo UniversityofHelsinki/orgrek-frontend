@@ -352,6 +352,13 @@ const theme = createTheme(
           },
         },
       },
+      MuiButtonBase: {
+        styleOverrides: {
+          root: {
+            outlineColor: 'red',
+          },
+        },
+      },
       MuiSwitch: {
         defaultProps: {
           disableRipple: true,
@@ -370,7 +377,6 @@ const theme = createTheme(
                 backgroundColor: `${palette.primary.main}`,
                 backgroundRepeat: 'no-repeat',
                 backgroundPosition: '25% 50%',
-                border: `1px solid ${palette.primary.nearlyBlack}`,
               },
             },
             '& .Mui-disabled': {
@@ -390,7 +396,7 @@ const theme = createTheme(
             },
             '&:hover': {
               ' .MuiSwitch-track': {
-                backgroundColor: '#dfdfdf',
+                backgroundColor: '#48C5F8',
               },
               ' .Mui-checked + .MuiSwitch-track': {
                 backgroundColor: '#48C5F8',
@@ -401,7 +407,7 @@ const theme = createTheme(
             },
             '&:focus-within': {
               ' .MuiSwitch-track': {
-                backgroundColor: '#dfdfdf',
+                backgroundColor: `${hyPalette.grayscale.mediumDark}`,
               },
               ' .Mui-checked + .MuiSwitch-track': {
                 backgroundColor: '#0e719a',
