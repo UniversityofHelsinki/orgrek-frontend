@@ -2,7 +2,7 @@
 <html lang="sv">
   <head>
     <meta charset="UTF-8" />
-    <title>Tillgänglighetsutlåtande</title>
+    <title>Tillgänglighetsutlåtande - Organisationsregister</title>
     <!-- Kehoitamme muuttamaan tyylejä muuhun sivustoon sopivaksi. -->
     <style type="text/css">
       body {
@@ -62,25 +62,31 @@
       .flaw__wcag li {
         margin: 0;
       }
+
+      .screen-reader-text {
+        position: absolute;
+        width: 1px;
+        clip: rect(0 0 0 0);
+        overflow: hidden;
+        white-space: nowrap;
+      }
     </style>
   </head>
 
   <body>
     <article>
       <header>
-        <h1>
-          Välkommen, det här är tillgänglighetsutlåtande av Helsingfors
-          universitet
-        </h1>
+        <h1>Tillgänglighetsutlåtande</h1>
       </header>
       <section class="statement__section">
         <p>
-          Detta tillgänglighetsutlåtande gäller tjänsten Organisationsregister
-          och har upprättats / uppdaterats 07.09.2023. Tjänsten omfattas av
-          lagen om tillhandahållande av digitala tjänster och dess krav på att
-          offentliga webbplatser måste vara tillgängliga.
+          Detta tillgänglighetsutlåtande gäller Helsingfors universitets tjänst
+          Organisationsregister (https://organisation.it.helsinki.fi) och har
+          uppdaterats 07.09.2023. Tjänsten omfattas av lagen om
+          tillhandahållande av digitala tjänster och dess krav på att offentliga
+          webbplatser måste vara tillgängliga.
         </p>
-        <p>Vi har själva granskat hur tillgänglig tjänsten är</p>
+        <p>Vi har själva granskat hur tillgänglig tjänsten är.</p>
       </section>
 
       <section class="statement__section">
@@ -92,7 +98,7 @@
 
       <section class="statement__section">
         <section class="statement__inaccessible">
-          <h3>3. Webbplatsen uppfyller ännu inte alla krav.</h3>
+          <h3>Webbplatsen uppfyller ännu inte alla krav</h3>
 
           <ul class="flaws">
             <li class="flaw">
@@ -110,6 +116,7 @@
               <h5>Tillgänglighetskrav som inte uppfylls</h5>
               <ul class="flaw__wcag">
                 <li>1.3.1 Information och relationer</li>
+                <li>2.5.3 Etikett i namn</li>
               </ul>
             </li>
             <li class="flaw">
