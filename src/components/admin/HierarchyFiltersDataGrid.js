@@ -83,6 +83,7 @@ const HierarchyFiltersDataGrid = ({
       getCreateNewLabel: (value) =>
         t('hierarchyFiltersDataGrid.newHierarchyLabel', { value }),
       valueFormatter: (row) => t(row.value),
+      sortComparator: (a, b) => stringComparator(t(a), t(b)),
     },
     {
       field: 'key',
