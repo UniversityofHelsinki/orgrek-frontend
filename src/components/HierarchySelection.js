@@ -131,7 +131,7 @@ const HierarchySelection = (props) => {
             <TextField
               id="search"
               {...params}
-              label={t('units')}
+              label={t('organisation_hierarchies')}
               placeholder=""
             />
           )}

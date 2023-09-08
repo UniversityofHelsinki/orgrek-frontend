@@ -58,7 +58,7 @@ const Footer = () => {
             </Link>
             <br />
             <Link
-              href="/saavutettavuusseloste.html"
+              href={t('hy_accessibility_statement_link')}
               target="_blank"
               rel="noreferrer noopener"
               variant={'navigationLink'}
