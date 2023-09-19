@@ -28,7 +28,7 @@ export const authActions = {
     edit: { allowRoles: allWriterRoles },
   },
   children: {
-    edit: { allowRoles: [roleAdmin] },
+    edit: { allowRoles: allWriterRoles },
   },
   hierarchyFilters: {
     edit: { allowRoles: [roleAdmin] },

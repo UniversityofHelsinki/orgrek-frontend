@@ -9,6 +9,7 @@ import {
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { authActions } from '../../auth';
+import { stringComparator } from './fieldComparator';
 import GridToolbar from './GridToolbar';
 import HierarchyForm from './HierarchyForm';
 
@@ -49,6 +50,7 @@ const HierarchyDataGrid = ({
       headerName: t(`hierarchy_column_hierarchy`),
       flex: 1,
       valueFormatter: (row) => t(row.value),
+      sortComparator: (a, b) => stringComparator(t(a), t(b)),
     },
     {
       field: 'publicity',
@@ -65,6 +67,7 @@ const HierarchyDataGrid = ({
         );
       },
       valueFormatter: (row) => t(`publicity_${row.value}`),
+      sortComparator: (a, b) => stringComparator(t(a), t(b)),
     },
   ];
 

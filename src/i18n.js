@@ -51,9 +51,9 @@ export const initI18n = async (useHttpBackend = true) => {
     ns: ['texts', 'default'],
     defaultNS: 'texts',
     fallbackNS: 'default',
+    lng: 'fi',
     fallbackLng: {
       ia: ['ia'],
-      default: ['fi'],
     },
     interpolation: {
       escapeValue: false, // not needed for react as it escapes by default

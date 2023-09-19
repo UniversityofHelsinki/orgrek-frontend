@@ -18,6 +18,7 @@ import ReplayIcon from '../icons/Replay';
 import DeleteSweepIcon from '@mui/icons-material/DeleteSweep';
 import ClearAllIcon from '@mui/icons-material/ClearAll';
 import { getRowId } from '../../pages/TextsPage';
+import { stringComparator } from './fieldComparator';
 
 /**
  * Admin view for managing translations.
@@ -67,6 +68,7 @@ const TextsDataGrid = ({
       flex: 1,
       editable: isAuthorized(user, authActions.texts.edit),
       valueGetter: (params) => params.row.value || params.row.defaultValue,
+      sortComparator: stringComparator,
     },
     {
       field: 'defaultValue',
