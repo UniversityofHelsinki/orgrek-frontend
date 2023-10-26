@@ -96,7 +96,7 @@ const HierarchyFiltersPage = () => {
   };
 
   return (
-    <Container sx={{ pt: 6, pb: 6 }}>
+    <Container sx={{ pt: 6, pb: 6 }} id="main-content" tabIndex="-1">
       <HierarchyFiltersDataGrid
         initialRows={hierarchyFilters}
         selectableHierarchies={selectableHierarchies}
