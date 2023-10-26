@@ -15,10 +15,13 @@ import Stack from '@mui/material/Stack';
 import NavLink from './NavLink';
 import IfAuthorized from '../auth/IfAuthorized';
 import { authActions } from '../auth';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import theme from '../theme';
 
 const Header = () => {
   const { t } = useTranslation();
   const user = useCurrentUser();
+
   return (
     <Box component="header" pt={2}>
       <Container>
@@ -64,7 +67,7 @@ const Header = () => {
             </Grid>
           </Grid>
         </Box>
-        <Box sx={{ my: 5 }}>
+        <Box sx={{ my: 5, overflowWrap: 'anywhere' }}>
           <Typography component="h1" variant="h2" textTransform="uppercase">
             {t('organisational_registry')}
           </Typography>
