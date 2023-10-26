@@ -15,8 +15,6 @@ import Stack from '@mui/material/Stack';
 import NavLink from './NavLink';
 import IfAuthorized from '../auth/IfAuthorized';
 import { authActions } from '../auth';
-import useMediaQuery from '@mui/material/useMediaQuery';
-import theme from '../theme';
 
 const Header = () => {
   const { t } = useTranslation();
