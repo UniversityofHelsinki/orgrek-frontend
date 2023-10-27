@@ -96,6 +96,7 @@ const HierarchyDataGrid = ({
     toolbarFilters: t('datagrid_toolbar_filters'),
     toolbarDensity: t('datagrid_toolbar_density'),
     toolbarExport: t('datagrid_toolbar_export'),
+    columnMenuManageColumns: t('datagrid_column_menu_manage_columns'),
   };
 
   const hierarchyIdentifiers = hierarchies.map(
