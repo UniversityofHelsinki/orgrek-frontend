@@ -30,6 +30,7 @@
     "addRow": "addRow",
     "deleteRow": "deleteRow"
   },
+  "datagrid_column_menu_manage_columns": "datagrid_column_menu_manage_columns",
   "datagrid_toolbar_columns": "datagrid_toolbar_columns",
   "datagrid_toolbar_density": "datagrid_toolbar_density",
   "datagrid_toolbar_export": "datagrid_toolbar_export",
