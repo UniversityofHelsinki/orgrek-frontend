@@ -71,7 +71,7 @@ const UnitTypeEditor = ({ metas }) => {
       {Object.entries(values).map(([key, attributes], i) => (
         <AttributeEditor
           key={`${key}-${i}`}
-          path="type"
+          path={key}
           attributeLabel={t(key)}
           attributeKey={key}
           getDisplayText={getDisplayText}
