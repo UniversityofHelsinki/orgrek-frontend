@@ -48,11 +48,11 @@ const UnitTypeSection = ({ showHistory, showFuture }) => {
   // Submit button is disabled when validation fails
   const validationSchema = defaultSchemaForAttributes(keys);
 
-  const ObjectToArray = (obj) => Object.assign([], Object.values(obj));
-
   const handleSubmit = (values) => {
-    const valuesArray = ObjectToArray(values.type);
-    return saveTypeAttributes({ valuesArray, nodeId }).unwrap();
+    return saveTypeAttributes({
+      valuesArray: Object.values(values).flat(),
+      nodeId,
+    }).unwrap();
   };
 
   const title = t('unit_type');
