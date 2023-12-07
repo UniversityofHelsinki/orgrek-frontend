@@ -16,6 +16,7 @@
     "validFrom": "Voimassaolo alkaa",
     "validUntil": "Voimassaolo päättyy"
   },
+  "attribute_orders": "attribute_orders",
   "attribute_value": "Arvo",
   "cancel_button": "Peruuta",
   "codeInfo": {

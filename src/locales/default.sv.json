@@ -16,6 +16,7 @@
     "validFrom": "validFrom",
     "validUntil": "validUntil"
   },
+  "attribute_orders": "attribute_orders",
   "attribute_value": "Värde",
   "cancel_button": "Avbryt",
   "codeInfo": {

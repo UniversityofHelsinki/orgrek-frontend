@@ -51,6 +51,10 @@ export const authActions = {
     edit: { allowRoles: [roleAdmin] },
     view: { allowRoles: allWriterRoles },
   },
+  attributeorders: {
+    edit: { allowRoles: [roleAdmin] },
+    view: { allowRoles: allWriterRoles },
+  },
 };
 
 /**

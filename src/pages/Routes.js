@@ -5,12 +5,10 @@ import TextsPage from './TextsPage';
 import HierarchyFiltersPage from './HierarchyFiltersPage';
 import SectionsPage from './SectionsPage';
 import useCurrentUser from '../hooks/useCurrentUser';
-import useSelectedHierarchies from '../hooks/useSelectedHierarchies';
 import { authActions, isAuthorized } from '../auth';
 import Layout from '../components/Layout';
 import useScrollToTop from '../hooks/useScrollToTop';
 import HierarchyPage from './HierarchyPage';
-import useHierarchies from '../hooks/useHierarchies';
 
 const AppRoutes = () => {
   useScrollToTop();
@@ -31,6 +29,9 @@ const AppRoutes = () => {
         )}
         {isAuthorized(user, authActions.hierarchies.view) && (
           <Route path="hierarchies" element={<HierarchyPage />} />
+        )}
+        {isAuthorized(user, authActions.attributeorders.view) && (
+          <Route path="attributeorders" element={<p>moi</p>} />
         )}
       </Route>
     </Routes>
