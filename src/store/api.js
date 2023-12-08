@@ -103,6 +103,60 @@ export const api = createApi({
         };
       },
     }),
+    getAttributeOrders: builder.query({
+      providesTags: () => [{ type: 'AttributeOrders' }],
+      query: () => {
+        return {
+          url: `attributeorder`,
+          method: 'GET',
+        };
+      },
+    }),
+    insertAttributeOrder: builder.mutation({
+      invalidatesTags: (result, error) => {
+        if (error) {
+          return [];
+        }
+        return [{ type: 'AttributeOrders' }];
+      },
+      query: ({ data }) => {
+        return {
+          url: `attributeorder`,
+          method: 'POST',
+          body: data,
+        };
+      },
+    }),
+    deleteAttributeOrder: builder.mutation({
+      invalidatesTags: (result, error) => {
+        if (error) {
+          return [];
+        }
+        return [{ type: 'AttributeOrders' }];
+      },
+      query: ({ data }) => {
+        return {
+          url: `attributeorder`,
+          method: 'DELETE',
+          body: data,
+        };
+      },
+    }),
+    updateAttributeOrder: builder.mutation({
+      invalidatesTags: (result, error) => {
+        if (error) {
+          return [];
+        }
+        return [{ type: 'AttributeOrders' }];
+      },
+      query: ({ data }) => {
+        return {
+          url: 'attributeorder',
+          method: 'PUT',
+          body: data,
+        };
+      },
+    }),
     getHierarchyFilters: builder.query({
       providesTags: () => [{ type: 'HierarchyFilters' }],
       query: () => {
@@ -555,4 +609,8 @@ export const {
   useGetHierarchyPublicitiesQuery,
   useInsertHierarchyPublicityMutation,
   useUpdateHierarchyPublicityMutation,
+  useGetAttributeOrdersQuery,
+  useInsertAttributeOrderMutation,
+  useDeleteAttributeOrderMutation,
+  useUpdateAttributeOrderMutation,
 } = api;

@@ -16,7 +16,18 @@
     "validFrom": "Valid from",
     "validUntil": "Valid until"
   },
+  "attribute_order_already_exists": "attribute_order_already_exists",
+  "attribute_order_delete_failure": "attribute_order_delete_failure",
+  "attribute_order_delete_success": "attribute_order_delete_success",
+  "attribute_order_insert_failure": "attribute_order_insert_failure",
+  "attribute_order_insert_success": "attribute_order_insert_success",
+  "attribute_order_update_failure": "attribute_order_update_failure",
+  "attribute_order_update_success": "attribute_order_update_success",
   "attribute_orders": "attribute_orders",
+  "attribute_orders_key": "attribute_orders_key",
+  "attribute_orders_new": "attribute_orders_new",
+  "attribute_orders_order": "attribute_orders_order",
+  "attribute_orders_value": "attribute_orders_value",
   "attribute_value": "Value",
   "cancel_button": "Cancel",
   "codeInfo": {

@@ -4,6 +4,7 @@ import NodePage from './NodePage';
 import TextsPage from './TextsPage';
 import HierarchyFiltersPage from './HierarchyFiltersPage';
 import SectionsPage from './SectionsPage';
+import AttributeOrderPage from './AttributeOrderPage';
 import useCurrentUser from '../hooks/useCurrentUser';
 import { authActions, isAuthorized } from '../auth';
 import Layout from '../components/Layout';
@@ -31,7 +32,7 @@ const AppRoutes = () => {
           <Route path="hierarchies" element={<HierarchyPage />} />
         )}
         {isAuthorized(user, authActions.attributeorders.view) && (
-          <Route path="attributeorders" element={<p>moi</p>} />
+          <Route path="attributeorders" element={<AttributeOrderPage />} />
         )}
       </Route>
     </Routes>
