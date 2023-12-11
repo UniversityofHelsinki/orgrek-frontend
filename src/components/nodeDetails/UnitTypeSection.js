@@ -5,16 +5,11 @@ import AttributesTable from '../attributes/AttributesTable';
 import Placeholder from '../Placeholder';
 import EditableContent from '../EditableContent';
 import UnitTypeEditor from './UnitTypeEditor';
-import {
-  useGetTypeAttributesQuery,
-  useSaveTypeAttributesMutation,
-} from '../../store';
+import { useSaveTypeAttributesMutation } from '../../store';
 import { useNodeId } from '../../hooks/useNodeId';
 import { authActions } from '../../auth';
 import { defaultSchemaForAttributes } from '../../utils/validations';
 import useFilterAttributesByDate from '../../hooks/useFilterAttributesByDate';
-import useSelectedDate from '../../hooks/useSelectedDate';
-import useHierarchies from '../../hooks/useHierarchies';
 import { toFormValues } from '../../utils/attributeUtils';
 import useAttributes from '../../hooks/useAttributes';
 
@@ -37,6 +32,10 @@ const UnitTypeSection = ({ showHistory, showFuture }) => {
     types.filter((t) => !t.isNew),
     types.filter((t) => t.isNew).map((t) => t.key)
   );
+
+  const keyOrder = types
+    .map((type) => type.key)
+    .filter((t, i, a) => a.indexOf(t) === i);
 
   const keys = Object.keys(formValues);
   const metas = types.reduce((accumulated, current) => {
@@ -61,7 +60,7 @@ const UnitTypeSection = ({ showHistory, showFuture }) => {
   return (
     <EditableAccordion title={title} loading={loading} defaultExpanded={!empty}>
       <EditableContent
-        editorComponent={<UnitTypeEditor metas={metas} />}
+        editorComponent={<UnitTypeEditor metas={metas} keys={keyOrder} />}
         validationSchema={validationSchema}
         initialValues={formValues}
         onSubmit={handleSubmit}

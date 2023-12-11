@@ -20,7 +20,6 @@ import { newAttributeOrderSchema } from '../../utils/validations';
 import useFormField from '../../hooks/useFormField';
 import { stringComparator } from '../admin/fieldComparator';
 import HelperText from '../inputs/HelperText';
-import ValueField from '../attributes/ValueField';
 import TextField from '../inputs/TextField';
 
 const AttributeOrderForm = ({
@@ -101,7 +100,7 @@ const AttributeOrderForm = ({
     return (
       <Field
         name="key"
-        label={t('attribute_orders_key')}
+        label={t('attribute_orders_label_key')}
         values={attributeKeys}
       />
     );
@@ -115,7 +114,7 @@ const AttributeOrderForm = ({
     return (
       <Field
         name="value"
-        label={t('attribute_orders_value')}
+        label={t('attribute_orders_label_value')}
         values={attributeValues}
       />
     );
@@ -165,9 +164,9 @@ const AttributeOrderForm = ({
         <DialogTitle>{headerRow}</DialogTitle>
         <Divider />
         <DialogContent>
-          <ContentHeader value={t('attribute_orders_key')} />
+          <ContentHeader value={t('attribute_orders_label_key')} />
           <KeyField />
-          <ContentHeader value={t('attribute_orders_value')} />
+          <ContentHeader value={t('attribute_orders_label_value')} />
           <AttributeValueField />
         </DialogContent>
         <Divider />

@@ -25,6 +25,8 @@
   "attribute_order_update_success": "attribute_order_update_success",
   "attribute_orders": "Attribuuttien arvojärjestys",
   "attribute_orders_key": "attribute_orders_key",
+  "attribute_orders_label_key": "attribute_orders_label_key",
+  "attribute_orders_label_value": "attribute_orders_label_value",
   "attribute_orders_new": "attribute_orders_new",
   "attribute_orders_order": "attribute_orders_order",
   "attribute_orders_value": "attribute_orders_value",
