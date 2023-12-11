@@ -24,6 +24,7 @@
   "attribute_order_update_failure": "Päivitys epäonnistui",
   "attribute_order_update_success": "Päivitetty",
   "attribute_orders": "Attribuuttien arvojärjestysrivi",
+  "attribute_orders_header": "Attribuuttien arvojärjestys",
   "attribute_orders_key": "Attribuutti",
   "attribute_orders_label_key": "Attribuutti",
   "attribute_orders_label_value": "Arvo",

@@ -24,6 +24,7 @@
   "attribute_order_update_failure": "attribute_order_update_failure",
   "attribute_order_update_success": "attribute_order_update_success",
   "attribute_orders": "attribute_orders",
+  "attribute_orders_header": "attribute_orders_header",
   "attribute_orders_key": "attribute_orders_key",
   "attribute_orders_label_key": "attribute_orders_label_key",
   "attribute_orders_label_value": "attribute_orders_label_value",
