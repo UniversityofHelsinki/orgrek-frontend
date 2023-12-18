@@ -39,7 +39,7 @@ const OtherAttributeValueField = ({ path, value: attribute, focusRef }) => {
   );
 };
 
-const OtherAttributesEditor = ({ metas }) => {
+const OtherAttributesEditor = ({ metas, keys }) => {
   const { t } = useTranslation();
   const { values } = useForm();
 
@@ -68,11 +68,11 @@ const OtherAttributesEditor = ({ metas }) => {
 
   return (
     <Stack spacing={2}>
-      {Object.entries(values).map(([key, attributes], i) => (
+      {keys.map((key, i) => (
         <AttributeEditor
           key={`${key}-${i}`}
           attributeLabel={t(key)}
-          attributeKey={`${key}`}
+          attributeKey={key}
           path={key}
           fields={fields}
           customCreateRow={createRow(key)}
