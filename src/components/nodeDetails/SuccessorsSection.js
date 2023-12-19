@@ -56,8 +56,8 @@ const SuccessorsSection = () => {
 
   const asEdge = (value) => ({
     id: value.id,
-    parentUniqueId: nodeId,
-    childUniqueId: value.value?.id,
+    parentUniqueId: value.value?.id,
+    childUniqueId: nodeId,
     startDate: value.startDate,
     endDate: null,
     isNew: value.isNew,
