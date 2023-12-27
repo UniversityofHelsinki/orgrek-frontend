@@ -181,7 +181,10 @@ export const api = createApi({
         if (error) {
           return [];
         }
-        return [{ type: 'HierarchyFilters' }];
+        return [
+          { type: 'HierarchyFilters' },
+          { type: 'ValueSortableAttributes' },
+        ];
       },
       query: ({ data }) => {
         return { url: `/hierarchyFilters`, method: 'PUT', body: data };
@@ -192,7 +195,10 @@ export const api = createApi({
         if (error) {
           return [];
         }
-        return [{ type: 'HierarchyFilters' }];
+        return [
+          { type: 'HierarchyFilters' },
+          { type: 'ValueSortableAttributes' },
+        ];
       },
       query: ({ data }) => {
         return { url: `/hierarchyFilters`, method: 'POST', body: data };
@@ -203,7 +209,10 @@ export const api = createApi({
         if (error) {
           return [];
         }
-        return [{ type: 'HierarchyFilters' }];
+        return [
+          { type: 'HierarchyFilters' },
+          { type: 'ValueSortableAttributes' },
+        ];
       },
       query: ({ data }) => {
         return {
@@ -233,6 +242,15 @@ export const api = createApi({
       query: () => {
         return {
           url: `/node/attributes/distinctattributes`,
+          method: 'GET',
+        };
+      },
+    }),
+    getValueSortableAttributes: builder.query({
+      providesTags: () => [{ type: 'ValueSortableAttributes' }],
+      query: () => {
+        return {
+          url: `/node/attributes/sortable`,
           method: 'GET',
         };
       },
@@ -613,4 +631,5 @@ export const {
   useInsertAttributeOrderMutation,
   useDeleteAttributeOrderMutation,
   useUpdateAttributeOrderMutation,
+  useGetValueSortableAttributesQuery,
 } = api;

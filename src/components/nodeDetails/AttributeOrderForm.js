@@ -7,6 +7,7 @@ import {
   DialogTitle,
   Divider,
   IconButton,
+  MenuItem,
   Stack,
   Typography,
 } from '@mui/material';
@@ -65,34 +66,21 @@ const AttributeOrderForm = ({
   const Field = ({ name, label, values }) => {
     const { props, errors } = useFormField({ path: '', name });
 
-    const autocompleteProps = {
-      ...props,
-      onInputChange: (_, value) => props.onChange(value),
-      onChange: undefined,
-      error: undefined,
-      value: undefined,
-    };
-
-    const getOptionLabel = (option) => {
-      return option || '';
-    };
-
     return (
-      <Autocomplete
-        {...autocompleteProps}
-        freeSolo
-        options={[...values].sort(stringComparator)}
-        getOptionLabel={getOptionLabel}
-        renderInput={(params) => (
-          <TextField
-            {...params}
-            fullWidth
-            label={label}
-            error={errors.length > 0}
-            helperText={<HelperText errors={errors} />}
-          />
-        )}
-      />
+      <TextField
+        {...props}
+        select
+        fullWidth
+        label={label}
+        error={errors.length > 0}
+        helperText={<HelperText errors={errors} />}
+      >
+        {[...values].sort(stringComparator).map((option) => (
+          <MenuItem key={option} value={option}>
+            {option}
+          </MenuItem>
+        ))}
+      </TextField>
     );
   };
 
@@ -109,7 +97,7 @@ const AttributeOrderForm = ({
   const AttributeValueField = () => {
     const { values } = useForm();
     const key = values.key;
-    const attributeValues = attributes[key] || [];
+    const attributeValues = (attributes[key] || []).filter((a) => a);
 
     return (
       <Field
