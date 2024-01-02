@@ -7,7 +7,7 @@ import {
   showNotification,
   useDeleteAttributeOrderMutation,
   useGetAttributeOrdersQuery,
-  useGetDistinctNodeAttributesQuery,
+  useGetValueSortableAttributesQuery,
   useInsertAttributeOrderMutation,
   useUpdateAttributeOrderMutation,
 } from '../store';
@@ -18,7 +18,7 @@ const AttributeOrderPage = () => {
   const { data: attributeOrders, isFetching: loadingAttributeOrders } =
     useGetAttributeOrdersQuery();
   const { data: attributes, isFetching: loadingAttributes } =
-    useGetDistinctNodeAttributesQuery();
+    useGetValueSortableAttributesQuery();
   const [insertAttributeOrder] = useInsertAttributeOrderMutation();
   const [deleteAttributeOrder] = useDeleteAttributeOrderMutation();
   const [updateAttributeOrder] = useUpdateAttributeOrderMutation();
