@@ -36,7 +36,7 @@ const UnitTypeField = ({ path, value: attribute, focusRef }) => {
   );
 };
 
-const UnitTypeEditor = ({ metas }) => {
+const UnitTypeEditor = ({ metas, keys }) => {
   const { t } = useTranslation();
 
   const { values } = useForm();
@@ -68,7 +68,7 @@ const UnitTypeEditor = ({ metas }) => {
 
   return (
     <Stack spacing={2}>
-      {Object.entries(values).map(([key, attributes], i) => (
+      {keys.map((key, i) => (
         <AttributeEditor
           key={`${key}-${i}`}
           path={key}

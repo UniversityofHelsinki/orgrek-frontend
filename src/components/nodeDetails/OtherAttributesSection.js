@@ -47,6 +47,10 @@ const OtherAttributesSection = ({ showHistory, showFuture }) => {
     return accumulated;
   }, {});
 
+  const keyOrder = nodeOtherAttributes
+    .map((attr) => attr.key)
+    .filter((attr, i, all) => all.indexOf(attr) === i);
+
   const handleSubmit = (values) => {
     const valuesArray = Object.values(values).flat();
     return saveOtherAttributes({ valuesArray, nodeId }).unwrap();
@@ -59,7 +63,9 @@ const OtherAttributesSection = ({ showHistory, showFuture }) => {
       defaultExpanded={!empty}
     >
       <EditableContent
-        editorComponent={<OtherAttributesEditor metas={metas} />}
+        editorComponent={
+          <OtherAttributesEditor metas={metas} keys={keyOrder} />
+        }
         initialValues={formValues}
         validationSchema={validationSchema}
         onSubmit={handleSubmit}

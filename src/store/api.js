@@ -103,6 +103,60 @@ export const api = createApi({
         };
       },
     }),
+    getAttributeOrders: builder.query({
+      providesTags: () => [{ type: 'AttributeOrders' }],
+      query: () => {
+        return {
+          url: `attributeorder`,
+          method: 'GET',
+        };
+      },
+    }),
+    insertAttributeOrder: builder.mutation({
+      invalidatesTags: (result, error) => {
+        if (error) {
+          return [];
+        }
+        return [{ type: 'AttributeOrders' }];
+      },
+      query: ({ data }) => {
+        return {
+          url: `attributeorder`,
+          method: 'POST',
+          body: data,
+        };
+      },
+    }),
+    deleteAttributeOrder: builder.mutation({
+      invalidatesTags: (result, error) => {
+        if (error) {
+          return [];
+        }
+        return [{ type: 'AttributeOrders' }];
+      },
+      query: ({ data }) => {
+        return {
+          url: `attributeorder`,
+          method: 'DELETE',
+          body: data,
+        };
+      },
+    }),
+    updateAttributeOrder: builder.mutation({
+      invalidatesTags: (result, error) => {
+        if (error) {
+          return [];
+        }
+        return [{ type: 'AttributeOrders' }];
+      },
+      query: ({ data }) => {
+        return {
+          url: 'attributeorder',
+          method: 'PUT',
+          body: data,
+        };
+      },
+    }),
     getHierarchyFilters: builder.query({
       providesTags: () => [{ type: 'HierarchyFilters' }],
       query: () => {
@@ -127,7 +181,10 @@ export const api = createApi({
         if (error) {
           return [];
         }
-        return [{ type: 'HierarchyFilters' }];
+        return [
+          { type: 'HierarchyFilters' },
+          { type: 'ValueSortableAttributes' },
+        ];
       },
       query: ({ data }) => {
         return { url: `/hierarchyFilters`, method: 'PUT', body: data };
@@ -138,7 +195,10 @@ export const api = createApi({
         if (error) {
           return [];
         }
-        return [{ type: 'HierarchyFilters' }];
+        return [
+          { type: 'HierarchyFilters' },
+          { type: 'ValueSortableAttributes' },
+        ];
       },
       query: ({ data }) => {
         return { url: `/hierarchyFilters`, method: 'POST', body: data };
@@ -149,7 +209,10 @@ export const api = createApi({
         if (error) {
           return [];
         }
-        return [{ type: 'HierarchyFilters' }];
+        return [
+          { type: 'HierarchyFilters' },
+          { type: 'ValueSortableAttributes' },
+        ];
       },
       query: ({ data }) => {
         return {
@@ -179,6 +242,15 @@ export const api = createApi({
       query: () => {
         return {
           url: `/node/attributes/distinctattributes`,
+          method: 'GET',
+        };
+      },
+    }),
+    getValueSortableAttributes: builder.query({
+      providesTags: () => [{ type: 'ValueSortableAttributes' }],
+      query: () => {
+        return {
+          url: `/node/attributes/sortable`,
           method: 'GET',
         };
       },
@@ -555,4 +627,9 @@ export const {
   useGetHierarchyPublicitiesQuery,
   useInsertHierarchyPublicityMutation,
   useUpdateHierarchyPublicityMutation,
+  useGetAttributeOrdersQuery,
+  useInsertAttributeOrderMutation,
+  useDeleteAttributeOrderMutation,
+  useUpdateAttributeOrderMutation,
+  useGetValueSortableAttributesQuery,
 } = api;

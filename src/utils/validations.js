@@ -408,3 +408,32 @@ export const newHierarchySchema = (existingHierarchies, errorMessage) =>
     unit: number().required(),
     publicity: boolean().required(),
   });
+
+const attributeOrderAlreadyExists = (existingAttributeOrders, errorMessage) => {
+  const validate = (_value, { parent }) =>
+    existingAttributeOrders.filter(
+      (eao) => eao.key === parent.key && eao.value === parent.value
+    ).length === 0;
+  return {
+    name: 'attribute-order-already-exists',
+    test: validate,
+    message: errorMessage,
+  };
+};
+
+export const newAttributeOrderSchema = (
+  existingAttributeOrders,
+  errorMessage
+) =>
+  object({
+    key: string()
+      .required()
+      .test(attributeOrderAlreadyExists(existingAttributeOrders, errorMessage)),
+    value: string()
+      .required()
+      .test(attributeOrderAlreadyExists(existingAttributeOrders, errorMessage)),
+    order: number()
+      .required()
+      .min(0)
+      .max(2 ** 31 - 1),
+  });
