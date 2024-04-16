@@ -22,6 +22,7 @@ import {
 } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import useHierarchies from '../../hooks/useHierarchies';
+import useFavorableName from '../../hooks/useFavorableName';
 
 const ContentHeader = ({ value }) => {
   return (
@@ -93,11 +94,12 @@ const Hierarchies = ({ hierarchies }) => {
 
 const Node = () => {
   const currentNode = useFetchNode();
+  const favorableName = useFavorableName(currentNode.uniqueId);
   const { t } = useTranslation();
   return (
     <Box>
       <ContentHeader value={t('subunits.parent')} />
-      <Typography variant="body1">{currentNode.name}</Typography>
+      <Typography variant="body1">{favorableName}</Typography>
     </Box>
   );
 };
