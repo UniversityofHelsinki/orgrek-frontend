@@ -155,13 +155,13 @@ deploy_dev:
     # before any action, I connect to the OpenShift server with the appropriate credentials
     - oc login https://$OPENSHIFT_ADDR_TEST:$OPENSHIFT_PORT --token=$OPENSHIFT_TOKEN_TEST
     - oc project organisaatiorekisteri
-    - oc set env dc/organisaatiorekisteri-frontend-dev REACT_APP_GIT_HASH=$(git rev-parse --short=7 HEAD)
-    - oc set env dc/organisaatiorekisteri-frontend-dev TZ="Europe/Helsinki"
+    - oc set env deploy/organisaatiorekisteri-frontend-dev REACT_APP_GIT_HASH=$(git rev-parse --short=7 HEAD)
+    - oc set env deploy/organisaatiorekisteri-frontend-dev TZ="Europe/Helsinki"
     - oc start-build organisaatiorekisteri-frontend-dev --from-dir=. --follow
     - oc patch bc/organisaatiorekisteri-frontend-dev --patch '{"spec":{"successfulBuildsHistoryLimit":1}}'
     - oc patch bc/organisaatiorekisteri-frontend-dev --patch '{"spec":{"failedBuildsHistoryLimit":1}}'
     # set pod memory quota to 100 MB and limit to 500 MB
-    - oc set resources dc/organisaatiorekisteri-frontend-dev --limits=memory=500Mi --requests=memory=100Mi
+    - oc set resources deploy/organisaatiorekisteri-frontend-dev --limits=memory=500Mi --requests=memory=100Mi
 
 deploy_test:
   stage: deploy
@@ -207,13 +207,13 @@ deploy_prod:
     # before any action, I connect to the OpenShift server with the appropriate credentials
     - oc login https://$OPENSHIFT_ADDR_PROD:$OPENSHIFT_PORT --token=$OPENSHIFT_TOKEN_PROD
     - oc project organisaatiorekisteri
-    - oc set env dc/organisaatiorekisteri-frontend-prod REACT_APP_GIT_HASH=$(git rev-parse --short=7 HEAD)
-    - oc set env dc/organisaatiorekisteri-frontend-prod TZ="Europe/Helsinki"
+    - oc set env deploy/organisaatiorekisteri-frontend-prod REACT_APP_GIT_HASH=$(git rev-parse --short=7 HEAD)
+    - oc set env deploy/organisaatiorekisteri-frontend-prod TZ="Europe/Helsinki"
     - oc start-build organisaatiorekisteri-frontend-prod --from-dir=. --follow
     - oc patch bc/organisaatiorekisteri-frontend-prod --patch '{"spec":{"successfulBuildsHistoryLimit":1}}'
     - oc patch bc/organisaatiorekisteri-frontend-prod --patch '{"spec":{"failedBuildsHistoryLimit":1}}'
     # set pod memory quota to 100 MB and limit to 500 MB
-    - oc set resources dc/organisaatiorekisteri-frontend-prod --limits=memory=500Mi --requests=memory=100Mi
+    - oc set resources deploy/organisaatiorekisteri-frontend-prod --limits=memory=500Mi --requests=memory=100Mi
 
 # Rules for the scheduled npm audit and outdated scans
 dependency scanning:
