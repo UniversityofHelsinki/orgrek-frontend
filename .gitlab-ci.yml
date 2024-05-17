@@ -64,14 +64,13 @@ storybook_build:
       - storybook-static/
     expire_in: 1 hour
 
-storybook_test:
+storybook_test_admin:
   stage: test
   image: mcr.microsoft.com/playwright:v1.31.2-focal
   tags:
     - ohtu-build-3
   script:
-    - npm run storybook:test:ci
-  parallel: 2
+    - npm run storybook:test:ci:admin
   coverage: /All files\s*\|\s*([\d\.]+)/
 
 sonarqube-check:
