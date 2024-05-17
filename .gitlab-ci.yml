@@ -31,7 +31,6 @@ setup:
       CYPRESS_CACHE_FOLDER='.cache/Cypress'
       PLAYWRIGHT_BROWSERS_PATH=.cache/ms-playwright
       npm ci
-    - echo "testing setup"
   tags:
     - ohtu-build-3
   extends: .dependencies_cache
