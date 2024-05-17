@@ -17,9 +17,9 @@ variables:
 # Define the stages
 stages:
   - setup
+  - build
   - test
   - audit_scan
-  - build
   - deploy
 
 # Define the process for setup stage
