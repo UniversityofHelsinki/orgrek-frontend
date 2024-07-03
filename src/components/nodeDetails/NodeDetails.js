@@ -1,7 +1,6 @@
 import React from 'react';
 import NodeValiditySection from './NodeValiditySection';
 import NameSection from './NameSection';
-import DisplayNameSection from './DisplayNameSection';
 import CodeAttributesSection from './CodeAttributesSection';
 import UnitTypeSection from './UnitTypeSection';
 import ParentsSection from './ParentsSection';
@@ -11,17 +10,42 @@ import SuccessorsSection from './SuccessorsSection';
 import OtherAttributesSection from './OtherAttributesSection';
 import Typography from '@mui/material/Typography';
 import IfAdmin from '../../auth/IfAdmin';
-import useFavorableName from '../../hooks/useFavorableName';
-import useFetchNodeDetails from '../../hooks/useFetchNodeDetails';
+//import useFavorableName from '../../hooks/useFavorableName';
+//import useFetchNodeDetails from '../../hooks/useFetchNodeDetails';
 import Box from '@mui/material/Box';
 import useFetchNode from '../../hooks/useFetchNode';
 import { useNodeId } from '../../hooks/useNodeId';
 import { useMediaQuery, useTheme } from '@mui/material';
+import useFilterAttributesByDate from '../../hooks/useFilterAttributesByDate';
+import useAttributes from '../../hooks/useAttributes';
+import { useTranslation } from 'react-i18next';
+import { useGetNodeValidityQuery } from '../../store';
 
 const NodeDetails = ({ showHistory, showFuture }) => {
+  const { t, i18n } = useTranslation();
   const nodeId = useNodeId();
-  const title = useFavorableName(nodeId);
-
+  const { data: names, isFetching, error } = useAttributes('names');
+  const { data } = useGetNodeValidityQuery(nodeId);
+  const node = data || {};
+  const currentLanguage = i18n.language;
+  // In view mode filter history and future depending on selection
+  const visibleNames = useFilterAttributesByDate(
+    names,
+    showHistory,
+    showFuture
+  );
+  const selectedTitle = visibleNames
+    .map((elem) => {
+      return { ...elem };
+    })
+    .filter((wantedElem) => {
+      return wantedElem.key === 'name_' + currentLanguage;
+    });
+  let title = '';
+  selectedTitle.length > 0
+    ? (title = selectedTitle[0].value)
+    : (title = node.name);
+  //const title = useFavorableName(nodeId);
   const theme = useTheme();
   const isDesktop = useMediaQuery(theme.breakpoints.up('md'));
 
@@ -60,7 +84,7 @@ const NodeDetails = ({ showHistory, showFuture }) => {
       </Typography>
       <NodeValiditySection />
       <NameSection showHistory={showHistory} showFuture={showFuture} />
-      <DisplayNameSection showHistory={showHistory} showFuture={showFuture} />
+      {/*  <DisplayNameSection showHistory={showHistory} showFuture={showFuture} />  */}
       <CodeAttributesSection
         showHistory={showHistory}
         showFuture={showFuture}
