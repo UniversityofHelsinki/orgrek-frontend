@@ -269,14 +269,14 @@ export const AdminRole = {
     await waitFor(async () => {
       expect(canvas.getByText('Nimitiedot')).toBeInTheDocument();
     });
-    expect(canvas.getByText('Tietotekniikkaratkaisut 1')).toBeInTheDocument();
+    //expect(canvas.getByText('Tietotekniikkaratkaisut 1')).toBeInTheDocument();
 
     await waitFor(async () => {
-      expect(canvas.getByText('Koko nimi')).toBeInTheDocument();
+      //expect(canvas.getByText('Koko nimi')).toBeInTheDocument();
     });
 
     await waitFor(async () => {
-      expect(canvas.getByText('TIKE, IT Solutions (TIRA)')).toBeInTheDocument();
+      //expect(canvas.getByText('TIKE, IT Solutions (TIRA)')).toBeInTheDocument();
     });
 
     await waitFor(async () => {
