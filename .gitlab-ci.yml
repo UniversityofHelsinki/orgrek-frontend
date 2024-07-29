@@ -17,9 +17,9 @@ variables:
 # Define the stages
 stages:
   - setup
+  - build
   - test
   - audit_scan
-  - build
   - deploy
 
 # Define the process for setup stage
@@ -51,13 +51,24 @@ test:
     - npm test
   coverage: /All files\s*\|\s*([\d\.]+)/
 
+storybook_build:
+  stage: build
+  tags:
+    - ohtu-build-3
+  image: mcr.microsoft.com/playwright:v1.31.2-focal
+  script:
+    - npm run storybook:build
+  artifacts:
+    paths:
+      - storybook-static/
+    expire_in: 1 hour
+
 storybook_test:
   stage: test
   image: mcr.microsoft.com/playwright:v1.31.2-focal
   tags:
     - ohtu-build-3
   script:
-    - npm run storybook:build
     - npm run storybook:test:ci
   coverage: /All files\s*\|\s*([\d\.]+)/
 

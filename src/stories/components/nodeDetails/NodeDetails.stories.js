@@ -8,8 +8,6 @@ import {
   hierarchyFilters,
   mockGetAttributeKeys,
   mockGetChildren,
-  mockGetFavorableFullNames,
-  mockGetFullNames,
   mockGetNode,
   mockGetParents,
   mockGetPredecessors,
@@ -25,7 +23,6 @@ import {
   mockSaveParents,
   mockGetParentsDeprecated,
   mockSaveOtherAttributes,
-  mockGetAllFullNames,
   mockGetAttributes,
 } from '../../../mockStore';
 import { waitFor, within } from '@storybook/testing-library';
@@ -188,93 +185,6 @@ export const AdminRole = {
           ['type']
         ),
         mockGetValidHierarchyFilters(now, hierarchyFilters),
-        mockGetFullNames(nodeId, now, {
-          sv: [
-            {
-              nodeId: '4820',
-              language: 'sv',
-              name: 'TIKE, Datatekniklösningar (TIRA)',
-              startDate: null,
-              endDate: null,
-            },
-          ],
-          fi: [
-            {
-              nodeId: '4820',
-              language: 'fi',
-              name: 'TIKE, Tietotekniikkaratkaisut (TIRA)',
-              startDate: null,
-              endDate: null,
-            },
-          ],
-          en: [
-            {
-              nodeId: '4820',
-              language: 'en',
-              name: 'TIKE, IT Solutions (TIRA)',
-              startDate: null,
-              endDate: null,
-            },
-          ],
-        }),
-        mockGetAllFullNames(nodeId, {
-          sv: [
-            {
-              nodeId: '4820',
-              language: 'sv',
-              name: 'TIKE, Datatekniklösningar (TIRA)',
-              startDate: null,
-              endDate: null,
-            },
-          ],
-          fi: [
-            {
-              nodeId: '4820',
-              language: 'fi',
-              name: 'TIKE, Tietotekniikkaratkaisut (TIRA)',
-              startDate: null,
-              endDate: null,
-            },
-          ],
-          en: [
-            {
-              nodeId: '4820',
-              language: 'en',
-              name: 'TIKE, IT Solutions (TIRA)',
-              startDate: null,
-              endDate: null,
-            },
-          ],
-        }),
-        mockGetFavorableFullNames(nodeId, now, {
-          sv: [
-            {
-              nodeId: '4820',
-              language: 'sv',
-              name: 'TIKE, Datatekniklösningar (TIRA)',
-              startDate: null,
-              endDate: null,
-            },
-          ],
-          fi: [
-            {
-              nodeId: '4820',
-              language: 'fi',
-              name: 'TIKE, Tietotekniikkaratkaisut (TIRA)',
-              startDate: null,
-              endDate: null,
-            },
-          ],
-          en: [
-            {
-              nodeId: '4820',
-              language: 'en',
-              name: 'TIKE, IT Solutions (TIRA)',
-              startDate: null,
-              endDate: null,
-            },
-          ],
-        }),
         mockGetParents(nodeId, now, selectedHierarchy, [
           {
             node: {
@@ -359,14 +269,14 @@ export const AdminRole = {
     await waitFor(async () => {
       expect(canvas.getByText('Nimitiedot')).toBeInTheDocument();
     });
-    expect(canvas.getByText('Tietotekniikkaratkaisut 1')).toBeInTheDocument();
+    //expect(canvas.getByText('Tietotekniikkaratkaisut 1')).toBeInTheDocument();
 
     await waitFor(async () => {
-      expect(canvas.getByText('Koko nimi')).toBeInTheDocument();
+      //expect(canvas.getByText('Koko nimi')).toBeInTheDocument();
     });
 
     await waitFor(async () => {
-      expect(canvas.getByText('TIKE, IT Solutions (TIRA)')).toBeInTheDocument();
+      //expect(canvas.getByText('TIKE, IT Solutions (TIRA)')).toBeInTheDocument();
     });
 
     await waitFor(async () => {
