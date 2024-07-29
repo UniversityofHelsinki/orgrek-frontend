@@ -9,7 +9,6 @@ import PredecessorsSection from './PredecessorsSection';
 import SuccessorsSection from './SuccessorsSection';
 import OtherAttributesSection from './OtherAttributesSection';
 import Typography from '@mui/material/Typography';
-import IfAdmin from '../../auth/IfAdmin';
 import Box from '@mui/material/Box';
 import { useNodeId } from '../../hooks/useNodeId';
 import { useMediaQuery, useTheme } from '@mui/material';
@@ -31,18 +30,9 @@ const NodeDetails = ({ showHistory, showFuture }) => {
     showHistory,
     showFuture
   );
-  const selectedTitle = visibleNames
-    .map((elem) => {
-      return { ...elem };
-    })
-    .filter((wantedElem) => {
-      return wantedElem.key === 'name_' + currentLanguage;
-    });
-  let title = '';
-  selectedTitle.length > 0
-    ? (title = selectedTitle[0].value)
-    : (title = node.name);
-  //const title = useFavorableName(nodeId);
+  const title =
+    visibleNames.find((name) => name.key === `name_${currentLanguage}`)
+      ?.value || node.name;
   const theme = useTheme();
   const isDesktop = useMediaQuery(theme.breakpoints.up('md'));
 
@@ -81,7 +71,6 @@ const NodeDetails = ({ showHistory, showFuture }) => {
       </Typography>
       <NodeValiditySection />
       <NameSection showHistory={showHistory} showFuture={showFuture} />
-      {/*  <DisplayNameSection showHistory={showHistory} showFuture={showFuture} />  */}
       <CodeAttributesSection
         showHistory={showHistory}
         showFuture={showFuture}
