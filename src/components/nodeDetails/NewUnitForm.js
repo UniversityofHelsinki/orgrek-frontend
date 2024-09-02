@@ -6,7 +6,6 @@ import StartDateField from '../attributes/StartDateField';
 import ValueField from '../attributes/ValueField';
 import useForm from '../../hooks/useForm';
 import { newNodeValiditySchema } from '../../utils/validations';
-import { useSelector } from 'react-redux';
 import Button from '../inputs/Button';
 import {
   Box,
@@ -22,6 +21,10 @@ import {
 } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import useHierarchies from '../../hooks/useHierarchies';
+import useFilterAttributesByDate from '../../hooks/useFilterAttributesByDate';
+import useAttributes from '../../hooks/useAttributes';
+import { useGetNodeValidityQuery } from '../../store';
+import { useNodeId } from '../../hooks/useNodeId';
 
 const ContentHeader = ({ value }) => {
   return (
@@ -93,11 +96,30 @@ const Hierarchies = ({ hierarchies }) => {
 
 const Node = () => {
   const currentNode = useFetchNode();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const nodeId = useNodeId();
+  const { data: names, isFetching, error } = useAttributes('names');
+  const { data } = useGetNodeValidityQuery(nodeId);
+  const node = data || {};
+  const currentLanguage = i18n.language;
+  // In view mode filter history and future depending on selection
+  const visibleNames = useFilterAttributesByDate(names, false, false);
+  const selectedTitle = visibleNames
+    .map((elem) => {
+      return { ...elem };
+    })
+    .filter((wantedElem) => {
+      return wantedElem.key === 'name_' + currentLanguage;
+    });
+  let title = '';
+  selectedTitle.length > 0
+    ? (title = selectedTitle[0].value)
+    : (title = node.name);
+
   return (
     <Box>
       <ContentHeader value={t('subunits.parent')} />
-      <Typography variant="body1">{currentNode.name}</Typography>
+      <Typography variant="body1">{title}</Typography>
     </Box>
   );
 };
