@@ -17,9 +17,9 @@ variables:
 # Define the stages
 stages:
   - setup
-  - build
   - dependency-check
   - sonarqube-check
+  - build
   - test
   - deploy
 
@@ -54,6 +54,8 @@ test:
 
 storybook_build:
   stage: build
+  except:
+    - schedules
   tags:
     - ohtu-build-3
   image: mcr.microsoft.com/playwright:v1.31.2-focal
@@ -65,6 +67,8 @@ storybook_build:
     expire_in: 1 hour
 
 storybook_test:
+  except:
+    - schedules
   stage: test
   image: mcr.microsoft.com/playwright:v1.31.2-focal
   tags:
