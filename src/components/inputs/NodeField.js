@@ -96,7 +96,10 @@ const NodeField = ({
       onInputChange={(event, value) => setInputValue(value)}
       getOptionLabel={(option) => (option && option.names[languageField]) || ''}
       renderOption={(props, option) => (
-        <li {...props} key={`${option.names[languageField]}`}>
+        <li
+          {...props}
+          key={`${option.names[languageField]}-${option.uniqueId}`}
+        >
           {option.names[languageField]}
         </li>
       )}
