@@ -12,6 +12,15 @@ module.exports = {
       rules: storyContext.parameters?.a11y?.config?.rules,
     });
 
+    /* https://github.com/dequelabs/axe-core/issues/3426
+     * https://github.com/dequelabs/axe-core/issues/3528
+     *
+     * page.evaluate: Error: Axe is already running. Use `await axe.run()` to wait for the previous run to finish before starting a new run.
+     *
+     * Disabled until the bug above in axe-core is fixed.
+     *
+     */
+    /*
     const element = storyContext.parameters?.a11y?.element ?? '#storybook-root';
     await checkA11y(
       page,
@@ -22,5 +31,6 @@ module.exports = {
       true,
       'v2'
     );
+    */
   },
 };
