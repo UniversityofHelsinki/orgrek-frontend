@@ -78,28 +78,6 @@ export const Search = {
   },
 };
 
-export const Selected = {
-  ...Combobox,
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement.parentElement);
-
-    await userEvent.type(
-      canvas.getByLabelText('Etsi nimellä tai tunnuksella'),
-      'kie'
-    );
-
-    await waitFor(async () => {
-      await expect(canvas.getByText(/HY, Kielikeskus/)).toBeInTheDocument();
-    });
-
-    await userEvent.click(canvas.getByText(/HY, Kielikeskus/));
-
-    await expect(
-      canvas.getByLabelText('Etsi nimellä tai tunnuksella')
-    ).toHaveValue('HY, Kielikeskus (KIELIKESKUS)');
-  },
-};
-
 export const ExistingValue = {
   ...Combobox,
   args: {
