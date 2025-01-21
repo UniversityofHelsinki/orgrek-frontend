@@ -107,7 +107,7 @@
     "format:check": "prettier --check .",
     "cypress:open": "cypress open",
     "storybook": "storybook dev -p 6006",
-    "storybook:test": "test-storybook --coverage --maxWorkers 2 --url http://localhost:6006",
+    "storybook:test": "test-storybook --coverage --maxWorkers 1 --url http://localhost:6006",
     "storybook:test:ci": "concurrently -k --kill-others-on-fail -s first -n \"storybook,test\" -c \"magenta,blue\" \"http-server storybook-static -d --port 6006\" \"echo ODOTELLAAN... && wait-on -t 42s -v tcp:localhost:6006 && npm run storybook:test\"",
     "storybook:test:ci:admin": "concurrently -k -s first -n \"storybook,test\" -c \"magenta,blue\" \"http-server storybook-static -a localhost --port 6006 --silent\" \"wait-on tcp:6006 && jest src/stories/components/admin/*.stories.js\"",
     "storybook:build": "storybook build",
