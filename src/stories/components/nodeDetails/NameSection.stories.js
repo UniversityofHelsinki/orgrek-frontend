@@ -5,8 +5,8 @@ import {
   withMockStore,
 } from '../../../mockStore';
 import NameSection from '../../../components/nodeDetails/NameSection';
-import { expect } from '@storybook/jest';
-import { userEvent, waitFor, within } from '@storybook/testing-library';
+import { expect } from '@storybook/test';
+import { userEvent, waitFor, within } from '@storybook/test';
 
 const nodeId = '1';
 const hierarchies = 'virallinen';

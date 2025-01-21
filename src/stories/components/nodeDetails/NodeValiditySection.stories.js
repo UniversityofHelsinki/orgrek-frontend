@@ -4,8 +4,8 @@ import {
   withMockStore,
 } from '../../../mockStore';
 import NodeValiditySection from '../../../components/nodeDetails/NodeValiditySection';
-import { userEvent, waitFor, within } from '@storybook/testing-library';
-import { expect } from '@storybook/jest';
+import { userEvent, waitFor, within } from '@storybook/test';
+import { expect } from '@storybook/test';
 
 const now = new Date('2023-03-22T14:28:00+0200');
 const nodeId = '1';

@@ -1,11 +1,11 @@
-import { expect } from '@storybook/jest';
+import { expect } from '@storybook/test';
 import {
   mockGetAttributes,
   mockSaveCodeAttributes,
   withMockStore,
 } from '../../../mockStore';
 import CodeAttributesSection from '../../../components/nodeDetails/CodeAttributesSection';
-import { waitFor, within } from '@storybook/testing-library';
+import { waitFor, within } from '@storybook/test';
 
 // Use a fixed date to ensure that tests always have a consistent result
 const now = new Date('2023-03-22T14:28:00+0200');

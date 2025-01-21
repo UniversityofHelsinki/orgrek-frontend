@@ -4,8 +4,8 @@ import {
   mockSaveParents,
   withMockStore,
 } from '../../../mockStore';
-import { userEvent, waitFor, within } from '@storybook/testing-library';
-import { expect } from '@storybook/jest';
+import { userEvent, waitFor, within } from '@storybook/test';
+import { expect } from '@storybook/test';
 import { waitForAnimations } from '../../storyUtils';
 
 // Use a fixed date to ensure that tests always have a consistent result
