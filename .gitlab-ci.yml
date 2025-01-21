@@ -102,7 +102,7 @@ sonarqube-check:
 dependency-check:
   stage: dependency-check
   only:
-    - master
+    - disabled
   tags:
     - ohtu-build-3
   image:
