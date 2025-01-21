@@ -17,6 +17,7 @@ variables:
 # Define the stages
 stages:
   - setup
+  - dependency-check
   - sonarqube-check
   - build
   - test
