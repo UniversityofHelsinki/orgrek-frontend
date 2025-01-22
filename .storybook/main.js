@@ -27,9 +27,7 @@ const config = {
     name: '@storybook/react-webpack5',
     options: {},
   },
-  docs: {
-    autodocs: 'tag',
-  },
+  docs: {},
 };
 
 export default config;

@@ -3,8 +3,8 @@ FROM nginx:alpine
 WORKDIR /app
 COPY build ./
 
-RUN apk update
-RUN apk add tzdata
+RUN apk update && \
+    apk add --no-cache tzdata
 
 RUN ls -la
 RUN cp -r . /usr/share/nginx/html

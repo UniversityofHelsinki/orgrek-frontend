@@ -3,9 +3,9 @@ import React from 'react';
 import AttributeEditor from '../../../components/attributes/AttributeEditor';
 import MenuItem from '@mui/material/MenuItem';
 import TextField from '../../../components/inputs/TextField';
-import { within, userEvent, waitFor } from '@storybook/testing-library';
+import { within, userEvent, waitFor } from '@storybook/test';
 import { object, array, string, boolean } from 'yup';
-import { expect } from '@storybook/jest';
+import { expect } from '@storybook/test';
 import { Form } from '../../../contexts/FormContext';
 import { toDate } from '../../../utils/dateUtils';
 import '../../../utils/validations'; // Register custom validators

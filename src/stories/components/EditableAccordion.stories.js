@@ -1,7 +1,7 @@
 import React from 'react';
 import EditableAccordion from '../../components/EditableAccordion';
-import { expect } from '@storybook/jest';
-import { userEvent, within, waitFor } from '@storybook/testing-library';
+import { expect } from '@storybook/test';
+import { userEvent, within, waitFor } from '@storybook/test';
 
 export default {
   component: EditableAccordion,

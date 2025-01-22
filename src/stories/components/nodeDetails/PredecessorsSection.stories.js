@@ -4,8 +4,8 @@ import {
   withNode,
 } from '../../../mockStore';
 import PredecessorsSection from '../../../components/nodeDetails/PredecessorsSection';
-import { waitFor, within } from '@storybook/testing-library';
-import { expect } from '@storybook/jest';
+import { waitFor, within } from '@storybook/test';
+import { expect } from '@storybook/test';
 
 const today = new Date();
 const nodeId = '1';

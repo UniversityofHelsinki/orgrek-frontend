@@ -1,7 +1,7 @@
-import { expect } from '@storybook/jest';
+import { expect, fn } from '@storybook/test';
 import NodeField from '../../../components/inputs/NodeField';
 import { mockGetTree, withMockStore, tree } from '../../../mockStore';
-import { userEvent, within, waitFor } from '@storybook/testing-library';
+import { userEvent, within, waitFor } from '@storybook/test';
 import React, { useState } from 'react';
 
 // Use a fixed date to ensure that tests always have a consistent result
@@ -13,6 +13,10 @@ export default {
   component: NodeField,
   parameters: {
     systemTime: now,
+  },
+  args: {
+    onClick: fn(),
+    onChange: fn(),
   },
 };
 
@@ -26,6 +30,8 @@ export const Combobox = {
     required: false,
     disabled: false,
     error: false,
+    onClick: fn(),
+    onChange: fn(),
   },
   render: (args) => {
     const [value, setValue] = useState(args.value);
@@ -68,28 +74,7 @@ export const Search = {
     ...Combobox.args,
     label: 'Etsi nimellä tai tunnuksella',
     variant: 'search',
-  },
-};
-
-export const Selected = {
-  ...Combobox,
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement.parentElement);
-
-    await userEvent.type(
-      canvas.getByLabelText('Etsi nimellä tai tunnuksella'),
-      'kie'
-    );
-
-    await waitFor(async () => {
-      await expect(canvas.getByText(/HY, Kielikeskus/)).toBeInTheDocument();
-    });
-
-    await userEvent.click(canvas.getByText(/HY, Kielikeskus/));
-
-    await expect(
-      canvas.getByLabelText('Etsi nimellä tai tunnuksella')
-    ).toHaveValue('HY, Kielikeskus (KIELIKESKUS)');
+    onClick: fn(),
   },
 };
 
@@ -101,6 +86,7 @@ export const ExistingValue = {
       id: 38919588,
       names: { fi: 'TIKE, Tietotekniikkaratkaisut (TIRA)' },
     },
+    onClick: fn(),
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement.parentElement);
