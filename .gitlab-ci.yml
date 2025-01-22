@@ -17,10 +17,10 @@ variables:
 # Define the stages
 stages:
   - setup
-  - build
-  - test
   - dependency-check
   - sonarqube-check
+  - build
+  - test
   - deploy
 
 # Define the process for setup stage
