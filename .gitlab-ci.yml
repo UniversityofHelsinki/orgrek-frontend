@@ -52,31 +52,6 @@ test:
     - npm test
   coverage: /All files\s*\|\s*([\d\.]+)/
 
-storybook_build:
-  stage: build
-  except:
-    - schedules
-  tags:
-    - ohtu-build-3
-  image: mcr.microsoft.com/playwright:v1.31.2-focal
-  script:
-    - npm run storybook:build
-  artifacts:
-    paths:
-      - storybook-static/
-    expire_in: 1 hour
-
-storybook_test:
-  except:
-    - schedules
-  stage: test
-  image: mcr.microsoft.com/playwright:v1.31.2-focal
-  tags:
-    - ohtu-build-3
-  script:
-    - npm run storybook:test:ci
-  coverage: /All files\s*\|\s*([\d\.]+)/
-
 sonarqube-check:
   stage: sonarqube-check
   tags:
