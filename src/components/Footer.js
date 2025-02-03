@@ -8,6 +8,7 @@ import ExternalLinkIcon from '../components/icons/ExternalLink';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import { visuallyHidden } from '@mui/utils';
+import Colours from './utilities/HyColours';
 
 const Footer = () => {
   const { t } = useTranslation();
@@ -52,7 +53,7 @@ const Footer = () => {
               <Box sx={visuallyHidden}>{t('open_in_new_tab')}</Box>
               <ExternalLinkIcon
                 sx={{ ml: 0.5 }}
-                color={'inherit'}
+                fill={Colours.white}
                 fontSize={'inherit'}
               />
             </Link>
@@ -69,7 +70,7 @@ const Footer = () => {
               <Box sx={visuallyHidden}>{t('open_in_new_tab')}</Box>
               <ExternalLinkIcon
                 sx={{ ml: 0.5 }}
-                color={'inherit'}
+                fill={Colours.white}
                 fontSize={'inherit'}
               />
             </Link>
