@@ -15,6 +15,7 @@ import Stack from '@mui/material/Stack';
 import NavLink from './NavLink';
 import IfAuthorized from '../auth/IfAuthorized';
 import { authActions } from '../auth';
+import Colours from './utilities/HyColours';
 
 const Header = () => {
   const { t } = useTranslation();
@@ -41,7 +42,7 @@ const Header = () => {
                 <Box sx={visuallyHidden}>{t('open_in_new_tab')}</Box>
                 <ExternalLinkIcon
                   sx={{ ml: 0.5 }}
-                  color={'inherit'}
+                  fill={Colours.lightGray}
                   fontSize={'inherit'}
                 />
               </Link>

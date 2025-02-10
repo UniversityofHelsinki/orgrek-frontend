@@ -6,12 +6,13 @@ import CaretDownIcon from './icons/CaretDown';
 import Divider from '@mui/material/Divider';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+import Colours from './utilities/HyColours';
 
 export const AccordionSummary = ({ children, sx, ...props }) => {
   return (
     <MuiAccordionSummary
       {...props}
-      expandIcon={<CaretDownIcon color="primary" fontSize="small" />}
+      expandIcon={<CaretDownIcon fill={Colours.blue} fontSize="small" />}
       sx={{
         flexDirection: 'row-reverse',
         gap: 1,
@@ -25,7 +26,7 @@ export const AccordionSummary = ({ children, sx, ...props }) => {
 
 export const AccordionDetails = ({ children, sx, ...props }) => (
   <MuiAccordionDetails {...props} sx={{ pt: 0, ...sx }}>
-    <Divider role="presentation" />
+    <Divider color={Colours.darkGray} role="presentation" />
     <Box mt={2}>{children}</Box>
   </MuiAccordionDetails>
 );
