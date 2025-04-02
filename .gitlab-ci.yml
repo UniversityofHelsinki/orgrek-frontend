@@ -20,7 +20,7 @@ stages:
   - dependency-check
   - sonarqube-check
   - dtrack-sbom
-  - dependency-track-submit
+  - submit-sbom
   - build
   - test
   - deploy
