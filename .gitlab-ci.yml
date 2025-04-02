@@ -74,6 +74,31 @@ sonarqube-check:
     - job: dependency-check
       artifacts: true
 
+dtrack-sbom:
+  tags:
+    - ohtu-build-4
+  stage: dtrack-sbom
+  script:
+    - mvn org.cyclonedx:cyclonedx-maven-plugin:makeAggregateBom
+  artifacts:
+    expire_in: 1h
+    paths:
+      - target/bom.xml
+
+submit-sbom:
+  image: alpine:latest
+  stage: dependency-track-submit
+  only:
+    - main
+  tags:
+    - ohtu-build-4
+  dependencies:
+    - dtrack-sbom
+  before_script:
+    - apk add --no-cache curl
+  script:
+    - "curl -X POST ${DTRACK_API_URL} -H 'Content-Type: multipart/form-data' -H 'X-Api-Key: '${DTRACK_API_KEY} -F 'projectName='${PROJECT_NAME} -F 'autoCreate=true' -F 'projectVersion='${PROJECT_VERSION} -F 'bom=@target/bom.xml'"
+
 dependency-check:
   stage: dependency-check
   only:
