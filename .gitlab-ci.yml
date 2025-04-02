@@ -19,6 +19,8 @@ stages:
   - setup
   - dependency-check
   - sonarqube-check
+  - dtrack-sbom
+  - dependency-track-submit
   - build
   - test
   - deploy
