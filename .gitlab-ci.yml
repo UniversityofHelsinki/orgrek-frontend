@@ -85,7 +85,7 @@ generate-sbom:
     - ohtu-build-4
   script:
     - npm ci
-    - npm install
+    - npm install axe-playwright
     - npx @cyclonedx/cyclonedx-npm --output-file sbom.xml
   artifacts:
     expire_in: 1h
