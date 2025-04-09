@@ -84,7 +84,8 @@ generate-sbom:
   tags:
     - ohtu-build-4
   script:
-    - npm ci --omit=peer
+    - npm ci
+    - npm install
     - npx @cyclonedx/cyclonedx-npm --output-file sbom.xml
   artifacts:
     expire_in: 1h
