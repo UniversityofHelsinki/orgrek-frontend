@@ -85,7 +85,7 @@ generate-sbom:
     - ohtu-build-4
   script:
     - npm ci
-    - npx @cyclonedx/cyclonedx-npm --output-file sbom.xml
+    - npx @cyclonedx/cyclonedx-npm --output-file sbom.xml --omit dev
   artifacts:
     expire_in: 1h
     paths:
