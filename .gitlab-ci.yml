@@ -16,9 +16,9 @@ variables:
 
 # Define the stages
 stages:
-  - setup
   - dependency-track-sbom
   - dependency-track-submit
+  - setup
   - dependency-check
   - sonarqube-check
   - build
