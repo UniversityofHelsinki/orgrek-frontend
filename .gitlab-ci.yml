@@ -84,7 +84,7 @@ generate-sbom:
   tags:
     - ohtu-build-4
   script:
-    - npx @cyclonedx/cyclonedx-npm --output-file sbom.xml --package-lock-only
+    - npx @cyclonedx/cyclonedx-npm --output-file sbom.xml --omit dev --package-lock-only
   artifacts:
     expire_in: 1h
     paths:
