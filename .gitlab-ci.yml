@@ -17,10 +17,10 @@ variables:
 # Define the stages
 stages:
   - setup
-  - dependency-check
-  - sonarqube-check
   - dependency-track-sbom
   - dependency-track-submit
+  - dependency-check
+  - sonarqube-check
   - build
   - test
   - deploy
