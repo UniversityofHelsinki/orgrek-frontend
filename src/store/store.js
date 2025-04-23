@@ -1,7 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
 import thunk from 'redux-thunk';
-import { loadTranslations, syncTranslationWithStore } from 'react-redux-i18n';
-import translationsObject from '../translations';
 import { dayReducer } from './dayChange';
 import { editModeReducer } from './editMode';
 import { hierarchyFilterReducer } from './hierarchyFilter';
@@ -39,8 +37,4 @@ const store = configureStore({
 });
 
 setupListeners(store.dispatch);
-
-syncTranslationWithStore(store);
-store.dispatch(loadTranslations(translationsObject));
-
 export default store;
