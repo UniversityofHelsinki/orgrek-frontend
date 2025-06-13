@@ -22,7 +22,7 @@ const Header = () => {
   const user = useCurrentUser();
 
   return (
-    <Box component="header" pt={2}>
+    <Box component="header" pt={2} sx={{ overflow: 'hidden' }}>
       <Container>
         <Box>
           <Grid container>
