@@ -3,7 +3,7 @@ import NodeDetails from '../components/nodeDetails/NodeDetails';
 import React, { memo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import Container from '@mui/material/Container';
-import { Box, Divider, Grid, useTheme } from '@mui/material';
+import { Box, Divider, Grid, useMediaQuery, useTheme } from '@mui/material';
 import Tree from '../components/tree/Tree';
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 import useTree from '../hooks/useTree';
@@ -29,12 +29,13 @@ const NodePage = () => {
   const onSwitchHistoryClick = (v) => setShowHistory(v);
   const onSwitchFutureClick = (v) => setShowFuture(v);
 
+  const theme = useTheme();
+  const onMobile = useMediaQuery('(max-width: 480px');
+
   const switchHandlers = {
     onSwitchHistory: onSwitchHistoryClick,
     onSwitchFuture: onSwitchFutureClick,
   };
-
-  const theme = useTheme();
 
   const [dragOptions, setDragOptions] = useState({
     dragging: false,
@@ -48,7 +49,7 @@ const NodePage = () => {
   const width = dragOptions.width;
 
   return (
-    <Container sx={{ paddingLeft: 0, paddingRight: 0 }}>
+    <Container sx={{ paddingLeft: 0, paddingRight: 0, overflow: 'hidden' }}>
       <Grid
         container
         paddingBottom={3}
@@ -82,7 +83,7 @@ const NodePage = () => {
         <Grid
           item
           sx={{
-            position: 'sticky',
+            position: onMobile ? 'static' : 'sticky',
             zIndex: theme.zIndex.appBar,
             top: 0,
           }}
@@ -104,7 +105,7 @@ const NodePage = () => {
           <Box
             sx={{
               width: width,
-              position: 'sticky',
+              position: onMobile ? 'static' : 'sticky',
               top: 100,
               alignSelf: 'flex-start',
               overflowY: 'auto',

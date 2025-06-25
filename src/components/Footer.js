@@ -13,7 +13,13 @@ import Colours from './utilities/HyColours';
 const Footer = () => {
   const { t } = useTranslation();
   return (
-    <Box component={'footer'} pt={6} pb={6} backgroundColor={'common.black'}>
+    <Box
+      component={'footer'}
+      pt={6}
+      pb={6}
+      backgroundColor={'common.black'}
+      sx={{ overflow: 'hidden' }}
+    >
       <Container>
         <Grid2 container>
           <Grid2 xs={12} sm={2} md={2} lg={1} pt={1} pb={2} pr={1}>
