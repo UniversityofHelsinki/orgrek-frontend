@@ -16,6 +16,8 @@ variables:
 
 # Define the stages
 stages:
+  - dependency-track-sbom
+  - dependency-track-submit
   - setup
   - dependency-check
   - sonarqube-check
@@ -73,6 +75,35 @@ sonarqube-check:
   needs:
     - job: dependency-check
       artifacts: true
+
+generate-sbom:
+  stage: dependency-track-sbom
+  image: node:22-alpine
+  only:
+    - schedules
+  tags:
+    - ohtu-build-4
+  script:
+    - npm ci
+    - npx @cyclonedx/cyclonedx-npm --output-file sbom.xml --omit dev
+  artifacts:
+    expire_in: 1h
+    paths:
+      - sbom.xml
+
+submit-sbom:
+  image: alpine:latest
+  stage: dependency-track-submit
+  only:
+    - schedules
+  tags:
+    - ohtu-build-4
+  dependencies:
+    - generate-sbom
+  before_script:
+    - apk add --no-cache curl
+  script:
+    - "curl -X POST ${DTRACK_API_URL} -H 'Content-Type: multipart/form-data' -H 'X-Api-Key: '${DTRACK_API_KEY} -F 'projectName='${PROJECT_NAME} -F 'autoCreate=true' -F 'projectVersion='${PROJECT_VERSION} -F 'bom=@sbom.xml'"
 
 dependency-check:
   stage: dependency-check
