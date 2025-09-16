@@ -35,6 +35,7 @@ const NodeDetails = ({ showHistory, showFuture }) => {
       ?.value || node.name;
   const theme = useTheme();
   const isDesktop = useMediaQuery(theme.breakpoints.up('md'));
+  const onMobile = useMediaQuery('(max-width: 480px)');
 
   if (!nodeId) {
     return null;
@@ -57,7 +58,7 @@ const NodeDetails = ({ showHistory, showFuture }) => {
         mt={5}
         mb={5}
         sx={{
-          position: 'sticky',
+          position: onMobile ? 'static' : 'sticky',
           bgcolor: 'white',
           top: isDesktop ? 70 : 120,
           alignSelf: 'flex-start',
