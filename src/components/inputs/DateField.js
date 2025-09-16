@@ -6,7 +6,6 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import TextField from '@mui/material/TextField';
 import { getDateFnsLocale, toISODateStringLocal } from '../../utils/dateUtils';
 import { useTranslation } from 'react-i18next';
-import { parseISO } from 'date-fns';
 
 const DateField = ({
   helperText,
@@ -17,7 +16,6 @@ const DateField = ({
   onChange,
   variant,
   renderInput,
-  value,
   ...props
 }) => {
   const defaultRenderInput = (textFieldProps) => (
@@ -77,7 +75,6 @@ const DateField = ({
           onChange && onChange(toISODateStringLocal(date), keyboardInputValue);
         }}
         {...props}
-        value={parseISO(value)}
         renderInput={renderInput || defaultRenderInput}
       />
     </LocalizationProvider>
