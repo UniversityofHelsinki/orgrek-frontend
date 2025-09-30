@@ -260,3 +260,28 @@ deploy_prod:
     - oc patch bc/organisaatiorekisteri-frontend-prod --patch '{"spec":{"failedBuildsHistoryLimit":1}}'
     # set pod memory quota to 100 MB and limit to 500 MB
     - oc set resources deploy/organisaatiorekisteri-frontend-prod --limits=memory=500Mi --requests=memory=100Mi
+
+deploy_periodically_prod:
+  stage: deploy
+  tags:
+    - ohtu-build-3
+  environment:
+    name: prod
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "schedule" && $CI_COMMIT_BRANCH == "prod"'
+      when: always
+    - when: never
+  script:
+    # set home path for openshift 1001 user
+    - export HOME=/home/1001
+    - mv nginx_prod.conf nginx.conf
+    # before any action, I connect to the OpenShift server with the appropriate credentials
+    - oc login https://$OPENSHIFT_ADDR_PROD:$OPENSHIFT_PORT --token=$OPENSHIFT_TOKEN_PROD
+    - oc project organisaatiorekisteri
+    - oc set env deploy/organisaatiorekisteri-frontend-prod REACT_APP_GIT_HASH=$(git rev-parse --short=7 HEAD)
+    - oc set env deploy/organisaatiorekisteri-frontend-prod TZ="Europe/Helsinki"
+    - oc start-build organisaatiorekisteri-frontend-prod --from-dir=. --follow
+    - oc patch bc/organisaatiorekisteri-frontend-prod --patch '{"spec":{"successfulBuildsHistoryLimit":1}}'
+    - oc patch bc/organisaatiorekisteri-frontend-prod --patch '{"spec":{"failedBuildsHistoryLimit":1}}'
+    # set pod memory quota to 100 MB and limit to 500 MB
+    - oc set resources deploy/organisaatiorekisteri-frontend-prod --limits=memory=500Mi --requests=memory=100Mi
