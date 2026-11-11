@@ -191,6 +191,7 @@ deploy_dev:
     name: development
   only:
     - master
+    - date-conversion
   except:
     # Skip deploy when scheduled npm audit and outdated scans are executed.
     - schedules
