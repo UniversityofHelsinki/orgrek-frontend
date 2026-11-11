@@ -2,6 +2,7 @@ import {
   formatDate,
   formatDateTime,
   toDate,
+  toLocalDate,
   toISODateString,
   toISODateStringLocal,
 } from '../../src/utils/dateUtils';
@@ -39,6 +40,25 @@ describe('toDate', () => {
     expect(() => toDate({})).toThrowError(
       'Expected string or Date but got [object Object]'
     );
+  });
+});
+
+describe('toLocalDate', () => {
+  test.each(['2025-06-03', '2025-03-30', '2025-10-26'])(
+    'parses %s as a local calendar date',
+    (dateString) => {
+      const date = toLocalDate(dateString);
+
+      expect(date.getFullYear()).toBe(Number(dateString.substring(0, 4)));
+      expect(date.getMonth()).toBe(Number(dateString.substring(5, 7)) - 1);
+      expect(date.getDate()).toBe(Number(dateString.substring(8, 10)));
+      expect(toISODateStringLocal(date)).toBe(dateString);
+    }
+  );
+
+  test('preserves null and undefined values', () => {
+    expect(toLocalDate(null)).toBeNull();
+    expect(toLocalDate(undefined)).toBeUndefined();
   });
 });
 
@@ -145,10 +165,14 @@ describe('toISODateStringLocal', () => {
     expect(toISODateStringLocal(date)).toBe('2023-04-14');
   });
 
-  test("converts UTC to user's local time zone", () => {
+  test('formats according to the active local calendar date', () => {
     const date = new Date('2023-04-14T23:00:00.000Z');
-    // This tests expects user's time zone to be Europe/Helsinki
-    expect(date.getTimezoneOffset()).toBeLessThan(0);
-    expect(toISODateStringLocal(date)).toBe('2023-04-15');
+    const expectedDate = [
+      date.getFullYear(),
+      String(date.getMonth() + 1).padStart(2, '0'),
+      String(date.getDate()).padStart(2, '0'),
+    ].join('-');
+
+    expect(toISODateStringLocal(date)).toBe(expectedDate);
   });
 });

@@ -4,7 +4,11 @@ import { fiFI, svSE, enUS } from '@mui/x-date-pickers/locales';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import TextField from '@mui/material/TextField';
-import { getDateFnsLocale, toISODateStringLocal } from '../../utils/dateUtils';
+import {
+  getDateFnsLocale,
+  toISODateStringLocal,
+  toLocalDate,
+} from '../../utils/dateUtils';
 import { useTranslation } from 'react-i18next';
 
 const DateField = ({
@@ -16,6 +20,9 @@ const DateField = ({
   onChange,
   variant,
   renderInput,
+  value,
+  minDate,
+  maxDate,
   ...props
 }) => {
   const defaultRenderInput = (textFieldProps) => (
@@ -75,6 +82,9 @@ const DateField = ({
           onChange && onChange(toISODateStringLocal(date), keyboardInputValue);
         }}
         {...props}
+        value={toLocalDate(value)}
+        minDate={toLocalDate(minDate)}
+        maxDate={toLocalDate(maxDate)}
         renderInput={renderInput || defaultRenderInput}
       />
     </LocalizationProvider>

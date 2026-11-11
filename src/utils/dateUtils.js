@@ -4,6 +4,7 @@ import format from 'date-fns-tz/format';
 import utcToZonedTime from 'date-fns-tz/utcToZonedTime';
 import i18n from '../../src/i18n';
 import { isValid } from 'date-fns';
+import parseISO from 'date-fns/parseISO';
 
 /**
  * Returns date-fns locale for the given language.
@@ -41,6 +42,22 @@ export const toDate = (date) => {
   } else {
     throw new Error(`Expected string or Date but got ${date}`);
   }
+};
+
+/**
+ * Parses a date-only value as a local calendar date for date picker adapters.
+ *
+ * @param {string|number|Date|null|undefined} date
+ * @return {Date|null|undefined}
+ */
+export const toLocalDate = (date) => {
+  if (date === null || date === undefined) {
+    return date;
+  } else if (typeof date === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(date)) {
+    return parseISO(date);
+  }
+
+  return toDate(date);
 };
 
 /**
