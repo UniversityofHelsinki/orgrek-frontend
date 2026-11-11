@@ -132,6 +132,7 @@ build_dev:
     - ohtu-build-3
   only:
     - master
+    - date-conversion
   script:
     - yes | cp -f -v .env.development .env.production || true
     - CI=false npm run build
