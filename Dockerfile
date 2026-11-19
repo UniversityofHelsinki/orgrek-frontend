@@ -4,6 +4,7 @@ WORKDIR /app
 COPY build ./
 
 RUN apk update && \
+    apk upgrade --no-cache && \
     apk add --no-cache tzdata
 
 RUN ls -la
