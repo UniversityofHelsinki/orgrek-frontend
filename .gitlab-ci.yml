@@ -204,6 +204,7 @@ deploy_dev:
     - oc project organisaatiorekisteri
     - oc set env deploy/organisaatiorekisteri-frontend-dev REACT_APP_GIT_HASH=$(git rev-parse --short=7 HEAD)
     - oc set env deploy/organisaatiorekisteri-frontend-dev TZ="Europe/Helsinki"
+    - oc patch bc/organisaatiorekisteri-frontend-dev --type=merge --patch '{"spec":{"strategy":{"dockerStrategy":{"from":null}}}}'
     - oc start-build organisaatiorekisteri-frontend-dev --from-dir=. --follow
     - oc patch bc/organisaatiorekisteri-frontend-dev --patch '{"spec":{"successfulBuildsHistoryLimit":1}}'
     - oc patch bc/organisaatiorekisteri-frontend-dev --patch '{"spec":{"failedBuildsHistoryLimit":1}}'
@@ -230,6 +231,7 @@ deploy_test:
     - oc project organisaatiorekisteri
     - oc set env deploy/organisaatiorekisteri-frontend-test REACT_APP_GIT_HASH=$(git rev-parse --short=7 HEAD)
     - oc set env deploy/organisaatiorekisteri-frontend-test TZ="Europe/Helsinki"
+    - oc patch bc/organisaatiorekisteri-frontend-test --type=merge --patch '{"spec":{"strategy":{"dockerStrategy":{"from":null}}}}'
     - oc start-build organisaatiorekisteri-frontend-test --from-dir=. --follow
     - oc patch bc/organisaatiorekisteri-frontend-test --patch '{"spec":{"successfulBuildsHistoryLimit":1}}'
     - oc patch bc/organisaatiorekisteri-frontend-test --patch '{"spec":{"failedBuildsHistoryLimit":1}}'
@@ -256,6 +258,7 @@ deploy_prod:
     - oc project organisaatiorekisteri
     - oc set env deploy/organisaatiorekisteri-frontend-prod REACT_APP_GIT_HASH=$(git rev-parse --short=7 HEAD)
     - oc set env deploy/organisaatiorekisteri-frontend-prod TZ="Europe/Helsinki"
+    - oc patch bc/organisaatiorekisteri-frontend-prod --type=merge --patch '{"spec":{"strategy":{"dockerStrategy":{"from":null}}}}'
     - oc start-build organisaatiorekisteri-frontend-prod --from-dir=. --follow
     - oc patch bc/organisaatiorekisteri-frontend-prod --patch '{"spec":{"successfulBuildsHistoryLimit":1}}'
     - oc patch bc/organisaatiorekisteri-frontend-prod --patch '{"spec":{"failedBuildsHistoryLimit":1}}'
@@ -281,6 +284,7 @@ deploy_periodically_prod:
     - oc project organisaatiorekisteri
     - oc set env deploy/organisaatiorekisteri-frontend-prod REACT_APP_GIT_HASH=$(git rev-parse --short=7 HEAD)
     - oc set env deploy/organisaatiorekisteri-frontend-prod TZ="Europe/Helsinki"
+    - oc patch bc/organisaatiorekisteri-frontend-prod --type=merge --patch '{"spec":{"strategy":{"dockerStrategy":{"from":null}}}}'
     - oc start-build organisaatiorekisteri-frontend-prod --from-dir=. --follow
     - oc patch bc/organisaatiorekisteri-frontend-prod --patch '{"spec":{"successfulBuildsHistoryLimit":1}}'
     - oc patch bc/organisaatiorekisteri-frontend-prod --patch '{"spec":{"failedBuildsHistoryLimit":1}}'
